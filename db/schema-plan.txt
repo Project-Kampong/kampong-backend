@@ -1,0 +1,124 @@
+User:
+    ID - PRIMARY KEY
+    Role:
+        1. User
+        2. Admin
+    Name
+    Email
+    Password
+    created_on: timestamp
+
+Profile:
+    UserID - FOREIGN KEY
+    Profile picture: text
+    About: text
+    Gender: text
+    Age: 
+    Interest: text
+    Handphone: text
+    Facebook: text
+    Twitter: text
+    Instagram: text
+    LinkedIn: text
+    is_verified: boolean
+
+Skills:
+    SkillID - PRIMARY KEY
+    Skill: text
+
+ProfileSkills:
+    UserID - FOREIGN KEY
+    SkillID - FOREIGN KEY
+    (UserID, SkillID) - PRIMARY KEY
+
+Organisation:
+    OrganisationID - PRIMARY KEY
+    Name: text
+    Type: text
+    About: text
+    url: text
+    Handphone: text
+    Email: text
+    is_verified: boolean
+    created_on: timestamp
+
+Membership:
+    OrganisationID - FOREIGN KEY
+    UserID - FOREIGN KEY
+    is_owner: boolean
+    (OrganisationID, UserID) - PRIMARY KEY
+    joined_on: timestamp
+
+Project/Initiative (Listing):
+    ListingID - PRIMARY KEY
+    OrganisationID - FOREIGN KEY /*Can be null*/
+    created_by - FOREIGN KEY
+    Title: text
+    Category: text
+    About: text
+    Tagline: text
+    Mission: text
+    url: text
+    pic1: text
+    pic2: text
+    pic3: text
+    pic4: text
+    pic5: text
+    is_published: boolean
+    is_verified: boolean
+    start_date: timestamp
+    end_date: timestamp
+    created_on: timestamp
+
+FeaturedListing:
+    ListingID - PRIMARY KEY, FOREIGN KEY
+
+Tags:
+    ListingID - FOREIGN KEY
+    Tag: text
+    (ListingID, Tag) - PRIMARY KEY
+
+ListingSkills:
+    ListingID - FOREIGN KEY
+    SkillID - FOREIGN KEY
+    (ListingID, SkillID) - PRIMARY KEY
+
+ListingJobs:
+    ID - PRIMARY KEY
+    ListingID - FOREIGN KEY
+    Job: text
+    Description: text
+
+ListingFAQ:
+    ID - PRIMARY KEY
+    ListingID - FOREIGN KEY
+    Question: text
+    Answer: text
+
+ListingLikes:
+    UserID - FOREIGN KEY
+    ListingID - FOREIGN KEY
+    (UserID, ListingID) - PRIMARY KEY
+
+ListingAdmin:
+    UserID - FOREIGN KEY
+    ListingID - FOREIGN KEY
+    (UserID, ListingID) - PRIMARY KEY
+
+ListingJoin:
+    ListingID - FOREIGN KEY
+    UserID - FOREIGN KEY
+    (ListingID, UserID) - PRIMARY KEY
+    joined_on: timestamp
+    end_on: timestamp
+
+Favourites (ListingSubscription):
+    UserID - FOREIGN KEY
+    ListingID - FOREIGN KEY
+    (UserID, ListingID) - PRIMARY KEY
+
+PHASE 2: Progress tracking*
+ListingMilestone:
+    ID - PRIMARY KEY
+    ListingID - FOREIGN KEY
+    Description: text
