@@ -2,3 +2,5 @@
 
 # env variables
 config/config.env
+
+yarn-error.log
