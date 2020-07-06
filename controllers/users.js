@@ -66,7 +66,7 @@ exports.updateUser = async (req, res) => {
   }
   // remove last comma
   updateUserQuery = updateUserQuery.replace(/,\s*$/, ' ');
-  updateUserQuery += `WHERE id = ${id} RETURNING *`;
+  updateUserQuery += `WHERE id = ${req.params.id} RETURNING *`;
 
   const rows = await db.query(updateUserQuery);
 
