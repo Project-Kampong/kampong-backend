@@ -2,20 +2,17 @@ const express = require('express');
 const router = express.Router();
 
 // import controllers here
-// const {
-//   getUsers
-//   getUser,
-//   createUser,
-//   updateUser,
-//   deleteUser
-// } = require('../controllers/users');
+const {
+  getUsers,
+  getUser,
+  createUser,
+  updateUser,
+  deleteUser
+} = require('../controllers/users');
 
 // map routes to controller
-// router.route('/').get(getUsers);
-// .post(createUser);
+router.route('/').get(getUsers).post(createUser);
 
-// router.route('/:id').put(updateUser).delete(deleteUser);
-
-// router.route('/login').get(getUser);
+router.route('/:id').get(getUser).put(updateUser).delete(deleteUser);
 
 module.exports = router;
