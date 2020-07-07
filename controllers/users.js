@@ -5,7 +5,6 @@ const { db } = require('../config/db');
 // @acess   Public
 exports.getUsers = async (req, res) => {
   const rows = await db.query('SELECT * FROM users');
-  console.log(rows);
 
   res.status(200).json({
     success: true,
@@ -80,10 +79,12 @@ exports.updateUser = async (req, res) => {
 // @route   DELETE /api/users/:id
 // @access  Private/Admin
 exports.deleteUser = async (req, res) => {
-  const row = await db.query(`DELETE FROM users WHERE id = ${req.params.id}`);
+  const row = await db.query(
+    `DELETE FROM users WHERE id = ${req.params.id} RETURNING *`
+  );
 
   res.status(200).json({
     success: true,
-    data: {}
+    data: row
   });
 };
