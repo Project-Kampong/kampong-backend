@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS Users CASCADE;
-/*DROP TABLE IF EXISTS UserRoles CASCADE;*/
+/* DROP TABLE IF EXISTS Roles CASCADE; */
 DROP TABLE IF EXISTS Admins CASCADE;
 DROP TABLE IF EXISTS Profiles CASCADE;
 DROP TABLE IF EXISTS Skills CASCADE;
@@ -7,22 +7,23 @@ DROP TABLE IF EXISTS ProfileSkills CASCADE;
 DROP TABLE IF EXISTS Organisations CASCADE;
 DROP TABLE IF EXISTS Memberships CASCADE;
 DROP TABLE IF EXISTS Listings CASCADE;
-DROP TABLE IF EXISTS FeaturedListings CASCADE;
+DROP TABLE IF EXISTS Features CASCADE;
 DROP TABLE IF EXISTS Tags CASCADE;
 DROP TABLE IF EXISTS ListingSkills CASCADE;
-DROP TABLE IF EXISTS ListingJobs CASCADE;
-DROP TABLE IF EXISTS ListingLikes CASCADE;
+DROP TABLE IF EXISTS Jobs CASCADE;
+DROP TABLE IF EXISTS FAQs CASCADE;
+DROP TABLE IF EXISTS Likes CASCADE;
 DROP TABLE IF EXISTS ListingAdmins CASCADE;
-DROP TABLE IF EXISTS ListingJoins CASCADE;
-DROP TABLE IF EXISTS ListingSubscriptions CASCADE;
-DROP TABLE IF EXISTS ListingMilestones CASCADE;
+DROP TABLE IF EXISTS Participants CASCADE;
+DROP TABLE IF EXISTS Subscriptions CASCADE;
+DROP TABLE IF EXISTS Milestones CASCADE;
 
 
 CREATE TABLE Users (
     user_id SERIAL,
-    name VARCHAR(64) NOT NULL, /*Unsure of the limit -> check with the rest */
+    name VARCHAR(64) NOT NULL,
     email VARCHAR(320) UNIQUE NOT NULL,
-    password VARCHAR(256) NOT NULL, /*Unsure of the limit -> check with the rest */
+    password VARCHAR(256) NOT NULL,
     user_role INTEGER NOT NULL DEFAULT 1,
     created_on TIMESTAMP NOT NULL,
 
@@ -30,9 +31,9 @@ CREATE TABLE Users (
 );
 
 /*
-CREATE TABLE UserRoles (
+CREATE TABLE Roles (
     user_id INTEGER,
-    userRole ENUM('m', 'o'), // m = Member; o = Organizer 
+    user_role ENUM('m', 'o'), // m = Member; o = Organizer 
 
     PRIMARY KEY (user_id),
     FOREIGN KEY (user_id) REFERENCES Users
@@ -131,7 +132,8 @@ CREATE TABLE Listings (
     FOREIGN KEY (created_by) REFERENCES Users
 );
 
-CREATE TABLE FeaturedListings (
+/* Featured listings */
+CREATE TABLE Features (
     listing_id INTEGER,
 
     PRIMARY KEY (listing_id),
@@ -155,7 +157,8 @@ CREATE TABLE ListingSkills (
     FOREIGN KEY (skill_id) REFERENCES Skills
 );
 
-CREATE TABLE ListingJobs (
+/* Jobs for a particular listing */
+CREATE TABLE Jobs (
     job_id INTEGER,
     listing_id INTEGER,
     job_title VARCHAR(256) NOT NULL,
@@ -165,8 +168,7 @@ CREATE TABLE ListingJobs (
     FOREIGN KEY (listing_id) REFERENCES Listings
 );
 
-/* Might be better to store the whole thing as a text or something rather than a table */
-CREATE TABLE ListingFAQ (
+CREATE TABLE FAQs (
     faq_id SERIAL,
     listing_id INTEGER NOT NULL,
     question TEXT,
@@ -176,7 +178,7 @@ CREATE TABLE ListingFAQ (
     FOREIGN KEY (listing_id) REFERENCES Listings
 );
 
-CREATE TABLE ListingLikes (
+CREATE TABLE Likes (
     user_id INTEGER,
     listing_id INTEGER,
 
@@ -194,7 +196,7 @@ CREATE TABLE ListingAdmins (
     FOREIGN KEY (listing_id) REFERENCES Listings
 );
 
-CREATE TABLE ListingJoins (
+CREATE TABLE Participants (
     listing_id INTEGER,
     user_id INTEGER,
     joined_on TIMESTAMP NOT NULL,
@@ -205,7 +207,7 @@ CREATE TABLE ListingJoins (
     FOREIGN KEY (listing_id) REFERENCES Listings
 );
 
-CREATE TABLE ListingSubscriptions (
+CREATE TABLE Subscriptions (
     user_id INTEGER,
     listing_id INTEGER,
 
@@ -214,7 +216,7 @@ CREATE TABLE ListingSubscriptions (
     FOREIGN KEY (listing_id) REFERENCES Listings
 );
 
-CREATE TABLE ListingMilestones (
+CREATE TABLE Milestones (
     listing_id INTEGER,
     milestone_id SERIAL,
     description TEXT NOT NULL,
