@@ -75,12 +75,12 @@ exports.updateUser = asyncHandler(async (req, res) => {
 // @route   DELETE /api/users/:id
 // @access  Private/Admin
 exports.deleteUser = asyncHandler(async (req, res) => {
-  const row = await db.none(
-    `DELETE FROM users WHERE user_id = ${req.params.id}`
+  const row = await db.one(
+    `DELETE FROM users WHERE user_id = ${req.params.id} RETURNING *`
   );
 
   res.status(200).json({
     success: true,
-    data: {}
+    data: row
   });
 });
