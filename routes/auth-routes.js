@@ -3,8 +3,8 @@ const router = express.Router();
 
 // import controllers here
 const {
-  register
-  // login,
+  register,
+  login
   // logout,
   // getMe,
   // updateDetails,
@@ -15,7 +15,7 @@ const {
 
 // map routes to controller
 router.post('/register', register);
-// router.post('/login', login);
+router.post('/login', login);
 // router.get('/logout', protect, logout);
 // router.get('/me', protect, getMe);
 // router.put('/updatedetails', protect, updateDetails);

@@ -1,9 +1,14 @@
-const { getSignedJwtToken, hashPasword } = require('../utils/auth.js');
+const {
+  checkPassword,
+  getSignedJwtToken,
+  hashPasword
+} = require('../utils/auth.js');
 const { db } = require('../config/db');
 const asyncHandler = require('../middleware/async');
+const ErrorResponse = require('../utils/errorResponse');
 
 // @desc    Register user
-// @route   POST /api/v1/auth/register
+// @route   POST /api/auth/register
 // @access  Public
 exports.register = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -12,6 +17,37 @@ exports.register = asyncHandler(async (req, res) => {
   const createUserQuery = `INSERT INTO users (name, email, password) VALUES ('${name}', '${email}', '${hashedPassword}') RETURNING *`;
 
   const user = await db.one(createUserQuery);
+
+  sendTokenResponse(user, 200, res);
+});
+
+// @desc    Login user
+// @route   POST /api/auth/login
+// @access  Public
+exports.login = asyncHandler(async (req, res, next) => {
+  const { email, password } = req.body;
+
+  // Validate email & password
+  if (!email || !password) {
+    return next(new ErrorResponse('Please provide an email and password', 400));
+  }
+
+  const user = await db.oneOrNone(
+    `SELECT * FROM users WHERE email = '${email}'`
+  );
+
+  // Throw exception if user does not exist
+  if (!user) {
+    return next(new ErrorResponse('Invalid credentials', 401));
+  }
+
+  // Check if password matches
+  const originalPassword = user.password;
+  const isMatch = await checkPassword(password, originalPassword);
+
+  if (!isMatch) {
+    return next(new ErrorResponse('Invalid credentials', 401));
+  }
 
   sendTokenResponse(user, 200, res);
 });

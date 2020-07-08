@@ -15,3 +15,6 @@ exports.hashPasword = async password => {
   const hashedPassword = await bcrypt.hash(password, salt);
   return hashedPassword;
 };
+
+exports.checkPassword = async (inputPassword, originalPassword) =>
+  await bcrypt.compare(inputPassword, originalPassword);
