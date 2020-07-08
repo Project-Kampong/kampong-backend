@@ -25,7 +25,7 @@ exports.getUsers = async (req, res) => {
 exports.getUser = async (req, res) => {
   try {
     const rows = await db.one(
-      `SELECT * FROM users WHERE id = ${req.params.id}`
+      `SELECT * FROM users WHERE userID = ${req.params.id}`
     );
     res.status(200).json({
       success: true,
@@ -47,7 +47,7 @@ exports.createUser = async (req, res) => {
 
   // TODO: Hash password
 
-  const createUserQuery = `INSERT INTO USERS (name, email, password, role) VALUES ('${name}', '${email}', '${password}', '${role}') RETURNING *`;
+  const createUserQuery = `INSERT INTO USERS (name, email, password) VALUES ('${name}', '${email}', '${password}') RETURNING *`;
 
   try {
     const rows = await db.one(createUserQuery);
@@ -79,12 +79,9 @@ exports.updateUser = async (req, res) => {
   if (password) {
     updateUserQuery += `password = '${password}', `;
   }
-  if (role) {
-    updateUserQuery += `role = '${role}', `;
-  }
   // remove last comma
   updateUserQuery = updateUserQuery.replace(/,\s*$/, ' ');
-  updateUserQuery += `WHERE id = ${req.params.id} RETURNING *`;
+  updateUserQuery += `WHERE userID = ${req.params.id} RETURNING *`;
 
   try {
     const rows = await db.one(updateUserQuery);
@@ -107,7 +104,7 @@ exports.updateUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   try {
     const row = await db.one(
-      `DELETE FROM users WHERE id = ${req.params.id} RETURNING *`
+      `DELETE FROM users WHERE userID = ${req.params.id} RETURNING *`
     );
 
     res.status(200).json({
