@@ -1,4 +1,4 @@
-const bcrypt = require('bcryptjs');
+const { hashPasword } = require('../utils/auth.js');
 const { db } = require('../config/db');
 const asyncHandler = require('../middleware/async');
 
@@ -87,9 +87,3 @@ exports.deleteUser = asyncHandler(async (req, res) => {
     data: row
   });
 });
-
-const hashPasword = async password => {
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
-  return hashedPassword;
-};

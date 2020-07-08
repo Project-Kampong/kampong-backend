@@ -1,5 +1,4 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const { getSignedJwtToken, hashPasword } = require('../utils/auth.js');
 const { db } = require('../config/db');
 const asyncHandler = require('../middleware/async');
 
@@ -39,15 +38,4 @@ const sendTokenResponse = (user, statusCode, res) => {
     success: true,
     token
   });
-};
-
-const getSignedJwtToken = user =>
-  jwt.sign({ id: user.user_id, email: user.email }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRE
-  });
-
-const hashPasword = async password => {
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
-  return hashedPassword;
 };
