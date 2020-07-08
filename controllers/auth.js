@@ -5,7 +5,7 @@ const asyncHandler = require('../middleware/async');
 // @desc    Register user
 // @route   POST /api/v1/auth/register
 // @access  Public
-exports.register = asyncHandler(async (req, res, next) => {
+exports.register = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
   const hashedPassword = await hashPasword(password);
 
