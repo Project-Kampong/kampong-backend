@@ -24,7 +24,7 @@ CREATE TABLE Users (
     email VARCHAR(320) UNIQUE NOT NULL,
     password VARCHAR(256) NOT NULL, /*Unsure of the limit -> check with the rest */
     userRole INTEGER NOT NULL DEFAULT 1,
-    createdOn TIMESTAMP NOT NULL,
+    createdOn TIMESTAMP NOT NULL DEFAULT NOW(),
 
     PRIMARY KEY (userID)
 );
@@ -89,7 +89,7 @@ CREATE TABLE Organisations (
     handphone VARCHAR(32) DEFAULT NULL,
     email VARCHAR(320) DEFAULT NULL,
     isVerified BOOLEAN DEFAULT FALSE,
-    createdOn TIMESTAMP NOT NULL,
+    createdOn TIMESTAMP NOT NULL DEFAULT NOW(),
 
     PRIMARY KEY (organisationID)
 );
@@ -124,7 +124,7 @@ CREATE TABLE Listings (
     isVerified BOOLEAN DEFAULT FALSE,
     startDate TIMESTAMP NOT NULL,
     endDate TIMESTAMP DEFAULT NULL,
-    createdOn TIMESTAMP NOT NULL,
+    createdOn TIMESTAMP NOT NULL DEFAULT NOW(),
 
     PRIMARY KEY (listingID),
     FOREIGN KEY (organisationID) REFERENCES Organisations,
@@ -197,7 +197,7 @@ CREATE TABLE ListingAdmins (
 CREATE TABLE ListingJoins (
     listingID INTEGER,
     userID INTEGER,
-    joinedOn TIMESTAMP NOT NULL,
+    joinedOn TIMESTAMP NOT NULL DEFAULT NOW(),
     endOn TIMESTAMP,
 
     PRIMARY KEY (listingID, userID, joinedOn),
