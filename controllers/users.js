@@ -33,12 +33,12 @@ exports.getUser = asyncHandler(async (req, res) => {
 exports.createUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
-  // TODO: Hash password
   const hashedPassword = await hashPasword(password);
 
   const createUserQuery = `INSERT INTO users (name, email, password) VALUES ('${name}', '${email}', '${hashedPassword}') RETURNING *`;
 
   const rows = await db.one(createUserQuery);
+
   res.status(201).json({
     success: true,
     data: rows
@@ -57,7 +57,7 @@ exports.updateUser = asyncHandler(async (req, res) => {
   if (email) {
     updateUserQuery += `email = '${email}', `;
   }
-  // TODO: Hash password
+
   if (password) {
     const hashedPassword = await hashPasword(password);
     updateUserQuery += `password = '${hashedPassword}', `;
