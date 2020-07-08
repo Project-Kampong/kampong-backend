@@ -25,7 +25,7 @@ exports.getUsers = async (req, res) => {
 exports.getUser = async (req, res) => {
   try {
     const rows = await db.one(
-      `SELECT * FROM users WHERE userID = ${req.params.id}`
+      `SELECT * FROM users WHERE user_id = ${req.params.id}`
     );
     res.status(200).json({
       success: true,
@@ -43,11 +43,11 @@ exports.getUser = async (req, res) => {
 // @route   POST /api/users
 // @access  Private/Admin
 exports.createUser = async (req, res) => {
-  const { name, email, password, role } = req.body;
+  const { name, email, password } = req.body;
 
   // TODO: Hash password
 
-  const createUserQuery = `INSERT INTO USERS (name, email, password) VALUES ('${name}', '${email}', '${password}') RETURNING *`;
+  const createUserQuery = `INSERT INTO users (name, email, password) VALUES ('${name}', '${email}', '${password}') RETURNING *`;
 
   try {
     const rows = await db.one(createUserQuery);
@@ -67,7 +67,7 @@ exports.createUser = async (req, res) => {
 // @route   PUT /api/users/:id
 // @access  Private/Admin
 exports.updateUser = async (req, res) => {
-  const { name, email, password, role } = req.body;
+  const { name, email, password } = req.body;
   let updateUserQuery = `UPDATE users SET `;
   if (name) {
     updateUserQuery += `name = '${name}', `;
@@ -81,7 +81,7 @@ exports.updateUser = async (req, res) => {
   }
   // remove last comma
   updateUserQuery = updateUserQuery.replace(/,\s*$/, ' ');
-  updateUserQuery += `WHERE userID = ${req.params.id} RETURNING *`;
+  updateUserQuery += `WHERE user_id = ${req.params.id} RETURNING *`;
 
   try {
     const rows = await db.one(updateUserQuery);
@@ -104,7 +104,7 @@ exports.updateUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   try {
     const row = await db.one(
-      `DELETE FROM users WHERE userID = ${req.params.id} RETURNING *`
+      `DELETE FROM users WHERE user_id = ${req.params.id} RETURNING *`
     );
 
     res.status(200).json({
