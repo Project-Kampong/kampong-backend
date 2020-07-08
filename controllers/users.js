@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const { db } = require('../config/db');
 const asyncHandler = require('../middleware/async');
 
@@ -33,8 +34,9 @@ exports.createUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
   // TODO: Hash password
+  const hashedPassword = await hashPasword(password);
 
-  const createUserQuery = `INSERT INTO users (name, email, password) VALUES ('${name}', '${email}', '${password}') RETURNING *`;
+  const createUserQuery = `INSERT INTO users (name, email, password) VALUES ('${name}', '${email}', '${hashedPassword}') RETURNING *`;
 
   const rows = await db.one(createUserQuery);
   res.status(201).json({
@@ -57,7 +59,8 @@ exports.updateUser = asyncHandler(async (req, res) => {
   }
   // TODO: Hash password
   if (password) {
-    updateUserQuery += `password = '${password}', `;
+    const hashedPassword = await hashPasword(password);
+    updateUserQuery += `password = '${hashedPassword}', `;
   }
   // remove last comma
   updateUserQuery = updateUserQuery.replace(/,\s*$/, ' ');
@@ -84,3 +87,9 @@ exports.deleteUser = asyncHandler(async (req, res) => {
     data: row
   });
 });
+
+const hashPasword = async password => {
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+  return hashedPassword;
+};
