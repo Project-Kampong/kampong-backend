@@ -25,7 +25,7 @@ CREATE TABLE Users (
     email VARCHAR(320) UNIQUE NOT NULL,
     password VARCHAR(256) NOT NULL,
     user_role INTEGER NOT NULL DEFAULT 1,
-    created_on TIMESTAMP NOT NULL,
+    created_on TIMESTAMP NOT NULL DEFAULT NOW(),
 
     PRIMARY KEY (user_id)
 );
@@ -90,7 +90,7 @@ CREATE TABLE Organisations (
     handphone VARCHAR(32) DEFAULT NULL,
     email VARCHAR(320) DEFAULT NULL,
     is_verified BOOLEAN DEFAULT FALSE,
-    created_on TIMESTAMP NOT NULL,
+    created_on TIMESTAMP NOT NULL DEFAULT NOW(),
 
     PRIMARY KEY (organisation_id)
 );
@@ -125,7 +125,7 @@ CREATE TABLE Listings (
     is_verified BOOLEAN DEFAULT FALSE,
     start_date TIMESTAMP NOT NULL,
     end_date TIMESTAMP DEFAULT NULL,
-    created_on TIMESTAMP NOT NULL,
+    created_on TIMESTAMP NOT NULL DEFAULT NOW(),
 
     PRIMARY KEY (listing_id),
     FOREIGN KEY (organisation_id) REFERENCES Organisations,
@@ -199,7 +199,7 @@ CREATE TABLE ListingAdmins (
 CREATE TABLE Participants (
     listing_id INTEGER,
     user_id INTEGER,
-    joined_on TIMESTAMP NOT NULL,
+    joined_on TIMESTAMP NOT NULL DEFAULT NOW(),
     end_on TIMESTAMP,
 
     PRIMARY KEY (listing_id, user_id, joined_on),
