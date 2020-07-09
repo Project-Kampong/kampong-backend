@@ -15,10 +15,7 @@ CREATE TABLE Users (
     name        VARCHAR NOT NULL,
     password    VARCHAR NOT NULL,
     role        INTEGER NOT NULL DEFAULT 1,
-    -- TODO: discuss if need db-level check for the following
-    CHECK (email LIKE '%@%'),
-    CHECK (name <> ''),
-    CHECK (password <> ''),
+
     CONSTRAINT fk_user_role FOREIGN KEY (role) REFERENCES UserRoles (id)
 );
 
@@ -26,7 +23,7 @@ CREATE TABLE Users (
 INSERT INTO UserRoles (role) VALUES ('User');
 INSERT INTO UserRoles (role) VALUES ('Admin');
 
-INSERT INTO Users (email, name, password, role) VALUES ('don@gmail.com', 'Don', '123456', '2');
-INSERT INTO Users (email, name, password, role) VALUES ('john@gmail.com', 'John', '123456', '1');
-INSERT INTO Users (email, name, password, role) VALUES ('aaron@gmail.com', 'Aaron', '123456', '1');
-INSERT INTO Users (email, name, password, role) VALUES ('ben@gmail.com', 'Ben', '123456', '1');
+INSERT INTO Users (email, name, password, user_role) VALUES ('don@gmail.com', 'Don', '123456', '2');
+INSERT INTO Users (email, name, password, user_role) VALUES ('john@gmail.com', 'John', '123456', '1');
+INSERT INTO Users (email, name, password, user_role) VALUES ('aaron@gmail.com', 'Aaron', '123456', '1');
+INSERT INTO Users (email, name, password, user_role) VALUES ('ben@gmail.com', 'Ben', '123456', '1');
