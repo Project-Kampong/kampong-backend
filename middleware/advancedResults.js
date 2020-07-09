@@ -9,7 +9,10 @@ const { db } = require('../config/db');
  * matches, and each attribute can only be matched to max 1 value.
  * Wrapping string values with '' is optional when filtering via
  * string matches.
- * eg. ?select=name,password&sort=name,user_role&page=2&limit=2&name='Ron'
+ * Currently, populate only supports natural join with model.
+ * Sample request query. ?select=name,password&sort=name,user_role&page=2&limit=2&name='Ron'
+ * @param model:String the table name to query
+ * @param populate:String the table name to form a natural join with model
  */
 const advancedResults = (model, populate) => async (req, res, next) => {
   let query = `SELECT `;
