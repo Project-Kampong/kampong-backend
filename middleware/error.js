@@ -2,9 +2,9 @@ const ErrorResponse = require('../utils/errorResponse');
 
 const errorHandler = (err, req, res, next) => {
   // Log to console for dev
-  // console.log(err.stack.red);
-  console.error(`err.name is ${err.name}`.bgRed);
-  console.error(`err.code is ${err.code}`.bgRed);
+  console.log(err.stack.red);
+  // console.error(`err.name is ${err.name}`.bgRed);
+  // console.error(`err.code is ${err.code}`.bgRed);
   // console.error(err);
 
   let error = { ...err };

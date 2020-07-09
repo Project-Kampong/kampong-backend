@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
+const advancedResults = require('../middleware/advancedResults');
 const { checkInputError } = require('../middleware/input-validation');
 
 // import controllers here
@@ -15,7 +16,7 @@ const {
 // map routes to controller
 router
   .route('/')
-  .get(getUsers)
+  .get(advancedResults('users'), getUsers)
   .post(
     [
       check('name', 'Name is required').not().isEmpty(),
