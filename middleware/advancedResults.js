@@ -41,16 +41,19 @@ const advancedResults = (model, populate) => async (req, res, next) => {
   // Remove fields from reqQuery
   removeFields.forEach(field => delete reqQuery[field]);
 
+  let filterQuery = ``;
   if (reqQuery) {
-    query += `WHERE `;
+    filterQuery += `WHERE `;
     for (let [key, value] of Object.entries(reqQuery)) {
       if (!(value.startsWith("'") && value.endsWith("'"))) {
         value = `'${value}'`;
       }
-      query += `${key} = ${value} AND `;
+      filterQuery += `${key} = ${value} AND `;
     }
-    query = query.slice(0, query.lastIndexOf('AND '));
+    filterQuery = filterQuery.slice(0, filterQuery.lastIndexOf('AND '));
   }
+
+  query += filterQuery;
 
   // Handle sort
   if (req.query.sort) {
@@ -65,7 +68,9 @@ const advancedResults = (model, populate) => async (req, res, next) => {
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
 
-  const totalEntries = await db.one(`SELECT COUNT(*) FROM ${model}`);
+  const totalEntries = await db.one(
+    `SELECT COUNT(*) FROM ${model} ${filterQuery}`
+  );
 
   query += `OFFSET ${startIndex} LIMIT ${limit}`;
 
