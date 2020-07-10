@@ -55,7 +55,7 @@ On the command line in the root directory:
 yarn start
 
 #### Run in development environment
-yarn run dev
+yarn dev
 ```
 
 ## API Documentation
