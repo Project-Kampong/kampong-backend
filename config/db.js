@@ -10,7 +10,8 @@ const dbConfig = {
     console.log(`EXECUTING QUERY: ${e.query}`.dim);
   },
   error(err, e) {
-    console.error(JSON.stringify(e, null, 2).red);
+    // console.error(JSON.stringify(e, null, 2).red);
+    console.error(JSON.stringify(err, null, 2).red);
   }
 };
 const pgp = require('pg-promise')(dbConfig);
