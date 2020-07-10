@@ -23,7 +23,7 @@ exports.getUser = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Create user
+// @desc    Create user and user profile
 // @route   POST /api/users
 // @access  Private/Admin
 exports.createUser = asyncHandler(async (req, res) => {
@@ -31,9 +31,20 @@ exports.createUser = asyncHandler(async (req, res) => {
 
   const hashedPassword = await hashPasword(password);
 
-  const createUserQuery = `INSERT INTO users (name, email, password) VALUES ('${name}', '${email}', '${hashedPassword}') RETURNING *`;
-
-  const rows = await db.one(createUserQuery);
+  /**
+   * Returns an array of 2 json:
+   * 1st json: User auth
+   * 2nd json: User profile
+   */
+  const rows = await db.tx(async query => {
+    const createUser = await query.one(
+      `INSERT INTO users (name, email, password) VALUES ('${name}', '${email}', '${hashedPassword}') RETURNING *`
+    );
+    const createProfile = await query.one(
+      `INSERT INTO profiles (user_id) VALUES ('${createUser.user_id}') RETURNING *`
+    );
+    return query.batch([createUser, createProfile]);
+  });
 
   res.status(201).json({
     success: true,
