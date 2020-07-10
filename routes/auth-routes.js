@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
+const { protect } = require('../middleware/auth');
 
 // import controllers here
 const {
   register,
-  login
+  login,
   // logout,
-  // getMe,
+  getMe
   // updateDetails,
   // updatePassword,
   // forgotPassword,
@@ -42,7 +43,7 @@ router.post(
   login
 );
 // router.get('/logout', protect, logout);
-// router.get('/me', protect, getMe);
+router.get('/me', protect, getMe);
 // router.put('/updatedetails', protect, updateDetails);
 // router.put('/updatepassword', protect, updatePassword);
 // router.post('/forgotpassword', forgotPassword);

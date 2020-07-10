@@ -62,6 +62,22 @@ exports.login = asyncHandler(async (req, res, next) => {
   sendTokenResponse(user, 200, res);
 });
 
+/**
+ * @desc    Get current logged in user details
+ * @route   GET /api/auth/me
+ * @access  Private
+ */
+exports.getMe = asyncHandler(async (req, res, next) => {
+  const user = await db.one(
+    `SELECT * FROM users WHERE user_id = '${req.user.user_id}'`
+  );
+
+  res.status(200).json({
+    success: true,
+    data: user
+  });
+});
+
 // Helper method to get token from model, create cookie and send response
 const sendTokenResponse = (user, statusCode, res) => {
   // Create token
