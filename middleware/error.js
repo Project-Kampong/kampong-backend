@@ -15,6 +15,17 @@ const errorHandler = (err, req, res, next) => {
     const message = `Resource not found`;
     error = new ErrorResponse(message, 404);
   }
+  //  Postgres invalid value type error
+  if (err.code === '22P02') {
+    const message = `Invalid value type: ${err.routine}`;
+    error = new ErrorResponse(message, 400);
+  }
+
+  // Postgres missing column error
+  if (err.code === '42703') {
+    const message = `Table column does not exist: ${err.routine}`;
+    error = new ErrorResponse(message, 400);
+  }
 
   // Postgres duplicate key error
   if (err.code === '23505') {
