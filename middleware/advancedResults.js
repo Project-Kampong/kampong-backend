@@ -1,3 +1,4 @@
+const asyncHandler = require('./async');
 const { db } = require('../config/db');
 
 /**
@@ -14,88 +15,95 @@ const { db } = require('../config/db');
  * @param model:String the table name to query
  * @param populate:String the table name to form a natural join with model
  */
-const advancedResults = (model, populate) => async (req, res, next) => {
-  let query = `SELECT `;
+const advancedResults = (model, populate) =>
+  asyncHandler(async (req, res, next) => {
+    let query = `SELECT `;
 
-  // Handle select queries
-  if (req.query.select) {
-    query += req.query.select + ' ';
-  } else {
-    query += `* `;
-  }
-
-  // handle model:String
-  query += `FROM ${model} `;
-
-  // Populate each entry with natural join
-  if (populate) {
-    query += `NATURAL JOIN ${populate} `;
-  }
-
-  // Copy req.query, if any
-  const reqQuery = { ...req.query };
-
-  // Query fields to exclude from reqQuery
-  const removeFields = ['select', 'sort', 'page', 'limit'];
-
-  // Remove fields from reqQuery
-  removeFields.forEach(field => delete reqQuery[field]);
-
-  if (reqQuery) {
-    query += `WHERE `;
-    for (let [key, value] of Object.entries(reqQuery)) {
-      if (!(value.startsWith("'") && value.endsWith("'"))) {
-        value = `'${value}'`;
-      }
-      query += `${key} = ${value} AND `;
+    // Handle select queries
+    if (req.query.select) {
+      query += req.query.select + ' ';
+    } else {
+      query += `* `;
     }
-    query = query.slice(0, query.lastIndexOf('AND '));
-  }
 
-  // Handle sort
-  if (req.query.sort) {
-    query += `ORDER BY ${req.query.sort} `;
-  }
+    // handle model:String
+    query += `FROM ${model} `;
 
-  // Pagination (default val: 1 page, 25 entries)
-  const page = parseInt(req.query.page, 10) || 1;
-  const limit = parseInt(req.query.limit, 10) || 25;
+    // Populate each entry with natural join
+    if (populate) {
+      query += `NATURAL JOIN ${populate} `;
+    }
 
-  // start and end entry number for a page
-  const startIndex = (page - 1) * limit;
-  const endIndex = page * limit;
+    // Copy req.query, if any
+    const reqQuery = { ...req.query };
 
-  const totalEntries = await db.one(`SELECT COUNT(*) FROM ${model}`);
+    // Query fields to exclude from reqQuery
+    const removeFields = ['select', 'sort', 'page', 'limit'];
 
-  query += `OFFSET ${startIndex} LIMIT ${limit}`;
+    // Remove fields from reqQuery
+    removeFields.forEach(field => delete reqQuery[field]);
 
-  const results = await db.manyOrNone(query);
+    let filterQuery = ``;
 
-  // Pagination results
-  const pagination = {};
+    if (reqQuery) {
+      filterQuery += `WHERE `;
+      for (let [key, value] of Object.entries(reqQuery)) {
+        if (!(value.startsWith("'") && value.endsWith("'"))) {
+          value = `'${value}'`;
+        }
+        filterQuery += `${key} = ${value} AND `;
+      }
+      filterQuery = filterQuery.slice(0, filterQuery.lastIndexOf('AND '));
+    }
 
-  if (endIndex < totalEntries.count) {
-    pagination.next = {
-      page: page + 1,
-      limit
+    query += filterQuery;
+
+    // Handle sort
+    if (req.query.sort) {
+      query += `ORDER BY ${req.query.sort} `;
+    }
+
+    // Pagination (default val: 1 page, 25 entries)
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 25;
+
+    // start and end entry number for a page
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    const totalEntries = await db.one(
+      `SELECT COUNT(*) FROM ${model} ${filterQuery}`
+    );
+
+    query += `OFFSET ${startIndex} LIMIT ${limit}`;
+
+    const results = await db.manyOrNone(query);
+
+    // Pagination results
+    const pagination = {};
+
+    if (endIndex < totalEntries.count) {
+      pagination.next = {
+        page: page + 1,
+        limit
+      };
+    }
+
+    if (startIndex > 0) {
+      pagination.prev = {
+        page: page - 1,
+        limit
+      };
+    }
+
+    res.advancedResults = {
+      success: true,
+      count: results.length,
+      pagination,
+      data: results
     };
-  }
 
-  if (startIndex > 0) {
-    pagination.prev = {
-      page: page - 1,
-      limit
-    };
-  }
-
-  res.advancedResults = {
-    success: true,
-    count: results.length,
-    pagination,
-    data: results
-  };
-
-  next();
-};
+    next();
+  });
 
 module.exports = advancedResults;
