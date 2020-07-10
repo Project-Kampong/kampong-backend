@@ -2,17 +2,21 @@ const { hashPasword } = require('../utils/auth.js');
 const { db } = require('../config/db');
 const asyncHandler = require('../middleware/async');
 
-// @desc    Get all users
-// @route   GET /api/users
-// @access   Private/Admin
+/**
+ * @desc    Get all users
+ * @route   GET /api/users
+ * @access   Private/Admin
+ */
 exports.getUsers = asyncHandler(async (req, res) => {
   // TODO: Handle hiding of user credential, whilst allowing select queries
   res.status(200).json(res.advancedResults);
 });
 
-// @desc    Get single user
-// @route   GET /api/users/:id
-// @access  Private/Admin
+/**
+ * @desc    Get single user
+ * @route   GET /api/users/:id
+ * @access  Private/Admin
+ */
 exports.getUser = asyncHandler(async (req, res) => {
   const rows = await db.one(
     `SELECT * FROM users WHERE user_id = ${req.params.id}`
@@ -23,9 +27,11 @@ exports.getUser = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Create user and user profile
-// @route   POST /api/users
-// @access  Private/Admin
+/**
+ * @desc    Create user and user profile
+ * @route   POST /api/users
+ * @access  Private/Admin
+ */
 exports.createUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -52,9 +58,11 @@ exports.createUser = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Update single user
-// @route   PUT /api/users/:id
-// @access  Private/Admin
+/**
+ * @desc    Update single user
+ * @route   PUT /api/users/:id
+ * @access  Private/Admin
+ */
 exports.updateUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
   let updateUserQuery = `UPDATE users SET `;
@@ -81,9 +89,11 @@ exports.updateUser = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Delete single user
-// @route   DELETE /api/users/:id
-// @access  Private/Admin
+/**
+ * @desc    Delete single user
+ * @route   DELETE /api/users/:id
+ * @access  Private/Admin
+ */
 exports.deleteUser = asyncHandler(async (req, res) => {
   const row = await db.one(
     `DELETE FROM users WHERE user_id = ${req.params.id} RETURNING *`

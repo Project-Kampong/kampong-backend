@@ -7,9 +7,11 @@ const { db } = require('../config/db');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
 
-// @desc    Register user and create user profile
-// @route   POST /api/auth/register
-// @access  Public
+/**
+ * @desc    Register user and create user profile
+ * @route   POST /api/auth/register
+ * @access  Public
+ */
 exports.register = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
   const hashedPassword = await hashPasword(password);
@@ -32,9 +34,11 @@ exports.register = asyncHandler(async (req, res) => {
   sendTokenResponse(user[0], 200, res);
 });
 
-// @desc    Login user
-// @route   POST /api/auth/login
-// @access  Public
+/**
+ * @desc    Login user
+ * @route   POST /api/auth/login
+ * @access  Public
+ */
 exports.login = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
