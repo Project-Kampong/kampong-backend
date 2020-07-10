@@ -51,7 +51,7 @@ CREATE TABLE Profiles (
     user_id INTEGER,
     profile_picture VARCHAR(256),
     about TEXT,
-    gender ENUM('m', 'f', 'o', 'u') DEFAULT 'u', /* m = male, f = female, o = others, u = undisclosed */
+    gender VARCHAR(4) CHECK (gender IN ('m', 'f', 'o', 'u')) DEFAULT 'u', /* m = male, f = female, o = others, u = undisclosed */
     age INTEGER,
     interest TEXT,
     phone VARCHAR(32),
