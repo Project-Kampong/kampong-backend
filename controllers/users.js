@@ -4,7 +4,7 @@ const asyncHandler = require('../middleware/async');
 
 // @desc    Get all users
 // @route   GET /api/users
-// @acess   Private/Admin
+// @access   Private/Admin
 exports.getUsers = asyncHandler(async (req, res) => {
   // TODO: Handle hiding of user credential, whilst allowing select queries
   res.status(200).json(res.advancedResults);
