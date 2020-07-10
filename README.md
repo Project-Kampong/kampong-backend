@@ -6,7 +6,7 @@ REST API web service in Node.js, Express, and PostgreSQL for Project Kampong.
 
 ### Package manager
 
-Yarn is the recommended package manager for LearnDev. Install yarn [here](https://classic.yarnpkg.com/en/docs/install/).
+Yarn is the recommended package manager for Project Kampong API. Install yarn [here](https://classic.yarnpkg.com/en/docs/install/).
 
 ### Setting up
 
