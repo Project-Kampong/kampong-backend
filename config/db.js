@@ -1,4 +1,5 @@
 const dotenv = require('dotenv');
+const path = require('path');
 
 // TODO: find out if loading dotenv config in non server/index.js file is good practice, else try pre-loading dotenv files on start-up
 // see: https://medium.com/the-node-js-collection/making-your-node-js-work-everywhere-with-environment-variables-2da8cdf6e786
@@ -31,4 +32,10 @@ const checkConn = async () => {
   console.log(`Connected to ${res[0].db_info}`.cyan.underline.bold);
 };
 
-module.exports = { checkConn, db };
+// Helper for linking to external query files:
+const generateSqlQueryFile = file => {
+  const fullPath = path.join(__dirname, file);
+  return new pgp.QueryFile(fullPath, { minify: true });
+};
+
+module.exports = { checkConn, db, generateSqlQueryFile };
