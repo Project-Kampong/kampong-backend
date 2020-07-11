@@ -24,8 +24,12 @@ router
   .get(advancedResults('users'), getUsers)
   .post(
     [
-      check('name', 'Name is required').not().isEmpty(),
-      check('email', 'Please include a valid email').isEmail(),
+      check('name', 'Name is required').trim().not().isEmpty(),
+      check('name', 'Name must contain alphabetic characters only').isAlpha(),
+      check('email', 'Please include a valid email')
+        .trim()
+        .isEmail()
+        .normalizeEmail(),
       check(
         'password',
         'Please enter a password with 6 or more characters'
@@ -51,8 +55,17 @@ router
         ],
         'At least one field must be updated'
       ),
-      check('name', 'Please include a valid name').optional().not().isEmpty(),
-      check('email', 'Please include a valid email').optional().isEmail(),
+      check('name', 'Please include a valid name')
+        .optional()
+        .trim()
+        .not()
+        .isEmpty()
+        .isAlpha(),
+      check('email', 'Please include a valid email')
+        .optional()
+        .trim()
+        .isEmail()
+        .normalizeEmail(),
       check('password', 'Please enter a password with 6 or more characters')
         .optional()
         .isLength({ min: 6 })
