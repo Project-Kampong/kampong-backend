@@ -23,8 +23,9 @@ router.get('/me', protect, getMe);
 router.post(
   '/register',
   [
-    check('name', 'Name is required').not().isEmpty(),
-    check('email', 'Please include a valid email').isEmail(),
+    check('name', 'Name is required').trim().not().isEmpty(),
+    check('name', 'Name must contain alphabetic characters only').isAlpha(),
+    check('email', 'Please include a valid email').isEmail().normalizeEmail(),
     check(
       'password',
       'Please enter a password with 6 or more characters'
@@ -37,7 +38,7 @@ router.post(
 router.post(
   '/login',
   [
-    check('email', 'Please include a valid email').isEmail(),
+    check('email', 'Please include a valid email').isEmail().normalizeEmail(),
     check(
       'password',
       'Please enter a password with 6 or more characters'
@@ -58,8 +59,16 @@ router.put(
       ],
       'At least one field must be updated'
     ),
-    check('name', 'Please include a valid name').optional().not().isEmpty(),
-    check('email', 'Please include a valid email').optional().isEmail()
+    check('name', 'Please include a valid name')
+      .optional()
+      .trim()
+      .not()
+      .isEmpty()
+      .isAlpha(),
+    check('email', 'Please include a valid email')
+      .optional()
+      .isEmail()
+      .normalizeEmail()
   ],
   checkInputError,
   updateDetails
