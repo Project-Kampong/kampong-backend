@@ -116,12 +116,18 @@ exports.deleteUser = asyncHandler(async (req, res) => {
     return next(new ErrorResponse(`User does not exist`, 400));
   }
 
-  const row = await db.one(
-    `DELETE FROM users WHERE user_id = ${req.params.id} RETURNING *`
-  );
+  const rows = await db.tx(async query => {
+    const deleteUser = await query.one(
+      `DELETE FROM users WHERE user_id = ${req.params.id} RETURNING *`
+    );
+    const deleteProfile = await query.one(
+      `DELETE FROM profiles WHERE user_id = ${req.params.id} RETURNING *`
+    );
+    return query.batch([deleteUser, deleteProfile]);
+  });
 
   res.status(200).json({
     success: true,
-    data: row
+    data: rows
   });
 });
