@@ -129,10 +129,7 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
 
   const rows = await db.one(updateUserQuery);
 
-  res.status(200).json({
-    success: true,
-    data: rows
-  });
+  sendTokenResponse(rows, 200, res);
 });
 
 /**
@@ -167,10 +164,7 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
 
   const rows = await db.one(updateUserQuery);
 
-  res.status(200).json({
-    success: true,
-    data: rows
-  });
+  sendTokenResponse(rows, 200, res);
 });
 
 // Helper method to get token from model, create cookie and send response

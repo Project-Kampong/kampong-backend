@@ -4,6 +4,13 @@ const { check, oneOf } = require('express-validator');
 const advancedResults = require('../middleware/advancedResults');
 const { protect, authorise } = require('../middleware/auth');
 const { checkInputError } = require('../middleware/input-validation');
+const { ALPHA_WHITESPACE_REGEX } = require('../utils/regex');
+const {
+  INVALID_EMAIL_MSG,
+  INVALID_NAME_MSG,
+  INVALID_PASSWORD_MSG,
+  NO_FIELD_UPDATED_MSG
+} = require('../utils/inputExceptionMsg');
 
 // import controllers here
 const {
@@ -24,16 +31,13 @@ router
   .get(advancedResults('users'), getUsers)
   .post(
     [
-      check('name', 'Name is required').trim().not().isEmpty(),
-      check('name', 'Name must contain alphabetic characters only').isAlpha(),
-      check('email', 'Please include a valid email')
+      check('name', INVALID_NAME_MSG)
         .trim()
-        .isEmail()
-        .normalizeEmail(),
-      check(
-        'password',
-        'Please enter a password with 6 or more characters'
-      ).isLength({ min: 6 })
+        .not()
+        .isEmpty()
+        .matches(ALPHA_WHITESPACE_REGEX),
+      check('email', INVALID_EMAIL_MSG).trim().isEmail().normalizeEmail(),
+      check('password', INVALID_PASSWORD_MSG).isLength({ min: 6 })
     ],
     checkInputError,
     createUser
@@ -46,29 +50,24 @@ router
     [
       oneOf(
         [
-          check('name', 'Name is required').exists(),
-          check('email', 'Please include a valid email').exists(),
-          check(
-            'password',
-            'Please enter a password with 6 or more characters'
-          ).exists()
+          check('name').exists(),
+          check('email').exists(),
+          check('password').exists()
         ],
-        'At least one field must be updated'
+        NO_FIELD_UPDATED_MSG
       ),
-      check('name', 'Please include a valid name')
+      check('name', INVALID_NAME_MSG)
         .optional()
         .trim()
         .not()
         .isEmpty()
-        .isAlpha(),
-      check('email', 'Please include a valid email')
+        .matches(ALPHA_WHITESPACE_REGEX),
+      check('email', INVALID_EMAIL_MSG)
         .optional()
         .trim()
         .isEmail()
         .normalizeEmail(),
-      check('password', 'Please enter a password with 6 or more characters')
-        .optional()
-        .isLength({ min: 6 })
+      check('password', INVALID_PASSWORD_MSG).optional().isLength({ min: 6 })
     ],
     checkInputError,
     updateUser

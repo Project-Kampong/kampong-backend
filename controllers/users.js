@@ -6,10 +6,9 @@ const ErrorResponse = require('../utils/errorResponse.js');
 /**
  * @desc    Get all users
  * @route   GET /api/users
- * @access   Admin
+ * @access  Admin
  */
 exports.getUsers = asyncHandler(async (req, res) => {
-  // TODO: Handle hiding of user credential, whilst allowing select queries
   res.status(200).json(res.advancedResults);
 });
 

@@ -2,6 +2,13 @@ const express = require('express');
 const router = express.Router();
 const { check, oneOf } = require('express-validator');
 const { protect } = require('../middleware/auth');
+const { ALPHA_WHITESPACE_REGEX } = require('../utils/regex');
+const {
+  INVALID_EMAIL_MSG,
+  INVALID_NAME_MSG,
+  INVALID_PASSWORD_MSG,
+  NO_FIELD_UPDATED_MSG
+} = require('../utils/inputExceptionMsg');
 
 // import controllers here
 const {
@@ -23,16 +30,13 @@ router.get('/me', protect, getMe);
 router.post(
   '/register',
   [
-    check('name', 'Name is required').trim().not().isEmpty(),
-    check('name', 'Name must contain alphabetic characters only').isAlpha(),
-    check('email', 'Please include a valid email')
+    check('name', INVALID_NAME_MSG)
       .trim()
-      .isEmail()
-      .normalizeEmail(),
-    check(
-      'password',
-      'Please enter a password with 6 or more characters'
-    ).isLength({ min: 6 })
+      .not()
+      .isEmpty()
+      .matches(ALPHA_WHITESPACE_REGEX),
+    check('email', INVALID_EMAIL_MSG).trim().isEmail().normalizeEmail(),
+    check('password', INVALID_PASSWORD_MSG).isLength({ min: 6 })
   ],
   checkInputError,
   register
@@ -41,14 +45,8 @@ router.post(
 router.post(
   '/login',
   [
-    check('email', 'Please include a valid email')
-      .trim()
-      .isEmail()
-      .normalizeEmail(),
-    check(
-      'password',
-      'Please enter a password with 6 or more characters'
-    ).isLength({ min: 6 })
+    check('email', INVALID_EMAIL_MSG).trim().isEmail().normalizeEmail(),
+    check('password', INVALID_PASSWORD_MSG).isLength({ min: 6 })
   ],
   checkInputError,
   login
@@ -59,19 +57,16 @@ router.put(
   protect,
   [
     oneOf(
-      [
-        check('name', 'Name is required').exists(),
-        check('email', 'Please include a valid email').exists()
-      ],
-      'At least one field must be updated'
+      [check('name').exists(), check('email').exists()],
+      NO_FIELD_UPDATED_MSG
     ),
-    check('name', 'Please include a valid name')
+    check('name', INVALID_NAME_MSG)
       .optional()
       .trim()
       .not()
       .isEmpty()
-      .isAlpha(),
-    check('email', 'Please include a valid email')
+      .matches(ALPHA_WHITESPACE_REGEX),
+    check('email', INVALID_EMAIL_MSG)
       .optional()
       .trim()
       .isEmail()
@@ -86,10 +81,7 @@ router.put(
   protect,
   [
     check('oldPassword', 'Please enter your old password').exists(),
-    check(
-      'newPassword',
-      'Please enter a password with 6 or more characters'
-    ).isLength({ min: 6 })
+    check('newPassword', INVALID_PASSWORD_MSG).isLength({ min: 6 })
   ],
   checkInputError,
   updatePassword
