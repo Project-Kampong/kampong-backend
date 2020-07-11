@@ -17,6 +17,7 @@ exports.register = asyncHandler(async (req, res) => {
   const hashedPassword = await hashPasword(password);
 
   /**
+   * SQL Transaction, creating user and associated user profile
    * Returns an array of 2 json:
    * 1st json: User auth
    * 2nd json: User profile
