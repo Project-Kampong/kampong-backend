@@ -38,9 +38,11 @@ Under `config/config.env`, fill in `PG_USER`, `PG_HOST`, `PG_NAME`, `PG_PORT` wi
 
 ##### Create database tables
 
-1. Connect to your database via `psql` terminal.
-2. Under the `db/schema.sql` file, copy the entire file content.
-3. In the `psql` terminal, run the file contents as a query.
+On the command line in the root directory:
+
+```
+yarn create-tables
+```
 
 ##### Populate database with mock data
 
