@@ -7,7 +7,7 @@ const { protect } = require('../middleware/auth');
 const {
   register,
   login,
-  // logout,
+  logout,
   getMe
   // updateDetails,
   // updatePassword,
@@ -42,7 +42,7 @@ router.post(
   checkInputError,
   login
 );
-// router.get('/logout', protect, logout);
+router.get('/logout', protect, logout);
 router.get('/me', protect, getMe);
 // router.put('/updatedetails', protect, updateDetails);
 // router.put('/updatepassword', protect, updatePassword);

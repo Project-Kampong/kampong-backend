@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
+const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const { checkConn } = require('./config/db');
 const apiRoutes = require('./routes/api-routes');
@@ -14,7 +15,11 @@ const app = express();
 // Check connection to db
 checkConn();
 
+// Express json parser
 app.use(express.json());
+
+// Cookie parser
+app.use(cookieParser());
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
