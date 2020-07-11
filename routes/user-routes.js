@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
 const advancedResults = require('../middleware/advancedResults');
+const { protect, authorise } = require('../middleware/auth');
 const { checkInputError } = require('../middleware/input-validation');
 
 // import controllers here
@@ -12,6 +13,10 @@ const {
   updateUser,
   deleteUser
 } = require('../controllers/users');
+
+// all route to use protect middleware
+router.use(protect);
+router.use(authorise('admin')); // admin authorisation only
 
 // map routes to controller
 router

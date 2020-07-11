@@ -1,18 +1,23 @@
 const { hashPasword } = require('../utils/auth.js');
 const { db } = require('../config/db');
 const asyncHandler = require('../middleware/async');
+const ErrorResponse = require('../utils/errorResponse.js');
 
-// @desc    Get all users
-// @route   GET /api/users
-// @acess   Public
+/**
+ * @desc    Get all users
+ * @route   GET /api/users
+ * @access   Admin
+ */
 exports.getUsers = asyncHandler(async (req, res) => {
   // TODO: Handle hiding of user credential, whilst allowing select queries
   res.status(200).json(res.advancedResults);
 });
 
-// @desc    Get single user
-// @route   GET /api/users/:id
-// @access  Private/Admin
+/**
+ * @desc    Get single user
+ * @route   GET /api/users/:id
+ * @access  Admin
+ */
 exports.getUser = asyncHandler(async (req, res) => {
   const rows = await db.one(
     `SELECT * FROM users WHERE user_id = ${req.params.id}`
@@ -23,17 +28,31 @@ exports.getUser = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Create user
-// @route   POST /api/users
-// @access  Private/Admin
+/**
+ * @desc    Create user and associated user profile
+ * @route   POST /api/users
+ * @access  Admin
+ */
 exports.createUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
   const hashedPassword = await hashPasword(password);
 
-  const createUserQuery = `INSERT INTO users (name, email, password) VALUES ('${name}', '${email}', '${hashedPassword}') RETURNING *`;
-
-  const rows = await db.one(createUserQuery);
+  /**
+   * SQL Transaction, creating user and associated user profile
+   * Returns an array of 2 json:
+   * 1st json: User auth
+   * 2nd json: User profile
+   */
+  const rows = await db.tx(async query => {
+    const createUser = await query.one(
+      `INSERT INTO users (name, email, password) VALUES ('${name}', '${email}', '${hashedPassword}') RETURNING *`
+    );
+    const createProfile = await query.one(
+      `INSERT INTO profiles (user_id) VALUES ('${createUser.user_id}') RETURNING *`
+    );
+    return query.batch([createUser, createProfile]);
+  });
 
   res.status(201).json({
     success: true,
@@ -41,10 +60,22 @@ exports.createUser = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Update single user
-// @route   PUT /api/users/:id
-// @access  Private/Admin
-exports.updateUser = asyncHandler(async (req, res) => {
+/**
+ * @desc    Update single user
+ * @route   PUT /api/users/:id
+ * @access  Admin
+ */
+exports.updateUser = asyncHandler(async (req, res, next) => {
+  // check if user exists
+  const isValidUser = await db.oneOrNone(
+    `SELECT * FROM users WHERE user_id = ${req.params.id}`
+  );
+
+  // return bad request response if invalid user
+  if (!isValidUser) {
+    return next(new ErrorResponse(`User does not exist`, 400));
+  }
+
   const { name, email, password } = req.body;
   let updateUserQuery = `UPDATE users SET `;
   if (name) {
@@ -70,10 +101,22 @@ exports.updateUser = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Delete single user
-// @route   DELETE /api/users/:id
-// @access  Private/Admin
+/**
+ * @desc    Delete single user
+ * @route   DELETE /api/users/:id
+ * @access  Admin
+ */
 exports.deleteUser = asyncHandler(async (req, res) => {
+  // check if user exists
+  const isValidUser = await db.oneOrNone(
+    `SELECT * FROM users WHERE user_id = ${req.params.id}`
+  );
+
+  // return bad request response if invalid user
+  if (!isValidUser) {
+    return next(new ErrorResponse(`User does not exist`, 400));
+  }
+
   const row = await db.one(
     `DELETE FROM users WHERE user_id = ${req.params.id} RETURNING *`
   );

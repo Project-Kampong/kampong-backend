@@ -7,23 +7,39 @@ const { db } = require('../config/db');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
 
-// @desc    Register user
-// @route   POST /api/auth/register
-// @access  Public
+/**
+ * @desc    Register user and create user profile
+ * @route   POST /api/auth/register
+ * @access  Public
+ */
 exports.register = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
   const hashedPassword = await hashPasword(password);
 
-  const createUserQuery = `INSERT INTO users (name, email, password) VALUES ('${name}', '${email}', '${hashedPassword}') RETURNING *`;
+  /**
+   * SQL Transaction, creating user and associated user profile
+   * Returns an array of 2 json:
+   * 1st json: User auth
+   * 2nd json: User profile
+   */
+  const user = await db.tx(async query => {
+    const createUser = await query.one(
+      `INSERT INTO users (name, email, password) VALUES ('${name}', '${email}', '${hashedPassword}') RETURNING *`
+    );
+    const createProfile = await query.one(
+      `INSERT INTO profiles (user_id) VALUES ('${createUser.user_id}') RETURNING *`
+    );
+    return query.batch([createUser, createProfile]);
+  });
 
-  const user = await db.one(createUserQuery);
-
-  sendTokenResponse(user, 200, res);
+  sendTokenResponse(user[0], 200, res);
 });
 
-// @desc    Login user
-// @route   POST /api/auth/login
-// @access  Public
+/**
+ * @desc    Login user
+ * @route   POST /api/auth/login
+ * @access  Public
+ */
 exports.login = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -45,6 +61,22 @@ exports.login = asyncHandler(async (req, res, next) => {
   }
 
   sendTokenResponse(user, 200, res);
+});
+
+/**
+ * @desc    Get current logged in user details
+ * @route   GET /api/auth/me
+ * @access  Private
+ */
+exports.getMe = asyncHandler(async (req, res, next) => {
+  const user = await db.one(
+    `SELECT * FROM users WHERE user_id = '${req.user.user_id}'`
+  );
+
+  res.status(200).json({
+    success: true,
+    data: user
+  });
 });
 
 // Helper method to get token from model, create cookie and send response
