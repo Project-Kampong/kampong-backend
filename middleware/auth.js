@@ -14,8 +14,8 @@ exports.protect = asyncHandler(async (req, res, next) => {
   }
 
   // if token exist in cookie, assign to token variable (comment out for testing purpose)
-  // else if (req.cookies.token) {
-  //     token = req.cookies.token;
+  // else if (req.cookies) {
+  //   token = req.cookies.token;
   // }
 
   // Check token exists
