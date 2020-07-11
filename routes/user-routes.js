@@ -26,7 +26,10 @@ router
     [
       check('name', 'Name is required').trim().not().isEmpty(),
       check('name', 'Name must contain alphabetic characters only').isAlpha(),
-      check('email', 'Please include a valid email').isEmail().normalizeEmail(),
+      check('email', 'Please include a valid email')
+        .trim()
+        .isEmail()
+        .normalizeEmail(),
       check(
         'password',
         'Please enter a password with 6 or more characters'
@@ -60,6 +63,7 @@ router
         .isAlpha(),
       check('email', 'Please include a valid email')
         .optional()
+        .trim()
         .isEmail()
         .normalizeEmail(),
       check('password', 'Please enter a password with 6 or more characters')
