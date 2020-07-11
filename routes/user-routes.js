@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { check } = require('express-validator');
+const { check, oneOf } = require('express-validator');
 const advancedResults = require('../middleware/advancedResults');
 const { protect, authorise } = require('../middleware/auth');
 const { checkInputError } = require('../middleware/input-validation');
@@ -40,7 +40,18 @@ router
   .get(getUser)
   .put(
     [
-      check('name', 'Name is required').optional().not().isEmpty(),
+      oneOf(
+        [
+          check('name', 'Name is required').exists(),
+          check('email', 'Please include a valid email').exists(),
+          check(
+            'password',
+            'Please enter a password with 6 or more characters'
+          ).exists()
+        ],
+        'At least one field must be updated'
+      ),
+      check('name', 'Please include a valid name').optional().not().isEmpty(),
       check('email', 'Please include a valid email').optional().isEmail(),
       check('password', 'Please enter a password with 6 or more characters')
         .optional()
