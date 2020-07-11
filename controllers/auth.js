@@ -97,6 +97,82 @@ exports.getMe = asyncHandler(async (req, res, next) => {
   });
 });
 
+/**
+ * @desc    Update current logged in user details (except password)
+ * @route   PUT /api/auth/updatedetails
+ * @access  Private
+ */
+exports.updateDetails = asyncHandler(async (req, res, next) => {
+  // check if user exists
+  const user = await db.oneOrNone(
+    `SELECT * FROM users WHERE user_id = '${req.user.user_id}'`
+  );
+
+  // if user does not exist, return 401 unauthorised response
+  if (!user) {
+    return next(new ErrorResponse(`Not authorised to access this route`, 401));
+  }
+
+  const { name, email } = req.body;
+
+  let updateUserQuery = `UPDATE users SET `;
+  if (name) {
+    updateUserQuery += `name = '${name}', `;
+  }
+  if (email) {
+    updateUserQuery += `email = '${email}', `;
+  }
+
+  // remove last comma
+  updateUserQuery = updateUserQuery.replace(/,\s*$/, ' ');
+  updateUserQuery += `WHERE user_id = ${req.user.user_id} RETURNING *`;
+
+  const rows = await db.one(updateUserQuery);
+
+  res.status(200).json({
+    success: true,
+    data: rows
+  });
+});
+
+/**
+ * @desc    Update current logged in user password
+ * @route   PUT /api/auth/updatepassword
+ * @access  Private
+ */
+exports.updatePassword = asyncHandler(async (req, res, next) => {
+  // check if user exists
+  const user = await db.oneOrNone(
+    `SELECT * FROM users WHERE user_id = '${req.user.user_id}'`
+  );
+
+  // if user does not exist, return 401 unauthorised response
+  if (!user) {
+    return next(new ErrorResponse(`Not authorised to access this route`, 401));
+  }
+  const { oldPassword, newPassword } = req.body;
+
+  // validate old password
+  const isMatch = await checkPassword(oldPassword, user.password);
+
+  // return unauthorised response if password does not match
+  if (!isMatch) {
+    return next(new ErrorResponse('Invalid credentials', 401));
+  }
+
+  // hash new password
+  const hashedPassword = await hashPasword(newPassword);
+
+  let updateUserQuery = `UPDATE users SET password = '${hashedPassword}' WHERE user_id = ${req.user.user_id} RETURNING *`;
+
+  const rows = await db.one(updateUserQuery);
+
+  res.status(200).json({
+    success: true,
+    data: rows
+  });
+});
+
 // Helper method to get token from model, create cookie and send response
 const sendTokenResponse = (user, statusCode, res) => {
   // Create token

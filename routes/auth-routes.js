@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { check } = require('express-validator');
+const { check, oneOf } = require('express-validator');
 const { protect } = require('../middleware/auth');
 
 // import controllers here
@@ -8,15 +8,18 @@ const {
   register,
   login,
   logout,
-  getMe
-  // updateDetails,
-  // updatePassword,
+  getMe,
+  updateDetails,
+  updatePassword
   // forgotPassword,
   // resetPassword
 } = require('../controllers/auth');
 const { checkInputError } = require('../middleware/input-validation');
 
 // map routes to controller
+router.get('/logout', protect, logout);
+router.get('/me', protect, getMe);
+
 router.post(
   '/register',
   [
@@ -30,6 +33,7 @@ router.post(
   checkInputError,
   register
 );
+
 router.post(
   '/login',
   [
@@ -42,10 +46,39 @@ router.post(
   checkInputError,
   login
 );
-router.get('/logout', protect, logout);
-router.get('/me', protect, getMe);
-// router.put('/updatedetails', protect, updateDetails);
-// router.put('/updatepassword', protect, updatePassword);
+
+router.put(
+  '/updatedetails',
+  protect,
+  [
+    oneOf(
+      [
+        check('name', 'Name is required').exists(),
+        check('email', 'Please include a valid email').exists()
+      ],
+      'At least one field must be updated'
+    ),
+    check('name', 'Please include a valid name').optional().not().isEmpty(),
+    check('email', 'Please include a valid email').optional().isEmail()
+  ],
+  checkInputError,
+  updateDetails
+);
+
+router.put(
+  '/updatepassword',
+  protect,
+  [
+    check('oldPassword', 'Please enter your old password').exists(),
+    check(
+      'newPassword',
+      'Please enter a password with 6 or more characters'
+    ).isLength({ min: 6 })
+  ],
+  checkInputError,
+  updatePassword
+);
+
 // router.post('/forgotpassword', forgotPassword);
 // router.put('/resetpassword/:resettoken', resetPassword);
 
