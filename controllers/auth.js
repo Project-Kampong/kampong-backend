@@ -1,7 +1,7 @@
 const {
   checkPassword,
   getSignedJwtToken,
-  hashPasword
+  hashPassword
 } = require('../utils/auth.js');
 const { db } = require('../config/db');
 const asyncHandler = require('../middleware/async');
@@ -14,7 +14,7 @@ const ErrorResponse = require('../utils/errorResponse');
  */
 exports.register = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
-  const hashedPassword = await hashPasword(password);
+  const hashedPassword = await hashPassword(password);
 
   const user = await db.one(
     `INSERT INTO users (name, email, password) VALUES ('${name}', '${email}', '${hashedPassword}') RETURNING *`
@@ -146,7 +146,7 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
   }
 
   // hash new password
-  const hashedPassword = await hashPasword(newPassword);
+  const hashedPassword = await hashPassword(newPassword);
 
   let updateUserQuery = `UPDATE users SET password = '${hashedPassword}' WHERE user_id = ${req.user.user_id} RETURNING *`;
 
