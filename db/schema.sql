@@ -18,6 +18,8 @@ DROP TABLE IF EXISTS Participants CASCADE;
 DROP TABLE IF EXISTS Subscriptions CASCADE;
 DROP TABLE IF EXISTS Milestones CASCADE;
 
+DROP FUNCTION IF EXISTS create_user_profile() CASCADE;
+DROP TRIGGER IF EXISTS create_profile_trigger ON users CASCADE;
 
 CREATE TABLE Users (
     user_id SERIAL,
@@ -62,7 +64,7 @@ CREATE TABLE Profiles (
     is_verified BOOLEAN DEFAULT FALSE,
     
     PRIMARY KEY (user_id),
-    FOREIGN KEY (user_id) REFERENCES Users
+    FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE
 );
 
 CREATE TABLE Skills (
@@ -225,6 +227,21 @@ CREATE TABLE Milestones (
     FOREIGN KEY (listing_id) REFERENCES Listings
 );
 
+-- Create user profile when user is created
+CREATE OR REPLACE FUNCTION create_user_profile()
+RETURNS TRIGGER
+AS $$
+BEGIN
+    INSERT INTO Profiles (user_id)
+    VALUES (NEW.user_id);
+    RAISE NOTICE 'User profile created for user id: %', NEW.user_id;
+	RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
 
-
-
+CREATE CONSTRAINT TRIGGER create_profile_trigger
+	AFTER INSERT
+	ON users
+	DEFERRABLE INITIALLY DEFERRED
+	FOR EACH ROW
+	EXECUTE PROCEDURE create_user_profile();

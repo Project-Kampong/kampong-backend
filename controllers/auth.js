@@ -8,7 +8,7 @@ const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
 
 /**
- * @desc    Register user and create user profile
+ * @desc    Register user (user profile will be created, enforced by sql triggers)
  * @route   POST /api/auth/register
  * @access  Public
  */
@@ -16,23 +16,11 @@ exports.register = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
   const hashedPassword = await hashPasword(password);
 
-  /**
-   * SQL Transaction, creating user and associated user profile
-   * Returns an array of 2 json:
-   * 1st json: User auth
-   * 2nd json: User profile
-   */
-  const user = await db.tx(async query => {
-    const createUser = await query.one(
-      `INSERT INTO users (name, email, password) VALUES ('${name}', '${email}', '${hashedPassword}') RETURNING *`
-    );
-    const createProfile = await query.one(
-      `INSERT INTO profiles (user_id) VALUES ('${createUser.user_id}') RETURNING *`
-    );
-    return query.batch([createUser, createProfile]);
-  });
+  const user = await db.one(
+    `INSERT INTO users (name, email, password) VALUES ('${name}', '${email}', '${hashedPassword}') RETURNING *`
+  );
 
-  sendTokenResponse(user[0], 200, res);
+  sendTokenResponse(user, 200, res);
 });
 
 /**

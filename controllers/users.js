@@ -28,7 +28,7 @@ exports.getUser = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Create user and associated user profile
+ * @desc    Create user (user profile will be created, enforced by sql triggers)
  * @route   POST /api/users
  * @access  Admin
  */
@@ -37,21 +37,9 @@ exports.createUser = asyncHandler(async (req, res) => {
 
   const hashedPassword = await hashPasword(password);
 
-  /**
-   * SQL Transaction, creating user and associated user profile
-   * Returns an array of 2 json:
-   * 1st json: User auth
-   * 2nd json: User profile
-   */
-  const rows = await db.tx(async query => {
-    const createUser = await query.one(
-      `INSERT INTO users (name, email, password) VALUES ('${name}', '${email}', '${hashedPassword}') RETURNING *`
-    );
-    const createProfile = await query.one(
-      `INSERT INTO profiles (user_id) VALUES ('${createUser.user_id}') RETURNING *`
-    );
-    return query.batch([createUser, createProfile]);
-  });
+  const rows = await db.one(
+    `INSERT INTO users (name, email, password) VALUES ('${name}', '${email}', '${hashedPassword}') RETURNING *`
+  );
 
   res.status(201).json({
     success: true,
@@ -101,7 +89,7 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Delete single user
+ * @desc    Delete single user (user profile will be deleted, enforced by sql triggers)
  * @route   DELETE /api/users/:id
  * @access  Admin
  */
@@ -116,15 +104,9 @@ exports.deleteUser = asyncHandler(async (req, res) => {
     return next(new ErrorResponse(`User does not exist`, 400));
   }
 
-  const rows = await db.tx(async query => {
-    const deleteUser = await query.one(
-      `DELETE FROM users WHERE user_id = ${req.params.id} RETURNING *`
-    );
-    const deleteProfile = await query.one(
-      `DELETE FROM profiles WHERE user_id = ${req.params.id} RETURNING *`
-    );
-    return query.batch([deleteUser, deleteProfile]);
-  });
+  const rows = await db.one(
+    `DELETE FROM users WHERE user_id = ${req.params.id} RETURNING *`
+  );
 
   res.status(200).json({
     success: true,
