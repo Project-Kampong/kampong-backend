@@ -1,5 +1,6 @@
 const { db } = require('../config/db');
 const asyncHandler = require('../middleware/async');
+const { cleanseData } = require('../utils/dbHelper');
 const ErrorResponse = require('../utils/errorResponse.js');
 
 /**
@@ -72,8 +73,8 @@ exports.createListing = asyncHandler(async (req, res) => {
   // Add logged in user as creator of listing
   data.created_by = req.user.user_id;
 
-  // remove undefined items in json
-  Object.keys(data).forEach(key => data[key] === undefined && delete data[key]);
+  // remove undefined values in json object
+  cleanseData(data);
 
   const rows = await db.one(
     'INSERT INTO listings (${this:name}) VALUES (${this:csv}) RETURNING *',
