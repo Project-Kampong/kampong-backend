@@ -9,7 +9,7 @@ const schema = generateSqlQueryFile('../db/schema.sql');
 
 const createTables = async () => {
   try {
-    await db.manyOrNone(schema);
+    await db.tx(async query => await query.manyOrNone(schema));
     console.log(`Data Imported...`.green.inverse);
     process.exit();
   } catch (err) {
