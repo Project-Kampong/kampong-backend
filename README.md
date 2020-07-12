@@ -46,7 +46,13 @@ yarn create-tables
 
 ##### Populate database with mock data
 
-Coming soon.
+On the command line in the root directory:
+
+```
+yarn import-data
+```
+
+If data import fails, run the create database tables command and try again.
 
 ### Running the app
 
