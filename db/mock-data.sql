@@ -1,4 +1,5 @@
 insert into Users (name, email, password) values ('Hedvig Ahlin', 'hahlin0@sohu.com', $1);
+insert into Admins (user_id) values ('1');
 insert into Users (name, email, password) values ('Kristi Rowson', 'krowson1@illinois.edu', $1);
 insert into Users (name, email, password) values ('Orbadiah Fouracre', 'ofouracre2@google.ru', $1);
 insert into Users (name, email, password) values ('Orel Robbert', 'orobbert3@reverbnation.com', $1);
