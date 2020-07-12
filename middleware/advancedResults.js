@@ -45,7 +45,7 @@ const advancedResults = (model, populate) =>
 
     let filterQuery = ``;
 
-    if (reqQuery) {
+    if (Object.keys(reqQuery).length !== 0) {
       filterQuery += `WHERE `;
       for (let [key, value] of Object.entries(reqQuery)) {
         if (!(value.startsWith("'") && value.endsWith("'"))) {
