@@ -93,17 +93,22 @@ exports.createListing = asyncHandler(async (req, res) => {
  * @access  Private/Admin
  */
 exports.updateListing = asyncHandler(async (req, res, next) => {
-  // TODO: check if listings belong to user, otherwise, admin
-
   // check if listing exists
-  const isValidListing = await db.oneOrNone(
+  const listing = await db.oneOrNone(
     'SELECT * FROM listings WHERE listing_id = $1',
     req.params.id
   );
 
   // return bad request response if invalid listing
-  if (!isValidListing) {
+  if (!listing) {
     return next(new ErrorResponse(`Listing does not exist`, 400));
+  }
+
+  // Unauthorised if neither admin nor listing owner
+  if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
+    return next(
+      new ErrorResponse(`User not authorised to update this listing`, 403)
+    );
   }
 
   const {
@@ -202,16 +207,22 @@ exports.verifyListing = asyncHandler(async (req, res, next) => {
  * @access  Private/Admin
  */
 exports.deleteListing = asyncHandler(async (req, res, next) => {
-  // TODO: check if listings belong to user, otherwise, admin
   // check if listing exists
-  const isValidListing = await db.oneOrNone(
+  const listing = await db.oneOrNone(
     'SELECT * FROM listings WHERE listing_id = $1',
     req.params.id
   );
 
   // return bad request response if invalid listing
-  if (!isValidListing) {
+  if (!listing) {
     return next(new ErrorResponse(`Listing does not exist`, 400));
+  }
+
+  // Unauthorised if neither admin nor listing owner
+  if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
+    return next(
+      new ErrorResponse(`User not authorised to delete this listing`, 403)
+    );
   }
 
   const rows = await db.one(

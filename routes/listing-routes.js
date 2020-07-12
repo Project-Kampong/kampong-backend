@@ -26,9 +26,11 @@ router
 router
   .route('/:id')
   .get(getListing)
-  .put(protect, updateListing)
+  .put(protect, authorise('user', 'admin'), updateListing)
   .delete(protect, deleteListing);
 
-router.route('/:id/verify').put(protect, authorise('admin'), verifyListing);
+router
+  .route('/:id/verify')
+  .put(protect, authorise('user', 'admin'), verifyListing);
 
 module.exports = router;
