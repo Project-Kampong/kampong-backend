@@ -21,9 +21,9 @@ DROP TABLE IF EXISTS Milestones CASCADE;
 
 CREATE TABLE Users (
     user_id SERIAL,
-    name VARCHAR(64) NOT NULL,
+    name VARCHAR NOT NULL,
     email VARCHAR(320) UNIQUE NOT NULL,
-    password VARCHAR(256) NOT NULL,
+    password VARCHAR NOT NULL,
     user_role INTEGER NOT NULL DEFAULT 1,
     created_on TIMESTAMP NOT NULL DEFAULT NOW(),
 
@@ -49,16 +49,16 @@ CREATE TABLE Admins (
 
 CREATE TABLE Profiles (
     user_id INTEGER,
-    profile_picture VARCHAR(256),
+    profile_picture VARCHAR,
     about TEXT,
-    gender VARCHAR(4) CHECK (gender IN ('m', 'f', 'o', 'u')) DEFAULT 'u', /* m = male, f = female, o = others, u = undisclosed */
+    gender VARCHAR CHECK (gender IN ('m', 'f', 'o', 'u')) DEFAULT 'u', /* m = male, f = female, o = others, u = undisclosed */
     age INTEGER,
     interest TEXT,
-    phone VARCHAR(32),
-    facebook_link VARCHAR(256),
-    twitter_link VARCHAR(256),
-    instagram_link VARCHAR(256),
-    linkedin_link VARCHAR(256),
+    phone VARCHAR,
+    facebook_link VARCHAR,
+    twitter_link VARCHAR,
+    instagram_link VARCHAR,
+    linkedin_link VARCHAR,
     is_verified BOOLEAN DEFAULT FALSE,
     
     PRIMARY KEY (user_id),
@@ -67,7 +67,7 @@ CREATE TABLE Profiles (
 
 CREATE TABLE Skills (
     skill_id SERIAL,
-    skill VARCHAR(256),
+    skill VARCHAR,
 
     PRIMARY KEY (skill_id)
 );
@@ -83,11 +83,11 @@ CREATE TABLE ProfileSkills (
 
 CREATE TABLE Organisations (
     organisation_id SERIAL,
-    name VARCHAR(256) NOT NULL,
-    type VARCHAR(256) NOT NULL,
+    name VARCHAR NOT NULL,
+    type VARCHAR NOT NULL,
     about TEXT,
-    website_url VARCHAR(256),
-    handphone VARCHAR(32),
+    website_url VARCHAR,
+    handphone VARCHAR,
     email VARCHAR(320),
     is_verified BOOLEAN DEFAULT FALSE,
     created_on TIMESTAMP NOT NULL DEFAULT NOW(),
@@ -110,17 +110,17 @@ CREATE TABLE Listings (
     listing_id SERIAL,
     organisation_id INTEGER,
     created_by INTEGER NOT NULL,
-    title VARCHAR(256) NOT NULL,
-    category VARCHAR(256) NOT NULL,
+    title VARCHAR NOT NULL,
+    category VARCHAR NOT NULL,
     about TEXT,
-    tagline VARCHAR(256),
+    tagline VARCHAR,
     mission TEXT,
-    listing_url VARCHAR(256),
-    pic1 VARCHAR(256),
-    pic2 VARCHAR(256),
-    pic3 VARCHAR(256),
-    pic4 VARCHAR(256),
-    pic5 VARCHAR(256),
+    listing_url VARCHAR,
+    pic1 VARCHAR,
+    pic2 VARCHAR,
+    pic3 VARCHAR,
+    pic4 VARCHAR,
+    pic5 VARCHAR,
     is_published BOOLEAN DEFAULT FALSE,
     is_verified BOOLEAN DEFAULT FALSE,
     start_date TIMESTAMP NOT NULL DEFAULT NOW(),
@@ -142,7 +142,7 @@ CREATE TABLE Features (
 
 CREATE TABLE Tags (
     listing_id INTEGER,
-    description VARCHAR(256) NOT NULL,
+    description VARCHAR NOT NULL,
 
     PRIMARY KEY (listing_id, description),
     FOREIGN KEY (listing_id) REFERENCES Listings
@@ -161,7 +161,7 @@ CREATE TABLE ListingSkills (
 CREATE TABLE Jobs (
     job_id INTEGER,
     listing_id INTEGER,
-    job_title VARCHAR(256) NOT NULL,
+    job_title VARCHAR NOT NULL,
     job_description TEXT NOT NULL,
 
     PRIMARY KEY (listing_id, job_id),
