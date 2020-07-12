@@ -1,4 +1,4 @@
-const { db } = require('../config/db');
+const { db, parseSqlUpdateStmt } = require('../config/db');
 const asyncHandler = require('../middleware/async');
 const { cleanseData } = require('../utils/dbHelper');
 const ErrorResponse = require('../utils/errorResponse.js');
@@ -94,72 +94,67 @@ exports.createListing = asyncHandler(async (req, res) => {
  */
 exports.updateListing = asyncHandler(async (req, res, next) => {
   // check if listing exists
-  //   const isValidListing = await db.oneOrNone(
-  //     'SELECT * FROM listings WHERE listing_id = $1',
-  //     req.params.id
-  //   );
+  const isValidListing = await db.oneOrNone(
+    'SELECT * FROM listings WHERE listing_id = $1',
+    req.params.id
+  );
 
-  //   // return bad request response if invalid listing
-  //   if (!isValidListing) {
-  //     return next(new ErrorResponse(`Listing does not exist`, 400));
-  //   }
+  // return bad request response if invalid listing
+  if (!isValidListing) {
+    return next(new ErrorResponse(`Listing does not exist`, 400));
+  }
 
-  //   const {
-  //     organisation_id,
-  //     title,
-  //     category,
-  //     about,
-  //     tagline,
-  //     mission,
-  //     listing_url,
-  //     pic1,
-  //     pic2,
-  //     pic3,
-  //     pic4,
-  //     pic5,
-  //     is_published,
-  //     start_date,
-  //     end_date
-  //   } = req.body;
+  const {
+    organisation_id,
+    title,
+    category,
+    about,
+    tagline,
+    mission,
+    listing_url,
+    pic1,
+    pic2,
+    pic3,
+    pic4,
+    pic5,
+    is_published,
+    start_date,
+    end_date
+  } = req.body;
 
-  //   const data = {
-  //     organisation_id,
-  //     title,
-  //     category,
-  //     about,
-  //     tagline,
-  //     mission,
-  //     listing_url,
-  //     pic1,
-  //     pic2,
-  //     pic3,
-  //     pic4,
-  //     pic5,
-  //     is_published,
-  //     start_date,
-  //     end_date
-  //   };
+  const data = {
+    organisation_id,
+    title,
+    category,
+    about,
+    tagline,
+    mission,
+    listing_url,
+    pic1,
+    pic2,
+    pic3,
+    pic4,
+    pic5,
+    is_published,
+    start_date,
+    end_date
+  };
 
-  //   // remove undefined items in json
-  //   Object.keys(data).forEach(key => data[key] === undefined && delete data[key]);
+  // remove undefined items in json
+  cleanseData(data);
 
-  //   let updateListingQuery = `UPDATE listings SET `;
-  //   if (name) {
-  //     updateListingQuery += `name = '${name}', `;
-  //   }
-  //   if (email) {
-  //     updateListingQuery += `email = '${email}', `;
-  //   }
+  const updateListingQuery = parseSqlUpdateStmt(
+    data,
+    'listings',
+    'WHERE listing_id = $1 RETURNING *',
+    [req.params.id]
+  );
 
-  //   // remove last comma
-  //   updateListingQuery = updateListingQuery.replace(/,\s*$/, ' ');
-  //   updateListingQuery += `WHERE listing_id = ${req.params.id} RETURNING *`;
-
-  //   const rows = await db.one(updateListingQuery);
+  const rows = await db.one(updateListingQuery);
 
   res.status(200).json({
-    success: true
-    // data: rows
+    success: true,
+    data: rows
   });
 });
 
