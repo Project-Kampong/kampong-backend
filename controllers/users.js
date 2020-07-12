@@ -19,7 +19,8 @@ exports.getUsers = asyncHandler(async (req, res) => {
  */
 exports.getUser = asyncHandler(async (req, res) => {
   const rows = await db.one(
-    `SELECT * FROM users WHERE user_id = ${req.params.id}`
+    'SELECT * FROM users WHERE user_id = $1',
+    req.params.id
   );
   res.status(200).json({
     success: true,

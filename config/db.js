@@ -13,7 +13,8 @@ const dbConfig = {
   error(err, e) {
     // console.error(JSON.stringify(e, null, 2).red);
     console.error(JSON.stringify(err, null, 2).red);
-  }
+  },
+  capSQL: true
 };
 const pgp = require('pg-promise')(dbConfig);
 
@@ -38,4 +39,22 @@ const generateSqlQueryFile = file => {
   return new pgp.QueryFile(fullPath, { minify: true });
 };
 
-module.exports = { checkConn, db, generateSqlQueryFile };
+/**
+ * Helper for creating String SQL update statement
+ * Sample: parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING *', [req.params.id]);
+ * @param {Object} jsonData
+ * @param {String} tableString SQL table to be queried
+ * @param {String} conditionString SQL string to be appended to update statement (usually WHERE clause and 'RETURNING *')
+ * @param {String or Array} conditionDataArray data to be formatted into the WHERE clause
+ */
+const parseSqlUpdateStmt = (
+  jsonData,
+  tableString,
+  conditionString,
+  conditionDataArray
+) => {
+  const condition = pgp.as.format(' ' + conditionString, conditionDataArray);
+  return pgp.helpers.update(jsonData, null, tableString) + condition;
+};
+
+module.exports = { checkConn, db, generateSqlQueryFile, parseSqlUpdateStmt };
