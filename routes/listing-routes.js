@@ -13,6 +13,7 @@ const {
   getListing,
   createListing,
   updateListing,
+  verifyListing,
   deleteListing
 } = require('../controllers/listings');
 
@@ -22,7 +23,12 @@ router
   .get(advancedResults('listings'), getListings)
   .post(protect, createListing);
 
-router.route('/:id').get(getListing).put(protect, updateListing);
-//   .delete(deleteListing);
+router
+  .route('/:id')
+  .get(getListing)
+  .put(protect, updateListing)
+  .delete(protect, deleteListing);
+
+router.route('/:id/verify').put(protect, authorise('admin'), verifyListing);
 
 module.exports = router;

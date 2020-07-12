@@ -93,6 +93,8 @@ exports.createListing = asyncHandler(async (req, res) => {
  * @access  Private/Admin
  */
 exports.updateListing = asyncHandler(async (req, res, next) => {
+  // TODO: check if listings belong to user, otherwise, admin
+
   // check if listing exists
   const isValidListing = await db.oneOrNone(
     'SELECT * FROM listings WHERE listing_id = $1',
@@ -160,13 +162,37 @@ exports.updateListing = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Verify single listing
- * @route   PUT /api/listings/:id
+ * @route   PUT /api/listings/:id/verify
  * @access  Admin
  */
 exports.verifyListing = asyncHandler(async (req, res, next) => {
+  // check if listing exists
+  const isValidListing = await db.oneOrNone(
+    'SELECT * FROM listings WHERE listing_id = $1',
+    req.params.id
+  );
+
+  // return bad request response if invalid listing
+  if (!isValidListing) {
+    return next(new ErrorResponse(`Listing does not exist`, 400));
+  }
+
+  const { is_verified } = req.body;
+
+  const data = { is_verified };
+
+  const verifyListingQuery = parseSqlUpdateStmt(
+    data,
+    'listings',
+    'WHERE listing_id = $1 RETURNING *',
+    [req.params.id]
+  );
+
+  const rows = await db.one(verifyListingQuery);
+
   res.status(200).json({
-    success: true
-    // data: rows
+    success: true,
+    data: rows
   });
 });
 
@@ -175,23 +201,26 @@ exports.verifyListing = asyncHandler(async (req, res, next) => {
  * @route   DELETE /api/listings/:id
  * @access  Private/Admin
  */
-exports.deleteListing = asyncHandler(async (req, res) => {
+exports.deleteListing = asyncHandler(async (req, res, next) => {
+  // TODO: check if listings belong to user, otherwise, admin
   // check if listing exists
-  //   const isValidListing = await db.oneOrNone(
-  //     `SELECT * FROM listings WHERE listing_id = ${req.params.id}`
-  //   );
+  const isValidListing = await db.oneOrNone(
+    'SELECT * FROM listings WHERE listing_id = $1',
+    req.params.id
+  );
 
-  //   // return bad request response if invalid listing
-  //   if (!isValidListing) {
-  //     return next(new ErrorResponse(`Listing does not exist`, 400));
-  //   }
+  // return bad request response if invalid listing
+  if (!isValidListing) {
+    return next(new ErrorResponse(`Listing does not exist`, 400));
+  }
 
-  //   const rows = await db.one(
-  //     `DELETE FROM listings WHERE listing_id = ${req.params.id} RETURNING *`
-  //   );
+  const rows = await db.one(
+    'DELETE FROM listings WHERE listing_id = $1 RETURNING *',
+    req.params.id
+  );
 
   res.status(200).json({
-    success: true
-    // data: rows
+    success: true,
+    data: rows
   });
 });
