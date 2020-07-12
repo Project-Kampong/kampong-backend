@@ -1,4 +1,4 @@
-const { hashPasword } = require('../utils/auth.js');
+const { hashPassword } = require('../utils/auth.js');
 const { db } = require('../config/db');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse.js');
@@ -35,7 +35,7 @@ exports.getUser = asyncHandler(async (req, res) => {
 exports.createUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
-  const hashedPassword = await hashPasword(password);
+  const hashedPassword = await hashPassword(password);
 
   const rows = await db.one(
     `INSERT INTO users (name, email, password) VALUES ('${name}', '${email}', '${hashedPassword}') RETURNING *`
@@ -73,7 +73,7 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
   }
 
   if (password) {
-    const hashedPassword = await hashPasword(password);
+    const hashedPassword = await hashPassword(password);
     updateUserQuery += `password = '${hashedPassword}', `;
   }
   // remove last comma

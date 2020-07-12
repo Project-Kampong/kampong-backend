@@ -1,5 +1,8 @@
 const colors = require('colors');
 const { checkConn, db, generateSqlQueryFile } = require('../config/db');
+const { hashPassword } = require('./auth');
+
+const DEFAULT_PASSWORD = '123456';
 
 // Check connection to db
 checkConn();
@@ -21,7 +24,8 @@ const createTables = async () => {
 
 const importData = async () => {
   try {
-    await db.tx(async query => await query.manyOrNone(data));
+    const hashedPassword = await hashPassword(DEFAULT_PASSWORD);
+    await db.tx(async query => await query.manyOrNone(data, [hashedPassword]));
     console.log(`Data Imported...`.green.inverse);
     process.exit();
   } catch (err) {
