@@ -239,9 +239,10 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+/* Set to immediate to allow transactions with user creation and update profile (eg. seeder) */
 CREATE CONSTRAINT TRIGGER create_profile_trigger
 	AFTER INSERT
 	ON users
-	DEFERRABLE INITIALLY DEFERRED
+	DEFERRABLE INITIALLY IMMEDIATE
 	FOR EACH ROW
 	EXECUTE PROCEDURE create_user_profile();
