@@ -3,9 +3,10 @@ const {
   getSignedJwtToken,
   hashPassword
 } = require('../utils/auth.js');
-const { db } = require('../config/db');
+const { db, parseSqlUpdateStmt } = require('../config/db');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
+const { cleanseData } = require('../utils/dbHelper.js');
 
 /**
  * @desc    Register user and create user profile
@@ -113,7 +114,8 @@ exports.getMe = asyncHandler(async (req, res, next) => {
 exports.updateDetails = asyncHandler(async (req, res, next) => {
   // check if user exists
   const user = await db.oneOrNone(
-    `SELECT * FROM users WHERE user_id = '${req.user.user_id}'`
+    'SELECT * FROM users WHERE user_id = $1',
+    req.user.user_id
   );
 
   // if user does not exist, return 401 unauthorised response
@@ -123,17 +125,19 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
 
   const { name, email } = req.body;
 
-  let updateUserQuery = `UPDATE users SET `;
-  if (name) {
-    updateUserQuery += `name = '${name}', `;
-  }
-  if (email) {
-    updateUserQuery += `email = '${email}', `;
-  }
+  const data = {
+    name,
+    email
+  };
 
-  // remove last comma
-  updateUserQuery = updateUserQuery.replace(/,\s*$/, ' ');
-  updateUserQuery += `WHERE user_id = ${req.user.user_id} RETURNING *`;
+  cleanseData(data);
+
+  const updateUserQuery = parseSqlUpdateStmt(
+    data,
+    'users',
+    'WHERE user_id = $1 RETURNING *',
+    [req.user.user_id]
+  );
 
   const rows = await db.one(updateUserQuery);
 
@@ -148,7 +152,8 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
 exports.updatePassword = asyncHandler(async (req, res, next) => {
   // check if user exists
   const user = await db.oneOrNone(
-    `SELECT * FROM users WHERE user_id = '${req.user.user_id}'`
+    'SELECT * FROM users WHERE user_id = $1',
+    req.user.user_id
   );
 
   // if user does not exist, return 401 unauthorised response
@@ -165,12 +170,18 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse('Invalid credentials', 401));
   }
 
-  // hash new password
-  const hashedPassword = await hashPassword(newPassword);
+  const data = {
+    password: await hashPassword(newPassword) // hash new password
+  };
 
-  let updateUserQuery = `UPDATE users SET password = '${hashedPassword}' WHERE user_id = ${req.user.user_id} RETURNING *`;
+  const updatePasswordQuery = parseSqlUpdateStmt(
+    data,
+    'users',
+    'WHERE user_id = $1 RETURNING *',
+    [req.user.user_id]
+  );
 
-  const rows = await db.one(updateUserQuery);
+  const rows = await db.one(updatePasswordQuery);
 
   sendTokenResponse(rows, 200, res);
 });
