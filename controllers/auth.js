@@ -14,7 +14,11 @@ const ErrorResponse = require('../utils/errorResponse');
  */
 exports.register = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
-  const hashedPassword = await hashPassword(password);
+  const data = {
+    name,
+    email,
+    password: await hashPassword(password)
+  };
 
   /**
    * SQL Transaction, creating user and associated user profile
@@ -24,10 +28,12 @@ exports.register = asyncHandler(async (req, res) => {
    */
   const user = await db.tx(async query => {
     const createUser = await query.one(
-      `INSERT INTO users (name, email, password) VALUES ('${name}', '${email}', '${hashedPassword}') RETURNING *`
+      'INSERT INTO users (${this:name}) VALUES (${this:csv}) RETURNING *',
+      data
     );
     const createProfile = await query.one(
-      `INSERT INTO profiles (user_id) VALUES ('${createUser.user_id}') RETURNING *`
+      'INSERT INTO profiles (user_id) VALUES ($1) RETURNING *',
+      createUser.user_id
     );
     return query.batch([createUser, createProfile]);
   });
@@ -44,7 +50,8 @@ exports.login = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
   const user = await db.oneOrNone(
-    `SELECT * FROM users WHERE email = '${email}'`
+    'SELECT * FROM users WHERE email = $1',
+    email
   );
 
   // Throw exception if user does not exist
@@ -88,7 +95,8 @@ exports.logout = asyncHandler(async (req, res, next) => {
  */
 exports.getMe = asyncHandler(async (req, res, next) => {
   const user = await db.one(
-    `SELECT * FROM users WHERE user_id = '${req.user.user_id}'`
+    'SELECT * FROM users WHERE user_id = $1',
+    req.user.user_id
   );
 
   res.status(200).json({
