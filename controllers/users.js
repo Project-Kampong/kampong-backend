@@ -1,7 +1,8 @@
 const { hashPassword } = require('../utils/auth.js');
-const { db } = require('../config/db');
+const { db, parseSqlUpdateStmt } = require('../config/db');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse.js');
+const { cleanseData } = require('../utils/dbHelper.js');
 
 /**
  * @desc    Get all users
@@ -36,7 +37,11 @@ exports.getUser = asyncHandler(async (req, res) => {
 exports.createUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
-  const hashedPassword = await hashPassword(password);
+  const data = {
+    name,
+    email,
+    password: await hashPassword(password)
+  };
 
   /**
    * SQL Transaction, creating user and associated user profile
@@ -46,10 +51,12 @@ exports.createUser = asyncHandler(async (req, res) => {
    */
   const rows = await db.tx(async query => {
     const createUser = await query.one(
-      `INSERT INTO users (name, email, password) VALUES ('${name}', '${email}', '${hashedPassword}') RETURNING *`
+      'INSERT INTO users (${this:name}) VALUES (${this:csv}) RETURNING *',
+      data
     );
     const createProfile = await query.one(
-      `INSERT INTO profiles (user_id) VALUES ('${createUser.user_id}') RETURNING *`
+      'INSERT INTO profiles (user_id) VALUES ($1) RETURNING *',
+      createUser.user_id
     );
     return query.batch([createUser, createProfile]);
   });
@@ -68,7 +75,8 @@ exports.createUser = asyncHandler(async (req, res) => {
 exports.updateUser = asyncHandler(async (req, res, next) => {
   // check if user exists
   const isValidUser = await db.oneOrNone(
-    `SELECT * FROM users WHERE user_id = ${req.params.id}`
+    'SELECT * FROM users WHERE user_id = $1',
+    req.params.id
   );
 
   // return bad request response if invalid user
@@ -77,21 +85,26 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
   }
 
   const { name, email, password } = req.body;
-  let updateUserQuery = `UPDATE users SET `;
-  if (name) {
-    updateUserQuery += `name = '${name}', `;
-  }
-  if (email) {
-    updateUserQuery += `email = '${email}', `;
+
+  const data = {
+    name,
+    email,
+    password
+  };
+
+  cleanseData(data);
+
+  if (data.password) {
+    const hashedPassword = await hashPassword(data.password);
+    data.password = hashedPassword;
   }
 
-  if (password) {
-    const hashedPassword = await hashPassword(password);
-    updateUserQuery += `password = '${hashedPassword}', `;
-  }
-  // remove last comma
-  updateUserQuery = updateUserQuery.replace(/,\s*$/, ' ');
-  updateUserQuery += `WHERE user_id = ${req.params.id} RETURNING *`;
+  const updateUserQuery = parseSqlUpdateStmt(
+    data,
+    'users',
+    'WHERE user_id = $1 RETURNING *',
+    [req.params.id]
+  );
 
   const rows = await db.one(updateUserQuery);
 
