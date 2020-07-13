@@ -7,7 +7,7 @@ const { checkInputError } = require('../middleware/input-validation');
 const { ALPHA_WHITESPACE_REGEX } = require('../utils/regex');
 const {
   INVALID_EMAIL_MSG,
-  INVALID_NAME_MSG,
+  INVALID_ALPHA_SPACE_MSG,
   INVALID_PASSWORD_MSG,
   NO_FIELD_UPDATED_MSG
 } = require('../utils/inputExceptionMsg');
@@ -31,10 +31,9 @@ router
   .get(advancedResults('users'), getUsers)
   .post(
     [
-      check('name', INVALID_NAME_MSG)
+      check('name', INVALID_ALPHA_SPACE_MSG('name'))
         .trim()
-        .not()
-        .isEmpty()
+        .notEmpty()
         .matches(ALPHA_WHITESPACE_REGEX),
       check('email', INVALID_EMAIL_MSG).trim().isEmail().normalizeEmail(),
       check('password', INVALID_PASSWORD_MSG).isLength({ min: 6 })
@@ -56,11 +55,10 @@ router
         ],
         NO_FIELD_UPDATED_MSG
       ),
-      check('name', INVALID_NAME_MSG)
+      check('name', INVALID_ALPHA_SPACE_MSG('name'))
         .optional()
         .trim()
-        .not()
-        .isEmpty()
+        .notEmpty()
         .matches(ALPHA_WHITESPACE_REGEX),
       check('email', INVALID_EMAIL_MSG)
         .optional()
