@@ -44,7 +44,7 @@ CREATE TABLE Admins (
     user_id INTEGER,
 
     PRIMARY KEY (user_id),
-    FOREIGN KEY (user_id) REFERENCES Users
+    FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE
 );
 
 CREATE TABLE Profiles (
@@ -62,7 +62,7 @@ CREATE TABLE Profiles (
     is_verified BOOLEAN DEFAULT FALSE,
     
     PRIMARY KEY (user_id),
-    FOREIGN KEY (user_id) REFERENCES Users
+    FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE
 );
 
 CREATE TABLE Skills (
@@ -77,8 +77,8 @@ CREATE TABLE ProfileSkills (
     skill_id INTEGER,
 
     PRIMARY KEY (user_id, skill_id),
-    FOREIGN KEY (user_id) REFERENCES Users,
-    FOREIGN KEY (skill_id) REFERENCES Skills
+    FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
+    FOREIGN KEY (skill_id) REFERENCES Skills ON DELETE NO ACTION
 );
 
 CREATE TABLE Organisations (
@@ -102,8 +102,8 @@ CREATE TABLE Memberships (
     joined_on TIMESTAMP NOT NULL,
 
     PRIMARY KEY(organisation_id, user_id),
-    FOREIGN KEY (organisation_id) REFERENCES Organisations,
-    FOREIGN KEY (user_id) REFERENCES Users
+    FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE
 );
 
 CREATE TABLE Listings (
@@ -128,8 +128,8 @@ CREATE TABLE Listings (
     created_on TIMESTAMP NOT NULL DEFAULT NOW(),
 
     PRIMARY KEY (listing_id),
-    FOREIGN KEY (organisation_id) REFERENCES Organisations,
-    FOREIGN KEY (created_by) REFERENCES Users
+    FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE NO ACTION,
+    FOREIGN KEY (created_by) REFERENCES Users ON DELETE NO ACTION
 );
 
 /* Featured listings */
@@ -137,7 +137,7 @@ CREATE TABLE Features (
     listing_id INTEGER,
 
     PRIMARY KEY (listing_id),
-    FOREIGN KEY (listing_id) REFERENCES Listings
+    FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
 CREATE TABLE Tags (
@@ -145,7 +145,7 @@ CREATE TABLE Tags (
     description VARCHAR NOT NULL,
 
     PRIMARY KEY (listing_id, description),
-    FOREIGN KEY (listing_id) REFERENCES Listings
+    FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
 CREATE TABLE ListingSkills (
@@ -153,19 +153,19 @@ CREATE TABLE ListingSkills (
     skill_id INTEGER,
     
     PRIMARY KEY (listing_id, skill_id),
-    FOREIGN KEY (listing_id) REFERENCES Listings,
-    FOREIGN KEY (skill_id) REFERENCES Skills
+    FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE,
+    FOREIGN KEY (skill_id) REFERENCES Skills ON DELETE NO ACTION
 );
 
 /* Jobs for a particular listing */
 CREATE TABLE Jobs (
-    job_id INTEGER,
+    job_id SERIAL,
     listing_id INTEGER,
     job_title VARCHAR NOT NULL,
     job_description TEXT NOT NULL,
 
     PRIMARY KEY (listing_id, job_id),
-    FOREIGN KEY (listing_id) REFERENCES Listings
+    FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
 CREATE TABLE FAQs (
@@ -175,7 +175,7 @@ CREATE TABLE FAQs (
     answer TEXT,
 
     PRIMARY KEY (faq_id),
-    FOREIGN KEY (listing_id) REFERENCES Listings
+    FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
 CREATE TABLE Likes (
@@ -183,8 +183,8 @@ CREATE TABLE Likes (
     listing_id INTEGER,
 
     PRIMARY KEY (user_id, listing_id),
-    FOREIGN KEY (user_id) REFERENCES Users,
-    FOREIGN KEY (listing_id) REFERENCES Listings
+    FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
+    FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
 CREATE TABLE ListingAdmins (
@@ -192,8 +192,8 @@ CREATE TABLE ListingAdmins (
     listing_id INTEGER,
 
     PRIMARY KEY (user_id, listing_id),
-    FOREIGN KEY (user_id) REFERENCES Users,
-    FOREIGN KEY (listing_id) REFERENCES Listings
+    FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
+    FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
 CREATE TABLE Participants (
@@ -203,8 +203,8 @@ CREATE TABLE Participants (
     end_on TIMESTAMP,
 
     PRIMARY KEY (listing_id, user_id, joined_on),
-    FOREIGN KEY (user_id) REFERENCES Users,
-    FOREIGN KEY (listing_id) REFERENCES Listings
+    FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
+    FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
 CREATE TABLE Subscriptions (
@@ -212,8 +212,8 @@ CREATE TABLE Subscriptions (
     listing_id INTEGER,
 
     PRIMARY KEY (user_id, listing_id),
-    FOREIGN KEY (user_id) REFERENCES Users,
-    FOREIGN KEY (listing_id) REFERENCES Listings
+    FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
+    FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
 CREATE TABLE Milestones (
@@ -222,7 +222,7 @@ CREATE TABLE Milestones (
     description TEXT NOT NULL,
 
     PRIMARY KEY (milestone_id),
-    FOREIGN KEY (listing_id) REFERENCES Listings
+    FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
 
