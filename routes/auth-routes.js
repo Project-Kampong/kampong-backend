@@ -5,9 +5,10 @@ const { protect } = require('../middleware/auth');
 const { ALPHA_WHITESPACE_REGEX } = require('../utils/regex');
 const {
   INVALID_EMAIL_MSG,
-  INVALID_NAME_MSG,
+  INVALID_ALPHA_SPACE_MSG,
   INVALID_PASSWORD_MSG,
-  NO_FIELD_UPDATED_MSG
+  NO_FIELD_UPDATED_MSG,
+  INVALID_EXISTING_MSG
 } = require('../utils/inputExceptionMsg');
 
 // import controllers here
@@ -30,10 +31,9 @@ router.get('/me', protect, getMe);
 router.post(
   '/register',
   [
-    check('name', INVALID_NAME_MSG)
+    check('name', INVALID_ALPHA_SPACE_MSG('name'))
       .trim()
-      .not()
-      .isEmpty()
+      .notEmpty()
       .matches(ALPHA_WHITESPACE_REGEX),
     check('email', INVALID_EMAIL_MSG).trim().isEmail().normalizeEmail(),
     check('password', INVALID_PASSWORD_MSG).isLength({ min: 6 })
@@ -60,11 +60,10 @@ router.put(
       [check('name').exists(), check('email').exists()],
       NO_FIELD_UPDATED_MSG
     ),
-    check('name', INVALID_NAME_MSG)
+    check('name', INVALID_ALPHA_SPACE_MSG('name'))
       .optional()
       .trim()
-      .not()
-      .isEmpty()
+      .notEmpty()
       .matches(ALPHA_WHITESPACE_REGEX),
     check('email', INVALID_EMAIL_MSG)
       .optional()
@@ -80,7 +79,7 @@ router.put(
   '/updatepassword',
   protect,
   [
-    check('oldPassword', 'Please enter your old password').exists(),
+    check('oldPassword', INVALID_EXISTING_MSG('old password')).exists(),
     check('newPassword', INVALID_PASSWORD_MSG).isLength({ min: 6 })
   ],
   checkInputError,
