@@ -1,5 +1,5 @@
 const asyncHandler = require('./async');
-const { db } = require('../config/db');
+const { db, pgp } = require('../config/db');
 const { cleanseData } = require('../utils/dbHelper');
 
 /**
@@ -7,14 +7,15 @@ const { cleanseData } = require('../utils/dbHelper');
  * Request queries begin with '?' and separated by '&'
  * For select and sort queries, multiple values must be separated
  * by commas, and in the order to be parsed as SQL query statements.
- * In current implementation, filter queries can only check for exact
- * matches, and each attribute can only be matched to max 1 value.
+ * Filter query:
+ * In current implementation, filter queries can check for exact
+ * matches on multiple values (separated by single ',').
+ * In checking for string matches, it is optional to use ' to enclose string values.
  * Sample request query. ?select=name,password&sort=name,user_role&page=2&limit=2&name='Ron'
  * @param {String} model name of SQL table to query
  */
 const advancedResults = model =>
   asyncHandler(async (req, res, next) => {
-    // console.log(req.query);
     let { select, sort, page = 1, limit = 25 } = req.query;
     select = select ? select.split(',') : '*';
     sort = sort ? sort.split(',') : sort;
@@ -31,28 +32,39 @@ const advancedResults = model =>
 
     // remove undefined values (ie. remove sort if no sort value specified)
     cleanseData(format);
-    // console.log(format);
 
-    let query = 'SELECT ${select:name} FROM ${model:name} ';
+    let query = pgp.as.format(
+      'SELECT ${select:name} FROM ${model:name} ',
+      format
+    );
 
     // // Copy req.query, if any
-    // const reqQuery = { ...req.query };
+    const reqQuery = { ...req.query };
 
     // // Query fields to exclude from reqQuery
-    // const removeFields = ['select', 'sort', 'page', 'limit'];
+    const removeFields = ['select', 'sort', 'page', 'limit'];
 
     // // Remove fields from reqQuery
-    // removeFields.forEach(field => delete reqQuery[field]);
+    removeFields.forEach(field => delete reqQuery[field]);
 
     let filterQuery = '';
 
-    // if (Object.keys(reqQuery).length !== 0) {
-    //   filterQuery += `WHERE `;
-    //   for (let [key, value] of Object.entries(reqQuery)) {
-    //     filterQuery += `${key} = ${value} AND `;
-    //   }
-    //   filterQuery = filterQuery.slice(0, filterQuery.lastIndexOf('AND '));
-    // }
+    if (Object.keys(reqQuery).length !== 0) {
+      filterQuery += 'WHERE ';
+      for (let [key, value] of Object.entries(reqQuery)) {
+        const mappedFilter = {
+          key,
+          value: value.split(',').map(str => str.split(/'/).join('')) // remove all ' for pgp formatter to parse into sql
+        };
+
+        filterQuery += pgp.as.format(
+          '${key:name} IN (${value:csv}) AND ',
+          mappedFilter
+        );
+      }
+      filterQuery = filterQuery.slice(0, filterQuery.lastIndexOf('AND '));
+    }
+    format.filterQuery = filterQuery;
 
     query += filterQuery;
 
@@ -69,10 +81,10 @@ const advancedResults = model =>
 
     const totalEntries = await db.one(
       'SELECT COUNT(*) FROM ${model:name} ${filterQuery:raw}',
-      { model, filterQuery }
+      format
     );
 
-    query += 'OFFSET ${startIndex} LIMIT ${limit}';
+    query += pgp.as.format('OFFSET ${startIndex} LIMIT ${limit}', format);
 
     const results = await db.manyOrNone(query, format);
 
