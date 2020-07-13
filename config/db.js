@@ -57,4 +57,10 @@ const parseSqlUpdateStmt = (
   return pgp.helpers.update(jsonData, null, tableString) + condition;
 };
 
-module.exports = { checkConn, db, generateSqlQueryFile, parseSqlUpdateStmt };
+module.exports = {
+  checkConn,
+  db,
+  generateSqlQueryFile,
+  parseSqlUpdateStmt,
+  pgp
+};
