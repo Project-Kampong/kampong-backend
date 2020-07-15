@@ -216,7 +216,7 @@ CREATE TABLE Milestones (
     milestone_id SERIAL,
     listing_id INTEGER,
     description TEXT NOT NULL,
-    date TIMESTAMP
+    date TIMESTAMP,
 
     PRIMARY KEY (milestone_id),
     FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
