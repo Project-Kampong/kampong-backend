@@ -5,9 +5,35 @@ const ErrorResponse = require('../utils/errorResponse');
 /**
  * @desc    Get all skills
  * @route   GET /api/skills
+ * @route   GET /api/listings/:listingId/skills
+ * @route   GET /api/profiles/:profileId/skills
  * @access  Public
  */
 exports.getSkills = asyncHandler(async (req, res) => {
+  if (req.params.listingId) {
+    const skills = await db.manyOrNone(
+      'SELECT * FROM ListingSkills ls JOIN Skills s USING (skill_id) WHERE ls.listing_id = $1',
+      req.params.listingId
+    );
+    return res.status(200).json({
+      success: true,
+      count: skills.length,
+      data: skills
+    });
+  }
+
+  if (req.params.profileId) {
+    const skills = await db.manyOrNone(
+      'SELECT * FROM ProfileSkills ps JOIN Skills s USING (skill_id) WHERE ps.user_id = $1',
+      req.params.profileId
+    );
+    return res.status(200).json({
+      success: true,
+      count: skills.length,
+      data: skills
+    });
+  }
+
   res.status(200).json(res.advancedResults);
 });
 
