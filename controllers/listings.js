@@ -1,7 +1,7 @@
 const { db, parseSqlUpdateStmt } = require('../config/db');
 const asyncHandler = require('../middleware/async');
 const { cleanseData } = require('../utils/dbHelper');
-const ErrorResponse = require('../utils/errorResponse.js');
+const ErrorResponse = require('../utils/errorResponse');
 
 /**
  * @desc    Get all listings

@@ -2,11 +2,11 @@ const {
   checkPassword,
   getSignedJwtToken,
   hashPassword
-} = require('../utils/auth.js');
+} = require('../utils/auth');
 const { db, parseSqlUpdateStmt } = require('../config/db');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
-const { cleanseData } = require('../utils/dbHelper.js');
+const { cleanseData } = require('../utils/dbHelper');
 
 /**
  * @desc    Register user and create user profile
