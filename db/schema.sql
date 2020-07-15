@@ -55,7 +55,7 @@ CREATE TABLE Profiles (
     twitter_link VARCHAR,
     instagram_link VARCHAR,
     linkedin_link VARCHAR,
-    is_verified BOOLEAN DEFAULT FALSE,
+    is_verified BOOLEAN NOT NULL DEFAULT FALSE,
     
     PRIMARY KEY (user_id),
     FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE
@@ -85,7 +85,7 @@ CREATE TABLE Organisations (
     website_url VARCHAR,
     handphone VARCHAR,
     email VARCHAR(320),
-    is_verified BOOLEAN DEFAULT FALSE,
+    is_verified BOOLEAN NOT NULL DEFAULT FALSE,
     created_on TIMESTAMP NOT NULL DEFAULT NOW(),
 
     PRIMARY KEY (organisation_id)
@@ -94,8 +94,8 @@ CREATE TABLE Organisations (
 CREATE TABLE Memberships (
     organisation_id INTEGER,
     user_id INTEGER,
-    is_owner BOOLEAN DEFAULT FALSE,
-    joined_on TIMESTAMP NOT NULL,
+    is_owner BOOLEAN NOT NULL DEFAULT FALSE,
+    joined_on TIMESTAMP NOT NULL DEFAULT NOW(),
 
     PRIMARY KEY(organisation_id, user_id),
     FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE,
@@ -117,8 +117,8 @@ CREATE TABLE Listings (
     pic3 VARCHAR,
     pic4 VARCHAR,
     pic5 VARCHAR,
-    is_published BOOLEAN DEFAULT FALSE,
-    is_verified BOOLEAN DEFAULT FALSE,
+    is_published BOOLEAN NOT NULL DEFAULT FALSE,
+    is_verified BOOLEAN NOT NULL DEFAULT FALSE,
     start_date TIMESTAMP NOT NULL DEFAULT NOW(),
     end_date TIMESTAMP,
     created_on TIMESTAMP NOT NULL DEFAULT NOW(),
