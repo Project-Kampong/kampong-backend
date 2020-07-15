@@ -1,6 +1,6 @@
+DROP TABLE IF EXISTS Roles CASCADE;
 DROP TABLE IF EXISTS Users CASCADE;
-/* DROP TABLE IF EXISTS Roles CASCADE; */
-DROP TABLE IF EXISTS Admins CASCADE;
+/* DROP TABLE IF EXISTS Admins CASCADE; */
 DROP TABLE IF EXISTS Profiles CASCADE;
 DROP TABLE IF EXISTS Skills CASCADE;
 DROP TABLE IF EXISTS ProfileSkills CASCADE;
@@ -18,34 +18,33 @@ DROP TABLE IF EXISTS Participants CASCADE;
 DROP TABLE IF EXISTS Subscriptions CASCADE;
 DROP TABLE IF EXISTS Milestones CASCADE;
 
+CREATE TABLE Roles (
+    role_id SERIAL,
+    role VARCHAR UNIQUE NOT NULL,
+
+    PRIMARY KEY (role_id)
+);
 
 CREATE TABLE Users (
     user_id SERIAL,
     name VARCHAR NOT NULL,
     email VARCHAR(320) UNIQUE NOT NULL,
     password VARCHAR NOT NULL,
-    user_role INTEGER NOT NULL DEFAULT 1,
+    role_id INTEGER NOT NULL DEFAULT 1,
     created_on TIMESTAMP NOT NULL DEFAULT NOW(),
 
-    PRIMARY KEY (user_id)
+    PRIMARY KEY (user_id),
+    FOREIGN KEY (role_id) REFERENCES Roles ON DELETE SET DEFAULT
 );
 
 /*
-CREATE TABLE Roles (
-    user_id INTEGER,
-    user_role ENUM('m', 'o'), // m = Member; o = Organizer 
-
-    PRIMARY KEY (user_id),
-    FOREIGN KEY (user_id) REFERENCES Users
-)
-*/
-
 CREATE TABLE Admins (
     user_id INTEGER,
 
     PRIMARY KEY (user_id),
     FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE
 );
+*/
 
 CREATE TABLE Profiles (
     user_id INTEGER,

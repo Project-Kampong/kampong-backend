@@ -95,14 +95,9 @@ exports.logout = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 exports.getMe = asyncHandler(async (req, res, next) => {
-  const user = await db.one(
-    'SELECT * FROM users WHERE user_id = $1',
-    req.user.user_id
-  );
-
   res.status(200).json({
     success: true,
-    data: user
+    data: req.user
   });
 });
 
