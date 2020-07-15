@@ -31,7 +31,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
 
     // Set user request to the token's user id (all protected route has user entry (as JSON) in request)
     req.user = await db.one(
-      'SELECT * FROM users u JOIN roles r USING (role_id) WHERE user_id = $1',
+      'SELECT * FROM users WHERE user_id = $1',
       decoded.id
     );
 

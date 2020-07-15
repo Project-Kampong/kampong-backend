@@ -1,9 +1,9 @@
 /* Create user roles */
-INSERT INTO Roles (role) VALUES ('User');
-INSERT INTO Roles (role) VALUES ('Admin');
+INSERT INTO Roles (role) VALUES ('user');
+INSERT INTO Roles (role) VALUES ('admin');
 
 /* User population */
-insert into Users (name, email, password, role_id) values ('Don', 'don@gmail.com', $1, 2);
+insert into Users (name, email, password, role) values ('Don', 'don@gmail.com', $1, 'admin');
 insert into Users (name, email, password) values ('Kristi Rowson', 'krowson1@illinois.edu', $1);
 insert into Users (name, email, password) values ('Orbadiah Fouracre', 'ofouracre2@google.ru', $1);
 insert into Users (name, email, password) values ('Orel Robbert', 'orobbert3@reverbnation.com', $1);
