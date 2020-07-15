@@ -5,7 +5,9 @@ const ErrorResponse = require('../utils/errorResponse');
 /**
  * @desc    Get all skills
  * @route   GET /api/skills
+ * @desc    Get all skills for a listing
  * @route   GET /api/listings/:listingId/skills
+ * @desc    Get all skills for a profile
  * @route   GET /api/profiles/:profileId/skills
  * @access  Public
  */
