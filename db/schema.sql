@@ -63,7 +63,7 @@ CREATE TABLE Profiles (
 
 CREATE TABLE Skills (
     skill_id SERIAL,
-    skill VARCHAR,
+    skill VARCHAR UNIQUE NOT NULL,
 
     PRIMARY KEY (skill_id)
 );
@@ -138,7 +138,7 @@ CREATE TABLE Features (
 
 CREATE TABLE Tags (
     listing_id INTEGER,
-    description VARCHAR NOT NULL,
+    description VARCHAR UNIQUE NOT NULL,
 
     PRIMARY KEY (listing_id, description),
     FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
@@ -158,16 +158,16 @@ CREATE TABLE Jobs (
     job_id SERIAL,
     listing_id INTEGER,
     job_title VARCHAR NOT NULL,
-    job_description TEXT NOT NULL,
+    job_description TEXT,
 
-    PRIMARY KEY (listing_id, job_id),
+    PRIMARY KEY (job_id),
     FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
 CREATE TABLE FAQs (
     faq_id SERIAL,
-    listing_id INTEGER NOT NULL,
-    question TEXT,
+    listing_id INTEGER,
+    question TEXT NOT NULL,
     answer TEXT,
 
     PRIMARY KEY (faq_id),
@@ -198,7 +198,7 @@ CREATE TABLE Participants (
     joined_on TIMESTAMP NOT NULL DEFAULT NOW(),
     end_on TIMESTAMP,
 
-    PRIMARY KEY (listing_id, user_id, joined_on),
+    PRIMARY KEY (listing_id, user_id),
     FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
     FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
@@ -213,9 +213,10 @@ CREATE TABLE Subscriptions (
 );
 
 CREATE TABLE Milestones (
-    listing_id INTEGER,
     milestone_id SERIAL,
+    listing_id INTEGER,
     description TEXT NOT NULL,
+    date TIMESTAMP
 
     PRIMARY KEY (milestone_id),
     FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
