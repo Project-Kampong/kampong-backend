@@ -43,14 +43,9 @@ router
   .put(
     [
       oneOf(
-        [
-          check('listing_id').exists(),
-          check('question').exists(),
-          check('answer').exists()
-        ],
+        [check('question').exists(), check('answer').exists()],
         NO_FIELD_UPDATED_MSG
       ),
-      check('listing_id', INVALID_FIELD_MSG('listing_id')).optional().isInt(),
       check('question', INVALID_FIELD_MSG('question'))
         .optional()
         .trim()
