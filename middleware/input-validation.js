@@ -4,14 +4,11 @@ const { validationResult } = require('express-validator');
 
 exports.checkInputError = asyncHandler(async (req, res, next) => {
   const errors = validationResult(req);
+  const uniqueErrors = [...new Set(errors.errors.map(obj => obj.msg))];
+
   if (!errors.isEmpty()) {
-    let errMsg = '';
-    errors.errors
-      .map(obj => obj.msg)
-      .forEach(element => {
-        errMsg += element + '. ';
-      });
-    return next(new ErrorResponse(errMsg.trim(), 400));
+    const errMsg = uniqueErrors.join('. ').trim() + '.';
+    return next(new ErrorResponse(errMsg, 400));
   }
   next();
 });
