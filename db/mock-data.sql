@@ -1,5 +1,9 @@
-insert into Users (name, email, password) values ('Hedvig Ahlin', 'hahlin0@sohu.com', $1);
-insert into Admins (user_id) values ('1');
+/* Create user roles */
+INSERT INTO Roles (role) VALUES ('user');
+INSERT INTO Roles (role) VALUES ('admin');
+
+/* User population */
+insert into Users (name, email, password, role) values ('Don', 'don@gmail.com', $1, 'admin');
 insert into Users (name, email, password) values ('Kristi Rowson', 'krowson1@illinois.edu', $1);
 insert into Users (name, email, password) values ('Orbadiah Fouracre', 'ofouracre2@google.ru', $1);
 insert into Users (name, email, password) values ('Orel Robbert', 'orobbert3@reverbnation.com', $1);
@@ -100,6 +104,7 @@ insert into Users (name, email, password) values ('Jonathan Whittlesee', 'jwhitt
 insert into Users (name, email, password) values ('Salli Gisby', 'sgisby2q@4shared.com', $1);
 insert into Users (name, email, password) values ('Donny Westwick', 'dwestwick2r@wix.com', $1);
 
+/* User profile population */
 insert into Profiles (user_id, profile_picture, about, gender, age, interest, phone, linkedin_link, is_verified) values (1, null, 'Stand-alone reciprocal infrastructure', 'm', 21, 'Federal Government', 99014110, null, false);
 insert into Profiles (user_id, profile_picture, about, gender, age, interest, phone, linkedin_link, is_verified) values (2, 'https://robohash.org/exercitationemeumofficiis.jpg?size=50x50&set=set1', 'Re-engineered bifurcated time-frame', 'o', 28, 'CCDP', 90623638, null, true);
 insert into Profiles (user_id, profile_picture, about, gender, age, interest, phone, linkedin_link, is_verified) values (3, 'https://robohash.org/ipsamullamatque.jpg?size=50x50&set=set1', 'Cross-platform modular internet solution', 'o', 38, 'FDDI', 92505199, null, false);
