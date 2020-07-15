@@ -23,10 +23,12 @@ const {
 } = require('../controllers/listings');
 
 // Include other resource's controllers to access their endpoints
-const skillRouter = require('./skill-routes');
+const skillRoute = require('./skill-routes');
+const faqRoute = require('./faq-routes');
 
 // Re-route this URI to other resource router
-router.use('/:listingId/skills', skillRouter);
+router.use('/:listingId/skills', skillRoute);
+router.use('/:listingId/faqs', faqRoute);
 
 // map routes to controller
 router
