@@ -8,11 +8,16 @@ dotenv.config({ path: 'config/config.env' });
 
 const dbConfig = {
   query(e) {
-    console.log(`EXECUTING QUERY: ${e.query}`.dim);
+    // only run in development mode
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`EXECUTING QUERY: ${e.query}`.dim);
+    }
   },
   error(err, e) {
-    // console.error(JSON.stringify(e, null, 2).red);
-    console.error(JSON.stringify(err, null, 2).red);
+    // only run in development mode
+    if (process.env.NODE_ENV === 'development') {
+      console.error(JSON.stringify(err, null, 2).red);
+    }
   },
   capSQL: true
 };
