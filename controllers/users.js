@@ -119,7 +119,7 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
  * @route   DELETE /api/users/:id
  * @access  Admin
  */
-exports.deleteUser = asyncHandler(async (req, res) => {
+exports.deleteUser = asyncHandler(async (req, res, next) => {
   // check if user exists
   const isValidUser = await db.oneOrNone(
     'SELECT * FROM users WHERE user_id = $1',

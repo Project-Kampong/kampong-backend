@@ -58,12 +58,14 @@ exports.createFaq = asyncHandler(async (req, res, next) => {
 
   cleanseData(data);
 
-  // check if owner of listing
-  const listingOwner = await isListingOwner(req.user.user_id, listing_id);
-  if (!listingOwner) {
-    return next(
-      new ErrorResponse(`Not authorised to update FAQ for this listing`, 403)
-    );
+  // if non-admin ,check if owner of listing
+  if (req.user.role !== 'admin') {
+    const listingOwner = await isListingOwner(req.user.user_id, listing_id);
+    if (!listingOwner) {
+      return next(
+        new ErrorResponse(`Not authorised to update FAQ for this listing`, 403)
+      );
+    }
   }
 
   const rows = await db.one(
@@ -94,12 +96,14 @@ exports.updateFaq = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`Faq does not exist`, 400));
   }
 
-  // check if owner of listing
-  const listingOwner = await isListingOwner(req.user.user_id, faq.listing_id);
-  if (!listingOwner) {
-    return next(
-      new ErrorResponse(`Not authorised to update FAQ for this listing`, 403)
-    );
+  // if non-admin, check if owner of listing
+  if (req.user.role !== 'admin') {
+    const listingOwner = await isListingOwner(req.user.user_id, faq.listing_id);
+    if (!listingOwner) {
+      return next(
+        new ErrorResponse(`Not authorised to update FAQ for this listing`, 403)
+      );
+    }
   }
 
   const { question, answer } = req.body;
@@ -143,12 +147,14 @@ exports.deleteFaq = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`Faq does not exist`, 400));
   }
 
-  // check if owner of listing
-  const listingOwner = await isListingOwner(req.user.user_id, faq.listing_id);
-  if (!listingOwner) {
-    return next(
-      new ErrorResponse(`Not authorised to update FAQ for this listing`, 403)
-    );
+  // if non-admin, check if owner of listing
+  if (req.user.role !== 'admin') {
+    const listingOwner = await isListingOwner(req.user.user_id, faq.listing_id);
+    if (!listingOwner) {
+      return next(
+        new ErrorResponse(`Not authorised to update FAQ for this listing`, 403)
+      );
+    }
   }
 
   const rows = await db.one(
