@@ -52,9 +52,11 @@ router.post(
   login
 );
 
+// routers below use protect middleware
+router.use(protect);
+
 router.put(
   '/updatedetails',
-  protect,
   [
     oneOf(
       [check('name').exists(), check('email').exists()],
@@ -77,7 +79,6 @@ router.put(
 
 router.put(
   '/updatepassword',
-  protect,
   [
     check('oldPassword', INVALID_EXISTING_MSG('old password')).exists(),
     check('newPassword', INVALID_PASSWORD_MSG).isLength({ min: 6 })

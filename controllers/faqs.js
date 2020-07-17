@@ -7,14 +7,14 @@ const { cleanseData } = require('../utils/dbHelper');
  * @desc    Get all faqs
  * @route   GET /api/faqs
  * @desc    Get all faqs for a listing
- * @route   GET /api/listings/:listingId/faqs
+ * @route   GET /api/listings/:listing_id/faqs
  * @access  Public
  */
 exports.getFaqs = asyncHandler(async (req, res) => {
-  if (req.params.listingId) {
+  if (req.params.listing_id) {
     const faqs = await db.manyOrNone(
       'SELECT * FROM faqs WHERE listing_id = $1',
-      req.params.listingId
+      req.params.listing_id
     );
     return res.status(200).json({
       success: true,
