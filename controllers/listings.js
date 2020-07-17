@@ -35,7 +35,7 @@ exports.getListing = asyncHandler(async (req, res) => {
  */
 exports.createListing = asyncHandler(async (req, res) => {
   const {
-    organisation_id,
+    organisation_id, // NOTE: do not use this field until organisations endpoint is implemented
     title,
     category,
     about,
@@ -112,7 +112,7 @@ exports.updateListing = asyncHandler(async (req, res, next) => {
   }
 
   const {
-    organisation_id,
+    organisation_id, // NOTE: do not use this field until organisations endpoint is implemented
     title,
     category,
     about,
