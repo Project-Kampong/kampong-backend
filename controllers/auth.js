@@ -57,7 +57,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   // Throw exception if user does not exist
   if (!user) {
-    return next(new ErrorResponse('Invalid credentials', 401));
+    return next(new ErrorResponse('Invalid login credentials', 401));
   }
 
   // Check if password matches
@@ -65,7 +65,7 @@ exports.login = asyncHandler(async (req, res, next) => {
   const isMatch = await checkPassword(password, originalPassword);
 
   if (!isMatch) {
-    return next(new ErrorResponse('Invalid credentials', 401));
+    return next(new ErrorResponse('Invalid login credentials', 401));
   }
 
   sendTokenResponse(user, 200, res);

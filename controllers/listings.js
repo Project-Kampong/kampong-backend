@@ -90,7 +90,7 @@ exports.createListing = asyncHandler(async (req, res) => {
 /**
  * @desc    Update single listing
  * @route   PUT /api/listings/:id
- * @access  Private/Admin
+ * @access  Admin/Owner
  */
 exports.updateListing = asyncHandler(async (req, res, next) => {
   // check if listing exists
@@ -204,7 +204,7 @@ exports.verifyListing = asyncHandler(async (req, res, next) => {
 /**
  * @desc    Delete single listing
  * @route   DELETE /api/listings/:id
- * @access  Private/Admin
+ * @access  Admin/Owner
  */
 exports.deleteListing = asyncHandler(async (req, res, next) => {
   // check if listing exists
