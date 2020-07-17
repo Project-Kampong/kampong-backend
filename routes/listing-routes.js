@@ -28,8 +28,8 @@ const faqRoute = require('./faq-routes');
 const participantRoute = require('./participant-routes');
 
 // Re-route this URI to other resource router
-router.use('/:listingId/skills', skillRoute);
-router.use('/:listingId/faqs', faqRoute);
+router.use('/:listing_id/skills', skillRoute);
+router.use('/:listing_id/faqs', faqRoute);
 router.use('/:listing_id/participants', participantRoute);
 
 // map routes to controller
