@@ -8,8 +8,8 @@ const { cleanseData } = require('../utils/dbHelper');
  * @route   GET /api/participants
  * @desc    Get all participants for a listing
  * @route   GET /api/listings/:listing_id/participants
- * @desc    Get all participation for a user
- * @route   GET /api/users/:user_id/participants
+ * @desc    Get all participation for a user profile
+ * @route   GET /api/profiles/:user_id/participants
  * @access  Public
  */
 exports.getParticipants = asyncHandler(async (req, res) => {
