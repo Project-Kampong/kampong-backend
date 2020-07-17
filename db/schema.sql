@@ -150,7 +150,7 @@ CREATE TABLE ListingSkills (
     
     PRIMARY KEY (listing_id, skill_id),
     FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE,
-    FOREIGN KEY (skill_id) REFERENCES Skills ON DELETE NO ACTION
+    FOREIGN KEY (skill_id) REFERENCES Skills ON DELETE CASCADE
 );
 
 /* Jobs for a particular listing */
