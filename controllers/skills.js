@@ -11,8 +11,14 @@ const ErrorResponse = require('../utils/errorResponse');
  * @route   GET /api/profiles/:user_id/skills
  * @access  Public
  */
-exports.getSkills = asyncHandler(async (req, res) => {
+exports.getSkills = asyncHandler(async (req, res, next) => {
   if (req.params.listing_id) {
+    // return 404 error response if listing not found
+    const listing = await db.one(
+      'SELECT * FROM Listings WHERE listing_id = $1',
+      req.params.listing_id
+    );
+
     const skills = await db.manyOrNone(
       'SELECT * FROM ListingSkills ls JOIN Skills s USING (skill_id) WHERE ls.listing_id = $1',
       req.params.listing_id
@@ -25,6 +31,12 @@ exports.getSkills = asyncHandler(async (req, res) => {
   }
 
   if (req.params.user_id) {
+    // return 404 error response if user not found
+    const user = await db.one(
+      'SELECT * FROM Profiles WHERE user_id = $1',
+      req.params.user_id
+    );
+
     const skills = await db.manyOrNone(
       'SELECT * FROM ProfileSkills ps JOIN Skills s USING (skill_id) WHERE ps.user_id = $1',
       req.params.user_id
