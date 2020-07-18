@@ -32,7 +32,7 @@ exports.getProfile = asyncHandler(async (req, res) => {
 /**
  * @desc    Update single profile
  * @route   PUT /api/profiles/:id
- * @access  Private
+ * @access  Admin/Private
  */
 exports.updateProfile = asyncHandler(async (req, res, next) => {
   // check if user exists
@@ -44,6 +44,13 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
   // return bad request response if invalid user
   if (!isValidUser) {
     return next(new ErrorResponse(`User does not exist`, 400));
+  }
+
+  // if non-admin user, throw 403 if not updating self
+  if (req.user.role !== 'admin' && req.user.user_id !== req.params.id) {
+    return next(
+      new ErrorResponse(`Not allowed to update other user's profile`, 403)
+    );
   }
 
   const {

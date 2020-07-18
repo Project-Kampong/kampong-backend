@@ -30,6 +30,7 @@ router.use(protect);
 router
   .route('/:id')
   .put(
+    authorise('admin', 'user'),
     [
       oneOf(
         [
@@ -51,11 +52,10 @@ router
     updateProfile
   );
 
-router.use(authorise('admin'));
-
 router
   .route('/:id')
   .put(
+    authorise('admin'),
     [check('is_verified', NO_FIELD_UPDATED_MSG).exists()],
     checkInputError,
     verifyProfile
