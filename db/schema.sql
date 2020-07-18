@@ -74,7 +74,7 @@ CREATE TABLE ProfileSkills (
 
     PRIMARY KEY (user_id, skill_id),
     FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
-    FOREIGN KEY (skill_id) REFERENCES Skills ON DELETE NO ACTION
+    FOREIGN KEY (skill_id) REFERENCES Skills ON DELETE CASCADE
 );
 
 CREATE TABLE Organisations (
@@ -105,7 +105,7 @@ CREATE TABLE Memberships (
 CREATE TABLE Listings (
     listing_id SERIAL,
     organisation_id INTEGER,
-    created_by INTEGER NOT NULL,
+    created_by INTEGER,
     title VARCHAR NOT NULL,
     category VARCHAR NOT NULL,
     about TEXT,
@@ -124,8 +124,8 @@ CREATE TABLE Listings (
     created_on TIMESTAMP NOT NULL DEFAULT NOW(),
 
     PRIMARY KEY (listing_id),
-    FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE NO ACTION,
-    FOREIGN KEY (created_by) REFERENCES Users ON DELETE NO ACTION
+    FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE SET NULL,
+    FOREIGN KEY (created_by) REFERENCES Users ON DELETE SET NULL
 );
 
 /* Featured listings */
@@ -150,7 +150,7 @@ CREATE TABLE ListingSkills (
     
     PRIMARY KEY (listing_id, skill_id),
     FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE,
-    FOREIGN KEY (skill_id) REFERENCES Skills ON DELETE NO ACTION
+    FOREIGN KEY (skill_id) REFERENCES Skills ON DELETE CASCADE
 );
 
 /* Jobs for a particular listing */

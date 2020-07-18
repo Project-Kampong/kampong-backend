@@ -7,14 +7,20 @@ const { cleanseData } = require('../utils/dbHelper');
  * @desc    Get all faqs
  * @route   GET /api/faqs
  * @desc    Get all faqs for a listing
- * @route   GET /api/listings/:listingId/faqs
+ * @route   GET /api/listings/:listing_id/faqs
  * @access  Public
  */
 exports.getFaqs = asyncHandler(async (req, res) => {
-  if (req.params.listingId) {
+  if (req.params.listing_id) {
+    // return 404 error response if listing not found
+    const listing = await db.one(
+      'SELECT * FROM Listings WHERE listing_id = $1',
+      req.params.listing_id
+    );
+
     const faqs = await db.manyOrNone(
       'SELECT * FROM faqs WHERE listing_id = $1',
-      req.params.listingId
+      req.params.listing_id
     );
     return res.status(200).json({
       success: true,
@@ -58,12 +64,14 @@ exports.createFaq = asyncHandler(async (req, res, next) => {
 
   cleanseData(data);
 
-  // check if owner of listing
-  const listingOwner = await isListingOwner(req.user.user_id, listing_id);
-  if (!listingOwner) {
-    return next(
-      new ErrorResponse(`Not authorised to update FAQ for this listing`, 403)
-    );
+  // if non-admin ,check if owner of listing
+  if (req.user.role !== 'admin') {
+    const listingOwner = await isListingOwner(req.user.user_id, listing_id);
+    if (!listingOwner) {
+      return next(
+        new ErrorResponse(`Not authorised to update FAQ for this listing`, 403)
+      );
+    }
   }
 
   const rows = await db.one(
@@ -94,12 +102,14 @@ exports.updateFaq = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`Faq does not exist`, 400));
   }
 
-  // check if owner of listing
-  const listingOwner = await isListingOwner(req.user.user_id, faq.listing_id);
-  if (!listingOwner) {
-    return next(
-      new ErrorResponse(`Not authorised to update FAQ for this listing`, 403)
-    );
+  // if non-admin, check if owner of listing
+  if (req.user.role !== 'admin') {
+    const listingOwner = await isListingOwner(req.user.user_id, faq.listing_id);
+    if (!listingOwner) {
+      return next(
+        new ErrorResponse(`Not authorised to update FAQ for this listing`, 403)
+      );
+    }
   }
 
   const { question, answer } = req.body;
@@ -143,12 +153,14 @@ exports.deleteFaq = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`Faq does not exist`, 400));
   }
 
-  // check if owner of listing
-  const listingOwner = await isListingOwner(req.user.user_id, faq.listing_id);
-  if (!listingOwner) {
-    return next(
-      new ErrorResponse(`Not authorised to update FAQ for this listing`, 403)
-    );
+  // if non-admin, check if owner of listing
+  if (req.user.role !== 'admin') {
+    const listingOwner = await isListingOwner(req.user.user_id, faq.listing_id);
+    if (!listingOwner) {
+      return next(
+        new ErrorResponse(`Not authorised to update FAQ for this listing`, 403)
+      );
+    }
   }
 
   const rows = await db.one(

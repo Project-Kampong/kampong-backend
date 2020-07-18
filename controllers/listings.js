@@ -35,7 +35,7 @@ exports.getListing = asyncHandler(async (req, res) => {
  */
 exports.createListing = asyncHandler(async (req, res) => {
   const {
-    organisation_id,
+    organisation_id, // NOTE: do not use this field until organisations endpoint is implemented
     title,
     category,
     about,
@@ -90,7 +90,7 @@ exports.createListing = asyncHandler(async (req, res) => {
 /**
  * @desc    Update single listing
  * @route   PUT /api/listings/:id
- * @access  Private/Admin
+ * @access  Admin/Owner
  */
 exports.updateListing = asyncHandler(async (req, res, next) => {
   // check if listing exists
@@ -112,7 +112,7 @@ exports.updateListing = asyncHandler(async (req, res, next) => {
   }
 
   const {
-    organisation_id,
+    organisation_id, // NOTE: do not use this field until organisations endpoint is implemented
     title,
     category,
     about,
@@ -204,7 +204,7 @@ exports.verifyListing = asyncHandler(async (req, res, next) => {
 /**
  * @desc    Delete single listing
  * @route   DELETE /api/listings/:id
- * @access  Private/Admin
+ * @access  Admin/Owner
  */
 exports.deleteListing = asyncHandler(async (req, res, next) => {
   // check if listing exists
