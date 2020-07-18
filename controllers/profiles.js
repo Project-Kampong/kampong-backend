@@ -46,11 +46,24 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`User does not exist`, 400));
   }
 
-  const { profile_picture, about, interest, phone, facebook_link, twitter_link, instagram_link, linkedin_link } = req.body;
+  const {
+    profile_picture,
+    about,
+    gender,
+    dob,
+    interest,
+    phone,
+    facebook_link,
+    twitter_link,
+    instagram_link,
+    linkedin_link
+  } = req.body;
 
   const data = {
     profile_picture,
     about,
+    gender,
+    dob,
     interest,
     phone,
     facebook_link,
