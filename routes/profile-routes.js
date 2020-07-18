@@ -3,6 +3,11 @@ const { check, oneOf } = require('express-validator');
 const advancedResults = require('../middleware/advancedResults');
 const { protect, authorise } = require('../middleware/auth');
 const { checkInputError } = require('../middleware/input-validation');
+const {
+  INVALID_TIMESTAMP_MSG,
+  INVALID_FIELD_MSG
+} = require('../utils/inputExceptionMsg');
+const { DATETIME_REGEX } = require('../utils/regex');
 const router = express.Router();
 
 // Include other resource's controllers to access their endpoints
@@ -48,7 +53,24 @@ router
           check('linkedin_link').exists()
         ],
         NO_FIELD_UPDATED_MSG
-      )
+      ),
+      check('dob')
+        .optional()
+        .matches(DATETIME_REGEX)
+        .withMessage(INVALID_TIMESTAMP_MSG('dob')),
+      check('phone')
+        .optional()
+        .isMobilePhone('any')
+        .withMessage(INVALID_FIELD_MSG('phone number')),
+      check([
+        'facebook_link',
+        'twitter_link',
+        'instagram_link',
+        'linkedin_link'
+      ])
+        .optional()
+        .isURL()
+        .withMessage(INVALID_FIELD_MSG('URL'))
     ],
     checkInputError,
     updateProfile
