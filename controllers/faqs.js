@@ -12,6 +12,12 @@ const { cleanseData } = require('../utils/dbHelper');
  */
 exports.getFaqs = asyncHandler(async (req, res) => {
   if (req.params.listing_id) {
+    // return 404 error response if listing not found
+    const listing = await db.one(
+      'SELECT * FROM Listings WHERE listing_id = $1',
+      req.params.listing_id
+    );
+
     const faqs = await db.manyOrNone(
       'SELECT * FROM faqs WHERE listing_id = $1',
       req.params.listing_id
