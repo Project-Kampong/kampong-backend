@@ -7,6 +7,7 @@ const skillRoute = require('./skill-routes');
 const profileRoute = require('./profile-routes');
 const faqRoute = require('./faq-routes');
 const participantRoute = require('./participant-routes');
+const jobRoute = require('./job-routes');
 
 // Mount routes
 router.use('/listings', listingRoute);
@@ -16,5 +17,6 @@ router.use('/skills', skillRoute);
 router.use('/profiles', profileRoute);
 router.use('/faqs', faqRoute);
 router.use('/participants', participantRoute);
+router.use('/jobs', jobRoute);
 
 module.exports = router;

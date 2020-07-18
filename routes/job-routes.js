@@ -11,15 +11,15 @@ const {
 
 // import controllers here
 const {
-  getFaqs,
-  getFaq,
-  createFaq,
-  updateFaq,
-  deleteFaq
-} = require('../controllers/faqs');
+  getJobs,
+  getJob,
+  createJob,
+  updateJob,
+  deleteJob
+} = require('../controllers/jobs');
 
-router.route('/').get(advancedResults('faqs'), getFaqs);
-router.route('/:id').get(getFaq);
+router.route('/').get(advancedResults('jobs'), getJobs);
+router.route('/:id').get(getJob);
 
 // all routes below only accessible to admin
 router.use(protect);
@@ -31,11 +31,11 @@ router
   .post(
     [
       check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
-      check('question', INVALID_FIELD_MSG('question')).trim().notEmpty(),
-      check('answer').optional().trim()
+      check('job_title', INVALID_FIELD_MSG('job title')).trim().notEmpty(),
+      check('job_description').optional().trim()
     ],
     checkInputError,
-    createFaq
+    createJob
   );
 
 router
@@ -43,18 +43,18 @@ router
   .put(
     [
       oneOf(
-        [check('question').exists(), check('answer').exists()],
+        [check('job_title').exists(), check('job_description').exists()],
         NO_FIELD_UPDATED_MSG
       ),
-      check('question', INVALID_FIELD_MSG('question'))
+      check('job_title', INVALID_FIELD_MSG('job title'))
         .optional()
         .trim()
         .notEmpty(),
-      check('answer').optional().trim()
+      check('job_description').optional().trim()
     ],
     checkInputError,
-    updateFaq
+    updateJob
   )
-  .delete(deleteFaq);
+  .delete(deleteJob);
 
 module.exports = router;
