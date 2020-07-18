@@ -69,7 +69,7 @@ exports.createJob = asyncHandler(async (req, res, next) => {
     const listingOwner = await isListingOwner(req.user.user_id, listing_id);
     if (!listingOwner) {
       return next(
-        new ErrorResponse(`Not authorised to update jobs in this listing`, 403)
+        new ErrorResponse(`Not authorised to create jobs in this listing`, 403)
       );
     }
   }
@@ -158,7 +158,7 @@ exports.deleteJob = asyncHandler(async (req, res, next) => {
     const listingOwner = await isListingOwner(req.user.user_id, job.listing_id);
     if (!listingOwner) {
       return next(
-        new ErrorResponse(`Not authorised to update JOB for this listing`, 403)
+        new ErrorResponse(`Not authorised to delete jobs in this listing`, 403)
       );
     }
   }
