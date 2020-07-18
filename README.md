@@ -34,7 +34,7 @@ Skip this step if you already have a PostgreSQL database to connect to.
 
 ##### Connect PostgreSQL database to the Project Kampong web server
 
-Under `config/config.env`, fill in `PG_USER`, `PG_HOST`, `PG_NAME`, `PG_PORT` with your PostgreSQL database credentials.
+Under `config/config.env`, fill in `PG_USER`, `PG_HOST`, `PG_NAME`, `PG_PORT`, `PG_PASSWORD` with your PostgreSQL database credentials.
 
 ##### Create database tables
 
