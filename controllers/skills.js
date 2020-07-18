@@ -33,7 +33,7 @@ exports.getSkills = asyncHandler(async (req, res, next) => {
   if (req.params.user_id) {
     // return 404 error response if user not found
     const user = await db.one(
-      'SELECT * FROM Users WHERE user_id = $1',
+      'SELECT * FROM Profiles WHERE user_id = $1',
       req.params.user_id
     );
 
