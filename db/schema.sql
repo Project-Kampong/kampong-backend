@@ -48,7 +48,7 @@ CREATE TABLE Profiles (
     profile_picture VARCHAR,
     about TEXT,
     gender VARCHAR CHECK (gender IN ('m', 'f', 'o', 'u')) DEFAULT 'u', /* m = male, f = female, o = others, u = undisclosed */
-    age INTEGER,
+    dob TIMESTAMP, /* change to timestamp */
     interest TEXT,
     phone VARCHAR,
     facebook_link VARCHAR,
