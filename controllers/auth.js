@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const {
   checkPassword,
   getSignedJwtToken,
@@ -68,8 +69,8 @@ exports.register = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Create user account and profile
- * @route   POST /api/auth/confirmEmail/:confirmEmailToken
+ * @desc    Create user account and profile, after email confirmation
+ * @route   PATCH /api/auth/confirmEmail/:confirmEmailToken
  * @access  Public
  */
 exports.confirmEmail = asyncHandler(async (req, res) => {

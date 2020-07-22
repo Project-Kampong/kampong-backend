@@ -18,7 +18,8 @@ const {
   logout,
   getMe,
   updateDetails,
-  updatePassword
+  updatePassword,
+  confirmEmail
   // forgotPassword,
   // resetPassword
 } = require('../controllers/auth');
@@ -86,6 +87,8 @@ router.put(
   checkInputError,
   updatePassword
 );
+
+router.patch('/confirmEmail/:confirmEmailToken', confirmEmail);
 
 // router.post('/forgotpassword', forgotPassword);
 // router.put('/resetpassword/:resettoken', resetPassword);
