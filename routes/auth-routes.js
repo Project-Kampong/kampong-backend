@@ -29,6 +29,8 @@ const { checkInputError } = require('../middleware/input-validation');
 router.get('/logout', protect, logout);
 router.get('/me', protect, getMe);
 
+router.get('/confirmEmail/:confirmEmailToken', confirmEmail);
+
 router.post(
   '/register',
   [
@@ -87,8 +89,6 @@ router.put(
   checkInputError,
   updatePassword
 );
-
-router.patch('/confirmEmail/:confirmEmailToken', confirmEmail);
 
 // router.post('/forgotpassword', forgotPassword);
 // router.put('/resetpassword/:resettoken', resetPassword);

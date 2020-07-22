@@ -8,13 +8,25 @@ const { db, parseSqlUpdateStmt } = require('../config/db');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
 const { cleanseData } = require('../utils/dbHelper');
+const sendEmail = require('../utils/sendEmail');
 
 /**
  * @desc    Register user and send email to user email with link to confirm email
  * @route   POST /api/auth/register
  * @access  Public
  */
-exports.register = asyncHandler(async (req, res) => {
+exports.register = asyncHandler(async (req, res, next) => {
+  // Check if user email already exists
+  const { name, email, password } = req.body;
+  const userExists = await db.oneOrNone(
+    'SELECT * FROM Users WHERE email = $1',
+    email
+  );
+
+  if (userExists) {
+    return next(new ErrorResponse(`Email has already been used.`, 400));
+  }
+
   // Generate and hash confirm email token
   const token = crypto.randomBytes(20).toString('hex');
   const hashedEmailToken = hashConfirmEmailToken(token);
@@ -22,15 +34,13 @@ exports.register = asyncHandler(async (req, res) => {
   // Set token expiry 30min from present
   const tokenExpiry = Date.now() + 30 * 60 * 1000;
 
-  // TODO: store data, hashedEmailToken, and tokenExpiry in PendingUsers table
-  const { name, email, password } = req.body;
-
+  // Store data, hashedEmailToken, and tokenExpiry in PendingUsers table
   const data = {
     name,
     email,
     password: await hashPassword(password),
     token: hashedEmailToken,
-    expiry: tokenExpiry
+    expiry: new Date(tokenExpiry)
   };
 
   const rows = await db.one(
@@ -43,14 +53,13 @@ exports.register = asyncHandler(async (req, res) => {
     'host'
   )}/api/auth/confirmEmail/${token}`;
 
-  const message = `Thank you for joining Project Kampong. 
-    Please click on the link to activate your account: \n\n ${confirmationUrl}\n\n
-    Please contact admin@kampong.com immediately if you are not the intended receipient 
-    of this mail.\n\nBest Regards\nTeam Kampong`;
+  const message = `Thank you for joining Project Kampong. Please click on the link to activate your account:
+  \n\n${confirmationUrl}\n\nPlease contact admin@kampong.com immediately if you are not the intended receipient 
+  of this mail.\n\nWelcome on board!\n\nTeam Kampong`;
 
   try {
     await sendEmail({
-      email: data.email,
+      email: rows.email,
       subject: 'Project Kampong Account Activation',
       message
     });
@@ -62,7 +71,10 @@ exports.register = asyncHandler(async (req, res) => {
   } catch (err) {
     console.error(err);
     // delete data from PendingUsers table, if error
-    db.one('DELETE FROM PendingUsers WHERE email = $1 RETURNING *', email);
+    await db.one(
+      'DELETE FROM PendingUsers WHERE email = $1 RETURNING *',
+      email
+    );
 
     return next(new ErrorResponse('Email could not be sent', 500));
   }
@@ -70,24 +82,37 @@ exports.register = asyncHandler(async (req, res) => {
 
 /**
  * @desc    Create user account and profile, after email confirmation
- * @route   PATCH /api/auth/confirmEmail/:confirmEmailToken
+ * @route   GET /api/auth/confirmEmail/:confirmEmailToken
  * @access  Public
  */
-exports.confirmEmail = asyncHandler(async (req, res) => {
+exports.confirmEmail = asyncHandler(async (req, res, next) => {
   const hashedToken = hashConfirmEmailToken(req.params.confirmEmailToken);
 
   // Look up PendingUsers table for token
-  const pendingUser = db.one(
+  const pendingUser = await db.oneOrNone(
     'SELECT * FROM PendingUsers WHERE token = $1',
     hashedToken
   );
+
+  // if pendingUser entry does not exist, 400 Bad Request
+  if (!pendingUser) {
+    return next(
+      new ErrorResponse(
+        `Invalid account activation link. The user account may be activated already.`,
+        400
+      )
+    );
+  }
 
   // Destructure from results
   const { name, email, password, expiry } = pendingUser;
 
   // 400 response if token expired, and delete entry from PendingUsers table
   if (expiry < Date.now()) {
-    db.one('DELETE FROM PendingUsers WHERE email = $1 RETURNING *', email);
+    await db.one(
+      'DELETE FROM PendingUsers WHERE email = $1 RETURNING *',
+      email
+    );
     return next(
       new ErrorResponse(
         `Account activation link has expired. Please re-create your account again.`
@@ -112,6 +137,10 @@ exports.confirmEmail = asyncHandler(async (req, res) => {
     const createProfile = await query.one(
       'INSERT INTO profiles (user_id) VALUES ($1) RETURNING *',
       createUser.user_id
+    );
+    const deletePendingUser = await query.one(
+      'DELETE FROM PendingUsers WHERE email = $1 RETURNING *',
+      email
     );
     return query.batch([createUser, createProfile]);
   });
