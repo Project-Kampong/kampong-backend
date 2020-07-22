@@ -9,17 +9,93 @@ const ErrorResponse = require('../utils/errorResponse');
 const { cleanseData } = require('../utils/dbHelper');
 
 /**
- * @desc    Register user and create user profile
+ * @desc    Register user and send email to user email with link to confirm email
  * @route   POST /api/auth/register
  * @access  Public
  */
 exports.register = asyncHandler(async (req, res) => {
+  // Generate and hash confirm email token
+  const token = crypto.randomBytes(20).toString('hex');
+  const hashedEmailToken = hashConfirmEmailToken(token);
+
+  // Set token expiry 30min from present
+  const tokenExpiry = Date.now() + 30 * 60 * 1000;
+
+  // TODO: store data, hashedEmailToken, and tokenExpiry in PendingUsers table
   const { name, email, password } = req.body;
+
   const data = {
     name,
     email,
-    password: await hashPassword(password)
+    password: await hashPassword(password),
+    token: hashedEmailToken,
+    expiry: tokenExpiry
   };
+
+  const rows = await db.one(
+    'INSERT INTO PendingUsers (${this:name}) VALUES (${this:csv}) RETURNING *',
+    data
+  );
+
+  // Create confirmation url
+  const confirmationUrl = `${req.protocol}://${req.get(
+    'host'
+  )}/api/auth/confirmEmail/${token}`;
+
+  const message = `Thank you for joining Project Kampong. 
+    Please click on the link to activate your account: \n\n ${confirmationUrl}\n\n
+    Please contact admin@kampong.com immediately if you are not the intended receipient 
+    of this mail.\n\nBest Regards\nTeam Kampong`;
+
+  try {
+    await sendEmail({
+      email: data.email,
+      subject: 'Project Kampong Account Activation',
+      message
+    });
+
+    res.status(200).json({
+      success: true,
+      data: confirmationUrl // confirmationUrl given in response
+    });
+  } catch (err) {
+    console.error(err);
+    // delete data from PendingUsers table, if error
+    db.one('DELETE FROM PendingUsers WHERE email = $1 RETURNING *', email);
+
+    return next(new ErrorResponse('Email could not be sent', 500));
+  }
+});
+
+/**
+ * @desc    Create user account and profile
+ * @route   POST /api/auth/confirmEmail/:confirmEmailToken
+ * @access  Public
+ */
+exports.confirmEmail = asyncHandler(async (req, res) => {
+  const hashedToken = hashConfirmEmailToken(req.params.confirmEmailToken);
+
+  // Look up PendingUsers table for token
+  const pendingUser = db.one(
+    'SELECT * FROM PendingUsers WHERE token = $1',
+    hashedToken
+  );
+
+  // Destructure from results
+  const { name, email, password, expiry } = pendingUser;
+
+  // 400 response if token expired, and delete entry from PendingUsers table
+  if (expiry < Date.now()) {
+    db.one('DELETE FROM PendingUsers WHERE email = $1 RETURNING *', email);
+    return next(
+      new ErrorResponse(
+        `Account activation link has expired. Please re-create your account again.`
+      )
+    );
+  }
+
+  // Get name, email, password from PendingUsers and store into data
+  const data = { name, email, password };
 
   /**
    * SQL Transaction, creating user and associated user profile
@@ -38,7 +114,6 @@ exports.register = asyncHandler(async (req, res) => {
     );
     return query.batch([createUser, createProfile]);
   });
-
   sendTokenResponse(user[0], 200, res);
 });
 
@@ -203,4 +278,12 @@ const sendTokenResponse = (user, statusCode, res) => {
     success: true,
     token
   });
+};
+
+// Hash pending user token
+const hashConfirmEmailToken = token => {
+  // Hash token and set to confirmPasswordToken field of model
+  const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+
+  return hashedToken;
 };
