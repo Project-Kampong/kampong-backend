@@ -20,8 +20,8 @@ const {
   updateDetails,
   updatePassword,
   confirmEmail,
-  // forgotPassword,
-  // resetPassword
+  forgetPassword,
+  resetPassword,
 } = require('../controllers/auth');
 const { checkInputError } = require('../middleware/input-validation');
 
@@ -29,7 +29,7 @@ const { checkInputError } = require('../middleware/input-validation');
 router.get('/logout', protect, logout);
 router.get('/me', protect, getMe);
 
-router.get('/register/:confirmEmailToken/confirmEmail', confirmEmail);
+router.get('/register/:confirmEmailToken/confirmemail', confirmEmail);
 
 router.post(
   '/register',
@@ -53,6 +53,20 @@ router.post(
   ],
   checkInputError,
   login
+);
+
+router.post(
+  '/forgetpassword',
+  [check('email', INVALID_EMAIL_MSG).trim().isEmail().normalizeEmail()],
+  checkInputError,
+  forgetPassword
+);
+
+router.put(
+  '/resetpassword/:resetToken',
+  [check('password', INVALID_PASSWORD_MSG).isLength({ min: 6 })],
+  checkInputError,
+  resetPassword
 );
 
 // routers below use protect middleware
@@ -89,8 +103,5 @@ router.put(
   checkInputError,
   updatePassword
 );
-
-// router.post('/forgotpassword', forgotPassword);
-// router.put('/resetpassword/:resettoken', resetPassword);
 
 module.exports = router;
