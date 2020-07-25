@@ -8,7 +8,7 @@ const {
   INVALID_ALPHA_SPACE_MSG,
   INVALID_PASSWORD_MSG,
   NO_FIELD_UPDATED_MSG,
-  INVALID_EXISTING_MSG
+  INVALID_EXISTING_MSG,
 } = require('../utils/inputExceptionMsg');
 
 // import controllers here
@@ -19,7 +19,7 @@ const {
   getMe,
   updateDetails,
   updatePassword,
-  confirmEmail
+  confirmEmail,
   // forgotPassword,
   // resetPassword
 } = require('../controllers/auth');
@@ -29,7 +29,7 @@ const { checkInputError } = require('../middleware/input-validation');
 router.get('/logout', protect, logout);
 router.get('/me', protect, getMe);
 
-router.get('/confirmEmail/:confirmEmailToken', confirmEmail);
+router.get('/register/:confirmEmailToken/confirmEmail', confirmEmail);
 
 router.post(
   '/register',
@@ -39,7 +39,7 @@ router.post(
       .notEmpty()
       .matches(ALPHA_WHITESPACE_REGEX),
     check('email', INVALID_EMAIL_MSG).trim().isEmail().normalizeEmail(),
-    check('password', INVALID_PASSWORD_MSG).isLength({ min: 6 })
+    check('password', INVALID_PASSWORD_MSG).isLength({ min: 6 }),
   ],
   checkInputError,
   register
@@ -49,7 +49,7 @@ router.post(
   '/login',
   [
     check('email', INVALID_EMAIL_MSG).trim().isEmail().normalizeEmail(),
-    check('password', INVALID_PASSWORD_MSG).isLength({ min: 6 })
+    check('password', INVALID_PASSWORD_MSG).isLength({ min: 6 }),
   ],
   checkInputError,
   login
@@ -74,7 +74,7 @@ router.put(
       .optional()
       .trim()
       .isEmail()
-      .normalizeEmail()
+      .normalizeEmail(),
   ],
   checkInputError,
   updateDetails
@@ -84,7 +84,7 @@ router.put(
   '/updatepassword',
   [
     check('oldPassword', INVALID_EXISTING_MSG('old password')).exists(),
-    check('newPassword', INVALID_PASSWORD_MSG).isLength({ min: 6 })
+    check('newPassword', INVALID_PASSWORD_MSG).isLength({ min: 6 }),
   ],
   checkInputError,
   updatePassword
