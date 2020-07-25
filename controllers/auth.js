@@ -29,7 +29,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 
   // Generate and hash confirm email token
   const token = crypto.randomBytes(20).toString('hex');
-  const hashedEmailToken = hashConfirmEmailToken(token);
+  const hashedEmailToken = hashToken(token);
 
   // Set token expiry 30min from present
   const tokenExpiry = Date.now() + 30 * 60 * 1000;
@@ -86,7 +86,7 @@ exports.register = asyncHandler(async (req, res, next) => {
  * @access  Public
  */
 exports.confirmEmail = asyncHandler(async (req, res, next) => {
-  const hashedToken = hashConfirmEmailToken(req.params.confirmEmailToken);
+  const hashedToken = hashToken(req.params.confirmEmailToken);
 
   // Look up PendingUsers table for token
   const pendingUser = await db.oneOrNone(
@@ -146,6 +146,143 @@ exports.confirmEmail = asyncHandler(async (req, res, next) => {
     return query.batch([createUser, createProfile]);
   });
   sendTokenResponse(user[0], 200, res);
+});
+
+/**
+ * @desc    User forget password
+ * @route   POST /api/auth/forgetpassword
+ * @access  Public
+ */
+exports.forgetPassword = asyncHandler(async (req, res, next) => {
+  // Check if user email already exists
+  const { email } = req.body;
+  const userExists = await db.oneOrNone(
+    'SELECT * FROM Users WHERE email = $1',
+    email
+  );
+
+  if (!userExists) {
+    return next(new ErrorResponse(`User does not exist.`, 404));
+  }
+
+  // Generate and hash reset password token
+  const token = crypto.randomBytes(20).toString('hex');
+  const hashedResetToken = hashToken(token);
+
+  // Set token expiry in 10min
+  const tokenExpiry = Date.now() + 10 * 60 * 1000;
+
+  // Store email, hashedEmailToken, and tokenExpiry in ForgetPassword table
+  const data = {
+    email,
+    token: hashedEmailToken,
+    expiry: new Date(tokenExpiry),
+  };
+
+  const rows = await db.one(
+    'INSERT INTO ForgetPassword (${this:name}) VALUES (${this:csv}) RETURNING *',
+    data
+  );
+
+  // Create reset password url
+  const resetPasswordUrl = `${req.protocol}://${req.get(
+    'host'
+  )}/api/auth/resetpassword/${token}`;
+
+  const message = `You are receiving this email because you have requested for a password reset. 
+  Please make a PUT request to: \n\n ${resetPasswordUrl}`;
+
+  try {
+    await sendEmail({
+      email: rows.email,
+      subject: 'Reset Your Account Password',
+      message,
+    });
+
+    res.status(200).json({
+      success: true,
+      data: resetPasswordUrl, // confirmationUrl given in response
+    });
+  } catch (err) {
+    console.error(err);
+    // delete data from ForgetPassword table, if error
+    await db.one(
+      'DELETE FROM ForgetPassword WHERE email = $1 RETURNING *',
+      email
+    );
+
+    return next(new ErrorResponse('Email could not be sent', 500));
+  }
+});
+
+/**
+ * @desc    Reset account password of user with forgotten password
+ * @route   PUT /api/auth/resetpassword/:resetToken
+ * @access  Public
+ */
+exports.resetPassword = asyncHandler(async (req, res, next) => {
+  const { resetToken } = req.params;
+  const hashedToken = hashToken(resetToken);
+
+  // Look up ForgetPassword table for token
+  let user = await db.oneOrNone(
+    'SELECT * FROM ForgetPassword WHERE token = $1',
+    hashedToken
+  );
+
+  // if user entry does not exist, 400 Bad Request
+  if (!user) {
+    return next(
+      new ErrorResponse(
+        `Invalid reset password link. This link has expired.`,
+        400
+      )
+    );
+  }
+
+  // Destructure from results
+  const { email, expiry } = user;
+  // 400 response if token expired, and delete entry from ForgetPassword table
+  if (expiry < Date.now()) {
+    await db.one(
+      'DELETE FROM ForgetPassword WHERE token = $1 RETURNING *',
+      hashedToken
+    );
+    return next(
+      new ErrorResponse(
+        `Reset password link has expired. Please send a 'Forget Password' request again.`,
+        400
+      )
+    );
+  }
+
+  const { newPassword } = req.body;
+  const data = {
+    password: await hashPassword(newPassword), // hash new password
+  };
+  const updatePasswordQuery = parseSqlUpdateStmt(
+    data,
+    'users',
+    'WHERE email = $1 RETURNING *',
+    email
+  );
+
+  /**
+   * SQL Transaction, creating user and associated user profile
+   * Returns an array of 2 json:
+   * 1st json: Updated user password
+   * 2nd json: Deleted ForgetPassword entry
+   */
+  const updateUser = await db.tx(async query => {
+    const updateUserPassword = await db.one(updatePasswordQuery);
+
+    const deleteForgetPassword = await query.one(
+      'DELETE FROM ForgetPassword WHERE email = $1 RETURNING *',
+      email
+    );
+    return query.batch([updateUserPassword, deleteForgetPassword]);
+  });
+  sendTokenResponse(updateUser[0], 200, res);
 });
 
 /**
@@ -312,7 +449,7 @@ const sendTokenResponse = (user, statusCode, res) => {
 };
 
 // Hash pending user token
-const hashConfirmEmailToken = token => {
+const hashToken = token => {
   // Hash token and set to confirmPasswordToken field of model
   const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
 
