@@ -1,25 +1,128 @@
+const crypto = require('crypto');
 const {
   checkPassword,
   getSignedJwtToken,
-  hashPassword
+  hashPassword,
 } = require('../utils/auth');
 const { db, parseSqlUpdateStmt } = require('../config/db');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
 const { cleanseData } = require('../utils/dbHelper');
+const sendEmail = require('../utils/sendEmail');
 
 /**
- * @desc    Register user and create user profile
+ * @desc    Register user and send email to user email with link to confirm email and activate account
  * @route   POST /api/auth/register
  * @access  Public
  */
-exports.register = asyncHandler(async (req, res) => {
+exports.register = asyncHandler(async (req, res, next) => {
+  // Check if user email already exists
   const { name, email, password } = req.body;
+  const userExists = await db.oneOrNone(
+    'SELECT * FROM Users WHERE email = $1',
+    email
+  );
+
+  if (userExists) {
+    return next(new ErrorResponse(`Email has already been used.`, 400));
+  }
+
+  // Generate and hash confirm email token
+  const token = crypto.randomBytes(20).toString('hex');
+  const hashedEmailToken = hashConfirmEmailToken(token);
+
+  // Set token expiry 30min from present
+  const tokenExpiry = Date.now() + 30 * 60 * 1000;
+
+  // Store data, hashedEmailToken, and tokenExpiry in PendingUsers table
   const data = {
     name,
     email,
-    password: await hashPassword(password)
+    password: await hashPassword(password),
+    token: hashedEmailToken,
+    expiry: new Date(tokenExpiry),
   };
+
+  const rows = await db.one(
+    'INSERT INTO PendingUsers (${this:name}) VALUES (${this:csv}) RETURNING *',
+    data
+  );
+
+  // Create confirmation url
+  const confirmationUrl = `${req.protocol}://${req.get(
+    'host'
+  )}/api/auth/confirmEmail/${token}`;
+
+  const message = `Thank you for joining Project Kampong. Please click on the link to activate your account:
+  \n\n${confirmationUrl}\n\nPlease contact admin@kampong.com immediately if you are not the intended receipient 
+  of this mail.\n\nWelcome on board!\n\nTeam Kampong`;
+
+  try {
+    await sendEmail({
+      email: rows.email,
+      subject: 'Project Kampong Account Activation',
+      message,
+    });
+
+    res.status(200).json({
+      success: true,
+      data: confirmationUrl, // confirmationUrl given in response
+    });
+  } catch (err) {
+    console.error(err);
+    // delete data from PendingUsers table, if error
+    await db.one(
+      'DELETE FROM PendingUsers WHERE email = $1 RETURNING *',
+      email
+    );
+
+    return next(new ErrorResponse('Email could not be sent', 500));
+  }
+});
+
+/**
+ * @desc    Create (activate) user account and profile, after email confirmation
+ * @route   GET /api/auth/confirmEmail/:confirmEmailToken
+ * @access  Public
+ */
+exports.confirmEmail = asyncHandler(async (req, res, next) => {
+  const hashedToken = hashConfirmEmailToken(req.params.confirmEmailToken);
+
+  // Look up PendingUsers table for token
+  const pendingUser = await db.oneOrNone(
+    'SELECT * FROM PendingUsers WHERE token = $1',
+    hashedToken
+  );
+
+  // if pendingUser entry does not exist, 400 Bad Request
+  if (!pendingUser) {
+    return next(
+      new ErrorResponse(
+        `Invalid account activation link. The user account may have been activated already.`,
+        400
+      )
+    );
+  }
+
+  // Destructure from results
+  const { name, email, password, expiry } = pendingUser;
+
+  // 400 response if token expired, and delete entry from PendingUsers table
+  if (expiry < Date.now()) {
+    await db.one(
+      'DELETE FROM PendingUsers WHERE email = $1 RETURNING *',
+      email
+    );
+    return next(
+      new ErrorResponse(
+        `Account activation link has expired. Please re-create your account again.`,
+        400
+      )
+    );
+  }
+
+  // Get name, email, password from PendingUsers and store into data
+  const data = { name, email, password };
 
   /**
    * SQL Transaction, creating user and associated user profile
@@ -36,9 +139,12 @@ exports.register = asyncHandler(async (req, res) => {
       'INSERT INTO profiles (user_id) VALUES ($1) RETURNING *',
       createUser.user_id
     );
+    const deletePendingUser = await query.one(
+      'DELETE FROM PendingUsers WHERE email = $1 RETURNING *',
+      email
+    );
     return query.batch([createUser, createProfile]);
   });
-
   sendTokenResponse(user[0], 200, res);
 });
 
@@ -80,12 +186,12 @@ exports.logout = asyncHandler(async (req, res, next) => {
   // set token cookie to none
   res.cookie('token', 'none', {
     expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true
+    httpOnly: true,
   });
 
   res.status(200).json({
     success: true,
-    data: {}
+    data: {},
   });
 });
 
@@ -97,7 +203,7 @@ exports.logout = asyncHandler(async (req, res, next) => {
 exports.getMe = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     success: true,
-    data: req.user
+    data: req.user,
   });
 });
 
@@ -122,7 +228,7 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
 
   const data = {
     name,
-    email
+    email,
   };
 
   cleanseData(data);
@@ -166,7 +272,7 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
   }
 
   const data = {
-    password: await hashPassword(newPassword) // hash new password
+    password: await hashPassword(newPassword), // hash new password
   };
 
   const updatePasswordQuery = parseSqlUpdateStmt(
@@ -191,7 +297,7 @@ const sendTokenResponse = (user, statusCode, res) => {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
-    httpOnly: true
+    httpOnly: true,
   };
 
   // Set secure flag to true if in production (cookie will be sent through https)
@@ -201,6 +307,14 @@ const sendTokenResponse = (user, statusCode, res) => {
 
   res.status(statusCode).cookie('token', token, options).json({
     success: true,
-    token
+    token,
   });
+};
+
+// Hash pending user token
+const hashConfirmEmailToken = token => {
+  // Hash token and set to confirmPasswordToken field of model
+  const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+
+  return hashedToken;
 };

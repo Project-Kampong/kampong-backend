@@ -18,7 +18,8 @@ const {
   logout,
   getMe,
   updateDetails,
-  updatePassword
+  updatePassword,
+  confirmEmail
   // forgotPassword,
   // resetPassword
 } = require('../controllers/auth');
@@ -27,6 +28,8 @@ const { checkInputError } = require('../middleware/input-validation');
 // map routes to controller
 router.get('/logout', protect, logout);
 router.get('/me', protect, getMe);
+
+router.get('/confirmEmail/:confirmEmailToken', confirmEmail);
 
 router.post(
   '/register',
