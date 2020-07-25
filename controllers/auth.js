@@ -51,7 +51,7 @@ exports.register = asyncHandler(async (req, res, next) => {
   // Create confirmation url
   const confirmationUrl = `${req.protocol}://${req.get(
     'host'
-  )}/api/auth/confirmEmail/${token}`;
+  )}/api/auth/register/${token}/confirmemail`;
 
   const message = `Thank you for joining Project Kampong. Please click on the link to activate your account:
   \n\n${confirmationUrl}\n\nPlease contact admin@kampong.com immediately if you are not the intended receipient 
@@ -82,7 +82,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Create (activate) user account and profile, after email confirmation
- * @route   GET /api/auth/register/:confirmEmailToken/confirmEmail
+ * @route   GET /api/auth/register/:confirmEmailToken/confirmemail
  * @access  Public
  */
 exports.confirmEmail = asyncHandler(async (req, res, next) => {

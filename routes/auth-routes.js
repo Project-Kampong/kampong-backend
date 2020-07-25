@@ -29,7 +29,7 @@ const { checkInputError } = require('../middleware/input-validation');
 router.get('/logout', protect, logout);
 router.get('/me', protect, getMe);
 
-router.get('/register/:confirmEmailToken/confirmEmail', confirmEmail);
+router.get('/register/:confirmEmailToken/confirmemail', confirmEmail);
 
 router.post(
   '/register',
