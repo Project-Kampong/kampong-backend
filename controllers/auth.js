@@ -2,7 +2,7 @@ const crypto = require('crypto');
 const {
   checkPassword,
   getSignedJwtToken,
-  hashPassword
+  hashPassword,
 } = require('../utils/auth');
 const { db, parseSqlUpdateStmt } = require('../config/db');
 const asyncHandler = require('../middleware/async');
@@ -11,7 +11,7 @@ const { cleanseData } = require('../utils/dbHelper');
 const sendEmail = require('../utils/sendEmail');
 
 /**
- * @desc    Register user and send email to user email with link to confirm email
+ * @desc    Register user and send email to user email with link to confirm email and activate account
  * @route   POST /api/auth/register
  * @access  Public
  */
@@ -40,7 +40,7 @@ exports.register = asyncHandler(async (req, res, next) => {
     email,
     password: await hashPassword(password),
     token: hashedEmailToken,
-    expiry: new Date(tokenExpiry)
+    expiry: new Date(tokenExpiry),
   };
 
   const rows = await db.one(
@@ -61,12 +61,12 @@ exports.register = asyncHandler(async (req, res, next) => {
     await sendEmail({
       email: rows.email,
       subject: 'Project Kampong Account Activation',
-      message
+      message,
     });
 
     res.status(200).json({
       success: true,
-      data: confirmationUrl // confirmationUrl given in response
+      data: confirmationUrl, // confirmationUrl given in response
     });
   } catch (err) {
     console.error(err);
@@ -81,7 +81,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Create user account and profile, after email confirmation
+ * @desc    Create (activate) user account and profile, after email confirmation
  * @route   GET /api/auth/confirmEmail/:confirmEmailToken
  * @access  Public
  */
@@ -98,7 +98,7 @@ exports.confirmEmail = asyncHandler(async (req, res, next) => {
   if (!pendingUser) {
     return next(
       new ErrorResponse(
-        `Invalid account activation link. The user account may be activated already.`,
+        `Invalid account activation link. The user account may have been activated already.`,
         400
       )
     );
@@ -115,7 +115,8 @@ exports.confirmEmail = asyncHandler(async (req, res, next) => {
     );
     return next(
       new ErrorResponse(
-        `Account activation link has expired. Please re-create your account again.`
+        `Account activation link has expired. Please re-create your account again.`,
+        400
       )
     );
   }
@@ -185,12 +186,12 @@ exports.logout = asyncHandler(async (req, res, next) => {
   // set token cookie to none
   res.cookie('token', 'none', {
     expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true
+    httpOnly: true,
   });
 
   res.status(200).json({
     success: true,
-    data: {}
+    data: {},
   });
 });
 
@@ -202,7 +203,7 @@ exports.logout = asyncHandler(async (req, res, next) => {
 exports.getMe = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     success: true,
-    data: req.user
+    data: req.user,
   });
 });
 
@@ -227,7 +228,7 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
 
   const data = {
     name,
-    email
+    email,
   };
 
   cleanseData(data);
@@ -271,7 +272,7 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
   }
 
   const data = {
-    password: await hashPassword(newPassword) // hash new password
+    password: await hashPassword(newPassword), // hash new password
   };
 
   const updatePasswordQuery = parseSqlUpdateStmt(
@@ -296,7 +297,7 @@ const sendTokenResponse = (user, statusCode, res) => {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
-    httpOnly: true
+    httpOnly: true,
   };
 
   // Set secure flag to true if in production (cookie will be sent through https)
@@ -306,7 +307,7 @@ const sendTokenResponse = (user, statusCode, res) => {
 
   res.status(statusCode).cookie('token', token, options).json({
     success: true,
-    token
+    token,
   });
 };
 
