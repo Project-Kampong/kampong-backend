@@ -28,7 +28,7 @@ exports.getParticipants = asyncHandler(async (req, res) => {
     return res.status(200).json({
       success: true,
       count: participants.length,
-      data: participants
+      data: participants,
     });
   }
 
@@ -47,7 +47,7 @@ exports.getParticipants = asyncHandler(async (req, res) => {
     return res.status(200).json({
       success: true,
       count: participants.length,
-      data: participants
+      data: participants,
     });
   }
 
@@ -56,7 +56,7 @@ exports.getParticipants = asyncHandler(async (req, res) => {
 
 /**
  * @desc    Get single participant (identified by listing_id and user_id)
- * @route   GET /api/participants/:listing_id/:user_id
+ * @route   GET /api/participants/listings/:listing_id/users/:user_id
  * @access  Public
  */
 exports.getParticipant = asyncHandler(async (req, res) => {
@@ -67,7 +67,7 @@ exports.getParticipant = asyncHandler(async (req, res) => {
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -83,7 +83,7 @@ exports.createParticipant = asyncHandler(async (req, res, next) => {
     listing_id,
     user_id,
     joined_on,
-    end_on
+    end_on,
   };
 
   cleanseData(data);
@@ -111,13 +111,13 @@ exports.createParticipant = asyncHandler(async (req, res, next) => {
 
   res.status(201).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
 /**
  * @desc    Update single participant (identified by listing_id and user_id)
- * @route   PUT /api/participants/:listing_id/:user_id
+ * @route   PUT /api/participants/listings/:listing_id/users/:user_id
  * @access  Admin/Owner/Private
  */
 exports.updateParticipant = asyncHandler(async (req, res, next) => {
@@ -153,7 +153,7 @@ exports.updateParticipant = asyncHandler(async (req, res, next) => {
 
   const data = {
     joined_on,
-    end_on
+    end_on,
   };
 
   cleanseData(data);
@@ -169,13 +169,13 @@ exports.updateParticipant = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
 /**
  * @desc    Delete single participant (identified by listing_id and user_id)
- * @route   DELETE /api/participants/:listing_id/:user_id
+ * @route   DELETE /api/participants/listings/:listing_id/users/:user_id
  * @access  Admin/Owner/Private
  */
 exports.deleteParticipant = asyncHandler(async (req, res, next) => {
@@ -214,7 +214,7 @@ exports.deleteParticipant = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 

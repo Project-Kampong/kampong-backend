@@ -8,7 +8,7 @@ const { DATETIME_REGEX } = require('../utils/regex');
 const {
   INVALID_FIELD_MSG,
   INVALID_TIMESTAMP_MSG,
-  NO_FIELD_UPDATED_MSG
+  NO_FIELD_UPDATED_MSG,
 } = require('../utils/inputExceptionMsg');
 
 // import controllers here
@@ -17,11 +17,11 @@ const {
   getParticipant,
   createParticipant,
   updateParticipant,
-  deleteParticipant
+  deleteParticipant,
 } = require('../controllers/participants');
 
 router.route('/').get(advancedResults('participants'), getParticipants);
-router.route('/:listing_id/:user_id').get(getParticipant);
+router.route('/listings/:listing_id/users/:user_id').get(getParticipant);
 
 // all routes below only accessible to admin
 router.use(protect);
@@ -39,14 +39,14 @@ router
         .matches(DATETIME_REGEX),
       check('end_on', INVALID_TIMESTAMP_MSG('end date'))
         .optional()
-        .matches(DATETIME_REGEX)
+        .matches(DATETIME_REGEX),
     ],
     checkInputError,
     createParticipant
   );
 
 router
-  .route('/:listing_id/:user_id')
+  .route('/listings/:listing_id/users/:user_id')
   .put(
     [
       oneOf(
@@ -58,7 +58,7 @@ router
         .matches(DATETIME_REGEX),
       check('end_on', INVALID_TIMESTAMP_MSG('end date'))
         .optional()
-        .matches(DATETIME_REGEX)
+        .matches(DATETIME_REGEX),
     ],
     checkInputError,
     updateParticipant

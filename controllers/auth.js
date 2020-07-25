@@ -82,7 +82,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Create (activate) user account and profile, after email confirmation
- * @route   GET /api/auth/confirmEmail/:confirmEmailToken
+ * @route   GET /api/auth/register/:confirmEmailToken/confirmEmail
  * @access  Public
  */
 exports.confirmEmail = asyncHandler(async (req, res, next) => {
