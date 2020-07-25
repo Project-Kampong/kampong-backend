@@ -175,7 +175,7 @@ exports.forgetPassword = asyncHandler(async (req, res, next) => {
   // Store email, hashedEmailToken, and tokenExpiry in ForgetPasswordUsers table
   const data = {
     email,
-    token: hashedEmailToken,
+    token: hashedResetToken,
     expiry: new Date(tokenExpiry),
   };
 
@@ -256,9 +256,9 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
     );
   }
 
-  const { newPassword } = req.body;
+  const { password } = req.body;
   const data = {
-    password: await hashPassword(newPassword), // hash new password
+    password: await hashPassword(password), // hash new password
   };
   const updatePasswordQuery = parseSqlUpdateStmt(
     data,

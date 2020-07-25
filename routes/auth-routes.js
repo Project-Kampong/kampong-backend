@@ -55,8 +55,19 @@ router.post(
   login
 );
 
-router.post('/forgetpassword', forgetPassword);
-router.put('/resetpassword/:resettoken', resetPassword);
+router.post(
+  '/forgetpassword',
+  [check('email', INVALID_EMAIL_MSG).trim().isEmail().normalizeEmail()],
+  checkInputError,
+  forgetPassword
+);
+
+router.put(
+  '/resetpassword/:resetToken',
+  [check('password', INVALID_PASSWORD_MSG).isLength({ min: 6 })],
+  checkInputError,
+  resetPassword
+);
 
 // routers below use protect middleware
 router.use(protect);
