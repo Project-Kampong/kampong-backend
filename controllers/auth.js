@@ -172,7 +172,7 @@ exports.forgetPassword = asyncHandler(async (req, res, next) => {
   // Set token expiry in 10min
   const tokenExpiry = Date.now() + 10 * 60 * 1000;
 
-  // Store email, hashedEmailToken, and tokenExpiry in ForgetPassword table
+  // Store email, hashedEmailToken, and tokenExpiry in ForgetPasswordUsers table
   const data = {
     email,
     token: hashedEmailToken,
@@ -180,7 +180,7 @@ exports.forgetPassword = asyncHandler(async (req, res, next) => {
   };
 
   const rows = await db.one(
-    'INSERT INTO ForgetPassword (${this:name}) VALUES (${this:csv}) RETURNING *',
+    'INSERT INTO ForgetPasswordUsers (${this:name}) VALUES (${this:csv}) RETURNING *',
     data
   );
 
@@ -205,9 +205,9 @@ exports.forgetPassword = asyncHandler(async (req, res, next) => {
     });
   } catch (err) {
     console.error(err);
-    // delete data from ForgetPassword table, if error
+    // delete data from ForgetPasswordUsers table, if error
     await db.one(
-      'DELETE FROM ForgetPassword WHERE email = $1 RETURNING *',
+      'DELETE FROM ForgetPasswordUsers WHERE email = $1 RETURNING *',
       email
     );
 
@@ -224,9 +224,9 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
   const { resetToken } = req.params;
   const hashedToken = hashToken(resetToken);
 
-  // Look up ForgetPassword table for token
+  // Look up ForgetPasswordUsers table for token
   let user = await db.oneOrNone(
-    'SELECT * FROM ForgetPassword WHERE token = $1',
+    'SELECT * FROM ForgetPasswordUsers WHERE token = $1',
     hashedToken
   );
 
@@ -242,10 +242,10 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 
   // Destructure from results
   const { email, expiry } = user;
-  // 400 response if token expired, and delete entry from ForgetPassword table
+  // 400 response if token expired, and delete entry from ForgetPasswordUsers table
   if (expiry < Date.now()) {
     await db.one(
-      'DELETE FROM ForgetPassword WHERE token = $1 RETURNING *',
+      'DELETE FROM ForgetPasswordUsers WHERE token = $1 RETURNING *',
       hashedToken
     );
     return next(
@@ -271,16 +271,16 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
    * SQL Transaction, creating user and associated user profile
    * Returns an array of 2 json:
    * 1st json: Updated user password
-   * 2nd json: Deleted ForgetPassword entry
+   * 2nd json: Deleted ForgetPasswordUsers entry
    */
   const updateUser = await db.tx(async query => {
     const updateUserPassword = await db.one(updatePasswordQuery);
 
-    const deleteForgetPassword = await query.one(
-      'DELETE FROM ForgetPassword WHERE email = $1 RETURNING *',
+    const deleteForgetPasswordUser = await query.one(
+      'DELETE FROM ForgetPasswordUsers WHERE email = $1 RETURNING *',
       email
     );
-    return query.batch([updateUserPassword, deleteForgetPassword]);
+    return query.batch([updateUserPassword, deleteForgetPasswordUser]);
   });
   sendTokenResponse(updateUser[0], 200, res);
 });

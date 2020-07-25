@@ -45,6 +45,14 @@ CREATE TABLE PendingUsers (
     PRIMARY KEY (email)
 );
 
+CREATE TABLE ForgetPasswordUsers (
+    email VARCHAR(320),
+    token VARCHAR UNIQUE NOT NULL,
+    expiry TIMESTAMP NOT NULL DEFAULT NOW(),
+
+    PRIMARY KEY (email)
+);
+
 /*
 CREATE TABLE Admins (
     user_id INTEGER,
