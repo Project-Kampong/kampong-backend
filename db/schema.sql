@@ -1,3 +1,7 @@
+/* Import PostGIS extension for geospatial data support */
+DROP EXTENSION IF EXISTS postgis;
+CREATE EXTENSION postgis;
+
 DROP TABLE IF EXISTS Roles CASCADE;
 DROP TABLE IF EXISTS Users CASCADE;
 DROP TABLE IF EXISTS PendingUsers CASCADE;
