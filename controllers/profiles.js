@@ -25,7 +25,7 @@ exports.getProfile = asyncHandler(async (req, res) => {
   );
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -54,6 +54,7 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
   }
 
   const {
+    nickname,
     profile_picture,
     about,
     gender,
@@ -63,10 +64,11 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
     facebook_link,
     twitter_link,
     instagram_link,
-    linkedin_link
+    linkedin_link,
   } = req.body;
 
   const data = {
+    nickname,
     profile_picture,
     about,
     gender,
@@ -76,7 +78,7 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
     facebook_link,
     twitter_link,
     instagram_link,
-    linkedin_link
+    linkedin_link,
   };
 
   cleanseData(data);
@@ -92,7 +94,7 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -116,7 +118,7 @@ exports.verifyProfile = asyncHandler(async (req, res, next) => {
   const { is_verified } = req.body;
 
   const data = {
-    is_verified
+    is_verified,
   };
 
   cleanseData(data);
@@ -132,6 +134,6 @@ exports.verifyProfile = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });

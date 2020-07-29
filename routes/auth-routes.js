@@ -34,7 +34,12 @@ router.get('/register/:confirmEmailToken/confirmemail', confirmEmail);
 router.post(
   '/register',
   [
-    check('name', INVALID_ALPHA_SPACE_MSG('name'))
+    check('first_name', INVALID_ALPHA_SPACE_MSG('first name'))
+      .trim()
+      .notEmpty()
+      .matches(ALPHA_WHITESPACE_REGEX),
+    check('last_name', INVALID_ALPHA_SPACE_MSG('last name'))
+      .optional()
       .trim()
       .notEmpty()
       .matches(ALPHA_WHITESPACE_REGEX),
@@ -76,10 +81,19 @@ router.put(
   '/updatedetails',
   [
     oneOf(
-      [check('name').exists(), check('email').exists()],
+      [
+        check('first_name').exists(),
+        check('last_name').exists(),
+        check('email').exists(),
+      ],
       NO_FIELD_UPDATED_MSG
     ),
-    check('name', INVALID_ALPHA_SPACE_MSG('name'))
+    check('first_name', INVALID_ALPHA_SPACE_MSG('first name'))
+      .optional()
+      .trim()
+      .notEmpty()
+      .matches(ALPHA_WHITESPACE_REGEX),
+    check('last_name', INVALID_ALPHA_SPACE_MSG('last name'))
       .optional()
       .trim()
       .notEmpty()
