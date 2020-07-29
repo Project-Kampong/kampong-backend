@@ -17,7 +17,7 @@ const sendEmail = require('../utils/sendEmail');
  */
 exports.register = asyncHandler(async (req, res, next) => {
   // Check if user email already exists
-  const { name, email, password } = req.body;
+  const { first_name, last_name, email, password } = req.body;
   const userExists = await db.oneOrNone(
     'SELECT * FROM Users WHERE email = $1',
     email
@@ -36,7 +36,8 @@ exports.register = asyncHandler(async (req, res, next) => {
 
   // Store data, hashedEmailToken, and tokenExpiry in PendingUsers table
   const data = {
-    name,
+    first_name,
+    last_name,
     email,
     password: await hashPassword(password),
     token: hashedEmailToken,
@@ -105,7 +106,7 @@ exports.confirmEmail = asyncHandler(async (req, res, next) => {
   }
 
   // Destructure from results
-  const { name, email, password, expiry } = pendingUser;
+  const { first_name, last_name, email, password, expiry } = pendingUser;
 
   // 400 response if token expired, and delete entry from PendingUsers table
   if (expiry < Date.now()) {
@@ -121,8 +122,10 @@ exports.confirmEmail = asyncHandler(async (req, res, next) => {
     );
   }
 
-  // Get name, email, password from PendingUsers and store into data
-  const data = { name, email, password };
+  // Get first_name, last_name, email, password from PendingUsers and store into data
+  const data = { first_name, last_name, email, password };
+
+  const nickname = last_name ? first_name + ' ' + last_name : first_name;
 
   /**
    * SQL Transaction, creating user and associated user profile
@@ -136,8 +139,8 @@ exports.confirmEmail = asyncHandler(async (req, res, next) => {
       data
     );
     const createProfile = await query.one(
-      'INSERT INTO profiles (user_id) VALUES ($1) RETURNING *',
-      createUser.user_id
+      'INSERT INTO profiles (user_id, nickname) VALUES ($1, $2) RETURNING *',
+      [createUser.user_id, nickname]
     );
     const deletePendingUser = await query.one(
       'DELETE FROM PendingUsers WHERE email = $1 RETURNING *',
@@ -361,10 +364,11 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`Not authorised to access this route`, 401));
   }
 
-  const { name, email } = req.body;
+  const { first_name, last_name, email } = req.body;
 
   const data = {
-    name,
+    first_name,
+    last_name,
     email,
   };
 
