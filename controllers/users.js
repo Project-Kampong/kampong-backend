@@ -25,7 +25,7 @@ exports.getUser = asyncHandler(async (req, res) => {
   );
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -35,13 +35,16 @@ exports.getUser = asyncHandler(async (req, res) => {
  * @access  Admin
  */
 exports.createUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { first_name, last_name, email, password } = req.body;
 
   const data = {
-    name,
+    first_name,
+    last_name,
     email,
-    password: await hashPassword(password)
+    password: await hashPassword(password),
   };
+
+  const nickname = last_name ? first_name + ' ' + last_name : first_name;
 
   /**
    * SQL Transaction, creating user and associated user profile
@@ -55,15 +58,15 @@ exports.createUser = asyncHandler(async (req, res) => {
       data
     );
     const createProfile = await query.one(
-      'INSERT INTO profiles (user_id) VALUES ($1) RETURNING *',
-      createUser.user_id
+      'INSERT INTO profiles (user_id, nickname) VALUES ($1, $2) RETURNING *',
+      [createUser.user_id, nickname]
     );
     return query.batch([createUser, createProfile]);
   });
 
   res.status(201).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -84,12 +87,13 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`User does not exist`, 400));
   }
 
-  const { name, email, password } = req.body;
+  const { first_name, last_name, email, password } = req.body;
 
   const data = {
-    name,
+    first_name,
+    last_name,
     email,
-    password
+    password,
   };
 
   cleanseData(data);
@@ -110,7 +114,7 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -146,6 +150,6 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });

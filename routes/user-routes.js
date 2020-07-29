@@ -9,7 +9,7 @@ const {
   INVALID_EMAIL_MSG,
   INVALID_ALPHA_SPACE_MSG,
   INVALID_PASSWORD_MSG,
-  NO_FIELD_UPDATED_MSG
+  NO_FIELD_UPDATED_MSG,
 } = require('../utils/inputExceptionMsg');
 
 // import controllers here
@@ -18,7 +18,7 @@ const {
   getUser,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
 } = require('../controllers/users');
 
 // all route to use protect middleware
@@ -31,12 +31,17 @@ router
   .get(advancedResults('users'), getUsers)
   .post(
     [
-      check('name', INVALID_ALPHA_SPACE_MSG('name'))
+      check('first_name', INVALID_ALPHA_SPACE_MSG('first name'))
+        .trim()
+        .notEmpty()
+        .matches(ALPHA_WHITESPACE_REGEX),
+      check('last_name', INVALID_ALPHA_SPACE_MSG('last name'))
+        .optional()
         .trim()
         .notEmpty()
         .matches(ALPHA_WHITESPACE_REGEX),
       check('email', INVALID_EMAIL_MSG).trim().isEmail().normalizeEmail(),
-      check('password', INVALID_PASSWORD_MSG).isLength({ min: 6 })
+      check('password', INVALID_PASSWORD_MSG).isLength({ min: 6 }),
     ],
     checkInputError,
     createUser
@@ -49,13 +54,19 @@ router
     [
       oneOf(
         [
-          check('name').exists(),
+          check('first_name').exists(),
+          check('last_name').exists(),
           check('email').exists(),
-          check('password').exists()
+          check('password').exists(),
         ],
         NO_FIELD_UPDATED_MSG
       ),
-      check('name', INVALID_ALPHA_SPACE_MSG('name'))
+      check('first_name', INVALID_ALPHA_SPACE_MSG('first name'))
+        .optional()
+        .trim()
+        .notEmpty()
+        .matches(ALPHA_WHITESPACE_REGEX),
+      check('last_name', INVALID_ALPHA_SPACE_MSG('last name'))
         .optional()
         .trim()
         .notEmpty()
@@ -65,7 +76,7 @@ router
         .trim()
         .isEmail()
         .normalizeEmail(),
-      check('password', INVALID_PASSWORD_MSG).optional().isLength({ min: 6 })
+      check('password', INVALID_PASSWORD_MSG).optional().isLength({ min: 6 }),
     ],
     checkInputError,
     updateUser

@@ -26,18 +26,19 @@ CREATE TABLE Roles (
 
 CREATE TABLE Users (
     user_id SERIAL,
-    name VARCHAR NOT NULL,
+    first_name VARCHAR NOT NULL,
+    last_name VARCHAR,
     email VARCHAR(320) UNIQUE NOT NULL,
     password VARCHAR NOT NULL,
     role VARCHAR NOT NULL DEFAULT 'user',
-    created_on TIMESTAMP NOT NULL DEFAULT NOW(),
 
     PRIMARY KEY (user_id),
     FOREIGN KEY (role) REFERENCES Roles ON DELETE SET DEFAULT
 );
 
 CREATE TABLE PendingUsers (
-    name VARCHAR NOT NULL,
+    first_name VARCHAR NOT NULL,
+    last_name VARCHAR,
     email VARCHAR(320),
     password VARCHAR NOT NULL,
     token VARCHAR UNIQUE NOT NULL,
@@ -65,6 +66,7 @@ CREATE TABLE Admins (
 
 CREATE TABLE Profiles (
     user_id INTEGER,
+    nickname VARCHAR NOT NULL,
     profile_picture VARCHAR,
     about TEXT,
     gender VARCHAR CHECK (gender IN ('m', 'f', 'o', 'u')) DEFAULT 'u', /* m = male, f = female, o = others, u = undisclosed */
@@ -76,6 +78,7 @@ CREATE TABLE Profiles (
     instagram_link VARCHAR,
     linkedin_link VARCHAR,
     is_verified BOOLEAN NOT NULL DEFAULT FALSE,
+    created_on TIMESTAMP NOT NULL DEFAULT NOW(),
     
     PRIMARY KEY (user_id),
     FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE

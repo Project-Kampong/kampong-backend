@@ -25,7 +25,7 @@ exports.getFaqs = asyncHandler(async (req, res) => {
     return res.status(200).json({
       success: true,
       count: faqs.length,
-      data: faqs
+      data: faqs,
     });
   }
 
@@ -44,7 +44,7 @@ exports.getFaq = asyncHandler(async (req, res) => {
   );
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -59,7 +59,7 @@ exports.createFaq = asyncHandler(async (req, res, next) => {
   const data = {
     listing_id,
     question,
-    answer
+    answer,
   };
 
   cleanseData(data);
@@ -81,7 +81,7 @@ exports.createFaq = asyncHandler(async (req, res, next) => {
 
   res.status(201).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -116,7 +116,7 @@ exports.updateFaq = asyncHandler(async (req, res, next) => {
 
   const data = {
     question,
-    answer
+    answer,
   };
 
   cleanseData(data);
@@ -132,7 +132,7 @@ exports.updateFaq = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -170,7 +170,7 @@ exports.deleteFaq = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 

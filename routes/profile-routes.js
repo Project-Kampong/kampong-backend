@@ -5,7 +5,7 @@ const { protect, authorise } = require('../middleware/auth');
 const { checkInputError } = require('../middleware/input-validation');
 const {
   INVALID_TIMESTAMP_MSG,
-  INVALID_FIELD_MSG
+  INVALID_FIELD_MSG,
 } = require('../utils/inputExceptionMsg');
 const { DATETIME_REGEX } = require('../utils/regex');
 const router = express.Router();
@@ -23,7 +23,7 @@ const {
   getProfiles,
   getProfile,
   updateProfile,
-  verifyProfile
+  verifyProfile,
 } = require('../controllers/profiles');
 const { NO_FIELD_UPDATED_MSG } = require('../utils/inputExceptionMsg');
 
@@ -41,6 +41,7 @@ router
     [
       oneOf(
         [
+          check('nickname').exists(),
           check('profile_picture').exists(),
           check('about').exists(),
           check('gender').exists(),
@@ -50,10 +51,14 @@ router
           check('facebook_link').exists(),
           check('twitter_link').exists(),
           check('instagram_link').exists(),
-          check('linkedin_link').exists()
+          check('linkedin_link').exists(),
         ],
         NO_FIELD_UPDATED_MSG
       ),
+      check('nickname', INVALID_FIELD_MSG('nickname'))
+        .optional()
+        .trim()
+        .notEmpty(),
       check('dob')
         .optional()
         .matches(DATETIME_REGEX)
@@ -66,11 +71,11 @@ router
         'facebook_link',
         'twitter_link',
         'instagram_link',
-        'linkedin_link'
+        'linkedin_link',
       ])
         .optional()
         .isURL()
-        .withMessage(INVALID_FIELD_MSG('URL'))
+        .withMessage(INVALID_FIELD_MSG('URL')),
     ],
     checkInputError,
     updateProfile
