@@ -218,12 +218,14 @@ CREATE TABLE ListingAdmins (
 );
 
 CREATE TABLE Participants (
+    participant_id SERIAL,
     listing_id INTEGER,
     user_id INTEGER,
     joined_on TIMESTAMP NOT NULL DEFAULT NOW(),
     end_on TIMESTAMP,
 
-    PRIMARY KEY (listing_id, user_id),
+    PRIMARY KEY (participant_id),
+    UNIQUE (listing_id, user_id),
     FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
     FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
