@@ -9,7 +9,7 @@ const {
   NO_FIELD_UPDATED_MSG,
   INVALID_FIELD_MSG,
   INVALID_BOOLEAN_MSG,
-  INVALID_TIMESTAMP_MSG
+  INVALID_TIMESTAMP_MSG,
 } = require('../utils/inputExceptionMsg');
 
 // import controllers here
@@ -19,18 +19,20 @@ const {
   createListing,
   updateListing,
   verifyListing,
-  deleteListing
+  deleteListing,
 } = require('../controllers/listings');
 
 // Include other resource's controllers to access their endpoints
-const skillRoute = require('./skill-routes');
 const faqRoute = require('./faq-routes');
+const likeRoute = require('./like-routes');
 const participantRoute = require('./participant-routes');
+const skillRoute = require('./skill-routes');
 
 // Re-route this URI to other resource router
-router.use('/:listing_id/skills', skillRoute);
 router.use('/:listing_id/faqs', faqRoute);
+router.use('/:listing_id/likes', likeRoute);
 router.use('/:listing_id/participants', participantRoute);
+router.use('/:listing_id/skills', skillRoute);
 
 // map routes to controller
 router
@@ -53,7 +55,7 @@ router
         .matches(DATETIME_REGEX),
       check('end_date', INVALID_TIMESTAMP_MSG('end date'))
         .optional()
-        .matches(DATETIME_REGEX)
+        .matches(DATETIME_REGEX),
     ],
     checkInputError,
     createListing
@@ -82,7 +84,7 @@ router
           check('pic5').exists(),
           check('is_published').exists(),
           check('start_date').exists(),
-          check('end_date').exists()
+          check('end_date').exists(),
         ],
         NO_FIELD_UPDATED_MSG
       ),
@@ -103,7 +105,7 @@ router
         .matches(DATETIME_REGEX),
       check('end_date', INVALID_TIMESTAMP_MSG('end date'))
         .optional()
-        .matches(DATETIME_REGEX)
+        .matches(DATETIME_REGEX),
     ],
     checkInputError,
     updateListing
