@@ -11,12 +11,14 @@ const { DATETIME_REGEX } = require('../utils/regex');
 const router = express.Router();
 
 // Include other resource's controllers to access their endpoints
-const skillRoute = require('./skill-routes');
+const likeRoute = require('./like-routes');
 const participantRoute = require('./participant-routes');
+const skillRoute = require('./skill-routes');
 
 // Re-route this URI to other resource router
-router.use('/:user_id/skills', skillRoute);
+router.use('/:user_id/likes', likeRoute);
 router.use('/:user_id/participants', participantRoute);
+router.use('/:user_id/skills', skillRoute);
 
 // import controllers here
 const {

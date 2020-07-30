@@ -198,10 +198,12 @@ CREATE TABLE FAQs (
 );
 
 CREATE TABLE Likes (
-    user_id INTEGER,
-    listing_id INTEGER,
+    like_id SERIAL,
+    user_id INTEGER NOT NULL,
+    listing_id INTEGER NOT NULL,
 
-    PRIMARY KEY (user_id, listing_id),
+    PRIMARY KEY (like_id),
+    UNIQUE (user_id, listing_id),
     FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
     FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
