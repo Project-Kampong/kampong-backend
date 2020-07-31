@@ -32,7 +32,8 @@ app.use('/api', apiRoutes);
 // Mount error handler
 app.use(errorHandler);
 
-// const dataUpload = uploadToS3('test', './utils/auth.js');
+// For testing fileUploader only. Remove once done with testing
+// uploadToS3('test', './utils/auth.js');
 
 const PORT = process.env.PORT || 5000;
 
