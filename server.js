@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const { checkConn } = require('./config/db');
 const apiRoutes = require('./routes/api-routes');
 const errorHandler = require('./middleware/error');
+const { uploadToS3 } = require('./utils/fileUploader');
 
 dotenv.config({ path: 'config/config.env' });
 
@@ -30,6 +31,8 @@ app.use('/api', apiRoutes);
 
 // Mount error handler
 app.use(errorHandler);
+
+const dataUpload = uploadToS3('./README.md');
 
 const PORT = process.env.PORT || 5000;
 
