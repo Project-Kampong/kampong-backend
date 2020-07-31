@@ -2,7 +2,6 @@ const AWS = require('aws-sdk');
 const fs = require('fs');
 const path = require('path');
 const dotenv = require('dotenv');
-const asyncHandler = require('../middleware/async');
 
 // TODO: find out if loading dotenv config in non server/index.js file is good practice, else try pre-loading dotenv files on start-up
 // see: https://medium.com/the-node-js-collection/making-your-node-js-work-everywhere-with-environment-variables-2da8cdf6e786
@@ -18,20 +17,28 @@ AWS.config.update({
 
 const s3 = new AWS.S3();
 
-const uploadToS3 = filePath => {
+/**
+ * Upload file located at app directory's file path to S3 bucket with folder name
+ * @param {*} destFolder
+ * @param {*} filePath
+ * @returns URL where file is uploaded to
+ */
+const uploadToS3 = (destFolder, filePath) => {
   //configuring parameters
   const params = {
     Bucket: process.env.S3_BUCKET_NAME,
     Body: fs.readFileSync(filePath),
-    Key: 'folder/' + Date.now() + '_' + path.basename(filePath),
+    Key: destFolder + '/' + Date.now() + '_' + path.basename(filePath),
   };
-  const data = s3.upload(params, (err, data) => {
+  s3.upload(params, (err, data) => {
     if (err) {
       throw err;
     }
-    return data;
+    console.log(
+      `File uploaded to: ${JSON.stringify(data, null, 2)}`.blue.inverse
+    );
+    return data.Location;
   });
-  console.log(data);
 };
 
 module.exports = { uploadToS3 };
