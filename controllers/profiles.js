@@ -35,17 +35,6 @@ exports.getProfile = asyncHandler(async (req, res) => {
  * @access  Admin/Private
  */
 exports.updateProfile = asyncHandler(async (req, res, next) => {
-  // check if user exists
-  const isValidUser = await db.oneOrNone(
-    'SELECT * FROM profiles WHERE user_id = $1',
-    req.params.id
-  );
-
-  // return bad request response if invalid user
-  if (!isValidUser) {
-    return next(new ErrorResponse(`User does not exist`, 400));
-  }
-
   // if non-admin user, throw 403 if not updating self
   if (req.user.role !== 'admin' && req.user.user_id !== req.params.id) {
     return next(
@@ -55,7 +44,6 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
 
   const {
     nickname,
-    profile_picture,
     about,
     gender,
     dob,
@@ -69,7 +57,6 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
 
   const data = {
     nickname,
-    profile_picture,
     about,
     gender,
     dob,
