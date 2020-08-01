@@ -133,8 +133,8 @@ exports.updateListing = asyncHandler(async (req, res, next) => {
   const updateListingQuery = parseSqlUpdateStmt(
     data,
     'listings',
-    'WHERE listing_id = $1 RETURNING *',
-    [req.params.id]
+    'WHERE listing_id = $1 RETURNING $2:name',
+    [req.params.id, data]
   );
 
   const rows = await db.one(updateListingQuery);
@@ -169,8 +169,8 @@ exports.verifyListing = asyncHandler(async (req, res, next) => {
   const verifyListingQuery = parseSqlUpdateStmt(
     data,
     'listings',
-    'WHERE listing_id = $1 RETURNING *',
-    [req.params.id]
+    'WHERE listing_id = $1 RETURNING $2:name',
+    [req.params.id, data]
   );
 
   const rows = await db.one(verifyListingQuery);
@@ -188,15 +188,10 @@ exports.verifyListing = asyncHandler(async (req, res, next) => {
  */
 exports.deleteListing = asyncHandler(async (req, res, next) => {
   // check if listing exists
-  const listing = await db.oneOrNone(
+  const listing = await db.one(
     'SELECT * FROM listings WHERE listing_id = $1',
     req.params.id
   );
-
-  // return bad request response if invalid listing
-  if (!listing) {
-    return next(new ErrorResponse(`Listing does not exist`, 400));
-  }
 
   // Unauthorised if neither admin nor listing owner
   if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {

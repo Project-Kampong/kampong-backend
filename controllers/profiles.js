@@ -73,8 +73,8 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
   const updateProfileQuery = parseSqlUpdateStmt(
     data,
     'profiles',
-    'WHERE user_id = $1 RETURNING *',
-    [req.params.id]
+    'WHERE user_id = $1 RETURNING $2:name',
+    [req.params.id, data]
   );
 
   const rows = await db.one(updateProfileQuery);
