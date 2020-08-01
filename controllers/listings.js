@@ -238,28 +238,34 @@ exports.uploadListingPics = asyncHandler(async (req, res, next) => {
     );
   }
 
-  console.log(req.files);
+  const newPics = req.files;
+  // console.log(newPics);
 
-  const pictures = req.files;
+  // get mapping of pic number to original filename from req body
+  const { pic1, pic2, pic3, pic4, pic5 } = req.body;
 
   const data = {
-    pic1: null,
-    pic2: null,
-    pic3: null,
-    pic4: null,
-    pic5: null,
+    pic1,
+    pic2,
+    pic3,
+    pic4,
+    pic5,
   };
-
-  // TODO: improve logic as now, order of input to new pics is from pic1 to 5
-  // regardless if pic1 to 5 already exist in db entry
-  Object.keys(data).map(pic => (data[pic] = pictures.shift().location));
   cleanseData(data);
+
+  // Maps the picture storage location to the respective pic numbers (eg. pic1, pic2 etc...) given by new uploaded pic's original filename as given in req.body
+  Object.keys(data).map(
+    picNum =>
+      (data[picNum] = newPics.find(
+        newPic => newPic.originalname === data[picNum]
+      ).location)
+  );
 
   const updateProfileQuery = parseSqlUpdateStmt(
     data,
     'listings',
-    'WHERE listing_id = $1 RETURNING pic1, pic2, pic3, pic4, pic5',
-    req.params.id
+    'WHERE listing_id = $1 RETURNING $2:name',
+    [req.params.id, data]
   );
 
   const rows = await db.one(updateProfileQuery);
