@@ -24,7 +24,7 @@ exports.getListing = asyncHandler(async (req, res) => {
   );
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -49,7 +49,7 @@ exports.createListing = asyncHandler(async (req, res) => {
     pic5,
     is_published,
     start_date,
-    end_date
+    end_date,
   } = req.body;
 
   const data = {
@@ -67,7 +67,7 @@ exports.createListing = asyncHandler(async (req, res) => {
     pic5,
     is_published,
     start_date,
-    end_date
+    end_date,
   };
 
   // Add logged in user as creator of listing
@@ -83,7 +83,7 @@ exports.createListing = asyncHandler(async (req, res) => {
 
   res.status(201).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -119,14 +119,9 @@ exports.updateListing = asyncHandler(async (req, res, next) => {
     tagline,
     mission,
     listing_url,
-    pic1,
-    pic2,
-    pic3,
-    pic4,
-    pic5,
     is_published,
     start_date,
-    end_date
+    end_date,
   } = req.body;
 
   const data = {
@@ -137,14 +132,9 @@ exports.updateListing = asyncHandler(async (req, res, next) => {
     tagline,
     mission,
     listing_url,
-    pic1,
-    pic2,
-    pic3,
-    pic4,
-    pic5,
     is_published,
     start_date,
-    end_date
+    end_date,
   };
 
   // remove undefined items in json
@@ -161,7 +151,7 @@ exports.updateListing = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -197,7 +187,7 @@ exports.verifyListing = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -232,6 +222,60 @@ exports.deleteListing = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
+  });
+});
+
+/**
+ * @desc    Upload new or update multiple listing pictures
+ * @route   PUT /api/listings/:id/photo
+ * @access  Admin/Owner
+ */
+exports.uploadListingPics = asyncHandler(async (req, res, next) => {
+  // check if listing exists
+  const listing = await db.one(
+    'SELECT * FROM listings WHERE listing_id = $1',
+    req.params.id
+  );
+
+  // Unauthorised if neither admin nor listing owner
+  if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
+    return next(
+      new ErrorResponse(
+        `User not authorised to upload photo for this listing`,
+        403
+      )
+    );
+  }
+
+  console.log(req.files);
+
+  const pictures = req.files;
+
+  const data = {
+    pic1: null,
+    pic2: null,
+    pic3: null,
+    pic4: null,
+    pic5: null,
+  };
+
+  // TODO: improve logic as now, order of input to new pics is from pic1 to 5
+  // regardless if pic1 to 5 already exist in db entry
+  Object.keys(data).map(pic => (data[pic] = pictures.shift().location));
+  cleanseData(data);
+
+  const updateProfileQuery = parseSqlUpdateStmt(
+    data,
+    'listings',
+    'WHERE listing_id = $1 RETURNING pic1, pic2, pic3, pic4, pic5',
+    req.params.id
+  );
+
+  const rows = await db.one(updateProfileQuery);
+
+  res.status(200).json({
+    success: true,
+    data: rows,
   });
 });

@@ -37,6 +37,7 @@ router.route('/').get(advancedResults('profiles'), getProfiles);
 
 router.route('/:id').get(getProfile);
 
+// all routes below uses protect middleware
 router.use(protect);
 
 router
@@ -88,7 +89,7 @@ router
 
 router
   .route('/:id/photo')
-  .put(authorise('admin', 'user'), uploadFile.single('file'), uploadPic);
+  .put(authorise('admin', 'user'), uploadFile.single('pic'), uploadPic);
 
 router
   .route('/:id')
