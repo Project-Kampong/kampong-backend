@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
@@ -26,6 +27,9 @@ app.use(cookieParser());
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
+// Set static folder (ie. so all files can access public folder with './public/' and base directory of URI is public folder)
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Mount routers
 app.use('/api', apiRoutes);
