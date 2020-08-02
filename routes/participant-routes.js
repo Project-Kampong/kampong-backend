@@ -21,7 +21,7 @@ const {
 } = require('../controllers/participants');
 
 router.route('/').get(advancedResults('participants'), getParticipants);
-router.route('/listings/:listing_id/users/:user_id').get(getParticipant);
+router.route('/:participant_id').get(getParticipant);
 
 // all routes below only accessible to admin
 router.use(protect);
@@ -46,7 +46,7 @@ router
   );
 
 router
-  .route('/listings/:listing_id/users/:user_id')
+  .route('/:participant_id')
   .put(
     [
       oneOf(

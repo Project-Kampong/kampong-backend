@@ -55,14 +55,14 @@ exports.getParticipants = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Get single participant (identified by listing_id and user_id)
- * @route   GET /api/participants/listings/:listing_id/users/:user_id
+ * @desc    Get single participant (identified by participant id)
+ * @route   GET /api/participants/:participant_id
  * @access  Public
  */
 exports.getParticipant = asyncHandler(async (req, res) => {
   const rows = await db.one(
-    'SELECT * FROM participants WHERE listing_id = $2 AND user_id = $1',
-    [req.params.listing_id, req.params.user_id]
+    'SELECT * FROM participants WHERE participant_id = $1',
+    req.params.participant_id
   );
 
   res.status(200).json({
@@ -116,8 +116,8 @@ exports.createParticipant = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Update single participant (identified by listing_id and user_id)
- * @route   PUT /api/participants/listings/:listing_id/users/:user_id
+ * @desc    Update single participant (identified by participant id)
+ * @route   PUT /api/participants/:participant_id
  * @access  Admin/Owner/Private
  */
 exports.updateParticipant = asyncHandler(async (req, res, next) => {
@@ -138,16 +138,11 @@ exports.updateParticipant = asyncHandler(async (req, res, next) => {
     }
   }
 
-  // check if participant exists
-  const participantExists = await db.oneOrNone(
-    'SELECT * FROM participants WHERE listing_id = $1 AND user_id = $2',
-    [req.params.listing_id, req.params.user_id]
+  // throws 404 if participant does not exist
+  const participantExists = await db.one(
+    'SELECT * FROM participants WHERE participant_id = $1',
+    req.params.participant_id
   );
-
-  // return bad request response if invalid participant
-  if (!participantExists) {
-    return next(new ErrorResponse(`Participant does not exist`, 400));
-  }
 
   const { joined_on, end_on } = req.body;
 
@@ -161,8 +156,8 @@ exports.updateParticipant = asyncHandler(async (req, res, next) => {
   const updateParticipantQuery = parseSqlUpdateStmt(
     data,
     'participants',
-    'WHERE listing_id = $1 AND user_id = $2 RETURNING *',
-    [req.params.listing_id, req.params.user_id]
+    'WHERE participant_id = $1 RETURNING *',
+    req.params.participant_id
   );
 
   const rows = await db.one(updateParticipantQuery);
@@ -174,8 +169,8 @@ exports.updateParticipant = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Delete single participant (identified by listing_id and user_id)
- * @route   DELETE /api/participants/listings/:listing_id/users/:user_id
+ * @desc    Delete single participant (identified by participant id)
+ * @route   DELETE /api/participants/:participant_id
  * @access  Admin/Owner/Private
  */
 exports.deleteParticipant = asyncHandler(async (req, res, next) => {
@@ -198,8 +193,8 @@ exports.deleteParticipant = asyncHandler(async (req, res, next) => {
 
   // check if participant exists
   const participant = await db.oneOrNone(
-    'SELECT * FROM participants WHERE listing_id = $1 AND user_id = $2',
-    [req.params.listing_id, req.params.user_id]
+    'SELECT * FROM participants WHERE participant_id = $1',
+    req.params.participant_id
   );
 
   // return bad request response if invalid participant
@@ -208,8 +203,8 @@ exports.deleteParticipant = asyncHandler(async (req, res, next) => {
   }
 
   const rows = await db.one(
-    'DELETE FROM participants WHERE listing_id = $1 AND user_id = $2 RETURNING *',
-    [req.params.listing_id, req.params.user_id]
+    'DELETE FROM participants WHERE participant_id = $1 RETURNING *',
+    req.params.participant_id
   );
 
   res.status(200).json({
