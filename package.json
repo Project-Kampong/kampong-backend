@@ -11,6 +11,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.724.0",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "cookie-parser": "^1.4.5",
@@ -20,6 +21,8 @@
     "express-validator": "^6.6.0",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
     "nodemailer": "^6.4.10",
     "nodemon": "^2.0.4",
     "pg-promise": "^10.5.7"

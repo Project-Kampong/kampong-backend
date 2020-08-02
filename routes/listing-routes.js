@@ -11,6 +11,7 @@ const {
   INVALID_BOOLEAN_MSG,
   INVALID_TIMESTAMP_MSG,
 } = require('../utils/inputExceptionMsg');
+const { uploadFile } = require('../utils/fileUploader');
 
 // import controllers here
 const {
@@ -20,6 +21,7 @@ const {
   updateListing,
   verifyListing,
   deleteListing,
+  uploadListingPics,
 } = require('../controllers/listings');
 
 // Include other resource's controllers to access their endpoints
@@ -77,11 +79,6 @@ router
           check('tagline').exists(),
           check('mission').exists(),
           check('listing_url').exists(),
-          check('pic1').exists(),
-          check('pic2').exists(),
-          check('pic3').exists(),
-          check('pic4').exists(),
-          check('pic5').exists(),
           check('is_published').exists(),
           check('start_date').exists(),
           check('end_date').exists(),
@@ -111,6 +108,15 @@ router
     updateListing
   )
   .delete(protect, deleteListing);
+
+router
+  .route('/:id/photo')
+  .put(
+    protect,
+    authorise('admin', 'user'),
+    uploadFile.array('pics', 5),
+    uploadListingPics
+  );
 
 router
   .route('/:id/verify')

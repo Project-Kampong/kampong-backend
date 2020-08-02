@@ -19,7 +19,7 @@ const dbConfig = {
       console.error(JSON.stringify(err, null, 2).red);
     }
   },
-  capSQL: true
+  capSQL: true,
 };
 const pgp = require('pg-promise')(dbConfig);
 
@@ -29,7 +29,7 @@ const db = pgp({
   port: process.env.PG_PORT,
   database: process.env.PG_NAME,
   user: process.env.PG_USER,
-  password: process.env.PG_PASSWORD
+  password: process.env.PG_PASSWORD,
 });
 
 const checkConn = async () => {
@@ -68,5 +68,5 @@ module.exports = {
   db,
   generateSqlQueryFile,
   parseSqlUpdateStmt,
-  pgp
+  pgp,
 };

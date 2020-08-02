@@ -24,7 +24,7 @@ exports.getListing = asyncHandler(async (req, res) => {
   );
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -42,14 +42,9 @@ exports.createListing = asyncHandler(async (req, res) => {
     tagline,
     mission,
     listing_url,
-    pic1,
-    pic2,
-    pic3,
-    pic4,
-    pic5,
     is_published,
     start_date,
-    end_date
+    end_date,
   } = req.body;
 
   const data = {
@@ -60,14 +55,9 @@ exports.createListing = asyncHandler(async (req, res) => {
     tagline,
     mission,
     listing_url,
-    pic1,
-    pic2,
-    pic3,
-    pic4,
-    pic5,
     is_published,
     start_date,
-    end_date
+    end_date,
   };
 
   // Add logged in user as creator of listing
@@ -83,7 +73,7 @@ exports.createListing = asyncHandler(async (req, res) => {
 
   res.status(201).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -119,14 +109,9 @@ exports.updateListing = asyncHandler(async (req, res, next) => {
     tagline,
     mission,
     listing_url,
-    pic1,
-    pic2,
-    pic3,
-    pic4,
-    pic5,
     is_published,
     start_date,
-    end_date
+    end_date,
   } = req.body;
 
   const data = {
@@ -137,14 +122,9 @@ exports.updateListing = asyncHandler(async (req, res, next) => {
     tagline,
     mission,
     listing_url,
-    pic1,
-    pic2,
-    pic3,
-    pic4,
-    pic5,
     is_published,
     start_date,
-    end_date
+    end_date,
   };
 
   // remove undefined items in json
@@ -153,15 +133,15 @@ exports.updateListing = asyncHandler(async (req, res, next) => {
   const updateListingQuery = parseSqlUpdateStmt(
     data,
     'listings',
-    'WHERE listing_id = $1 RETURNING *',
-    [req.params.id]
+    'WHERE listing_id = $1 RETURNING $2:name',
+    [req.params.id, data]
   );
 
   const rows = await db.one(updateListingQuery);
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -189,15 +169,15 @@ exports.verifyListing = asyncHandler(async (req, res, next) => {
   const verifyListingQuery = parseSqlUpdateStmt(
     data,
     'listings',
-    'WHERE listing_id = $1 RETURNING *',
-    [req.params.id]
+    'WHERE listing_id = $1 RETURNING $2:name',
+    [req.params.id, data]
   );
 
   const rows = await db.one(verifyListingQuery);
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -208,15 +188,10 @@ exports.verifyListing = asyncHandler(async (req, res, next) => {
  */
 exports.deleteListing = asyncHandler(async (req, res, next) => {
   // check if listing exists
-  const listing = await db.oneOrNone(
+  const listing = await db.one(
     'SELECT * FROM listings WHERE listing_id = $1',
     req.params.id
   );
-
-  // return bad request response if invalid listing
-  if (!listing) {
-    return next(new ErrorResponse(`Listing does not exist`, 400));
-  }
 
   // Unauthorised if neither admin nor listing owner
   if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
@@ -232,6 +207,70 @@ exports.deleteListing = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
+  });
+});
+
+/**
+ * @desc    Upload multiple (up to 5) new pictures for a particular listing (identified by listing id)
+ * @route   PUT /api/listings/:id/photo
+ * @access  Admin/Owner
+ */
+exports.uploadListingPics = asyncHandler(async (req, res, next) => {
+  // check if listing exists
+  const listing = await db.one(
+    'SELECT * FROM listings WHERE listing_id = $1',
+    req.params.id
+  );
+
+  // Unauthorised if neither admin nor listing owner
+  if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
+    return next(
+      new ErrorResponse(
+        `User not authorised to upload photo for this listing`,
+        403
+      )
+    );
+  }
+
+  const newPics = req.files;
+  // console.log(newPics);
+
+  // get mapping of pic number to original filename from req body
+  const { pic1, pic2, pic3, pic4, pic5 } = req.body;
+
+  const data = {
+    pic1,
+    pic2,
+    pic3,
+    pic4,
+    pic5,
+  };
+  cleanseData(data);
+
+  // Maps the picture storage location to the respective pic numbers (eg. pic1, pic2 etc...) given by new uploaded pic's original filename as given in req.body
+  Object.keys(data).map(picNum => {
+    const newPicInfo = newPics.find(
+      newPic => newPic.originalname === data[picNum]
+    );
+    if (newPicInfo) {
+      data[picNum] = newPicInfo.location;
+    } else {
+      data[picNum] = null;
+    }
+  });
+
+  const updateProfileQuery = parseSqlUpdateStmt(
+    data,
+    'listings',
+    'WHERE listing_id = $1 RETURNING $2:name',
+    [req.params.id, data]
+  );
+
+  const rows = await db.one(updateProfileQuery);
+
+  res.status(200).json({
+    success: true,
+    data: rows,
   });
 });

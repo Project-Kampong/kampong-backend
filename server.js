@@ -3,8 +3,10 @@ const dotenv = require('dotenv');
 const colors = require('colors');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
+
 const { checkConn } = require('./config/db');
 const apiRoutes = require('./routes/api-routes');
+const testRoutes = require('./routes/test-routes');
 const errorHandler = require('./middleware/error');
 
 dotenv.config({ path: 'config/config.env' });
@@ -27,6 +29,11 @@ if (process.env.NODE_ENV === 'development') {
 
 // Mount routers
 app.use('/api', apiRoutes);
+
+// Mount dev-only test routers
+if (process.env.NODE_ENV === 'development') {
+  app.use('/test', testRoutes);
+}
 
 // Mount error handler
 app.use(errorHandler);

@@ -35,17 +35,6 @@ exports.getProfile = asyncHandler(async (req, res) => {
  * @access  Admin/Private
  */
 exports.updateProfile = asyncHandler(async (req, res, next) => {
-  // check if user exists
-  const isValidUser = await db.oneOrNone(
-    'SELECT * FROM profiles WHERE user_id = $1',
-    req.params.id
-  );
-
-  // return bad request response if invalid user
-  if (!isValidUser) {
-    return next(new ErrorResponse(`User does not exist`, 400));
-  }
-
   // if non-admin user, throw 403 if not updating self
   if (req.user.role !== 'admin' && req.user.user_id !== req.params.id) {
     return next(
@@ -55,7 +44,6 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
 
   const {
     nickname,
-    profile_picture,
     about,
     gender,
     dob,
@@ -69,7 +57,6 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
 
   const data = {
     nickname,
-    profile_picture,
     about,
     gender,
     dob,
@@ -86,8 +73,8 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
   const updateProfileQuery = parseSqlUpdateStmt(
     data,
     'profiles',
-    'WHERE user_id = $1 RETURNING *',
-    [req.params.id]
+    'WHERE user_id = $1 RETURNING $2:name',
+    [req.params.id, data]
   );
 
   const rows = await db.one(updateProfileQuery);
@@ -131,6 +118,43 @@ exports.verifyProfile = asyncHandler(async (req, res, next) => {
   );
 
   const rows = await db.one(updateIsVerifiedQuery);
+
+  res.status(200).json({
+    success: true,
+    data: rows,
+  });
+});
+
+/**
+ * @desc    Upload new or update profile picture
+ * @route   PUT /api/profiles/:id/photo
+ * @access  Admin/Private
+ */
+exports.uploadPic = asyncHandler(async (req, res, next) => {
+  // if non-admin user, throw 403 if not updating self
+  if (req.user.role !== 'admin' && req.user.user_id !== req.params.id) {
+    return next(
+      new ErrorResponse(
+        `Not allowed to update other user's profile picture`,
+        403
+      )
+    );
+  }
+
+  const profile_picture = req.file.location;
+
+  const data = {
+    profile_picture,
+  };
+
+  const updateProfileQuery = parseSqlUpdateStmt(
+    data,
+    'profiles',
+    'WHERE user_id = $1 RETURNING profile_picture',
+    req.params.id
+  );
+
+  const rows = await db.one(updateProfileQuery);
 
   res.status(200).json({
     success: true,
