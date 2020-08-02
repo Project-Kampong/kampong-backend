@@ -212,7 +212,7 @@ exports.deleteListing = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Upload new or update multiple listing pictures
+ * @desc    Upload multiple (up to 5) new pictures for a particular listing (identified by listing id)
  * @route   PUT /api/listings/:id/photo
  * @access  Admin/Owner
  */
