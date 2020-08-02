@@ -249,12 +249,16 @@ exports.uploadListingPics = asyncHandler(async (req, res, next) => {
   cleanseData(data);
 
   // Maps the picture storage location to the respective pic numbers (eg. pic1, pic2 etc...) given by new uploaded pic's original filename as given in req.body
-  Object.keys(data).map(
-    picNum =>
-      (data[picNum] = newPics.find(
-        newPic => newPic.originalname === data[picNum]
-      ).location)
-  );
+  Object.keys(data).map(picNum => {
+    const newPicInfo = newPics.find(
+      newPic => newPic.originalname === data[picNum]
+    );
+    if (newPicInfo) {
+      data[picNum] = newPicInfo.location;
+    } else {
+      data[picNum] = null;
+    }
+  });
 
   const updateProfileQuery = parseSqlUpdateStmt(
     data,
