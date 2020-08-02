@@ -8,9 +8,11 @@ const profileRoute = require('./profile-routes');
 const faqRoute = require('./faq-routes');
 const participantRoute = require('./participant-routes');
 const jobRoute = require('./job-routes');
+const likeRoute = require('./like-routes');
 
 // Mount routes
 router.use('/listings', listingRoute);
+router.use('/likes', likeRoute);
 router.use('/users', userRoute);
 router.use('/auth', authRoute);
 router.use('/skills', skillRoute);

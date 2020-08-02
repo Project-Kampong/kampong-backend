@@ -27,6 +27,12 @@ const errorHandler = (err, req, res, next) => {
     error = new ErrorResponse(message, 400);
   }
 
+  // Postgres non-existent foreign key value error
+  if (err.code === '23503') {
+    const message = `Foreign key value does not exist: ${err.detail}`;
+    error = new ErrorResponse(message, 400);
+  }
+
   // Postgres duplicate key error
   if (err.code === '23505') {
     const message = `Duplicate field value entered: ${err.detail}`;
@@ -35,7 +41,7 @@ const errorHandler = (err, req, res, next) => {
 
   res.status(error.statusCode || 500).json({
     success: false,
-    error: error.message || `Server Error`
+    error: error.message || `Server Error`,
   });
 };
 

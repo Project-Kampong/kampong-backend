@@ -1,5 +1,7 @@
 const express = require('express');
+const router = express.Router();
 const { check, oneOf } = require('express-validator');
+
 const advancedResults = require('../middleware/advancedResults');
 const { protect, authorise } = require('../middleware/auth');
 const { checkInputError } = require('../middleware/input-validation');
@@ -8,15 +10,17 @@ const {
   INVALID_FIELD_MSG,
 } = require('../utils/inputExceptionMsg');
 const { DATETIME_REGEX } = require('../utils/regex');
-const router = express.Router();
+const { uploadFile } = require('../utils/fileUploader');
 
 // Include other resource's controllers to access their endpoints
-const skillRoute = require('./skill-routes');
+const likeRoute = require('./like-routes');
 const participantRoute = require('./participant-routes');
+const skillRoute = require('./skill-routes');
 
 // Re-route this URI to other resource router
-router.use('/:user_id/skills', skillRoute);
+router.use('/:user_id/likes', likeRoute);
 router.use('/:user_id/participants', participantRoute);
+router.use('/:user_id/skills', skillRoute);
 
 // import controllers here
 const {
@@ -24,6 +28,7 @@ const {
   getProfile,
   updateProfile,
   verifyProfile,
+  uploadPic,
 } = require('../controllers/profiles');
 const { NO_FIELD_UPDATED_MSG } = require('../utils/inputExceptionMsg');
 
@@ -32,6 +37,7 @@ router.route('/').get(advancedResults('profiles'), getProfiles);
 
 router.route('/:id').get(getProfile);
 
+// all routes below uses protect middleware
 router.use(protect);
 
 router
@@ -80,6 +86,10 @@ router
     checkInputError,
     updateProfile
   );
+
+router
+  .route('/:id/photo')
+  .put(authorise('admin', 'user'), uploadFile.single('pic'), uploadPic);
 
 router
   .route('/:id')
