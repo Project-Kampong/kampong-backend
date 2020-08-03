@@ -29,8 +29,10 @@ const faqRoute = require('./faq-routes');
 const likeRoute = require('./like-routes');
 const participantRoute = require('./participant-routes');
 const skillRoute = require('./skill-routes');
+const storyRoute = require('./listingstory-routes');
 
 // Re-route this URI to other resource router
+router.use('/stories', storyRoute);
 router.use('/:listing_id/faqs', faqRoute);
 router.use('/:listing_id/likes', likeRoute);
 router.use('/:listing_id/participants', participantRoute);
