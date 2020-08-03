@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Listing Stories schema, routing and endpoint.
+
+### Changed
+
+- Listings create and delete endpoint to also create and delete its corresponding listing story with same listing id.
+- Minor update to README, indicating temporary API documentation location.
+
 ## [0.0.1] - 2020-08-03
 
 ### Added

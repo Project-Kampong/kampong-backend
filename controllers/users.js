@@ -125,27 +125,22 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
  */
 exports.deleteUser = asyncHandler(async (req, res, next) => {
   // check if user exists
-  const isValidUser = await db.oneOrNone(
+  const user = await db.one(
     'SELECT * FROM users WHERE user_id = $1',
     req.params.id
   );
 
-  // return bad request response if invalid user
-  if (!isValidUser) {
-    return next(new ErrorResponse(`User does not exist`, 400));
-  }
-
   const rows = await db.tx(async query => {
-    const deleteProfile = await query.one(
+    const deleteProfile = query.one(
       'DELETE FROM profiles WHERE user_id = $1 RETURNING *',
       req.params.id
     );
 
-    const deleteUser = await query.one(
+    const deleteUser = query.one(
       'DELETE FROM users WHERE user_id = $1 RETURNING *',
       req.params.id
     );
-    return query.batch([deleteUser, deleteProfile]);
+    return await query.batch([deleteUser, deleteProfile]);
   });
 
   res.status(200).json({
