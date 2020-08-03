@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS ProfileSkills CASCADE;
 DROP TABLE IF EXISTS Organisations CASCADE;
 DROP TABLE IF EXISTS Memberships CASCADE;
 DROP TABLE IF EXISTS Listings CASCADE;
+DROP TABLE IF EXISTS ListingStories CASCADE;
 DROP TABLE IF EXISTS Features CASCADE;
 DROP TABLE IF EXISTS HashTags CASCADE;
 DROP TABLE IF EXISTS ListingSkills CASCADE;
@@ -155,6 +156,16 @@ CREATE TABLE Listings (
     PRIMARY KEY (listing_id),
     FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE SET NULL,
     FOREIGN KEY (created_by) REFERENCES Users ON DELETE SET NULL
+);
+
+CREATE TABLE ListingStories (
+    listing_id INTEGER,
+    problem TEXT,
+    solution TEXT,
+    outcome TEXT,
+
+    PRIMARY KEY (listing_id),
+    FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
 /* Featured listings */
