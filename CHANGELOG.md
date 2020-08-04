@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Listing Stories schema, routing and endpoint.
+- Hashtag schema, routing and endpoint.
 
 ### Changed
 

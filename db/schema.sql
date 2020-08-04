@@ -180,7 +180,7 @@ CREATE TABLE Features (
 
 CREATE TABLE HashTags (
     hashtag_id SERIAL,
-    listing_id INTEGER,
+    listing_id INTEGER NOT NULL,
     tag VARCHAR NOT NULL,
 
     PRIMARY KEY (hashtag_id),
@@ -212,7 +212,7 @@ CREATE TABLE Jobs (
 
 CREATE TABLE FAQs (
     faq_id SERIAL,
-    listing_id INTEGER,
+    listing_id INTEGER NOT NULL,
     question TEXT NOT NULL,
     answer TEXT,
 
