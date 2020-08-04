@@ -10,22 +10,21 @@ const { cleanseData } = require('../utils/dbHelper');
  * @route   GET /api/listings/:listing_id/milestones
  * @access  Public
  */
-exports.getMilestones = asyncHandler(async (req, res) => {
+exports.getMilestones = asyncHandler(async (req, res, next) => {
   if (req.params.listing_id) {
-    // return 404 error response if listing not found
-    const listing = await db.one(
-      'SELECT * FROM Listings WHERE listing_id = $1',
+    // returns 404 error response if listing not found
+    const milestones = await db.many(
+      'SELECT l.listing_id, m.milestone_id, description, m.date FROM listings l left join milestones m ON l.listing_id = m.listing_id WHERE l.listing_id = $1',
       req.params.listing_id
     );
 
-    const milestones = await db.manyOrNone(
-      'SELECT * FROM milestones WHERE listing_id = $1',
-      req.params.listing_id
-    );
+    // remove null milestone_id from result
+    const data = milestones.filter(m => m.milestone_id !== null);
+
     return res.status(200).json({
       success: true,
-      count: milestones.length,
-      data: milestones,
+      count: data.length,
+      data,
     });
   }
 
