@@ -28,12 +28,17 @@ router
     [
       oneOf(
         [
+          check('overview').exists(),
           check('problem').exists(),
           check('solution').exists(),
           check('outcome').exists(),
         ],
         NO_FIELD_UPDATED_MSG
       ),
+      check('overview', INVALID_FIELD_MSG('overview'))
+        .optional()
+        .trim()
+        .notEmpty(),
       check('problem', INVALID_FIELD_MSG('problem'))
         .optional()
         .trim()

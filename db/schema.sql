@@ -160,6 +160,7 @@ CREATE TABLE Listings (
 
 CREATE TABLE ListingStories (
     listing_id INTEGER,
+    overview TEXT,
     problem TEXT,
     solution TEXT,
     outcome TEXT,

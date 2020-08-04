@@ -49,9 +49,10 @@ exports.updateListingStory = asyncHandler(async (req, res, next) => {
     );
   }
 
-  const { problem, solution, outcome } = req.body;
+  const { overview, problem, solution, outcome } = req.body;
 
   const data = {
+    overview,
     problem,
     solution,
     outcome,
