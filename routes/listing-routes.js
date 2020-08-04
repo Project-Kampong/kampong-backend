@@ -27,6 +27,7 @@ const {
 // Include other resource's controllers to access their endpoints
 const faqRoute = require('./faq-routes');
 const likeRoute = require('./like-routes');
+const milestoneRoute = require('./milestone-routes');
 const participantRoute = require('./participant-routes');
 const skillRoute = require('./skill-routes');
 const storyRoute = require('./listingstory-routes');
@@ -35,6 +36,7 @@ const storyRoute = require('./listingstory-routes');
 router.use('/stories', storyRoute);
 router.use('/:listing_id/faqs', faqRoute);
 router.use('/:listing_id/likes', likeRoute);
+router.use('/:listing_id/milestones', milestoneRoute);
 router.use('/:listing_id/participants', participantRoute);
 router.use('/:listing_id/skills', skillRoute);
 

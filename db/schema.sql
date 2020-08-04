@@ -202,7 +202,7 @@ CREATE TABLE ListingSkills (
 /* Jobs for a particular listing */
 CREATE TABLE Jobs (
     job_id SERIAL,
-    listing_id INTEGER,
+    listing_id INTEGER NOT NULL,
     job_title VARCHAR NOT NULL,
     job_description TEXT,
 
@@ -268,7 +268,7 @@ CREATE TABLE Subscriptions (
 
 CREATE TABLE Milestones (
     milestone_id SERIAL,
-    listing_id INTEGER,
+    listing_id INTEGER NOT NULL,
     description TEXT NOT NULL,
     date TIMESTAMP,
 
