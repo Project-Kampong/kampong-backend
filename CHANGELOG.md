@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Listing Stories schema, routing and endpoint.
 - Hashtag schema, routing and endpoint.
+- Add upload photo in create listings, header type changed from application/json to multipart/form-data
 
 ### Changed
 
