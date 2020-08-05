@@ -48,6 +48,7 @@ router
   .get(advancedResults('listings'), getListings)
   .post(
     protect,
+    uploadFile.array('pics', 5),
     [
       check('organisation_id', INVALID_FIELD_MSG('organisation id'))
         .optional()
