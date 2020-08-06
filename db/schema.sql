@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS ProfileSkills CASCADE;
 DROP TABLE IF EXISTS Organisations CASCADE;
 DROP TABLE IF EXISTS Memberships CASCADE;
 DROP TABLE IF EXISTS Listings CASCADE;
+DROP TABLE IF EXISTS ListingStories CASCADE;
 DROP TABLE IF EXISTS Features CASCADE;
 DROP TABLE IF EXISTS HashTags CASCADE;
 DROP TABLE IF EXISTS ListingSkills CASCADE;
@@ -157,6 +158,17 @@ CREATE TABLE Listings (
     FOREIGN KEY (created_by) REFERENCES Users ON DELETE SET NULL
 );
 
+CREATE TABLE ListingStories (
+    listing_id INTEGER,
+    overview TEXT,
+    problem TEXT,
+    solution TEXT,
+    outcome TEXT,
+
+    PRIMARY KEY (listing_id),
+    FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+);
+
 /* Featured listings */
 CREATE TABLE Features (
     feature_id SERIAL,
@@ -168,7 +180,7 @@ CREATE TABLE Features (
 
 CREATE TABLE HashTags (
     hashtag_id SERIAL,
-    listing_id INTEGER,
+    listing_id INTEGER NOT NULL,
     tag VARCHAR NOT NULL,
 
     PRIMARY KEY (hashtag_id),
@@ -190,7 +202,7 @@ CREATE TABLE ListingSkills (
 /* Jobs for a particular listing */
 CREATE TABLE Jobs (
     job_id SERIAL,
-    listing_id INTEGER,
+    listing_id INTEGER NOT NULL,
     job_title VARCHAR NOT NULL,
     job_description TEXT,
 
@@ -200,7 +212,7 @@ CREATE TABLE Jobs (
 
 CREATE TABLE FAQs (
     faq_id SERIAL,
-    listing_id INTEGER,
+    listing_id INTEGER NOT NULL,
     question TEXT NOT NULL,
     answer TEXT,
 
@@ -256,7 +268,7 @@ CREATE TABLE Subscriptions (
 
 CREATE TABLE Milestones (
     milestone_id SERIAL,
-    listing_id INTEGER,
+    listing_id INTEGER NOT NULL,
     description TEXT NOT NULL,
     date TIMESTAMP,
 
