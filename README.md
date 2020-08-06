@@ -68,7 +68,7 @@ yarn dev
 
 ## API Documentation
 
-Documentation coming soon.
+Documentation is temporarily found in `public/index.html` for this developmental phase. New API documentation location will be set up once Kampong deploys a stable release.
 
 ## License
 

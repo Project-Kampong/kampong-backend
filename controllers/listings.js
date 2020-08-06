@@ -29,7 +29,7 @@ exports.getListing = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Create listing
+ * @desc    Create listing and associated listing story
  * @route   POST /api/listings
  * @access  Private
  */
@@ -42,6 +42,11 @@ exports.createListing = asyncHandler(async (req, res) => {
     tagline,
     mission,
     listing_url,
+    pic1,
+    pic2,
+    pic3,
+    pic4,
+    pic5,
     is_published,
     start_date,
     end_date,
@@ -55,6 +60,11 @@ exports.createListing = asyncHandler(async (req, res) => {
     tagline,
     mission,
     listing_url,
+    pic1,
+    pic2,
+    pic3,
+    pic4,
+    pic5,
     is_published,
     start_date,
     end_date,
@@ -66,10 +76,23 @@ exports.createListing = asyncHandler(async (req, res) => {
   // remove undefined values in json object
   cleanseData(data);
 
-  const rows = await db.one(
-    'INSERT INTO listings (${this:name}) VALUES (${this:csv}) RETURNING *',
-    data
-  );
+  /**
+   * SQL Transaction, creating listing and associated listing story
+   * Returns an array of 2 json:
+   * 1st json: Listing entry
+   * 2nd json: Listing story entry
+   */
+  const rows = await db.tx(async query => {
+    const createListing = await query.one(
+      'INSERT INTO listings (${this:name}) VALUES (${this:csv}) RETURNING *',
+      data
+    );
+    const createListingStory = await query.one(
+      'INSERT INTO listingstories (listing_id) VALUES ($1) RETURNING *',
+      createListing.listing_id
+    );
+    return query.batch([createListing, createListingStory]);
+  });
 
   res.status(201).json({
     success: true,
@@ -182,7 +205,7 @@ exports.verifyListing = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Delete single listing
+ * @desc    Delete single listing and associated listing story
  * @route   DELETE /api/listings/:id
  * @access  Admin/Owner
  */
@@ -200,10 +223,19 @@ exports.deleteListing = asyncHandler(async (req, res, next) => {
     );
   }
 
-  const rows = await db.one(
-    'DELETE FROM listings WHERE listing_id = $1 RETURNING *',
-    req.params.id
-  );
+  const rows = await db.tx(async query => {
+    const deleteListing = db.one(
+      'DELETE FROM listings WHERE listing_id = $1 RETURNING *',
+      req.params.id
+    );
+
+    const deleteListingStory = db.one(
+      'DELETE FROM listingstories WHERE listing_id = $1 RETURNING *',
+      req.params.id
+    );
+
+    return await query.batch([deleteListing, deleteListingStory]);
+  });
 
   res.status(200).json({
     success: true,
