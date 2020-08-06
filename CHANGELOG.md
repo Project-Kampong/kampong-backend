@@ -9,8 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add hashId generator utility, to generate hashed serial number and with decoding and encoding functionality.
-- For 'Get All...' endpoints, they will show their corresponding hashId values. If the select query params is used, there will not be a hashId field generated. Note that this feature is not reliable for tables with more than one id field (ie. exactly one attribute ending with '\_id'), and its use on such tables is highly discouraged (unless you know what you are doing).
+- hashId generator utility, to generate hashed serial number and with decoding and encoding functionality.
+- Show corresponding hashId values for 'Get All...' endpoints. If select query params is used, hashId field will not be generated. Note that this feature is not reliable for tables with more than one id field (ie. more than one columns with column name ending with '\_id'). It is implemented such that it will take the first id column if multiple id columns are present. This is usually safe as existing tables have their first id column as their primary key. Nevertheless, its use on tables with multiple id columns is highly discouraged as it may lead to unpredictable outcomes.
 - Get single listing by hashId endpoint
 - Get single profile by hashId endpoint
 
