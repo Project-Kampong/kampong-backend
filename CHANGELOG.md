@@ -5,7 +5,16 @@ Record of notable changes to Project Kampong Backend.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+### [Unreleased]
+
+### Added
+
+- Add hashId generator utility, to generate hashed serial number and with decoding and encoding functionality.
+- For 'Get All...' endpoints, if the table queried has exactly one id field (ie. exactly one attribute ending with '\_id'), they will show their corresponding hashId values. If the select query params is used, there will not be a hashId field generated.
+
+### Changed
+
+- All 'Get All...' endpoints count now reflect the total count of database entries that fulfill the conditions, regardless of limit and offset.
 
 ### Added
 

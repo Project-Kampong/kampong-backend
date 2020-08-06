@@ -1,6 +1,7 @@
 const asyncHandler = require('./async');
 const { db, pgp } = require('../config/db');
 const { cleanseData } = require('../utils/dbHelper');
+const { hashEncode } = require('../utils/hashIdGenerator');
 
 /**
  * Handles select, sort, page, limit and filter request queries.
@@ -27,7 +28,7 @@ const advancedResults = model =>
       model,
       sort,
       page,
-      limit
+      limit,
     };
 
     // remove undefined values (ie. remove sort if no sort value specified)
@@ -54,7 +55,7 @@ const advancedResults = model =>
       for (let [key, value] of Object.entries(reqQuery)) {
         const mappedFilter = {
           key,
-          value: value.split(',').map(str => str.split(/'/).join('')) // remove all ' for pgp formatter to parse into sql
+          value: value.split(',').map(str => str.split(/'/).join('')), // remove all ' for pgp formatter to parse into sql
         };
 
         filterQuery += pgp.as.format(
@@ -83,33 +84,43 @@ const advancedResults = model =>
       'SELECT COUNT(*) FROM ${model:name} ${filterQuery:raw}',
       format
     );
+    const count = parseInt(totalEntries.count);
 
     query += pgp.as.format('OFFSET ${startIndex} LIMIT ${limit}', format);
 
-    const results = await db.manyOrNone(query, format);
+    let results = await db.manyOrNone(query, format);
+
+    // Look for id field and generate hashId if non-empty results
+    if (results.length !== 0) {
+      const id = Object.keys(results[0]).filter(key => key.includes('_id'));
+      // if there is exactly one id field and select is '*', generate its corresponding hashId
+      if (id.length === 1 && select === '*') {
+        results.map(res => (res['hashId'] = hashEncode(res[id])));
+      }
+    }
 
     // Pagination results
     const pagination = {};
 
-    if (endIndex < totalEntries.count) {
+    if (endIndex < count) {
       pagination.next = {
         page: page + 1,
-        limit
+        limit,
       };
     }
 
     if (startIndex > 0) {
       pagination.prev = {
         page: page - 1,
-        limit
+        limit,
       };
     }
 
     res.advancedResults = {
       success: true,
-      count: results.length,
+      count,
       pagination,
-      data: results
+      data: results,
     };
 
     next();
