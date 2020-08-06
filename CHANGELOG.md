@@ -10,11 +10,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add hashId generator utility, to generate hashed serial number and with decoding and encoding functionality.
-- For 'Get All...' endpoints, if the table queried has exactly one id field (ie. exactly one attribute ending with '\_id'), they will show their corresponding hashId values. If the select query params is used, there will not be a hashId field generated.
+- For 'Get All...' endpoints, they will show their corresponding hashId values. If the select query params is used, there will not be a hashId field generated. Note that this feature is not reliable for tables with more than one id field (ie. exactly one attribute ending with '\_id'), and its use on such tables is highly discouraged (unless you know what you are doing).
+- Get single listing by hashId endpoint
+- Get single profile by hashId endpoint
 
 ### Changed
 
 - All 'Get All...' endpoints count now reflect the total count of database entries that fulfill the conditions, regardless of limit and offset.
+- Route for original get single listing by listing id (see API docs)
+- Route for original get single profile by profile id (see API docs)
+- Updated API docs to show hashId displayed for relevant Get All endpoints
 
 ### Added
 

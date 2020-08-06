@@ -2,6 +2,7 @@ const { db, parseSqlUpdateStmt } = require('../config/db');
 const asyncHandler = require('../middleware/async');
 const { cleanseData } = require('../utils/dbHelper');
 const ErrorResponse = require('../utils/errorResponse');
+const { hashDecode } = require('../utils/hashIdGenerator');
 
 /**
  * @desc    Get all listings
@@ -13,14 +14,34 @@ exports.getListings = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Get single listing
- * @route   GET /api/listings/:id
+ * @desc    Get single listing by listing id
+ * @route   GET /api/listings/:id/raw
  * @access  Public
  */
 exports.getListing = asyncHandler(async (req, res) => {
   const rows = await db.one(
     'SELECT * FROM listings WHERE listing_id = $1',
     req.params.id
+  );
+  res.status(200).json({
+    success: true,
+    data: rows,
+  });
+});
+
+/**
+ * @desc    Get single listing by hashId
+ * @route   GET /api/listings/:hashId
+ * @access  Public
+ */
+exports.getListingByHashId = asyncHandler(async (req, res, next) => {
+  const decodedId = hashDecode(req.params.hashId)[0];
+  if (!decodedId) {
+    return next(new ErrorResponse('Invalid listing ID', 400));
+  }
+  const rows = await db.one(
+    'SELECT * FROM listings WHERE listing_id = $1',
+    decodedId
   );
   res.status(200).json({
     success: true,

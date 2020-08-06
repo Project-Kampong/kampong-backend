@@ -93,9 +93,9 @@ const advancedResults = model =>
     // Look for id field and generate hashId if non-empty results
     if (results.length !== 0) {
       const id = Object.keys(results[0]).filter(key => key.includes('_id'));
-      // if there is exactly one id field and select is '*', generate its corresponding hashId
-      if (id.length === 1 && select === '*') {
-        results.map(res => (res['hashId'] = hashEncode(res[id])));
+      // if there is at least one id field and select is '*', generate its corresponding hashId using the first id attribute in the table
+      if (id.length !== 0 && select === '*') {
+        results.map(res => (res['hashId'] = hashEncode(res[id[0]])));
       }
     }
 
