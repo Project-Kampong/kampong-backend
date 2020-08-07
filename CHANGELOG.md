@@ -21,6 +21,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Route for original get single profile by profile id (see API docs)
 - Updated API docs to show hashId displayed for relevant Get All endpoints
 
+### Fixed
+
+- Bug where user cannot update own profile, and upload profile pic as 403 response was given.
+- Bug (similar as above) where 403 response given when user is updating own participant entry.
+
 ## [0.0.2] - 2020-08-06
 
 ### Added
