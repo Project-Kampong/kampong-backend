@@ -20,6 +20,7 @@ DROP TABLE IF EXISTS ListingAdmins CASCADE;
 DROP TABLE IF EXISTS Participants CASCADE;
 DROP TABLE IF EXISTS Subscriptions CASCADE;
 DROP TABLE IF EXISTS Milestones CASCADE;
+DROP TABLE IF EXISTS Updates CASCADE;
 
 CREATE TABLE Roles (
     role VARCHAR PRIMARY KEY
@@ -155,7 +156,7 @@ CREATE TABLE Listings (
 
     PRIMARY KEY (listing_id),
     FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE SET NULL,
-    FOREIGN KEY (created_by) REFERENCES Users ON DELETE SET NULL
+    FOREIGN KEY (created_by) REFERENCES Users(user_id) ON DELETE SET NULL
 );
 
 CREATE TABLE ListingStories (
@@ -276,6 +277,13 @@ CREATE TABLE Milestones (
     FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
+CREATE TABLE Updates (
+    update_id SERIAL,
+    listing_id INTEGER NOT NULL,
+    description TEXT NOT NULL,
+    posted_by INTEGER NOT NULL,
+    created_on TIMESTAMP NOT NULL DEFAULT NOW(),
 
-
-
+    PRIMARY KEY (update_id),
+    FOREIGN KEY (posted_by) REFERENCES Users(user_id) ON DELETE SET NULL
+);
