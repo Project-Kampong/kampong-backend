@@ -281,9 +281,14 @@ CREATE TABLE Updates (
     update_id SERIAL,
     listing_id INTEGER NOT NULL,
     description TEXT NOT NULL,
-    posted_by INTEGER NOT NULL,
+    pic1 VARCHAR,
+    pic2 VARCHAR,
+    pic3 VARCHAR,
+    pic4 VARCHAR,
+    pic5 VARCHAR,
     created_on TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_on TIMESTAMP NOT NULL DEFAULT NOW(),
 
     PRIMARY KEY (update_id),
-    FOREIGN KEY (posted_by) REFERENCES Users(user_id) ON DELETE SET NULL
+    FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );

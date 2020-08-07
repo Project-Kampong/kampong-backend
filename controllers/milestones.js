@@ -108,7 +108,7 @@ exports.updateMilestone = asyncHandler(async (req, res, next) => {
     if (!listingOwner) {
       return next(
         new ErrorResponse(
-          `Not authorised to update milestones for this listing`,
+          `Not authorised to update milestones in this listing`,
           403
         )
       );
@@ -160,7 +160,7 @@ exports.deleteMilestone = asyncHandler(async (req, res, next) => {
     if (!listingOwner) {
       return next(
         new ErrorResponse(
-          `Not authorised to update MILESTONE for this listing`,
+          `Not authorised to delete milestones in this listing`,
           403
         )
       );
