@@ -22,7 +22,10 @@ DROP TABLE IF EXISTS Subscriptions CASCADE;
 DROP TABLE IF EXISTS Milestones CASCADE;
 
 CREATE TABLE Roles (
-    role VARCHAR PRIMARY KEY
+    role_id SERIAL,
+    role_name VARCHAR UNIQUE NOT NULL,
+
+    PRIMARY KEY (role_id)
 );
 
 CREATE TABLE Users (
@@ -34,7 +37,7 @@ CREATE TABLE Users (
     role VARCHAR NOT NULL DEFAULT 'user',
 
     PRIMARY KEY (user_id),
-    FOREIGN KEY (role) REFERENCES Roles ON DELETE SET DEFAULT
+    FOREIGN KEY (role) REFERENCES Roles(role_name) ON DELETE SET DEFAULT
 );
 
 CREATE TABLE PendingUsers (
