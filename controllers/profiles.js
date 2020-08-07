@@ -1,4 +1,3 @@
-const { hashPassword } = require('../utils/auth.js');
 const { db, parseSqlUpdateStmt } = require('../config/db');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
@@ -57,7 +56,10 @@ exports.getProfileByHashId = asyncHandler(async (req, res, next) => {
  */
 exports.updateProfile = asyncHandler(async (req, res, next) => {
   // if non-admin user, throw 403 if not updating self
-  if (req.user.role !== 'admin' && req.user.user_id !== req.params.id) {
+  if (
+    req.user.role !== 'admin' &&
+    req.user.user_id.toString() !== req.params.id
+  ) {
     return next(
       new ErrorResponse(`Not allowed to update other user's profile`, 403)
     );
@@ -153,7 +155,10 @@ exports.verifyProfile = asyncHandler(async (req, res, next) => {
  */
 exports.uploadPic = asyncHandler(async (req, res, next) => {
   // if non-admin user, throw 403 if not updating self
-  if (req.user.role !== 'admin' && req.user.user_id !== req.params.id) {
+  if (
+    req.user.role !== 'admin' &&
+    req.user.user_id.toString() !== req.params.id
+  ) {
     return next(
       new ErrorResponse(
         `Not allowed to update other user's profile picture`,
