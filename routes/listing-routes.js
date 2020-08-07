@@ -17,6 +17,7 @@ const { uploadFile } = require('../utils/fileUploader');
 const {
   getListings,
   getListing,
+  getListingByHashId,
   createListing,
   updateListing,
   verifyListing,
@@ -70,9 +71,11 @@ router
     createListing
   );
 
+router.route('/:id/raw').get(getListing);
+router.route('/:hashId').get(getListingByHashId);
+
 router
   .route('/:id')
-  .get(getListing)
   .put(
     protect,
     authorise('user', 'admin'),

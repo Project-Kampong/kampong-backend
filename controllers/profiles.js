@@ -3,6 +3,7 @@ const { db, parseSqlUpdateStmt } = require('../config/db');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
 const { cleanseData } = require('../utils/dbHelper');
+const { hashDecode } = require('../utils/hashIdGenerator');
 
 /**
  * @desc    Get all profiles
@@ -14,14 +15,34 @@ exports.getProfiles = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Get single profile
- * @route   GET /api/profiles/:id
+ * @desc    Get single profile by profile id
+ * @route   GET /api/profiles/:id/raw
  * @access  Public
  */
 exports.getProfile = asyncHandler(async (req, res) => {
   const rows = await db.one(
     'SELECT * FROM profiles WHERE user_id = $1',
     req.params.id
+  );
+  res.status(200).json({
+    success: true,
+    data: rows,
+  });
+});
+
+/**
+ * @desc    Get single profile by hash id
+ * @route   GET /api/profiles/:hashId
+ * @access  Public
+ */
+exports.getProfileByHashId = asyncHandler(async (req, res, next) => {
+  const decodedId = hashDecode(req.params.hashId)[0];
+  if (!decodedId) {
+    return next(new ErrorResponse('Invalid user ID', 400));
+  }
+  const rows = await db.one(
+    'SELECT * FROM profiles WHERE user_id = $1',
+    decodedId
   );
   res.status(200).json({
     success: true,

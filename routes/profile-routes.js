@@ -26,6 +26,7 @@ router.use('/:user_id/skills', skillRoute);
 const {
   getProfiles,
   getProfile,
+  getProfileByHashId,
   updateProfile,
   verifyProfile,
   uploadPic,
@@ -35,7 +36,9 @@ const { NO_FIELD_UPDATED_MSG } = require('../utils/inputExceptionMsg');
 // map routes to controller
 router.route('/').get(advancedResults('profiles'), getProfiles);
 
-router.route('/:id').get(getProfile);
+router.route('/:id/raw').get(getProfile);
+
+router.route('/:hashId').get(getProfileByHashId);
 
 // all routes below uses protect middleware
 router.use(protect);
