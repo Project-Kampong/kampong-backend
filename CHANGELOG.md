@@ -11,15 +11,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - hashId generator utility, to generate hashed serial number and with decoding and encoding functionality.
 - Show corresponding hashId values for 'Get All...' endpoints. If select query params is used, hashId field will not be generated. Note that this feature is not reliable for tables with more than one id field (ie. more than one columns with column name ending with '\_id'). It is implemented such that it will take the first id column if multiple id columns are present. This is usually safe as existing tables have their first id column as their primary key. Nevertheless, its use on tables with multiple id columns is highly discouraged as it may lead to unpredictable outcomes.
-- Get single listing by hashId endpoint
-- Get single profile by hashId endpoint
+- Get single listing by hashId endpoint.
+- Get single profile by hashId endpoint.
+- LoDash library for use of util functions.
 
 ### Changed
 
 - All 'Get All...' endpoints count now reflect the total count of database entries that fulfill the conditions, regardless of limit and offset.
-- Route for original get single listing by listing id (see API docs)
-- Route for original get single profile by profile id (see API docs)
-- Updated API docs to show hashId displayed for relevant Get All endpoints
+- Route for original get single listing by listing id. (see API docs)
+- Route for original get single profile by profile id. (see API docs)
+- Updated API docs to show hashId displayed for relevant Get All endpoints.
+
+### Fixed
+
+- Multiple photo upload not storing URL location in database. This was an issue affecting the listings endpoints only.
 
 ### Fixed
 
