@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Route for original get single listing by listing id (see API docs)
 - Route for original get single profile by profile id (see API docs)
 - Updated API docs to show hashId displayed for relevant Get All endpoints
-- 'Get all skills for listing' renamed to 'Get all listing skills for listing' and URI changed from `/api/listings/:listing_id/skills` to `/api/listings/:listing_id/listingskills`, for consistency in terminology of `Skill` and `ListingSkill`
+- 'Get all skills for listing' renamed to 'Get all listing skills for listing' and URI changed from `/api/listings/:listing_id/skills` to `/api/listings/:listing_id/listing-skills`, for consistency in terminology of `Skill` and `ListingSkill`
 
 ### Fixed
 

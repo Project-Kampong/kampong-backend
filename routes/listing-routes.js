@@ -41,7 +41,7 @@ router.use('/:listing_id/hashtags', hashtagRoute);
 router.use('/:listing_id/likes', likeRoute);
 router.use('/:listing_id/milestones', milestoneRoute);
 router.use('/:listing_id/participants', participantRoute);
-router.use('/:listing_id/listingskills', listingSkillRoute);
+router.use('/:listing_id/listing-skills', listingSkillRoute);
 
 // map routes to controller
 router

@@ -4,9 +4,9 @@ const ErrorResponse = require('../utils/errorResponse');
 
 /**
  * @desc    Get all listing skills
- * @route   GET /api/listingskills
+ * @route   GET /api/listing-skills
  * @desc    Get all listing skills for a listing
- * @route   GET /api/listings/:listing_id/listingskills
+ * @route   GET /api/listings/:listing_id/listing-skills
  * @access  Public
  */
 exports.getListingSkills = asyncHandler(async (req, res, next) => {
@@ -32,7 +32,7 @@ exports.getListingSkills = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Get single listingskill by listing skill id
- * @route   GET /api/listingskills/:id
+ * @route   GET /api/listing-skills/:id
  * @access  Public
  */
 exports.getListingSkill = asyncHandler(async (req, res) => {
@@ -48,7 +48,7 @@ exports.getListingSkill = asyncHandler(async (req, res) => {
 
 /**
  * @desc    Create listing skill for listing
- * @route   POST /api/listingskills
+ * @route   POST /api/listing-skills
  * @access  Admin/Owner
  */
 exports.createListingSkill = asyncHandler(async (req, res, next) => {
@@ -85,7 +85,7 @@ exports.createListingSkill = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Delete single listing skill by listing skill id
- * @route   DELETE /api/listingskills/:id
+ * @route   DELETE /api/listing-skills/:id
  * @access  Admin/Owner
  */
 exports.deleteListingSkill = asyncHandler(async (req, res, next) => {

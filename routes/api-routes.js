@@ -21,7 +21,7 @@ router.use('/hashtags', hashtagRoute);
 router.use('/jobs', jobRoute);
 router.use('/likes', likeRoute);
 router.use('/listings', listingRoute);
-router.use('/listingskills', listingSkillRoute);
+router.use('/listing-skills', listingSkillRoute);
 router.use('/milestones', milestoneRoute);
 router.use('/profiles', profileRoute);
 router.use('/participants', participantRoute);
