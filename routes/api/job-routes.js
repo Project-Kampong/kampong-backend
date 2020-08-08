@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const { check, oneOf } = require('express-validator');
-const advancedResults = require('../middleware/advancedResults');
-const { protect, authorise } = require('../middleware/auth');
-const { checkInputError } = require('../middleware/inputValidation');
+const advancedResults = require('../../middleware/advancedResults');
+const { protect, authorise } = require('../../middleware/auth');
+const { checkInputError } = require('../../middleware/inputValidation');
 const {
   NO_FIELD_UPDATED_MSG,
   INVALID_FIELD_MSG,
-} = require('../utils/inputExceptionMsg');
+} = require('../../utils/inputExceptionMsg');
 
 // import controllers here
 const {
@@ -16,7 +16,7 @@ const {
   createJob,
   updateJob,
   deleteJob,
-} = require('../controllers/jobs');
+} = require('../../controllers/jobs');
 
 router.route('/').get(advancedResults('jobs'), getJobs);
 router.route('/:id').get(getJob);

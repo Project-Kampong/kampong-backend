@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const { check, oneOf } = require('express-validator');
-const advancedResults = require('../middleware/advancedResults');
-const { protect, authorise } = require('../middleware/auth');
-const { checkInputError } = require('../middleware/inputValidation');
+const advancedResults = require('../../middleware/advancedResults');
+const { protect, authorise } = require('../../middleware/auth');
+const { checkInputError } = require('../../middleware/inputValidation');
 const {
   NO_FIELD_UPDATED_MSG,
   INVALID_FIELD_MSG,
   INVALID_TIMESTAMP_MSG,
-} = require('../utils/inputExceptionMsg');
+} = require('../../utils/inputExceptionMsg');
 
 // import controllers here
 const {
@@ -17,8 +17,8 @@ const {
   createMilestone,
   updateMilestone,
   deleteMilestone,
-} = require('../controllers/milestones');
-const { DATETIME_REGEX } = require('../utils/regex');
+} = require('../../controllers/milestones');
+const { DATETIME_REGEX } = require('../../utils/regex');
 
 router.route('/').get(advancedResults('milestones'), getMilestones);
 router.route('/:id').get(getMilestone);
