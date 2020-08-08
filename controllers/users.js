@@ -1,8 +1,8 @@
 const { hashPassword } = require('../utils/auth.js');
-const { db, parseSqlUpdateStmt } = require('../db/db');
+const { db } = require('../db/db');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
-const { cleanseData } = require('../utils/dbHelper');
+const { cleanseData, parseSqlUpdateStmt } = require('../utils/dbHelper');
 
 /**
  * @desc    Get all users
