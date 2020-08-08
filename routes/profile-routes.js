@@ -4,7 +4,7 @@ const { check, oneOf } = require('express-validator');
 
 const advancedResults = require('../middleware/advancedResults');
 const { protect, authorise } = require('../middleware/auth');
-const { checkInputError } = require('../middleware/input-validation');
+const { checkInputError } = require('../middleware/inputValidation');
 const {
   INVALID_TIMESTAMP_MSG,
   INVALID_FIELD_MSG,

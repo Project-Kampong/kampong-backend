@@ -23,7 +23,7 @@ const {
   forgetPassword,
   resetPassword,
 } = require('../controllers/auth');
-const { checkInputError } = require('../middleware/input-validation');
+const { checkInputError } = require('../middleware/inputValidation');
 
 // map routes to controller
 router.get('/logout', protect, logout);

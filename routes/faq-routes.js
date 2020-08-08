@@ -3,10 +3,10 @@ const router = express.Router({ mergeParams: true });
 const { check, oneOf } = require('express-validator');
 const advancedResults = require('../middleware/advancedResults');
 const { protect, authorise } = require('../middleware/auth');
-const { checkInputError } = require('../middleware/input-validation');
+const { checkInputError } = require('../middleware/inputValidation');
 const {
   NO_FIELD_UPDATED_MSG,
-  INVALID_FIELD_MSG
+  INVALID_FIELD_MSG,
 } = require('../utils/inputExceptionMsg');
 
 // import controllers here
@@ -15,7 +15,7 @@ const {
   getFaq,
   createFaq,
   updateFaq,
-  deleteFaq
+  deleteFaq,
 } = require('../controllers/faqs');
 
 router.route('/').get(advancedResults('faqs'), getFaqs);
@@ -32,7 +32,7 @@ router
     [
       check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
       check('question', INVALID_FIELD_MSG('question')).trim().notEmpty(),
-      check('answer').optional().trim()
+      check('answer').optional().trim(),
     ],
     checkInputError,
     createFaq
@@ -50,7 +50,7 @@ router
         .optional()
         .trim()
         .notEmpty(),
-      check('answer').optional().trim()
+      check('answer').optional().trim(),
     ],
     checkInputError,
     updateFaq
