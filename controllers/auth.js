@@ -4,7 +4,7 @@ const {
   getSignedJwtToken,
   hashPassword,
 } = require('../utils/auth');
-const { db, parseSqlUpdateStmt } = require('../config/db');
+const { db, parseSqlUpdateStmt } = require('../db/db');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
 const { cleanseData } = require('../utils/dbHelper');

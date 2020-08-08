@@ -1,5 +1,5 @@
 const asyncHandler = require('./async');
-const { db, pgp } = require('../config/db');
+const { db, pgp } = require('../db/db');
 const { cleanseData } = require('../utils/dbHelper');
 const { hashEncode } = require('../utils/hashIdGenerator');
 

@@ -1,4 +1,4 @@
-const { db, parseSqlUpdateStmt } = require('../config/db');
+const { db, parseSqlUpdateStmt } = require('../db/db');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
 const { cleanseData } = require('../utils/dbHelper');
@@ -25,7 +25,7 @@ exports.getJobs = asyncHandler(async (req, res) => {
     return res.status(200).json({
       success: true,
       count: jobs.length,
-      data: jobs
+      data: jobs,
     });
   }
 
@@ -44,7 +44,7 @@ exports.getJob = asyncHandler(async (req, res) => {
   );
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -59,7 +59,7 @@ exports.createJob = asyncHandler(async (req, res, next) => {
   const data = {
     listing_id,
     job_title,
-    job_description
+    job_description,
   };
 
   cleanseData(data);
@@ -81,7 +81,7 @@ exports.createJob = asyncHandler(async (req, res, next) => {
 
   res.status(201).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -116,7 +116,7 @@ exports.updateJob = asyncHandler(async (req, res, next) => {
 
   const data = {
     job_title,
-    job_description
+    job_description,
   };
 
   cleanseData(data);
@@ -132,7 +132,7 @@ exports.updateJob = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -170,7 +170,7 @@ exports.deleteJob = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 

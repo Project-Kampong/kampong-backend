@@ -1,4 +1,4 @@
-const { db, parseSqlUpdateStmt } = require('../config/db');
+const { db, parseSqlUpdateStmt } = require('../db/db');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
 
@@ -26,7 +26,7 @@ exports.getSkills = asyncHandler(async (req, res, next) => {
     return res.status(200).json({
       success: true,
       count: skills.length,
-      data: skills
+      data: skills,
     });
   }
 
@@ -44,7 +44,7 @@ exports.getSkills = asyncHandler(async (req, res, next) => {
     return res.status(200).json({
       success: true,
       count: skills.length,
-      data: skills
+      data: skills,
     });
   }
 
@@ -63,7 +63,7 @@ exports.getSkill = asyncHandler(async (req, res) => {
   );
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -76,7 +76,7 @@ exports.createSkill = asyncHandler(async (req, res) => {
   const { skill } = req.body;
 
   const data = {
-    skill
+    skill,
   };
 
   const rows = await db.one(
@@ -86,7 +86,7 @@ exports.createSkill = asyncHandler(async (req, res) => {
 
   res.status(201).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -110,7 +110,7 @@ exports.updateSkill = asyncHandler(async (req, res, next) => {
   const { skill } = req.body;
 
   const data = {
-    skill
+    skill,
   };
 
   const updateSkillQuery = parseSqlUpdateStmt(
@@ -124,7 +124,7 @@ exports.updateSkill = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -152,6 +152,6 @@ exports.deleteSkill = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
