@@ -14,8 +14,10 @@ const { hashEncode } = require('../utils/hashIdGenerator');
  * In checking for string matches, it is optional to use ' to enclose string values.
  * Sample request query. ?select=name,password&sort=name,user_role&page=2&limit=2&name='Ron'
  * @param {String} model name of SQL table to query
+ * @param {String} join name of SQL to form an SQL join with (optional)
+ * @param {String} using column name common to both table to form an SQL join on (required, if join is provided)
  */
-const advancedResults = model =>
+const advancedResults = (model, join, using) =>
   asyncHandler(async (req, res, next) => {
     let { select, sort, page = 1, limit = 25 } = req.query;
     select = select ? select.split(',') : '*';
@@ -29,6 +31,8 @@ const advancedResults = model =>
       sort,
       page,
       limit,
+      join,
+      using,
     };
 
     // remove undefined values (ie. remove sort if no sort value specified)
@@ -38,6 +42,11 @@ const advancedResults = model =>
       'SELECT ${select:name} FROM ${model:name} ',
       format
     );
+
+    if (join && using) {
+      query += pgp.as.format('JOIN ${join:raw} USING (${using:raw}) ', format);
+    }
+    console.log(query.red);
 
     // // Copy req.query, if any
     const reqQuery = { ...req.query };

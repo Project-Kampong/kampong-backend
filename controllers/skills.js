@@ -5,31 +5,11 @@ const ErrorResponse = require('../utils/errorResponse');
 /**
  * @desc    Get all skills
  * @route   GET /api/skills
- * @desc    Get all skills for a listing
- * @route   GET /api/listings/:listing_id/skills
  * @desc    Get all skills for a profile
  * @route   GET /api/profiles/:user_id/skills
  * @access  Public
  */
 exports.getSkills = asyncHandler(async (req, res, next) => {
-  if (req.params.listing_id) {
-    // return 404 error response if listing not found
-    const listing = await db.one(
-      'SELECT * FROM Listings WHERE listing_id = $1',
-      req.params.listing_id
-    );
-
-    const skills = await db.manyOrNone(
-      'SELECT * FROM ListingSkills ls JOIN Skills s USING (skill_id) WHERE ls.listing_id = $1',
-      req.params.listing_id
-    );
-    return res.status(200).json({
-      success: true,
-      count: skills.length,
-      data: skills
-    });
-  }
-
   if (req.params.user_id) {
     // return 404 error response if user not found
     const user = await db.one(
@@ -44,7 +24,7 @@ exports.getSkills = asyncHandler(async (req, res, next) => {
     return res.status(200).json({
       success: true,
       count: skills.length,
-      data: skills
+      data: skills,
     });
   }
 
@@ -63,7 +43,7 @@ exports.getSkill = asyncHandler(async (req, res) => {
   );
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -76,7 +56,7 @@ exports.createSkill = asyncHandler(async (req, res) => {
   const { skill } = req.body;
 
   const data = {
-    skill
+    skill,
   };
 
   const rows = await db.one(
@@ -86,7 +66,7 @@ exports.createSkill = asyncHandler(async (req, res) => {
 
   res.status(201).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -110,7 +90,7 @@ exports.updateSkill = asyncHandler(async (req, res, next) => {
   const { skill } = req.body;
 
   const data = {
-    skill
+    skill,
   };
 
   const updateSkillQuery = parseSqlUpdateStmt(
@@ -124,7 +104,7 @@ exports.updateSkill = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });
 
@@ -152,6 +132,6 @@ exports.deleteSkill = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
 });

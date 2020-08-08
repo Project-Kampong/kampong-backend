@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Show corresponding hashId values for 'Get All...' endpoints. If select query params is used, hashId field will not be generated. Note that this feature is not reliable for tables with more than one id field (ie. more than one columns with column name ending with '\_id'). It is implemented such that it will take the first id column if multiple id columns are present. This is usually safe as existing tables have their first id column as their primary key. Nevertheless, its use on tables with multiple id columns is highly discouraged as it may lead to unpredictable outcomes.
 - Get single listing by hashId endpoint
 - Get single profile by hashId endpoint
+- Listing Skills create, read, delete endpoint
+- `adavancedResult` middleware now accepts `join` and `using` as optional arguments to form SQL joins
 
 ### Changed
 
@@ -20,11 +22,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Route for original get single listing by listing id (see API docs)
 - Route for original get single profile by profile id (see API docs)
 - Updated API docs to show hashId displayed for relevant Get All endpoints
+- 'Get all skills for listing' renamed to 'Get all listing skills for listing' and URI changed from `/api/listings/:listing_id/skills` to `/api/listings/:listing_id/listingskills`, for consistency in terminology of `Skill` and `ListingSkill`
 
 ### Fixed
 
-- Bug where user cannot update own profile, and upload profile pic as 403 response was given.
-- Bug (similar as above) where 403 response given when user is updating own participant entry.
+- Bug where user cannot update own profile, and upload profile pic as `403` response was given.
+- Bug (similar as above) where `403` response given when user is updating own participant entry.
 
 ## [0.0.2] - 2020-08-06
 
@@ -32,7 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Listing Stories schema, routing and endpoint.
 - Hashtag schema, routing and endpoint.
-- Add upload photo in create listings, header type changed from application/json to multipart/form-data
+- Add upload photo in create listings, header type changed from `application/json` to `multipart/form-data`
 
 ### Changed
 
