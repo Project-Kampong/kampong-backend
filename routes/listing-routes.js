@@ -29,6 +29,7 @@ const {
 const faqRoute = require('./faq-routes');
 const hashtagRoute = require('./hashtag-routes');
 const likeRoute = require('./like-routes');
+const listingUpdateRoute = require('./listingupdate-routes');
 const milestoneRoute = require('./milestone-routes');
 const participantRoute = require('./participant-routes');
 const skillRoute = require('./skill-routes');
@@ -39,6 +40,7 @@ router.use('/stories', storyRoute);
 router.use('/:listing_id/faqs', faqRoute);
 router.use('/:listing_id/hashtags', hashtagRoute);
 router.use('/:listing_id/likes', likeRoute);
+router.use('/:listing_id/listing-update', listingUpdateRoute);
 router.use('/:listing_id/milestones', milestoneRoute);
 router.use('/:listing_id/participants', participantRoute);
 router.use('/:listing_id/skills', skillRoute);

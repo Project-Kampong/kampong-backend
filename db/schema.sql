@@ -277,8 +277,8 @@ CREATE TABLE Milestones (
     FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
-CREATE TABLE Updates (
-    update_id SERIAL,
+CREATE TABLE ListingUpdates (
+    listing_update_id SERIAL,
     listing_id INTEGER NOT NULL,
     description TEXT NOT NULL,
     pic1 VARCHAR,
@@ -289,6 +289,6 @@ CREATE TABLE Updates (
     created_on TIMESTAMP NOT NULL DEFAULT NOW(),
     updated_on TIMESTAMP NOT NULL DEFAULT NOW(),
 
-    PRIMARY KEY (update_id),
+    PRIMARY KEY (listing_update_id),
     FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
