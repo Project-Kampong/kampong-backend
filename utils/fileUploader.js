@@ -25,7 +25,7 @@ const uploadFile = multer({
     metadata: (req, file, cb) => {
       cb(null, {
         filename: file.originalname,
-        uploaded_on: Date.now().toString(),
+        uploaded_on: new Date().toLocaleString(),
       });
     },
     key: (req, file, cb) => {

@@ -65,6 +65,7 @@ const advancedResults = (model, join, on) =>
     // // Remove fields from reqQuery
     removeFields.forEach(field => delete reqQuery[field]);
 
+    // Handle WHERE clause of SQL statement
     let filterQuery = '';
 
     if (Object.keys(reqQuery).length !== 0) {

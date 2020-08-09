@@ -10,11 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - hashId generator utility, to generate hashed serial number and with decoding and encoding functionality.
-- Show corresponding hashId values for 'Get All...' endpoints. If select query params is used, hashId field will not be generated. Note that this feature is not reliable for tables with more than one id field (ie. more than one columns with column name ending with '\_id'). It is implemented such that it will take the first id column if multiple id columns are present. This is usually safe as existing tables have their first id column as their primary key. Nevertheless, its use on tables with multiple id columns is highly discouraged as it may lead to unpredictable outcomes.
-- Get single listing by hashId endpoint
-- Get single profile by hashId endpoint
+- Show corresponding `hashId` values for 'Get All...' endpoints. If select query params is used, hashId field will not be generated. Note that this feature is not reliable for tables with more than one id field (ie. more than one columns with column name ending with '\_id'). It is implemented such that it will take the first id column if multiple id columns are present. This is usually safe as existing tables have their first id column as their primary key. Nevertheless, its use on tables with multiple id columns is highly discouraged as it may lead to unpredictable outcomes.
+- LoDash library for use of util functions.
+- Listing Updates CRUD endpoints.
+- Get single listing by hashId endpoint.
+- Get single profile by hashId endpoint.
 - Listing Skills create, read, delete endpoint
 - `adavancedResult` middleware now accepts `join` and `on` as optional arguments to form SQL joins
+- New testing route for multiple file upload.
 
 ### Changed
 
@@ -23,9 +26,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Route for original get single profile by profile id (see API docs)
 - Updated API docs to show hashId displayed for relevant Get All endpoints
 - 'Get all skills for listing' renamed to 'Get all listing skills for listing' and URI changed from `/api/listings/:listing_id/skills` to `/api/listings/:listing_id/listing-skills`, for consistency in terminology of `Skill` and `ListingSkill`
+- File metadata when uploading to S3 now includes file's original name, and upload timestamp
 
 ### Fixed
 
+- Multiple photo upload not storing URL location in database. This was an issue affecting the listings endpoints only.
 - Bug where user cannot update own profile, and upload profile pic as `403` response was given.
 - Bug (similar as above) where `403` response given when user is updating own participant entry.
 

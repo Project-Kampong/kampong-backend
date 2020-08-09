@@ -4,6 +4,7 @@ const { check, oneOf } = require('express-validator');
 const advancedResults = require('../middleware/advancedResults');
 const { protect, authorise } = require('../middleware/auth');
 const { checkInputError } = require('../middleware/input-validation');
+const { mapFilenameToLocation } = require('../middleware/fileUploadHelper');
 const {
   NO_FIELD_UPDATED_MSG,
   INVALID_FIELD_MSG,
@@ -31,6 +32,7 @@ router
   .route('/')
   .post(
     uploadFile.array('pics', 5),
+    mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
     [
       check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
       check('description', INVALID_FIELD_MSG('description')).trim().notEmpty(),
@@ -43,6 +45,7 @@ router
   .route('/:id')
   .put(
     uploadFile.array('pics', 5),
+    mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
     [
       oneOf([check('description').exists()], NO_FIELD_UPDATED_MSG),
       check('description', INVALID_FIELD_MSG('description'))
