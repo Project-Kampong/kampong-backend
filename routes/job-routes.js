@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router({ mergeParams: true });
 const { check, oneOf } = require('express-validator');
 const advancedResults = require('../middleware/advancedResults');
-const { protect, authorise } = require('../middleware/auth');
+const { protect, authorise, includeRoles } = require('../middleware/auth');
 const { checkInputError } = require('../middleware/input-validation');
 const {
   NO_FIELD_UPDATED_MSG,
@@ -12,14 +12,17 @@ const {
 // import controllers here
 const {
   getJobs,
+  getJobsAll,
   getJob,
   createJob,
   updateJob,
-  deleteJob
+  deleteJob,
+  deactivateJob,
 } = require('../controllers/jobs');
 
-router.route('/').get(advancedResults('jobs'), getJobs);
-router.route('/:id').get(getJob);
+router.route('/').get(advancedResults('jobsview'), getJobs);
+router.route('/all').get(protect, authorise('admin'), advancedResults('jobs'), getJobsAll);
+router.route('/:id').get(includeRoles, getJob);
 
 // all routes below only accessible to admin
 router.use(protect);
@@ -39,6 +42,14 @@ router
   );
 
 router
+  .route('/:id/deactivate')
+  .put(
+    protect,
+    authorise('admin', 'owner'),
+    deactivateJob
+  );
+
+router
   .route('/:id')
   .put(
     [
@@ -55,6 +66,6 @@ router
     checkInputError,
     updateJob
   )
-  .delete(deleteJob);
+  .delete(protect, deleteJob);
 
 module.exports = router;

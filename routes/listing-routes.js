@@ -36,6 +36,7 @@ const listingUpdateRoute = require('./listingupdate-routes');
 const milestoneRoute = require('./milestone-routes');
 const participantRoute = require('./participant-routes');
 const listingSkillRoute = require('./listingskill-routes');
+const jobRoute = require('./job-routes');
 const storyRoute = require('./listingstory-routes');
 
 // Re-route this URI to other resource router
@@ -47,6 +48,7 @@ router.use('/:listing_id/listing-updates', listingUpdateRoute);
 router.use('/:listing_id/milestones', milestoneRoute);
 router.use('/:listing_id/participants', participantRoute);
 router.use('/:listing_id/listing-skills', listingSkillRoute);
+router.use('/:listing_id/jobs', jobRoute);
 
 // map routes to controller
 router

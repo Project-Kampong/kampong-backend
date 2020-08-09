@@ -14,7 +14,36 @@ exports.getJobs = asyncHandler(async (req, res) => {
   if (req.params.listing_id) {
     // return 404 error response if listing not found
     const listing = await db.one(
-      'SELECT * FROM Listings WHERE listing_id = $1',
+      'SELECT * FROM listingsview WHERE listing_id = $1',
+      req.params.listing_id
+    );
+
+    const jobs = await db.manyOrNone(
+      'SELECT * FROM jobsview WHERE listing_id = $1',
+      req.params.listing_id
+    );
+    return res.status(200).json({
+      success: true,
+      count: jobs.length,
+      data: jobs,
+    });
+  }
+
+  res.status(200).json(res.advancedResults);
+});
+
+/**
+ * @desc    Get all jobs including soft deletes
+ * @route   GET /api/jobs/all
+ * @desc    Get all jobs for a listing including soft deletes
+ * @route   GET /api/listings/:listing_id/jobs/all
+ * @access  Admin
+ */
+exports.getJobsAll = asyncHandler(async (req, res) => {
+  if (req.params.listing_id) {
+    // return 404 error response if listing not found
+    const listing = await db.one(
+      'SELECT * FROM listings WHERE listing_id = $1',
       req.params.listing_id
     );
 
@@ -38,10 +67,21 @@ exports.getJobs = asyncHandler(async (req, res) => {
  * @access  Public
  */
 exports.getJob = asyncHandler(async (req, res) => {
-  const rows = await db.one(
-    'SELECT * FROM jobs WHERE job_id = $1',
-    req.params.id
-  );
+
+  let rows;
+
+  if (req.query.all === 'true') {
+    rows = await db.one(
+      'SELECT * FROM jobs WHERE job_id = $1',
+      req.params.id
+    );
+  } else {
+    rows = await db.one(
+      'SELECT * FROM jobsview WHERE job_id = $1',
+      req.params.id
+    );
+  }
+
   res.status(200).json({
     success: true,
     data: rows,
@@ -137,11 +177,11 @@ exports.updateJob = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Delete single job
- * @route   DELETE /api/jobs/:id
- * @access  Owner/Admin
+ * @desc    Deactivate (Soft delete) single job
+ * @route   PUT /api/jobs/:id/deactivate
+ * @access  Admin/Owner
  */
-exports.deleteJob = asyncHandler(async (req, res, next) => {
+exports.deactivateJob = asyncHandler(async (req, res, next) => {
   // check if job exists
   const job = await db.oneOrNone(
     'SELECT * FROM jobs WHERE job_id = $1',
@@ -162,6 +202,41 @@ exports.deleteJob = asyncHandler(async (req, res, next) => {
       );
     }
   }
+
+  const rows = await db.one(
+    'UPDATE jobs SET deleted_on=to_timestamp($2 / 1000.0) WHERE job_id = $1 RETURNING *',
+    [req.params.id, Date.now()]
+  );
+
+  res.status(200).json({
+    success: true,
+    data: rows,
+  });
+});
+
+/**
+ * @desc    Delete single job
+ * @route   DELETE /api/jobs/:id
+ * @access  Admin
+ */
+exports.deleteJob = asyncHandler(async (req, res, next) => {
+  // check if job exists
+  const job = await db.oneOrNone(
+    'SELECT * FROM jobs WHERE job_id = $1',
+    req.params.id
+  );
+
+  // return bad request response if invalid job
+  if (!job) {
+    return next(new ErrorResponse(`Job does not exist`, 400));
+  }
+
+  // if non-admin, check if owner of listing
+  if (req.user.role !== 'admin') {
+      return next(
+        new ErrorResponse(`Not authorised to delete jobs in this listing`, 403)
+        );
+    }
 
   const rows = await db.one(
     'DELETE FROM jobs WHERE job_id = $1 RETURNING *',

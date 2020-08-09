@@ -11,6 +11,9 @@ exports.includeRoles = asyncHandler(async (req, res, next) => {
   if (auth && auth.startsWith('Bearer')) {
     // Get token part, since format of auth is string "Bearer <token>"
     token = auth.split(' ')[1];
+  } else {
+    // Else, user must be public
+    next();
   }
 
   try {

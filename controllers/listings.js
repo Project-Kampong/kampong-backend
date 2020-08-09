@@ -23,9 +23,12 @@ exports.getListingsAll = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Get single listing by listing id, specify all=true as query parameter to include soft delete 
- * @route   GET /api/listings/:id/raw OR GET /api/listings/:id/raw?all=true
- * @access  Public OR Admin
+ * @desc    Get single listing by listing id
+ * @route   GET /api/listings/:id/raw
+ * @access  Public
+ * @desc    Get single listing by listing id including soft delete
+ * @route   GET /api/listings/:id/raw?all=true
+ * @access  Admin
  */
 exports.getListing = asyncHandler(async (req, res, next) => {
 
@@ -61,9 +64,12 @@ exports.getListing = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Get single listing by hashId, specify all=true as query parameter to include soft delete
- * @route   GET /api/listings/:hashId OR GET /api/listings/:hashId?all=true
+ * @desc    Get single listing by hashId
+ * @route   GET /api/listings/:hashId
  * @access  Public
+ * @desc    Get single listing by hashId including soft delete
+ * @route   GET /api/listings/:hashId?all=true
+ * @access  Admin
  */
 exports.getListingByHashId = asyncHandler(async (req, res, next) => {
   const decodedId = hashDecode(req.params.hashId)[0];
