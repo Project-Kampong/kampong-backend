@@ -286,9 +286,6 @@ exports.uploadListingPics = asyncHandler(async (req, res, next) => {
     );
   }
 
-  const newPics = req.files;
-  // console.log(newPics);
-
   // get mapping of pic number to original filename from req body
   const { pic1, pic2, pic3, pic4, pic5 } = req.body;
 
@@ -300,18 +297,6 @@ exports.uploadListingPics = asyncHandler(async (req, res, next) => {
     pic5,
   };
   cleanseData(data);
-
-  // Maps the picture storage location to the respective pic numbers (eg. pic1, pic2 etc...) given by new uploaded pic's original filename as given in req.body
-  Object.keys(data).map(picNum => {
-    const newPicInfo = newPics.find(
-      newPic => newPic.originalname === data[picNum]
-    );
-    if (newPicInfo) {
-      data[picNum] = newPicInfo.location;
-    } else {
-      data[picNum] = null;
-    }
-  });
 
   const updateProfileQuery = parseSqlUpdateStmt(
     data,

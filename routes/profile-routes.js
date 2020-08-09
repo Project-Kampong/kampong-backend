@@ -5,6 +5,7 @@ const { check, oneOf } = require('express-validator');
 const advancedResults = require('../middleware/advancedResults');
 const { protect, authorise } = require('../middleware/auth');
 const { checkInputError } = require('../middleware/input-validation');
+const { mapSingleFileLocation } = require('../middleware/fileUploadHelper');
 const {
   INVALID_TIMESTAMP_MSG,
   INVALID_FIELD_MSG,
@@ -92,7 +93,12 @@ router
 
 router
   .route('/:id/photo')
-  .put(authorise('admin', 'user'), uploadFile.single('pic'), uploadPic);
+  .put(
+    authorise('admin', 'user'),
+    uploadFile.single('pic'),
+    mapSingleFileLocation('profile_picture'),
+    uploadPic
+  );
 
 router
   .route('/:id')
