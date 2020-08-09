@@ -15,24 +15,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Listing Updates CRUD endpoints.
 - Get single listing by hashId endpoint.
 - Get single profile by hashId endpoint.
-- Listing Skills create, read, delete endpoint
-- `adavancedResult` middleware now accepts `join` and `on` as optional arguments to form SQL joins
+- Listing Skills create, read, delete endpoint.
+- `adavancedResult` middleware now accepts `join` and `on` as optional arguments to form SQL joins.
 - New testing route for multiple file upload.
 
 ### Changed
 
 - All 'Get All...' endpoints count now reflect the total count of database entries that fulfill the conditions, regardless of limit and offset.
-- Route for original get single listing by listing id (see API docs)
-- Route for original get single profile by profile id (see API docs)
-- Updated API docs to show hashId displayed for relevant Get All endpoints
-- 'Get all skills for listing' renamed to 'Get all listing skills for listing' and URI changed from `/api/listings/:listing_id/skills` to `/api/listings/:listing_id/listing-skills`, for consistency in terminology of `Skill` and `ListingSkill`
-- File metadata when uploading to S3 now includes file's original name, and upload timestamp
+- Route for original get single listing by listing id. (see API docs)
+- Route for original get single profile by profile id. (see API docs)
+- Updated API docs to show hashId displayed for relevant Get All endpoints.
+- 'Get all skills for listing' renamed to 'Get all listing skills for listing' and URI changed from `/api/listings/:listing_id/skills` to `/api/listings/:listing_id/listing-skills`, for consistency in terminology of `Skill` and `ListingSkill`.
+- File metadata when uploading to S3 now includes file's original name, and upload timestamp.
+- Major refactor of file directories, methods to appropriate files. (see [#96](https://github.com/Project-Kampong/kampong-backend/pull/96))
 
 ### Fixed
 
 - Multiple photo upload not storing URL location in database. This was an issue affecting the listings endpoints only.
 - Bug where user cannot update own profile, and upload profile pic as `403` response was given.
 - Bug (similar as above) where `403` response given when user is updating own participant entry.
+- Bug where hashtags with '-' are not allowed. This affects the creation and update of hashtags. Hashtags must now start with '#' followed by a combination of alphanumeric characters, `-` and `_`, and be of length 3 to 20 excluding `#`.
 
 ## [0.0.2] - 2020-08-06
 
@@ -40,7 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Listing Stories schema, routing and endpoint.
 - Hashtag schema, routing and endpoint.
-- Add upload photo in create listings, header type changed from `application/json` to `multipart/form-data`
+- Add upload photo in create listings, header type changed from `application/json` to `multipart/form-data`.
 
 ### Changed
 
