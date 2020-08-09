@@ -54,15 +54,14 @@ const advancedResults = (model, join, on) =>
         format
       );
     }
-    console.log(query.red);
 
-    // // Copy req.query, if any
+    // Copy req.query, if any
     const reqQuery = { ...req.query };
 
-    // // Query fields to exclude from reqQuery
+    // Query fields to exclude from reqQuery
     const removeFields = ['select', 'sort', 'page', 'limit'];
 
-    // // Remove fields from reqQuery
+    // Remove fields from reqQuery
     removeFields.forEach(field => delete reqQuery[field]);
 
     // Handle WHERE clause of SQL statement

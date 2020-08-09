@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const { check } = require('express-validator');
-const advancedResults = require('../middleware/advancedResults');
-const { protect, authorise } = require('../middleware/auth');
-const { checkInputError } = require('../middleware/input-validation');
-const { INVALID_FIELD_MSG } = require('../utils/inputExceptionMsg');
+const advancedResults = require('../../middleware/advancedResults');
+const { protect, authorise } = require('../../middleware/auth');
+const { checkInputError } = require('../../middleware/inputValidation');
+const { INVALID_FIELD_MSG } = require('../../utils/inputExceptionMsg');
 
 // import controllers here
 const {
@@ -12,7 +12,7 @@ const {
   getListingSkill,
   createListingSkill,
   deleteListingSkill,
-} = require('../controllers/listingskills');
+} = require('../../controllers/listingskills');
 
 router
   .route('/')

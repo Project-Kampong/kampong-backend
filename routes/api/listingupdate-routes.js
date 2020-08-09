@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const { check, oneOf } = require('express-validator');
-const advancedResults = require('../middleware/advancedResults');
-const { protect, authorise } = require('../middleware/auth');
-const { checkInputError } = require('../middleware/input-validation');
-const { mapFilenameToLocation } = require('../middleware/fileUploadHelper');
+const advancedResults = require('../../middleware/advancedResults');
+const { protect, authorise } = require('../../middleware/auth');
+const { checkInputError } = require('../../middleware/inputValidation');
+const { mapFilenameToLocation } = require('../../middleware/fileUploadHelper');
 const {
   NO_FIELD_UPDATED_MSG,
   INVALID_FIELD_MSG,
-} = require('../utils/inputExceptionMsg');
-const { uploadFile } = require('../utils/fileUploader');
+} = require('../../utils/inputExceptionMsg');
+const { uploadFile } = require('../../utils/fileUploader');
 
 // import controllers here
 const {
@@ -18,7 +18,7 @@ const {
   createListingUpdate,
   modifyListingUpdate,
   deleteListingUpdate,
-} = require('../controllers/listingupdates');
+} = require('../../controllers/listingupdates');
 
 router.route('/').get(advancedResults('listingupdates'), getListingUpdates);
 router.route('/:id').get(getListingUpdate);
