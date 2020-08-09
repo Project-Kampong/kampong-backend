@@ -13,6 +13,7 @@ const participantRoute = require('./participant-routes');
 const profileRoute = require('./profile-routes');
 const skillRoute = require('./skill-routes');
 const userRoute = require('./user-routes');
+const listingUpdateRoute = require('./listingupdate-routes');
 
 // Mount routes
 router.use('/auth', authRoute);
@@ -21,6 +22,7 @@ router.use('/hashtags', hashtagRoute);
 router.use('/jobs', jobRoute);
 router.use('/likes', likeRoute);
 router.use('/listings', listingRoute);
+router.use('/listing-updates', listingUpdateRoute);
 router.use('/listing-skills', listingSkillRoute);
 router.use('/milestones', milestoneRoute);
 router.use('/profiles', profileRoute);
