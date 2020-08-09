@@ -23,7 +23,10 @@ const uploadFile = multer({
     bucket: process.env.S3_BUCKET_NAME,
     acl: 'public-read',
     metadata: (req, file, cb) => {
-      cb(null, { fieldName: file.fieldname });
+      cb(null, {
+        filename: file.originalname,
+        uploaded_on: new Date().toLocaleString(),
+      });
     },
     key: (req, file, cb) => {
       const strArr = file.originalname.split('.');

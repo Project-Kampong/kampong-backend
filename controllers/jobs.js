@@ -179,5 +179,5 @@ const isListingOwner = async (userId, listingId) => {
     'SELECT created_by FROM Listings WHERE listing_id = $1',
     listingId
   );
-  return userId === owner.created_by;
+  return parseInt(userId) === owner.created_by;
 };

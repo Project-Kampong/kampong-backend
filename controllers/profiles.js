@@ -167,7 +167,7 @@ exports.uploadPic = asyncHandler(async (req, res, next) => {
     );
   }
 
-  const profile_picture = req.file.location;
+  const { profile_picture } = req.body;
 
   const data = {
     profile_picture,

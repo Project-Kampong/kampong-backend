@@ -3,6 +3,7 @@ const router = express.Router();
 const { check, oneOf } = require('express-validator');
 const advancedResults = require('../../middleware/advancedResults');
 const { protect, authorise } = require('../../middleware/auth');
+const { mapFilenameToLocation } = require('../../middleware/fileUploadHelper');
 const { checkInputError } = require('../../middleware/inputValidation');
 const { DATETIME_REGEX } = require('../../utils/regex');
 const {
@@ -29,9 +30,10 @@ const {
 const faqRoute = require('./faq-routes');
 const hashtagRoute = require('./hashtag-routes');
 const likeRoute = require('./like-routes');
+const listingUpdateRoute = require('./listingupdate-routes');
 const milestoneRoute = require('./milestone-routes');
 const participantRoute = require('./participant-routes');
-const skillRoute = require('./skill-routes');
+const listingSkillRoute = require('./listingskill-routes');
 const storyRoute = require('./listingstory-routes');
 
 // Re-route this URI to other resource router
@@ -39,9 +41,10 @@ router.use('/stories', storyRoute);
 router.use('/:listing_id/faqs', faqRoute);
 router.use('/:listing_id/hashtags', hashtagRoute);
 router.use('/:listing_id/likes', likeRoute);
+router.use('/:listing_id/listing-updates', listingUpdateRoute);
 router.use('/:listing_id/milestones', milestoneRoute);
 router.use('/:listing_id/participants', participantRoute);
-router.use('/:listing_id/skills', skillRoute);
+router.use('/:listing_id/listing-skills', listingSkillRoute);
 
 // map routes to controller
 router
@@ -50,6 +53,7 @@ router
   .post(
     protect,
     uploadFile.array('pics', 5),
+    mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
     [
       check('organisation_id', INVALID_FIELD_MSG('organisation id'))
         .optional()
@@ -125,6 +129,7 @@ router
     protect,
     authorise('admin', 'user'),
     uploadFile.array('pics', 5),
+    mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
     uploadListingPics
   );
 
