@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { check, oneOf } = require('express-validator');
 const advancedResults = require('../middleware/advancedResults');
-const { protect, authorise } = require('../middleware/auth');
+const { protect, authorise, includeRoles } = require('../middleware/auth');
 const { checkInputError } = require('../middleware/input-validation');
 const { mapFilenameToLocation } = require('../middleware/fileUploadHelper');
 const { DATETIME_REGEX } = require('../utils/regex');
@@ -17,12 +17,14 @@ const { uploadFile } = require('../utils/fileUploader');
 // import controllers here
 const {
   getListings,
+  getListingsAll,
   getListing,
   getListingByHashId,
   createListing,
   updateListing,
   verifyListing,
   deleteListing,
+  deactivateListing,
   uploadListingPics,
 } = require('../controllers/listings');
 
@@ -49,7 +51,7 @@ router.use('/:listing_id/listing-skills', listingSkillRoute);
 // map routes to controller
 router
   .route('/')
-  .get(advancedResults('listings'), getListings)
+  .get(advancedResults('listingsview'), getListings)
   .post(
     protect,
     uploadFile.array('pics', 5),
@@ -75,8 +77,9 @@ router
     createListing
   );
 
-router.route('/:id/raw').get(getListing);
-router.route('/:hashId').get(getListingByHashId);
+router.route('/all').get(protect, authorise('admin'), advancedResults('listings'), getListingsAll);
+router.route('/:id/raw').get(includeRoles, getListing);
+router.route('/:hashId').get(includeRoles, getListingByHashId);
 
 router
   .route('/:id')
@@ -122,6 +125,14 @@ router
     updateListing
   )
   .delete(protect, deleteListing);
+
+router
+  .route('/:id/deactivate')
+  .put(
+    protect,
+    authorise('admin', 'owner'),
+    deactivateListing
+  );
 
 router
   .route('/:id/photo')

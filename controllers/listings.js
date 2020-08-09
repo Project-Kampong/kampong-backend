@@ -14,24 +14,55 @@ exports.getListings = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Get single listing by listing id
- * @route   GET /api/listings/:id/raw
- * @access  Public
+ * @desc    Get all listings including soft deletes
+ * @route   GET /api/listings/all
+ * @access  Admin
  */
-exports.getListing = asyncHandler(async (req, res) => {
-  const rows = await db.one(
-    'SELECT * FROM listings WHERE listing_id = $1',
-    req.params.id
-  );
-  res.status(200).json({
-    success: true,
-    data: rows,
-  });
+exports.getListingsAll = asyncHandler(async (req, res) => {
+  res.status(200).json(res.advancedResults);
 });
 
 /**
- * @desc    Get single listing by hashId
- * @route   GET /api/listings/:hashId
+ * @desc    Get single listing by listing id, specify all=true as query parameter to include soft delete 
+ * @route   GET /api/listings/:id/raw OR GET /api/listings/:id/raw?all=true
+ * @access  Public OR Admin
+ */
+exports.getListing = asyncHandler(async (req, res, next) => {
+
+  if (req.query.all === 'true') {
+    const rows = await db.one(
+      'SELECT * FROM listings WHERE listing_id = $1',
+      req.params.id
+    );
+
+    //if not admin and the listing has been deactivated, return a bad request
+    if ((!req.user || req.user.role !== 'admin') && rows.deleted_on !== 'null') {
+      return next(new ErrorResponse(`Listing does not exist`, 400));
+
+    } else {
+      res.status(200).json({
+        success: true,
+        data: rows,
+      })
+    }
+
+  } else {
+    const rows = await db.one(
+      'SELECT * FROM listingsview WHERE listing_id = $1',
+      req.params.id
+    );
+
+    res.status(200).json({
+      success: true,
+      data: rows,
+    });
+  }
+
+});
+
+/**
+ * @desc    Get single listing by hashId, specify all=true as query parameter to include soft delete
+ * @route   GET /api/listings/:hashId OR GET /api/listings/:hashId?all=true
  * @access  Public
  */
 exports.getListingByHashId = asyncHandler(async (req, res, next) => {
@@ -39,14 +70,29 @@ exports.getListingByHashId = asyncHandler(async (req, res, next) => {
   if (!decodedId) {
     return next(new ErrorResponse('Invalid listing ID', 400));
   }
-  const rows = await db.one(
-    'SELECT * FROM listings WHERE listing_id = $1',
-    decodedId
-  );
-  res.status(200).json({
-    success: true,
-    data: rows,
-  });
+  if (req.query.all === 'true') {
+    const rows = await db.one(
+      'SELECT * FROM listings WHERE listing_id = $1',
+      decodedId
+    );
+    if ((!req.user || req.user.role !== 'admin') && rows.deleted_on !== 'null') {
+      return next(new ErrorResponse(`Listing does not exist`, 400));
+    } else {
+      res.status(200).json({
+        success: true,
+        data: rows,
+      })
+    }
+  } else {
+    const rows = await db.one(
+      'SELECT * FROM listingsview WHERE listing_id = $1',
+      decodedId
+    );
+    res.status(200).json({
+      success: true,
+      data: rows,
+   });
+  }
 });
 
 /**
@@ -226,13 +272,14 @@ exports.verifyListing = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Delete single listing and associated listing story
- * @route   DELETE /api/listings/:id
+ * @desc    Deactivate (soft delete) single listing
+ * @route   PUT /api/listings/:id/deactivate
  * @access  Admin/Owner
  */
-exports.deleteListing = asyncHandler(async (req, res, next) => {
-  // check if listing exists
-  const listing = await db.one(
+
+ exports.deactivateListing = asyncHandler(async (req, res, next) => {
+   // check if listing exists
+   const listing = await db.one(
     'SELECT * FROM listings WHERE listing_id = $1',
     req.params.id
   );
@@ -244,19 +291,40 @@ exports.deleteListing = asyncHandler(async (req, res, next) => {
     );
   }
 
-  const rows = await db.tx(async query => {
-    const deleteListing = db.one(
+  const rows = await db.one(
+    'UPDATE listings SET deleted_on=to_timestamp($2 / 1000.0) WHERE listing_id = $1 RETURNING *',
+    [req.params.id, Date.now()]
+  );
+
+  res.status(200).json({
+    success: true,
+    data: rows
+  });
+ });
+
+/**
+ * @desc    Delete single listing and associated listing story
+ * @route   DELETE /api/listings/:id
+ * @access  Admin
+ */
+exports.deleteListing = asyncHandler(async (req, res, next) => {
+  // check if listing exists
+  const listing = await db.one(
+    'SELECT * FROM listings WHERE listing_id = $1',
+    req.params.id
+  );
+
+  // Unauthorised if not admin
+  if (req.user.role !== 'admin') {
+    return next(
+      new ErrorResponse(`User not authorised to delete this listing`, 403)
+    );
+  }
+
+  const rows = await db.one(
       'DELETE FROM listings WHERE listing_id = $1 RETURNING *',
       req.params.id
     );
-
-    const deleteListingStory = db.one(
-      'DELETE FROM listingstories WHERE listing_id = $1 RETURNING *',
-      req.params.id
-    );
-
-    return await query.batch([deleteListing, deleteListingStory]);
-  });
 
   res.status(200).json({
     success: true,

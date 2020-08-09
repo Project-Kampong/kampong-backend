@@ -71,10 +71,12 @@ const advancedResults = (model, join, on) =>
     if (Object.keys(reqQuery).length !== 0) {
       filterQuery += 'WHERE ';
       for (let [key, value] of Object.entries(reqQuery)) {
+        
         const mappedFilter = {
           key,
           value: value.split(',').map(str => str.split(/'/).join('')), // remove all ' for pgp formatter to parse into sql
         };
+        console.log(mappedFilter)
 
         filterQuery += pgp.as.format(
           '${key:name} IN (${value:csv}) AND ',

@@ -3,6 +3,33 @@ const asyncHandler = require('./async');
 const ErrorResponse = require('../utils/errorResponse');
 const { db } = require('../config/db');
 
+// Include roles in req if user is logged in to verify later on in the controller
+exports.includeRoles = asyncHandler(async (req, res, next) => {
+  const auth = req.headers.authorization;
+  let token;
+
+  if (auth && auth.startsWith('Bearer')) {
+    // Get token part, since format of auth is string "Bearer <token>"
+    token = auth.split(' ')[1];
+  }
+
+  try {
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Set user request to the token's user id (all protected route has user entry (as JSON) in request)
+    req.user = await db.one(
+      'SELECT * FROM users WHERE user_id = $1',
+      decoded.id
+    );
+    next();
+    //if there is an error, there is no token or user is not authorized properly
+  } catch (err) {
+    next();
+  }
+
+})
+
 // Protect routes
 exports.protect = asyncHandler(async (req, res, next) => {
   const auth = req.headers.authorization;
