@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Get single listing by hashId endpoint
 - Get single profile by hashId endpoint
 - Listing Skills create, read, delete endpoint
-- `adavancedResult` middleware now accepts `join` and `using` as optional arguments to form SQL joins
+- `adavancedResult` middleware now accepts `join` and `on` as optional arguments to form SQL joins
 
 ### Changed
 

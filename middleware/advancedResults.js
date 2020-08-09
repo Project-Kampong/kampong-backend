@@ -4,8 +4,13 @@ const { cleanseData } = require('../utils/dbHelper');
 const { hashEncode } = require('../utils/hashIdGenerator');
 
 /**
- * Handles select, sort, page, limit and filter request queries.
- * Request queries begin with '?' and separated by '&'
+ * Handles select, sort, page, limit and filter request query params.
+ * Request query params begin with '?' and separated by '&'
+ * 2 additional arguments, join, and on, allow joins to be formed
+ * given the table to be joined on, and the column common to both table to join on.
+ * If id column is present, the first id column is used to generate the hashId.
+ * Use of hashId from queries with multiple id field generated is discouraged,
+ * as it may lead to unpredictable outcomes.
  * For select and sort queries, multiple values must be separated
  * by commas, and in the order to be parsed as SQL query statements.
  * Filter query:
@@ -15,9 +20,9 @@ const { hashEncode } = require('../utils/hashIdGenerator');
  * Sample request query. ?select=name,password&sort=name,user_role&page=2&limit=2&name='Ron'
  * @param {String} model name of SQL table to query
  * @param {String} join name of SQL to form an SQL join with (optional)
- * @param {String} using column name common to both table to form an SQL join on (required, if join is provided)
+ * @param {String} on column name common to both table to form an SQL join on (required, if join is provided)
  */
-const advancedResults = (model, join, using) =>
+const advancedResults = (model, join, on) =>
   asyncHandler(async (req, res, next) => {
     let { select, sort, page = 1, limit = 25 } = req.query;
     select = select ? select.split(',') : '*';
@@ -32,10 +37,10 @@ const advancedResults = (model, join, using) =>
       page,
       limit,
       join,
-      using,
+      on,
     };
 
-    // remove undefined values (ie. remove sort if no sort value specified)
+    // remove undefined values (eg. remove sort if no sort value specified)
     cleanseData(format);
 
     let query = pgp.as.format(
@@ -43,8 +48,11 @@ const advancedResults = (model, join, using) =>
       format
     );
 
-    if (join && using) {
-      query += pgp.as.format('JOIN ${join:raw} USING (${using:raw}) ', format);
+    if (join && on) {
+      query += pgp.as.format(
+        'JOIN ${join:raw} ON (${model:raw}.${on:raw} = ${join:raw}.${on:raw}) ',
+        format
+      );
     }
     console.log(query.red);
 
