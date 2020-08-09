@@ -1,10 +1,10 @@
 /* Create user roles */
-INSERT INTO Roles (role) VALUES ('user');
-INSERT INTO Roles (role) VALUES ('admin');
+INSERT INTO Roles (role_name) VALUES ('user');
+INSERT INTO Roles (role_name) VALUES ('admin');
 
 /* User population */
 insert into Users (first_name, email, password, role) values ('Don', 'don@gmail.com', $1, 'admin');
-insert into Users (first_name, email, password) values ('Kristi', 'krowson1@illinois.edu', $1);
+insert into Users (first_name, email, password) values ('Derrick', 'derrick@gmail.com', $1);
 insert into Users (first_name, last_name, email, password) values ('Orbadiah', 'Fouracre', 'ofouracre2@google.ru', $1);
 insert into Users (first_name, last_name, email, password) values ('Orel', 'Robbert', 'orobbert3@reverbnation.com', $1);
 insert into Users (first_name, last_name, email, password) values ('Zilvia', 'Cove', 'zcove4@smugmug.com', $1);
@@ -105,8 +105,8 @@ insert into Users (first_name, last_name, email, password) values ('Salli', 'Gis
 insert into Users (first_name, email, password) values ('Donny', 'dwestwick2r@wix.com', $1);
 
 /* User profile population */
-insert into Profiles (user_id, nickname, profile_picture, about, gender, dob, interest, phone, facebook_link, twitter_link, instagram_link, linkedin_link) values (1, 'Weider', 'https://robohash.org/autvelautem.jpg?size=150x150&set=set1', 'Quality-focused impactful projection', 'o', '1985-04-18 00:43:59', 'Geological Engineer', 97690390, 'http://baidu.com/ipsum/primis/in/faucibus/orci/luctus.xml', 'http://nhs.uk/at/diam/nam.png', 'http://nasa.gov/pede/justo/eu/massa/donec/dapibus/duis.aspx', 'https://linkedin.com/ante/vestibulum/ante/ipsum/primis/in.json');
-insert into Profiles (user_id, nickname, profile_picture, about, gender, dob, interest, phone, facebook_link, twitter_link, instagram_link, linkedin_link) values (2, 'Kiel', null, 'Inverse local strategy', 'm', '1990-05-07 15:40:00', 'Software Consultant', 96831702, 'https://jigsy.com/eu/interdum/eu/tincidunt/in.html', 'http://nasa.gov/nisi/at/nibh/in/hac/habitasse.png', 'https://360.cn/sed/nisl/nunc/rhoncus/dui/vel.jpg', 'https://cbc.ca/id/luctus/nec/molestie/sed/justo/pellentesque.png');
+insert into Profiles (user_id, nickname, profile_picture, about, gender, dob, interest, phone, facebook_link, twitter_link, instagram_link, linkedin_link) values (1, 'Don', 'https://robohash.org/autvelautem.jpg?size=150x150&set=set1', 'Quality-focused impactful projection', 'o', '1985-04-18 00:43:59', 'Geological Engineer', 97690390, 'http://baidu.com/ipsum/primis/in/faucibus/orci/luctus.xml', 'http://nhs.uk/at/diam/nam.png', 'http://nasa.gov/pede/justo/eu/massa/donec/dapibus/duis.aspx', 'https://linkedin.com/ante/vestibulum/ante/ipsum/primis/in.json');
+insert into Profiles (user_id, nickname, profile_picture, about, gender, dob, interest, phone, facebook_link, twitter_link, instagram_link, linkedin_link) values (2, 'Derrick', null, 'Inverse local strategy', 'm', '1990-05-07 15:40:00', 'Software Consultant', 96831702, 'https://jigsy.com/eu/interdum/eu/tincidunt/in.html', 'http://nasa.gov/nisi/at/nibh/in/hac/habitasse.png', 'https://360.cn/sed/nisl/nunc/rhoncus/dui/vel.jpg', 'https://cbc.ca/id/luctus/nec/molestie/sed/justo/pellentesque.png');
 insert into Profiles (user_id, nickname, profile_picture, about, gender, dob, interest, phone, facebook_link, twitter_link, instagram_link, linkedin_link) values (3, 'Bambi', 'https://robohash.org/consequaturatquia.jpg?size=150x150&set=set1', 'Down-sized disintermediate circuit', 'f', '2003-09-22 08:32:55', 'Statistician IV', 87685829, 'https://tripadvisor.com/ornare/imperdiet.png', 'https://google.com/quis/orci/nullam/molestie/nibh/in/lectus.xml', 'http://1und1.de/in/libero/ut/massa.png', 'http://i2i.jp/imperdiet/sapien/urna/pretium/nisl/ut.jpg');
 insert into Profiles (user_id, nickname, profile_picture, about, gender, dob, interest, phone, facebook_link, twitter_link, instagram_link, linkedin_link) values (4, 'Hardy', 'https://robohash.org/sedasperioresmaxime.bmp?size=150x150&set=set1', 'Face to face neutral conglomeration', 'u', '2000-07-04 19:07:24', 'VP Product Management', 84428699, 'https://nhs.uk/mauris.xml', 'http://uiuc.edu/sit/amet/consectetuer/adipiscing/elit/proin.aspx', 'http://cbsnews.com/elementum/eu/interdum.jsp', 'https://hibu.com/quam/sapien/varius/ut/blandit/non/interdum.html');
 insert into Profiles (user_id, nickname, profile_picture, about, gender, dob, interest, phone, facebook_link, twitter_link, instagram_link, linkedin_link) values (5, 'Lucian', 'https://robohash.org/quodprovidenta.png?size=150x150&set=set1', 'Front-line non-volatile conglomeration', 'o', '1996-04-04 20:05:06', 'Software Engineer II', 84677316, 'http://51.la/dui/maecenas/tristique/est.json', 'https://mozilla.com/sagittis.jsp', 'http://vk.com/cubilia.html', 'https://bravesites.com/ut/mauris/eget/massa.jpg');
