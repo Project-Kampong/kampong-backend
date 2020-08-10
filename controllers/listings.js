@@ -14,6 +14,30 @@ exports.getListings = asyncHandler(async (req, res) => {
 });
 
 /**
+ * @desc    Get all listings owned by particular user
+ * @route   GET /api/profiles/:user_id/listings/owner
+ * @access  Public
+ */
+exports.getAllListingsOwnedByUser = asyncHandler(async (req, res, next) => {
+  const userId = req.params.user_id;
+  // check if user exists
+  const user = await db.one(
+    'SELECT * FROM Profiles WHERE user_id = $1',
+    userId
+  );
+
+  const rows = await db.manyOrNone(
+    'SELECT * FROM Listings WHERE created_by = $1',
+    userId
+  );
+
+  res.status(200).json({
+    success: true,
+    data: rows,
+  });
+});
+
+/**
  * @desc    Get single listing by listing id
  * @route   GET /api/listings/:id/raw
  * @access  Public
