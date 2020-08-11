@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Listing Skills create, read, delete endpoint
 - `adavancedResult` middleware now accepts `join` and `on` as optional arguments to form SQL joins
 - New testing route for multiple file upload.
+- Database diagram in `public/kampong-db-diagram.png`.
 
 ### Changed
 
