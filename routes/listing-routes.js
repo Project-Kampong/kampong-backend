@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 const { check, oneOf } = require('express-validator');
 const advancedResults = require('../middleware/advancedResults');
 const { protect, authorise } = require('../middleware/auth');
@@ -17,6 +17,7 @@ const { uploadFile } = require('../utils/fileUploader');
 // import controllers here
 const {
   getListings,
+  getAllListingsOwnedByUser,
   getListingsAll,
   getListing,
   getListingByHashId,
@@ -79,6 +80,7 @@ router
     createListing
   );
 
+router.route('/owner').get(getAllListingsOwnedByUser);
 router.route('/all').get(protect, authorise('admin'), advancedResults('listings'), getListingsAll);
 router.route('/:id/raw').get(getListing);
 router.route('/:hashId').get(getListingByHashId);

@@ -15,11 +15,13 @@ const { uploadFile } = require('../utils/fileUploader');
 
 // Include other resource's controllers to access their endpoints
 const likeRoute = require('./like-routes');
+const listingRoute = require('./listing-routes');
 const participantRoute = require('./participant-routes');
 const skillRoute = require('./skill-routes');
 
 // Re-route this URI to other resource router
 router.use('/:user_id/likes', likeRoute);
+router.use('/:user_id/listings', listingRoute);
 router.use('/:user_id/participants', participantRoute);
 router.use('/:user_id/skills', skillRoute);
 
