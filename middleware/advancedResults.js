@@ -1,5 +1,5 @@
 const asyncHandler = require('./async');
-const { db, pgp } = require('../config/db');
+const { db, pgp } = require('../db/db');
 const { cleanseData } = require('../utils/dbHelper');
 const { hashEncode } = require('../utils/hashIdGenerator');
 
@@ -54,15 +54,14 @@ const advancedResults = (model, join, on) =>
         format
       );
     }
-    //console.log(query.red);
 
-    // // Copy req.query, if any
+    // Copy req.query, if any
     const reqQuery = { ...req.query };
 
-    // // Query fields to exclude from reqQuery
+    // Query fields to exclude from reqQuery
     const removeFields = ['select', 'sort', 'page', 'limit'];
 
-    // // Remove fields from reqQuery
+    // Remove fields from reqQuery
     removeFields.forEach(field => delete reqQuery[field]);
 
     // Handle WHERE clause of SQL statement
@@ -71,7 +70,6 @@ const advancedResults = (model, join, on) =>
     if (Object.keys(reqQuery).length !== 0) {
       filterQuery += 'WHERE ';
       for (let [key, value] of Object.entries(reqQuery)) {
-        
         const mappedFilter = {
           key,
           value: value.split(',').map(str => str.split(/'/).join('')), // remove all ' for pgp formatter to parse into sql

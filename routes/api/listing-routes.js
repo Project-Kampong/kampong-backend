@@ -1,18 +1,18 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const { check, oneOf } = require('express-validator');
-const advancedResults = require('../middleware/advancedResults');
-const { protect, authorise } = require('../middleware/auth');
-const { checkInputError } = require('../middleware/input-validation');
-const { mapFilenameToLocation } = require('../middleware/fileUploadHelper');
-const { DATETIME_REGEX } = require('../utils/regex');
+const advancedResults = require('../../middleware/advancedResults');
+const { protect, authorise } = require('../../middleware/auth');
+const { mapFilenameToLocation } = require('../../middleware/fileUploadHelper');
+const { checkInputError } = require('../../middleware/inputValidation');
+const { DATETIME_REGEX } = require('../../utils/regex');
 const {
   NO_FIELD_UPDATED_MSG,
   INVALID_FIELD_MSG,
   INVALID_BOOLEAN_MSG,
   INVALID_TIMESTAMP_MSG,
-} = require('../utils/inputExceptionMsg');
-const { uploadFile } = require('../utils/fileUploader');
+} = require('../../utils/inputExceptionMsg');
+const { uploadFile } = require('../../utils/fileUploader');
 
 // import controllers here
 const {
@@ -27,7 +27,7 @@ const {
   deleteListing,
   deactivateListing,
   uploadListingPics,
-} = require('../controllers/listings');
+} = require('../../controllers/listings');
 
 // Include other resource's controllers to access their endpoints
 const faqRoute = require('./faq-routes');

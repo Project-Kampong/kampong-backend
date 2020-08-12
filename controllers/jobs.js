@@ -1,7 +1,7 @@
-const { db, parseSqlUpdateStmt } = require('../config/db');
+const { db } = require('../db/db');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
-const { cleanseData } = require('../utils/dbHelper');
+const { cleanseData, parseSqlUpdateStmt } = require('../utils/dbHelper');
 
 /**
  * @desc    Get all jobs
@@ -61,22 +61,18 @@ exports.getJobsAll = asyncHandler(async (req, res) => {
   res.status(200).json(res.advancedResults);
 });
 
-
 /**
  * @desc    Get single job
  * @route   GET /api/jobs/:id
  * @access  Public
  */
-exports.getJob = asyncHandler( async (req, res) => {
-  rows = await db.one(
-    'SELECT * FROM jobs WHERE job_id = $1',
-    req.params.id
-  );
+exports.getJob = asyncHandler(async (req, res) => {
+  rows = await db.one('SELECT * FROM jobs WHERE job_id = $1', req.params.id);
   res.status(200).json({
     success: true,
     data: rows,
-  })
-})
+  });
+});
 
 /**
  * @desc    Create job
@@ -118,7 +114,7 @@ exports.createJob = asyncHandler(async (req, res, next) => {
 /**
  * @desc    Update single job
  * @route   PUT /api/jobs/:id
- * @access  Owner/Admin
+ * @access  Admin/Owner
  */
 exports.updateJob = asyncHandler(async (req, res, next) => {
   // check if job exists
@@ -208,10 +204,10 @@ exports.deleteJob = asyncHandler(async (req, res, next) => {
 
   // check if user is admin
   if (req.user.role !== 'admin') {
-      return next(
-        new ErrorResponse(`Not authorised to delete jobs in this listing`, 403)
-        );
-    }
+    return next(
+      new ErrorResponse(`Not authorised to delete jobs in this listing`, 403)
+    );
+  }
 
   const rows = await db.one(
     'DELETE FROM jobs WHERE job_id = $1 RETURNING *',

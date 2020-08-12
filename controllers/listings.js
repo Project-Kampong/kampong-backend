@@ -1,6 +1,6 @@
-const { db, parseSqlUpdateStmt } = require('../config/db');
+const { db } = require('../db/db');
 const asyncHandler = require('../middleware/async');
-const { cleanseData } = require('../utils/dbHelper');
+const { cleanseData, parseSqlUpdateStmt } = require('../utils/dbHelper');
 const ErrorResponse = require('../utils/errorResponse');
 const { hashDecode } = require('../utils/hashIdGenerator');
 
@@ -11,6 +11,31 @@ const { hashDecode } = require('../utils/hashIdGenerator');
  */
 exports.getListings = asyncHandler(async (req, res) => {
   res.status(200).json(res.advancedResults);
+});
+
+/**
+ * @desc    Get all listings including soft deletes
+ * @route   GET /api/listings/all
+ * @access  Admin
+ */
+exports.getListingsAll = asyncHandler(async (req, res) => {
+  res.status(200).json(res.advancedResults);
+});
+
+/**
+ * @desc    Get single listing by listing id
+ * @route   GET /api/listings/:id/raw
+ * @access  Public
+ */
+exports.getListing = asyncHandler(async (req, res, next) => {
+  const rows = await db.one(
+    'SELECT * FROM listings WHERE listing_id = $1',
+    req.params.id
+  );
+  res.status(200).json({
+    success: true,
+    data: rows,
+  });
 });
 
 /**
@@ -31,31 +56,6 @@ exports.getAllListingsOwnedByUser = asyncHandler(async (req, res, next) => {
     userId
   );
 
-  res.status(200).json({
-    success: true,
-    data: rows,
-  });
-});
-  
-/**
- * @desc    Get all listings including soft deletes
- * @route   GET /api/listings/all
- * @access  Admin
- */
-exports.getListingsAll = asyncHandler(async (req, res) => {
-  res.status(200).json(res.advancedResults);
-});
-
-/**
- * @desc    Get single listing by listing id
- * @route   GET /api/listings/:id/raw
- * @access  Public
- */
-exports.getListing = asyncHandler(async (req, res, next) => {
-  const rows = await db.one(
-    'SELECT * FROM listings WHERE listing_id = $1',
-    req.params.id
-  );
   res.status(200).json({
     success: true,
     data: rows,
@@ -254,9 +254,9 @@ exports.verifyListing = asyncHandler(async (req, res, next) => {
  * @access  Admin/Owner
  */
 
- exports.deactivateListing = asyncHandler(async (req, res, next) => {
-   // check if listing exists
-   const listing = await db.one(
+exports.deactivateListing = asyncHandler(async (req, res, next) => {
+  // check if listing exists
+  const listing = await db.one(
     'SELECT * FROM listings WHERE listing_id = $1',
     req.params.id
   );
@@ -275,9 +275,9 @@ exports.verifyListing = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
- });
+});
 
 /**
  * @desc    Delete single listing and associated listing story
@@ -299,9 +299,9 @@ exports.deleteListing = asyncHandler(async (req, res, next) => {
   }
 
   const rows = await db.one(
-      'DELETE FROM listings WHERE listing_id = $1 RETURNING *',
-      req.params.id
-    );
+    'DELETE FROM listings WHERE listing_id = $1 RETURNING *',
+    req.params.id
+  );
 
   res.status(200).json({
     success: true,

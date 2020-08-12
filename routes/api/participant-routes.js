@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const { check, oneOf } = require('express-validator');
-const advancedResults = require('../middleware/advancedResults');
-const { protect, authorise } = require('../middleware/auth');
-const { checkInputError } = require('../middleware/input-validation');
-const { DATETIME_REGEX } = require('../utils/regex');
+const advancedResults = require('../../middleware/advancedResults');
+const { protect, authorise } = require('../../middleware/auth');
+const { checkInputError } = require('../../middleware/inputValidation');
+const { DATETIME_REGEX } = require('../../utils/regex');
 const {
   INVALID_FIELD_MSG,
   INVALID_TIMESTAMP_MSG,
   NO_FIELD_UPDATED_MSG,
-} = require('../utils/inputExceptionMsg');
+} = require('../../utils/inputExceptionMsg');
 
 // import controllers here
 const {
@@ -18,7 +18,7 @@ const {
   createParticipant,
   updateParticipant,
   deleteParticipant,
-} = require('../controllers/participants');
+} = require('../../controllers/participants');
 
 router.route('/').get(advancedResults('participants'), getParticipants);
 router.route('/:participant_id').get(getParticipant);

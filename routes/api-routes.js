@@ -1,19 +1,19 @@
 const express = require('express');
 const router = express.Router();
 
-const authRoute = require('./auth-routes');
-const faqRoute = require('./faq-routes');
-const hashtagRoute = require('./hashtag-routes');
-const jobRoute = require('./job-routes');
-const likeRoute = require('./like-routes');
-const listingRoute = require('./listing-routes');
-const listingSkillRoute = require('./listingskill-routes');
-const milestoneRoute = require('./milestone-routes');
-const participantRoute = require('./participant-routes');
-const profileRoute = require('./profile-routes');
-const skillRoute = require('./skill-routes');
-const userRoute = require('./user-routes');
-const listingUpdateRoute = require('./listingupdate-routes');
+const authRoute = require('./api/auth-routes');
+const faqRoute = require('./api/faq-routes');
+const hashtagRoute = require('./api/hashtag-routes');
+const jobRoute = require('./api/job-routes');
+const likeRoute = require('./api/like-routes');
+const listingRoute = require('./api/listing-routes');
+const listingSkillRoute = require('./api/listingskill-routes');
+const listingUpdateRoute = require('./api/listingupdate-routes');
+const milestoneRoute = require('./api/milestone-routes');
+const participantRoute = require('./api/participant-routes');
+const profileRoute = require('./api/profile-routes');
+const skillRoute = require('./api/skill-routes');
+const userRoute = require('./api/user-routes');
 
 // Mount routes
 router.use('/auth', authRoute);

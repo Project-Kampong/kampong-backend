@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const { check } = require('express-validator');
-const advancedResults = require('../middleware/advancedResults');
-const { protect, authorise } = require('../middleware/auth');
-const { checkInputError } = require('../middleware/input-validation');
-const { ALPHA_WHITESPACE_REGEX } = require('../utils/regex');
+const advancedResults = require('../../middleware/advancedResults');
+const { protect, authorise } = require('../../middleware/auth');
+const { checkInputError } = require('../../middleware/inputValidation');
+const { ALPHA_WHITESPACE_REGEX } = require('../../utils/regex');
 const {
   INVALID_ALPHA_SPACE_MSG,
-  NO_FIELD_UPDATED_MSG
-} = require('../utils/inputExceptionMsg');
+  NO_FIELD_UPDATED_MSG,
+} = require('../../utils/inputExceptionMsg');
 
 // import controllers here
 const {
@@ -16,8 +16,8 @@ const {
   getSkill,
   createSkill,
   updateSkill,
-  deleteSkill
-} = require('../controllers/skills');
+  deleteSkill,
+} = require('../../controllers/skills');
 
 router.route('/').get(advancedResults('skills'), getSkills);
 router.route('/:id').get(getSkill);
@@ -34,7 +34,7 @@ router
       check('skill', INVALID_ALPHA_SPACE_MSG('skill'))
         .trim()
         .notEmpty()
-        .matches(ALPHA_WHITESPACE_REGEX)
+        .matches(ALPHA_WHITESPACE_REGEX),
     ],
     checkInputError,
     createSkill
@@ -48,7 +48,7 @@ router
         .trim()
         .notEmpty()
         .matches(ALPHA_WHITESPACE_REGEX)
-        .withMessage(INVALID_ALPHA_SPACE_MSG('skill'))
+        .withMessage(INVALID_ALPHA_SPACE_MSG('skill')),
     ],
     checkInputError,
     updateSkill
