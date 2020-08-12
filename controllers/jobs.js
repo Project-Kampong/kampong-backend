@@ -1,3 +1,4 @@
+const moment = require('moment');
 const { db } = require('../db/db');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
@@ -181,7 +182,7 @@ exports.deactivateJob = asyncHandler(async (req, res, next) => {
 
   const rows = await db.one(
     'UPDATE jobs SET deleted_on=$2 WHERE job_id = $1 RETURNING *',
-    [req.params.id, new Date().toLocaleString()]
+    [req.params.id, moment().format('YYYY-MM-DD HH:mm:ss.000')]
   );
 
   res.status(200).json({

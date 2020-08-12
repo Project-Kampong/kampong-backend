@@ -1,5 +1,6 @@
 const aws = require('aws-sdk');
 const dotenv = require('dotenv');
+const moment = require('moment');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 
@@ -25,7 +26,7 @@ const uploadFile = multer({
     metadata: (req, file, cb) => {
       cb(null, {
         filename: file.originalname,
-        uploaded_on: new Date().toLocaleString(),
+        uploaded_on: moment().format('YYYY-MM-DD HH:mm:ss.000'),
       });
     },
     key: (req, file, cb) => {
