@@ -1,10 +1,16 @@
 const asyncHandler = require('./async');
-const { db, pgp } = require('../config/db');
+const { db, pgp } = require('../db/db');
 const { cleanseData } = require('../utils/dbHelper');
+const { hashEncode } = require('../utils/hashIdGenerator');
 
 /**
- * Handles select, sort, page, limit and filter request queries.
- * Request queries begin with '?' and separated by '&'
+ * Handles select, sort, page, limit and filter request query params.
+ * Request query params begin with '?' and separated by '&'
+ * 2 additional arguments, join, and on, allow joins to be formed
+ * given the table to be joined on, and the column common to both table to join on.
+ * If id column is present, the first id column is used to generate the hashId.
+ * Use of hashId from queries with multiple id field generated is discouraged,
+ * as it may lead to unpredictable outcomes.
  * For select and sort queries, multiple values must be separated
  * by commas, and in the order to be parsed as SQL query statements.
  * Filter query:
@@ -13,8 +19,10 @@ const { cleanseData } = require('../utils/dbHelper');
  * In checking for string matches, it is optional to use ' to enclose string values.
  * Sample request query. ?select=name,password&sort=name,user_role&page=2&limit=2&name='Ron'
  * @param {String} model name of SQL table to query
+ * @param {String} join name of SQL to form an SQL join with (optional)
+ * @param {String} on column name common to both table to form an SQL join on (required, if join is provided)
  */
-const advancedResults = model =>
+const advancedResults = (model, join, on) =>
   asyncHandler(async (req, res, next) => {
     let { select, sort, page = 1, limit = 25 } = req.query;
     select = select ? select.split(',') : '*';
@@ -27,10 +35,12 @@ const advancedResults = model =>
       model,
       sort,
       page,
-      limit
+      limit,
+      join,
+      on,
     };
 
-    // remove undefined values (ie. remove sort if no sort value specified)
+    // remove undefined values (eg. remove sort if no sort value specified)
     cleanseData(format);
 
     let query = pgp.as.format(
@@ -38,15 +48,23 @@ const advancedResults = model =>
       format
     );
 
-    // // Copy req.query, if any
+    if (join && on) {
+      query += pgp.as.format(
+        'JOIN ${join:raw} ON (${model:raw}.${on:raw} = ${join:raw}.${on:raw}) ',
+        format
+      );
+    }
+
+    // Copy req.query, if any
     const reqQuery = { ...req.query };
 
-    // // Query fields to exclude from reqQuery
+    // Query fields to exclude from reqQuery
     const removeFields = ['select', 'sort', 'page', 'limit'];
 
-    // // Remove fields from reqQuery
+    // Remove fields from reqQuery
     removeFields.forEach(field => delete reqQuery[field]);
 
+    // Handle WHERE clause of SQL statement
     let filterQuery = '';
 
     if (Object.keys(reqQuery).length !== 0) {
@@ -54,7 +72,7 @@ const advancedResults = model =>
       for (let [key, value] of Object.entries(reqQuery)) {
         const mappedFilter = {
           key,
-          value: value.split(',').map(str => str.split(/'/).join('')) // remove all ' for pgp formatter to parse into sql
+          value: value.split(',').map(str => str.split(/'/).join('')), // remove all ' for pgp formatter to parse into sql
         };
 
         filterQuery += pgp.as.format(
@@ -83,33 +101,43 @@ const advancedResults = model =>
       'SELECT COUNT(*) FROM ${model:name} ${filterQuery:raw}',
       format
     );
+    const count = parseInt(totalEntries.count);
 
     query += pgp.as.format('OFFSET ${startIndex} LIMIT ${limit}', format);
 
-    const results = await db.manyOrNone(query, format);
+    let results = await db.manyOrNone(query, format);
+
+    // Look for id field and generate hashId if non-empty results
+    if (results.length !== 0) {
+      const id = Object.keys(results[0]).filter(key => key.includes('_id'));
+      // if there is at least one id field and select is '*', generate its corresponding hashId using the first id attribute in the table
+      if (id.length !== 0 && select === '*') {
+        results.map(res => (res['hashId'] = hashEncode(res[id[0]])));
+      }
+    }
 
     // Pagination results
     const pagination = {};
 
-    if (endIndex < totalEntries.count) {
+    if (endIndex < count) {
       pagination.next = {
         page: page + 1,
-        limit
+        limit,
       };
     }
 
     if (startIndex > 0) {
       pagination.prev = {
         page: page - 1,
-        limit
+        limit,
       };
     }
 
     res.advancedResults = {
       success: true,
-      count: results.length,
+      count,
       pagination,
-      data: results
+      data: results,
     };
 
     next();
