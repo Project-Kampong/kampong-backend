@@ -56,13 +56,30 @@ exports.getListingComments = asyncHandler(async (req, res) => {
 
 /**
  * @desc    Get single listing comment (identified by listing comment id)
- * @route   GET /api/listing-comments/:listing_comment_id
+ * @route   GET /api/listing-comments/:id
  * @access  Public
  */
 exports.getListingComment = asyncHandler(async (req, res) => {
   const rows = await db.one(
     'SELECT * FROM ListingComments WHERE listing_comment_id = $1',
-    req.params.listing_comment_id
+    req.params.id
+  );
+
+  res.status(200).json({
+    success: true,
+    data: rows,
+  });
+});
+
+/**
+ * @desc    Get single listing comment and all its children comments (identified by listing comment id)
+ * @route   GET /api/listing-comments/:id/children
+ * @access  Public
+ */
+exports.getListingCommentChildren = asyncHandler(async (req, res) => {
+  const rows = await db.manyOrNone(
+    'WITH RECURSIVE recurselc AS (SELECT * FROM listingcomments WHERE listing_comment_id = $1 UNION SELECT lc.* FROM listingcomments lc JOIN recurselc rlc ON rlc.listing_comment_id = lc.reply_to_id) SELECT * FROM recurselc',
+    req.params.id
   );
 
   res.status(200).json({
@@ -101,7 +118,7 @@ exports.createListingComment = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Update single listing comment (identified by listing comment id)
- * @route   PUT /api/listing-comments/:listing_comment_id
+ * @route   PUT /api/listing-comments/:id
  * @access  Admin/Owner/Private
  */
 exports.updateListingComment = asyncHandler(async (req, res, next) => {
@@ -109,15 +126,12 @@ exports.updateListingComment = asyncHandler(async (req, res, next) => {
   if (req.user.role === 'user') {
     const listingId = await db.one(
       'SELECT listing_id FROM ListingComments WHERE listing_comment_id = $1',
-      req.params.listing_comment_id
+      req.params.id
     );
 
     const isListingOwner = checkListingOwner(req.user.user_id, listingId);
 
-    const isCommentOwner = checkCommentOwner(
-      req.user.user_id,
-      req.params.listing_comment_id
-    );
+    const isCommentOwner = checkCommentOwner(req.user.user_id, req.params.id);
 
     // if not listing owner and user_id to be updated is not self, 403 response
     if (!(await isListingOwner) && !(await isCommentOwner)) {
@@ -134,6 +148,7 @@ exports.updateListingComment = asyncHandler(async (req, res, next) => {
 
   const data = {
     comment,
+    updated_on: new Date().toISOString().slice(0, 19).replace('T', ' '),
   };
 
   cleanseData(data);
@@ -142,7 +157,7 @@ exports.updateListingComment = asyncHandler(async (req, res, next) => {
     data,
     'listingcomments',
     'WHERE listing_comment_id = $1 RETURNING *',
-    req.params.listing_comment_id
+    req.params.id
   );
 
   const rows = await db.one(updateListingCommentQuery);
@@ -155,7 +170,7 @@ exports.updateListingComment = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Delete single listing comment (identified by listing comment id)
- * @route   DELETE /api/listing-comments/:listing_comment_id
+ * @route   DELETE /api/listing-comments/:id
  * @access  Admin/Owner/Private
  */
 exports.deleteListingComment = asyncHandler(async (req, res, next) => {
@@ -163,15 +178,12 @@ exports.deleteListingComment = asyncHandler(async (req, res, next) => {
   if (req.user.role === 'user') {
     const listingId = await db.one(
       'SELECT listing_id FROM ListingComments WHERE listing_comment_id = $1',
-      req.params.listing_comment_id
+      req.params.id
     );
 
     const isListingOwner = checkListingOwner(req.user.user_id, listingId);
 
-    const isCommentOwner = checkCommentOwner(
-      req.user.user_id,
-      req.params.listing_comment_id
-    );
+    const isCommentOwner = checkCommentOwner(req.user.user_id, req.params.id);
 
     // if not listing owner and user_id to be updated is not self, 403 response
     if (!(await isListingOwner) && !(await isCommentOwner)) {
@@ -186,7 +198,7 @@ exports.deleteListingComment = asyncHandler(async (req, res, next) => {
 
   const rows = await db.one(
     'DELETE FROM ListingComments WHERE listing_comment_id = $1 RETURNING *',
-    req.params.listing_comment_id
+    req.params.id
   );
 
   res.status(200).json({

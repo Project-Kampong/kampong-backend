@@ -21,6 +21,12 @@ const {
   deleteUser,
 } = require('../../controllers/users');
 
+// Include other resource's controllers to access their endpoints
+const listingCommentRoute = require('./listingcomment-routes');
+
+// Re-route this URI to other resource router
+router.use('/:user_id/listing-comments', listingCommentRoute);
+
 // all route to use protect middleware
 router.use(protect);
 router.use(authorise('admin')); // admin authorisation only

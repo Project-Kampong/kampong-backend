@@ -33,6 +33,7 @@ const {
 const faqRoute = require('./faq-routes');
 const hashtagRoute = require('./hashtag-routes');
 const likeRoute = require('./like-routes');
+const listingCommentRoute = require('./listingcomment-routes');
 const listingUpdateRoute = require('./listingupdate-routes');
 const milestoneRoute = require('./milestone-routes');
 const participantRoute = require('./participant-routes');
@@ -45,6 +46,7 @@ router.use('/stories', storyRoute);
 router.use('/:listing_id/faqs', faqRoute);
 router.use('/:listing_id/hashtags', hashtagRoute);
 router.use('/:listing_id/likes', likeRoute);
+router.use('/:listing_id/listing-comments', listingCommentRoute);
 router.use('/:listing_id/listing-updates', listingUpdateRoute);
 router.use('/:listing_id/milestones', milestoneRoute);
 router.use('/:listing_id/participants', participantRoute);
@@ -81,7 +83,14 @@ router
   );
 
 router.route('/owner').get(getAllListingsOwnedByUser);
-router.route('/all').get(protect, authorise('admin'), advancedResults('listings'), getListingsAll);
+router
+  .route('/all')
+  .get(
+    protect,
+    authorise('admin'),
+    advancedResults('listings'),
+    getListingsAll
+  );
 router.route('/:id/raw').get(getListing);
 router.route('/:hashId').get(getListingByHashId);
 
@@ -132,11 +141,7 @@ router
 
 router
   .route('/:id/deactivate')
-  .put(
-    protect,
-    authorise('admin', 'owner'),
-    deactivateListing
-  );
+  .put(protect, authorise('admin', 'owner'), deactivateListing);
 
 router
   .route('/:id/photo')
