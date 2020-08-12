@@ -4,7 +4,11 @@ const dotenv = require('dotenv');
 const colors = require('colors');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
-
+const helmet = require('helmet');
+const xss = require('xss-clean');
+const rateLimit = require('express-rate-limit');
+const hpp = require('hpp');
+const cors = require('cors');
 const { checkConn } = require('./utils/dbHelper');
 const apiRoutes = require('./routes/api-routes');
 const testRoutes = require('./routes/test-routes');
@@ -27,6 +31,26 @@ app.use(cookieParser());
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
+// Set security headers
+app.use(helmet());
+
+// Prevent XSS attacks
+app.use(xss());
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 200,
+});
+
+app.use(limiter);
+
+// Prevent http param pollution
+app.use(hpp());
+
+// Enable CORS
+app.use(cors());
 
 // Set static folder (ie. so all files can access public folder with './public/' and base directory of URI is public folder)
 app.use(express.static(path.join(__dirname, 'public')));
