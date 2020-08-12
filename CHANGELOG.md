@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `adavancedResult` middleware now accepts `join` and `on` as optional arguments to form SQL joins.
 - New testing route for multiple file upload.
 - Get all listings owned by particular user (identified by `userId`).
+- Database diagram in `public/kampong-db-diagram.png`.
 
 ### Changed
 
