@@ -14,30 +14,6 @@ exports.getListings = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Get all listings owned by particular user
- * @route   GET /api/profiles/:user_id/listings/owner
- * @access  Public
- */
-exports.getAllListingsOwnedByUser = asyncHandler(async (req, res, next) => {
-  const userId = req.params.user_id;
-  // check if user exists
-  const user = await db.one(
-    'SELECT * FROM Profiles WHERE user_id = $1',
-    userId
-  );
-
-  const rows = await db.manyOrNone(
-    'SELECT * FROM Listings WHERE created_by = $1',
-    userId
-  );
-
-  res.status(200).json({
-    success: true,
-    data: rows,
-  });
-});
-  
-/**
  * @desc    Get all listings including soft deletes
  * @route   GET /api/listings/all
  * @access  Admin
@@ -56,6 +32,30 @@ exports.getListing = asyncHandler(async (req, res, next) => {
     'SELECT * FROM listings WHERE listing_id = $1',
     req.params.id
   );
+  res.status(200).json({
+    success: true,
+    data: rows,
+  });
+});
+
+/**
+ * @desc    Get all listings owned by particular user
+ * @route   GET /api/profiles/:user_id/listings/owner
+ * @access  Public
+ */
+exports.getAllListingsOwnedByUser = asyncHandler(async (req, res, next) => {
+  const userId = req.params.user_id;
+  // check if user exists
+  const user = await db.one(
+    'SELECT * FROM Profiles WHERE user_id = $1',
+    userId
+  );
+
+  const rows = await db.manyOrNone(
+    'SELECT * FROM Listings WHERE created_by = $1',
+    userId
+  );
+
   res.status(200).json({
     success: true,
     data: rows,
@@ -254,9 +254,9 @@ exports.verifyListing = asyncHandler(async (req, res, next) => {
  * @access  Admin/Owner
  */
 
- exports.deactivateListing = asyncHandler(async (req, res, next) => {
-   // check if listing exists
-   const listing = await db.one(
+exports.deactivateListing = asyncHandler(async (req, res, next) => {
+  // check if listing exists
+  const listing = await db.one(
     'SELECT * FROM listings WHERE listing_id = $1',
     req.params.id
   );
@@ -275,9 +275,9 @@ exports.verifyListing = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: rows
+    data: rows,
   });
- });
+});
 
 /**
  * @desc    Delete single listing and associated listing story
@@ -299,9 +299,9 @@ exports.deleteListing = asyncHandler(async (req, res, next) => {
   }
 
   const rows = await db.one(
-      'DELETE FROM listings WHERE listing_id = $1 RETURNING *',
-      req.params.id
-    );
+    'DELETE FROM listings WHERE listing_id = $1 RETURNING *',
+    req.params.id
+  );
 
   res.status(200).json({
     success: true,

@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - `hashId` generator utility, to generate hashed serial number and with decoding and encoding functionality.
-- Show corresponding `hashId` values for 'Get All...' endpoints. If select query params is used, hashId field will not be generated. Note that this feature is not reliable for tables with more than one id field (ie. more than one columns with column name ending with '\_id'). It is implemented such that it will take the first id column if multiple id columns are present. This is usually safe as existing tables have their first id column as their primary key. Nevertheless, its use on tables with multiple id columns is highly discouraged as it may lead to unpredictable outcomes.
+- Show corresponding `hashId` values for 'Get All...' endpoints. If select query params is used, hashId field will not be generated. Note that this feature is not reliable for tables with more than one id field (ie. more than one columns with column name ending with `_id`). It is implemented such that it will take the first id column if multiple id columns are present. This is usually safe as existing tables have their first id column as their primary key. Nevertheless, its use on tables with multiple id columns is highly discouraged as it may lead to unpredictable outcomes.
 - LoDash library for use of util functions.
 - Listing Updates CRUD endpoints.
 - Get single listing by hashId endpoint.
@@ -20,7 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New testing route for multiple file upload.
 - Get all listings owned by particular user (identified by `userId`).
 - Database diagram in `public/kampong-db-diagram.png`.
-- Soft delete for jobs and listings and its relevant endpoints.
+- Soft delete for jobs and listings.
+- Separate admin-only `Get all ... including soft delete` endpoint.
 
 ### Changed
 
