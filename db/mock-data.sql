@@ -5,8 +5,8 @@ INSERT INTO Roles (role_name) VALUES ('admin');
 /* User population */
 insert into Users (first_name, email, password, role) values ('Don', 'don@gmail.com', $1, 'admin');
 insert into Users (first_name, email, password) values ('Derrick', 'derrick@gmail.com', $1);
-insert into Users (first_name, last_name, email, password) values ('Orbadiah', 'Fouracre', 'ofouracre2@google.ru', $1);
-insert into Users (first_name, last_name, email, password) values ('Orel', 'Robbert', 'orobbert3@reverbnation.com', $1);
+insert into Users (first_name, last_name, email, password) values ('User', 'Test', 'user@gmail.com', $1);
+insert into Users (first_name, last_name, email, password, role) values ('Admin', 'Test', 'admin@gmail.com', $1, 'admin');
 insert into Users (first_name, last_name, email, password) values ('Zilvia', 'Cove', 'zcove4@smugmug.com', $1);
 insert into Users (first_name, last_name, email, password) values ('Jessy', 'Van der Daal', 'jvan5@vistaprint.com', $1);
 insert into Users (first_name, last_name, email, password) values ('Marcela', 'Josskoviz', 'mjosskoviz6@yahoo.co.jp', $1);
