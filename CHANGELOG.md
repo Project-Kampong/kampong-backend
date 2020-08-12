@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
+## [0.0.3] - 2020-08-13
+
 ### Added
 
 - `hashId` generator utility, to generate hashed serial number and with decoding and encoding functionality.
@@ -84,6 +86,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Internal, dev-only test routes and methods.
 - API documentation temporarily set up as front-end page to be served, for ease of testing by frontend.
 
-[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.0.2...HEAD
+[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.0.3...HEAD
+[0.0.3]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.0.3
 [0.0.2]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.0.2
 [0.0.1]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.0.1
