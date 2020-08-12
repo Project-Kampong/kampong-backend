@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New testing route for multiple file upload.
 - Get all listings owned by particular user (identified by `userId`).
 - Database diagram in `public/kampong-db-diagram.png`.
+- Soft delete for jobs and listings and its relevant endpoints.
 
 ### Changed
 
