@@ -11,11 +11,14 @@ checkConn();
 // Create a QueryFile globally, once per file:
 const schema = generateSqlQueryFile('../db/schema.sql');
 const data = generateSqlQueryFile('../db/mock-data.sql');
+const views = generateSqlQueryFile('../db/views.sql');
 
 const createTables = async () => {
   try {
     await db.tx(async query => await query.manyOrNone(schema));
     console.log(`Tables created...`.green.inverse);
+    await db.tx(async query => await query.manyOrNone(views));
+    console.log(`Views created...`.green.inverse);
     process.exit();
   } catch (err) {
     console.error(err.toString().red);

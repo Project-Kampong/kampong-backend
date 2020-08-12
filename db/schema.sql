@@ -124,6 +124,7 @@ CREATE TABLE Organisations (
 	email VARCHAR(320),
 	is_verified BOOLEAN NOT NULL DEFAULT FALSE,
 	created_on TIMESTAMP NOT NULL DEFAULT NOW(),
+	deleted_on TIMESTAMP DEFAULT NULL,
 	PRIMARY KEY (organisation_id)
 );
 
@@ -159,6 +160,7 @@ CREATE TABLE Listings (
 	start_date TIMESTAMP NOT NULL DEFAULT NOW(),
 	end_date TIMESTAMP,
 	created_on TIMESTAMP NOT NULL DEFAULT NOW(),
+	deleted_on TIMESTAMP DEFAULT NULL,
 	PRIMARY KEY (listing_id),
 	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE SET NULL,
 	FOREIGN KEY (created_by) REFERENCES Users (user_id) ON DELETE SET NULL
@@ -209,6 +211,7 @@ CREATE TABLE Jobs (
 	listing_id INTEGER NOT NULL,
 	job_title VARCHAR NOT NULL,
 	job_description TEXT,
+	deleted_on TIMESTAMP DEFAULT NULL,
 	PRIMARY KEY (job_id),
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
