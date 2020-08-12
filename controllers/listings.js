@@ -1,3 +1,4 @@
+const moment = require('moment');
 const { db } = require('../db/db');
 const asyncHandler = require('../middleware/async');
 const { cleanseData, parseSqlUpdateStmt } = require('../utils/dbHelper');
@@ -270,7 +271,7 @@ exports.deactivateListing = asyncHandler(async (req, res, next) => {
 
   const rows = await db.one(
     'UPDATE listings SET deleted_on=$2 WHERE listing_id = $1 RETURNING *',
-    [req.params.id, new Date().toLocaleString()]
+    [req.params.id, moment().format('YYYY-MM-DD HH:mm:ss.000')]
   );
 
   res.status(200).json({

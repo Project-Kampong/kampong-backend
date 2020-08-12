@@ -1,3 +1,4 @@
+const moment = require('moment');
 const { db } = require('../db/db');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
@@ -130,7 +131,7 @@ exports.modifyListingUpdate = asyncHandler(async (req, res, next) => {
     pic3,
     pic4,
     pic5,
-    updated_on: new Date().toLocaleString(),
+    updated_on: moment().format('YYYY-MM-DD HH:mm:ss.000'),
   };
 
   cleanseData(data);
