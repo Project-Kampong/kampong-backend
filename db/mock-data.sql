@@ -228,7 +228,7 @@ insert into Listings (created_by, title, category, about, tagline, mission, list
 insert into Listings (created_by, title, category, about, tagline, mission, listing_url, pic1, pic2, pic3, pic4, pic5, start_date) values (18, 'phasellus id sapien in sapien iaculis congue', 'Marketing', 'Re-contextualized value-added toolset', 'reinvent virtual mindshare', 'morph front-end channels', 'https://bbb.org/vestibulum/ac/est/lacinia/nisi/venenatis.html', 'https://robohash.org/sitessenumquam.bmp?size=500x500&set=set1', 'https://robohash.org/asperioreseumblanditiis.bmp?size=500x500&set=set1', 'https://robohash.org/autsimiliquenon.jpg?size=500x500&set=set1', null, null, '2020-07-31 04:45:41');
 insert into Listings (created_by, title, category, about, tagline, mission, listing_url, pic1, pic2, pic3, pic4, pic5, start_date) values (4, 'diam vitae quam suspendisse potenti', 'Services', 'Synergized dynamic analyzer', 'integrate clicks-and-mortar ROI', 'revolutionize plug-and-play action-items', 'https://nyu.edu/cras/in/purus/eu/magna.json', 'https://robohash.org/ducimusiustocumque.jpg?size=500x500&set=set1', null, 'https://robohash.org/abautemvoluptatem.bmp?size=500x500&set=set1', null, null, '2020-09-26 06:20:51');
 
-
+/* Skills mock data population */
 insert into Skills (skill) values ('cDNA');
 insert into Skills (skill) values ('Typesetting');
 insert into Skills (skill) values ('Biochemistry');
@@ -480,6 +480,7 @@ insert into ListingSkills (listing_id, skill_id) values (20, 31);
 insert into ListingSkills (listing_id, skill_id) values (19, 46);
 insert into ListingSkills (listing_id, skill_id) values (18, 38);
 
+/* FAQ mock data population */
 insert into Faqs (listing_id, question, answer) values (8, 'consequat nulla nisl nunc nisl duis bibendum felis', '24/7');
 insert into Faqs (listing_id, question, answer) values (5, 'mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et magnis dis', 'Graphic Interface');
 insert into Faqs (listing_id, question, answer) values (15, 'mauris vulputate elementum nullam varius nulla facilisi cras', 'conglomeration');
@@ -521,6 +522,7 @@ insert into Faqs (listing_id, question, answer) values (10, 'amet sem fusce cons
 insert into Faqs (listing_id, question, answer) values (4, 'imperdiet nullam orci pede venenatis non sodales sed tincidunt eu felis', 'archive');
 insert into Faqs (listing_id, question, answer) values (11, 'sit amet nulla quisque arcu libero', 'frame');
 
+/* Participants mock data population */
 insert into Participants (listing_id, user_id, joined_on, end_on) values (15, 1, '12/19/2018', null);
 insert into Participants (listing_id, user_id, joined_on, end_on) values (13, 9, '9/24/2018', null);
 insert into Participants (listing_id, user_id, joined_on, end_on) values (2, 16, '10/18/2019', null);
@@ -542,6 +544,7 @@ insert into Participants (listing_id, user_id, joined_on, end_on) values (6, 1, 
 insert into Participants (listing_id, user_id, joined_on, end_on) values (3, 7, '6/18/2020', '8/3/2020');
 insert into Participants (listing_id, user_id, joined_on, end_on) values (4, 2, '12/20/2019', null);
 
+/* Jobs mock data population */
 insert into jobs (listing_id, job_title, job_description) values (8, 'Account Representative I', 'Polarised next generation alliance');
 insert into jobs (listing_id, job_title, job_description) values (4, 'Project Manager', 'Ameliorated 24 hour structure');
 insert into jobs (listing_id, job_title, job_description) values (16, 'Teacher', 'Enhanced 6th generation portal');
@@ -623,6 +626,7 @@ insert into jobs (listing_id, job_title, job_description) values (12, 'Database 
 insert into jobs (listing_id, job_title, job_description) values (10, 'Administrative Assistant I', 'Re-contextualized methodical workforce');
 insert into jobs (listing_id, job_title, job_description) values (16, 'Desktop Support Technician', 'Stand-alone bottom-line website');
 
+/* Likes (User-Listings) mock data population */
 insert into Likes (user_id, listing_id) values (1, 16);
 insert into Likes (user_id, listing_id) values (2, 17);
 insert into Likes (user_id, listing_id) values (3, 12);
@@ -724,6 +728,7 @@ insert into Likes (user_id, listing_id) values (98, 3);
 insert into Likes (user_id, listing_id) values (99, 13);
 insert into Likes (user_id, listing_id) values (100, 13);
 
+/* HashTags mock data population */
 insert into HashTags (listing_id, tag) values (4, '#broker0');
 insert into HashTags (listing_id, tag) values (13, '#sandyfirth1');
 insert into HashTags (listing_id, tag) values (12, '#tudhope2');
@@ -775,6 +780,7 @@ insert into HashTags (listing_id, tag) values (3, '#harder1b');
 insert into HashTags (listing_id, tag) values (19, '#clampe1c');
 insert into HashTags (listing_id, tag) values (17, '#delucia1d');
 
+/* Milestones mock data population */
 insert into Milestones (listing_id, description, date) values (17, 'De-engineered content-based solution', '2019-06-01 11:27:43');
 insert into Milestones (listing_id, description, date) values (20, 'Centralized stable groupware', '2020-07-09 11:30:19');
 insert into Milestones (listing_id, description, date) values (20, 'Future-proofed systemic interface', '2016-11-13 21:27:33');
@@ -826,6 +832,7 @@ insert into Milestones (listing_id, description, date) values (18, 'Distributed 
 insert into Milestones (listing_id, description, date) values (14, 'Stand-alone 3rd generation task-force', '2018-10-03 13:18:36');
 insert into Milestones (listing_id, description, date) values (10, 'Vision-oriented national array', '2016-07-03 05:41:53');
 
+/* ListingAdmins mock data population */
 insert into ListingAdmins (user_id, listing_id) values (25, 4);
 insert into ListingAdmins (user_id, listing_id) values (35, 11);
 insert into ListingAdmins (user_id, listing_id) values (35, 8);
@@ -857,6 +864,7 @@ insert into ListingAdmins (user_id, listing_id) values (23, 13);
 insert into ListingAdmins (user_id, listing_id) values (22, 9);
 insert into ListingAdmins (user_id, listing_id) values (40, 7);
 
+/* Features (featured-listings) mock data population */
 insert into Features (listing_id) values (19);
 insert into Features (listing_id) values (2);
 insert into Features (listing_id) values (1);

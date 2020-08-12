@@ -12,13 +12,16 @@ const {
 // import controllers here
 const {
   getJobs,
+  getJobsAll,
   getJob,
   createJob,
   updateJob,
   deleteJob,
+  deactivateJob,
 } = require('../../controllers/jobs');
 
-router.route('/').get(advancedResults('jobs'), getJobs);
+router.route('/').get(advancedResults('jobsview'), getJobs);
+router.route('/all').get(protect, advancedResults('jobs'), getJobsAll);
 router.route('/:id').get(getJob);
 
 // all routes below only accessible to admin
@@ -38,6 +41,8 @@ router
     createJob
   );
 
+router.route('/:id/deactivate').put(protect, deactivateJob);
+
 router
   .route('/:id')
   .put(
@@ -55,6 +60,6 @@ router
     checkInputError,
     updateJob
   )
-  .delete(deleteJob);
+  .delete(protect, deleteJob);
 
 module.exports = router;
