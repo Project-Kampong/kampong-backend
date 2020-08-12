@@ -77,7 +77,8 @@ exports.getListingComment = asyncHandler(async (req, res) => {
  * @access  Public
  */
 exports.getListingCommentChildren = asyncHandler(async (req, res) => {
-  const rows = await db.manyOrNone(
+  // 404 if listing comment id does not exist
+  const rows = await db.many(
     'WITH RECURSIVE recurselc AS (SELECT * FROM listingcomments WHERE listing_comment_id = $1 UNION SELECT lc.* FROM listingcomments lc JOIN recurselc rlc ON rlc.listing_comment_id = lc.reply_to_id) SELECT * FROM recurselc',
     req.params.id
   );
