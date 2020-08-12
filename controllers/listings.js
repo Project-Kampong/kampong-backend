@@ -246,7 +246,7 @@ exports.verifyListing = asyncHandler(async (req, res, next) => {
 
   const rows = await db.one(
     'UPDATE listings SET deleted_on=$2 WHERE listing_id = $1 RETURNING *',
-    [req.params.id, new Date().toLocaleDateString()]
+    [req.params.id, new Date().toLocaleString()]
   );
 
   res.status(200).json({

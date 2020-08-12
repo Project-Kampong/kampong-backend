@@ -185,7 +185,7 @@ exports.deactivateJob = asyncHandler(async (req, res, next) => {
 
   const rows = await db.one(
     'UPDATE jobs SET deleted_on=$2 WHERE job_id = $1 RETURNING *',
-    [req.params.id, new Date().toLocaleDateString()]
+    [req.params.id, new Date().toLocaleString()]
   );
 
   res.status(200).json({
