@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router({ mergeParams: true });
 const { check, oneOf } = require('express-validator');
 const advancedResults = require('../middleware/advancedResults');
-const { protect, authorise, includeRoles } = require('../middleware/auth');
+const { protect, authorise } = require('../middleware/auth');
 const { checkInputError } = require('../middleware/input-validation');
 const {
   NO_FIELD_UPDATED_MSG,
@@ -21,8 +21,8 @@ const {
 } = require('../controllers/jobs');
 
 router.route('/').get(advancedResults('jobsview'), getJobs);
-router.route('/all').get(protect, authorise('admin'), advancedResults('jobs'), getJobsAll);
-router.route('/:id').get(includeRoles, getJob);
+router.route('/all').get(protect, advancedResults('jobs'), getJobsAll);
+router.route('/:id').get(getJob);
 
 // all routes below only accessible to admin
 router.use(protect);
@@ -45,7 +45,6 @@ router
   .route('/:id/deactivate')
   .put(
     protect,
-    authorise('admin', 'owner'),
     deactivateJob
   );
 

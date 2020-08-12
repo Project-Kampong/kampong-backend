@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { check, oneOf } = require('express-validator');
 const advancedResults = require('../middleware/advancedResults');
-const { protect, authorise, includeRoles } = require('../middleware/auth');
+const { protect, authorise } = require('../middleware/auth');
 const { checkInputError } = require('../middleware/input-validation');
 const { mapFilenameToLocation } = require('../middleware/fileUploadHelper');
 const { DATETIME_REGEX } = require('../utils/regex');
@@ -80,8 +80,8 @@ router
   );
 
 router.route('/all').get(protect, authorise('admin'), advancedResults('listings'), getListingsAll);
-router.route('/:id/raw').get(includeRoles, getListing);
-router.route('/:hashId').get(includeRoles, getListingByHashId);
+router.route('/:id/raw').get(getListing);
+router.route('/:hashId').get(getListingByHashId);
 
 router
   .route('/:id')

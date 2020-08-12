@@ -61,32 +61,22 @@ exports.getJobsAll = asyncHandler(async (req, res) => {
   res.status(200).json(res.advancedResults);
 });
 
+
 /**
  * @desc    Get single job
  * @route   GET /api/jobs/:id
  * @access  Public
  */
-exports.getJob = asyncHandler(async (req, res) => {
-
-  let rows;
-
-  if (req.query.all === 'true') {
-    rows = await db.one(
-      'SELECT * FROM jobs WHERE job_id = $1',
-      req.params.id
-    );
-  } else {
-    rows = await db.one(
-      'SELECT * FROM jobsview WHERE job_id = $1',
-      req.params.id
-    );
-  }
-
+exports.getJob = asyncHandler( async (req, res) => {
+  rows = await db.one(
+    'SELECT * FROM jobs WHERE job_id = $1',
+    req.params.id
+  );
   res.status(200).json({
     success: true,
     data: rows,
-  });
-});
+  })
+})
 
 /**
  * @desc    Create job
@@ -132,15 +122,10 @@ exports.createJob = asyncHandler(async (req, res, next) => {
  */
 exports.updateJob = asyncHandler(async (req, res, next) => {
   // check if job exists
-  const job = await db.oneOrNone(
+  const job = await db.one(
     'SELECT * FROM jobs WHERE job_id = $1',
     req.params.id
   );
-
-  // return bad request response if invalid job
-  if (!job) {
-    return next(new ErrorResponse(`Job does not exist`, 400));
-  }
 
   // if non-admin, check if owner of listing
   if (req.user.role !== 'admin') {
@@ -183,15 +168,10 @@ exports.updateJob = asyncHandler(async (req, res, next) => {
  */
 exports.deactivateJob = asyncHandler(async (req, res, next) => {
   // check if job exists
-  const job = await db.oneOrNone(
+  const job = await db.one(
     'SELECT * FROM jobs WHERE job_id = $1',
     req.params.id
   );
-
-  // return bad request response if invalid job
-  if (!job) {
-    return next(new ErrorResponse(`Job does not exist`, 400));
-  }
 
   // if non-admin, check if owner of listing
   if (req.user.role !== 'admin') {
@@ -204,8 +184,8 @@ exports.deactivateJob = asyncHandler(async (req, res, next) => {
   }
 
   const rows = await db.one(
-    'UPDATE jobs SET deleted_on=to_timestamp($2 / 1000.0) WHERE job_id = $1 RETURNING *',
-    [req.params.id, Date.now()]
+    'UPDATE jobs SET deleted_on=$2 WHERE job_id = $1 RETURNING *',
+    [req.params.id, new Date().toLocaleDateString()]
   );
 
   res.status(200).json({
@@ -221,17 +201,12 @@ exports.deactivateJob = asyncHandler(async (req, res, next) => {
  */
 exports.deleteJob = asyncHandler(async (req, res, next) => {
   // check if job exists
-  const job = await db.oneOrNone(
+  const job = await db.one(
     'SELECT * FROM jobs WHERE job_id = $1',
     req.params.id
   );
 
-  // return bad request response if invalid job
-  if (!job) {
-    return next(new ErrorResponse(`Job does not exist`, 400));
-  }
-
-  // if non-admin, check if owner of listing
+  // check if user is admin
   if (req.user.role !== 'admin') {
       return next(
         new ErrorResponse(`Not authorised to delete jobs in this listing`, 403)

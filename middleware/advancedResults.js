@@ -54,7 +54,7 @@ const advancedResults = (model, join, on) =>
         format
       );
     }
-    console.log(query.red);
+    //console.log(query.red);
 
     // // Copy req.query, if any
     const reqQuery = { ...req.query };
@@ -76,7 +76,6 @@ const advancedResults = (model, join, on) =>
           key,
           value: value.split(',').map(str => str.split(/'/).join('')), // remove all ' for pgp formatter to parse into sql
         };
-        console.log(mappedFilter)
 
         filterQuery += pgp.as.format(
           '${key:name} IN (${value:csv}) AND ',

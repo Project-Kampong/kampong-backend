@@ -26,80 +26,37 @@ exports.getListingsAll = asyncHandler(async (req, res) => {
  * @desc    Get single listing by listing id
  * @route   GET /api/listings/:id/raw
  * @access  Public
- * @desc    Get single listing by listing id including soft delete
- * @route   GET /api/listings/:id/raw?all=true
- * @access  Admin
  */
 exports.getListing = asyncHandler(async (req, res, next) => {
-
-  if (req.query.all === 'true') {
-    const rows = await db.one(
-      'SELECT * FROM listings WHERE listing_id = $1',
-      req.params.id
-    );
-
-    //if not admin and the listing has been deactivated, return a bad request
-    if ((!req.user || req.user.role !== 'admin') && rows.deleted_on !== 'null') {
-      return next(new ErrorResponse(`Listing does not exist`, 400));
-
-    } else {
-      res.status(200).json({
-        success: true,
-        data: rows,
-      })
-    }
-
-  } else {
-    const rows = await db.one(
-      'SELECT * FROM listingsview WHERE listing_id = $1',
-      req.params.id
-    );
-
-    res.status(200).json({
-      success: true,
-      data: rows,
-    });
-  }
-
-});
+  const rows = await db.one(
+    'SELECT * FROM listings WHERE listing_id = $1',
+    req.params.id
+  );
+  res.status(200).json({
+    success: true,
+    data: rows,
+  });
+})
 
 /**
  * @desc    Get single listing by hashId
  * @route   GET /api/listings/:hashId
  * @access  Public
- * @desc    Get single listing by hashId including soft delete
- * @route   GET /api/listings/:hashId?all=true
- * @access  Admin
  */
 exports.getListingByHashId = asyncHandler(async (req, res, next) => {
   const decodedId = hashDecode(req.params.hashId)[0];
   if (!decodedId) {
     return next(new ErrorResponse('Invalid listing ID', 400));
   }
-  if (req.query.all === 'true') {
-    const rows = await db.one(
-      'SELECT * FROM listings WHERE listing_id = $1',
-      decodedId
-    );
-    if ((!req.user || req.user.role !== 'admin') && rows.deleted_on !== 'null') {
-      return next(new ErrorResponse(`Listing does not exist`, 400));
-    } else {
-      res.status(200).json({
-        success: true,
-        data: rows,
-      })
-    }
-  } else {
-    const rows = await db.one(
-      'SELECT * FROM listingsview WHERE listing_id = $1',
-      decodedId
-    );
-    res.status(200).json({
-      success: true,
-      data: rows,
-   });
-  }
-});
+  const rows = await db.one(
+    'SELECT * FROM listings WHERE listing_id = $1',
+    decodedId
+  );
+  res.status(200).json({
+    success: true,
+    data: rows,
+  })
+})
 
 /**
  * @desc    Create listing and associated listing story
@@ -180,15 +137,10 @@ exports.createListing = asyncHandler(async (req, res) => {
  */
 exports.updateListing = asyncHandler(async (req, res, next) => {
   // check if listing exists
-  const listing = await db.oneOrNone(
+  const listing = await db.one(
     'SELECT * FROM listings WHERE listing_id = $1',
     req.params.id
   );
-
-  // return bad request response if invalid listing
-  if (!listing) {
-    return next(new ErrorResponse(`Listing does not exist`, 400));
-  }
 
   // Unauthorised if neither admin nor listing owner
   if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
@@ -248,15 +200,10 @@ exports.updateListing = asyncHandler(async (req, res, next) => {
  */
 exports.verifyListing = asyncHandler(async (req, res, next) => {
   // check if listing exists
-  const isValidListing = await db.oneOrNone(
+  const isValidListing = await db.one(
     'SELECT * FROM listings WHERE listing_id = $1',
     req.params.id
   );
-
-  // return bad request response if invalid listing
-  if (!isValidListing) {
-    return next(new ErrorResponse(`Listing does not exist`, 400));
-  }
 
   const { is_verified } = req.body;
 
@@ -298,8 +245,8 @@ exports.verifyListing = asyncHandler(async (req, res, next) => {
   }
 
   const rows = await db.one(
-    'UPDATE listings SET deleted_on=to_timestamp($2 / 1000.0) WHERE listing_id = $1 RETURNING *',
-    [req.params.id, Date.now()]
+    'UPDATE listings SET deleted_on=$2 WHERE listing_id = $1 RETURNING *',
+    [req.params.id, new Date().toLocaleDateString()]
   );
 
   res.status(200).json({
