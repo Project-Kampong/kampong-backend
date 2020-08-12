@@ -17,12 +17,14 @@ const { uploadFile } = require('../utils/fileUploader');
 // import controllers here
 const {
   getListings,
+  getListingsAll,
   getListing,
   getListingByHashId,
   createListing,
   updateListing,
   verifyListing,
   deleteListing,
+  deactivateListing,
   uploadListingPics,
 } = require('../controllers/listings');
 
@@ -34,6 +36,7 @@ const listingUpdateRoute = require('./listingupdate-routes');
 const milestoneRoute = require('./milestone-routes');
 const participantRoute = require('./participant-routes');
 const listingSkillRoute = require('./listingskill-routes');
+const jobRoute = require('./job-routes');
 const storyRoute = require('./listingstory-routes');
 
 // Re-route this URI to other resource router
@@ -45,11 +48,12 @@ router.use('/:listing_id/listing-updates', listingUpdateRoute);
 router.use('/:listing_id/milestones', milestoneRoute);
 router.use('/:listing_id/participants', participantRoute);
 router.use('/:listing_id/listing-skills', listingSkillRoute);
+router.use('/:listing_id/jobs', jobRoute);
 
 // map routes to controller
 router
   .route('/')
-  .get(advancedResults('listings'), getListings)
+  .get(advancedResults('listingsview'), getListings)
   .post(
     protect,
     uploadFile.array('pics', 5),
@@ -75,6 +79,7 @@ router
     createListing
   );
 
+router.route('/all').get(protect, authorise('admin'), advancedResults('listings'), getListingsAll);
 router.route('/:id/raw').get(getListing);
 router.route('/:hashId').get(getListingByHashId);
 
@@ -122,6 +127,14 @@ router
     updateListing
   )
   .delete(protect, deleteListing);
+
+router
+  .route('/:id/deactivate')
+  .put(
+    protect,
+    authorise('admin', 'owner'),
+    deactivateListing
+  );
 
 router
   .route('/:id/photo')

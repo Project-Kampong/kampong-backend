@@ -14,11 +14,20 @@ exports.getListings = asyncHandler(async (req, res) => {
 });
 
 /**
+ * @desc    Get all listings including soft deletes
+ * @route   GET /api/listings/all
+ * @access  Admin
+ */
+exports.getListingsAll = asyncHandler(async (req, res) => {
+  res.status(200).json(res.advancedResults);
+});
+
+/**
  * @desc    Get single listing by listing id
  * @route   GET /api/listings/:id/raw
  * @access  Public
  */
-exports.getListing = asyncHandler(async (req, res) => {
+exports.getListing = asyncHandler(async (req, res, next) => {
   const rows = await db.one(
     'SELECT * FROM listings WHERE listing_id = $1',
     req.params.id
@@ -27,7 +36,7 @@ exports.getListing = asyncHandler(async (req, res) => {
     success: true,
     data: rows,
   });
-});
+})
 
 /**
  * @desc    Get single listing by hashId
@@ -46,8 +55,8 @@ exports.getListingByHashId = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     success: true,
     data: rows,
-  });
-});
+  })
+})
 
 /**
  * @desc    Create listing and associated listing story
@@ -128,15 +137,10 @@ exports.createListing = asyncHandler(async (req, res) => {
  */
 exports.updateListing = asyncHandler(async (req, res, next) => {
   // check if listing exists
-  const listing = await db.oneOrNone(
+  const listing = await db.one(
     'SELECT * FROM listings WHERE listing_id = $1',
     req.params.id
   );
-
-  // return bad request response if invalid listing
-  if (!listing) {
-    return next(new ErrorResponse(`Listing does not exist`, 400));
-  }
 
   // Unauthorised if neither admin nor listing owner
   if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
@@ -196,15 +200,10 @@ exports.updateListing = asyncHandler(async (req, res, next) => {
  */
 exports.verifyListing = asyncHandler(async (req, res, next) => {
   // check if listing exists
-  const isValidListing = await db.oneOrNone(
+  const isValidListing = await db.one(
     'SELECT * FROM listings WHERE listing_id = $1',
     req.params.id
   );
-
-  // return bad request response if invalid listing
-  if (!isValidListing) {
-    return next(new ErrorResponse(`Listing does not exist`, 400));
-  }
 
   const { is_verified } = req.body;
 
@@ -226,13 +225,14 @@ exports.verifyListing = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Delete single listing and associated listing story
- * @route   DELETE /api/listings/:id
+ * @desc    Deactivate (soft delete) single listing
+ * @route   PUT /api/listings/:id/deactivate
  * @access  Admin/Owner
  */
-exports.deleteListing = asyncHandler(async (req, res, next) => {
-  // check if listing exists
-  const listing = await db.one(
+
+ exports.deactivateListing = asyncHandler(async (req, res, next) => {
+   // check if listing exists
+   const listing = await db.one(
     'SELECT * FROM listings WHERE listing_id = $1',
     req.params.id
   );
@@ -244,19 +244,40 @@ exports.deleteListing = asyncHandler(async (req, res, next) => {
     );
   }
 
-  const rows = await db.tx(async query => {
-    const deleteListing = db.one(
+  const rows = await db.one(
+    'UPDATE listings SET deleted_on=$2 WHERE listing_id = $1 RETURNING *',
+    [req.params.id, new Date().toLocaleString()]
+  );
+
+  res.status(200).json({
+    success: true,
+    data: rows
+  });
+ });
+
+/**
+ * @desc    Delete single listing and associated listing story
+ * @route   DELETE /api/listings/:id
+ * @access  Admin
+ */
+exports.deleteListing = asyncHandler(async (req, res, next) => {
+  // check if listing exists
+  const listing = await db.one(
+    'SELECT * FROM listings WHERE listing_id = $1',
+    req.params.id
+  );
+
+  // Unauthorised if not admin
+  if (req.user.role !== 'admin') {
+    return next(
+      new ErrorResponse(`User not authorised to delete this listing`, 403)
+    );
+  }
+
+  const rows = await db.one(
       'DELETE FROM listings WHERE listing_id = $1 RETURNING *',
       req.params.id
     );
-
-    const deleteListingStory = db.one(
-      'DELETE FROM listingstories WHERE listing_id = $1 RETURNING *',
-      req.params.id
-    );
-
-    return await query.batch([deleteListing, deleteListingStory]);
-  });
 
   res.status(200).json({
     success: true,
