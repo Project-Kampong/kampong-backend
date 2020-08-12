@@ -1,7 +1,7 @@
-const { db, parseSqlUpdateStmt } = require('../config/db');
+const { db } = require('../db/db');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
-const { cleanseData } = require('../utils/dbHelper');
+const { cleanseData, parseSqlUpdateStmt } = require('../utils/dbHelper');
 
 /**
  * @desc    Get all faqs
@@ -69,7 +69,7 @@ exports.createFaq = asyncHandler(async (req, res, next) => {
     const listingOwner = await isListingOwner(req.user.user_id, listing_id);
     if (!listingOwner) {
       return next(
-        new ErrorResponse(`Not authorised to update FAQ for this listing`, 403)
+        new ErrorResponse(`Not authorised to create FAQs for this listing`, 403)
       );
     }
   }
@@ -107,7 +107,7 @@ exports.updateFaq = asyncHandler(async (req, res, next) => {
     const listingOwner = await isListingOwner(req.user.user_id, faq.listing_id);
     if (!listingOwner) {
       return next(
-        new ErrorResponse(`Not authorised to update FAQ for this listing`, 403)
+        new ErrorResponse(`Not authorised to update FAQs in this listing`, 403)
       );
     }
   }
@@ -158,7 +158,7 @@ exports.deleteFaq = asyncHandler(async (req, res, next) => {
     const listingOwner = await isListingOwner(req.user.user_id, faq.listing_id);
     if (!listingOwner) {
       return next(
-        new ErrorResponse(`Not authorised to update FAQ for this listing`, 403)
+        new ErrorResponse(`Not authorised to delete FAQs in this listing`, 403)
       );
     }
   }
@@ -179,5 +179,5 @@ const isListingOwner = async (userId, listingId) => {
     'SELECT created_by FROM Listings WHERE listing_id = $1',
     listingId
   );
-  return userId === owner.created_by;
+  return parseInt(userId) === owner.created_by;
 };

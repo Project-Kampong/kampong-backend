@@ -12,7 +12,7 @@ Yarn is the recommended package manager for Project Kampong API. Install yarn [h
 
 #### Install project dependencies
 
-On the command line in the root directory:
+On the command line in the project root directory:
 
 ```
 yarn install
@@ -38,7 +38,7 @@ Under `config/config.env`, fill in `PG_USER`, `PG_HOST`, `PG_NAME`, `PG_PORT`, `
 
 ##### Create database tables
 
-On the command line in the root directory:
+On the command line in the project root directory:
 
 ```
 yarn create-tables
@@ -46,7 +46,7 @@ yarn create-tables
 
 ##### Populate database with mock data
 
-On the command line in the root directory:
+On the command line in the project root directory:
 
 ```
 yarn import-data
@@ -56,7 +56,7 @@ If data import fails, run the create database tables command and try again.
 
 ### Running the app
 
-On the command line in the root directory:
+On the command line in the project root directory:
 
 ```
 #### Run in production
@@ -66,9 +66,13 @@ yarn start
 yarn dev
 ```
 
-## API Documentation
+## Documentation
 
-Documentation is temporarily found in `public/index.html` for this developmental phase. New API documentation location will be set up once Kampong deploys a stable release.
+API Documentation is temporarily found in `public/index.html` for this developmental phase. New API documentation location will be set up when Kampong deploys a stable release.
+
+The Postman API Collection is also available in `public/kampong-api.json`, and can be imported into your Postman API client for API testing.
+
+Database schema diagram can be found in `public/kampong-db-diagram.png`.
 
 ## License
 

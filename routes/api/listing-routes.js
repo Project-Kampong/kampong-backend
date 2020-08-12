@@ -1,36 +1,44 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 const { check, oneOf } = require('express-validator');
-const advancedResults = require('../middleware/advancedResults');
-const { protect, authorise } = require('../middleware/auth');
-const { checkInputError } = require('../middleware/input-validation');
-const { DATETIME_REGEX } = require('../utils/regex');
+const advancedResults = require('../../middleware/advancedResults');
+const { protect, authorise } = require('../../middleware/auth');
+const { mapFilenameToLocation } = require('../../middleware/fileUploadHelper');
+const { checkInputError } = require('../../middleware/inputValidation');
+const { DATETIME_REGEX } = require('../../utils/regex');
 const {
   NO_FIELD_UPDATED_MSG,
   INVALID_FIELD_MSG,
   INVALID_BOOLEAN_MSG,
   INVALID_TIMESTAMP_MSG,
-} = require('../utils/inputExceptionMsg');
-const { uploadFile } = require('../utils/fileUploader');
+} = require('../../utils/inputExceptionMsg');
+const { uploadFile } = require('../../utils/fileUploader');
 
 // import controllers here
 const {
   getListings,
+  getAllListingsOwnedByUser,
+  getListingsAll,
   getListing,
+  getListingByHashId,
   createListing,
   updateListing,
   verifyListing,
   deleteListing,
+  deactivateListing,
   uploadListingPics,
-} = require('../controllers/listings');
+} = require('../../controllers/listings');
 
 // Include other resource's controllers to access their endpoints
 const faqRoute = require('./faq-routes');
 const hashtagRoute = require('./hashtag-routes');
 const likeRoute = require('./like-routes');
+const listingCommentRoute = require('./listingcomment-routes');
+const listingUpdateRoute = require('./listingupdate-routes');
 const milestoneRoute = require('./milestone-routes');
 const participantRoute = require('./participant-routes');
-const skillRoute = require('./skill-routes');
+const listingSkillRoute = require('./listingskill-routes');
+const jobRoute = require('./job-routes');
 const storyRoute = require('./listingstory-routes');
 
 // Re-route this URI to other resource router
@@ -38,17 +46,21 @@ router.use('/stories', storyRoute);
 router.use('/:listing_id/faqs', faqRoute);
 router.use('/:listing_id/hashtags', hashtagRoute);
 router.use('/:listing_id/likes', likeRoute);
+router.use('/:listing_id/listing-comments', listingCommentRoute);
+router.use('/:listing_id/listing-updates', listingUpdateRoute);
 router.use('/:listing_id/milestones', milestoneRoute);
 router.use('/:listing_id/participants', participantRoute);
-router.use('/:listing_id/skills', skillRoute);
+router.use('/:listing_id/listing-skills', listingSkillRoute);
+router.use('/:listing_id/jobs', jobRoute);
 
 // map routes to controller
 router
   .route('/')
-  .get(advancedResults('listings'), getListings)
+  .get(advancedResults('listingsview'), getListings)
   .post(
     protect,
     uploadFile.array('pics', 5),
+    mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
     [
       check('organisation_id', INVALID_FIELD_MSG('organisation id'))
         .optional()
@@ -70,9 +82,20 @@ router
     createListing
   );
 
+router.route('/owner').get(getAllListingsOwnedByUser);
+router
+  .route('/all')
+  .get(
+    protect,
+    authorise('admin'),
+    advancedResults('listings'),
+    getListingsAll
+  );
+router.route('/:id/raw').get(getListing);
+router.route('/:hashId').get(getListingByHashId);
+
 router
   .route('/:id')
-  .get(getListing)
   .put(
     protect,
     authorise('user', 'admin'),
@@ -117,11 +140,16 @@ router
   .delete(protect, deleteListing);
 
 router
+  .route('/:id/deactivate')
+  .put(protect, authorise('admin', 'owner'), deactivateListing);
+
+router
   .route('/:id/photo')
   .put(
     protect,
     authorise('admin', 'user'),
     uploadFile.array('pics', 5),
+    mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
     uploadListingPics
   );
 

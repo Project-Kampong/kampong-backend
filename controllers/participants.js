@@ -1,7 +1,7 @@
-const { db, parseSqlUpdateStmt } = require('../config/db');
+const { db } = require('../db/db');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
-const { cleanseData } = require('../utils/dbHelper');
+const { cleanseData, parseSqlUpdateStmt } = require('../utils/dbHelper');
 
 /**
  * @desc    Get all participants
@@ -127,8 +127,15 @@ exports.updateParticipant = asyncHandler(async (req, res, next) => {
       req.user.user_id,
       req.params.listing_id
     );
+
+    // throws 404 if participant does not exist
+    const participant = await db.one(
+      'SELECT * FROM participants WHERE participant_id = $1',
+      req.params.participant_id
+    );
+
     // if not listing owner and user_id to be updated is not self, 403 response
-    if (!isListingOwner && req.user.user_id !== req.params.user_id) {
+    if (!isListingOwner && req.user.user_id !== participant.user_id) {
       return next(
         new ErrorResponse(
           `Not authorised to update other participants in this listing`,
@@ -137,12 +144,6 @@ exports.updateParticipant = asyncHandler(async (req, res, next) => {
       );
     }
   }
-
-  // throws 404 if participant does not exist
-  const participantExists = await db.one(
-    'SELECT * FROM participants WHERE participant_id = $1',
-    req.params.participant_id
-  );
 
   const { joined_on, end_on } = req.body;
 
@@ -218,5 +219,5 @@ const checkListingOwner = async (userId, listingId) => {
     'SELECT created_by FROM Listings WHERE listing_id = $1',
     listingId
   );
-  return userId === owner.created_by;
+  return parseInt(userId) === owner.created_by;
 };

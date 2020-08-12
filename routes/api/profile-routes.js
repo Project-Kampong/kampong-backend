@@ -2,23 +2,26 @@ const express = require('express');
 const router = express.Router();
 const { check, oneOf } = require('express-validator');
 
-const advancedResults = require('../middleware/advancedResults');
-const { protect, authorise } = require('../middleware/auth');
-const { checkInputError } = require('../middleware/input-validation');
+const advancedResults = require('../../middleware/advancedResults');
+const { protect, authorise } = require('../../middleware/auth');
+const { checkInputError } = require('../../middleware/inputValidation');
+const { mapSingleFileLocation } = require('../../middleware/fileUploadHelper');
 const {
   INVALID_TIMESTAMP_MSG,
   INVALID_FIELD_MSG,
-} = require('../utils/inputExceptionMsg');
-const { DATETIME_REGEX } = require('../utils/regex');
-const { uploadFile } = require('../utils/fileUploader');
+} = require('../../utils/inputExceptionMsg');
+const { DATETIME_REGEX } = require('../../utils/regex');
+const { uploadFile } = require('../../utils/fileUploader');
 
 // Include other resource's controllers to access their endpoints
 const likeRoute = require('./like-routes');
+const listingRoute = require('./listing-routes');
 const participantRoute = require('./participant-routes');
 const skillRoute = require('./skill-routes');
 
 // Re-route this URI to other resource router
 router.use('/:user_id/likes', likeRoute);
+router.use('/:user_id/listings', listingRoute);
 router.use('/:user_id/participants', participantRoute);
 router.use('/:user_id/skills', skillRoute);
 
@@ -26,16 +29,19 @@ router.use('/:user_id/skills', skillRoute);
 const {
   getProfiles,
   getProfile,
+  getProfileByHashId,
   updateProfile,
   verifyProfile,
   uploadPic,
-} = require('../controllers/profiles');
-const { NO_FIELD_UPDATED_MSG } = require('../utils/inputExceptionMsg');
+} = require('../../controllers/profiles');
+const { NO_FIELD_UPDATED_MSG } = require('../../utils/inputExceptionMsg');
 
 // map routes to controller
 router.route('/').get(advancedResults('profiles'), getProfiles);
 
-router.route('/:id').get(getProfile);
+router.route('/:id/raw').get(getProfile);
+
+router.route('/:hashId').get(getProfileByHashId);
 
 // all routes below uses protect middleware
 router.use(protect);
@@ -89,7 +95,12 @@ router
 
 router
   .route('/:id/photo')
-  .put(authorise('admin', 'user'), uploadFile.single('pic'), uploadPic);
+  .put(
+    authorise('admin', 'user'),
+    uploadFile.single('pic'),
+    mapSingleFileLocation('profile_picture'),
+    uploadPic
+  );
 
 router
   .route('/:id')

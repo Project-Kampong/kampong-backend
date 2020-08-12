@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const { check, oneOf } = require('express-validator');
-const advancedResults = require('../middleware/advancedResults');
-const { protect, authorise } = require('../middleware/auth');
-const { checkInputError } = require('../middleware/input-validation');
-const { ALPHA_WHITESPACE_REGEX } = require('../utils/regex');
+const advancedResults = require('../../middleware/advancedResults');
+const { protect, authorise } = require('../../middleware/auth');
+const { checkInputError } = require('../../middleware/inputValidation');
+const { ALPHA_WHITESPACE_REGEX } = require('../../utils/regex');
 const {
   INVALID_EMAIL_MSG,
   INVALID_ALPHA_SPACE_MSG,
   INVALID_PASSWORD_MSG,
   NO_FIELD_UPDATED_MSG,
-} = require('../utils/inputExceptionMsg');
+} = require('../../utils/inputExceptionMsg');
 
 // import controllers here
 const {
@@ -19,7 +19,13 @@ const {
   createUser,
   updateUser,
   deleteUser,
-} = require('../controllers/users');
+} = require('../../controllers/users');
+
+// Include other resource's controllers to access their endpoints
+const listingCommentRoute = require('./listingcomment-routes');
+
+// Re-route this URI to other resource router
+router.use('/:user_id/listing-comments', listingCommentRoute);
 
 // all route to use protect middleware
 router.use(protect);

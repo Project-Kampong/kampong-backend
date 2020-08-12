@@ -1,5 +1,6 @@
 const aws = require('aws-sdk');
 const dotenv = require('dotenv');
+const moment = require('moment');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 
@@ -23,7 +24,10 @@ const uploadFile = multer({
     bucket: process.env.S3_BUCKET_NAME,
     acl: 'public-read',
     metadata: (req, file, cb) => {
-      cb(null, { fieldName: file.fieldname });
+      cb(null, {
+        filename: file.originalname,
+        uploaded_on: moment().format('YYYY-MM-DD HH:mm:ss.000'),
+      });
     },
     key: (req, file, cb) => {
       const strArr = file.originalname.split('.');

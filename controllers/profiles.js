@@ -1,8 +1,8 @@
-const { hashPassword } = require('../utils/auth.js');
-const { db, parseSqlUpdateStmt } = require('../config/db');
+const { db } = require('../db/db');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
-const { cleanseData } = require('../utils/dbHelper');
+const { cleanseData, parseSqlUpdateStmt } = require('../utils/dbHelper');
+const { hashDecode } = require('../utils/hashIdGenerator');
 
 /**
  * @desc    Get all profiles
@@ -14,8 +14,8 @@ exports.getProfiles = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Get single profile
- * @route   GET /api/profiles/:id
+ * @desc    Get single profile by profile id
+ * @route   GET /api/profiles/:id/raw
  * @access  Public
  */
 exports.getProfile = asyncHandler(async (req, res) => {
@@ -30,13 +30,36 @@ exports.getProfile = asyncHandler(async (req, res) => {
 });
 
 /**
+ * @desc    Get single profile by hash id
+ * @route   GET /api/profiles/:hashId
+ * @access  Public
+ */
+exports.getProfileByHashId = asyncHandler(async (req, res, next) => {
+  const decodedId = hashDecode(req.params.hashId)[0];
+  if (!decodedId) {
+    return next(new ErrorResponse('Invalid user ID', 400));
+  }
+  const rows = await db.one(
+    'SELECT * FROM profiles WHERE user_id = $1',
+    decodedId
+  );
+  res.status(200).json({
+    success: true,
+    data: rows,
+  });
+});
+
+/**
  * @desc    Update single profile
  * @route   PUT /api/profiles/:id
  * @access  Admin/Private
  */
 exports.updateProfile = asyncHandler(async (req, res, next) => {
   // if non-admin user, throw 403 if not updating self
-  if (req.user.role !== 'admin' && req.user.user_id !== req.params.id) {
+  if (
+    req.user.role !== 'admin' &&
+    req.user.user_id.toString() !== req.params.id
+  ) {
     return next(
       new ErrorResponse(`Not allowed to update other user's profile`, 403)
     );
@@ -132,7 +155,10 @@ exports.verifyProfile = asyncHandler(async (req, res, next) => {
  */
 exports.uploadPic = asyncHandler(async (req, res, next) => {
   // if non-admin user, throw 403 if not updating self
-  if (req.user.role !== 'admin' && req.user.user_id !== req.params.id) {
+  if (
+    req.user.role !== 'admin' &&
+    req.user.user_id.toString() !== req.params.id
+  ) {
     return next(
       new ErrorResponse(
         `Not allowed to update other user's profile picture`,
@@ -141,7 +167,7 @@ exports.uploadPic = asyncHandler(async (req, res, next) => {
     );
   }
 
-  const profile_picture = req.file.location;
+  const { profile_picture } = req.body;
 
   const data = {
     profile_picture,
