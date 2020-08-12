@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Database diagram in `public/kampong-db-diagram.png`.
 - Soft delete for jobs and listings.
 - Separate admin-only `Get all ... including soft delete` endpoint.
+- Listing Comments CRUD endpoints.
 
 ### Changed
 
