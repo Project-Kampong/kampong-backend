@@ -6,9 +6,9 @@ const { cleanseData } = require('../utils/dbHelper');
 /**
  * @desc    Get all likes
  * @route   GET /api/likes
- * @desc    Get all likes for a listing
+ * @desc    Get all likes (including profile information) for a listing
  * @route   GET /api/listings/:listing_id/likes
- * @desc    Get all likes for a user profile
+ * @desc    Get all likes (including listing information) for a user profile
  * @route   GET /api/profiles/:user_id/likes
  * @access  Public
  */
@@ -21,7 +21,7 @@ exports.getLikes = asyncHandler(async (req, res) => {
     );
 
     const likes = await db.manyOrNone(
-      'SELECT * FROM likes WHERE listing_id = $1',
+      'SELECT * FROM likes NATURAL JOIN profiles WHERE listing_id = $1',
       req.params.listing_id
     );
 
@@ -40,7 +40,7 @@ exports.getLikes = asyncHandler(async (req, res) => {
     );
 
     const likes = await db.manyOrNone(
-      'SELECT * FROM likes WHERE user_id = $1',
+      'SELECT * FROM likes NATURAL JOIN listings WHERE user_id = $1',
       req.params.user_id
     );
 
