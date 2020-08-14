@@ -17,7 +17,7 @@ exports.getListingStories = asyncHandler(async (req, res) => {
  * @route   GET /api/listings/:listing_id/stories
  * @access  Public
  */
-exports.getListingStory = asyncHandler(async (req, res) => {
+exports.getListingStory = asyncHandler(async (req, res, next) => {
   // re-route to next middleware
   if (!req.params.listing_id) {
     return next();
