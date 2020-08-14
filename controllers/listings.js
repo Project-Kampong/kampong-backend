@@ -41,16 +41,13 @@ exports.getListing = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Get all listings owned by particular user
- * @route   GET /api/profiles/:user_id/listings/owner
+ * @route   GET /api/users/:user_id/listings/owner
  * @access  Public
  */
 exports.getAllListingsOwnedByUser = asyncHandler(async (req, res, next) => {
   const userId = req.params.user_id;
   // check if user exists
-  const user = await db.one(
-    'SELECT * FROM Profiles WHERE user_id = $1',
-    userId
-  );
+  const user = await db.one('SELECT * FROM Users WHERE user_id = $1', userId);
 
   const rows = await db.manyOrNone(
     'SELECT * FROM Listings WHERE created_by = $1',
@@ -312,7 +309,7 @@ exports.deleteListing = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Upload multiple (up to 5) new pictures for a particular listing (identified by listing id)
- * @route   PUT /api/listings/:id/photo
+ * @route   PUT /api/listings/:id/upload-photo
  * @access  Admin/Owner
  */
 exports.uploadListingPics = asyncHandler(async (req, res, next) => {
@@ -344,14 +341,14 @@ exports.uploadListingPics = asyncHandler(async (req, res, next) => {
   };
   cleanseData(data);
 
-  const updateProfileQuery = parseSqlUpdateStmt(
+  const updateListingQuery = parseSqlUpdateStmt(
     data,
     'listings',
     'WHERE listing_id = $1 RETURNING $2:name',
     [req.params.id, data]
   );
 
-  const rows = await db.one(updateProfileQuery);
+  const rows = await db.one(updateListingQuery);
 
   res.status(200).json({
     success: true,

@@ -146,7 +146,7 @@ router
   .put(protect, authorise('admin', 'owner'), deactivateListing);
 
 router
-  .route('/:id/photo')
+  .route('/:id/upload-photo')
   .put(
     protect,
     authorise('admin', 'user'),

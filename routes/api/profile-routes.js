@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 const { check, oneOf } = require('express-validator');
 
 const advancedResults = require('../../middleware/advancedResults');
@@ -13,18 +13,6 @@ const {
 const { DATETIME_REGEX } = require('../../utils/regex');
 const { uploadFile } = require('../../utils/fileUploader');
 
-// Include other resource's controllers to access their endpoints
-const likeRoute = require('./like-routes');
-const listingRoute = require('./listing-routes');
-const participantRoute = require('./participant-routes');
-const skillRoute = require('./skill-routes');
-
-// Re-route this URI to other resource router
-router.use('/:user_id/likes', likeRoute);
-router.use('/:user_id/listings', listingRoute);
-router.use('/:user_id/participants', participantRoute);
-router.use('/:user_id/skills', skillRoute);
-
 // import controllers here
 const {
   getProfiles,
@@ -37,17 +25,18 @@ const {
 const { NO_FIELD_UPDATED_MSG } = require('../../utils/inputExceptionMsg');
 
 // map routes to controller
-router.route('/').get(advancedResults('profiles'), getProfiles);
+router
+  .route('/')
+  .get(getProfileByHashId, advancedResults('profiles'), getProfiles);
 
-router.route('/:id/raw').get(getProfile);
-
-router.route('/:hashId').get(getProfileByHashId);
+router.route('/raw').get(getProfile);
 
 // all routes below uses protect middleware
 router.use(protect);
 
+// router takes merged params 'user_id' from user route
 router
-  .route('/:id')
+  .route('/')
   .put(
     authorise('admin', 'user'),
     [
@@ -94,7 +83,7 @@ router
   );
 
 router
-  .route('/:id/photo')
+  .route('/upload-photo')
   .put(
     authorise('admin', 'user'),
     uploadFile.single('pic'),
@@ -103,7 +92,7 @@ router
   );
 
 router
-  .route('/:id/verify')
+  .route('/verify')
   .put(
     authorise('admin'),
     [check('is_verified', NO_FIELD_UPDATED_MSG).exists()],

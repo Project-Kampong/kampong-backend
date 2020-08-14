@@ -9,12 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Verify profile endpoint.
+- Verify Profile endpoint.
 
 ### Changed
 
 - Get all likes for a particular listing or profile will show the necessary profile and listing information respectively.
 - `ListingStories` route changed from `/listings/stories/1` to `/listings/1/stories`.
+- Routing for following resources and endpoints:
+  - All `Profiles` routes `/profiles/...` -> `/users/:user_id/profiles/...`.
+  - All `ListingStories` routes `/listings/stories/:listing_id` -> `/listings/:listing_id/stories`.
+  - Get All Likes for a Profile `/profiles/1/likes` -> `/users/1/likes`.
+  - Get All Listing Participation for a Profile `/profiles/1/participants` -> `/users/1/participants`.
+  - Get All Listings owned by a Particular User `/profiles/1/listings/owner` -> `/users/1/listings/owner`.
+  - Upload Listing Photos `/listings/1/photo` -> `/listings/1/upload-photo`
+  - Upload Profile Picture `profiles/1/photo` -> `users/1/profiles/upload-photo`
+
+### Removed
+
+- Get All Skills for a Profile routing and endpoint.
 
 ## [0.0.3] - 2020-08-13
 

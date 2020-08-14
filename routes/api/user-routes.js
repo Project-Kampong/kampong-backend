@@ -22,10 +22,19 @@ const {
 } = require('../../controllers/users');
 
 // Include other resource's controllers to access their endpoints
+const likeRoute = require('./like-routes');
 const listingCommentRoute = require('./listingcomment-routes');
+const listingRoute = require('./listing-routes');
+const participantRoute = require('./participant-routes');
+const profileRoute = require('./profile-routes');
 
 // Re-route this URI to other resource router
+router.use('/profiles', profileRoute);
+router.use('/:user_id/likes', likeRoute);
 router.use('/:user_id/listing-comments', listingCommentRoute);
+router.use('/:user_id/listings', listingRoute);
+router.use('/:user_id/participants', participantRoute);
+router.use('/:user_id/profiles', profileRoute);
 
 // all route to use protect middleware
 router.use(protect);

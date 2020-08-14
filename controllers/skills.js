@@ -6,29 +6,9 @@ const { parseSqlUpdateStmt } = require('../utils/dbHelper');
 /**
  * @desc    Get all skills
  * @route   GET /api/skills
- * @desc    Get all skills for a profile
- * @route   GET /api/profiles/:user_id/skills
  * @access  Public
  */
 exports.getSkills = asyncHandler(async (req, res, next) => {
-  if (req.params.user_id) {
-    // return 404 error response if user not found
-    const user = await db.one(
-      'SELECT * FROM Profiles WHERE user_id = $1',
-      req.params.user_id
-    );
-
-    const skills = await db.manyOrNone(
-      'SELECT * FROM ProfileSkills ps JOIN Skills s USING (skill_id) WHERE ps.user_id = $1',
-      req.params.user_id
-    );
-    return res.status(200).json({
-      success: true,
-      count: skills.length,
-      data: skills,
-    });
-  }
-
   res.status(200).json(res.advancedResults);
 });
 
