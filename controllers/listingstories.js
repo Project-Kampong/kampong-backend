@@ -14,15 +14,20 @@ exports.getListingStories = asyncHandler(async (req, res) => {
 
 /**
  * @desc    Get single listing story
- * @route   GET /api/listings/stories/:id
+ * @route   GET /api/listings/:listing_id/stories
  * @access  Public
  */
-exports.getListingStory = asyncHandler(async (req, res) => {
+exports.getListingStory = asyncHandler(async (req, res, next) => {
+  // re-route to next middleware
+  if (!req.params.listing_id) {
+    return next();
+  }
+
   const rows = await db.one(
     'SELECT * FROM listingstories WHERE listing_id = $1',
-    req.params.id
+    req.params.listing_id
   );
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
     data: rows,
   });
@@ -30,20 +35,20 @@ exports.getListingStory = asyncHandler(async (req, res) => {
 
 /**
  * @desc    Update single listing story
- * @route   PUT /api/listings/stories/:id
+ * @route   PUT /api/listings/:listing_id/stories
  * @access  Admin/Owner
  */
 exports.updateListingStory = asyncHandler(async (req, res, next) => {
   // check if listing exists
   const listing = await db.one(
     'SELECT * FROM listings WHERE listing_id = $1',
-    req.params.id
+    req.params.listing_id
   );
-  // if non-admin user, throw 403 if not updating self
+  // if non-admin user, throw 403 if not listing owner
   if (req.user.role !== 'admin' && req.user.user_id !== listing.created_by) {
     return next(
       new ErrorResponse(
-        `Not allowed to update story of listing which you did not create`,
+        `Not allowed to update story of listing which you are not the owner of`,
         403
       )
     );
@@ -64,7 +69,7 @@ exports.updateListingStory = asyncHandler(async (req, res, next) => {
     data,
     'listingstories',
     'WHERE listing_id = $1 RETURNING $2:name',
-    [req.params.id, data]
+    [req.params.listing_id, data]
   );
 
   const rows = await db.one(updateListingStoryQuery);

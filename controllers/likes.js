@@ -8,8 +8,8 @@ const { cleanseData } = require('../utils/dbHelper');
  * @route   GET /api/likes
  * @desc    Get all likes (including profile information) for a listing
  * @route   GET /api/listings/:listing_id/likes
- * @desc    Get all likes (including listing information) for a user profile
- * @route   GET /api/profiles/:user_id/likes
+ * @desc    Get all likes (including listing information) for a user
+ * @route   GET /api/users/:user_id/likes
  * @access  Public
  */
 exports.getLikes = asyncHandler(async (req, res) => {
@@ -35,7 +35,7 @@ exports.getLikes = asyncHandler(async (req, res) => {
   if (req.params.user_id) {
     // return 404 error response if user not found
     const user = await db.one(
-      'SELECT * FROM Profiles WHERE user_id = $1',
+      'SELECT * FROM Users WHERE user_id = $1',
       req.params.user_id
     );
 
