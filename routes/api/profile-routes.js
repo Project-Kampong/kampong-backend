@@ -103,7 +103,7 @@ router
   );
 
 router
-  .route('/:id')
+  .route('/:id/verify')
   .put(
     authorise('admin'),
     [check('is_verified', NO_FIELD_UPDATED_MSG).exists()],

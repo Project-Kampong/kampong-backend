@@ -110,20 +110,15 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Verify single profile
- * @route   PUT /api/profiles/:id
+ * @route   PUT /api/profiles/:id/verify
  * @access  Admin
  */
 exports.verifyProfile = asyncHandler(async (req, res, next) => {
   // check if user exists
-  const isValidUser = await db.oneOrNone(
+  const user = await db.one(
     'SELECT * FROM profiles WHERE user_id = $1',
     req.params.id
   );
-
-  // return bad request response if invalid user
-  if (!isValidUser) {
-    return next(new ErrorResponse(`User does not exist`, 400));
-  }
 
   const { is_verified } = req.body;
 
@@ -136,8 +131,8 @@ exports.verifyProfile = asyncHandler(async (req, res, next) => {
   const updateIsVerifiedQuery = parseSqlUpdateStmt(
     data,
     'profiles',
-    'WHERE user_id = $1 RETURNING *',
-    [req.params.id]
+    'WHERE user_id = $1 RETURNING $2:name',
+    [req.params.id, data]
   );
 
   const rows = await db.one(updateIsVerifiedQuery);
