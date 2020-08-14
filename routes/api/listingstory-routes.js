@@ -1,8 +1,8 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 const { check, oneOf } = require('express-validator');
 const advancedResults = require('../../middleware/advancedResults');
-const { protect, authorise } = require('../../middleware/auth');
+const { protect } = require('../../middleware/auth');
 const { checkInputError } = require('../../middleware/inputValidation');
 const {
   NO_FIELD_UPDATED_MSG,
@@ -12,19 +12,15 @@ const {
 // import controllers here
 const {
   getListingStories,
-  getListingStory,
   updateListingStory,
 } = require('../../controllers/listingstories');
 
-// map routes to controller
-router.route('/').get(advancedResults('listingstories'), getListingStories);
-
+// All routes below use mergedParams from listings route
 router
-  .route('/:id')
-  .get(getListingStory)
+  .route('/')
+  .get(advancedResults('listingstories'), getListingStories)
   .put(
     protect,
-    authorise('user', 'admin'),
     [
       oneOf(
         [

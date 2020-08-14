@@ -38,11 +38,11 @@ const listingUpdateRoute = require('./listingupdate-routes');
 const milestoneRoute = require('./milestone-routes');
 const participantRoute = require('./participant-routes');
 const listingSkillRoute = require('./listingskill-routes');
+const listingStoryRoute = require('./listingstory-routes');
 const jobRoute = require('./job-routes');
 const storyRoute = require('./listingstory-routes');
 
 // Re-route this URI to other resource router
-router.use('/stories', storyRoute);
 router.use('/:listing_id/faqs', faqRoute);
 router.use('/:listing_id/hashtags', hashtagRoute);
 router.use('/:listing_id/likes', likeRoute);
@@ -50,6 +50,8 @@ router.use('/:listing_id/listing-comments', listingCommentRoute);
 router.use('/:listing_id/listing-updates', listingUpdateRoute);
 router.use('/:listing_id/milestones', milestoneRoute);
 router.use('/:listing_id/participants', participantRoute);
+router.use('/stories', storyRoute);
+router.use('/:listing_id/stories', storyRoute);
 router.use('/:listing_id/listing-skills', listingSkillRoute);
 router.use('/:listing_id/jobs', jobRoute);
 

@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Get all likes for a particular listing or profile will show the necessary profile and listing information respectively.
+- `ListingStories` route changed from `/listings/stories/1` to `/listings/1/stories`.
 
 ## [0.0.3] - 2020-08-13
 
