@@ -6,22 +6,31 @@ const { cleanseData, parseSqlUpdateStmt } = require('../utils/dbHelper');
 /**
  * @desc    Get all listing stories
  * @route   GET /api/listings/stories
+ * @access  Public
+ */
+exports.getListingStories = asyncHandler(async (req, res) => {
+  res.status(200).json(res.advancedResults);
+});
+
+/**
  * @desc    Get single listing story
  * @route   GET /api/listings/:listing_id/stories
  * @access  Public
  */
-exports.getListingStories = asyncHandler(async (req, res) => {
-  if (req.params.listing_id) {
-    const rows = await db.one(
-      'SELECT * FROM listingstories WHERE listing_id = $1',
-      req.params.listing_id
-    );
-    return res.status(200).json({
-      success: true,
-      data: rows,
-    });
+exports.getListingStory = asyncHandler(async (req, res) => {
+  // re-route to next middleware
+  if (!req.params.listing_id) {
+    return next();
   }
-  res.status(200).json(res.advancedResults);
+
+  const rows = await db.one(
+    'SELECT * FROM listingstories WHERE listing_id = $1',
+    req.params.listing_id
+  );
+  return res.status(200).json({
+    success: true,
+    data: rows,
+  });
 });
 
 /**

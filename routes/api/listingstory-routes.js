@@ -12,13 +12,14 @@ const {
 // import controllers here
 const {
   getListingStories,
+  getListingStory,
   updateListingStory,
 } = require('../../controllers/listingstories');
 
 // All routes below use mergedParams from listings route
 router
   .route('/')
-  .get(advancedResults('listingstories'), getListingStories)
+  .get(getListingStory, advancedResults('listingstories'), getListingStories)
   .put(
     protect,
     [
