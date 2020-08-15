@@ -17,6 +17,12 @@ const {
   deleteListingSkill,
 } = require('../../controllers/listingskills');
 
+// Define input validation chain
+const validateCreateListingSkill = [
+  check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
+  check('skill_id', INVALID_FIELD_MSG('skill id')).isInt(),
+];
+
 router
   .route('/')
   .get(
@@ -32,14 +38,7 @@ router.use(authorise('user', 'admin'));
 // map routes to controller
 router
   .route('/')
-  .post(
-    [
-      check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
-      check('skill_id', INVALID_FIELD_MSG('skill id')).isInt(),
-    ],
-    checkInputError,
-    createListingSkill
-  );
+  .post(validateCreateListingSkill, checkInputError, createListingSkill);
 
 router.route('/:id').delete(deleteListingSkill);
 

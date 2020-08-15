@@ -22,6 +22,22 @@ const {
   deleteSkill,
 } = require('../../controllers/skills');
 
+// Define input validation chain
+const validateCreateSkillFields = [
+  check('skill', INVALID_ALPHA_SPACE_MSG('skill'))
+    .trim()
+    .notEmpty()
+    .matches(ALPHA_WHITESPACE_REGEX),
+];
+
+const validateUpdateSkillFields = [
+  check('skill', NO_FIELD_UPDATED_MSG)
+    .trim()
+    .notEmpty()
+    .matches(ALPHA_WHITESPACE_REGEX)
+    .withMessage(INVALID_ALPHA_SPACE_MSG('skill')),
+];
+
 router.route('/').get(advancedResults('skills'), getSkills);
 router.route('/:id').get(getSkill);
 
@@ -30,32 +46,11 @@ router.use(protect);
 router.use(authorise('admin'));
 
 // map routes to controller
-router
-  .route('/')
-  .post(
-    [
-      check('skill', INVALID_ALPHA_SPACE_MSG('skill'))
-        .trim()
-        .notEmpty()
-        .matches(ALPHA_WHITESPACE_REGEX),
-    ],
-    checkInputError,
-    createSkill
-  );
+router.route('/').post(validateCreateSkillFields, checkInputError, createSkill);
 
 router
   .route('/:id')
-  .put(
-    [
-      check('skill', NO_FIELD_UPDATED_MSG)
-        .trim()
-        .notEmpty()
-        .matches(ALPHA_WHITESPACE_REGEX)
-        .withMessage(INVALID_ALPHA_SPACE_MSG('skill')),
-    ],
-    checkInputError,
-    updateSkill
-  )
+  .put(validateUpdateSkillFields, checkInputError, updateSkill)
   .delete(deleteSkill);
 
 module.exports = router;
