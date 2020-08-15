@@ -26,6 +26,39 @@ const { NO_FIELD_UPDATED_MSG } = require('../../utils/inputExceptionMsg');
 
 router.route('/raw').get(getProfile);
 
+// Define input validation chain for routes
+const validateProfileUpdateFields = [
+  oneOf(
+    [
+      check('nickname').exists(),
+      check('profile_picture').exists(),
+      check('about').exists(),
+      check('gender').exists(),
+      check('dob').exists(),
+      check('interest').exists(),
+      check('phone').exists(),
+      check('facebook_link').exists(),
+      check('twitter_link').exists(),
+      check('instagram_link').exists(),
+      check('linkedin_link').exists(),
+    ],
+    NO_FIELD_UPDATED_MSG
+  ),
+  check('nickname', INVALID_FIELD_MSG('nickname')).optional().trim().notEmpty(),
+  check('dob')
+    .optional()
+    .matches(DATETIME_REGEX)
+    .withMessage(INVALID_TIMESTAMP_MSG('dob')),
+  check('phone')
+    .optional()
+    .isMobilePhone('any')
+    .withMessage(INVALID_FIELD_MSG('phone number')),
+  check(['facebook_link', 'twitter_link', 'instagram_link', 'linkedin_link'])
+    .optional()
+    .isURL()
+    .withMessage(INVALID_FIELD_MSG('URL')),
+];
+
 // map routes to controller
 router
   .route('/')
@@ -44,45 +77,7 @@ router
   .route('/')
   .put(
     authorise('admin', 'user'),
-    [
-      oneOf(
-        [
-          check('nickname').exists(),
-          check('profile_picture').exists(),
-          check('about').exists(),
-          check('gender').exists(),
-          check('dob').exists(),
-          check('interest').exists(),
-          check('phone').exists(),
-          check('facebook_link').exists(),
-          check('twitter_link').exists(),
-          check('instagram_link').exists(),
-          check('linkedin_link').exists(),
-        ],
-        NO_FIELD_UPDATED_MSG
-      ),
-      check('nickname', INVALID_FIELD_MSG('nickname'))
-        .optional()
-        .trim()
-        .notEmpty(),
-      check('dob')
-        .optional()
-        .matches(DATETIME_REGEX)
-        .withMessage(INVALID_TIMESTAMP_MSG('dob')),
-      check('phone')
-        .optional()
-        .isMobilePhone('any')
-        .withMessage(INVALID_FIELD_MSG('phone number')),
-      check([
-        'facebook_link',
-        'twitter_link',
-        'instagram_link',
-        'linkedin_link',
-      ])
-        .optional()
-        .isURL()
-        .withMessage(INVALID_FIELD_MSG('URL')),
-    ],
+    validateProfileUpdateFields,
     checkInputError,
     decodeHashedReqKey('params.user_id'),
     updateProfile
@@ -92,45 +87,7 @@ router
   .route('/raw')
   .put(
     authorise('admin', 'user'),
-    [
-      oneOf(
-        [
-          check('nickname').exists(),
-          check('profile_picture').exists(),
-          check('about').exists(),
-          check('gender').exists(),
-          check('dob').exists(),
-          check('interest').exists(),
-          check('phone').exists(),
-          check('facebook_link').exists(),
-          check('twitter_link').exists(),
-          check('instagram_link').exists(),
-          check('linkedin_link').exists(),
-        ],
-        NO_FIELD_UPDATED_MSG
-      ),
-      check('nickname', INVALID_FIELD_MSG('nickname'))
-        .optional()
-        .trim()
-        .notEmpty(),
-      check('dob')
-        .optional()
-        .matches(DATETIME_REGEX)
-        .withMessage(INVALID_TIMESTAMP_MSG('dob')),
-      check('phone')
-        .optional()
-        .isMobilePhone('any')
-        .withMessage(INVALID_FIELD_MSG('phone number')),
-      check([
-        'facebook_link',
-        'twitter_link',
-        'instagram_link',
-        'linkedin_link',
-      ])
-        .optional()
-        .isURL()
-        .withMessage(INVALID_FIELD_MSG('URL')),
-    ],
+    validateProfileUpdateFields,
     checkInputError,
     updateProfile
   );
