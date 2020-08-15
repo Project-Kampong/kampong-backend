@@ -1,7 +1,6 @@
 const { db } = require('../db/db');
-const asyncHandler = require('../middleware/async');
-const ErrorResponse = require('../utils/errorResponse');
-const { parseSqlUpdateStmt } = require('../utils/dbHelper');
+const { asyncHandler } = require('../middleware');
+const { ErrorResponse, parseSqlUpdateStmt } = require('../utils');
 
 /**
  * @desc    Get all skills

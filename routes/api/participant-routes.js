@@ -1,15 +1,18 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const { check, oneOf } = require('express-validator');
-const advancedResults = require('../../middleware/advancedResults');
-const { protect, authorise } = require('../../middleware/auth');
-const { checkInputError } = require('../../middleware/inputValidation');
-const { DATETIME_REGEX } = require('../../utils/regex');
 const {
+  advancedResults,
+  protect,
+  authorise,
+  checkInputError,
+} = require('../../middleware');
+const {
+  DATETIME_REGEX,
   INVALID_FIELD_MSG,
   INVALID_TIMESTAMP_MSG,
   NO_FIELD_UPDATED_MSG,
-} = require('../../utils/inputExceptionMsg');
+} = require('../../utils');
 
 // import controllers here
 const {
