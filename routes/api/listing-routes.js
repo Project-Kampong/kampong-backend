@@ -1,18 +1,21 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const { check, oneOf } = require('express-validator');
-const advancedResults = require('../../middleware/advancedResults');
-const { protect, authorise } = require('../../middleware/auth');
-const { mapFilenameToLocation } = require('../../middleware/fileUploadHelper');
-const { checkInputError } = require('../../middleware/inputValidation');
-const { DATETIME_REGEX } = require('../../utils/regex');
 const {
+  advancedResults,
+  checkInputError,
+  protect,
+  authorise,
+  mapFilenameToLocation,
+} = require('../../middleware');
+const {
+  DATETIME_REGEX,
   NO_FIELD_UPDATED_MSG,
   INVALID_FIELD_MSG,
   INVALID_BOOLEAN_MSG,
   INVALID_TIMESTAMP_MSG,
-} = require('../../utils/inputExceptionMsg');
-const { uploadFile } = require('../../utils/fileUploader');
+  uploadFile,
+} = require('../../utils');
 
 // import controllers here
 const {

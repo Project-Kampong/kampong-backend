@@ -1,8 +1,11 @@
 const { db } = require('../db/db');
-const asyncHandler = require('../middleware/async');
-const ErrorResponse = require('../utils/errorResponse');
-const { cleanseData, parseSqlUpdateStmt } = require('../utils/dbHelper');
-const { hashDecode } = require('../utils/hashIdGenerator');
+const { asyncHandler } = require('../middleware');
+const {
+  cleanseData,
+  ErrorResponse,
+  hashDecode,
+  parseSqlUpdateStmt,
+} = require('../utils');
 
 /**
  * @desc    Get all profiles

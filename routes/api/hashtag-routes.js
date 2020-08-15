@@ -1,13 +1,17 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const { check, oneOf } = require('express-validator');
-const advancedResults = require('../../middleware/advancedResults');
-const { protect, authorise } = require('../../middleware/auth');
-const { checkInputError } = require('../../middleware/inputValidation');
 const {
+  advancedResults,
+  checkInputError,
+  protect,
+  authorise,
+} = require('../../middleware');
+const {
+  HASHTAG_REGEX,
   NO_FIELD_UPDATED_MSG,
   INVALID_FIELD_MSG,
-} = require('../../utils/inputExceptionMsg');
+} = require('../../utils');
 
 // import controllers here
 const {
@@ -17,7 +21,6 @@ const {
   updateHashtag,
   deleteHashtag,
 } = require('../../controllers/hashtags');
-const { HASHTAG_REGEX } = require('../../utils/regex');
 
 router.route('/').get(advancedResults('hashtags'), getHashtags);
 router.route('/:id').get(getHashtag);

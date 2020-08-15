@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const { check } = require('express-validator');
-const advancedResults = require('../../middleware/advancedResults');
-const { protect, authorise } = require('../../middleware/auth');
-const { checkInputError } = require('../../middleware/inputValidation');
-const { INVALID_FIELD_MSG } = require('../../utils/inputExceptionMsg');
+const {
+  advancedResults,
+  protect,
+  authorise,
+  checkInputError,
+} = require('../../middleware');
+const { INVALID_FIELD_MSG } = require('../../utils');
 
 // import controllers here
 const {

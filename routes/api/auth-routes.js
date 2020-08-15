@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const { check, oneOf } = require('express-validator');
-const { protect } = require('../../middleware/auth');
-const { ALPHA_WHITESPACE_REGEX } = require('../../utils/regex');
+const { protect, checkInputError } = require('../../middleware');
 const {
+  ALPHA_WHITESPACE_REGEX,
   INVALID_EMAIL_MSG,
   INVALID_ALPHA_SPACE_MSG,
   INVALID_PASSWORD_MSG,
   NO_FIELD_UPDATED_MSG,
   INVALID_EXISTING_MSG,
-} = require('../../utils/inputExceptionMsg');
+} = require('../../utils');
 
 // import controllers here
 const {
@@ -23,7 +23,6 @@ const {
   forgetPassword,
   resetPassword,
 } = require('../../controllers/auth');
-const { checkInputError } = require('../../middleware/inputValidation');
 
 // map routes to controller
 router.get('/logout', protect, logout);

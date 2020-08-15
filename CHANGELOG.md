@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Get All Listings owned by a Particular User `/profiles/1/listings/owner` -> `/users/1/listings/owner`.
   - Upload Listing Photos `/listings/1/photo` -> `/listings/1/upload-photo`
   - Upload Profile Picture `profiles/1/photo` -> `users/1/profiles/upload-photo`
+- For backend, added `index.js` file for `middleware` and `utils` directory, to consolidate imports and exports.
 
 ### Removed
 

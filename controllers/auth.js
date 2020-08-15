@@ -1,14 +1,15 @@
 const crypto = require('crypto');
 const {
   checkPassword,
+  cleanseData,
+  ErrorResponse,
   getSignedJwtToken,
   hashPassword,
-} = require('../utils/auth');
+  parseSqlUpdateStmt,
+  sendEmail,
+} = require('../utils');
 const { db } = require('../db/db');
-const asyncHandler = require('../middleware/async');
-const ErrorResponse = require('../utils/errorResponse');
-const { cleanseData, parseSqlUpdateStmt } = require('../utils/dbHelper');
-const sendEmail = require('../utils/sendEmail');
+const { asyncHandler } = require('../middleware');
 
 /**
  * @desc    Register user and send email to user email with link to confirm email and activate account
