@@ -23,6 +23,30 @@ const {
   deleteListingUpdate,
 } = require('../../controllers/listingupdates');
 
+// Define input validation chain
+const validateCreateListingUpdateFields = [
+  check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
+  check('description', INVALID_FIELD_MSG('description')).trim().notEmpty(),
+];
+
+const validateModifyListingUpdateFields = [
+  oneOf(
+    [
+      check('description').exists(),
+      check('pic1').exists(),
+      check('pic2').exists(),
+      check('pic3').exists(),
+      check('pic4').exists(),
+      check('pic5').exists(),
+    ],
+    NO_FIELD_UPDATED_MSG
+  ),
+  check('description', INVALID_FIELD_MSG('description'))
+    .optional()
+    .trim()
+    .notEmpty(),
+];
+
 router.route('/').get(advancedResults('listingupdates'), getListingUpdates);
 router.route('/:id').get(getListingUpdate);
 
@@ -36,10 +60,7 @@ router
   .post(
     uploadFile.array('pics', 5),
     mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
-    [
-      check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
-      check('description', INVALID_FIELD_MSG('description')).trim().notEmpty(),
-    ],
+    validateCreateListingUpdateFields,
     checkInputError,
     createListingUpdate
   );
@@ -49,23 +70,7 @@ router
   .put(
     uploadFile.array('pics', 5),
     mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
-    [
-      oneOf(
-        [
-          check('description').exists(),
-          check('pic1').exists(),
-          check('pic2').exists(),
-          check('pic3').exists(),
-          check('pic4').exists(),
-          check('pic5').exists(),
-        ],
-        NO_FIELD_UPDATED_MSG
-      ),
-      check('description', INVALID_FIELD_MSG('description'))
-        .optional()
-        .trim()
-        .notEmpty(),
-    ],
+    validateModifyListingUpdateFields,
     checkInputError,
     modifyListingUpdate
   )

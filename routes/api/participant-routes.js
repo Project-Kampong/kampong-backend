@@ -23,6 +23,31 @@ const {
   deleteParticipant,
 } = require('../../controllers/participants');
 
+// Define input validation chain
+const validateCreateParticipantFields = [
+  check('listing_id', INVALID_FIELD_MSG('listing_id')).isInt(),
+  check('user_id', INVALID_FIELD_MSG('user_id')).isInt(),
+  check('joined_on', INVALID_TIMESTAMP_MSG('join date'))
+    .optional()
+    .matches(DATETIME_REGEX),
+  check('end_on', INVALID_TIMESTAMP_MSG('end date'))
+    .optional()
+    .matches(DATETIME_REGEX),
+];
+
+const validateUpdateParticipantFields = [
+  oneOf(
+    [check('joined_on').exists(), check('end_on').exists()],
+    NO_FIELD_UPDATED_MSG
+  ),
+  check('joined_on', INVALID_TIMESTAMP_MSG('join date'))
+    .optional()
+    .matches(DATETIME_REGEX),
+  check('end_on', INVALID_TIMESTAMP_MSG('end date'))
+    .optional()
+    .matches(DATETIME_REGEX),
+];
+
 router.route('/').get(advancedResults('participants'), getParticipants);
 router.route('/:participant_id').get(getParticipant);
 
@@ -33,39 +58,11 @@ router.use(authorise('user', 'admin'));
 // map routes to controller
 router
   .route('/')
-  .post(
-    [
-      check('listing_id', INVALID_FIELD_MSG('listing_id')).isInt(),
-      check('user_id', INVALID_FIELD_MSG('user_id')).isInt(),
-      check('joined_on', INVALID_TIMESTAMP_MSG('join date'))
-        .optional()
-        .matches(DATETIME_REGEX),
-      check('end_on', INVALID_TIMESTAMP_MSG('end date'))
-        .optional()
-        .matches(DATETIME_REGEX),
-    ],
-    checkInputError,
-    createParticipant
-  );
+  .post(validateCreateParticipantFields, checkInputError, createParticipant);
 
 router
   .route('/:participant_id')
-  .put(
-    [
-      oneOf(
-        [check('joined_on').exists(), check('end_on').exists()],
-        NO_FIELD_UPDATED_MSG
-      ),
-      check('joined_on', INVALID_TIMESTAMP_MSG('join date'))
-        .optional()
-        .matches(DATETIME_REGEX),
-      check('end_on', INVALID_TIMESTAMP_MSG('end date'))
-        .optional()
-        .matches(DATETIME_REGEX),
-    ],
-    checkInputError,
-    updateParticipant
-  )
+  .put(validateUpdateParticipantFields, checkInputError, updateParticipant)
   .delete(deleteParticipant);
 
 module.exports = router;
