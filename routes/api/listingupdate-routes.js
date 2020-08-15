@@ -11,8 +11,8 @@ const {
 const {
   NO_FIELD_UPDATED_MSG,
   INVALID_FIELD_MSG,
-} = require('../../utils/inputExceptionMsg');
-const { uploadFile } = require('../../utils/fileUploader');
+  uploadFile,
+} = require('../../utils');
 
 // import controllers here
 const {

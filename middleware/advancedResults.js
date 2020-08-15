@@ -1,7 +1,6 @@
 const asyncHandler = require('./async');
 const { db, pgp } = require('../db/db');
-const { cleanseData } = require('../utils/dbHelper');
-const { hashEncode } = require('../utils/hashIdGenerator');
+const { cleanseData, hashEncode } = require('../utils');
 
 /**
  * Handles select, sort, page, limit and filter request query params.

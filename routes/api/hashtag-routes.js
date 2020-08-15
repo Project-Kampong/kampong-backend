@@ -8,9 +8,10 @@ const {
   authorise,
 } = require('../../middleware');
 const {
+  HASHTAG_REGEX,
   NO_FIELD_UPDATED_MSG,
   INVALID_FIELD_MSG,
-} = require('../../utils/inputExceptionMsg');
+} = require('../../utils');
 
 // import controllers here
 const {
@@ -20,7 +21,6 @@ const {
   updateHashtag,
   deleteHashtag,
 } = require('../../controllers/hashtags');
-const { HASHTAG_REGEX } = require('../../utils/regex');
 
 router.route('/').get(advancedResults('hashtags'), getHashtags);
 router.route('/:id').get(getHashtag);

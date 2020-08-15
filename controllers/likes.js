@@ -1,7 +1,6 @@
 const { db } = require('../db/db');
 const { asyncHandler } = require('../middleware');
-const ErrorResponse = require('../utils/errorResponse');
-const { cleanseData } = require('../utils/dbHelper');
+const { cleanseData, ErrorResponse } = require('../utils');
 
 /**
  * @desc    Get all likes

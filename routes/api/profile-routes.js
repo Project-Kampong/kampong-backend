@@ -9,11 +9,12 @@ const {
   mapSingleFileLocation,
 } = require('../../middleware');
 const {
+  DATETIME_REGEX,
   INVALID_TIMESTAMP_MSG,
   INVALID_FIELD_MSG,
-} = require('../../utils/inputExceptionMsg');
-const { DATETIME_REGEX } = require('../../utils/regex');
-const { uploadFile } = require('../../utils/fileUploader');
+  NO_FIELD_UPDATED_MSG,
+  uploadFile,
+} = require('../../utils');
 
 // import controllers here
 const {
@@ -24,7 +25,6 @@ const {
   verifyProfile,
   uploadPic,
 } = require('../../controllers/profiles');
-const { NO_FIELD_UPDATED_MSG } = require('../../utils/inputExceptionMsg');
 
 // map routes to controller
 router

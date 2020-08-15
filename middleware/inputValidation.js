@@ -1,6 +1,6 @@
 const asyncHandler = require('./async');
 const { isEmpty } = require('lodash');
-const ErrorResponse = require('../utils/errorResponse');
+const { ErrorResponse } = require('../utils');
 const { validationResult } = require('express-validator');
 
 exports.checkInputError = asyncHandler(async (req, res, next) => {

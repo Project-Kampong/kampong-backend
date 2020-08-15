@@ -8,10 +8,11 @@ const {
   checkInputError,
 } = require('../../middleware');
 const {
+  DATETIME_REGEX,
   NO_FIELD_UPDATED_MSG,
   INVALID_FIELD_MSG,
   INVALID_TIMESTAMP_MSG,
-} = require('../../utils/inputExceptionMsg');
+} = require('../../utils');
 
 // import controllers here
 const {
@@ -21,7 +22,6 @@ const {
   updateMilestone,
   deleteMilestone,
 } = require('../../controllers/milestones');
-const { DATETIME_REGEX } = require('../../utils/regex');
 
 router.route('/').get(advancedResults('milestones'), getMilestones);
 router.route('/:id').get(getMilestone);

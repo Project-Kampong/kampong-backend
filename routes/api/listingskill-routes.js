@@ -7,7 +7,7 @@ const {
   authorise,
   checkInputError,
 } = require('../../middleware');
-const { INVALID_FIELD_MSG } = require('../../utils/inputExceptionMsg');
+const { INVALID_FIELD_MSG } = require('../../utils');
 
 // import controllers here
 const {

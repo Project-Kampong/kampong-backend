@@ -7,12 +7,12 @@ const {
   authorise,
   checkInputError,
 } = require('../../middleware');
-const { DATETIME_REGEX } = require('../../utils/regex');
 const {
+  DATETIME_REGEX,
   INVALID_FIELD_MSG,
   INVALID_TIMESTAMP_MSG,
   NO_FIELD_UPDATED_MSG,
-} = require('../../utils/inputExceptionMsg');
+} = require('../../utils');
 
 // import controllers here
 const {

@@ -1,7 +1,6 @@
 const { db } = require('../db/db');
 const { asyncHandler } = require('../middleware');
-const ErrorResponse = require('../utils/errorResponse');
-const { cleanseData, parseSqlUpdateStmt } = require('../utils/dbHelper');
+const { cleanseData, ErrorResponse, parseSqlUpdateStmt } = require('../utils');
 
 /**
  * @desc    Get all participants

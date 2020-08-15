@@ -1,6 +1,6 @@
 const colors = require('colors');
 const { db } = require('../db/db');
-const { checkConn, generateSqlQueryFile } = require('../utils/dbHelper');
+const { checkConn, generateSqlQueryFile } = require('../utils');
 const { hashPassword } = require('./auth');
 
 const DEFAULT_PASSWORD = '123456';

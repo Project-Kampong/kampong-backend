@@ -7,10 +7,7 @@ const {
   protect,
   authorise,
 } = require('../../middleware');
-const {
-  NO_FIELD_UPDATED_MSG,
-  INVALID_FIELD_MSG,
-} = require('../../utils/inputExceptionMsg');
+const { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } = require('../../utils');
 
 // import controllers here
 const {

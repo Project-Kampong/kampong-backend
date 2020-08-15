@@ -1,6 +1,6 @@
 const { db } = require('../db/db');
 const { asyncHandler } = require('../middleware');
-const ErrorResponse = require('../utils/errorResponse');
+const { ErrorResponse } = require('../utils');
 
 /**
  * @desc    Get all listing skills

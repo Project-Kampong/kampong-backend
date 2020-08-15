@@ -10,7 +10,7 @@ const {
   NO_FIELD_UPDATED_MSG,
   INVALID_FIELD_MSG,
   INVALID_TIMESTAMP_MSG,
-} = require('../../utils/inputExceptionMsg');
+} = require('../../utils');
 
 // import controllers here
 const {

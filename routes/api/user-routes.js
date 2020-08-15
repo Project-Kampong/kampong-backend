@@ -7,13 +7,13 @@ const {
   authorise,
   checkInputError,
 } = require('../../middleware');
-const { ALPHA_WHITESPACE_REGEX } = require('../../utils/regex');
 const {
+  ALPHA_WHITESPACE_REGEX,
   INVALID_EMAIL_MSG,
   INVALID_ALPHA_SPACE_MSG,
   INVALID_PASSWORD_MSG,
   NO_FIELD_UPDATED_MSG,
-} = require('../../utils/inputExceptionMsg');
+} = require('../../utils');
 
 // import controllers here
 const {

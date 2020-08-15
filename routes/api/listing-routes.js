@@ -8,14 +8,14 @@ const {
   authorise,
   mapFilenameToLocation,
 } = require('../../middleware');
-const { DATETIME_REGEX } = require('../../utils/regex');
 const {
+  DATETIME_REGEX,
   NO_FIELD_UPDATED_MSG,
   INVALID_FIELD_MSG,
   INVALID_BOOLEAN_MSG,
   INVALID_TIMESTAMP_MSG,
-} = require('../../utils/inputExceptionMsg');
-const { uploadFile } = require('../../utils/fileUploader');
+  uploadFile,
+} = require('../../utils');
 
 // import controllers here
 const {
