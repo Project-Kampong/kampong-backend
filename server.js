@@ -12,7 +12,7 @@ const cors = require('cors');
 const { checkConn } = require('./utils/dbHelper');
 const apiRoutes = require('./routes/api-routes');
 const testRoutes = require('./routes/test-routes');
-const errorHandler = require('./middleware/error');
+const { errorHandler } = require('./middleware');
 
 dotenv.config({ path: 'config/config.env' });
 

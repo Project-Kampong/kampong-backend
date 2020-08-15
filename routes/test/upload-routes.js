@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { mapSingleFileLocation } = require('../../middleware/fileUploadHelper');
+const { mapSingleFileLocation } = require('../../middleware');
 const { uploadFile } = require('../../utils/fileUploader');
 
 router.post(

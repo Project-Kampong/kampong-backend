@@ -1,5 +1,5 @@
 const { db } = require('../db/db');
-const asyncHandler = require('../middleware/async');
+const { asyncHandler } = require('../middleware');
 const ErrorResponse = require('../utils/errorResponse');
 const { cleanseData } = require('../utils/dbHelper');
 

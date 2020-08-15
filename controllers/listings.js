@@ -1,6 +1,6 @@
 const moment = require('moment');
 const { db } = require('../db/db');
-const asyncHandler = require('../middleware/async');
+const { asyncHandler } = require('../middleware');
 const { cleanseData, parseSqlUpdateStmt } = require('../utils/dbHelper');
 const ErrorResponse = require('../utils/errorResponse');
 const { hashDecode } = require('../utils/hashIdGenerator');

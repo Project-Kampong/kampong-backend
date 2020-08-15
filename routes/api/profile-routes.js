@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const { check, oneOf } = require('express-validator');
-
-const advancedResults = require('../../middleware/advancedResults');
-const { protect, authorise } = require('../../middleware/auth');
-const { checkInputError } = require('../../middleware/inputValidation');
-const { mapSingleFileLocation } = require('../../middleware/fileUploadHelper');
+const {
+  advancedResults,
+  checkInputError,
+  protect,
+  authorise,
+  mapSingleFileLocation,
+} = require('../../middleware');
 const {
   INVALID_TIMESTAMP_MSG,
   INVALID_FIELD_MSG,

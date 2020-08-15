@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { check, oneOf } = require('express-validator');
-const { protect } = require('../../middleware/auth');
+const { protect, checkInputError } = require('../../middleware');
 const { ALPHA_WHITESPACE_REGEX } = require('../../utils/regex');
 const {
   INVALID_EMAIL_MSG,
@@ -23,7 +23,6 @@ const {
   forgetPassword,
   resetPassword,
 } = require('../../controllers/auth');
-const { checkInputError } = require('../../middleware/inputValidation');
 
 // map routes to controller
 router.get('/logout', protect, logout);

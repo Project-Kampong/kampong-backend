@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const { check, oneOf } = require('express-validator');
-const advancedResults = require('../../middleware/advancedResults');
-const { protect, authorise } = require('../../middleware/auth');
-const { checkInputError } = require('../../middleware/inputValidation');
+const {
+  advancedResults,
+  protect,
+  authorise,
+  checkInputError,
+} = require('../../middleware');
 const { ALPHA_WHITESPACE_REGEX } = require('../../utils/regex');
 const {
   INVALID_EMAIL_MSG,

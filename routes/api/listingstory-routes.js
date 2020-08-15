@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const { check, oneOf } = require('express-validator');
-const advancedResults = require('../../middleware/advancedResults');
-const { protect } = require('../../middleware/auth');
-const { checkInputError } = require('../../middleware/inputValidation');
+const {
+  advancedResults,
+  checkInputError,
+  protect,
+} = require('../../middleware');
 const {
   NO_FIELD_UPDATED_MSG,
   INVALID_FIELD_MSG,
