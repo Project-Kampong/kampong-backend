@@ -23,6 +23,29 @@ const {
   deleteMilestone,
 } = require('../../controllers/milestones');
 
+// Define input validation chain
+const validateCreateMilestoneFields = [
+  check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
+  check('description', INVALID_FIELD_MSG('description')).trim().notEmpty(),
+  check('date', INVALID_TIMESTAMP_MSG('date'))
+    .optional()
+    .matches(DATETIME_REGEX),
+];
+
+const validateUpdateMilestoneFields = [
+  oneOf(
+    [check('description').exists(), check('date').exists()],
+    NO_FIELD_UPDATED_MSG
+  ),
+  check('description', INVALID_FIELD_MSG('description'))
+    .optional()
+    .trim()
+    .notEmpty(),
+  check('date', INVALID_TIMESTAMP_MSG('date'))
+    .optional()
+    .matches(DATETIME_REGEX),
+];
+
 router.route('/').get(advancedResults('milestones'), getMilestones);
 router.route('/:id').get(getMilestone);
 
@@ -33,37 +56,11 @@ router.use(authorise('user', 'admin'));
 // map routes to controller
 router
   .route('/')
-  .post(
-    [
-      check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
-      check('description', INVALID_FIELD_MSG('description')).trim().notEmpty(),
-      check('date', INVALID_TIMESTAMP_MSG('date'))
-        .optional()
-        .matches(DATETIME_REGEX),
-    ],
-    checkInputError,
-    createMilestone
-  );
+  .post(validateCreateMilestoneFields, checkInputError, createMilestone);
 
 router
   .route('/:id')
-  .put(
-    [
-      oneOf(
-        [check('description').exists(), check('date').exists()],
-        NO_FIELD_UPDATED_MSG
-      ),
-      check('description', INVALID_FIELD_MSG('description'))
-        .optional()
-        .trim()
-        .notEmpty(),
-      check('date', INVALID_TIMESTAMP_MSG('date'))
-        .optional()
-        .matches(DATETIME_REGEX),
-    ],
-    checkInputError,
-    updateMilestone
-  )
+  .put(validateUpdateMilestoneFields, checkInputError, updateMilestone)
   .delete(deleteMilestone);
 
 module.exports = router;

@@ -58,6 +58,62 @@ router.use('/:listing_id/stories', storyRoute);
 router.use('/:listing_id/listing-skills', listingSkillRoute);
 router.use('/:listing_id/jobs', jobRoute);
 
+// Define input validation chain
+const validateCreateListingFields = [
+  check('organisation_id', INVALID_FIELD_MSG('organisation id'))
+    .optional()
+    .isInt(),
+  check('title', INVALID_FIELD_MSG('title')).trim().notEmpty(),
+  check('category', INVALID_FIELD_MSG('category')).trim().notEmpty(),
+  check('listing_url', INVALID_FIELD_MSG('listing URL')).optional().isURL(),
+  check('is_published', INVALID_BOOLEAN_MSG('is_published'))
+    .optional()
+    .isBoolean(),
+  check('start_date', INVALID_TIMESTAMP_MSG('start date'))
+    .optional()
+    .matches(DATETIME_REGEX),
+  check('end_date', INVALID_TIMESTAMP_MSG('end date'))
+    .optional()
+    .matches(DATETIME_REGEX),
+];
+
+const validateUpdateListingFields = [
+  oneOf(
+    [
+      check('organisation_id').exists(),
+      check('title').exists(),
+      check('category').exists(),
+      check('about').exists(),
+      check('tagline').exists(),
+      check('mission').exists(),
+      check('listing_url').exists(),
+      check('is_published').exists(),
+      check('start_date').exists(),
+      check('end_date').exists(),
+    ],
+    NO_FIELD_UPDATED_MSG
+  ),
+  check('organisation_id', INVALID_FIELD_MSG('organisation id'))
+    .optional()
+    .isInt(),
+  check('title', INVALID_FIELD_MSG('title')).optional().trim().notEmpty(),
+  check('category', INVALID_FIELD_MSG('category')).optional().trim().notEmpty(),
+  check('listing_url', INVALID_FIELD_MSG('listing URL')).optional().isURL(),
+  check('is_published', INVALID_BOOLEAN_MSG('is_published'))
+    .optional()
+    .isBoolean(),
+  check('start_date', INVALID_TIMESTAMP_MSG('start date'))
+    .optional()
+    .matches(DATETIME_REGEX),
+  check('end_date', INVALID_TIMESTAMP_MSG('end date'))
+    .optional()
+    .matches(DATETIME_REGEX),
+];
+
+const validateVerifyListingFields = [
+  check('is_verified', INVALID_BOOLEAN_MSG('is_verified')).isBoolean(),
+];
+
 // map routes to controller
 router
   .route('/')
@@ -66,23 +122,7 @@ router
     protect,
     uploadFile.array('pics', 5),
     mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
-    [
-      check('organisation_id', INVALID_FIELD_MSG('organisation id'))
-        .optional()
-        .isInt(),
-      check('title', INVALID_FIELD_MSG('title')).trim().notEmpty(),
-      check('category', INVALID_FIELD_MSG('category')).trim().notEmpty(),
-      check('listing_url', INVALID_FIELD_MSG('listing URL')).optional().isURL(),
-      check('is_published', INVALID_BOOLEAN_MSG('is_published'))
-        .optional()
-        .isBoolean(),
-      check('start_date', INVALID_TIMESTAMP_MSG('start date'))
-        .optional()
-        .matches(DATETIME_REGEX),
-      check('end_date', INVALID_TIMESTAMP_MSG('end date'))
-        .optional()
-        .matches(DATETIME_REGEX),
-    ],
+    validateCreateListingFields,
     checkInputError,
     createListing
   );
@@ -104,41 +144,7 @@ router
   .put(
     protect,
     authorise('user', 'admin'),
-    [
-      oneOf(
-        [
-          check('organisation_id').exists(),
-          check('title').exists(),
-          check('category').exists(),
-          check('about').exists(),
-          check('tagline').exists(),
-          check('mission').exists(),
-          check('listing_url').exists(),
-          check('is_published').exists(),
-          check('start_date').exists(),
-          check('end_date').exists(),
-        ],
-        NO_FIELD_UPDATED_MSG
-      ),
-      check('organisation_id', INVALID_FIELD_MSG('organisation id'))
-        .optional()
-        .isInt(),
-      check('title', INVALID_FIELD_MSG('title')).optional().trim().notEmpty(),
-      check('category', INVALID_FIELD_MSG('category'))
-        .optional()
-        .trim()
-        .notEmpty(),
-      check('listing_url', INVALID_FIELD_MSG('listing URL')).optional().isURL(),
-      check('is_published', INVALID_BOOLEAN_MSG('is_published'))
-        .optional()
-        .isBoolean(),
-      check('start_date', INVALID_TIMESTAMP_MSG('start date'))
-        .optional()
-        .matches(DATETIME_REGEX),
-      check('end_date', INVALID_TIMESTAMP_MSG('end date'))
-        .optional()
-        .matches(DATETIME_REGEX),
-    ],
+    validateUpdateListingFields,
     checkInputError,
     updateListing
   )
@@ -163,7 +169,7 @@ router
   .put(
     protect,
     authorise('admin'),
-    [check('is_verified', INVALID_BOOLEAN_MSG('is_verified')).isBoolean()],
+    validateVerifyListingFields,
     checkInputError,
     verifyListing
   );

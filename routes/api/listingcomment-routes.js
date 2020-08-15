@@ -22,6 +22,18 @@ const {
   deleteListingComment,
 } = require('../../controllers/listingcomments');
 
+// Define input validation chain
+const validateCreateListingCommentFields = [
+  check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
+  check('comment', INVALID_FIELD_MSG('comment')).trim().notEmpty(),
+  check('reply_to_id', INVALID_TIMESTAMP_MSG('reply to id')).optional().isInt(),
+];
+
+const validateUpdateListingCommentFields = [
+  oneOf([check('comment').exists()], NO_FIELD_UPDATED_MSG),
+  check('comment', INVALID_FIELD_MSG('comment')).optional().trim().notEmpty(),
+];
+
 router.route('/').get(advancedResults('listingcomments'), getListingComments);
 router.route('/:id').get(getListingComment);
 router.route('/:id/children').get(getListingCommentChildren);
@@ -33,13 +45,7 @@ router.use(protect);
 router
   .route('/')
   .post(
-    [
-      check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
-      check('comment', INVALID_FIELD_MSG('comment')).trim().notEmpty(),
-      check('reply_to_id', INVALID_TIMESTAMP_MSG('reply to id'))
-        .optional()
-        .isInt(),
-    ],
+    validateCreateListingCommentFields,
     checkInputError,
     createListingComment
   );
@@ -47,13 +53,7 @@ router
 router
   .route('/:id')
   .put(
-    [
-      oneOf([check('comment').exists()], NO_FIELD_UPDATED_MSG),
-      check('comment', INVALID_FIELD_MSG('comment'))
-        .optional()
-        .trim()
-        .notEmpty(),
-    ],
+    validateUpdateListingCommentFields,
     checkInputError,
     updateListingComment
   )

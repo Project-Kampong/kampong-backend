@@ -16,6 +16,11 @@ const {
   unLike,
 } = require('../../controllers/likes');
 
+// Define input validation chain
+const validateNewLikeFields = [
+  check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
+];
+
 router.route('/').get(advancedResults('likes'), getLikes);
 router.route('/:like_id').get(getLike);
 
@@ -23,13 +28,7 @@ router.route('/:like_id').get(getLike);
 router.use(protect);
 
 // map routes to controller
-router
-  .route('/')
-  .post(
-    [check('listing_id', INVALID_FIELD_MSG('listing id')).isInt()],
-    checkInputError,
-    newLike
-  );
+router.route('/').post(validateNewLikeFields, checkInputError, newLike);
 
 router.route('/:like_id').delete(unLike);
 

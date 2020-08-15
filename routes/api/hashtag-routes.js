@@ -22,6 +22,17 @@ const {
   deleteHashtag,
 } = require('../../controllers/hashtags');
 
+// Define input validation chain
+const validateCreateHashtagFields = [
+  check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
+  check('tag', INVALID_FIELD_MSG('tag')).matches(HASHTAG_REGEX),
+];
+
+const validateUpdateHashtagFields = [
+  oneOf([check('tag').exists()], NO_FIELD_UPDATED_MSG),
+  check('tag', INVALID_FIELD_MSG('tag')).optional().matches(HASHTAG_REGEX),
+];
+
 router.route('/').get(advancedResults('hashtags'), getHashtags);
 router.route('/:id').get(getHashtag);
 
@@ -32,25 +43,11 @@ router.use(authorise('user', 'admin'));
 // map routes to controller
 router
   .route('/')
-  .post(
-    [
-      check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
-      check('tag', INVALID_FIELD_MSG('tag')).matches(HASHTAG_REGEX),
-    ],
-    checkInputError,
-    createHashtag
-  );
+  .post(validateCreateHashtagFields, checkInputError, createHashtag);
 
 router
   .route('/:id')
-  .put(
-    [
-      oneOf([check('tag').exists()], NO_FIELD_UPDATED_MSG),
-      check('tag', INVALID_FIELD_MSG('tag')).optional().matches(HASHTAG_REGEX),
-    ],
-    checkInputError,
-    updateHashtag
-  )
+  .put(validateUpdateHashtagFields, checkInputError, updateHashtag)
   .delete(deleteHashtag);
 
 module.exports = router;
