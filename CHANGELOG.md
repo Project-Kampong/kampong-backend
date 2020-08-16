@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Verify Profile endpoint.
+- Soft delete for `ListingComments`.
+- `ListingComments` now show comment poster's nickname and profile picture.
 
 ### Changed
 
@@ -21,8 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Get All Likes for a Profile `/profiles/1/likes` -> `/users/1/likes`.
   - Get All Listing Participation for a Profile `/profiles/1/participants` -> `/users/1/participants`.
   - Get All Listings owned by a Particular User `/profiles/1/listings/owner` -> `/users/1/listings/owner`.
-  - Upload Listing Photos `/listings/1/photo` -> `/listings/1/upload-photo`
-  - Upload Profile Picture `profiles/1/photo` -> `users/1/profiles/upload-photo`
+  - Upload Listing Photos `/listings/1/photo` -> `/listings/1/upload-photo`.
+  - Upload Profile Picture `profiles/1/photo` -> `users/1/profiles/upload-photo`.
 - For backend, added `index.js` file for `middleware` and `utils` directory, to consolidate imports and exports.
 
 ### Removed
