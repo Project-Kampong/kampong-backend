@@ -124,28 +124,13 @@ exports.createListingComment = asyncHandler(async (req, res, next) => {
  */
 exports.updateListingComment = asyncHandler(async (req, res, next) => {
   // check for non-admin, must be listing owner, else must update own comment only
-  if (req.user.role === 'user') {
-    const listingId = await db.one(
-      'SELECT listing_id FROM ListingComments WHERE listing_comment_id = $1',
-      req.params.id
+  if (!(await isListingOrCommentOwner(req.user, req.params.id))) {
+    return next(
+      new ErrorResponse(
+        `Not authorised to update other comments in this listing`,
+        403
+      )
     );
-
-    const isListingOwner = checkListingOwner(
-      req.user.user_id,
-      listingId.listing_id
-    );
-
-    const isCommentOwner = checkCommentOwner(req.user.user_id, req.params.id);
-
-    // if not listing owner and user_id to be updated is not self, 403 response
-    if (!(await isListingOwner) && !(await isCommentOwner)) {
-      return next(
-        new ErrorResponse(
-          `Not authorised to update other comments in this listing`,
-          403
-        )
-      );
-    }
   }
 
   const { comment } = req.body;
@@ -179,28 +164,13 @@ exports.updateListingComment = asyncHandler(async (req, res, next) => {
  */
 exports.deactivateListingComment = asyncHandler(async (req, res, next) => {
   // check for non-admin, must be listing owner, else must update own comment only
-  if (req.user.role === 'user') {
-    const listingId = await db.one(
-      'SELECT listing_id FROM ListingComments WHERE listing_comment_id = $1',
-      req.params.id
+  if (!(await isListingOrCommentOwner(req.user, req.params.id))) {
+    return next(
+      new ErrorResponse(
+        `Not authorised to update other comments in this listing`,
+        403
+      )
     );
-
-    const isListingOwner = checkListingOwner(
-      req.user.user_id,
-      listingId.listing_id
-    );
-
-    const isCommentOwner = checkCommentOwner(req.user.user_id, req.params.id);
-
-    // if not listing owner and user_id to be updated is not self, 403 response
-    if (!(await isListingOwner) && !(await isCommentOwner)) {
-      return next(
-        new ErrorResponse(
-          `Not authorised to update other comments in this listing`,
-          403
-        )
-      );
-    }
   }
 
   const data = {
@@ -228,29 +198,14 @@ exports.deactivateListingComment = asyncHandler(async (req, res, next) => {
  * @access  Admin/Owner/Private
  */
 exports.deleteListingComment = asyncHandler(async (req, res, next) => {
-  // check for non-admin, must be listing owner, else must delete own comment only
-  if (req.user.role === 'user') {
-    const listingId = await db.one(
-      'SELECT listing_id FROM ListingComments WHERE listing_comment_id = $1',
-      req.params.id
+  // check for non-admin, must be listing owner, else must update own comment only
+  if (!(await isListingOrCommentOwner(req.user, req.params.id))) {
+    return next(
+      new ErrorResponse(
+        `Not authorised to update other comments in this listing`,
+        403
+      )
     );
-
-    const isListingOwner = checkListingOwner(
-      req.user.user_id,
-      listingId.listing_id
-    );
-
-    const isCommentOwner = checkCommentOwner(req.user.user_id, req.params.id);
-
-    // if not listing owner and user_id to be updated is not self, 403 response
-    if (!(await isListingOwner) && !(await isCommentOwner)) {
-      return next(
-        new ErrorResponse(
-          `Not authorised to delete other comments in this listing`,
-          403
-        )
-      );
-    }
   }
 
   const rows = await db.one(
@@ -264,18 +219,23 @@ exports.deleteListingComment = asyncHandler(async (req, res, next) => {
   });
 });
 
-const checkListingOwner = async (userId, listingId) => {
-  const owner = await db.one(
-    'SELECT created_by FROM Listings WHERE listing_id = $1',
-    listingId
-  );
-  return parseInt(userId) === owner.created_by;
-};
+// Returns true if is admin, listing, or comment owner
+const isListingOrCommentOwner = async (reqUser, listingCommentId) => {
+  const role = reqUser.role;
+  const userId = reqUser.user_id;
 
-const checkCommentOwner = async (userId, listingCommentId) => {
-  const owner = await db.one(
-    'SELECT user_id FROM ListingComments WHERE listing_comment_id = $1',
+  if (role === 'admin') {
+    return true;
+  }
+  const listingInfo = await db.one(
+    'SELECT created_by, user_id FROM ListingComments lc JOIN Listings l USING (listing_id) WHERE listing_comment_id = $1',
     listingCommentId
   );
-  return parseInt(userId) === owner.user_id;
+  if (
+    listingInfo.created_by !== parseInt(userId) &&
+    listingInfo.user_id !== parseInt(userId)
+  ) {
+    return false;
+  }
+  return true;
 };
