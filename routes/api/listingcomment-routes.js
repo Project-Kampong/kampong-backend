@@ -20,6 +20,7 @@ const {
   createListingComment,
   updateListingComment,
   deleteListingComment,
+  deactivateListingComment,
 } = require('../../controllers/listingcomments');
 
 // Define input validation chain
@@ -60,5 +61,7 @@ router
     updateListingComment
   )
   .delete(deleteListingComment);
+
+router.route('/:id/deactivate').put(deactivateListingComment);
 
 module.exports = router;

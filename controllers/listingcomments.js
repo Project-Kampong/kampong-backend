@@ -1,3 +1,4 @@
+const moment = require('moment');
 const { db } = require('../db/db');
 const { asyncHandler } = require('../middleware');
 const { cleanseData, ErrorResponse, parseSqlUpdateStmt } = require('../utils');
@@ -129,7 +130,10 @@ exports.updateListingComment = asyncHandler(async (req, res, next) => {
       req.params.id
     );
 
-    const isListingOwner = checkListingOwner(req.user.user_id, listingId);
+    const isListingOwner = checkListingOwner(
+      req.user.user_id,
+      listingId.listing_id
+    );
 
     const isCommentOwner = checkCommentOwner(req.user.user_id, req.params.id);
 
@@ -148,7 +152,7 @@ exports.updateListingComment = asyncHandler(async (req, res, next) => {
 
   const data = {
     comment,
-    updated_on: new Date().toISOString().slice(0, 19).replace('T', ' '),
+    updated_on: moment().format('YYYY-MM-DD HH:mm:ss.000'),
   };
 
   cleanseData(data);
@@ -169,6 +173,56 @@ exports.updateListingComment = asyncHandler(async (req, res, next) => {
 });
 
 /**
+ * @desc    Deactivate (soft delete) single listing comment (identified by listing comment id)
+ * @route   PUT /api/listings-comments/:id/deactivate
+ * @access  Admin/Owner/Private
+ */
+exports.deactivateListingComment = asyncHandler(async (req, res, next) => {
+  // check for non-admin, must be listing owner, else must update own comment only
+  if (req.user.role === 'user') {
+    const listingId = await db.one(
+      'SELECT listing_id FROM ListingComments WHERE listing_comment_id = $1',
+      req.params.id
+    );
+
+    const isListingOwner = checkListingOwner(
+      req.user.user_id,
+      listingId.listing_id
+    );
+
+    const isCommentOwner = checkCommentOwner(req.user.user_id, req.params.id);
+
+    // if not listing owner and user_id to be updated is not self, 403 response
+    if (!(await isListingOwner) && !(await isCommentOwner)) {
+      return next(
+        new ErrorResponse(
+          `Not authorised to update other comments in this listing`,
+          403
+        )
+      );
+    }
+  }
+
+  const data = {
+    deleted_on: moment().format('YYYY-MM-DD HH:mm:ss.000'),
+  };
+
+  const deactivateListingCommentQuery = parseSqlUpdateStmt(
+    data,
+    'listingcomments',
+    'WHERE listing_comment_id = $1 RETURNING $2:name',
+    [req.params.id, data]
+  );
+
+  const rows = await db.one(deactivateListingCommentQuery);
+
+  res.status(200).json({
+    success: true,
+    data: rows,
+  });
+});
+
+/**
  * @desc    Delete single listing comment (identified by listing comment id)
  * @route   DELETE /api/listing-comments/:id
  * @access  Admin/Owner/Private
@@ -181,7 +235,10 @@ exports.deleteListingComment = asyncHandler(async (req, res, next) => {
       req.params.id
     );
 
-    const isListingOwner = checkListingOwner(req.user.user_id, listingId);
+    const isListingOwner = checkListingOwner(
+      req.user.user_id,
+      listingId.listing_id
+    );
 
     const isCommentOwner = checkCommentOwner(req.user.user_id, req.params.id);
 
