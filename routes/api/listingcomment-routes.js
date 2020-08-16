@@ -20,6 +20,7 @@ const {
   createListingComment,
   updateListingComment,
   deleteListingComment,
+  deactivateListingComment,
 } = require('../../controllers/listingcomments');
 
 // Define input validation chain
@@ -34,7 +35,9 @@ const validateUpdateListingCommentFields = [
   check('comment', INVALID_FIELD_MSG('comment')).optional().trim().notEmpty(),
 ];
 
-router.route('/').get(advancedResults('listingcomments'), getListingComments);
+router
+  .route('/')
+  .get(advancedResults('listingcommentsview'), getListingComments);
 router.route('/:id').get(getListingComment);
 router.route('/:id/children').get(getListingCommentChildren);
 
@@ -58,5 +61,7 @@ router
     updateListingComment
   )
   .delete(deleteListingComment);
+
+router.route('/:id/deactivate').put(deactivateListingComment);
 
 module.exports = router;
