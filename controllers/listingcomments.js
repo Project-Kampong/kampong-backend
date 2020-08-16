@@ -20,7 +20,7 @@ exports.getListingComments = asyncHandler(async (req, res) => {
     );
 
     const listingComments = await db.manyOrNone(
-      'SELECT * FROM ListingComments WHERE listing_id = $1',
+      'SELECT * FROM ListingCommentsView WHERE listing_id = $1',
       req.params.listing_id
     );
 
@@ -39,7 +39,7 @@ exports.getListingComments = asyncHandler(async (req, res) => {
     );
 
     const listingComments = await db.manyOrNone(
-      'SELECT * FROM ListingComments WHERE user_id = $1',
+      'SELECT * FROM ListingCommentsView WHERE user_id = $1',
       req.params.user_id
     );
 
@@ -60,7 +60,7 @@ exports.getListingComments = asyncHandler(async (req, res) => {
  */
 exports.getListingComment = asyncHandler(async (req, res) => {
   const rows = await db.one(
-    'SELECT * FROM ListingComments WHERE listing_comment_id = $1',
+    'SELECT lc.*, p.nickname, p.profile_picture FROM ListingComments lc LEFT JOIN Profiles p ON lc.user_id = p.user_id WHERE listing_comment_id = $1',
     req.params.id
   );
 
@@ -78,7 +78,7 @@ exports.getListingComment = asyncHandler(async (req, res) => {
 exports.getListingCommentChildren = asyncHandler(async (req, res) => {
   // 404 if listing comment id does not exist
   const rows = await db.many(
-    'WITH RECURSIVE recurselc AS (SELECT * FROM listingcomments WHERE listing_comment_id = $1 UNION SELECT lc.* FROM listingcomments lc JOIN recurselc rlc ON rlc.listing_comment_id = lc.reply_to_id) SELECT * FROM recurselc',
+    'WITH RECURSIVE lcinfo AS(SELECT lc.*,p.nickname,p.profile_picture FROM ListingComments lc LEFT JOIN Profiles p ON lc.user_id=p.user_id),recurselc AS(SELECT*FROM lcinfo WHERE listing_comment_id=$1 UNION SELECT lc.*FROM lcinfo lc JOIN recurselc rlc ON rlc.listing_comment_id=lc.reply_to_id)SELECT*FROM recurselc',
     req.params.id
   );
 

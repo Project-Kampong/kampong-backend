@@ -34,7 +34,9 @@ const validateUpdateListingCommentFields = [
   check('comment', INVALID_FIELD_MSG('comment')).optional().trim().notEmpty(),
 ];
 
-router.route('/').get(advancedResults('listingcomments'), getListingComments);
+router
+  .route('/')
+  .get(advancedResults('listingcommentsview'), getListingComments);
 router.route('/:id').get(getListingComment);
 router.route('/:id/children').get(getListingCommentChildren);
 

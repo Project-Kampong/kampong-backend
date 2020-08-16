@@ -41,6 +41,7 @@ DROP TABLE IF EXISTS Subscriptions CASCADE;
 DROP TABLE IF EXISTS Milestones CASCADE;
 
 DROP TABLE IF EXISTS ListingUpdates CASCADE;
+
 DROP TABLE IF EXISTS ListingComments CASCADE;
 
 CREATE TABLE Roles (
@@ -299,6 +300,7 @@ CREATE TABLE ListingComments (
 	reply_to_id INTEGER CONSTRAINT reply_to_other_id CHECK (reply_to_id <> listing_comment_id),
     created_on TIMESTAMP NOT NULL DEFAULT NOW(),
     updated_on TIMESTAMP NOT NULL DEFAULT NOW(),
+	deleted_on TIMESTAMP,
 	PRIMARY KEY (listing_comment_id),
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE SET NULL,
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE SET NULL,

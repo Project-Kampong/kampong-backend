@@ -16,3 +16,11 @@ CREATE VIEW JobsView AS
   SELECT *
   FROM Jobs
   WHERE deleted_on IS NULL;
+
+CREATE VIEW ListingCommentsView AS
+  SELECT lc.*, p.nickname, p.profile_picture
+  FROM ListingComments lc
+  LEFT JOIN Profiles p
+  ON lc.user_id = p.user_id
+  WHERE lc.deleted_on IS NULL;
+  
