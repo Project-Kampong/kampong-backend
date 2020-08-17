@@ -11,7 +11,10 @@ exports.mapFilenameToLocation = (...keys) => {
     const filesInfo = get(req, 'files', []);
     forEach(keys, key => {
       const fileInfo = find(filesInfo, info => info.originalname === obj[key]);
-      obj[key] = get(fileInfo, 'location', null);
+      console.log(obj[key]);
+      if (obj[key] !== undefined) {
+        obj[key] = get(fileInfo, 'location', null);
+      }
     });
     next();
   };
@@ -26,7 +29,9 @@ exports.mapSingleFileLocation = key => {
   return (req, res, next) => {
     const obj = get(req, 'body', {});
     const fileInfo = get(req, 'file', []);
-    obj[key] = get(fileInfo, 'location', null);
+    if (obj[key] !== undefined) {
+      obj[key] = get(fileInfo, 'location', null);
+    }
     next();
   };
 };

@@ -185,6 +185,11 @@ exports.updateListing = asyncHandler(async (req, res, next) => {
     is_published,
     start_date,
     end_date,
+    pic1,
+    pic2,
+    pic3,
+    pic4,
+    pic5,
   } = req.body;
 
   const data = {
@@ -198,6 +203,11 @@ exports.updateListing = asyncHandler(async (req, res, next) => {
     is_published,
     start_date,
     end_date,
+    pic1,
+    pic2,
+    pic3,
+    pic4,
+    pic5,
   };
 
   // remove undefined items in json

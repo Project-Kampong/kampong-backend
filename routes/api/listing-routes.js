@@ -90,6 +90,11 @@ const validateUpdateListingFields = [
       check('is_published').exists(),
       check('start_date').exists(),
       check('end_date').exists(),
+      check('pic1').exists(),
+      check('pic2').exists(),
+      check('pic3').exists(),
+      check('pic4').exists(),
+      check('pic5').exists(),
     ],
     NO_FIELD_UPDATED_MSG
   ),
@@ -107,7 +112,8 @@ const validateUpdateListingFields = [
     .matches(DATETIME_REGEX),
   check('end_date', INVALID_TIMESTAMP_MSG('end date'))
     .optional()
-    .matches(DATETIME_REGEX),
+    .matches(DATETIME_REGEX)
+
 ];
 
 const validateVerifyListingFields = [
@@ -144,6 +150,8 @@ router
   .put(
     protect,
     authorise('user', 'admin'),
+    uploadFile.array('pics', 5),
+    mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
     validateUpdateListingFields,
     checkInputError,
     updateListing

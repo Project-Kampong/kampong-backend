@@ -14,6 +14,7 @@ const milestoneRoute = require('./api/milestone-routes');
 const participantRoute = require('./api/participant-routes');
 const skillRoute = require('./api/skill-routes');
 const userRoute = require('./api/user-routes');
+const uploadRoute = require('./api/upload-routes');
 
 // Mount routes
 router.use('/auth', authRoute);
@@ -29,5 +30,7 @@ router.use('/milestones', milestoneRoute);
 router.use('/participants', participantRoute);
 router.use('/skills', skillRoute);
 router.use('/users', userRoute);
+router.use('/file-upload', uploadRoute);
+
 
 module.exports = router;
