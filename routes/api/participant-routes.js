@@ -25,8 +25,8 @@ const {
 
 // Define input validation chain
 const validateCreateParticipantFields = [
-  check('listing_id', INVALID_FIELD_MSG('listing_id')).isInt(),
-  check('user_id', INVALID_FIELD_MSG('user_id')).isInt(),
+  check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID(),
+  check('user_id', INVALID_FIELD_MSG('user id')).isUUID(),
   check('joined_on', INVALID_TIMESTAMP_MSG('join date'))
     .optional()
     .matches(DATETIME_REGEX),

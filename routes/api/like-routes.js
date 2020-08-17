@@ -18,7 +18,7 @@ const {
 
 // Define input validation chain
 const validateNewLikeFields = [
-  check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
+  check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID(),
 ];
 
 router.route('/').get(advancedResults('likes'), getLikes);

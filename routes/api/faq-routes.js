@@ -20,7 +20,7 @@ const {
 
 // input validation chain definition
 const validateCreateFaqFields = [
-  check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
+  check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID(),
   check('question', INVALID_FIELD_MSG('question')).trim().notEmpty(),
   check('answer').optional().trim(),
 ];

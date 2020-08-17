@@ -294,8 +294,8 @@ CREATE TABLE ListingUpdates (
 
 CREATE TABLE ListingComments (
 	listing_comment_id SERIAL,
-	listing_id VARCHAR NOT NULL,
-	user_id VARCHAR NOT NULL,
+	listing_id VARCHAR,
+	user_id VARCHAR,
 	comment TEXT,
 	reply_to_id INTEGER CONSTRAINT reply_to_other_id CHECK (reply_to_id <> listing_comment_id),
     created_on TIMESTAMP NOT NULL DEFAULT NOW(),

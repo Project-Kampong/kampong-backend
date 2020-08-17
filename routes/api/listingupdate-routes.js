@@ -25,7 +25,7 @@ const {
 
 // Define input validation chain
 const validateCreateListingUpdateFields = [
-  check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
+  check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID(),
   check('description', INVALID_FIELD_MSG('description')).trim().notEmpty(),
 ];
 
