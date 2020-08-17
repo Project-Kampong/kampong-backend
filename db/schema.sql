@@ -51,7 +51,7 @@ CREATE TABLE Roles (
 );
 
 CREATE TABLE Users (
-	user_id SERIAL,
+	user_id VARCHAR,
 	first_name VARCHAR NOT NULL,
 	last_name VARCHAR,
 	email VARCHAR(320) UNIQUE NOT NULL,
@@ -81,7 +81,7 @@ CREATE TABLE ForgetPasswordUsers (
 );
 
 CREATE TABLE Profiles (
-	user_id INTEGER,
+	user_id VARCHAR,
 	nickname VARCHAR NOT NULL,
 	profile_picture VARCHAR,
 	about TEXT,
@@ -107,7 +107,7 @@ CREATE TABLE Skills (
 
 CREATE TABLE ProfileSkills (
 	profile_skill_id SERIAL,
-	user_id INTEGER NOT NULL,
+	user_id VARCHAR NOT NULL,
 	skill_id INTEGER NOT NULL,
 	PRIMARY KEY (profile_skill_id),
 	UNIQUE (user_id, skill_id),
@@ -132,7 +132,7 @@ CREATE TABLE Organisations (
 CREATE TABLE Memberships (
 	membership_id SERIAL,
 	organisation_id INTEGER NOT NULL,
-	user_id INTEGER NOT NULL,
+	user_id VARCHAR NOT NULL,
 	is_owner BOOLEAN NOT NULL DEFAULT FALSE,
 	joined_on TIMESTAMP NOT NULL DEFAULT NOW(),
 	PRIMARY KEY (membership_id),
@@ -142,9 +142,9 @@ CREATE TABLE Memberships (
 );
 
 CREATE TABLE Listings (
-	listing_id SERIAL,
+	listing_id VARCHAR,
 	organisation_id INTEGER,
-	created_by INTEGER,
+	created_by VARCHAR,
 	title VARCHAR NOT NULL,
 	category VARCHAR NOT NULL,
 	about TEXT,
@@ -168,7 +168,7 @@ CREATE TABLE Listings (
 );
 
 CREATE TABLE ListingStories (
-	listing_id INTEGER,
+	listing_id VARCHAR,
 	overview TEXT,
 	problem TEXT,
 	solution TEXT,
@@ -181,14 +181,14 @@ CREATE TABLE ListingStories (
 /* Featured listings */
 CREATE TABLE Features (
 	feature_id SERIAL,
-	listing_id INTEGER UNIQUE NOT NULL,
+	listing_id VARCHAR UNIQUE NOT NULL,
 	PRIMARY KEY (feature_id),
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
 CREATE TABLE HashTags (
 	hashtag_id SERIAL,
-	listing_id INTEGER NOT NULL,
+	listing_id VARCHAR NOT NULL,
 	tag VARCHAR NOT NULL,
 	PRIMARY KEY (hashtag_id),
 	UNIQUE (listing_id, tag),
@@ -197,7 +197,7 @@ CREATE TABLE HashTags (
 
 CREATE TABLE ListingSkills (
 	listing_skill_id SERIAL,
-	listing_id INTEGER NOT NULL,
+	listing_id VARCHAR NOT NULL,
 	skill_id INTEGER NOT NULL,
 	PRIMARY KEY (listing_skill_id),
 	UNIQUE (listing_id, skill_id),
@@ -209,7 +209,7 @@ CREATE TABLE ListingSkills (
 /* Jobs for a particular listing */
 CREATE TABLE Jobs (
 	job_id SERIAL,
-	listing_id INTEGER NOT NULL,
+	listing_id VARCHAR NOT NULL,
 	job_title VARCHAR NOT NULL,
 	job_description TEXT,
 	deleted_on TIMESTAMP DEFAULT NULL,
@@ -219,7 +219,7 @@ CREATE TABLE Jobs (
 
 CREATE TABLE FAQs (
 	faq_id SERIAL,
-	listing_id INTEGER NOT NULL,
+	listing_id VARCHAR NOT NULL,
 	question TEXT NOT NULL,
 	answer TEXT,
 	PRIMARY KEY (faq_id),
@@ -228,8 +228,8 @@ CREATE TABLE FAQs (
 
 CREATE TABLE Likes (
 	like_id SERIAL,
-	user_id INTEGER NOT NULL,
-	listing_id INTEGER NOT NULL,
+	user_id VARCHAR NOT NULL,
+	listing_id VARCHAR NOT NULL,
 	PRIMARY KEY (like_id),
 	UNIQUE (user_id, listing_id),
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
@@ -238,8 +238,8 @@ CREATE TABLE Likes (
 
 CREATE TABLE ListingAdmins (
 	listing_admin_id SERIAL,
-	user_id INTEGER NOT NULL,
-	listing_id INTEGER NOT NULL,
+	user_id VARCHAR NOT NULL,
+	listing_id VARCHAR NOT NULL,
 	PRIMARY KEY (listing_admin_id),
 	UNIQUE (user_id, listing_id),
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
@@ -248,8 +248,8 @@ CREATE TABLE ListingAdmins (
 
 CREATE TABLE Participants (
 	participant_id SERIAL,
-	listing_id INTEGER NOT NULL,
-	user_id INTEGER NOT NULL,
+	listing_id VARCHAR NOT NULL,
+	user_id VARCHAR NOT NULL,
 	joined_on TIMESTAMP NOT NULL DEFAULT NOW(),
 	end_on TIMESTAMP,
 	PRIMARY KEY (participant_id),
@@ -260,8 +260,8 @@ CREATE TABLE Participants (
 
 CREATE TABLE Subscriptions (
 	subscription_id SERIAL,
-	user_id INTEGER NOT NULL,
-	listing_id INTEGER NOT NULL,
+	user_id VARCHAR NOT NULL,
+	listing_id VARCHAR NOT NULL,
 	PRIMARY KEY (subscription_id),
 	UNIQUE (user_id, listing_id),
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
@@ -270,7 +270,7 @@ CREATE TABLE Subscriptions (
 
 CREATE TABLE Milestones (
 	milestone_id SERIAL,
-	listing_id INTEGER NOT NULL,
+	listing_id VARCHAR NOT NULL,
 	description TEXT NOT NULL,
 	date TIMESTAMP,
 	PRIMARY KEY (milestone_id),
@@ -279,7 +279,7 @@ CREATE TABLE Milestones (
 
 CREATE TABLE ListingUpdates (
     listing_update_id SERIAL,
-    listing_id INTEGER NOT NULL,
+    listing_id VARCHAR NOT NULL,
     description TEXT NOT NULL,
     pic1 VARCHAR,
     pic2 VARCHAR,
@@ -294,8 +294,8 @@ CREATE TABLE ListingUpdates (
 
 CREATE TABLE ListingComments (
 	listing_comment_id SERIAL,
-	listing_id INTEGER NOT NULL,
-	user_id INTEGER NOT NULL,
+	listing_id VARCHAR NOT NULL,
+	user_id VARCHAR NOT NULL,
 	comment TEXT,
 	reply_to_id INTEGER CONSTRAINT reply_to_other_id CHECK (reply_to_id <> listing_comment_id),
     created_on TIMESTAMP NOT NULL DEFAULT NOW(),
