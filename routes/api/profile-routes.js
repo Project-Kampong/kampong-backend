@@ -26,8 +26,6 @@ const {
   uploadPic,
 } = require('../../controllers/profiles');
 
-router.route('/raw').get(getProfile);
-
 // Define input validation chain for routes
 const validateProfileUpdateFields = [
   oneOf(
@@ -62,14 +60,7 @@ const validateProfileUpdateFields = [
 ];
 
 // map routes to controller
-router
-  .route('/')
-  .get(
-    decodeHashedReqKey('params.user_id'),
-    getProfile,
-    advancedResults('profiles'),
-    getProfiles
-  );
+router.route('/').get(getProfile, advancedResults('profiles'), getProfiles);
 
 // all routes below uses protect middleware
 router.use(protect);
@@ -77,16 +68,6 @@ router.use(protect);
 // router takes merged params 'user_id' from user route
 router
   .route('/')
-  .put(
-    authorise('admin', 'user'),
-    validateProfileUpdateFields,
-    checkInputError,
-    decodeHashedReqKey('params.user_id'),
-    updateProfile
-  );
-
-router
-  .route('/raw')
   .put(
     authorise('admin', 'user'),
     validateProfileUpdateFields,
@@ -99,30 +80,11 @@ router
   .put(
     uploadFile.single('pic'),
     mapSingleFileLocation('profile_picture'),
-    decodeHashedReqKey('params.user_id'),
-    uploadPic
-  );
-
-router
-  .route('/upload-photo/raw')
-  .put(
-    uploadFile.single('pic'),
-    mapSingleFileLocation('profile_picture'),
     uploadPic
   );
 
 router
   .route('/verify')
-  .put(
-    authorise('admin'),
-    [check('is_verified', NO_FIELD_UPDATED_MSG).exists()],
-    checkInputError,
-    decodeHashedReqKey('params.user_id'),
-    verifyProfile
-  );
-
-router
-  .route('/verify/raw')
   .put(
     authorise('admin'),
     [check('is_verified', NO_FIELD_UPDATED_MSG).exists()],

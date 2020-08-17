@@ -15,8 +15,6 @@ exports.getProfiles = asyncHandler(async (req, res, next) => {
 /**
  * @desc    Get single profile by hashed user id
  * @route   GET /api/users/:user_id/profiles
- * @desc    Get single profile by user id
- * @route   GET /api/users/:user_id/profiles/raw
  * @access  Public
  */
 exports.getProfile = asyncHandler(async (req, res, next) => {
@@ -35,10 +33,8 @@ exports.getProfile = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Update single profile by hashed user id
- * @route   PUT /api/users/:user_id/profiles
  * @desc    Update single profile by user id
- * @route   PUT /api/users/:user_id/profiles/raw
+ * @route   PUT /api/users/:user_id/profiles
  * @access  Admin/Private
  */
 exports.updateProfile = asyncHandler(async (req, res, next) => {
@@ -98,8 +94,6 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
 /**
  * @desc    Verify single profile by hashed user id
  * @route   PUT /api/users/:user_id/profiles/verify
- * @desc    Verify single profile by user id
- * @route   PUT /api/users/:user_id/profiles/verify/raw
  * @access  Admin
  */
 exports.verifyProfile = asyncHandler(async (req, res, next) => {
@@ -139,8 +133,6 @@ exports.verifyProfile = asyncHandler(async (req, res, next) => {
 /**
  * @desc    Upload new or update profile picture by hashed user id
  * @route   PUT /api/users/:user_id/profiles/upload-photo
- * @desc    Upload new or update profile picture by user id
- * @route   PUT /api/users/:user_id/profiles/upload-photo/raw
  * @access  Admin/Private
  */
 exports.uploadPic = asyncHandler(async (req, res, next) => {
