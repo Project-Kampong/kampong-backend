@@ -13,9 +13,9 @@ const { cleanseData, ErrorResponse } = require('../utils');
  */
 exports.getLikes = asyncHandler(async (req, res) => {
   if (req.params.listing_id) {
-    // return 404 error response if listing not found
+    // return 404 error response if listing not found or soft deleted
     const listing = await db.one(
-      'SELECT * FROM Listings WHERE listing_id = $1',
+      'SELECT * FROM listingsview WHERE listing_id = $1',
       req.params.listing_id
     );
 
