@@ -1,11 +1,7 @@
 const { db } = require('../db/db');
 const { asyncHandler } = require('../middleware');
-const {
-  cleanseData,
-  ErrorResponse,
-  hashDecode,
-  parseSqlUpdateStmt,
-} = require('../utils');
+const { cleanseData, ErrorResponse, parseSqlUpdateStmt } = require('../utils');
+const { isNil } = require('lodash');
 
 /**
  * @desc    Get all profiles
@@ -17,39 +13,18 @@ exports.getProfiles = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Get single profile by profile id
- * @route   GET /api/users/:user_id/profiles/raw
- * @access  Public
- */
-exports.getProfile = asyncHandler(async (req, res) => {
-  const rows = await db.one(
-    'SELECT * FROM profiles WHERE user_id = $1',
-    req.params.user_id
-  );
-  res.status(200).json({
-    success: true,
-    data: rows,
-  });
-});
-
-/**
- * @desc    Get single profile by hash id
+ * @desc    Get single profile by hashed user id
  * @route   GET /api/users/:user_id/profiles
  * @access  Public
  */
-exports.getProfileByHashId = asyncHandler(async (req, res, next) => {
+exports.getProfile = asyncHandler(async (req, res, next) => {
   // if not user_id params, go to next middleware
   if (!req.params.user_id) {
     return next();
   }
-
-  const decodedId = hashDecode(req.params.user_id)[0];
-  if (!decodedId) {
-    return next(new ErrorResponse('Invalid user ID', 400));
-  }
   const rows = await db.one(
     'SELECT * FROM profiles WHERE user_id = $1',
-    decodedId
+    req.params.user_id
   );
   return res.status(200).json({
     success: true,
@@ -58,7 +33,7 @@ exports.getProfileByHashId = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Update single profile
+ * @desc    Update single profile by user id
  * @route   PUT /api/users/:user_id/profiles
  * @access  Admin/Private
  */
@@ -117,11 +92,15 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Verify single profile
+ * @desc    Verify single profile by hashed user id
  * @route   PUT /api/users/:user_id/profiles/verify
  * @access  Admin
  */
 exports.verifyProfile = asyncHandler(async (req, res, next) => {
+  // 400 response for wrong hash decoding
+  if (isNil(req.params.user_id)) {
+    return next(new ErrorResponse(`Invalid user id`, 400));
+  }
   // check if user exists
   const user = await db.one(
     'SELECT * FROM profiles WHERE user_id = $1',
@@ -152,11 +131,16 @@ exports.verifyProfile = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Upload new or update profile picture
+ * @desc    Upload new or update profile picture by hashed user id
  * @route   PUT /api/users/:user_id/profiles/upload-photo
  * @access  Admin/Private
  */
 exports.uploadPic = asyncHandler(async (req, res, next) => {
+  // 400 response for wrong hash decoding
+  if (isNil(req.params.user_id)) {
+    return next(new ErrorResponse(`Invalid user id`, 400));
+  }
+
   // if non-admin user, throw 403 if not updating self
   if (
     req.user.role !== 'admin' &&

@@ -1,12 +1,8 @@
 const moment = require('moment');
+const { v4: uuidv4 } = require('uuid');
 const { db } = require('../db/db');
 const { asyncHandler } = require('../middleware');
-const {
-  cleanseData,
-  ErrorResponse,
-  hashDecode,
-  parseSqlUpdateStmt,
-} = require('../utils');
+const { cleanseData, ErrorResponse, parseSqlUpdateStmt } = require('../utils');
 
 /**
  * @desc    Get all listings
@@ -28,7 +24,7 @@ exports.getListingsAll = asyncHandler(async (req, res) => {
 
 /**
  * @desc    Get single listing by listing id
- * @route   GET /api/listings/:id/raw
+ * @route   GET /api/listings/:id
  * @access  Public
  */
 exports.getListing = asyncHandler(async (req, res, next) => {
@@ -64,26 +60,6 @@ exports.getAllListingsOwnedByUser = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Get single listing by hashId
- * @route   GET /api/listings/:hashId
- * @access  Public
- */
-exports.getListingByHashId = asyncHandler(async (req, res, next) => {
-  const decodedId = hashDecode(req.params.hashId)[0];
-  if (!decodedId) {
-    return next(new ErrorResponse('Invalid listing ID', 400));
-  }
-  const rows = await db.one(
-    'SELECT * FROM listings WHERE listing_id = $1',
-    decodedId
-  );
-  res.status(200).json({
-    success: true,
-    data: rows,
-  });
-});
-
-/**
  * @desc    Create listing and associated listing story
  * @route   POST /api/listings
  * @access  Private
@@ -108,6 +84,8 @@ exports.createListing = asyncHandler(async (req, res) => {
   } = req.body;
 
   const data = {
+    listing_id: uuidv4(),
+    created_by: req.user.user_id,
     organisation_id,
     title,
     category,
@@ -124,9 +102,6 @@ exports.createListing = asyncHandler(async (req, res) => {
     start_date,
     end_date,
   };
-
-  // Add logged in user as creator of listing
-  data.created_by = req.user.user_id;
 
   // remove undefined values in json object
   cleanseData(data);

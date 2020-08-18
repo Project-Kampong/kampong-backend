@@ -25,7 +25,7 @@ const {
 
 // Define input validation chain
 const validateCreateListingCommentFields = [
-  check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
+  check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID(),
   check('comment', INVALID_FIELD_MSG('comment')).trim().notEmpty(),
   check('reply_to_id', INVALID_TIMESTAMP_MSG('reply to id')).optional().isInt(),
 ];

@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const { v4: uuidv4 } = require('uuid');
 const {
   checkPassword,
   cleanseData,
@@ -124,7 +125,7 @@ exports.confirmEmail = asyncHandler(async (req, res, next) => {
   }
 
   // Get first_name, last_name, email, password from PendingUsers and store into data
-  const data = { first_name, last_name, email, password };
+  const data = { user_id: uuidv4(), first_name, last_name, email, password };
 
   const nickname = last_name ? first_name + ' ' + last_name : first_name;
 

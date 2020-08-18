@@ -24,7 +24,7 @@ const {
 
 // Define input validation chain
 const validateCreateHashtagFields = [
-  check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
+  check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID(),
   check('tag', INVALID_FIELD_MSG('tag')).matches(HASHTAG_REGEX),
 ];
 

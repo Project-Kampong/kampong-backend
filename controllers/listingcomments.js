@@ -231,10 +231,7 @@ const isListingOrCommentOwner = async (reqUser, listingCommentId) => {
     'SELECT created_by, user_id FROM ListingComments lc JOIN Listings l USING (listing_id) WHERE listing_comment_id = $1',
     listingCommentId
   );
-  if (
-    listingInfo.created_by !== parseInt(userId) &&
-    listingInfo.user_id !== parseInt(userId)
-  ) {
+  if (listingInfo.created_by !== userId && listingInfo.user_id !== userId) {
     return false;
   }
   return true;

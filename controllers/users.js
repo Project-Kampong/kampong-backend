@@ -1,3 +1,4 @@
+const { v4: uuidv4 } = require('uuid');
 const { db } = require('../db/db');
 const { asyncHandler } = require('../middleware');
 const {
@@ -41,6 +42,7 @@ exports.createUser = asyncHandler(async (req, res) => {
   const { first_name, last_name, email, password } = req.body;
 
   const data = {
+    user_id: uuidv4(),
     first_name,
     last_name,
     email,
