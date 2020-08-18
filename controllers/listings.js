@@ -23,13 +23,13 @@ exports.getListingsAll = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Get single listing by listing id
+ * @desc    Get single listing by listing id (excludes soft-deleted)
  * @route   GET /api/listings/:id
  * @access  Public
  */
 exports.getListing = asyncHandler(async (req, res, next) => {
   const rows = await db.one(
-    'SELECT * FROM listings WHERE listing_id = $1',
+    'SELECT * FROM listingsview WHERE listing_id = $1',
     req.params.id
   );
   res.status(200).json({
@@ -39,7 +39,7 @@ exports.getListing = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Get all listings owned by particular user
+ * @desc    Get all listings owned by particular user (excludes soft-deleted)
  * @route   GET /api/users/:user_id/listings/owner
  * @access  Public
  */
@@ -49,7 +49,7 @@ exports.getAllListingsOwnedByUser = asyncHandler(async (req, res, next) => {
   const user = await db.one('SELECT * FROM Users WHERE user_id = $1', userId);
 
   const rows = await db.manyOrNone(
-    'SELECT * FROM Listings WHERE created_by = $1',
+    'SELECT * FROM listingsview WHERE created_by = $1',
     userId
   );
 
@@ -131,14 +131,14 @@ exports.createListing = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Update single listing
+ * @desc    Update single listing (excludes soft-deleted)
  * @route   PUT /api/listings/:id
  * @access  Admin/Owner
  */
 exports.updateListing = asyncHandler(async (req, res, next) => {
-  // check if listing exists
+  // check if listing exists and is not soft-deleted
   const listing = await db.one(
-    'SELECT * FROM listings WHERE listing_id = $1',
+    'SELECT * FROM listingsview WHERE listing_id = $1',
     req.params.id
   );
 
@@ -231,9 +231,9 @@ exports.verifyListing = asyncHandler(async (req, res, next) => {
  */
 
 exports.deactivateListing = asyncHandler(async (req, res, next) => {
-  // check if listing exists
+  // check if listing exists and not soft-deleted
   const listing = await db.one(
-    'SELECT * FROM listings WHERE listing_id = $1',
+    'SELECT * FROM listingsview WHERE listing_id = $1',
     req.params.id
   );
 
@@ -245,8 +245,8 @@ exports.deactivateListing = asyncHandler(async (req, res, next) => {
   }
 
   const rows = await db.one(
-    'UPDATE listings SET deleted_on=$2 WHERE listing_id = $1 RETURNING *',
-    [req.params.id, moment().format('YYYY-MM-DD HH:mm:ss.000')]
+    'UPDATE listings SET deleted_on=$1 WHERE listing_id = $2 RETURNING *',
+    [moment().format('YYYY-MM-DD HH:mm:ss.000'), req.params.id]
   );
 
   res.status(200).json({

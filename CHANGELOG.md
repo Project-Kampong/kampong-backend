@@ -26,10 +26,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Upload Listing Photos `/listings/1/photo` -> `/listings/1/upload-photo`.
   - Upload Profile Picture `profiles/1/photo` -> `users/1/profiles/upload-photo`.
 - For backend, added `index.js` file for `middleware` and `utils` directory, to consolidate imports and exports.
+- Public cannot read or update `Listings` which have been soft-deleted. Will require admin-only `GET all...` endpoint to read soft-deleted `Listings`.
+- `Listings` read endpoint now show creator's nickname, profile picture, phone and email.
 
 ### Removed
 
 - Get All Skills for a Profile routing and endpoint.
+- `hashId` no longer show in `Get All...` endpoints
 
 ## [0.0.3] - 2020-08-13
 
