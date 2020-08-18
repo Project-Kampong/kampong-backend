@@ -7,7 +7,7 @@ const {
   authorise,
   checkInputError,
 } = require('../../middleware');
-const { INVALID_FIELD_MSG } = require('../../utils');
+const { INVALID_FIELD_MSG, ALPHA_WHITESPACE_REGEX, INVALID_ALPHA_SPACE_MSG } = require('../../utils');
 
 // import controllers here
 const {
@@ -15,12 +15,21 @@ const {
   getListingSkill,
   createListingSkill,
   deleteListingSkill,
+  createCustomListingSkill,
 } = require('../../controllers/listingskills');
 
 // Define input validation chain
 const validateCreateListingSkill = [
   check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID(),
   check('skill_id', INVALID_FIELD_MSG('skill id')).isInt(),
+];
+
+const validateCustomSkill = [
+  check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID(),
+  check('skill', INVALID_ALPHA_SPACE_MSG('skill'))
+    .trim()
+    .notEmpty()
+    .matches(ALPHA_WHITESPACE_REGEX),
 ];
 
 router
@@ -41,5 +50,7 @@ router
   .post(validateCreateListingSkill, checkInputError, createListingSkill);
 
 router.route('/:id').delete(deleteListingSkill);
+
+router.route('/add-skill').post(validateCustomSkill, checkInputError, createCustomListingSkill);
 
 module.exports = router;

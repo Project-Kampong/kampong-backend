@@ -102,25 +102,9 @@ CREATE TABLE Profiles (
 CREATE TABLE Skills (
 	skill_id SERIAL,
 	skill VARCHAR UNIQUE NOT NULL,
+	skill_group VARCHAR DEFAULT NULL,
 	PRIMARY KEY (skill_id)
 );
-
-/*
-CREATE TABLE GroupSkills (
-	group_skill_id SERIAL,
-	skill_id INTEGER UNIQUE NOT NULL,
-	group VARCHAR NOT NULL,
-	PRIMARY KEY (group_skill_id),
-	FOREIGN KEY (skill_id) REFERENCES Skills ON DELETE CASCADE
-)
-
-CREATE TABLE DefaultSkills (
-	default_skill_id SERIAL,
-	skill_id INTEGER NOT NULL,
-	PRIMARY KEY (default_skill_id),
-	FOREIGN KEY (skill_id) REFERENCES Skills ON DELETE CASCADE
-)
-*/
 
 CREATE TABLE ProfileSkills (
 	profile_skill_id SERIAL,

@@ -28,6 +28,10 @@ const validateCreateSkillFields = [
     .trim()
     .notEmpty()
     .matches(ALPHA_WHITESPACE_REGEX),
+  check('skill_group', NO_FIELD_UPDATED_MSG)
+    .trim()
+    .notEmpty()
+    .matches(ALPHA_WHITESPACE_REGEX)
 ];
 
 const validateUpdateSkillFields = [
@@ -36,6 +40,11 @@ const validateUpdateSkillFields = [
     .notEmpty()
     .matches(ALPHA_WHITESPACE_REGEX)
     .withMessage(INVALID_ALPHA_SPACE_MSG('skill')),
+  check('skill_group', NO_FIELD_UPDATED_MSG)
+    .trim()
+    .notEmpty()
+    .matches(ALPHA_WHITESPACE_REGEX)
+    .withMessage(INVALID_ALPHA_SPACE_MSG('group')),
 ];
 
 router.route('/').get(advancedResults('skills'), getSkills);

@@ -31,9 +31,9 @@ insert into ListingStories (listing_id, overview, problem, solution, outcome) va
 insert into ListingStories (listing_id, overview, problem, solution, outcome) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'Integrated fresh-thinking parallelism', 'Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.', 'Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.', 'neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo');
 
 /* Skills mock data population */
-insert into Skills (skill) values ('Auditing');
-insert into Skills (skill) values ('Typesetting');
-insert into Skills (skill) values ('Copywriting');
+insert into Skills (skill, skill_group) values ('Auditing', 'Test Group');
+insert into Skills (skill, skill_group) values ('Typesetting', 'Test Group');
+insert into Skills (skill, skill_group) values ('Copywriting', 'Test Group');
 insert into Skills (skill) values ('WiFi');
 insert into Skills (skill) values ('Media and Design');
 insert into Skills (skill) values ('Programming');

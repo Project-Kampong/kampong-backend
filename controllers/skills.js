@@ -33,10 +33,11 @@ exports.getSkill = asyncHandler(async (req, res) => {
  * @access  Admin
  */
 exports.createSkill = asyncHandler(async (req, res) => {
-  const { skill } = req.body;
+  const { skill, skill_group } = req.body;
 
   const data = {
     skill,
+    skill_group,
   };
 
   const rows = await db.one(
@@ -67,10 +68,11 @@ exports.updateSkill = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`Skill does not exist`, 400));
   }
 
-  const { skill } = req.body;
+  const { skill, skill_group } = req.body;
 
   const data = {
     skill,
+    skill_group,
   };
 
   const updateSkillQuery = parseSqlUpdateStmt(
