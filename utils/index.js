@@ -7,7 +7,6 @@ const {
 } = require('./dbHelper');
 const ErrorResponse = require('./errorResponse');
 const { uploadFile } = require('./fileUploader');
-const { hashDecode, hashEncode } = require('./hashIdGenerator');
 const {
   INVALID_ALPHA_SPACE_MSG,
   INVALID_BOOLEAN_MSG,
@@ -34,8 +33,6 @@ module.exports = {
   parseSqlUpdateStmt,
   ErrorResponse,
   uploadFile,
-  hashDecode,
-  hashEncode,
   INVALID_ALPHA_SPACE_MSG,
   INVALID_BOOLEAN_MSG,
   INVALID_EMAIL_MSG,
