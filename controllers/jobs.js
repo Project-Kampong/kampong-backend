@@ -12,7 +12,7 @@ const { cleanseData, ErrorResponse, parseSqlUpdateStmt } = require('../utils');
  */
 exports.getJobs = asyncHandler(async (req, res) => {
   if (req.params.listing_id) {
-    // return 404 error response if listing not found
+    // return 404 error response if listing not found or soft deleted
     const listing = await db.one(
       'SELECT * FROM listingsview WHERE listing_id = $1',
       req.params.listing_id
