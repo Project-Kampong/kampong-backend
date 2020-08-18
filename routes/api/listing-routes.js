@@ -23,7 +23,6 @@ const {
   getAllListingsOwnedByUser,
   getListingsAll,
   getListing,
-  getListingByHashId,
   createListing,
   updateListing,
   verifyListing,
@@ -41,7 +40,6 @@ const listingUpdateRoute = require('./listingupdate-routes');
 const milestoneRoute = require('./milestone-routes');
 const participantRoute = require('./participant-routes');
 const listingSkillRoute = require('./listingskill-routes');
-const listingStoryRoute = require('./listingstory-routes');
 const jobRoute = require('./job-routes');
 const storyRoute = require('./listingstory-routes');
 
@@ -142,8 +140,8 @@ router
     advancedResults('listings'),
     getListingsAll
   );
-router.route('/:id/raw').get(getListing);
-router.route('/:hashId').get(getListingByHashId);
+
+router.route('/:id').get(getListing);
 
 router
   .route('/:id')

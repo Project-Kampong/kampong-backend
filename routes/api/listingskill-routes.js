@@ -19,7 +19,7 @@ const {
 
 // Define input validation chain
 const validateCreateListingSkill = [
-  check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
+  check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID(),
   check('skill_id', INVALID_FIELD_MSG('skill id')).isInt(),
 ];
 

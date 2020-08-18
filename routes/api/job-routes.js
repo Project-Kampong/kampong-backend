@@ -22,7 +22,7 @@ const {
 
 // Define input validation chain
 const validateCreateJobFields = [
-  check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
+  check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID(),
   check('job_title', INVALID_FIELD_MSG('job title')).trim().notEmpty(),
   check('job_description').optional().trim(),
 ];
