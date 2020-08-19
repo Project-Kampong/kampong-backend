@@ -1,4 +1,4 @@
-const { find, forEach, get } = require('lodash');
+const { find, forEach, get, isEmpty } = require('lodash');
 
 /**
  * Maps provided filename to its storage location given by multer-s3, after calling the `array` method.
@@ -9,13 +9,12 @@ exports.mapFilenameToLocation = (...keys) => {
   return (req, res, next) => {
     const obj = get(req, 'body', {});
     const filesInfo = get(req, 'files', []);
-    forEach(keys, key => {
-      const fileInfo = find(filesInfo, info => info.originalname === obj[key]);
-      console.log(obj[key]);
-      if (obj[key] !== undefined) {
-        obj[key] = get(fileInfo, 'location', null);
-      }
-    });
+    if (!isEmpty(filesInfo)) {
+      forEach(keys, key => {
+        const fileInfo = find(filesInfo, info => info.originalname === obj[key]);
+        obj[key] = get(fileInfo, 'location');
+      });
+    }
     next();
   };
 };
@@ -29,8 +28,8 @@ exports.mapSingleFileLocation = key => {
   return (req, res, next) => {
     const obj = get(req, 'body', {});
     const fileInfo = get(req, 'file', []);
-    if (obj[key] !== undefined) {
-      obj[key] = get(fileInfo, 'location', null);
+    if (!isEmpty(fileInfo)) {
+      obj[key] = get(fileInfo, 'location');
     }
     next();
   };
