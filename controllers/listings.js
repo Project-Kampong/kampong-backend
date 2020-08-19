@@ -248,8 +248,6 @@ exports.deactivateListing = asyncHandler(async (req, res, next) => {
   );
 
   // Unauthorised if neither admin nor listing owner
-  console.log(req.user.user_id)
-  console.log(listing.created_by)
   if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
     return next(
       new ErrorResponse(`User not authorised to delete this listing`, 403)
