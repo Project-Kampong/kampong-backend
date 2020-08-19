@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const { check } = require('express-validator');
-const advancedResults = require('../../middleware/advancedResults');
-const { protect, authorise } = require('../../middleware/auth');
-const { checkInputError } = require('../../middleware/inputValidation');
-const { INVALID_FIELD_MSG } = require('../../utils/inputExceptionMsg');
+const {
+  advancedResults,
+  protect,
+  authorise,
+  checkInputError,
+} = require('../../middleware');
+const { INVALID_FIELD_MSG, ALPHA_WHITESPACE_REGEX, INVALID_ALPHA_SPACE_MSG } = require('../../utils');
 
 // import controllers here
 const {
@@ -12,7 +15,22 @@ const {
   getListingSkill,
   createListingSkill,
   deleteListingSkill,
+  createCustomListingSkill,
 } = require('../../controllers/listingskills');
+
+// Define input validation chain
+const validateCreateListingSkill = [
+  check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID(),
+  check('skill_id', INVALID_FIELD_MSG('skill id')).isInt(),
+];
+
+const validateCustomSkill = [
+  check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID(),
+  check('skill', INVALID_ALPHA_SPACE_MSG('skill'))
+    .trim()
+    .notEmpty()
+    .matches(ALPHA_WHITESPACE_REGEX),
+];
 
 router
   .route('/')
@@ -29,15 +47,10 @@ router.use(authorise('user', 'admin'));
 // map routes to controller
 router
   .route('/')
-  .post(
-    [
-      check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
-      check('skill_id', INVALID_FIELD_MSG('skill id')).isInt(),
-    ],
-    checkInputError,
-    createListingSkill
-  );
+  .post(validateCreateListingSkill, checkInputError, createListingSkill);
 
 router.route('/:id').delete(deleteListingSkill);
+
+router.route('/add-skill').post(validateCustomSkill, checkInputError, createCustomListingSkill);
 
 module.exports = router;

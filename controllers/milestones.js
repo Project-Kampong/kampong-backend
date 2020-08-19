@@ -1,7 +1,6 @@
 const { db } = require('../db/db');
-const asyncHandler = require('../middleware/async');
-const ErrorResponse = require('../utils/errorResponse');
-const { cleanseData, parseSqlUpdateStmt } = require('../utils/dbHelper');
+const { asyncHandler } = require('../middleware');
+const { cleanseData, ErrorResponse, parseSqlUpdateStmt } = require('../utils');
 
 /**
  * @desc    Get all milestones
@@ -14,7 +13,7 @@ exports.getMilestones = asyncHandler(async (req, res, next) => {
   if (req.params.listing_id) {
     // returns 404 error response if listing not found
     const milestones = await db.many(
-      'SELECT l.listing_id, m.milestone_id, description, m.date FROM listings l LEFT JOIN milestones m ON l.listing_id = m.listing_id WHERE l.listing_id = $1',
+      'SELECT l.listing_id, m.milestone_id, description, m.date FROM listingsview l LEFT JOIN milestones m ON l.listing_id = m.listing_id WHERE l.listing_id = $1',
       req.params.listing_id
     );
 
@@ -183,5 +182,5 @@ const isListingOwner = async (userId, listingId) => {
     'SELECT created_by FROM Listings WHERE listing_id = $1',
     listingId
   );
-  return parseInt(userId) === owner.created_by;
+  return userId === owner.created_by;
 };

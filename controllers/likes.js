@@ -1,27 +1,26 @@
 const { db } = require('../db/db');
-const asyncHandler = require('../middleware/async');
-const ErrorResponse = require('../utils/errorResponse');
-const { cleanseData } = require('../utils/dbHelper');
+const { asyncHandler } = require('../middleware');
+const { cleanseData, ErrorResponse } = require('../utils');
 
 /**
  * @desc    Get all likes
  * @route   GET /api/likes
- * @desc    Get all likes for a listing
+ * @desc    Get all likes (including profile information) for a listing
  * @route   GET /api/listings/:listing_id/likes
- * @desc    Get all likes for a user profile
- * @route   GET /api/profiles/:user_id/likes
+ * @desc    Get all likes (including listing information) for a user
+ * @route   GET /api/users/:user_id/likes
  * @access  Public
  */
 exports.getLikes = asyncHandler(async (req, res) => {
   if (req.params.listing_id) {
-    // return 404 error response if listing not found
+    // return 404 error response if listing not found or soft deleted
     const listing = await db.one(
-      'SELECT * FROM Listings WHERE listing_id = $1',
+      'SELECT * FROM listingsview WHERE listing_id = $1',
       req.params.listing_id
     );
 
     const likes = await db.manyOrNone(
-      'SELECT * FROM likes WHERE listing_id = $1',
+      'SELECT * FROM likes NATURAL JOIN profiles WHERE listing_id = $1',
       req.params.listing_id
     );
 
@@ -35,12 +34,12 @@ exports.getLikes = asyncHandler(async (req, res) => {
   if (req.params.user_id) {
     // return 404 error response if user not found
     const user = await db.one(
-      'SELECT * FROM Profiles WHERE user_id = $1',
+      'SELECT * FROM Users WHERE user_id = $1',
       req.params.user_id
     );
 
     const likes = await db.manyOrNone(
-      'SELECT * FROM likes WHERE user_id = $1',
+      'SELECT * FROM likes NATURAL JOIN listings WHERE user_id = $1',
       req.params.user_id
     );
 

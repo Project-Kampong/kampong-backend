@@ -1,7 +1,6 @@
 const { db } = require('../db/db');
-const asyncHandler = require('../middleware/async');
-const ErrorResponse = require('../utils/errorResponse');
-const { cleanseData, parseSqlUpdateStmt } = require('../utils/dbHelper');
+const { asyncHandler } = require('../middleware');
+const { cleanseData, ErrorResponse, parseSqlUpdateStmt } = require('../utils');
 
 /**
  * @desc    Get all faqs
@@ -12,9 +11,9 @@ const { cleanseData, parseSqlUpdateStmt } = require('../utils/dbHelper');
  */
 exports.getFaqs = asyncHandler(async (req, res) => {
   if (req.params.listing_id) {
-    // return 404 error response if listing not found
+    // return 404 error response if listing not found or soft deleted
     const listing = await db.one(
-      'SELECT * FROM Listings WHERE listing_id = $1',
+      'SELECT * FROM listingsview WHERE listing_id = $1',
       req.params.listing_id
     );
 
@@ -179,5 +178,5 @@ const isListingOwner = async (userId, listingId) => {
     'SELECT created_by FROM Listings WHERE listing_id = $1',
     listingId
   );
-  return parseInt(userId) === owner.created_by;
+  return userId === owner.created_by;
 };

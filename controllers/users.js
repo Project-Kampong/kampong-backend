@@ -1,8 +1,12 @@
-const { hashPassword } = require('../utils/auth.js');
+const { v4: uuidv4 } = require('uuid');
 const { db } = require('../db/db');
-const asyncHandler = require('../middleware/async');
-const ErrorResponse = require('../utils/errorResponse');
-const { cleanseData, parseSqlUpdateStmt } = require('../utils/dbHelper');
+const { asyncHandler } = require('../middleware');
+const {
+  cleanseData,
+  hashPassword,
+  ErrorResponse,
+  parseSqlUpdateStmt,
+} = require('../utils');
 
 /**
  * @desc    Get all users
@@ -38,6 +42,7 @@ exports.createUser = asyncHandler(async (req, res) => {
   const { first_name, last_name, email, password } = req.body;
 
   const data = {
+    user_id: uuidv4(),
     first_name,
     last_name,
     email,

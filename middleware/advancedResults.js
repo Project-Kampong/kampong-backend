@@ -1,7 +1,6 @@
 const asyncHandler = require('./async');
 const { db, pgp } = require('../db/db');
-const { cleanseData } = require('../utils/dbHelper');
-const { hashEncode } = require('../utils/hashIdGenerator');
+const { cleanseData } = require('../utils');
 
 /**
  * Handles select, sort, page, limit and filter request query params.
@@ -20,7 +19,7 @@ const { hashEncode } = require('../utils/hashIdGenerator');
  * Sample request query. ?select=name,password&sort=name,user_role&page=2&limit=2&name='Ron'
  * @param {String} model name of SQL table to query
  * @param {String} join name of SQL to form an SQL join with (optional)
- * @param {String} on column name common to both table to form an SQL join on (required, if join is provided)
+ * @param {String} on column name common to both table to form an SQL join on (required if join is provided)
  */
 const advancedResults = (model, join, on) =>
   asyncHandler(async (req, res, next) => {
@@ -106,15 +105,6 @@ const advancedResults = (model, join, on) =>
     query += pgp.as.format('OFFSET ${startIndex} LIMIT ${limit}', format);
 
     let results = await db.manyOrNone(query, format);
-
-    // Look for id field and generate hashId if non-empty results
-    if (results.length !== 0) {
-      const id = Object.keys(results[0]).filter(key => key.includes('_id'));
-      // if there is at least one id field and select is '*', generate its corresponding hashId using the first id attribute in the table
-      if (id.length !== 0 && select === '*') {
-        results.map(res => (res['hashId'] = hashEncode(res[id[0]])));
-      }
-    }
 
     // Pagination results
     const pagination = {};

@@ -1,22 +1,21 @@
 const { db } = require('../db/db');
-const asyncHandler = require('../middleware/async');
-const ErrorResponse = require('../utils/errorResponse');
-const { cleanseData, parseSqlUpdateStmt } = require('../utils/dbHelper');
+const { asyncHandler } = require('../middleware');
+const { cleanseData, ErrorResponse, parseSqlUpdateStmt } = require('../utils');
 
 /**
  * @desc    Get all participants
  * @route   GET /api/participants
  * @desc    Get all participants for a listing
  * @route   GET /api/listings/:listing_id/participants
- * @desc    Get all participation for a user profile
- * @route   GET /api/profiles/:user_id/participants
+ * @desc    Get all participation for a user
+ * @route   GET /api/users/:user_id/participants
  * @access  Public
  */
 exports.getParticipants = asyncHandler(async (req, res) => {
   if (req.params.listing_id) {
     // return 404 error response if listing not found
     const listing = await db.one(
-      'SELECT * FROM Listings WHERE listing_id = $1',
+      'SELECT * FROM listingsview WHERE listing_id = $1',
       req.params.listing_id
     );
 
@@ -35,7 +34,7 @@ exports.getParticipants = asyncHandler(async (req, res) => {
   if (req.params.user_id) {
     // return 404 error response if user not found
     const user = await db.one(
-      'SELECT * FROM Profiles WHERE user_id = $1',
+      'SELECT * FROM Users WHERE user_id = $1',
       req.params.user_id
     );
 
@@ -219,5 +218,5 @@ const checkListingOwner = async (userId, listingId) => {
     'SELECT created_by FROM Listings WHERE listing_id = $1',
     listingId
   );
-  return parseInt(userId) === owner.created_by;
+  return userId === owner.created_by;
 };

@@ -1,15 +1,18 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const { check, oneOf } = require('express-validator');
-const advancedResults = require('../../middleware/advancedResults');
-const { protect, authorise } = require('../../middleware/auth');
-const { checkInputError } = require('../../middleware/inputValidation');
-const { DATETIME_REGEX } = require('../../utils/regex');
 const {
+  advancedResults,
+  protect,
+  authorise,
+  checkInputError,
+} = require('../../middleware');
+const {
+  DATETIME_REGEX,
   INVALID_FIELD_MSG,
   INVALID_TIMESTAMP_MSG,
   NO_FIELD_UPDATED_MSG,
-} = require('../../utils/inputExceptionMsg');
+} = require('../../utils');
 
 // import controllers here
 const {
@@ -19,6 +22,31 @@ const {
   updateParticipant,
   deleteParticipant,
 } = require('../../controllers/participants');
+
+// Define input validation chain
+const validateCreateParticipantFields = [
+  check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID(),
+  check('user_id', INVALID_FIELD_MSG('user id')).isUUID(),
+  check('joined_on', INVALID_TIMESTAMP_MSG('join date'))
+    .optional()
+    .matches(DATETIME_REGEX),
+  check('end_on', INVALID_TIMESTAMP_MSG('end date'))
+    .optional()
+    .matches(DATETIME_REGEX),
+];
+
+const validateUpdateParticipantFields = [
+  oneOf(
+    [check('joined_on').exists(), check('end_on').exists()],
+    NO_FIELD_UPDATED_MSG
+  ),
+  check('joined_on', INVALID_TIMESTAMP_MSG('join date'))
+    .optional()
+    .matches(DATETIME_REGEX),
+  check('end_on', INVALID_TIMESTAMP_MSG('end date'))
+    .optional()
+    .matches(DATETIME_REGEX),
+];
 
 router.route('/').get(advancedResults('participants'), getParticipants);
 router.route('/:participant_id').get(getParticipant);
@@ -30,39 +58,11 @@ router.use(authorise('user', 'admin'));
 // map routes to controller
 router
   .route('/')
-  .post(
-    [
-      check('listing_id', INVALID_FIELD_MSG('listing_id')).isInt(),
-      check('user_id', INVALID_FIELD_MSG('user_id')).isInt(),
-      check('joined_on', INVALID_TIMESTAMP_MSG('join date'))
-        .optional()
-        .matches(DATETIME_REGEX),
-      check('end_on', INVALID_TIMESTAMP_MSG('end date'))
-        .optional()
-        .matches(DATETIME_REGEX),
-    ],
-    checkInputError,
-    createParticipant
-  );
+  .post(validateCreateParticipantFields, checkInputError, createParticipant);
 
 router
   .route('/:participant_id')
-  .put(
-    [
-      oneOf(
-        [check('joined_on').exists(), check('end_on').exists()],
-        NO_FIELD_UPDATED_MSG
-      ),
-      check('joined_on', INVALID_TIMESTAMP_MSG('join date'))
-        .optional()
-        .matches(DATETIME_REGEX),
-      check('end_on', INVALID_TIMESTAMP_MSG('end date'))
-        .optional()
-        .matches(DATETIME_REGEX),
-    ],
-    checkInputError,
-    updateParticipant
-  )
+  .put(validateUpdateParticipantFields, checkInputError, updateParticipant)
   .delete(deleteParticipant);
 
 module.exports = router;

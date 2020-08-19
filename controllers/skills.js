@@ -1,34 +1,13 @@
 const { db } = require('../db/db');
-const asyncHandler = require('../middleware/async');
-const ErrorResponse = require('../utils/errorResponse');
-const { parseSqlUpdateStmt } = require('../utils/dbHelper');
+const { asyncHandler } = require('../middleware');
+const { ErrorResponse, parseSqlUpdateStmt } = require('../utils');
 
 /**
  * @desc    Get all skills
  * @route   GET /api/skills
- * @desc    Get all skills for a profile
- * @route   GET /api/profiles/:user_id/skills
  * @access  Public
  */
 exports.getSkills = asyncHandler(async (req, res, next) => {
-  if (req.params.user_id) {
-    // return 404 error response if user not found
-    const user = await db.one(
-      'SELECT * FROM Profiles WHERE user_id = $1',
-      req.params.user_id
-    );
-
-    const skills = await db.manyOrNone(
-      'SELECT * FROM ProfileSkills ps JOIN Skills s USING (skill_id) WHERE ps.user_id = $1',
-      req.params.user_id
-    );
-    return res.status(200).json({
-      success: true,
-      count: skills.length,
-      data: skills,
-    });
-  }
-
   res.status(200).json(res.advancedResults);
 });
 
@@ -54,10 +33,11 @@ exports.getSkill = asyncHandler(async (req, res) => {
  * @access  Admin
  */
 exports.createSkill = asyncHandler(async (req, res) => {
-  const { skill } = req.body;
+  const { skill, skill_group } = req.body;
 
   const data = {
     skill,
+    skill_group,
   };
 
   const rows = await db.one(
@@ -88,10 +68,11 @@ exports.updateSkill = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`Skill does not exist`, 400));
   }
 
-  const { skill } = req.body;
+  const { skill, skill_group } = req.body;
 
   const data = {
     skill,
+    skill_group,
   };
 
   const updateSkillQuery = parseSqlUpdateStmt(

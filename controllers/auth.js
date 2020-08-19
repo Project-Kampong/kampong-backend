@@ -1,14 +1,16 @@
 const crypto = require('crypto');
+const { v4: uuidv4 } = require('uuid');
 const {
   checkPassword,
+  cleanseData,
+  ErrorResponse,
   getSignedJwtToken,
   hashPassword,
-} = require('../utils/auth');
+  parseSqlUpdateStmt,
+  sendEmail,
+} = require('../utils');
 const { db } = require('../db/db');
-const asyncHandler = require('../middleware/async');
-const ErrorResponse = require('../utils/errorResponse');
-const { cleanseData, parseSqlUpdateStmt } = require('../utils/dbHelper');
-const sendEmail = require('../utils/sendEmail');
+const { asyncHandler } = require('../middleware');
 
 /**
  * @desc    Register user and send email to user email with link to confirm email and activate account
@@ -123,7 +125,7 @@ exports.confirmEmail = asyncHandler(async (req, res, next) => {
   }
 
   // Get first_name, last_name, email, password from PendingUsers and store into data
-  const data = { first_name, last_name, email, password };
+  const data = { user_id: uuidv4(), first_name, last_name, email, password };
 
   const nickname = last_name ? first_name + ' ' + last_name : first_name;
 

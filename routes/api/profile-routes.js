@@ -1,109 +1,90 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 const { check, oneOf } = require('express-validator');
-
-const advancedResults = require('../../middleware/advancedResults');
-const { protect, authorise } = require('../../middleware/auth');
-const { checkInputError } = require('../../middleware/inputValidation');
-const { mapSingleFileLocation } = require('../../middleware/fileUploadHelper');
 const {
+  advancedResults,
+  checkInputError,
+  decodeHashedReqKey,
+  protect,
+  authorise,
+  mapSingleFileLocation,
+} = require('../../middleware');
+const {
+  DATETIME_REGEX,
   INVALID_TIMESTAMP_MSG,
   INVALID_FIELD_MSG,
-} = require('../../utils/inputExceptionMsg');
-const { DATETIME_REGEX } = require('../../utils/regex');
-const { uploadFile } = require('../../utils/fileUploader');
-
-// Include other resource's controllers to access their endpoints
-const likeRoute = require('./like-routes');
-const listingRoute = require('./listing-routes');
-const participantRoute = require('./participant-routes');
-const skillRoute = require('./skill-routes');
-
-// Re-route this URI to other resource router
-router.use('/:user_id/likes', likeRoute);
-router.use('/:user_id/listings', listingRoute);
-router.use('/:user_id/participants', participantRoute);
-router.use('/:user_id/skills', skillRoute);
+  NO_FIELD_UPDATED_MSG,
+  uploadFile,
+} = require('../../utils');
 
 // import controllers here
 const {
   getProfiles,
   getProfile,
-  getProfileByHashId,
   updateProfile,
   verifyProfile,
   uploadPic,
 } = require('../../controllers/profiles');
-const { NO_FIELD_UPDATED_MSG } = require('../../utils/inputExceptionMsg');
+
+// Define input validation chain for routes
+const validateProfileUpdateFields = [
+  oneOf(
+    [
+      check('nickname').exists(),
+      check('profile_picture').exists(),
+      check('about').exists(),
+      check('gender').exists(),
+      check('dob').exists(),
+      check('interest').exists(),
+      check('phone').exists(),
+      check('facebook_link').exists(),
+      check('twitter_link').exists(),
+      check('instagram_link').exists(),
+      check('linkedin_link').exists(),
+    ],
+    NO_FIELD_UPDATED_MSG
+  ),
+  check('nickname', INVALID_FIELD_MSG('nickname')).optional().trim().notEmpty(),
+  check('dob')
+    .optional()
+    .matches(DATETIME_REGEX)
+    .withMessage(INVALID_TIMESTAMP_MSG('dob')),
+  check('phone')
+    .optional()
+    .isMobilePhone('any')
+    .withMessage(INVALID_FIELD_MSG('phone number')),
+  check(['facebook_link', 'twitter_link', 'instagram_link', 'linkedin_link'])
+    .optional()
+    .isURL()
+    .withMessage(INVALID_FIELD_MSG('URL')),
+];
 
 // map routes to controller
-router.route('/').get(advancedResults('profiles'), getProfiles);
-
-router.route('/:id/raw').get(getProfile);
-
-router.route('/:hashId').get(getProfileByHashId);
+router.route('/').get(getProfile, advancedResults('profiles'), getProfiles);
 
 // all routes below uses protect middleware
 router.use(protect);
 
+// router takes merged params 'user_id' from user route
 router
-  .route('/:id')
+  .route('/')
   .put(
     authorise('admin', 'user'),
-    [
-      oneOf(
-        [
-          check('nickname').exists(),
-          check('profile_picture').exists(),
-          check('about').exists(),
-          check('gender').exists(),
-          check('dob').exists(),
-          check('interest').exists(),
-          check('phone').exists(),
-          check('facebook_link').exists(),
-          check('twitter_link').exists(),
-          check('instagram_link').exists(),
-          check('linkedin_link').exists(),
-        ],
-        NO_FIELD_UPDATED_MSG
-      ),
-      check('nickname', INVALID_FIELD_MSG('nickname'))
-        .optional()
-        .trim()
-        .notEmpty(),
-      check('dob')
-        .optional()
-        .matches(DATETIME_REGEX)
-        .withMessage(INVALID_TIMESTAMP_MSG('dob')),
-      check('phone')
-        .optional()
-        .isMobilePhone('any')
-        .withMessage(INVALID_FIELD_MSG('phone number')),
-      check([
-        'facebook_link',
-        'twitter_link',
-        'instagram_link',
-        'linkedin_link',
-      ])
-        .optional()
-        .isURL()
-        .withMessage(INVALID_FIELD_MSG('URL')),
-    ],
+    validateProfileUpdateFields,
     checkInputError,
     updateProfile
   );
 
 router
-  .route('/:id/photo')
+  .route('/upload-photo')
   .put(
-    authorise('admin', 'user'),
     uploadFile.single('pic'),
     mapSingleFileLocation('profile_picture'),
     uploadPic
   );
 
 router
-  .route('/:id')
+  .route('/verify')
   .put(
     authorise('admin'),
     [check('is_verified', NO_FIELD_UPDATED_MSG).exists()],

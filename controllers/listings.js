@@ -1,9 +1,8 @@
 const moment = require('moment');
+const { v4: uuidv4 } = require('uuid');
 const { db } = require('../db/db');
-const asyncHandler = require('../middleware/async');
-const { cleanseData, parseSqlUpdateStmt } = require('../utils/dbHelper');
-const ErrorResponse = require('../utils/errorResponse');
-const { hashDecode } = require('../utils/hashIdGenerator');
+const { asyncHandler } = require('../middleware');
+const { cleanseData, ErrorResponse, parseSqlUpdateStmt } = require('../utils');
 
 /**
  * @desc    Get all listings
@@ -24,13 +23,13 @@ exports.getListingsAll = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Get single listing by listing id
- * @route   GET /api/listings/:id/raw
+ * @desc    Get single listing by listing id (excludes soft-deleted)
+ * @route   GET /api/listings/:id
  * @access  Public
  */
 exports.getListing = asyncHandler(async (req, res, next) => {
   const rows = await db.one(
-    'SELECT * FROM listings WHERE listing_id = $1',
+    'SELECT * FROM listingsview WHERE listing_id = $1',
     req.params.id
   );
   res.status(200).json({
@@ -40,43 +39,20 @@ exports.getListing = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Get all listings owned by particular user
- * @route   GET /api/profiles/:user_id/listings/owner
+ * @desc    Get all listings owned by particular user (excludes soft-deleted)
+ * @route   GET /api/users/:user_id/listings/owner
  * @access  Public
  */
 exports.getAllListingsOwnedByUser = asyncHandler(async (req, res, next) => {
   const userId = req.params.user_id;
   // check if user exists
-  const user = await db.one(
-    'SELECT * FROM Profiles WHERE user_id = $1',
-    userId
-  );
+  const user = await db.one('SELECT * FROM Users WHERE user_id = $1', userId);
 
   const rows = await db.manyOrNone(
-    'SELECT * FROM Listings WHERE created_by = $1',
+    'SELECT * FROM listingsview WHERE created_by = $1',
     userId
   );
 
-  res.status(200).json({
-    success: true,
-    data: rows,
-  });
-});
-
-/**
- * @desc    Get single listing by hashId
- * @route   GET /api/listings/:hashId
- * @access  Public
- */
-exports.getListingByHashId = asyncHandler(async (req, res, next) => {
-  const decodedId = hashDecode(req.params.hashId)[0];
-  if (!decodedId) {
-    return next(new ErrorResponse('Invalid listing ID', 400));
-  }
-  const rows = await db.one(
-    'SELECT * FROM listings WHERE listing_id = $1',
-    decodedId
-  );
   res.status(200).json({
     success: true,
     data: rows,
@@ -108,6 +84,8 @@ exports.createListing = asyncHandler(async (req, res) => {
   } = req.body;
 
   const data = {
+    listing_id: uuidv4(),
+    created_by: req.user.user_id,
     organisation_id,
     title,
     category,
@@ -124,9 +102,6 @@ exports.createListing = asyncHandler(async (req, res) => {
     start_date,
     end_date,
   };
-
-  // Add logged in user as creator of listing
-  data.created_by = req.user.user_id;
 
   // remove undefined values in json object
   cleanseData(data);
@@ -156,14 +131,14 @@ exports.createListing = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Update single listing
+ * @desc    Update single listing (excludes soft-deleted)
  * @route   PUT /api/listings/:id
  * @access  Admin/Owner
  */
 exports.updateListing = asyncHandler(async (req, res, next) => {
-  // check if listing exists
+  // check if listing exists and is not soft-deleted
   const listing = await db.one(
-    'SELECT * FROM listings WHERE listing_id = $1',
+    'SELECT * FROM listingsview WHERE listing_id = $1',
     req.params.id
   );
 
@@ -185,6 +160,11 @@ exports.updateListing = asyncHandler(async (req, res, next) => {
     is_published,
     start_date,
     end_date,
+    pic1,
+    pic2,
+    pic3,
+    pic4,
+    pic5,
   } = req.body;
 
   const data = {
@@ -198,6 +178,11 @@ exports.updateListing = asyncHandler(async (req, res, next) => {
     is_published,
     start_date,
     end_date,
+    pic1,
+    pic2,
+    pic3,
+    pic4,
+    pic5,
   };
 
   // remove undefined items in json
@@ -256,9 +241,9 @@ exports.verifyListing = asyncHandler(async (req, res, next) => {
  */
 
 exports.deactivateListing = asyncHandler(async (req, res, next) => {
-  // check if listing exists
+  // check if listing exists and not soft-deleted
   const listing = await db.one(
-    'SELECT * FROM listings WHERE listing_id = $1',
+    'SELECT * FROM listingsview WHERE listing_id = $1',
     req.params.id
   );
 
@@ -270,8 +255,8 @@ exports.deactivateListing = asyncHandler(async (req, res, next) => {
   }
 
   const rows = await db.one(
-    'UPDATE listings SET deleted_on=$2 WHERE listing_id = $1 RETURNING *',
-    [req.params.id, moment().format('YYYY-MM-DD HH:mm:ss.000')]
+    'UPDATE listings SET deleted_on=$1 WHERE listing_id = $2 RETURNING *',
+    [moment().format('YYYY-MM-DD HH:mm:ss.000'), req.params.id]
   );
 
   res.status(200).json({
@@ -312,7 +297,7 @@ exports.deleteListing = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Upload multiple (up to 5) new pictures for a particular listing (identified by listing id)
- * @route   PUT /api/listings/:id/photo
+ * @route   PUT /api/listings/:id/upload-photo
  * @access  Admin/Owner
  */
 exports.uploadListingPics = asyncHandler(async (req, res, next) => {
@@ -344,14 +329,14 @@ exports.uploadListingPics = asyncHandler(async (req, res, next) => {
   };
   cleanseData(data);
 
-  const updateProfileQuery = parseSqlUpdateStmt(
+  const updateListingQuery = parseSqlUpdateStmt(
     data,
     'listings',
     'WHERE listing_id = $1 RETURNING $2:name',
     [req.params.id, data]
   );
 
-  const rows = await db.one(updateProfileQuery);
+  const rows = await db.one(updateListingQuery);
 
   res.status(200).json({
     success: true,

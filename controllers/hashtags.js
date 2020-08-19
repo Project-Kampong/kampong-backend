@@ -1,7 +1,6 @@
 const { db } = require('../db/db');
-const asyncHandler = require('../middleware/async');
-const ErrorResponse = require('../utils/errorResponse');
-const { cleanseData, parseSqlUpdateStmt } = require('../utils/dbHelper');
+const { asyncHandler } = require('../middleware');
+const { cleanseData, ErrorResponse, parseSqlUpdateStmt } = require('../utils');
 
 /**
  * @desc    Get all hashtags
@@ -12,9 +11,9 @@ const { cleanseData, parseSqlUpdateStmt } = require('../utils/dbHelper');
  */
 exports.getHashtags = asyncHandler(async (req, res, next) => {
   if (req.params.listing_id) {
-    // returns 404 error response if listing not found
+    // returns 404 error response if listing not found or soft deleted
     const hashtags = await db.many(
-      'SELECT l.listing_id, h.hashtag_id, tag FROM listings l LEFT JOIN hashtags h ON l.listing_id = h.listing_id WHERE l.listing_id = $1',
+      'SELECT l.listing_id, h.hashtag_id, tag FROM listingsview l LEFT JOIN hashtags h ON l.listing_id = h.listing_id WHERE l.listing_id = $1',
       req.params.listing_id
     );
 
@@ -181,5 +180,5 @@ const isListingOwner = async (userId, listingId) => {
     'SELECT created_by FROM Listings WHERE listing_id = $1',
     listingId
   );
-  return parseInt(userId) === owner.created_by;
+  return userId === owner.created_by;
 };

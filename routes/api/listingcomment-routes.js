@@ -1,14 +1,16 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const { check, oneOf } = require('express-validator');
-const advancedResults = require('../../middleware/advancedResults');
-const { protect } = require('../../middleware/auth');
-const { checkInputError } = require('../../middleware/inputValidation');
+const {
+  advancedResults,
+  checkInputError,
+  protect,
+} = require('../../middleware');
 const {
   NO_FIELD_UPDATED_MSG,
   INVALID_FIELD_MSG,
   INVALID_TIMESTAMP_MSG,
-} = require('../../utils/inputExceptionMsg');
+} = require('../../utils');
 
 // import controllers here
 const {
@@ -18,9 +20,24 @@ const {
   createListingComment,
   updateListingComment,
   deleteListingComment,
+  deactivateListingComment,
 } = require('../../controllers/listingcomments');
 
-router.route('/').get(advancedResults('listingcomments'), getListingComments);
+// Define input validation chain
+const validateCreateListingCommentFields = [
+  check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID(),
+  check('comment', INVALID_FIELD_MSG('comment')).trim().notEmpty(),
+  check('reply_to_id', INVALID_TIMESTAMP_MSG('reply to id')).optional().isInt(),
+];
+
+const validateUpdateListingCommentFields = [
+  oneOf([check('comment').exists()], NO_FIELD_UPDATED_MSG),
+  check('comment', INVALID_FIELD_MSG('comment')).optional().trim().notEmpty(),
+];
+
+router
+  .route('/')
+  .get(advancedResults('listingcommentsview'), getListingComments);
 router.route('/:id').get(getListingComment);
 router.route('/:id/children').get(getListingCommentChildren);
 
@@ -31,13 +48,7 @@ router.use(protect);
 router
   .route('/')
   .post(
-    [
-      check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
-      check('comment', INVALID_FIELD_MSG('comment')).trim().notEmpty(),
-      check('reply_to_id', INVALID_TIMESTAMP_MSG('reply to id'))
-        .optional()
-        .isInt(),
-    ],
+    validateCreateListingCommentFields,
     checkInputError,
     createListingComment
   );
@@ -45,16 +56,12 @@ router
 router
   .route('/:id')
   .put(
-    [
-      oneOf([check('comment').exists()], NO_FIELD_UPDATED_MSG),
-      check('comment', INVALID_FIELD_MSG('comment'))
-        .optional()
-        .trim()
-        .notEmpty(),
-    ],
+    validateUpdateListingCommentFields,
     checkInputError,
     updateListingComment
   )
   .delete(deleteListingComment);
+
+router.route('/:id/deactivate').put(deactivateListingComment);
 
 module.exports = router;
