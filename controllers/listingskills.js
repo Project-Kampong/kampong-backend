@@ -11,9 +11,9 @@ const { ErrorResponse } = require('../utils');
  */
 exports.getListingSkills = asyncHandler(async (req, res, next) => {
   if (req.params.listing_id) {
-    // return 404 error response if listing not found
+    // return 404 error response if listing not found or soft deleted
     const listingSkills = await db.many(
-      'SELECT ls.listing_skill_id, l.listing_id, ls.skill_id, s.skill FROM Listings l LEFT JOIN ListingSkills ls ON l.listing_id = ls.listing_id LEFT JOIN Skills s ON ls.skill_id = s.skill_id WHERE l.listing_id = $1',
+      'SELECT ls.listing_skill_id, l.listing_id, ls.skill_id, s.skill FROM listingsview l LEFT JOIN ListingSkills ls ON l.listing_id = ls.listing_id LEFT JOIN Skills s ON ls.skill_id = s.skill_id WHERE l.listing_id = $1',
       req.params.listing_id
     );
 
