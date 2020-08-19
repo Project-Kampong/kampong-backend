@@ -76,5 +76,5 @@ Database schema diagram can be found in `public/kampong-db-diagram.png`.
 
 ## License
 
-- Version: 1.0.0
-- License: MIT
+-   Version: 1.0.0
+-   License: MIT
