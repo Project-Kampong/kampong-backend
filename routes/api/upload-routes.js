@@ -18,7 +18,6 @@ router.post(
   '/multi',
   protect,
   uploadFile.array('files', 3), (req, res) => {
-    console.log(req.files)
     res.status(200).json({ success: true, data: req.files.map((file) => file.location) });
   });
 
