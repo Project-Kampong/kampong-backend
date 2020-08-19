@@ -11,7 +11,6 @@ const hpp = require('hpp');
 const cors = require('cors');
 const { checkConn } = require('./utils/dbHelper');
 const apiRoutes = require('./routes/api-routes');
-const testRoutes = require('./routes/test-routes');
 const { errorHandler } = require('./middleware');
 
 dotenv.config({ path: 'config/config.env' });
@@ -29,7 +28,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
+    app.use(morgan('dev'));
 }
 
 // Set security headers
@@ -40,8 +39,8 @@ app.use(xss());
 
 // Rate limiting
 const limiter = rateLimit({
-  windowMs: 1 * 60 * 1000, // 1 minute
-  max: 200,
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 200,
 });
 
 app.use(limiter);
@@ -58,25 +57,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Mount routers
 app.use('/api', apiRoutes);
 
-// Mount dev-only test routers
-if (process.env.NODE_ENV === 'development') {
-  app.use('/test', testRoutes);
-}
-
 // Mount error handler
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
 const server = app.listen(PORT, () => {
-  console.log(
-    `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold
-  );
+    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold);
 });
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err, promise) => {
-  console.log(`Unhandled Error: ${err.message}`.bgRed);
-  // Close server & exit process
-  server.close(() => process.exit(1));
+    console.log(`Unhandled Error: ${err.message}`.bgRed);
+    // Close server & exit process
+    server.close(() => process.exit(1));
 });
