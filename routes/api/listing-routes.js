@@ -158,7 +158,7 @@ router
 
 router
   .route('/:id/deactivate')
-  .put(protect, authorise('admin', 'owner'), deactivateListing);
+  .put(protect, deactivateListing);
 
 router
   .route('/:id/upload-photo')
