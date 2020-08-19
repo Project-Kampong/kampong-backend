@@ -102,6 +102,7 @@ CREATE TABLE Profiles (
 CREATE TABLE Skills (
 	skill_id SERIAL,
 	skill VARCHAR UNIQUE NOT NULL,
+	skill_group VARCHAR DEFAULT NULL,
 	PRIMARY KEY (skill_id)
 );
 

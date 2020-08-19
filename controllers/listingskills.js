@@ -47,7 +47,58 @@ exports.getListingSkill = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Create listing skill for listing
+ * @desc    Create a customized listing skill specific to current listing id and update in skills table
+ * @route   POST /api/listing-skills/add-skill
+ * @access  Admin/Owner
+ */
+exports.createCustomListingSkill = asyncHandler(async (req, res, next) => {
+  const { listing_id, skill } = req.body;
+
+  const data = {
+    listing_id,
+    skill,
+  };
+
+  // check listing owner for non-admin users
+  if (
+    req.user.role !== 'admin' &&
+    !(await isListingOwner(req.user.user_id, listing_id))
+  ) {
+    return next(
+      new ErrorResponse(
+        `Not authorised to create listing skills for this listing`,
+        403
+      )
+    );
+  }
+
+  //if skill already exists, just link both listing and skill together in table
+  if (!(await doesSkillExist(skill))) {
+    const preinsert = await db.one(
+      'INSERT INTO skills (skill) VALUES ($1) RETURNING *',
+      skill
+    )
+  }
+
+  const skill_id_row = await db.one(
+    'SELECT skill_id FROM skills WHERE skill = $1',
+    skill
+  );
+
+  const rows = await db.one(
+    'INSERT INTO listingskills (listing_id, skill_id) VALUES ($1, $2) RETURNING *',
+    [listing_id, skill_id_row.skill_id]
+  );
+
+  res.status(201).json({
+    success: true,
+    data: rows,
+  });
+
+})
+
+/**
+ * @desc    Create listing skill for listing (with skill_id known)
  * @route   POST /api/listing-skills
  * @access  Admin/Owner
  */
@@ -126,3 +177,12 @@ const isListingOwner = async (userId, listingId) => {
   );
   return userId === owner.created_by;
 };
+
+const doesSkillExist = async (skill) => {
+  const skillBool = await db.oneOrNone(
+    'SELECT * FROM skills WHERE skill = $1',
+    skill
+  );
+  return skillBool;
+}
+

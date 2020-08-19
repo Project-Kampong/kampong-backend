@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Verify Profile endpoint.
 - Soft delete for `ListingComments`.
 - `ListingComments` now show comment poster's nickname and profile picture.
+- Editing/Updating `Listings` can now update photos.
+- General file upload route in `upload-routes`.
+- All skills created by admin have exactly one group under the column `skill_group`
+- `createCustomListingSkill` in `listingskills` to allow listing owners and admins to create skills for a listing
 
 ### Changed
 
@@ -32,7 +36,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - Get All Skills for a Profile routing and endpoint.
-- `hashId` no longer show in `Get All...` endpoints
+- `hashId` no longer show in `Get All...` endpoints.
+
+### Fixed
+
+- Bug whereby listing owners are unable to deactivate/soft delete.
+- Bug where user can only upload 5 photos at a time, else the remaining pic fields become null.
 
 ## [0.0.3] - 2020-08-13
 
