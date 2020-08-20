@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
--   Add frontend build files in `client/build` to be served when running in production mode. Frontend is now integrated with backend!
+-   Add frontend build files in `client/build` to be served. Frontend is now integrated with backend!
+-   Redirect user to homepage on confirmation of email address
 
 ### [v0.0.4] - 2020-08-20
 

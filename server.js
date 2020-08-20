@@ -57,16 +57,10 @@ app.use('/api', apiRoutes);
 // Mount error handler
 app.use(errorHandler);
 
-// Serve static assets in production
-if (process.env.NODE_ENV === 'production') {
-    // Set static folder
-    app.use(express.static('client/build'));
+// Set static folder
+app.use(express.static('client/build'));
 
-    app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')));
-} else {
-    // use resources in public folder if in non-production mode, API documentation will be served as homepage
-    app.use(express.static(path.join(__dirname, 'public')));
-}
+app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')));
 
 const PORT = process.env.PORT || 5000;
 
