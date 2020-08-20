@@ -51,14 +51,16 @@ app.use(hpp());
 // Enable CORS
 app.use(cors());
 
-// Set static folder (ie. so all files can access public folder with './public/' and base directory of URI is public folder)
-app.use(express.static(path.join(__dirname, 'public')));
-
 // Mount routers
 app.use('/api', apiRoutes);
 
 // Mount error handler
 app.use(errorHandler);
+
+// Set static folder
+app.use(express.static('client/build'));
+
+app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')));
 
 const PORT = process.env.PORT || 5000;
 
