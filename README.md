@@ -59,10 +59,10 @@ If data import fails, run the create database tables command and try again.
 On the command line in the project root directory:
 
 ```
-#### Run in production
+#### Run in production, serves frontend + API
 yarn start
 
-#### Run in development environment
+#### Run in development, serves API documentation + API
 yarn dev
 ```
 

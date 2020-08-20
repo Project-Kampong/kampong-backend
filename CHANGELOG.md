@@ -7,7 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
-### [0.0.4] - 2020-08-20
+### [v0.1.0b] - 2020-08-20
+
+### Added
+
+-   Add frontend build files in `client/build` to be served. Frontend is now integrated with backend!
+-   Redirect user to homepage on confirmation of email address
+
+### [v0.0.4] - 2020-08-20
 
 ### Added
 
@@ -45,7 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Bug whereby listing owners are unable to deactivate/soft delete.
 -   Bug where user can only upload 5 photos at a time, else the remaining pic fields become null.
 
-## [0.0.3] - 2020-08-13
+## [v0.0.3] - 2020-08-13
 
 ### Added
 
@@ -81,7 +88,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Bug (similar as above) where `403` response given when user is updating own participant entry.
 -   Bug where hashtags with '-' are not allowed. This affects the creation and update of hashtags. Hashtags must now start with '#' followed by a combination of alphanumeric characters, `-` and `_`, and be of length 3 to 20 excluding `#`.
 
-## [0.0.2] - 2020-08-06
+## [v0.0.2] - 2020-08-06
 
 ### Added
 
@@ -94,7 +101,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Listings create and delete endpoint to also create and delete its corresponding listing story with same listing id.
 -   Minor update to README, indicating temporary API documentation location.
 
-## [0.0.1] - 2020-08-03
+## [v0.0.1] - 2020-08-03
 
 ### Added
 
@@ -124,8 +131,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Internal, dev-only test routes and methods.
 -   API documentation temporarily set up as front-end page to be served, for ease of testing by frontend.
 
-[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.0.4...HEAD
-[0.0.4]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.0.4
-[0.0.3]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.0.3
-[0.0.2]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.0.2
-[0.0.1]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.0.1
+[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.1.0b...HEAD
+[v0.1.0b]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.1.0b
+[v0.0.4]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.0.4
+[v0.0.3]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.0.3
+[v0.0.2]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.0.2
+[v0.0.1]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.0.1
