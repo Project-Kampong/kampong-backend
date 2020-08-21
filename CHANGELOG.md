@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
+### [v0.1.1b] - 2020-08-21
+
+### Added
+
+-   Forget password request is limited to 5 times every 15min.
+
+### Changed
+
+-   Registration flow for users who try to re-register within 15min will see an error with an appropriate prompt, and users can smoothly re-register after 15min.
+-   Registration token expiry shortened from 30min to 15min.
+
 ### [v0.1.0b] - 2020-08-20
 
 ### Added
@@ -23,8 +34,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   `ListingComments` now show comment poster's nickname and profile picture.
 -   Editing/Updating `Listings` can now update photos.
 -   General file upload route in `upload-routes`.
--   All skills created by admin have exactly one group under the column `skill_group`
--   `createCustomListingSkill` in `listingskills` to allow listing owners and admins to create skills for a listing
+-   All skills created by admin have exactly one group under the column `skill_group`.
+-   `createCustomListingSkill` in `listingskills` to allow listing owners and admins to create skills for a listing.
 
 ### Changed
 
@@ -131,7 +142,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Internal, dev-only test routes and methods.
 -   API documentation temporarily set up as front-end page to be served, for ease of testing by frontend.
 
-[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.1.0b...HEAD
+[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.1.1b...HEAD
+[v0.1.1b]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.1.1b
 [v0.1.0b]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.1.0b
 [v0.0.4]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.0.4
 [v0.0.3]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.0.3
