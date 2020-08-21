@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "b09bd8c5-776a-4d8c-8b71-f528c017cb08",
-		"name": "Kampong API v0.1.0b",
+		"name": "Kampong API v0.1.1b",
 		"description": "Backend API for Project Kampong.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -990,7 +990,7 @@
 								"register"
 							]
 						},
-						"description": "User registration with password encryption, sends confirmation email address to activate account. Permission: Public.\n\nField rules:\nAll fields required unless otherwise stated.\nfirst_name: Alphabets and whitespaces only.\nlast_name: Alphabets and whitespaces only. Optional.\nemail: Valid email address only. Email address will be canonicalized.\npassword: Min 6 characters."
+						"description": "User registration with password encryption, sends confirmation email address to activate account. Token expires in 15min, after which user must register again. Permission: Public.\n\nField rules:\nAll fields required unless otherwise stated.\nfirst_name: Alphabets and whitespaces only.\nlast_name: Alphabets and whitespaces only. Optional.\nemail: Valid email address only. Email address will be canonicalized.\npassword: Min 6 characters."
 					},
 					"response": [
 						{
@@ -1379,7 +1379,7 @@
 								"forgetpassword"
 							]
 						},
-						"description": "Generate a reset password token and sends email to user when user forgets password. (Permission: Public)\n\nField rules:\nAll fields required unless otherwise stated.\nemail: Valid email address only. Email address will be canonicalized."
+						"description": "Generate a reset password token and sends email to user when user forgets password. Token expires in 10min, after which user must send another 'Forget Password' request again. (Permission: Public)\n\nField rules:\nAll fields required unless otherwise stated.\nemail: Valid email address only. Email address will be canonicalized."
 					},
 					"response": [
 						{
