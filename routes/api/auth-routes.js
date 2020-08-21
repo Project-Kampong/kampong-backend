@@ -1,122 +1,80 @@
 const express = require('express');
 const router = express.Router();
+const rateLimit = require('express-rate-limit');
 const { check, oneOf } = require('express-validator');
 const { protect, checkInputError } = require('../../middleware');
 const {
-  ALPHA_WHITESPACE_REGEX,
-  INVALID_EMAIL_MSG,
-  INVALID_ALPHA_SPACE_MSG,
-  INVALID_PASSWORD_MSG,
-  NO_FIELD_UPDATED_MSG,
-  INVALID_EXISTING_MSG,
+    ALPHA_WHITESPACE_REGEX,
+    INVALID_EMAIL_MSG,
+    INVALID_ALPHA_SPACE_MSG,
+    INVALID_PASSWORD_MSG,
+    NO_FIELD_UPDATED_MSG,
+    INVALID_EXISTING_MSG,
 } = require('../../utils');
 
 // import controllers here
 const {
-  register,
-  login,
-  logout,
-  getMe,
-  updateDetails,
-  updatePassword,
-  confirmEmail,
-  forgetPassword,
-  resetPassword,
+    register,
+    login,
+    logout,
+    getMe,
+    updateDetails,
+    updatePassword,
+    confirmEmail,
+    forgetPassword,
+    resetPassword,
 } = require('../../controllers/auth');
 
 // input validation chain definition
 const validateRegisterFields = [
-  check('first_name', INVALID_ALPHA_SPACE_MSG('first name'))
-    .trim()
-    .notEmpty()
-    .matches(ALPHA_WHITESPACE_REGEX),
-  check('last_name', INVALID_ALPHA_SPACE_MSG('last name'))
-    .optional()
-    .trim()
-    .notEmpty()
-    .matches(ALPHA_WHITESPACE_REGEX),
-  check('email', INVALID_EMAIL_MSG).trim().isEmail().normalizeEmail(),
-  check('password', INVALID_PASSWORD_MSG).isLength({ min: 6 }),
+    check('first_name', INVALID_ALPHA_SPACE_MSG('first name')).trim().notEmpty().matches(ALPHA_WHITESPACE_REGEX),
+    check('last_name', INVALID_ALPHA_SPACE_MSG('last name')).optional().trim().notEmpty().matches(ALPHA_WHITESPACE_REGEX),
+    check('email', INVALID_EMAIL_MSG).trim().isEmail().normalizeEmail(),
+    check('password', INVALID_PASSWORD_MSG).isLength({ min: 6 }),
 ];
 
 const validateLoginFields = [
-  check('email', INVALID_EMAIL_MSG).trim().isEmail().normalizeEmail(),
-  check('password', INVALID_PASSWORD_MSG).isLength({ min: 6 }),
+    check('email', INVALID_EMAIL_MSG).trim().isEmail().normalizeEmail(),
+    check('password', INVALID_PASSWORD_MSG).isLength({ min: 6 }),
 ];
 
-const validateForgetPasswordFields = [
-  check('email', INVALID_EMAIL_MSG).trim().isEmail().normalizeEmail(),
-];
+const validateForgetPasswordFields = [check('email', INVALID_EMAIL_MSG).trim().isEmail().normalizeEmail()];
 
-const validateResetPasswordFields = [
-  check('password', INVALID_PASSWORD_MSG).isLength({ min: 6 }),
-];
+const validateResetPasswordFields = [check('password', INVALID_PASSWORD_MSG).isLength({ min: 6 })];
 
 const validateUpdateDetailsFields = [
-  oneOf(
-    [
-      check('first_name').exists(),
-      check('last_name').exists(),
-      check('email').exists(),
-    ],
-    NO_FIELD_UPDATED_MSG
-  ),
-  check('first_name', INVALID_ALPHA_SPACE_MSG('first name'))
-    .optional()
-    .trim()
-    .notEmpty()
-    .matches(ALPHA_WHITESPACE_REGEX),
-  check('last_name', INVALID_ALPHA_SPACE_MSG('last name'))
-    .optional()
-    .trim()
-    .notEmpty()
-    .matches(ALPHA_WHITESPACE_REGEX),
-  check('email', INVALID_EMAIL_MSG)
-    .optional()
-    .trim()
-    .isEmail()
-    .normalizeEmail(),
+    oneOf([check('first_name').exists(), check('last_name').exists(), check('email').exists()], NO_FIELD_UPDATED_MSG),
+    check('first_name', INVALID_ALPHA_SPACE_MSG('first name')).optional().trim().notEmpty().matches(ALPHA_WHITESPACE_REGEX),
+    check('last_name', INVALID_ALPHA_SPACE_MSG('last name')).optional().trim().notEmpty().matches(ALPHA_WHITESPACE_REGEX),
+    check('email', INVALID_EMAIL_MSG).optional().trim().isEmail().normalizeEmail(),
 ];
 
 const validateUpdatePasswordFields = [
-  check('oldPassword', INVALID_EXISTING_MSG('old password')).exists(),
-  check('newPassword', INVALID_PASSWORD_MSG).isLength({ min: 6 }),
+    check('oldPassword', INVALID_EXISTING_MSG('old password')).exists(),
+    check('newPassword', INVALID_PASSWORD_MSG).isLength({ min: 6 }),
 ];
+
+// Request limiter middleware for auth endpoints
+const authRequestLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 min window
+    max: 5, // start blocking after 5 requests
+    message: { success: false, error: 'Request limit exceeded, please try again in an hour' },
+});
 
 // map routes to controller
 router.get('/logout', protect, logout);
 router.get('/me', protect, getMe);
 router.get('/register/:confirmEmailToken/confirmemail', confirmEmail);
-router.post('/register', validateRegisterFields, checkInputError, register);
+router.post('/register', authRequestLimiter, validateRegisterFields, checkInputError, register);
 router.post('/login', validateLoginFields, checkInputError, login);
-router.post(
-  '/forgetpassword',
-  validateForgetPasswordFields,
-  checkInputError,
-  forgetPassword
-);
-router.put(
-  '/resetpassword/:resetToken',
-  validateResetPasswordFields,
-  checkInputError,
-  resetPassword
-);
+router.post('/forgetpassword', authRequestLimiter, validateForgetPasswordFields, checkInputError, forgetPassword);
+router.put('/resetpassword/:resetToken', validateResetPasswordFields, checkInputError, resetPassword);
 
 // routers below use protect middleware
 router.use(protect);
 
-router.put(
-  '/updatedetails',
-  validateUpdateDetailsFields,
-  checkInputError,
-  updateDetails
-);
+router.put('/updatedetails', validateUpdateDetailsFields, checkInputError, updateDetails);
 
-router.put(
-  '/updatepassword',
-  validateUpdatePasswordFields,
-  checkInputError,
-  updatePassword
-);
+router.put('/updatepassword', validateUpdatePasswordFields, checkInputError, updatePassword);
 
 module.exports = router;

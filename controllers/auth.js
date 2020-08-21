@@ -18,12 +18,24 @@ exports.register = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Email has already been used.`, 400));
     }
 
+    const pendingUserExists = await db.oneOrNone('SELECT * FROM PendingUsers WHERE email = $1', email);
+
+    // if user attempting to register after token has expired, delete existing entry and allow to go ahead
+    if (pendingUserExists && pendingUserExists.expiry < Date.now()) {
+        await db.one('DELETE FROM PendingUsers WHERE email = $1 RETURNING *', email);
+    }
+
+    // if user attempts to register while existing token has not expired, 400 response
+    if (pendingUserExists && pendingUserExists.expiry >= Date.now()) {
+        return next(new ErrorResponse(`Please activate your account via the confirmation link sent to your email address.`, 400));
+    }
+
     // Generate and hash confirm email token
     const token = crypto.randomBytes(20).toString('hex');
     const hashedEmailToken = hashToken(token);
 
-    // Set token expiry 30min from present
-    const tokenExpiry = Date.now() + 30 * 60 * 1000;
+    // Set token expiry 15min from present
+    const tokenExpiry = Date.now() + 15 * 60 * 1000;
 
     // Store data, hashedEmailToken, and tokenExpiry in PendingUsers table
     const data = {
@@ -56,11 +68,10 @@ exports.register = asyncHandler(async (req, res, next) => {
             data: confirmationUrl, // confirmationUrl given in response
         });
     } catch (err) {
-        console.error(err);
         // delete data from PendingUsers table, if error
         await db.one('DELETE FROM PendingUsers WHERE email = $1 RETURNING *', email);
 
-        return next(new ErrorResponse('Email could not be sent', 500));
+        return next(new ErrorResponse('Email could not be sent. Please register an account again.', 500));
     }
 });
 
@@ -123,6 +134,18 @@ exports.forgetPassword = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`User does not exist.`, 404));
     }
 
+    const forgetPasswordUserExists = await db.oneOrNone('SELECT * FROM PendingUsers WHERE email = $1', email);
+
+    // if forget password user try after token has expired, delete existing entry and allow to go ahead
+    if (forgetPasswordUserExists && forgetPasswordUserExists.expiry < Date.now()) {
+        await db.one('DELETE FROM PendingUsers WHERE email = $1 RETURNING *', email);
+    }
+
+    // if forget password user attempts to make new forget password request while existing token has not expired, 400 response
+    if (forgetPasswordUserExists && forgetPasswordUserExists.expiry >= Date.now()) {
+        return next(new ErrorResponse(`Please reset your password via the link sent to your email address.`, 400));
+    }
+
     // Generate and hash reset password token
     const token = crypto.randomBytes(20).toString('hex');
     const hashedResetToken = hashToken(token);
@@ -175,12 +198,7 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
     const hashedToken = hashToken(resetToken);
 
     // Look up ForgetPasswordUsers table for token
-    let user = await db.oneOrNone('SELECT * FROM ForgetPasswordUsers WHERE token = $1', hashedToken);
-
-    // if user entry does not exist, 400 Bad Request
-    if (!user) {
-        return next(new ErrorResponse(`Invalid reset password link. This link has expired.`, 400));
-    }
+    let user = await db.one('SELECT * FROM ForgetPasswordUsers WHERE token = $1', hashedToken);
 
     // Destructure from results
     const { email, expiry } = user;
