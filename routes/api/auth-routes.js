@@ -56,16 +56,16 @@ const validateUpdatePasswordFields = [
 
 // Request limiter middleware for auth endpoints
 const authRequestLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 min window
+    windowMs: 5 * 60 * 1000, // 5 min window
     max: 5, // start blocking after 5 requests
-    message: { success: false, error: 'Request limit exceeded, please try again in an hour' },
+    message: { success: false, error: 'Request limit exceeded, please try again in 5 minutes.' },
 });
 
 // map routes to controller
 router.get('/logout', protect, logout);
 router.get('/me', protect, getMe);
 router.get('/register/:confirmEmailToken/confirmemail', confirmEmail);
-router.post('/register', authRequestLimiter, validateRegisterFields, checkInputError, register);
+router.post('/register', validateRegisterFields, checkInputError, register);
 router.post('/login', validateLoginFields, checkInputError, login);
 router.post('/forgetpassword', authRequestLimiter, validateForgetPasswordFields, checkInputError, forgetPassword);
 router.put('/resetpassword/:resetToken', validateResetPasswordFields, checkInputError, resetPassword);
