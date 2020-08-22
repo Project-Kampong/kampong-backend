@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Registration flow for users who try to re-register within 15min will see an error with an appropriate prompt, and users can smoothly re-register after 15min.
 -   Registration token expiry shortened from 30min to 15min.
+-   All cookies `httpOnly` flag set to `false` to facilitate client's auth flow. Will revert back once client resolves auth flow.
 
 ### [v0.1.0b] - 2020-08-20
 
