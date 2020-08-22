@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 const { db } = require('../db/db');
 const { asyncHandler } = require('../middleware');
 const { cleanseData, ErrorResponse, parseSqlUpdateStmt } = require('../utils');
+const { isNil } = require('lodash');
 
 /**
  * @desc    Get all listings
@@ -10,7 +11,7 @@ const { cleanseData, ErrorResponse, parseSqlUpdateStmt } = require('../utils');
  * @access  Public
  */
 exports.getListings = asyncHandler(async (req, res) => {
-  res.status(200).json(res.advancedResults);
+    res.status(200).json(res.advancedResults);
 });
 
 /**
@@ -19,7 +20,7 @@ exports.getListings = asyncHandler(async (req, res) => {
  * @access  Admin
  */
 exports.getListingsAll = asyncHandler(async (req, res) => {
-  res.status(200).json(res.advancedResults);
+    res.status(200).json(res.advancedResults);
 });
 
 /**
@@ -28,14 +29,11 @@ exports.getListingsAll = asyncHandler(async (req, res) => {
  * @access  Public
  */
 exports.getListing = asyncHandler(async (req, res, next) => {
-  const rows = await db.one(
-    'SELECT * FROM listingsview WHERE listing_id = $1',
-    req.params.id
-  );
-  res.status(200).json({
-    success: true,
-    data: rows,
-  });
+    const rows = await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.id);
+    res.status(200).json({
+        success: true,
+        data: rows,
+    });
 });
 
 /**
@@ -44,19 +42,16 @@ exports.getListing = asyncHandler(async (req, res, next) => {
  * @access  Public
  */
 exports.getAllListingsOwnedByUser = asyncHandler(async (req, res, next) => {
-  const userId = req.params.user_id;
-  // check if user exists
-  const user = await db.one('SELECT * FROM Users WHERE user_id = $1', userId);
+    const userId = req.params.user_id;
+    // check if user exists
+    const user = await db.one('SELECT * FROM Users WHERE user_id = $1', userId);
 
-  const rows = await db.manyOrNone(
-    'SELECT * FROM listingsview WHERE created_by = $1',
-    userId
-  );
+    const rows = await db.manyOrNone('SELECT * FROM listingsview WHERE created_by = $1', userId);
 
-  res.status(200).json({
-    success: true,
-    data: rows,
-  });
+    res.status(200).json({
+        success: true,
+        data: rows,
+    });
 });
 
 /**
@@ -65,69 +60,63 @@ exports.getAllListingsOwnedByUser = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 exports.createListing = asyncHandler(async (req, res) => {
-  const {
-    organisation_id, // NOTE: do not use this field until organisations endpoint is implemented
-    title,
-    category,
-    about,
-    tagline,
-    mission,
-    listing_url,
-    pic1,
-    pic2,
-    pic3,
-    pic4,
-    pic5,
-    is_published,
-    start_date,
-    end_date,
-  } = req.body;
+    const {
+        organisation_id, // NOTE: do not use this field until organisations endpoint is implemented
+        title,
+        category,
+        about,
+        tagline,
+        mission,
+        listing_url,
+        pic1,
+        pic2,
+        pic3,
+        pic4,
+        pic5,
+        is_published,
+        start_date,
+        end_date,
+    } = req.body;
 
-  const data = {
-    listing_id: uuidv4(),
-    created_by: req.user.user_id,
-    organisation_id,
-    title,
-    category,
-    about,
-    tagline,
-    mission,
-    listing_url,
-    pic1,
-    pic2,
-    pic3,
-    pic4,
-    pic5,
-    is_published,
-    start_date,
-    end_date,
-  };
+    const data = {
+        listing_id: uuidv4(),
+        created_by: req.user.user_id,
+        organisation_id,
+        title,
+        category,
+        about,
+        tagline,
+        mission,
+        listing_url,
+        pic1,
+        pic2,
+        pic3,
+        pic4,
+        pic5,
+        is_published,
+        start_date,
+        end_date,
+    };
 
-  // remove undefined values in json object
-  cleanseData(data);
+    // remove undefined values in json object
+    cleanseData(data);
 
-  /**
-   * SQL Transaction, creating listing and associated listing story
-   * Returns an array of 2 json:
-   * 1st json: Listing entry
-   * 2nd json: Listing story entry
-   */
-  const rows = await db.tx(async query => {
-    const createListing = await query.one(
-      'INSERT INTO listings (${this:name}) VALUES (${this:csv}) RETURNING *',
-      data
-    );
-    const createListingStory = await query.one(
-      'INSERT INTO listingstories (listing_id) VALUES ($1) RETURNING *',
-      createListing.listing_id
-    );
-    return query.batch([createListing, createListingStory]);
-  });
+    /**
+     * SQL Transaction, creating listing and associated listing story
+     * Returns an array of 2 json:
+     * 1st json: Listing entry
+     * 2nd json: Listing story entry
+     */
+    const rows = await db.tx(async (query) => {
+        const createListing = await query.one('INSERT INTO listings (${this:name}) VALUES (${this:csv}) RETURNING *', data);
+        const createListingStory = await query.one('INSERT INTO listingstories (listing_id) VALUES ($1) RETURNING *', createListing.listing_id);
+        return query.batch([createListing, createListingStory]);
+    });
 
-  res.status(201).json({
-    success: true,
-    data: rows,
-  });
+    res.status(201).json({
+        success: true,
+        data: rows,
+    });
 });
 
 /**
@@ -136,71 +125,61 @@ exports.createListing = asyncHandler(async (req, res) => {
  * @access  Admin/Owner
  */
 exports.updateListing = asyncHandler(async (req, res, next) => {
-  // check if listing exists and is not soft-deleted
-  const listing = await db.one(
-    'SELECT * FROM listingsview WHERE listing_id = $1',
-    req.params.id
-  );
+    // check if listing exists and is not soft-deleted
+    const listing = await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.id);
 
-  // Unauthorised if neither admin nor listing owner
-  if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
-    return next(
-      new ErrorResponse(`User not authorised to update this listing`, 403)
-    );
-  }
+    // Unauthorised if neither admin nor listing owner
+    if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
+        return next(new ErrorResponse(`User not authorised to update this listing`, 403));
+    }
 
-  const {
-    organisation_id, // NOTE: do not use this field until organisations endpoint is implemented
-    title,
-    category,
-    about,
-    tagline,
-    mission,
-    listing_url,
-    is_published,
-    start_date,
-    end_date,
-    pic1,
-    pic2,
-    pic3,
-    pic4,
-    pic5,
-  } = req.body;
+    const {
+        organisation_id, // NOTE: do not use this field until organisations endpoint is implemented
+        title,
+        category,
+        about,
+        tagline,
+        mission,
+        listing_url,
+        is_published,
+        start_date,
+        end_date,
+        pic1,
+        pic2,
+        pic3,
+        pic4,
+        pic5,
+    } = req.body;
 
-  const data = {
-    organisation_id,
-    title,
-    category,
-    about,
-    tagline,
-    mission,
-    listing_url,
-    is_published,
-    start_date,
-    end_date,
-    pic1,
-    pic2,
-    pic3,
-    pic4,
-    pic5,
-  };
+    const data = {
+        organisation_id,
+        title,
+        category,
+        about,
+        tagline,
+        mission,
+        listing_url,
+        is_published,
+        start_date,
+        end_date,
+        pic1,
+        pic2,
+        pic3,
+        pic4,
+        pic5,
+    };
 
-  // remove undefined items in json
-  cleanseData(data);
+    // remove undefined items in json
+    cleanseData(data);
 
-  const updateListingQuery = parseSqlUpdateStmt(
-    data,
-    'listings',
-    'WHERE listing_id = $1 RETURNING $2:name',
-    [req.params.id, data]
-  );
+    const updateListingQuery = parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING $2:name', [req.params.id, data]);
 
-  const rows = await db.one(updateListingQuery);
+    const rows = await db.one(updateListingQuery);
 
-  res.status(200).json({
-    success: true,
-    data: rows,
-  });
+    res.status(200).json({
+        success: true,
+        data: rows,
+    });
 });
 
 /**
@@ -209,29 +188,21 @@ exports.updateListing = asyncHandler(async (req, res, next) => {
  * @access  Admin
  */
 exports.verifyListing = asyncHandler(async (req, res, next) => {
-  // check if listing exists
-  const isValidListing = await db.one(
-    'SELECT * FROM listings WHERE listing_id = $1',
-    req.params.id
-  );
+    // check if listing exists
+    const isValidListing = await db.one('SELECT * FROM listings WHERE listing_id = $1', req.params.id);
 
-  const { is_verified } = req.body;
+    const { is_verified } = req.body;
 
-  const data = { is_verified };
+    const data = { is_verified };
 
-  const verifyListingQuery = parseSqlUpdateStmt(
-    data,
-    'listings',
-    'WHERE listing_id = $1 RETURNING $2:name',
-    [req.params.id, data]
-  );
+    const verifyListingQuery = parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING $2:name', [req.params.id, data]);
 
-  const rows = await db.one(verifyListingQuery);
+    const rows = await db.one(verifyListingQuery);
 
-  res.status(200).json({
-    success: true,
-    data: rows,
-  });
+    res.status(200).json({
+        success: true,
+        data: rows,
+    });
 });
 
 /**
@@ -241,28 +212,23 @@ exports.verifyListing = asyncHandler(async (req, res, next) => {
  */
 
 exports.deactivateListing = asyncHandler(async (req, res, next) => {
-  // check if listing exists and not soft-deleted
-  const listing = await db.one(
-    'SELECT * FROM listingsview WHERE listing_id = $1',
-    req.params.id
-  );
+    // check if listing exists and not soft-deleted
+    const listing = await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.id);
 
-  // Unauthorised if neither admin nor listing owner
-  if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
-    return next(
-      new ErrorResponse(`User not authorised to delete this listing`, 403)
-    );
-  }
+    // Unauthorised if neither admin nor listing owner
+    if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
+        return next(new ErrorResponse(`User not authorised to delete this listing`, 403));
+    }
 
-  const rows = await db.one(
-    'UPDATE listings SET deleted_on=$1 WHERE listing_id = $2 RETURNING *',
-    [moment().format('YYYY-MM-DD HH:mm:ss.000'), req.params.id]
-  );
+    const rows = await db.one('UPDATE listings SET deleted_on=$1 WHERE listing_id = $2 RETURNING *', [
+        moment().format('YYYY-MM-DD HH:mm:ss.000'),
+        req.params.id,
+    ]);
 
-  res.status(200).json({
-    success: true,
-    data: rows,
-  });
+    res.status(200).json({
+        success: true,
+        data: rows,
+    });
 });
 
 /**
@@ -271,28 +237,20 @@ exports.deactivateListing = asyncHandler(async (req, res, next) => {
  * @access  Admin
  */
 exports.deleteListing = asyncHandler(async (req, res, next) => {
-  // check if listing exists
-  const listing = await db.one(
-    'SELECT * FROM listings WHERE listing_id = $1',
-    req.params.id
-  );
+    // check if listing exists
+    const listing = await db.one('SELECT * FROM listings WHERE listing_id = $1', req.params.id);
 
-  // Unauthorised if not admin
-  if (req.user.role !== 'admin') {
-    return next(
-      new ErrorResponse(`User not authorised to delete this listing`, 403)
-    );
-  }
+    // Unauthorised if not admin
+    if (req.user.role !== 'admin') {
+        return next(new ErrorResponse(`User not authorised to delete this listing`, 403));
+    }
 
-  const rows = await db.one(
-    'DELETE FROM listings WHERE listing_id = $1 RETURNING *',
-    req.params.id
-  );
+    const rows = await db.one('DELETE FROM listings WHERE listing_id = $1 RETURNING *', req.params.id);
 
-  res.status(200).json({
-    success: true,
-    data: rows,
-  });
+    res.status(200).json({
+        success: true,
+        data: rows,
+    });
 });
 
 /**
@@ -301,45 +259,55 @@ exports.deleteListing = asyncHandler(async (req, res, next) => {
  * @access  Admin/Owner
  */
 exports.uploadListingPics = asyncHandler(async (req, res, next) => {
-  // check if listing exists
-  const listing = await db.one(
-    'SELECT * FROM listings WHERE listing_id = $1',
-    req.params.id
-  );
+    // check if listing exists
+    const listing = await db.one('SELECT * FROM listings WHERE listing_id = $1', req.params.id);
 
-  // Unauthorised if neither admin nor listing owner
-  if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
-    return next(
-      new ErrorResponse(
-        `User not authorised to upload photo for this listing`,
-        403
-      )
+    // Unauthorised if neither admin nor listing owner
+    if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
+        return next(new ErrorResponse(`User not authorised to upload photo for this listing`, 403));
+    }
+
+    // get mapping of pic number to original filename from req body
+    const { pic1, pic2, pic3, pic4, pic5 } = req.body;
+
+    const data = {
+        pic1,
+        pic2,
+        pic3,
+        pic4,
+        pic5,
+    };
+    cleanseData(data);
+
+    const updateListingQuery = parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING $2:name', [req.params.id, data]);
+
+    const rows = await db.one(updateListingQuery);
+
+    res.status(200).json({
+        success: true,
+        data: rows,
+    });
+});
+
+/**
+ * @desc    Search listings by title
+ * @route   GET /api/listings/search-title?title=kampong&sensitivity=10&limit=10
+ * @access  Public
+ */
+exports.searchListingsByTitle = asyncHandler(async (req, res) => {
+    let { title = '', sensitivity, limit } = req.query;
+    sensitivity = isNil(sensitivity) || isNaN(sensitivity) ? 10 : parseInt(sensitivity);
+    limit = isNil(limit) || isNaN(limit) ? 10 : parseInt(limit);
+    const data = { title, sensitivity, limit };
+    cleanseData(data);
+
+    const rows = await db.manyOrNone(
+        'SELECT * FROM listings WHERE levenshtein(title, ${title}) <= ${sensitivity} ORDER BY levenshtein(title, ${title}) LIMIT ${limit}',
+        data,
     );
-  }
 
-  // get mapping of pic number to original filename from req body
-  const { pic1, pic2, pic3, pic4, pic5 } = req.body;
-
-  const data = {
-    pic1,
-    pic2,
-    pic3,
-    pic4,
-    pic5,
-  };
-  cleanseData(data);
-
-  const updateListingQuery = parseSqlUpdateStmt(
-    data,
-    'listings',
-    'WHERE listing_id = $1 RETURNING $2:name',
-    [req.params.id, data]
-  );
-
-  const rows = await db.one(updateListingQuery);
-
-  res.status(200).json({
-    success: true,
-    data: rows,
-  });
+    res.status(200).json({
+        success: true,
+        data: rows,
+    });
 });

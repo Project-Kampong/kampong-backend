@@ -1,11 +1,16 @@
 # Changelog
 
-Record of notable changes to Project Kampong Backend.
+Record of notable changes to Project Kampong Backend. Server deployment do not follow release tags.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### [Unreleased]
+
+### Added
+
+-   All cookies `httpOnly` flag set to `false` to facilitate client's auth flow. Will revert back once client resolves auth flow.
+-   Search listings by title endpoint.
 
 ### [v0.1.1b] - 2020-08-21
 
@@ -17,7 +22,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Registration flow for users who try to re-register within 15min will see an error with an appropriate prompt, and users can smoothly re-register after 15min.
 -   Registration token expiry shortened from 30min to 15min.
--   All cookies `httpOnly` flag set to `false` to facilitate client's auth flow. Will revert back once client resolves auth flow.
 
 ### [v0.1.0b] - 2020-08-20
 

@@ -1,34 +1,22 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
-const { check, oneOf } = require('express-validator');
-const {
-  advancedResults,
-  checkInputError,
-  protect,
-  authorise,
-  mapFilenameToLocation,
-} = require('../../middleware');
-const {
-  DATETIME_REGEX,
-  NO_FIELD_UPDATED_MSG,
-  INVALID_FIELD_MSG,
-  INVALID_BOOLEAN_MSG,
-  INVALID_TIMESTAMP_MSG,
-  uploadFile,
-} = require('../../utils');
+const { check, oneOf, query } = require('express-validator');
+const { advancedResults, checkInputError, protect, authorise, mapFilenameToLocation } = require('../../middleware');
+const { DATETIME_REGEX, NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG, INVALID_BOOLEAN_MSG, INVALID_TIMESTAMP_MSG, uploadFile } = require('../../utils');
 
 // import controllers here
 const {
-  getListings,
-  getAllListingsOwnedByUser,
-  getListingsAll,
-  getListing,
-  createListing,
-  updateListing,
-  verifyListing,
-  deleteListing,
-  deactivateListing,
-  uploadListingPics,
+    getListings,
+    getAllListingsOwnedByUser,
+    getListingsAll,
+    getListing,
+    createListing,
+    updateListing,
+    verifyListing,
+    deleteListing,
+    deactivateListing,
+    uploadListingPics,
+    searchListingsByTitle,
 } = require('../../controllers/listings');
 
 // Include other resource's controllers to access their endpoints
@@ -58,126 +46,96 @@ router.use('/:listing_id/jobs', jobRoute);
 
 // Define input validation chain
 const validateCreateListingFields = [
-  check('organisation_id', INVALID_FIELD_MSG('organisation id'))
-    .optional()
-    .isInt(),
-  check('title', INVALID_FIELD_MSG('title')).trim().notEmpty(),
-  check('category', INVALID_FIELD_MSG('category')).trim().notEmpty(),
-  check('listing_url', INVALID_FIELD_MSG('listing URL')).optional().isURL(),
-  check('is_published', INVALID_BOOLEAN_MSG('is_published'))
-    .optional()
-    .isBoolean(),
-  check('start_date', INVALID_TIMESTAMP_MSG('start date'))
-    .optional()
-    .matches(DATETIME_REGEX),
-  check('end_date', INVALID_TIMESTAMP_MSG('end date'))
-    .optional()
-    .matches(DATETIME_REGEX),
+    check('organisation_id', INVALID_FIELD_MSG('organisation id')).optional().isInt(),
+    check('title', INVALID_FIELD_MSG('title')).trim().notEmpty(),
+    check('category', INVALID_FIELD_MSG('category')).trim().notEmpty(),
+    check('listing_url', INVALID_FIELD_MSG('listing URL')).optional().isURL(),
+    check('is_published', INVALID_BOOLEAN_MSG('is_published')).optional().isBoolean(),
+    check('start_date', INVALID_TIMESTAMP_MSG('start date')).optional().matches(DATETIME_REGEX),
+    check('end_date', INVALID_TIMESTAMP_MSG('end date')).optional().matches(DATETIME_REGEX),
 ];
 
 const validateUpdateListingFields = [
-  oneOf(
-    [
-      check('organisation_id').exists(),
-      check('title').exists(),
-      check('category').exists(),
-      check('about').exists(),
-      check('tagline').exists(),
-      check('mission').exists(),
-      check('listing_url').exists(),
-      check('is_published').exists(),
-      check('start_date').exists(),
-      check('end_date').exists(),
-      check('pic1').exists(),
-      check('pic2').exists(),
-      check('pic3').exists(),
-      check('pic4').exists(),
-      check('pic5').exists(),
-    ],
-    NO_FIELD_UPDATED_MSG
-  ),
-  check('organisation_id', INVALID_FIELD_MSG('organisation id'))
-    .optional()
-    .isInt(),
-  check('title', INVALID_FIELD_MSG('title')).optional().trim().notEmpty(),
-  check('category', INVALID_FIELD_MSG('category')).optional().trim().notEmpty(),
-  check('listing_url', INVALID_FIELD_MSG('listing URL')).optional().isURL(),
-  check('is_published', INVALID_BOOLEAN_MSG('is_published'))
-    .optional()
-    .isBoolean(),
-  check('start_date', INVALID_TIMESTAMP_MSG('start date'))
-    .optional()
-    .matches(DATETIME_REGEX),
-  check('end_date', INVALID_TIMESTAMP_MSG('end date'))
-    .optional()
-    .matches(DATETIME_REGEX)
-
+    oneOf(
+        [
+            check('organisation_id').exists(),
+            check('title').exists(),
+            check('category').exists(),
+            check('about').exists(),
+            check('tagline').exists(),
+            check('mission').exists(),
+            check('listing_url').exists(),
+            check('is_published').exists(),
+            check('start_date').exists(),
+            check('end_date').exists(),
+            check('pic1').exists(),
+            check('pic2').exists(),
+            check('pic3').exists(),
+            check('pic4').exists(),
+            check('pic5').exists(),
+        ],
+        NO_FIELD_UPDATED_MSG,
+    ),
+    check('organisation_id', INVALID_FIELD_MSG('organisation id')).optional().isInt(),
+    check('title', INVALID_FIELD_MSG('title')).optional().trim().notEmpty(),
+    check('category', INVALID_FIELD_MSG('category')).optional().trim().notEmpty(),
+    check('listing_url', INVALID_FIELD_MSG('listing URL')).optional().isURL(),
+    check('is_published', INVALID_BOOLEAN_MSG('is_published')).optional().isBoolean(),
+    check('start_date', INVALID_TIMESTAMP_MSG('start date')).optional().matches(DATETIME_REGEX),
+    check('end_date', INVALID_TIMESTAMP_MSG('end date')).optional().matches(DATETIME_REGEX),
 ];
 
-const validateVerifyListingFields = [
-  check('is_verified', INVALID_BOOLEAN_MSG('is_verified')).isBoolean(),
+const validateVerifyListingFields = [check('is_verified', INVALID_BOOLEAN_MSG('is_verified')).isBoolean()];
+const validateSearchByTitleFields = [
+    query('title', INVALID_FIELD_MSG('title')).exists(),
+    query('sensitivity', INVALID_FIELD_MSG('sensitivity')).optional().isNumeric(),
+    query('limit', INVALID_FIELD_MSG('limit')).optional().isNumeric(),
 ];
 
 // map routes to controller
 router
-  .route('/')
-  .get(advancedResults('listingsview'), getListings)
-  .post(
-    protect,
-    uploadFile.array('pics', 5),
-    mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
-    validateCreateListingFields,
-    checkInputError,
-    createListing
-  );
+    .route('/')
+    .get(advancedResults('listingsview'), getListings)
+    .post(
+        protect,
+        uploadFile.array('pics', 5),
+        mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
+        validateCreateListingFields,
+        checkInputError,
+        createListing,
+    );
 
 router.route('/owner').get(getAllListingsOwnedByUser);
-router
-  .route('/all')
-  .get(
-    protect,
-    authorise('admin'),
-    advancedResults('listings'),
-    getListingsAll
-  );
+router.route('/search-title').get(validateSearchByTitleFields, checkInputError, searchListingsByTitle);
+router.route('/all').get(protect, authorise('admin'), advancedResults('listings'), getListingsAll);
 
 router.route('/:id').get(getListing);
 
 router
-  .route('/:id')
-  .put(
-    protect,
-    authorise('user', 'admin'),
-    uploadFile.array('pics', 5),
-    mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
-    validateUpdateListingFields,
-    checkInputError,
-    updateListing
-  )
-  .delete(protect, deleteListing);
+    .route('/:id')
+    .put(
+        protect,
+        authorise('user', 'admin'),
+        uploadFile.array('pics', 5),
+        mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
+        validateUpdateListingFields,
+        checkInputError,
+        updateListing,
+    )
+    .delete(protect, deleteListing);
+
+router.route('/:id/deactivate').put(protect, deactivateListing);
 
 router
-  .route('/:id/deactivate')
-  .put(protect, deactivateListing);
+    .route('/:id/upload-photo')
+    .put(
+        protect,
+        authorise('admin', 'user'),
+        uploadFile.array('pics', 5),
+        mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
+        uploadListingPics,
+    );
 
-router
-  .route('/:id/upload-photo')
-  .put(
-    protect,
-    authorise('admin', 'user'),
-    uploadFile.array('pics', 5),
-    mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
-    uploadListingPics
-  );
-
-router
-  .route('/:id/verify')
-  .put(
-    protect,
-    authorise('admin'),
-    validateVerifyListingFields,
-    checkInputError,
-    verifyListing
-  );
+router.route('/:id/verify').put(protect, authorise('admin'), validateVerifyListingFields, checkInputError, verifyListing);
 
 module.exports = router;
