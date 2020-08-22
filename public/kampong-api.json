@@ -4556,6 +4556,235 @@
 					]
 				},
 				{
+					"name": "Search listings by title",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://165.22.103.155/api/listings/search-title?title=kampong&limit=10&sensitivity=10",
+							"host": [
+								"http://165.22.103.155"
+							],
+							"path": [
+								"api",
+								"listings",
+								"search-title"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "kampong"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "sensitivity",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Search for listings by title. Permission: Public.\n\nField rules:\nAll fields required unless otherwise stated.\ntitle - Keyword to be searched.\nsensitivity - Optional. Default: 10. Numeric value. Search sensitivity.\nlimit - Optional. Default: 10. Number of results to display."
+					},
+					"response": [
+						{
+							"name": "Search listings by title (400 Bad Request - Invalid query params passed)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://165.22.103.155/api/listings/search-title?title=kampong&limit=abc",
+									"host": [
+										"http://165.22.103.155"
+									],
+									"path": [
+										"api",
+										"listings",
+										"search-title"
+									],
+									"query": [
+										{
+											"key": "title",
+											"value": "kampong"
+										},
+										{
+											"key": "limit",
+											"value": "abc"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "200"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "199"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 22 Aug 2020 09:35:01 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1598088944"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "57"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"39-ROfLADl3MjQv010Je674xgRHgAo\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"error\": \"Please include a valid limit.\"\n}"
+						},
+						{
+							"name": "Search listings by title (200 OK)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://165.22.103.155/api/listings/search-title?title=kampong&limit=10&sensitivity=10",
+									"host": [
+										"http://165.22.103.155"
+									],
+									"path": [
+										"api",
+										"listings",
+										"search-title"
+									],
+									"query": [
+										{
+											"key": "title",
+											"value": "kampong"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "sensitivity",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "200"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "199"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 22 Aug 2020 09:34:43 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1598088884"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "782"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"30e-P/iqV9ic03QwTtQ1VKILjquxc3I\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"listing_id\": \"1276b4eb-df3a-4de3-bcae-a450ed96eeac\",\n            \"organisation_id\": null,\n            \"created_by\": \"b7662cd1-a2c9-4054-95e7-078e35ea6fa1\",\n            \"title\": \"Project Kampong\",\n            \"category\": \"Technology\",\n            \"about\": null,\n            \"tagline\": \"With Kampong you can\",\n            \"mission\": \"To build a platform that connects people with ideas and skills to build and track social good project initiatives\",\n            \"listing_url\": \"www.test.com\",\n            \"pic1\": \"https://kampong-dev.s3.ap-southeast-1.amazonaws.com/kampong%20logo-1597985636566.jpeg\",\n            \"pic2\": \"https://kampong-dev.s3.ap-southeast-1.amazonaws.com/group-large-1597985817857.png\",\n            \"pic3\": null,\n            \"pic4\": null,\n            \"pic5\": null,\n            \"is_published\": false,\n            \"is_verified\": false,\n            \"start_date\": \"2020-08-20T20:50:15.048Z\",\n            \"end_date\": null,\n            \"created_on\": \"2020-08-20T20:50:15.048Z\",\n            \"deleted_on\": null\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
 					"name": "Get Single Listing",
 					"request": {
 						"method": "GET",
