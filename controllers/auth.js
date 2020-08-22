@@ -264,7 +264,7 @@ exports.logout = asyncHandler(async (req, res, next) => {
     // set token cookie to none
     res.cookie('token', 'none', {
         expires: new Date(Date.now() + 10 * 1000),
-        httpOnly: true,
+        httpOnly: false,
     });
 
     res.status(200).json({
@@ -358,7 +358,7 @@ const sendTokenResponse = (user, statusCode, res, redirectHome = false) => {
     // Set cookie options
     const options = {
         expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000),
-        httpOnly: true,
+        httpOnly: false,
     };
 
     // Set secure flag to true if in production (cookie will be sent through https)
