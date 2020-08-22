@@ -291,7 +291,7 @@ exports.uploadListingPics = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Search listings by title
- * @route   GET /api/listings/search-title?title=kampong&sensitivity=10&limit=10
+ * @route   GET /api/listings/search-title?title=:title&sensitivity=:sensitivity&limit=:limit
  * @access  Public
  */
 exports.searchListingsByTitle = asyncHandler(async (req, res) => {
