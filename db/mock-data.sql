@@ -11,40 +11,80 @@ insert into Users (user_id, first_name, last_name, email, password, role) values
 
 /* User profile population */
 insert into Profiles (user_id, nickname, profile_picture, about, gender, dob, interest, phone, facebook_link, twitter_link, instagram_link, linkedin_link) values ('f96b2138-1754-4c17-a405-940e20adc601', 'Wayne', 'https://images.pexels.com/photos/1561863/pexels-photo-1561863.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'Quality-focused impactful projection', 'o', '1985-04-18 00:43:59', 'Geological Engineer', 97690390, 'http://baidu.com/ipsum/primis/in/faucibus/orci/luctus.xml', 'http://nhs.uk/at/diam/nam.png', 'http://nasa.gov/pede/justo/eu/massa/donec/dapibus/duis.aspx', 'https://linkedin.com/ante/vestibulum/ante/ipsum/primis/in.json');
-insert into Profiles (user_id, nickname, profile_picture, about, gender, dob, interest, phone, facebook_link, twitter_link, instagram_link, linkedin_link) values ('b7662cd1-a2c9-4054-95e7-078e35ea6fa1', 'Derrick', 'https://images.pexels.com/photos/2434268/pexels-photo-2434268.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'Inverse local strategy', 'm', '1990-05-07 15:40:00', 'Software Consultant', 96831702, 'https://jigsy.com/eu/interdum/eu/tincidunt/in.html', 'http://nasa.gov/nisi/at/nibh/in/hac/habitasse.png', 'https://360.cn/sed/nisl/nunc/rhoncus/dui/vel.jpg', 'https://cbc.ca/id/luctus/nec/molestie/sed/justo/pellentesque.png');
+INSERT INTO "public"."profiles" ("user_id", "nickname", "profile_picture", "about", "gender", "dob", "interest", "phone", "facebook_link", "twitter_link", "instagram_link", "linkedin_link", "is_verified", "created_on") VALUES
+('b7662cd1-a2c9-4054-95e7-078e35ea6fa1', 'Derrick', 'https://images.pexels.com/photos/2434268/pexels-photo-2434268.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'KFC is an American fast food restaurant chain headquartered in Louisville, Kentucky, that specializes in fried chicken. It is the world''s second-largest restaurant chain after McDonald''s, with 22,621 locations globally in 150 countries as of December 2019. The chain is a subsidiary of Yum', 'm', '1990-05-07 15:40:00', 'KFC Expert', '96831702', 'https://jigsy.com/eu/interdum/eu/tincidunt/in.html', 'http://nasa.gov/nisi/at/nibh/in/hac/habitasse.png', 'https://360.cn/sed/nisl/nunc/rhoncus/dui/vel.jpg', 'https://cbc.ca/id/luctus/nec/molestie/sed/justo/pellentesque.png', 'f', '2020-08-20 17:36:45.815638');
 insert into Profiles (user_id, nickname, profile_picture, about, gender, dob, interest, phone, facebook_link, twitter_link, instagram_link, linkedin_link) values ('d69a127d-815b-4834-b2b6-54ab398fccad', 'Aaron', 'https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'Down-sized disintermediate circuit', 'f', '2003-09-22 08:32:55', 'Statistician IV', 87685829, 'https://tripadvisor.com/ornare/imperdiet.png', 'https://google.com/quis/orci/nullam/molestie/nibh/in/lectus.xml', 'http://1und1.de/in/libero/ut/massa.png', 'http://i2i.jp/imperdiet/sapien/urna/pretium/nisl/ut.jpg');
 insert into Profiles (user_id, nickname, profile_picture, about, gender, dob, interest, phone, facebook_link, twitter_link, instagram_link, linkedin_link) values ('f997120c-2956-482e-9ba3-81a12b4fecc1', 'Viki Tay', 'https://images.pexels.com/photos/2426551/pexels-photo-2426551.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'Face to face neutral conglomeration', 'u', '2000-07-04 19:07:24', 'VP Product Management', 84428699, 'https://nhs.uk/mauris.xml', 'http://uiuc.edu/sit/amet/consectetuer/adipiscing/elit/proin.aspx', 'http://cbsnews.com/elementum/eu/interdum.jsp', 'https://hibu.com/quam/sapien/varius/ut/blandit/non/interdum.html');
 insert into Profiles (user_id, nickname, profile_picture, about, gender, dob, interest, phone, facebook_link, twitter_link, instagram_link, linkedin_link) values ('2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb', 'Constance Tan', 'https://images.pexels.com/photos/2426656/pexels-photo-2426656.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'Front-line non-volatile conglomeration', 'o', '1996-04-04 20:05:06', 'Software Engineer II', 84677316, 'http://51.la/dui/maecenas/tristique/est.json', 'https://mozilla.com/sagittis.jsp', 'http://vk.com/cubilia.html', 'https://bravesites.com/ut/mauris/eget/massa.jpg');
 
 /* Listings population */
-insert into Listings (listing_id, created_by, title, category, about, tagline, mission, listing_url, pic1, pic2, pic3, pic4, pic5, start_date) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'f96b2138-1754-4c17-a405-940e20adc601', 'neque libero convallis eget', 'Human Resources', 'Customer-focused dynamic installation', 'integrate cross-platform initiatives', 'embrace sticky synergies', 'http://ifeng.com/nisl.jsp', 'https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'https://robohash.org/ipsaiuresed.bmp?size=500x500&set=set1', 'https://robohash.org/animiautvoluptas.jpg?size=500x500&set=set1', 'https://robohash.org/fugaidconsequatur.png?size=500x500&set=set1', null, '2020-12-01 19:09:20');
-insert into Listings (listing_id, created_by, title, category, about, tagline, mission, listing_url, pic1, pic2, pic3, pic4, pic5, start_date) values ('c975a572-452d-4824-8ed5-500b50488436', 'b7662cd1-a2c9-4054-95e7-078e35ea6fa1', 'vestibulum sed magna at nunc', 'Training', 'Team-oriented context-sensitive forecast', 'innovate B2C markets', 'cultivate cutting-edge markets', 'https://ehow.com/in/imperdiet/et/commodo/vulputate/justo.xml', 'https://images.pexels.com/photos/3637796/pexels-photo-3637796.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260', null, null, null, null, '2020-07-30 13:54:45');
-insert into Listings (listing_id, created_by, title, category, about, tagline, mission, listing_url, pic1, pic2, pic3, pic4, pic5, start_date) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'd69a127d-815b-4834-b2b6-54ab398fccad', 'ipsum integer a nibh in quis justo maecenas rhoncus aliquam', 'Research and Development', 'Triple-buffered client-server installation', 'expedite front-end e-services', 'streamline web-enabled ROI', 'https://mtv.com/blandit/mi/in.png', 'https://images.pexels.com/photos/127873/pexels-photo-127873.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', null, 'https://robohash.org/auteligendimagnam.bmp?size=500x500&set=set1', null, null, '2020-01-01 20:54:13');
-insert into Listings (listing_id, created_by, title, category, about, tagline, mission, listing_url, pic1, pic2, pic3, pic4, pic5, start_date) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 'f997120c-2956-482e-9ba3-81a12b4fecc1', 'vehicula consequat morbi a ipsum integer a nibh in quis', 'Legal', 'Cloned 4th generation matrices', 'visualize bleeding-edge niches', 'utilize robust ROI', 'https://toplist.cz/aliquam.xml', 'https://images.pexels.com/photos/754769/pexels-photo-754769.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'https://robohash.org/utsednostrum.png?size=500x500&set=set1', null, 'https://robohash.org/laudantiumconsequatursequi.png?size=500x500&set=set1', null, '2020-12-25 22:21:11');
-insert into Listings (listing_id, created_by, title, category, about, tagline, mission, listing_url, pic1, pic2, pic3, pic4, pic5, start_date) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', '2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb', 'a odio in hac habitasse platea', 'Product Management', 'Adaptive disintermediate Graphical User Interface', 'engineer out-of-the-box solutions', 'e-enable dot-com metrics', 'http://i2i.jp/rhoncus/dui/vel.jpg', 'https://images.pexels.com/photos/339620/pexels-photo-339620.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', null, 'https://robohash.org/atquemolestiasvelit.jpg?size=500x500&set=set1', 'https://robohash.org/nonquodquam.png?size=500x500&set=set1', 'https://robohash.org/voluptaslaborumsimilique.png?size=500x500&set=set1', '2020-03-19 11:04:15');
+INSERT INTO "public"."listings" ("listing_id", "organisation_id", "created_by", "title", "category", "about", "tagline", "mission", "listing_url", "pic1", "pic2", "pic3", "pic4", "pic5", "is_published", "is_verified", "start_date", "end_date", "created_on", "deleted_on") VALUES
+('1276b4eb-df3a-4de3-bcae-a450ed96eeac', NULL, 'b7662cd1-a2c9-4054-95e7-078e35ea6fa1', 'Project Kampong', 'Technology', NULL, 'With Kampong you can', 'To build a platform that connects people with ideas and skills to build and track social good project initiatives', 'www.test.com', 'https://kampong-dev.s3.ap-southeast-1.amazonaws.com/kampong%20logo-1597985636566.jpeg', 'https://kampong-dev.s3.ap-southeast-1.amazonaws.com/group-large-1597985817857.png', NULL, NULL, NULL, 'f', 'f', '2020-08-21 04:50:15.047753', NULL, '2020-08-21 04:50:15.047753', NULL),
+('43824166-bee2-426e-8a08-ca2c4e4120ae', NULL, 'f96b2138-1754-4c17-a405-940e20adc601', 'Rebuilding Homes', 'Community', 'Customer-focused dynamic installation', 'Building Better Lives', 'Sharing compassion', 'http://ifeng.com/nisl.jsp', 'https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'https://robohash.org/ipsaiuresed.bmp?size=500x500&set=set1', 'https://robohash.org/animiautvoluptas.jpg?size=500x500&set=set1', 'https://robohash.org/fugaidconsequatur.png?size=500x500&set=set1', NULL, 'f', 'f', '2020-12-01 19:09:20', NULL, '2020-08-20 17:36:45.815638', NULL),
+('c975a572-452d-4824-8ed5-500b50488436', NULL, 'b7662cd1-a2c9-4054-95e7-078e35ea6fa1', 'CommStart 2020', 'Enterprise', 'Team-oriented context-sensitive forecast', 'Innovating Ideas, Creating Opportunities', 'Cultivating entrepreneurship and community impact', 'https://ehow.com/in/imperdiet/et/commodo/vulputate/justo.xml', 'https://images.pexels.com/photos/3637796/pexels-photo-3637796.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260', NULL, NULL, NULL, NULL, 'f', 'f', '2020-07-30 13:54:45', NULL, '2020-08-20 17:36:45.815638', NULL),
+('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', NULL, 'f997120c-2956-482e-9ba3-81a12b4fecc1', 'YOUTH Mentorship Programme', 'Youth', 'Cloned 4th generation matrices', 'Paving the way for the future generations', 'Strengthening bonds', 'https://toplist.cz/aliquam.xml', 'https://images.pexels.com/photos/754769/pexels-photo-754769.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'https://robohash.org/utsednostrum.png?size=500x500&set=set1', NULL, 'https://robohash.org/laudantiumconsequatursequi.png?size=500x500&set=set1', NULL, 'f', 'f', '2020-12-25 22:21:11', NULL, '2020-08-20 17:36:45.815638', NULL),
+('d95a6c2e-3c33-447c-be0c-be399247dd3f', NULL, 'd69a127d-815b-4834-b2b6-54ab398fccad', 'Supporting COVID-19 Efforts', 'COVID-19', 'Triple-buffered client-server installation', 'Emerge stronger together', 'streamline web-enabled ROI', 'https://mtv.com/blandit/mi/in.png', 'https://images.pexels.com/photos/127873/pexels-photo-127873.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', NULL, 'https://robohash.org/auteligendimagnam.bmp?size=500x500&set=set1', NULL, NULL, 'f', 'f', '2020-01-01 20:54:13', NULL, '2020-08-20 17:36:45.815638', NULL),
+('e411bd80-d5cf-49ac-b847-18c9fc13377a', NULL, '2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb', 'Project Donation Drive', 'Elderly Care', 'Adaptive disintermediate Graphical User Interface', 'Bridging communities', 'e-enable dot-com metrics', 'http://i2i.jp/rhoncus/dui/vel.jpg', 'https://images.pexels.com/photos/339620/pexels-photo-339620.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', NULL, 'https://robohash.org/atquemolestiasvelit.jpg?size=500x500&set=set1', 'https://robohash.org/nonquodquam.png?size=500x500&set=set1', 'https://robohash.org/voluptaslaborumsimilique.png?size=500x500&set=set1', 'f', 'f', '2020-03-19 11:04:15', NULL, '2020-08-20 17:36:45.815638', NULL);
 
 /* ListingStories with paragraphed text */
-insert into ListingStories (listing_id, overview, problem, solution, outcome) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', null, null, null, null);
-insert into ListingStories (listing_id, overview, problem, solution, outcome) values ('c975a572-452d-4824-8ed5-500b50488436', 'Up-sized hybrid moratorium', 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', 'Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.', 'nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem id ligula suspendisse');
-insert into ListingStories (listing_id, overview, problem, solution, outcome) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', null, null, null, null);
-insert into ListingStories (listing_id, overview, problem, solution, outcome) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 'Switchable neutral Graphic Interface', 'Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.', 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique.', 'pellentesque quisque porta volutpat erat quisque erat eros viverra eget congue eget semper rutrum nulla nunc');
-insert into ListingStories (listing_id, overview, problem, solution, outcome) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'Integrated fresh-thinking parallelism', 'Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.', 'Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.', 'neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo');
+INSERT INTO "public"."listingstories" ("listing_id", "overview", "problem", "solution", "outcome") VALUES
+('1276b4eb-df3a-4de3-bcae-a450ed96eeac', 'Formed in Sept 2019, a result of the Youth Action Challenge under the Ministry of Culture, Community, and Youth (MCCY), National Youth Council (NYC) and People''s Association Youth Movement (PAYM). PKG hopes to understand the existing gaps in the communication & information network systems which are utilized in the Social Sector in Singapore. 
+
+
+Our platform seeks to serve as an integrative shared central platform starting by creating visibility on completed and ongoing social good activities/initiatives. The aim of PKG is to lower the barrier for stakeholders to collaborate and create sustainable projects with trackable impacts.
+The current members of Project Kampong met each other at the YAC workshops hosted, ideated and formed Project Kampong.', 'Current providers include Volunteer.sg & Giving.sg. However, these platforms are not able to fully support the growth of initiatives but are instead a depository of resources to tap on for manpower and funds respectively. PKG would like to build capacity to meet the information visibility gap in the social sector. Being an aggregator or ecosystem builder is a growing trend with the likes of Trybe and A Good Space. However, the ecosystems in which these organizations have built are not available openly. 
+
+
+The restriction of such information has resulted in a lack of benchmarking in efforts directed towards addressing social issues. There is uncertainty as to who and how is actively working towards solving that problem. The lack of visibility and communication results in similar initiatives being created and sometimes funded from the same source. 
+
+
+The sooner this capacity is built, the sooner PKG will be able to engage the prospective users to efficiently start their own initiatives or find existing ones to join and contribute. 
+PKG operates and develops in a series of sprints whereby in each sprint, a new feature will be rolled out, tested and deployed.', 'Project Kampong is an online platform aggregator for youths to connect, collaborate and create social good initiatives for the benefit of their respective communities.
+Through skills and idea matching and intuitive progress tracking, we aim to be an online platform that collates and promotes collaboration.
+
+As part of the Singapore''s TogetherSG movement, having a shared central network system is crucial towards the aim of community development. Collaborative systems and Visibility are key areas in which focus, and resources should be poured into. Having an asset mapping tool is essential towards any initiatives or goals served by platforms like Project Kampong.', 'Youths today are becoming increasingly engaged in social issues. However, when trying to kick start their ideas, they often bump into a couple of problems: the lack of connection with people with the right skills, the resources to expand the ideas, or a platform to commit to. Youths that do start their ideas also face issues with project sustainability, such as making sure their ideas continue to deliver impact and staying afloat in the long run.'),
+('43824166-bee2-426e-8a08-ca2c4e4120ae', NULL, NULL, NULL, NULL),
+('c975a572-452d-4824-8ed5-500b50488436', 'Up-sized hybrid moratorium', 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', 'Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.', 'nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem id ligula suspendisse'),
+('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 'Switchable neutral Graphic Interface', 'Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.', 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique.', 'pellentesque quisque porta volutpat erat quisque erat eros viverra eget congue eget semper rutrum nulla nunc'),
+('d95a6c2e-3c33-447c-be0c-be399247dd3f', NULL, NULL, NULL, NULL),
+('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'Integrated fresh-thinking parallelism', 'Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.', 'Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.', 'neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo');
 
 /* Skills mock data population */
-insert into Skills (skill, skill_group) values ('Auditing', 'Test Group');
-insert into Skills (skill, skill_group) values ('Typesetting', 'Test Group');
-insert into Skills (skill, skill_group) values ('Copywriting', 'Test Group');
-insert into Skills (skill) values ('WiFi');
-insert into Skills (skill) values ('Media and Design');
-insert into Skills (skill) values ('Programming');
-insert into Skills (skill) values ('Management Consulting');
-insert into Skills (skill) values ('Early Childhood');
-insert into Skills (skill) values ('Geriatrics');
-insert into Skills (skill) values ('Mortgage Banking');
-insert into Skills (skill) values ('Swim Instruction');
-insert into Skills (skill) values ('Web Development');
-insert into Skills (skill) values ('Game Design');
-insert into Skills (skill) values ('Psychiatry');
+INSERT INTO "public"."skills" ("skill", "skill_group") VALUES
+('Needs Analysis', 'Big Data Analysis'),
+('Quantitative Research', 'Big Data Analysis'),
+('Statistical Analysis', 'Big Data Analysis'),
+('Compiling Statistics', 'Big Data Analysis'),
+('Database Management', 'Big Data Analysis'),
+('Modeling', 'Big Data Analysis'),
+('Data Analytics', 'Big Data Analysis'),
+('Phone Applications', 'Coding and Programming'),
+('Design UIUX', 'Coding and Programming'),
+('Website Building', 'Coding and Programming'),
+('Benchmarking', 'Project Management'),
+('Budget Planning', 'Project Management'),
+('Operations', 'Project Management'),
+('Quality Assurance', 'Project Management'),
+('Scheduling', 'Project Management'),
+('Fund Raiser', 'Project Management'),
+('Administrative', 'Project Management'),
+('Microsoft Office Skills', 'Project Management'),
+('Negotiations', 'Project Management'),
+('Public Speaking', 'Project Management'),
+('Content Management System', 'Social Media Experience'),
+('Digital Marketing', 'Social Media Experience'),
+('Networking', 'Social Media Experience'),
+('Search Engine Optimisation', 'Social Media Experience'),
+('Social Media Platforms', 'Social Media Experience'),
+('Web Analytics', 'Social Media Experience'),
+('Sales', 'Social Media Experience'),
+('Automated Marketing Software', 'Social Media Experience'),
+('Graphic Design', 'Social Media Experience'),
+('Research', 'Writing'),
+('Emails', 'Writing'),
+('Client Relations', 'Writing'),
+('Technical Documentation', 'Writing'),
+('Requirements Gathering', 'Writing');
 
 
 insert into ProfileSkills (user_id, skill_id) values ('f96b2138-1754-4c17-a405-940e20adc601', 1);
@@ -56,29 +96,13 @@ insert into ProfileSkills (user_id, skill_id) values ('d69a127d-815b-4834-b2b6-5
 insert into ProfileSkills (user_id, skill_id) values ('f997120c-2956-482e-9ba3-81a12b4fecc1', 7);
 insert into ProfileSkills (user_id, skill_id) values ('2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb', 8);
 
-insert into ListingSkills (listing_id, skill_id) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 1);
-insert into ListingSkills (listing_id, skill_id) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 2);
-insert into ListingSkills (listing_id, skill_id) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 3);
-insert into ListingSkills (listing_id, skill_id) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 4);
-insert into ListingSkills (listing_id, skill_id) values ('c975a572-452d-4824-8ed5-500b50488436', 5);
-insert into ListingSkills (listing_id, skill_id) values ('c975a572-452d-4824-8ed5-500b50488436', 6);
-insert into ListingSkills (listing_id, skill_id) values ('c975a572-452d-4824-8ed5-500b50488436', 7);
-insert into ListingSkills (listing_id, skill_id) values ('c975a572-452d-4824-8ed5-500b50488436', 8);
-insert into ListingSkills (listing_id, skill_id) values ('c975a572-452d-4824-8ed5-500b50488436', 9);
-insert into ListingSkills (listing_id, skill_id) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 10);
-insert into ListingSkills (listing_id, skill_id) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 11);
-insert into ListingSkills (listing_id, skill_id) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 12);
-insert into ListingSkills (listing_id, skill_id) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 13);
-insert into ListingSkills (listing_id, skill_id) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 14);
-insert into ListingSkills (listing_id, skill_id) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 1);
-insert into ListingSkills (listing_id, skill_id) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 2);
-insert into ListingSkills (listing_id, skill_id) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 3);
-insert into ListingSkills (listing_id, skill_id) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 4);
-insert into ListingSkills (listing_id, skill_id) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 5);
-insert into ListingSkills (listing_id, skill_id) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 6);
-insert into ListingSkills (listing_id, skill_id) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 7);
-insert into ListingSkills (listing_id, skill_id) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 8);
-insert into ListingSkills (listing_id, skill_id) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 9);
+INSERT INTO "public"."listingskills" ("listing_id", "skill_id") VALUES
+('c975a572-452d-4824-8ed5-500b50488436', '15'),
+('c975a572-452d-4824-8ed5-500b50488436', '16'),
+('c975a572-452d-4824-8ed5-500b50488436', '17'),
+('1276b4eb-df3a-4de3-bcae-a450ed96eeac', '15'),
+('1276b4eb-df3a-4de3-bcae-a450ed96eeac', '16'),
+('1276b4eb-df3a-4de3-bcae-a450ed96eeac', '17');
 
 /* FAQ mock data population */
 insert into Faqs (listing_id, question, answer) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'consequat nulla nisl nunc nisl duis bibendum felis', '24/7');
@@ -102,6 +126,8 @@ insert into Faqs (listing_id, question, answer) values ('cf4adc93-3b96-4bbc-8cb0
 insert into Faqs (listing_id, question, answer) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus', 'stable');
 insert into Faqs (listing_id, question, answer) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec', 'User-friendly');
 insert into Faqs (listing_id, question, answer) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'ullamcorper purus sit amet nulla quisque arcu libero rutrum ac lobortis', 'client-server');
+INSERT INTO "public"."faqs" ("listing_id", "question", "answer") VALUES
+('1276b4eb-df3a-4de3-bcae-a450ed96eeac', 'Who is behind Project Kampong?', 'Project Kampong is a youth-led platform dedicated to connecting young Singaporean leaders to build social good initiatives, together. By breaking down the barriers youths face in finding ideas and/or members, Project Kampong hopes to create a more level playing field that supports youth to innovate and  pursue their passions.');
 
 /* Participants mock data population */
 insert into Participants (listing_id, user_id, joined_on, end_on) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'f96b2138-1754-4c17-a405-940e20adc601', '12/19/2018', null);
@@ -167,6 +193,10 @@ insert into HashTags (listing_id, tag) values ('d95a6c2e-3c33-447c-be0c-be399247
 insert into HashTags (listing_id, tag) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', '#boteman8');
 insert into HashTags (listing_id, tag) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', '#joontjes9');
 insert into HashTags (listing_id, tag) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', '#baudina');
+INSERT INTO "public"."hashtags" ("listing_id", "tag") VALUES
+('1276b4eb-df3a-4de3-bcae-a450ed96eeac', '#kampong'),
+('1276b4eb-df3a-4de3-bcae-a450ed96eeac', '#socialgood'),
+('1276b4eb-df3a-4de3-bcae-a450ed96eeac', '#initiative');
 
 /* Milestones mock data population */
 insert into Milestones (listing_id, description, date) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'De-engineered content-based solution', '2019-06-01 11:27:43');
@@ -178,6 +208,14 @@ insert into Milestones (listing_id, description, date) values ('d95a6c2e-3c33-44
 insert into Milestones (listing_id, description, date) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'Monitored attitude-oriented array', '2017-11-23 11:53:21');
 insert into Milestones (listing_id, description, date) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 'Monitored object-oriented access', '2020-01-21 19:04:19');
 insert into Milestones (listing_id, description, date) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'Managed attitude-oriented frame', '2020-02-12 22:30:42');
+INSERT INTO "public"."milestones" ("listing_id", "description", "date") VALUES
+('1276b4eb-df3a-4de3-bcae-a450ed96eeac', 'Profile Listing', '2020-08-21 16:00:00'),
+('1276b4eb-df3a-4de3-bcae-a450ed96eeac', 'Location', '2020-09-18 16:00:00'),
+('1276b4eb-df3a-4de3-bcae-a450ed96eeac', 'One-Pager Template for Project Listing Platform', '2020-08-07 16:00:00'),
+('1276b4eb-df3a-4de3-bcae-a450ed96eeac', 'Project Browsing and Filtering', '2020-07-31 16:00:00'),
+('1276b4eb-df3a-4de3-bcae-a450ed96eeac', 'Individual Portfolio Dashboard', '2020-08-14 16:00:00'),
+('1276b4eb-df3a-4de3-bcae-a450ed96eeac', 'Project- Profile Matching & Recommendation', '2020-11-30 16:00:00'),
+('1276b4eb-df3a-4de3-bcae-a450ed96eeac', 'On-Platform Chat', '2020-10-31 16:00:00');
 
 /* ListingAdmins mock data population */
 insert into ListingAdmins (user_id, listing_id) values ('d69a127d-815b-4834-b2b6-54ab398fccad', '43824166-bee2-426e-8a08-ca2c4e4120ae');
