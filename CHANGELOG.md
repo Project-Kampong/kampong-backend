@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
-### [v0.1.1b] - 2020-08-24
+### [v0.1.1a] - 2020-08-24
 
 ### Added
 
@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Registration flow for users who try to re-register within 15min will see an error with an appropriate prompt, and users can smoothly re-register after 15min.
 -   Registration token expiry shortened from 30min to 15min.
 
-### [v0.1.0b] - 2020-08-20
+### [v0.1.0a] - 2020-08-20
 
 ### Added
 
