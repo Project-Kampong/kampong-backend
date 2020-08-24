@@ -59,20 +59,20 @@ If data import fails, run the create database tables command and try again.
 On the command line in the project root directory:
 
 ```
-#### Run in production, serves frontend + API
+#### Run in production
 yarn start
 
-#### Run in development, serves API documentation + API
+#### Run in development
 yarn dev
 ```
 
 ## Documentation
 
-API Documentation is temporarily found in `public/index.html` for this developmental phase. New API documentation location will be set up when Kampong deploys a stable release.
+API Documentation is found [here](https://kampong.app/api-docs).
 
-The Postman API Collection is also available in `public/kampong-api.json`, and can be imported into your Postman API client for API testing.
+The Postman API Collection is available [here](https://github.com/Project-Kampong/kampong-backend/blob/master/public/index.html), and can be imported into your Postman API client for API testing.
 
-Database schema diagram can be found in `public/kampong-db-diagram.png`.
+Database schema diagram can be found [here](https://github.com/Project-Kampong/kampong-backend/blob/master/public/kampong-er-diagram.png).
 
 ## License
 
