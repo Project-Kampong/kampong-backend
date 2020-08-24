@@ -7,16 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
-### Added
-
--   All cookies `httpOnly` flag set to `false` to facilitate client's auth flow. Will revert back once client resolves auth flow.
--   Search listings by title endpoint.
-
-### [v0.1.1b] - 2020-08-21
+### [v0.1.1b] - 2020-08-24
 
 ### Added
 
 -   Forget password request is limited to 5 times every 15min.
+-   All cookies `httpOnly` flag set to `false` to facilitate client's auth flow. Will revert back once client resolves auth flow.
+-   Search listings by title endpoint.
 
 ### Changed
 
