@@ -1,6 +1,8 @@
 const { db } = require('../db/db');
 const { asyncHandler } = require('../middleware');
 const { ErrorResponse } = require('../utils');
+const { isEmpty } = require('lodash');
+const { cleanseData } = require('../utils/dbHelper');
 
 /**
  * @desc    Get all listing skills
@@ -10,24 +12,24 @@ const { ErrorResponse } = require('../utils');
  * @access  Public
  */
 exports.getListingSkills = asyncHandler(async (req, res, next) => {
-  if (req.params.listing_id) {
-    // return 404 error response if listing not found or soft deleted
-    const listingSkills = await db.many(
-      'SELECT ls.listing_skill_id, l.listing_id, ls.skill_id, s.skill FROM listingsview l LEFT JOIN ListingSkills ls ON l.listing_id = ls.listing_id LEFT JOIN Skills s ON ls.skill_id = s.skill_id WHERE l.listing_id = $1',
-      req.params.listing_id
-    );
+    if (req.params.listing_id) {
+        // return 404 error response if listing not found or soft deleted
+        const listingSkills = await db.many(
+            'SELECT ls.listing_skill_id, l.listing_id, ls.skill_id, s.skill, s.skill_group, s.skill_description FROM listingsview l LEFT JOIN ListingSkills ls ON l.listing_id = ls.listing_id LEFT JOIN Skills s ON ls.skill_id = s.skill_id WHERE l.listing_id = $1',
+            req.params.listing_id,
+        );
 
-    // remove null skill_id from result
-    const data = listingSkills.filter(ls => ls.listing_skill_id !== null);
+        // remove null listing_skill_id from result
+        const data = listingSkills.filter((ls) => ls.listing_skill_id !== null);
 
-    return res.status(200).json({
-      success: true,
-      count: data.length,
-      data,
-    });
-  }
+        return res.status(200).json({
+            success: true,
+            count: data.length,
+            data,
+        });
+    }
 
-  res.status(200).json(res.advancedResults);
+    res.status(200).json(res.advancedResults);
 });
 
 /**
@@ -36,14 +38,11 @@ exports.getListingSkills = asyncHandler(async (req, res, next) => {
  * @access  Public
  */
 exports.getListingSkill = asyncHandler(async (req, res) => {
-  const rows = await db.one(
-    'SELECT * FROM ListingSkills ls JOIN Skills s ON ls.skill_id = s.skill_id WHERE listing_skill_id = $1',
-    req.params.id
-  );
-  res.status(200).json({
-    success: true,
-    data: rows,
-  });
+    const rows = await db.one('SELECT * FROM ListingSkills ls JOIN Skills s ON ls.skill_id = s.skill_id WHERE listing_skill_id = $1', req.params.id);
+    res.status(200).json({
+        success: true,
+        data: rows,
+    });
 });
 
 /**
@@ -52,50 +51,38 @@ exports.getListingSkill = asyncHandler(async (req, res) => {
  * @access  Admin/Owner
  */
 exports.createCustomListingSkill = asyncHandler(async (req, res, next) => {
-  const { listing_id, skill } = req.body;
+    const { listing_id, skill, skill_description } = req.body;
 
-  const data = {
-    listing_id,
-    skill,
-  };
+    const data = {
+        skill,
+        skill_description,
+    };
 
-  // check listing owner for non-admin users
-  if (
-    req.user.role !== 'admin' &&
-    !(await isListingOwner(req.user.user_id, listing_id))
-  ) {
-    return next(
-      new ErrorResponse(
-        `Not authorised to create listing skills for this listing`,
-        403
-      )
-    );
-  }
+    cleanseData(data);
 
-  //if skill already exists, just link both listing and skill together in table
-  if (!(await doesSkillExist(skill))) {
-    const preinsert = await db.one(
-      'INSERT INTO skills (skill) VALUES ($1) RETURNING *',
-      skill
-    )
-  }
+    // check listing owner for non-admin users
+    if (req.user.role !== 'admin' && !(await isListingOwner(req.user.user_id, listing_id))) {
+        return next(new ErrorResponse(`Not authorised to create listing skills for this listing`, 403));
+    }
 
-  const skill_id_row = await db.one(
-    'SELECT skill_id FROM skills WHERE skill = $1',
-    skill
-  );
+    //if skill already exists, just link both listing and skill together in table
+    const rows = await db.tx(async (query) => {
+        const newSkill = await query.one(
+            'INSERT INTO skills (${this:name}) VALUES (${this:csv}) ON CONFLICT (skill) DO UPDATE SET skill = ${skill} RETURNING *',
+            data,
+        );
+        const listingSkill = await query.one('INSERT INTO listingskills (listing_id, skill_id) VALUES ($1, $2) RETURNING *', [
+            listing_id,
+            newSkill.skill_id,
+        ]);
+        return query.batch([newSkill, listingSkill]);
+    });
 
-  const rows = await db.one(
-    'INSERT INTO listingskills (listing_id, skill_id) VALUES ($1, $2) RETURNING *',
-    [listing_id, skill_id_row.skill_id]
-  );
-
-  res.status(201).json({
-    success: true,
-    data: rows,
-  });
-
-})
+    res.status(201).json({
+        success: true,
+        data: rows[1],
+    });
+});
 
 /**
  * @desc    Create listing skill for listing (with skill_id known)
@@ -103,35 +90,26 @@ exports.createCustomListingSkill = asyncHandler(async (req, res, next) => {
  * @access  Admin/Owner
  */
 exports.createListingSkill = asyncHandler(async (req, res, next) => {
-  const { listing_id, skill_id } = req.body;
+    const { listing_id, skill_id } = req.body;
 
-  const data = {
-    listing_id,
-    skill_id,
-  };
+    const data = {
+        listing_id,
+        skill_id,
+    };
 
-  // check listing owner for non-admin users
-  if (
-    req.user.role !== 'admin' &&
-    !(await isListingOwner(req.user.user_id, listing_id))
-  ) {
-    return next(
-      new ErrorResponse(
-        `Not authorised to create listing skills for this listing`,
-        403
-      )
-    );
-  }
+    cleanseData(data);
 
-  const rows = await db.one(
-    'INSERT INTO ListingSkills (${this:name}) VALUES (${this:csv}) RETURNING *',
-    data
-  );
+    // check listing owner for non-admin users
+    if (req.user.role !== 'admin' && !(await isListingOwner(req.user.user_id, listing_id))) {
+        return next(new ErrorResponse(`Not authorised to create listing skills for this listing`, 403));
+    }
 
-  res.status(201).json({
-    success: true,
-    data: rows,
-  });
+    const rows = await db.one('INSERT INTO ListingSkills (${this:name}) VALUES (${this:csv}) RETURNING *', data);
+
+    res.status(201).json({
+        success: true,
+        data: rows,
+    });
 });
 
 /**
@@ -140,49 +118,23 @@ exports.createListingSkill = asyncHandler(async (req, res, next) => {
  * @access  Admin/Owner
  */
 exports.deleteListingSkill = asyncHandler(async (req, res, next) => {
-  // check if listingskill exists
-  const listingSkill = await db.one(
-    'SELECT * FROM ListingSkills WHERE listing_skill_id = $1',
-    req.params.id
-  );
+    // check if listingskill exists
+    const listingSkill = await db.one('SELECT * FROM ListingSkills WHERE listing_skill_id = $1', req.params.id);
 
-  // check listing owner for non-admin users
-  if (
-    req.user.role !== 'admin' &&
-    !(await isListingOwner(req.user.user_id, listingSkill.listing_id))
-  ) {
-    return next(
-      new ErrorResponse(
-        `Not authorised to create listing skills for this listing`,
-        403
-      )
-    );
-  }
+    // check listing owner for non-admin users
+    if (req.user.role !== 'admin' && !(await isListingOwner(req.user.user_id, listingSkill.listing_id))) {
+        return next(new ErrorResponse(`Not authorised to create listing skills for this listing`, 403));
+    }
 
-  const rows = await db.one(
-    'DELETE FROM ListingSkills WHERE listing_skill_id = $1 RETURNING *',
-    req.params.id
-  );
+    const rows = await db.one('DELETE FROM ListingSkills WHERE listing_skill_id = $1 RETURNING *', req.params.id);
 
-  res.status(200).json({
-    success: true,
-    data: rows,
-  });
+    res.status(200).json({
+        success: true,
+        data: rows,
+    });
 });
 
 const isListingOwner = async (userId, listingId) => {
-  const owner = await db.one(
-    'SELECT created_by FROM Listings WHERE listing_id = $1',
-    listingId
-  );
-  return userId === owner.created_by;
+    const owner = await db.one('SELECT created_by FROM Listings WHERE listing_id = $1', listingId);
+    return userId === owner.created_by;
 };
-
-const doesSkillExist = async (skill) => {
-  const skillBool = await db.oneOrNone(
-    'SELECT * FROM skills WHERE skill = $1',
-    skill
-  );
-  return skillBool;
-}
-
