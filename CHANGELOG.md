@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
+### Added
+
+-   Location tagging for listings.
+
 ### [v0.1.1a] - 2020-08-24
 
 ### Added

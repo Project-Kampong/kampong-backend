@@ -8,9 +8,28 @@ const { isNil } = require('lodash');
 /**
  * @desc    Get all listings
  * @route   GET /api/listings
+ * @desc    Get all listings for a location
+ * @route   GET /api/locations/:location_id/listings
  * @access  Public
  */
 exports.getListings = asyncHandler(async (req, res) => {
+    if (req.params.location_id) {
+        // return 404 error response if location not found or soft deleted
+        const locations = await db.many(
+            'SELECT lil.listing_location_id, l.listing_id, lil.location_id FROM listingsview l LEFT JOIN ListingLocations lil ON l.listing_id = lil.listing_id WHERE l.listing_id = $1',
+            req.params.location_id,
+        );
+
+        // remove null location_id from result
+        const data = locations.filter((lil) => lil.location_id !== null);
+
+        return res.status(200).json({
+            success: true,
+            count: data.length,
+            data,
+        });
+    }
+
     res.status(200).json(res.advancedResults);
 });
 
