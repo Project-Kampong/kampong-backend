@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
+### Added
+
+-   Location tagging for listings.
+
 ### Changed
 
 -   Password requirement to 8-25 characters, at least 1 uppercase, lowercase, and special character respectively.

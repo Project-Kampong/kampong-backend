@@ -1,7 +1,6 @@
 const { db } = require('../db/db');
 const { asyncHandler } = require('../middleware');
 const { ErrorResponse } = require('../utils');
-const { isEmpty } = require('lodash');
 const { cleanseData } = require('../utils/dbHelper');
 
 /**
@@ -123,7 +122,7 @@ exports.deleteListingSkill = asyncHandler(async (req, res, next) => {
 
     // check listing owner for non-admin users
     if (req.user.role !== 'admin' && !(await isListingOwner(req.user.user_id, listingSkill.listing_id))) {
-        return next(new ErrorResponse(`Not authorised to create listing skills for this listing`, 403));
+        return next(new ErrorResponse(`Not authorised to delete listing skills for this listing`, 403));
     }
 
     const rows = await db.one('DELETE FROM ListingSkills WHERE listing_skill_id = $1 RETURNING *', req.params.id);

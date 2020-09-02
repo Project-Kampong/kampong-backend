@@ -1,7 +1,3 @@
-/* Create user roles */
-INSERT INTO Roles (role_name) VALUES ('user');
-INSERT INTO Roles (role_name) VALUES ('admin');
-
 /* User population */
 insert into Users (user_id, first_name, last_name, email, password, role) values ('f96b2138-1754-4c17-a405-940e20adc601', 'Wayne', 'Lee', 'admin@gmail.com', $1, 'admin');
 insert into Users (user_id, first_name, last_name, email, password, role) values ('b7662cd1-a2c9-4054-95e7-078e35ea6fa1', 'Derrick', 'Lim', 'derrick@gmail.com', $1, 'admin');
@@ -255,3 +251,13 @@ insert into ListingComments (listing_id, user_id, comment, reply_to_id, created_
 insert into ListingComments (listing_id, user_id, comment, reply_to_id, created_on, updated_on) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'f997120c-2956-482e-9ba3-81a12b4fecc1', 'brand end-to-end web services', null, '2020-05-23 01:54:34', '2020-06-20 12:56:02');
 insert into ListingComments (listing_id, user_id, comment, reply_to_id, created_on, updated_on) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'f997120c-2956-482e-9ba3-81a12b4fecc1', 'grow integrated systems', 11, '2020-05-15 20:35:48', '2019-11-08 04:23:03');
 insert into ListingComments (listing_id, user_id, comment, reply_to_id, created_on, updated_on) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', '2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb', 'implement innovative platforms', 11, '2020-06-17 09:31:57', '2020-07-06 02:43:45');
+
+/* ListingLocations */
+insert into ListingLocations (listing_id, location_id) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 1);
+insert into ListingLocations (listing_id, location_id) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 2);
+insert into ListingLocations (listing_id, location_id) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 3);
+insert into ListingLocations (listing_id, location_id) values ('c975a572-452d-4824-8ed5-500b50488436', 3);
+insert into ListingLocations (listing_id, location_id) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 3);
+insert into ListingLocations (listing_id, location_id) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 3);
+insert into ListingLocations (listing_id, location_id) values ('c975a572-452d-4824-8ed5-500b50488436', 4);
+insert into ListingLocations (listing_id, location_id) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 4);

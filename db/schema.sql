@@ -46,6 +46,10 @@ DROP TABLE IF EXISTS ListingUpdates CASCADE;
 
 DROP TABLE IF EXISTS ListingComments CASCADE;
 
+DROP TABLE IF EXISTS Locations CASCADE;
+
+DROP TABLE IF EXISTS ListingLocations CASCADE;
+
 CREATE EXTENSION fuzzystrmatch;
 
 CREATE TABLE Roles (
@@ -311,4 +315,21 @@ CREATE TABLE ListingComments (
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE SET NULL,
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE SET NULL,
 	FOREIGN KEY (reply_to_id) REFERENCES ListingComments (listing_comment_id) ON DELETE SET NULL
+);
+
+CREATE TABLE Locations (
+	location_id SERIAL,
+	location VARCHAR,
+	PRIMARY KEY (location_id)
+
+);
+
+CREATE TABLE ListingLocations (
+	listing_location_id SERIAL,
+	listing_id VARCHAR NOT NULL,
+	location_id INTEGER NOT NULL,
+	PRIMARY KEY (listing_location_id),
+	UNIQUE(listing_id, location_id),
+	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE,
+	FOREIGN KEY (location_id) REFERENCES Locations ON DELETE CASCADE
 );

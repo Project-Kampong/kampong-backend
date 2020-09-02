@@ -10,8 +10,9 @@ checkConn();
 
 // Create a QueryFile globally, once per file:
 const schema = generateSqlQueryFile('../db/schema.sql');
-const data = generateSqlQueryFile('../db/mock-data.sql');
+const mockData = generateSqlQueryFile('../db/mock-data.sql');
 const views = generateSqlQueryFile('../db/views.sql');
+const requiredData = generateSqlQueryFile('../db/required-data.sql');
 
 const createTables = async () => {
     try {
@@ -19,6 +20,8 @@ const createTables = async () => {
         console.log(`Tables created...`.green.inverse);
         await db.tx(async (query) => await query.manyOrNone(views));
         console.log(`Views created...`.green.inverse);
+        await db.tx(async (query) => await query.manyOrNone(requiredData));
+        console.log(`Required data imported...`.green.inverse);
         process.exit();
     } catch (err) {
         console.error(err.toString().red);
@@ -29,8 +32,8 @@ const createTables = async () => {
 const importData = async () => {
     try {
         const hashedPassword = await hashPassword(DEFAULT_PASSWORD);
-        await db.tx(async (query) => await query.manyOrNone(data, [hashedPassword]));
-        console.log(`Data Imported...`.green.inverse);
+        await db.tx(async (query) => await query.manyOrNone(mockData, [hashedPassword]));
+        console.log(`Mock Data Imported...`.green.inverse);
         process.exit();
     } catch (err) {
         console.error(err.toString().red);
