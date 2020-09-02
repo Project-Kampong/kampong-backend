@@ -5,6 +5,7 @@ const { check, oneOf } = require('express-validator');
 const { protect, checkInputError } = require('../../middleware');
 const {
     ALPHA_WHITESPACE_REGEX,
+    PASSWORD_REGEX,
     INVALID_EMAIL_MSG,
     INVALID_ALPHA_SPACE_MSG,
     INVALID_PASSWORD_MSG,
@@ -30,17 +31,17 @@ const validateRegisterFields = [
     check('first_name', INVALID_ALPHA_SPACE_MSG('first name')).trim().notEmpty().matches(ALPHA_WHITESPACE_REGEX),
     check('last_name', INVALID_ALPHA_SPACE_MSG('last name')).optional().trim().notEmpty().matches(ALPHA_WHITESPACE_REGEX),
     check('email', INVALID_EMAIL_MSG).trim().isEmail().normalizeEmail(),
-    check('password', INVALID_PASSWORD_MSG).isLength({ min: 6 }),
+    check('password', INVALID_PASSWORD_MSG).matches(PASSWORD_REGEX),
 ];
 
 const validateLoginFields = [
     check('email', INVALID_EMAIL_MSG).trim().isEmail().normalizeEmail(),
-    check('password', INVALID_PASSWORD_MSG).isLength({ min: 6 }),
+    check('password', INVALID_PASSWORD_MSG).matches(PASSWORD_REGEX),
 ];
 
 const validateForgetPasswordFields = [check('email', INVALID_EMAIL_MSG).trim().isEmail().normalizeEmail()];
 
-const validateResetPasswordFields = [check('password', INVALID_PASSWORD_MSG).isLength({ min: 6 })];
+const validateResetPasswordFields = [check('password', INVALID_PASSWORD_MSG).matches(PASSWORD_REGEX)];
 
 const validateUpdateDetailsFields = [
     oneOf([check('first_name').exists(), check('last_name').exists(), check('email').exists()], NO_FIELD_UPDATED_MSG),
@@ -51,7 +52,7 @@ const validateUpdateDetailsFields = [
 
 const validateUpdatePasswordFields = [
     check('oldPassword', INVALID_EXISTING_MSG('old password')).exists(),
-    check('newPassword', INVALID_PASSWORD_MSG).isLength({ min: 6 }),
+    check('newPassword', INVALID_PASSWORD_MSG).matches(PASSWORD_REGEX),
 ];
 
 // Request limiter middleware for auth endpoints
