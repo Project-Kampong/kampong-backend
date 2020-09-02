@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Location tagging for listings.
 
+### Changed
+
+-   Password requirement to 8-25 characters, at least 1 uppercase, lowercase, and special character respectively.
+
 ### [v0.1.1a] - 2020-08-24
 
 ### Added
@@ -148,9 +152,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Internal, dev-only test routes and methods.
 -   API documentation temporarily set up as front-end page to be served, for ease of testing by frontend.
 
-[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.1.1b...HEAD
-[v0.1.1b]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.1.1b
-[v0.1.0b]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.1.0b
+[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.1.1a...HEAD
+[v0.1.0a]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.1.0a
 [v0.0.4]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.0.4
 [v0.0.3]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.0.3
 [v0.0.2]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.0.2

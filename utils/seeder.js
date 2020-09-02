@@ -3,7 +3,7 @@ const { db } = require('../db/db');
 const { checkConn, generateSqlQueryFile } = require('../utils');
 const { hashPassword } = require('./auth');
 
-const DEFAULT_PASSWORD = '123456';
+const DEFAULT_PASSWORD = 'Abc1234!';
 
 // Check connection to db
 checkConn();
