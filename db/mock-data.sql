@@ -1,7 +1,3 @@
-/* Create user roles */
-INSERT INTO Roles (role_name) VALUES ('user');
-INSERT INTO Roles (role_name) VALUES ('admin');
-
 /* User population */
 insert into Users (user_id, first_name, last_name, email, password, role) values ('f96b2138-1754-4c17-a405-940e20adc601', 'Wayne', 'Lee', 'admin@gmail.com', $1, 'admin');
 insert into Users (user_id, first_name, last_name, email, password, role) values ('b7662cd1-a2c9-4054-95e7-078e35ea6fa1', 'Derrick', 'Lim', 'derrick@gmail.com', $1, 'admin');
