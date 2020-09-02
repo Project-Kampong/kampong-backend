@@ -8,6 +8,7 @@ const jobRoute = require('./api/job-routes');
 const likeRoute = require('./api/like-routes');
 const listingRoute = require('./api/listing-routes');
 const listingCommentRoute = require('./api/listingcomment-routes');
+const listingLocationRoute = require('./api/listinglocation-routes');
 const listingSkillRoute = require('./api/listingskill-routes');
 const listingUpdateRoute = require('./api/listingupdate-routes');
 const milestoneRoute = require('./api/milestone-routes');
@@ -24,6 +25,7 @@ router.use('/jobs', jobRoute);
 router.use('/likes', likeRoute);
 router.use('/listings', listingRoute);
 router.use('/listing-comments', listingCommentRoute);
+router.use('/listing-locations', listingLocationRoute);
 router.use('/listing-updates', listingUpdateRoute);
 router.use('/listing-skills', listingSkillRoute);
 router.use('/milestones', milestoneRoute);
@@ -31,6 +33,5 @@ router.use('/participants', participantRoute);
 router.use('/skills', skillRoute);
 router.use('/users', userRoute);
 router.use('/file-upload', uploadRoute);
-
 
 module.exports = router;
