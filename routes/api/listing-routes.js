@@ -31,6 +31,7 @@ const participantRoute = require('./participant-routes');
 const listingSkillRoute = require('./listingskill-routes');
 const jobRoute = require('./job-routes');
 const storyRoute = require('./listingstory-routes');
+const { INVALID_EMAIL_MSG } = require('../../utils/inputExceptionMsg');
 
 // Re-route this URI to other resource router
 router.use('/:listing_id/faqs', faqRoute);
@@ -52,6 +53,7 @@ const validateCreateListingFields = [
     check('title', INVALID_FIELD_MSG('title')).trim().notEmpty(),
     check('category', INVALID_FIELD_MSG('category')).trim().notEmpty(),
     check('listing_url', INVALID_FIELD_MSG('listing URL')).optional().isURL(),
+    check('listing_email', INVALID_EMAIL_MSG('listing email')).notEmpty().isEmail({ ignore_max_length: true }),
     check('is_published', INVALID_BOOLEAN_MSG('is_published')).optional().isBoolean(),
     check('start_date', INVALID_TIMESTAMP_MSG('start date')).optional().matches(DATETIME_REGEX),
     check('end_date', INVALID_TIMESTAMP_MSG('end date')).optional().matches(DATETIME_REGEX),
@@ -67,6 +69,7 @@ const validateUpdateListingFields = [
             check('tagline').exists(),
             check('mission').exists(),
             check('listing_url').exists(),
+            check('listing_email').exists(),
             check('is_published').exists(),
             check('start_date').exists(),
             check('end_date').exists(),
@@ -82,6 +85,7 @@ const validateUpdateListingFields = [
     check('title', INVALID_FIELD_MSG('title')).optional().trim().notEmpty(),
     check('category', INVALID_FIELD_MSG('category')).optional().trim().notEmpty(),
     check('listing_url', INVALID_FIELD_MSG('listing URL')).optional().isURL(),
+    check('listing_email', INVALID_EMAIL_MSG('listing email')).optional().isEmail(),
     check('is_published', INVALID_BOOLEAN_MSG('is_published')).optional().isBoolean(),
     check('start_date', INVALID_TIMESTAMP_MSG('start date')).optional().matches(DATETIME_REGEX),
     check('end_date', INVALID_TIMESTAMP_MSG('end date')).optional().matches(DATETIME_REGEX),
