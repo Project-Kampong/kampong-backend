@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router({ mergeParams: true });
 const { check, oneOf, query } = require('express-validator');
 const { advancedResults, checkInputError, protect, authorise, mapFilenameToLocation } = require('../../middleware');
-const { DATETIME_REGEX, NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG, INVALID_BOOLEAN_MSG, INVALID_TIMESTAMP_MSG, uploadFile } = require('../../utils');
+const { DATETIME_REGEX, NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG, INVALID_EMAIL_MSG, INVALID_BOOLEAN_MSG, INVALID_TIMESTAMP_MSG, uploadFile } = require('../../utils');
 
 // import controllers here
 const {
@@ -31,7 +31,6 @@ const participantRoute = require('./participant-routes');
 const listingSkillRoute = require('./listingskill-routes');
 const jobRoute = require('./job-routes');
 const storyRoute = require('./listingstory-routes');
-const { INVALID_EMAIL_MSG } = require('../../utils/inputExceptionMsg');
 
 // Re-route this URI to other resource router
 router.use('/:listing_id/faqs', faqRoute);
