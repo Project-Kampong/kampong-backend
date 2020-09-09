@@ -11189,6 +11189,701 @@
 			"protocolProfileBehavior": {}
 		},
 		{
+			"name": "Featured Listings",
+			"item": [
+				{
+					"name": "Get All Featured Listings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://kampong.app/api/featured-listings",
+							"host": [
+								"https://kampong.app"
+							],
+							"path": [
+								"api",
+								"featured-listings"
+							]
+						},
+						"description": "Get all featured listings. Permission: Public."
+					},
+					"response": [
+						{
+							"name": "Get All Featured Listings (200 OK)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://kampong.app/api/featured-listings",
+									"host": [
+										"https://kampong.app"
+									],
+									"path": [
+										"api",
+										"featured-listings"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "200"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "199"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 09 Sep 2020 16:28:08 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1599668902"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "207"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"cf-dVX76eLnNYJM8LRuk62EAJGYNrQ\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"count\": 2,\n    \"pagination\": {},\n    \"data\": [\n        {\n            \"featured_listing_id\": 2,\n            \"listing_id\": \"c975a572-452d-4824-8ed5-500b50488436\"\n        },\n        {\n            \"featured_listing_id\": 3,\n            \"listing_id\": \"d95a6c2e-3c33-447c-be0c-be399247dd3f\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Single Featured Listings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://kampong.app/api/featured-listings/1",
+							"host": [
+								"https://kampong.app"
+							],
+							"path": [
+								"api",
+								"featured-listings",
+								"1"
+							]
+						},
+						"description": "Get single featured listing. Permission: Public."
+					},
+					"response": [
+						{
+							"name": "Get Single Featured Listings (200 OK)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://kampong.app/api/featured-listings/2",
+									"host": [
+										"https://kampong.app"
+									],
+									"path": [
+										"api",
+										"featured-listings",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "200"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "199"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 09 Sep 2020 16:28:23 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1599668962"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "101"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"65-H2i/NPcGmhFwKquhqWULjqbokXA\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"featured_listing_id\": 2,\n        \"listing_id\": \"c975a572-452d-4824-8ed5-500b50488436\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Featured Listing",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"description": "JSON Type",
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"listing_id\": \"1276b4eb-df3a-4de3-bcae-a450ed96eeac\"\n}"
+						},
+						"url": {
+							"raw": "https://kampong.app/api/featured-listings",
+							"host": [
+								"https://kampong.app"
+							],
+							"path": [
+								"api",
+								"featured-listings"
+							]
+						},
+						"description": "Create featured listing. Permission: Admin.\n\nField rules:\nAll fields required unless otherwise stated.\nlisting_id - Valid integer, existing listing id."
+					},
+					"response": [
+						{
+							"name": "Create Featured Listing (201 Created)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "JSON Type",
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\"\n}"
+								},
+								"url": {
+									"raw": "https://kampong.app/api/featured-listings",
+									"host": [
+										"https://kampong.app"
+									],
+									"path": [
+										"api",
+										"featured-listings"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "200"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "197"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 09 Sep 2020 16:24:45 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1599668686"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "101"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"65-oZ6JyDcccjUv/5fsEuU8au11O5s\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"featured_listing_id\": 5,\n        \"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\"\n    }\n}"
+						},
+						{
+							"name": "Create Featured Listing (403 Forbidden - Non-admin user)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "JSON Type",
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\"\n}"
+								},
+								"url": {
+									"raw": "https://kampong.app/api/featured-listings",
+									"host": [
+										"https://kampong.app"
+									],
+									"path": [
+										"api",
+										"featured-listings"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "200"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "197"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 09 Sep 2020 16:29:08 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1599668962"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "78"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4e-tRKXZfZDtU1crsKwjjFyNpMlYQ4\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"error\": \"User role user not authorised to access this route\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Featured Listing",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"description": "JSON Type",
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://kampong.app/api/featured-listings/1",
+							"host": [
+								"https://kampong.app"
+							],
+							"path": [
+								"api",
+								"featured-listings",
+								"1"
+							]
+						},
+						"description": "Delete featured listing identified by featured listing id. Permission: Admin."
+					},
+					"response": [
+						{
+							"name": "Delete Featured Listing (200 OK)",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"description": "JSON Type",
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "https://kampong.app/api/featured-listings/5",
+									"host": [
+										"https://kampong.app"
+									],
+									"path": [
+										"api",
+										"featured-listings",
+										"5"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "200"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "199"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 09 Sep 2020 16:25:23 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1599668782"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "101"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"65-oZ6JyDcccjUv/5fsEuU8au11O5s\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"featured_listing_id\": 5,\n        \"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\"\n    }\n}"
+						},
+						{
+							"name": "Delete Featured Listing (403 Forbidden - Non-admin user)",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"description": "JSON Type",
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "https://kampong.app/api/featured-listings/5",
+									"host": [
+										"https://kampong.app"
+									],
+									"path": [
+										"api",
+										"featured-listings",
+										"5"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "200"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "199"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 09 Sep 2020 16:29:31 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1599669022"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "78"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4e-tRKXZfZDtU1crsKwjjFyNpMlYQ4\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"error\": \"User role user not authorised to access this route\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Featured Listings CRUD functionality.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9437ce5a-4ae1-4e82-b9a0-528aa2a11836",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "47216425-97e7-40d6-ab11-be98439ba0bd",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
 			"name": "Locations",
 			"item": [
 				{
@@ -14679,7 +15374,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"skill\": \"Microsoft Powerpoint\",\n\t\"skill_group\": \"Microsoft Office Tools\"\n}"
+							"raw": "{\n\t\"skill\": \"Microsoft Powerpoint\",\n\t\"skill_group\": \"Microsoft Office Tools\",\n    \"skill_description\": \"Proficient in Microsoft Office apps\"\n}"
 						},
 						"url": {
 							"raw": "https://kampong.app/api/skills",
