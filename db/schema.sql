@@ -93,7 +93,8 @@ CREATE TABLE Profiles (
 	nickname VARCHAR NOT NULL,
 	profile_picture VARCHAR,
 	about TEXT,
-	gender VARCHAR CONSTRAINT gender_enum CHECK (gender IN('m', 'f', 'o', 'u')) DEFAULT 'u', /* m = male, f = female, o = others, u = undisclosed */
+	gender VARCHAR CONSTRAINT gender_enum CHECK (gender IN('m', 'f', 'o', 'u')) DEFAULT 'u',
+	/* m = male, f = female, o = others, u = undisclosed */
 	dob TIMESTAMP,
 	interest TEXT,
 	phone VARCHAR,
@@ -161,6 +162,7 @@ CREATE TABLE Listings (
 	tagline VARCHAR,
 	mission TEXT,
 	listing_url VARCHAR,
+	listing_email VARCHAR,
 	pic1 VARCHAR,
 	pic2 VARCHAR,
 	pic3 VARCHAR,
@@ -187,11 +189,15 @@ CREATE TABLE ListingStories (
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
-CREATE TABLE FeaturedListings (
+<< << << < HEAD CREATE TABLE FeaturedListings (
 	featured_listing_id SERIAL,
-	listing_id VARCHAR UNIQUE NOT NULL,
-	PRIMARY KEY (featured_listing_id),
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+	== == == =
+	/* Featured listings */
+	CREATE TABLE Features (
+		feature_id SERIAL,
+		>> >> >> > 1f51176ccf46176c38b086597db6752fdf44e1ba listing_id VARCHAR UNIQUE NOT NULL,
+		PRIMARY KEY (featured_listing_id),
+		FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
 CREATE TABLE HashTags (
@@ -286,28 +292,28 @@ CREATE TABLE Milestones (
 );
 
 CREATE TABLE ListingUpdates (
-    listing_update_id SERIAL,
-    listing_id VARCHAR NOT NULL,
-    description TEXT NOT NULL,
-    pic1 VARCHAR,
-    pic2 VARCHAR,
-    pic3 VARCHAR,
-    pic4 VARCHAR,
-    pic5 VARCHAR,
-    created_on TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_on TIMESTAMP NOT NULL DEFAULT NOW(),
-    PRIMARY KEY (listing_update_id),
-    FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+	listing_update_id SERIAL,
+	listing_id VARCHAR NOT NULL,
+	description TEXT NOT NULL,
+	pic1 VARCHAR,
+	pic2 VARCHAR,
+	pic3 VARCHAR,
+	pic4 VARCHAR,
+	pic5 VARCHAR,
+	created_on TIMESTAMP NOT NULL DEFAULT NOW(),
+	updated_on TIMESTAMP NOT NULL DEFAULT NOW(),
+	PRIMARY KEY (listing_update_id),
+	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
 CREATE TABLE ListingComments (
 	listing_comment_id SERIAL,
 	listing_id VARCHAR,
 	user_id VARCHAR,
-	comment TEXT,
+	COMMENT TEXT,
 	reply_to_id INTEGER CONSTRAINT reply_to_other_id CHECK (reply_to_id <> listing_comment_id),
-    created_on TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_on TIMESTAMP NOT NULL DEFAULT NOW(),
+	created_on TIMESTAMP NOT NULL DEFAULT NOW(),
+	updated_on TIMESTAMP NOT NULL DEFAULT NOW(),
 	deleted_on TIMESTAMP,
 	PRIMARY KEY (listing_comment_id),
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE SET NULL,
@@ -317,9 +323,8 @@ CREATE TABLE ListingComments (
 
 CREATE TABLE Locations (
 	location_id SERIAL,
-	location VARCHAR,
+	LOCATION VARCHAR,
 	PRIMARY KEY (location_id)
-
 );
 
 CREATE TABLE ListingLocations (
@@ -327,7 +332,7 @@ CREATE TABLE ListingLocations (
 	listing_id VARCHAR NOT NULL,
 	location_id INTEGER NOT NULL,
 	PRIMARY KEY (listing_location_id),
-	UNIQUE(listing_id, location_id),
+	UNIQUE (listing_id, location_id),
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE,
 	FOREIGN KEY (location_id) REFERENCES Locations ON DELETE CASCADE
 );
