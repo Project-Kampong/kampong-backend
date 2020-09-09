@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS Listings CASCADE;
 
 DROP TABLE IF EXISTS ListingStories CASCADE;
 
-DROP TABLE IF EXISTS Features CASCADE;
+DROP TABLE IF EXISTS FeaturedListings CASCADE;
 
 DROP TABLE IF EXISTS HashTags CASCADE;
 
@@ -187,12 +187,10 @@ CREATE TABLE ListingStories (
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
-
-/* Featured listings */
-CREATE TABLE Features (
-	feature_id SERIAL,
+CREATE TABLE FeaturedListings (
+	featured_listing_id SERIAL,
 	listing_id VARCHAR UNIQUE NOT NULL,
-	PRIMARY KEY (feature_id),
+	PRIMARY KEY (featured_listing_id),
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
