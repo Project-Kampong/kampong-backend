@@ -189,15 +189,11 @@ CREATE TABLE ListingStories (
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
-<< << << < HEAD CREATE TABLE FeaturedListings (
+CREATE TABLE FeaturedListings (
 	featured_listing_id SERIAL,
-	== == == =
-	/* Featured listings */
-	CREATE TABLE Features (
-		feature_id SERIAL,
-		>> >> >> > 1f51176ccf46176c38b086597db6752fdf44e1ba listing_id VARCHAR UNIQUE NOT NULL,
-		PRIMARY KEY (featured_listing_id),
-		FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+	listing_id VARCHAR UNIQUE NOT NULL,
+	PRIMARY KEY (featured_listing_id),
+	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
 CREATE TABLE HashTags (
