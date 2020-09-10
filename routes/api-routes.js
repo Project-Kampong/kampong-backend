@@ -3,6 +3,7 @@ const router = express.Router();
 
 const authRoute = require('./api/auth-routes');
 const faqRoute = require('./api/faq-routes');
+const featuredListingRoute = require('./api/featuredlisting-routes');
 const hashtagRoute = require('./api/hashtag-routes');
 const jobRoute = require('./api/job-routes');
 const likeRoute = require('./api/like-routes');
@@ -21,6 +22,7 @@ const uploadRoute = require('./api/upload-routes');
 // Mount routes
 router.use('/auth', authRoute);
 router.use('/faqs', faqRoute);
+router.use('/featured-listings', featuredListingRoute);
 router.use('/hashtags', hashtagRoute);
 router.use('/jobs', jobRoute);
 router.use('/likes', likeRoute);

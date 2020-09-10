@@ -3,12 +3,10 @@ DROP VIEW IF EXISTS OrganisationsView CASCADE;
 DROP VIEW IF EXISTS JobsView CASCADE;
 
 CREATE VIEW ListingsView AS
-  SELECT l.*, p.nickname, p.profile_picture, p.phone, u.email
+  SELECT l.*, p.nickname, p.profile_picture, p.phone
   FROM Listings l
   LEFT JOIN Profiles p
   ON l.created_by = p.user_id
-  LEFT JOIN Users u
-  ON l.created_by = u.user_id
   WHERE deleted_on IS NULL;
 
 CREATE VIEW OrganisationsView AS

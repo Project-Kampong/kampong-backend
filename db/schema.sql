@@ -1,92 +1,64 @@
-DROP EXTENSION
-IF EXISTS fuzzystrmatch;
+DROP EXTENSION IF EXISTS fuzzystrmatch;
 
-DROP TABLE IF EXISTS Roles
-CASCADE;
+DROP TABLE IF EXISTS Roles CASCADE;
 
-DROP TABLE IF EXISTS Users
-CASCADE;
+DROP TABLE IF EXISTS Users CASCADE;
 
-DROP TABLE IF EXISTS PendingUsers
-CASCADE;
+DROP TABLE IF EXISTS PendingUsers CASCADE;
 
-DROP TABLE IF EXISTS ForgetPasswordUsers
-CASCADE;
+DROP TABLE IF EXISTS ForgetPasswordUsers CASCADE;
 
-DROP TABLE IF EXISTS Profiles
-CASCADE;
+DROP TABLE IF EXISTS Profiles CASCADE;
 
-DROP TABLE IF EXISTS Skills
-CASCADE;
+DROP TABLE IF EXISTS Skills CASCADE;
 
-DROP TABLE IF EXISTS ProfileSkills
-CASCADE;
+DROP TABLE IF EXISTS ProfileSkills CASCADE;
 
-DROP TABLE IF EXISTS Organisations
-CASCADE;
+DROP TABLE IF EXISTS Organisations CASCADE;
 
-DROP TABLE IF EXISTS Memberships
-CASCADE;
+DROP TABLE IF EXISTS Memberships CASCADE;
 
-DROP TABLE IF EXISTS Listings
-CASCADE;
+DROP TABLE IF EXISTS Listings CASCADE;
 
-DROP TABLE IF EXISTS ListingStories
-CASCADE;
+DROP TABLE IF EXISTS ListingStories CASCADE;
 
-DROP TABLE IF EXISTS Features
-CASCADE;
+DROP TABLE IF EXISTS FeaturedListings CASCADE;
 
-DROP TABLE IF EXISTS HashTags
-CASCADE;
+DROP TABLE IF EXISTS HashTags CASCADE;
 
-DROP TABLE IF EXISTS ListingSkills
-CASCADE;
+DROP TABLE IF EXISTS ListingSkills CASCADE;
 
-DROP TABLE IF EXISTS Jobs
-CASCADE;
+DROP TABLE IF EXISTS Jobs CASCADE;
 
-DROP TABLE IF EXISTS FAQs
-CASCADE;
+DROP TABLE IF EXISTS FAQs CASCADE;
 
-DROP TABLE IF EXISTS Likes
-CASCADE;
+DROP TABLE IF EXISTS Likes CASCADE;
 
-DROP TABLE IF EXISTS ListingAdmins
-CASCADE;
+DROP TABLE IF EXISTS ListingAdmins CASCADE;
 
-DROP TABLE IF EXISTS Participants
-CASCADE;
+DROP TABLE IF EXISTS Participants CASCADE;
 
-DROP TABLE IF EXISTS Subscriptions
-CASCADE;
+DROP TABLE IF EXISTS Subscriptions CASCADE;
 
-DROP TABLE IF EXISTS Milestones
-CASCADE;
+DROP TABLE IF EXISTS Milestones CASCADE;
 
-DROP TABLE IF EXISTS ListingUpdates
-CASCADE;
+DROP TABLE IF EXISTS ListingUpdates CASCADE;
 
-DROP TABLE IF EXISTS ListingComments
-CASCADE;
+DROP TABLE IF EXISTS ListingComments CASCADE;
 
-DROP TABLE IF EXISTS Locations
-CASCADE;
+DROP TABLE IF EXISTS Locations CASCADE;
 
-DROP TABLE IF EXISTS ListingLocations
-CASCADE;
+DROP TABLE IF EXISTS ListingLocations CASCADE;
 
 CREATE EXTENSION fuzzystrmatch;
 
-CREATE TABLE Roles
-(
+CREATE TABLE Roles (
 	role_id SERIAL,
 	role_name VARCHAR UNIQUE NOT NULL,
 	PRIMARY KEY (role_id)
 );
 
-CREATE TABLE Users
-(
+CREATE TABLE Users (
 	user_id VARCHAR,
 	first_name VARCHAR NOT NULL,
 	last_name VARCHAR,
@@ -97,8 +69,7 @@ CREATE TABLE Users
 	FOREIGN KEY (ROLE) REFERENCES Roles (role_name) ON DELETE SET DEFAULT
 );
 
-CREATE TABLE PendingUsers
-(
+CREATE TABLE PendingUsers (
 	pending_user_id SERIAL,
 	first_name VARCHAR NOT NULL,
 	last_name VARCHAR,
@@ -109,8 +80,7 @@ CREATE TABLE PendingUsers
 	PRIMARY KEY (pending_user_id)
 );
 
-CREATE TABLE ForgetPasswordUsers
-(
+CREATE TABLE ForgetPasswordUsers (
 	forgetpass_user_id SERIAL,
 	email VARCHAR(320) UNIQUE NOT NULL,
 	token VARCHAR UNIQUE NOT NULL,
@@ -118,8 +88,7 @@ CREATE TABLE ForgetPasswordUsers
 	PRIMARY KEY (forgetpass_user_id)
 );
 
-CREATE TABLE Profiles
-(
+CREATE TABLE Profiles (
 	user_id VARCHAR,
 	nickname VARCHAR NOT NULL,
 	profile_picture VARCHAR,
@@ -139,8 +108,7 @@ CREATE TABLE Profiles
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE
 );
 
-CREATE TABLE Skills
-(
+CREATE TABLE Skills (
 	skill_id SERIAL,
 	skill VARCHAR UNIQUE NOT NULL,
 	skill_group VARCHAR,
@@ -148,8 +116,7 @@ CREATE TABLE Skills
 	PRIMARY KEY (skill_id)
 );
 
-CREATE TABLE ProfileSkills
-(
+CREATE TABLE ProfileSkills (
 	profile_skill_id SERIAL,
 	user_id VARCHAR NOT NULL,
 	skill_id INTEGER NOT NULL,
@@ -159,8 +126,7 @@ CREATE TABLE ProfileSkills
 	FOREIGN KEY (skill_id) REFERENCES Skills ON DELETE CASCADE
 );
 
-CREATE TABLE Organisations
-(
+CREATE TABLE Organisations (
 	organisation_id SERIAL,
 	name VARCHAR NOT NULL,
 	TYPE VARCHAR NOT NULL,
@@ -174,8 +140,7 @@ CREATE TABLE Organisations
 	PRIMARY KEY (organisation_id)
 );
 
-CREATE TABLE Memberships
-(
+CREATE TABLE Memberships (
 	membership_id SERIAL,
 	organisation_id INTEGER NOT NULL,
 	user_id VARCHAR NOT NULL,
@@ -187,8 +152,7 @@ CREATE TABLE Memberships
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE
 );
 
-CREATE TABLE Listings
-(
+CREATE TABLE Listings (
 	listing_id VARCHAR,
 	organisation_id INTEGER,
 	created_by VARCHAR,
@@ -215,8 +179,7 @@ CREATE TABLE Listings
 	FOREIGN KEY (created_by) REFERENCES Users (user_id) ON DELETE SET NULL
 );
 
-CREATE TABLE ListingStories
-(
+CREATE TABLE ListingStories (
 	listing_id VARCHAR,
 	overview TEXT,
 	problem TEXT,
@@ -226,18 +189,14 @@ CREATE TABLE ListingStories
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
-
-/* Featured listings */
-CREATE TABLE Features
-(
-	feature_id SERIAL,
+CREATE TABLE FeaturedListings (
+	featured_listing_id SERIAL,
 	listing_id VARCHAR UNIQUE NOT NULL,
-	PRIMARY KEY (feature_id),
+	PRIMARY KEY (featured_listing_id),
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
-CREATE TABLE HashTags
-(
+CREATE TABLE HashTags (
 	hashtag_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	tag VARCHAR NOT NULL,
@@ -246,8 +205,7 @@ CREATE TABLE HashTags
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
-CREATE TABLE ListingSkills
-(
+CREATE TABLE ListingSkills (
 	listing_skill_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	skill_id INTEGER NOT NULL,
@@ -259,8 +217,7 @@ CREATE TABLE ListingSkills
 
 
 /* Jobs for a particular listing */
-CREATE TABLE Jobs
-(
+CREATE TABLE Jobs (
 	job_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	job_title VARCHAR NOT NULL,
@@ -270,8 +227,7 @@ CREATE TABLE Jobs
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
-CREATE TABLE FAQs
-(
+CREATE TABLE FAQs (
 	faq_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	question TEXT NOT NULL,
@@ -280,8 +236,7 @@ CREATE TABLE FAQs
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
-CREATE TABLE Likes
-(
+CREATE TABLE Likes (
 	like_id SERIAL,
 	user_id VARCHAR NOT NULL,
 	listing_id VARCHAR NOT NULL,
@@ -291,8 +246,7 @@ CREATE TABLE Likes
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
-CREATE TABLE ListingAdmins
-(
+CREATE TABLE ListingAdmins (
 	listing_admin_id SERIAL,
 	user_id VARCHAR NOT NULL,
 	listing_id VARCHAR NOT NULL,
@@ -302,8 +256,7 @@ CREATE TABLE ListingAdmins
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
-CREATE TABLE Participants
-(
+CREATE TABLE Participants (
 	participant_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	user_id VARCHAR NOT NULL,
@@ -315,8 +268,7 @@ CREATE TABLE Participants
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
-CREATE TABLE Subscriptions
-(
+CREATE TABLE Subscriptions (
 	subscription_id SERIAL,
 	user_id VARCHAR NOT NULL,
 	listing_id VARCHAR NOT NULL,
@@ -326,8 +278,7 @@ CREATE TABLE Subscriptions
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
-CREATE TABLE Milestones
-(
+CREATE TABLE Milestones (
 	milestone_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	description TEXT NOT NULL,
@@ -336,8 +287,7 @@ CREATE TABLE Milestones
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
-CREATE TABLE ListingUpdates
-(
+CREATE TABLE ListingUpdates (
 	listing_update_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	description TEXT NOT NULL,
@@ -352,12 +302,11 @@ CREATE TABLE ListingUpdates
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
-CREATE TABLE ListingComments
-(
+CREATE TABLE ListingComments (
 	listing_comment_id SERIAL,
 	listing_id VARCHAR,
 	user_id VARCHAR,
-	comment TEXT,
+	COMMENT TEXT,
 	reply_to_id INTEGER CONSTRAINT reply_to_other_id CHECK (reply_to_id <> listing_comment_id),
 	created_on TIMESTAMP NOT NULL DEFAULT NOW(),
 	updated_on TIMESTAMP NOT NULL DEFAULT NOW(),
@@ -368,21 +317,18 @@ CREATE TABLE ListingComments
 	FOREIGN KEY (reply_to_id) REFERENCES ListingComments (listing_comment_id) ON DELETE SET NULL
 );
 
-CREATE TABLE Locations
-(
+CREATE TABLE Locations (
 	location_id SERIAL,
-	location VARCHAR,
+	LOCATION VARCHAR,
 	PRIMARY KEY (location_id)
-
 );
 
-CREATE TABLE ListingLocations
-(
+CREATE TABLE ListingLocations (
 	listing_location_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	location_id INTEGER NOT NULL,
 	PRIMARY KEY (listing_location_id),
-	UNIQUE(listing_id, location_id),
+	UNIQUE (listing_id, location_id),
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE,
 	FOREIGN KEY (location_id) REFERENCES Locations ON DELETE CASCADE
 );

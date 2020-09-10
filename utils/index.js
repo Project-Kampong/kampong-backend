@@ -34,5 +34,6 @@ module.exports = {
     ALPHA_WHITESPACE_REGEX,
     DATETIME_REGEX,
     HASHTAG_REGEX,
+    PASSWORD_REGEX,
     sendEmail,
 };

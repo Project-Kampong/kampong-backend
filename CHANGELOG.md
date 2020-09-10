@@ -9,9 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added:
 
-- Dedicated email field for listings.
-
-### [Unreleased]
+-   Dedicated email field for listings.
+-   Featured listings CRUD endpoints.
 
 ### [v0.1.2b] - 2020-09-03
 

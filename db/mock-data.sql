@@ -222,9 +222,9 @@ insert into ListingAdmins (user_id, listing_id) values ('f997120c-2956-482e-9ba3
 insert into ListingAdmins (user_id, listing_id) values ('2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb', 'd95a6c2e-3c33-447c-be0c-be399247dd3f');
 
 /* Features (featured-listings) mock data population */
-insert into Features (listing_id) values ('43824166-bee2-426e-8a08-ca2c4e4120ae');
-insert into Features (listing_id) values ('c975a572-452d-4824-8ed5-500b50488436');
-insert into Features (listing_id) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f');
+insert into FeaturedListings (listing_id) values ('43824166-bee2-426e-8a08-ca2c4e4120ae');
+insert into FeaturedListings (listing_id) values ('c975a572-452d-4824-8ed5-500b50488436');
+insert into FeaturedListings (listing_id) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f');
 
 insert into ListingUpdates (listing_id, description, pic1, pic2, pic3, pic4, pic5, created_on, updated_on) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'Horizontal dynamic encoding', 'https://robohash.org/utetut.bmp?size=500x500&set=set1', 'https://robohash.org/quiserrorlabore.jpg?size=500x500&set=set1', 'https://robohash.org/aspernaturcupiditateerror.png?size=500x500&set=set1', 'https://robohash.org/dolorevenietmaiores.jpg?size=500x500&set=set1', 'https://robohash.org/utconsequaturatque.bmp?size=500x500&set=set1', '2020-05-05 02:20:02', '2020-04-28 01:06:06');
 insert into ListingUpdates (listing_id, description, pic1, pic2, pic3, pic4, pic5, created_on, updated_on) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'Inverse eco-centric conglomeration', 'https://robohash.org/sititaqueiure.jpg?size=500x500&set=set1', 'https://robohash.org/facilisimpeditsoluta.bmp?size=500x500&set=set1', 'https://robohash.org/atquererumvoluptatem.jpg?size=500x500&set=set1', 'https://robohash.org/quietreprehenderit.bmp?size=500x500&set=set1', 'https://robohash.org/suscipittemporeet.png?size=500x500&set=set1', '2020-07-08 12:26:55', '2020-08-10 10:06:35');
