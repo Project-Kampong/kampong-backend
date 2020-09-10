@@ -11,6 +11,6 @@ exports.INVALID_TIMESTAMP_MSG = (field) => `Please include a valid timestamp (of
 exports.INVALID_EMAIL_MSG = 'Please include a valid email';
 
 exports.INVALID_PASSWORD_MSG =
-    'Please enter a password with 8-25 characters, at least 1 uppercase and lowercase letter each, and at least 1 special character(! @ # $ % ^ & *)';
+    'Please enter a password with 8-25 characters, at least 1 uppercase letter, 1 lowercase letter and 1 special character';
 
 exports.NO_FIELD_UPDATED_MSG = 'At least one field must be updated';
