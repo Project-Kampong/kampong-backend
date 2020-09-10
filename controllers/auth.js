@@ -38,7 +38,7 @@ exports.register = asyncHandler(async (req, res, next) => {
     const nickname = first_name + ' ' + (last_name || '');
 
     // Create confirmation url
-    const confirmationUrl = `${req.protocol}://${req.get('host')}/api/auth/register/${token}/confirmemail`;
+    const confirmationUrl = `${req.protocol}://${req.get('host')}/api/auth/register/${token}/confirm-email`;
 
     const message = `Thank you for joining Project Kampong. Please click on the link to activate your account:
   \n\n${confirmationUrl}\n\nPlease contact admin@kampong.com immediately if you are not the intended receipient 
@@ -75,7 +75,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Activate user account via email confirmation
- * @route   GET /api/auth/register/:confirmEmailToken/confirmemail
+ * @route   GET /api/auth/register/:confirmEmailToken/confirm-email
  * @access  Public
  */
 exports.confirmEmail = asyncHandler(async (req, res, next) => {
@@ -92,8 +92,39 @@ exports.confirmEmail = asyncHandler(async (req, res, next) => {
 });
 
 /**
+ * @desc    Resend account activation email for logged in unactivated user
+ * @route   GET /api/auth/register/resend-confirm-email
+ * @access  Private
+ */
+exports.resendActivationEmail = asyncHandler(async (req, res, next) => {
+    const pendingUser = await db.one('SELECT * FROM PendingUsers pu JOIN Users u ON pu.user_id = u.user_id WHERE pu.user_id = $1', req.user.user_id);
+    const { email, token } = pendingUser;
+
+    // Create confirmation url
+    const confirmationUrl = `${req.protocol}://${req.get('host')}/api/auth/register/${token}/confirm-email`;
+
+    const message = `Thank you for joining Project Kampong. Please click on the link to activate your account:
+      \n\n${confirmationUrl}\n\nPlease contact admin@kampong.com immediately if you are not the intended receipient 
+      of this mail.\n\nWelcome on board!\n\nTeam Kampong`;
+
+    try {
+        await sendEmail({
+            email,
+            subject: 'Project Kampong Account Activation',
+            message,
+        });
+    } catch (err) {
+        return next(new ErrorResponse('Email could not be sent. Please try again later.', 409));
+    }
+    res.status(200).json({
+        success: true,
+        data: {},
+    });
+});
+
+/**
  * @desc    User forget password
- * @route   POST /api/auth/forgetpassword
+ * @route   POST /api/auth/forget-password
  * @access  Public
  */
 exports.forgetPassword = asyncHandler(async (req, res, next) => {
@@ -161,7 +192,7 @@ exports.forgetPassword = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Reset account password of user with forgotten password
- * @route   PUT /api/auth/resetpassword/:resetToken
+ * @route   PUT /api/auth/forget-password/:resetToken
  * @access  Public
  */
 exports.resetPassword = asyncHandler(async (req, res, next) => {
@@ -258,7 +289,7 @@ exports.getMe = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Update current logged in user details (except password)
- * @route   PUT /api/auth/updatedetails
+ * @route   PUT /api/auth/update-details
  * @access  Private
  */
 exports.updateDetails = asyncHandler(async (req, res, next) => {
@@ -289,7 +320,7 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Update current logged in user password
- * @route   PUT /api/auth/updatepassword
+ * @route   PUT /api/auth/update-password
  * @access  Private
  */
 exports.updatePassword = asyncHandler(async (req, res, next) => {

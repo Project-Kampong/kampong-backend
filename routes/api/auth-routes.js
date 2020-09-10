@@ -24,6 +24,7 @@ const {
     confirmEmail,
     forgetPassword,
     resetPassword,
+    resendActivationEmail,
 } = require('../../controllers/auth');
 
 // input validation chain definition
@@ -65,17 +66,19 @@ const authRequestLimiter = rateLimit({
 // map routes to controller
 router.get('/logout', protect, logout);
 router.get('/me', protect, getMe);
-router.get('/register/:confirmEmailToken/confirmemail', confirmEmail);
+router.get('/register/:confirmEmailToken/confirm-email', confirmEmail);
 router.post('/register', validateRegisterFields, checkInputError, register);
 router.post('/login', validateLoginFields, checkInputError, login);
-router.post('/forgetpassword', authRequestLimiter, validateForgetPasswordFields, checkInputError, forgetPassword);
-router.put('/resetpassword/:resetToken', validateResetPasswordFields, checkInputError, resetPassword);
+router.post('/forget-password', authRequestLimiter, validateForgetPasswordFields, checkInputError, forgetPassword);
+router.put('/forget-password/:resetToken', validateResetPasswordFields, checkInputError, resetPassword);
 
 // routers below use protect middleware
 router.use(protect);
 
-router.put('/updatedetails', validateUpdateDetailsFields, checkInputError, updateDetails);
+router.get('/register/resend-confirm-email', resendActivationEmail);
 
-router.put('/updatepassword', validateUpdatePasswordFields, checkInputError, updatePassword);
+router.put('/update-details', validateUpdateDetailsFields, checkInputError, updateDetails);
+
+router.put('/update-password', validateUpdatePasswordFields, checkInputError, updatePassword);
 
 module.exports = router;
