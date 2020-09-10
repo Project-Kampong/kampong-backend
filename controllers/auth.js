@@ -18,36 +18,24 @@ exports.register = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Email has already been used.`, 400));
     }
 
-    const pendingUserExists = await db.oneOrNone('SELECT * FROM PendingUsers WHERE email = $1', email);
-
-    // if user attempting to register after token has expired, delete existing entry and allow to go ahead
-    if (pendingUserExists && pendingUserExists.expiry < Date.now()) {
-        await db.one('DELETE FROM PendingUsers WHERE email = $1 RETURNING *', email);
-    }
-
-    // if user attempts to register while existing token has not expired, 400 response
-    if (pendingUserExists && pendingUserExists.expiry >= Date.now()) {
-        return next(new ErrorResponse(`Please activate your account via the confirmation link sent to your email address.`, 400));
-    }
-
     // Generate and hash confirm email token
     const token = crypto.randomBytes(20).toString('hex');
     const hashedEmailToken = hashToken(token);
 
-    // Set token expiry 15min from present
-    const tokenExpiry = Date.now() + 15 * 60 * 1000;
-
-    // Store data, hashedEmailToken, and tokenExpiry in PendingUsers table
-    const data = {
+    const userData = {
+        user_id: uuidv4(),
         first_name,
         last_name,
         email,
         password: await hashPassword(password),
-        token: hashedEmailToken,
-        expiry: new Date(tokenExpiry),
     };
 
-    const rows = await db.one('INSERT INTO PendingUsers (${this:name}) VALUES (${this:csv}) RETURNING *', data);
+    const pendingUserData = {
+        user_id: userData.user_id,
+        token: hashedEmailToken,
+    };
+
+    const nickname = first_name + ' ' + (last_name || '');
 
     // Create confirmation url
     const confirmationUrl = `${req.protocol}://${req.get('host')}/api/auth/register/${token}/confirmemail`;
@@ -58,66 +46,49 @@ exports.register = asyncHandler(async (req, res, next) => {
 
     try {
         await sendEmail({
-            email: rows.email,
+            email,
             subject: 'Project Kampong Account Activation',
             message,
         });
 
-        res.status(200).json({
-            success: true,
-            data: confirmationUrl, // confirmationUrl given in response
+        /**
+         * SQL Transaction, creating user and associated user profile
+         * Returns an array of 2 json:
+         * 1st json: User auth
+         * 2nd json: User profile
+         */
+        const createUserQueries = await db.tx(async (query) => {
+            const createUser = await query.one('INSERT INTO Users (${this:name}) VALUES (${this:csv}) RETURNING *', userData);
+            const createProfile = await query.one('INSERT INTO Profiles (user_id, nickname) VALUES ($1, $2) RETURNING *', [
+                createUser.user_id,
+                nickname,
+            ]);
+            const createPendingUser = await query.one('INSERT INTO PendingUsers (${this:name}) VALUES (${this:csv}) RETURNING *', pendingUserData);
+            return query.batch([createUser, createProfile, createPendingUser]);
         });
-    } catch (err) {
-        // delete data from PendingUsers table, if error
-        await db.one('DELETE FROM PendingUsers WHERE email = $1 RETURNING *', email);
 
-        return next(new ErrorResponse('Email could not be sent. Please register an account again.', 500));
+        sendTokenResponse(createUserQueries[0], 200, res, true);
+    } catch (err) {
+        return next(new ErrorResponse('Email could not be sent. Please register for an account again.', 409));
     }
 });
 
 /**
- * @desc    Create (activate) user account and profile, after email confirmation
+ * @desc    Activate user account via email confirmation
  * @route   GET /api/auth/register/:confirmEmailToken/confirmemail
  * @access  Public
  */
 exports.confirmEmail = asyncHandler(async (req, res, next) => {
     const hashedToken = hashToken(req.params.confirmEmailToken);
 
-    // Look up PendingUsers table for token
-    const pendingUser = await db.oneOrNone('SELECT * FROM PendingUsers WHERE token = $1', hashedToken);
+    const pendingUserExists = await db.one('SELECT * FROM PendingUsers WHERE token = $1', hashedToken);
 
-    // if pendingUser entry does not exist, 400 Bad Request
-    if (!pendingUser) {
-        return next(new ErrorResponse(`Invalid account activation link. The user account may have been activated already.`, 400));
-    }
-
-    // Destructure from results
-    const { first_name, last_name, email, password, expiry } = pendingUser;
-
-    // 400 response if token expired, and delete entry from PendingUsers table
-    if (expiry < Date.now()) {
-        await db.one('DELETE FROM PendingUsers WHERE email = $1 RETURNING *', email);
-        return next(new ErrorResponse(`Account activation link has expired. Please re-create your account again.`, 400));
-    }
-
-    // Get first_name, last_name, email, password from PendingUsers and store into data
-    const data = { user_id: uuidv4(), first_name, last_name, email, password };
-
-    const nickname = last_name ? first_name + ' ' + last_name : first_name;
-
-    /**
-     * SQL Transaction, creating user and associated user profile
-     * Returns an array of 2 json:
-     * 1st json: User auth
-     * 2nd json: User profile
-     */
-    const user = await db.tx(async (query) => {
-        const createUser = await query.one('INSERT INTO users (${this:name}) VALUES (${this:csv}) RETURNING *', data);
-        const createProfile = await query.one('INSERT INTO profiles (user_id, nickname) VALUES ($1, $2) RETURNING *', [createUser.user_id, nickname]);
-        const deletePendingUser = await query.one('DELETE FROM PendingUsers WHERE email = $1 RETURNING *', email);
-        return query.batch([createUser, createProfile]);
+    const confirmEmail = await db.tx(async (query) => {
+        const deletePendingUser = await query.one('DELETE FROM PendingUsers WHERE token = $1 RETURNING *', hashedToken);
+        const activateUser = await query.one('UPDATE Users SET is_activated = TRUE WHERE user_id = $1 RETURNING *', deletePendingUser.user_id);
+        return query.batch([deletePendingUser, activateUser]);
     });
-    sendTokenResponse(user[0], 200, res, true);
+    sendTokenResponse(confirmEmail[1], 200, res, true);
 });
 
 /**
@@ -153,7 +124,7 @@ exports.forgetPassword = asyncHandler(async (req, res, next) => {
     // Set token expiry in 10min
     const tokenExpiry = Date.now() + 10 * 60 * 1000;
 
-    // Store email, hashedEmailToken, and tokenExpiry in ForgetPasswordUsers table
+    // Store email, hashedResetToken, and tokenExpiry in ForgetPasswordUsers table
     const data = {
         email,
         token: hashedResetToken,
