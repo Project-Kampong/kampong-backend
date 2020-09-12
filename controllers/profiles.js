@@ -9,7 +9,7 @@ const { isNil } = require('lodash');
  * @access  Public
  */
 exports.getProfiles = asyncHandler(async (req, res, next) => {
-  res.status(200).json(res.advancedResults);
+    res.status(200).json(res.advancedResults);
 });
 
 /**
@@ -18,18 +18,15 @@ exports.getProfiles = asyncHandler(async (req, res, next) => {
  * @access  Public
  */
 exports.getProfile = asyncHandler(async (req, res, next) => {
-  // if not user_id params, go to next middleware
-  if (!req.params.user_id) {
-    return next();
-  }
-  const rows = await db.one(
-    'SELECT * FROM profiles WHERE user_id = $1',
-    req.params.user_id
-  );
-  return res.status(200).json({
-    success: true,
-    data: rows,
-  });
+    // if not user_id params, go to next middleware
+    if (!req.params.user_id) {
+        return next();
+    }
+    const rows = await db.one('SELECT * FROM profiles WHERE user_id = $1', req.params.user_id);
+    return res.status(200).json({
+        success: true,
+        data: rows,
+    });
 });
 
 /**
@@ -38,57 +35,36 @@ exports.getProfile = asyncHandler(async (req, res, next) => {
  * @access  Admin/Private
  */
 exports.updateProfile = asyncHandler(async (req, res, next) => {
-  // if non-admin user, throw 403 if not updating self
-  if (
-    req.user.role !== 'admin' &&
-    req.user.user_id.toString() !== req.params.user_id
-  ) {
-    return next(
-      new ErrorResponse(`Not allowed to update other user's profile`, 403)
-    );
-  }
+    // if non-admin user, throw 403 if not updating self
+    if (req.user.role !== 'admin' && req.user.user_id.toString() !== req.params.user_id) {
+        return next(new ErrorResponse(`Not allowed to update other user's profile`, 403));
+    }
 
-  const {
-    nickname,
-    about,
-    gender,
-    dob,
-    interest,
-    phone,
-    facebook_link,
-    twitter_link,
-    instagram_link,
-    linkedin_link,
-  } = req.body;
+    const { nickname, about, gender, dob, occupation, phone, facebook_link, twitter_link, instagram_link, linkedin_link } = req.body;
 
-  const data = {
-    nickname,
-    about,
-    gender,
-    dob,
-    interest,
-    phone,
-    facebook_link,
-    twitter_link,
-    instagram_link,
-    linkedin_link,
-  };
+    const data = {
+        nickname,
+        about,
+        gender,
+        dob,
+        occupation,
+        phone,
+        facebook_link,
+        twitter_link,
+        instagram_link,
+        linkedin_link,
+    };
 
-  cleanseData(data);
+    cleanseData(data);
 
-  const updateProfileQuery = parseSqlUpdateStmt(
-    data,
-    'profiles',
-    'WHERE user_id = $1 RETURNING $2:name',
-    [req.params.user_id, data]
-  );
+    const updateProfileQuery = parseSqlUpdateStmt(data, 'profiles', 'WHERE user_id = $1 RETURNING $2:name', [req.params.user_id, data]);
 
-  const rows = await db.one(updateProfileQuery);
+    const rows = await db.one(updateProfileQuery);
 
-  res.status(200).json({
-    success: true,
-    data: rows,
-  });
+    res.status(200).json({
+        success: true,
+        data: rows,
+    });
 });
 
 /**
@@ -97,37 +73,29 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
  * @access  Admin
  */
 exports.verifyProfile = asyncHandler(async (req, res, next) => {
-  // 400 response for wrong hash decoding
-  if (isNil(req.params.user_id)) {
-    return next(new ErrorResponse(`Invalid user id`, 400));
-  }
-  // check if user exists
-  const user = await db.one(
-    'SELECT * FROM profiles WHERE user_id = $1',
-    req.params.user_id
-  );
+    // 400 response for wrong hash decoding
+    if (isNil(req.params.user_id)) {
+        return next(new ErrorResponse(`Invalid user id`, 400));
+    }
+    // check if user exists
+    const user = await db.one('SELECT * FROM profiles WHERE user_id = $1', req.params.user_id);
 
-  const { is_verified } = req.body;
+    const { is_verified } = req.body;
 
-  const data = {
-    is_verified,
-  };
+    const data = {
+        is_verified,
+    };
 
-  cleanseData(data);
+    cleanseData(data);
 
-  const updateIsVerifiedQuery = parseSqlUpdateStmt(
-    data,
-    'profiles',
-    'WHERE user_id = $1 RETURNING $2:name',
-    [req.params.user_id, data]
-  );
+    const updateIsVerifiedQuery = parseSqlUpdateStmt(data, 'profiles', 'WHERE user_id = $1 RETURNING $2:name', [req.params.user_id, data]);
 
-  const rows = await db.one(updateIsVerifiedQuery);
+    const rows = await db.one(updateIsVerifiedQuery);
 
-  res.status(200).json({
-    success: true,
-    data: rows,
-  });
+    res.status(200).json({
+        success: true,
+        data: rows,
+    });
 });
 
 /**
@@ -136,41 +104,28 @@ exports.verifyProfile = asyncHandler(async (req, res, next) => {
  * @access  Admin/Private
  */
 exports.uploadPic = asyncHandler(async (req, res, next) => {
-  // 400 response for wrong hash decoding
-  if (isNil(req.params.user_id)) {
-    return next(new ErrorResponse(`Invalid user id`, 400));
-  }
+    // 400 response for wrong hash decoding
+    if (isNil(req.params.user_id)) {
+        return next(new ErrorResponse(`Invalid user id`, 400));
+    }
 
-  // if non-admin user, throw 403 if not updating self
-  if (
-    req.user.role !== 'admin' &&
-    req.user.user_id.toString() !== req.params.user_id
-  ) {
-    return next(
-      new ErrorResponse(
-        `Not allowed to update other user's profile picture`,
-        403
-      )
-    );
-  }
+    // if non-admin user, throw 403 if not updating self
+    if (req.user.role !== 'admin' && req.user.user_id.toString() !== req.params.user_id) {
+        return next(new ErrorResponse(`Not allowed to update other user's profile picture`, 403));
+    }
 
-  const { profile_picture } = req.body;
+    const { profile_picture } = req.body;
 
-  const data = {
-    profile_picture,
-  };
+    const data = {
+        profile_picture,
+    };
 
-  const updateProfileQuery = parseSqlUpdateStmt(
-    data,
-    'profiles',
-    'WHERE user_id = $1 RETURNING profile_picture',
-    req.params.user_id
-  );
+    const updateProfileQuery = parseSqlUpdateStmt(data, 'profiles', 'WHERE user_id = $1 RETURNING profile_picture', req.params.user_id);
 
-  const rows = await db.one(updateProfileQuery);
+    const rows = await db.one(updateProfileQuery);
 
-  res.status(200).json({
-    success: true,
-    data: rows,
-  });
+    res.status(200).json({
+        success: true,
+        data: rows,
+    });
 });

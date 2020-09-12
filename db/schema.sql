@@ -96,7 +96,7 @@ CREATE TABLE Profiles (
 	gender VARCHAR CONSTRAINT gender_enum CHECK (gender IN('m', 'f', 'o', 'u')) DEFAULT 'u',
 	/* m = male, f = female, o = others, u = undisclosed */
 	dob TIMESTAMP,
-	interest TEXT,
+	occupation TEXT,
 	phone VARCHAR,
 	facebook_link VARCHAR,
 	twitter_link VARCHAR,
