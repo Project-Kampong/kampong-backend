@@ -7,10 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
-### Added:
+### Added
 
 -   Dedicated email field for listings.
 -   Featured listings CRUD endpoints.
+-   Registration flow allows user to login after registration without email confirmation.
+-   Endpoint to resend account activation email.
+
+### Changed
+
+-   BREAKING: Route naming for all auth endpoints changed to kebab case to adhere to convention.
 
 ### [v0.1.2b] - 2020-09-03
 

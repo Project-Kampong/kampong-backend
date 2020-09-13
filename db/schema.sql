@@ -63,21 +63,19 @@ CREATE TABLE Users (
 	first_name VARCHAR NOT NULL,
 	last_name VARCHAR,
 	email VARCHAR(320) UNIQUE NOT NULL,
-	PASSWORD VARCHAR NOT NULL,
-	ROLE VARCHAR NOT NULL DEFAULT 'user',
+	password VARCHAR NOT NULL,
+	role VARCHAR NOT NULL DEFAULT 'user',
+	is_activated BOOLEAN NOT NULL DEFAULT FALSE,
 	PRIMARY KEY (user_id),
-	FOREIGN KEY (ROLE) REFERENCES Roles (role_name) ON DELETE SET DEFAULT
+	FOREIGN KEY (role) REFERENCES Roles (role_name) ON DELETE SET DEFAULT
 );
 
 CREATE TABLE PendingUsers (
 	pending_user_id SERIAL,
-	first_name VARCHAR NOT NULL,
-	last_name VARCHAR,
-	email VARCHAR(320) UNIQUE NOT NULL,
-	PASSWORD VARCHAR NOT NULL,
+	user_id VARCHAR UNIQUE NOT NULL,
 	token VARCHAR UNIQUE NOT NULL,
-	expiry TIMESTAMP NOT NULL DEFAULT NOW(),
-	PRIMARY KEY (pending_user_id)
+	PRIMARY KEY (pending_user_id),
+	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE
 );
 
 CREATE TABLE ForgetPasswordUsers (
@@ -162,7 +160,7 @@ CREATE TABLE Listings (
 	tagline VARCHAR,
 	mission TEXT,
 	listing_url VARCHAR,
-	listing_email VARCHAR,
+	listing_email VARCHAR(320),
 	pic1 VARCHAR,
 	pic2 VARCHAR,
 	pic3 VARCHAR,

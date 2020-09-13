@@ -369,14 +369,14 @@
 							"raw": "{\n\t\"email\": \"don@gmail.com\",\n\t\"first_name\": \"Don\",\n\t\"last_name\": \"Tay\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/auth/updatedetails",
+							"raw": "https://kampong.app/api/auth/update-details",
 							"host": [
 								"https://kampong.app"
 							],
 							"path": [
 								"api",
 								"auth",
-								"updatedetails"
+								"update-details"
 							]
 						},
 						"description": "Update logged in user name and email.\n\nField rules:\nAt least 1 field must be updated.\nfirst_name: Alphabets and whitespaces only. \nlast_name: Alphabets and whitespaces only.\nemail: Valid email address only. Email address will be canonicalized."
@@ -595,14 +595,14 @@
 							"raw": "{\n\t\"oldPassword\": \"Abc1234!\",\n\t\"newPassword\": \"Abcd123!\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/auth/updatepassword",
+							"raw": "https://kampong.app/api/auth/update-password",
 							"host": [
 								"https://kampong.app"
 							],
 							"path": [
 								"api",
 								"auth",
-								"updatepassword"
+								"update-password"
 							]
 						},
 						"description": "Update logged in user password.\n\nField rules:\nAll fields required unless otherwise stated.\noldPassword: 8-25 characters. At least 1 uppercase character. At least 1 lowercase character. At least 1 special character.\nnewPassword: 8-25 characters. At least 1 uppercase character. At least 1 lowercase character. At least 1 special character."
@@ -977,7 +977,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"first_name\": \"Don\",\n\t\"last_name\": \"Tay\",\n\t\"email\" : \"dontay0209@gmail.com\",\n\t\"password\": \"123456\"\n}"
+							"raw": "{\n\t\"first_name\": \"Don\",\n\t\"last_name\": \"Tay\",\n\t\"email\" : \"dontay0209@gmail.com\",\n\t\"password\": \"Abc1234!\"\n}"
 						},
 						"url": {
 							"raw": "https://kampong.app/api/auth/register",
@@ -1176,6 +1176,234 @@
 					]
 				},
 				{
+					"name": "Resend Account Activation Email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "423d7f6f-619e-4a35-b819-796a014653b1",
+								"exec": [
+									"pm.environment.set(\"TOKEN\", pm.response.json().token)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "JSON Type",
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"first_name\": \"Don\",\n\t\"last_name\": \"Tay\",\n\t\"email\" : \"dontay0209@gmail.com\",\n\t\"password\": \"Abc1234!\"\n}"
+						},
+						"url": {
+							"raw": "https://kampong.app/api/auth/register/resend-confirm-email",
+							"host": [
+								"https://kampong.app"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register",
+								"resend-confirm-email"
+							]
+						},
+						"description": "Resend account activation email for unactivated user. Permission: Private."
+					},
+					"response": [
+						{
+							"name": "Register User (400 Bad Request - User account already exists)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "JSON Type",
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"first_name\": \"Don\",\n\t\"last_name\": \"Tay\",\n\t\"email\" : \"don@gmail.com\",\n\t\"password\": \"123456\"\n}"
+								},
+								"url": {
+									"raw": "https://kampong.app/api/auth/register",
+									"host": [
+										"https://kampong.app"
+									],
+									"path": [
+										"api",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "102"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"66-aPjzpub1n9r2xJkvk9bwsR8g09o\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jul 2020 09:42:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"error\": \"Duplicate field value entered: Key (email)=(don@gmail.com) already exists.\"\n}"
+						},
+						{
+							"name": "Register User (400 Bad Request - Invalid email/password requirement)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "JSON Type",
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"first_name\": \"Bon\",\n\t\"last_name\": \"Tan\",\n\t\"email\" : \"bon@gmail.com\",\n\t\"password\": \"12345\"\n}"
+								},
+								"url": {
+									"raw": "https://kampong.app/api/auth/register",
+									"host": [
+										"https://kampong.app"
+									],
+									"path": [
+										"api",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "78"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4e-WVT3+6mLbaqrKxoPpHpJrSSSfAs\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jul 2020 09:52:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"error\": \"Please enter a password with 6 or more characters.\"\n}"
+						},
+						{
+							"name": "Register User (200 OK)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "JSON Type",
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"first_name\": \"Don\",\n\t\"last_name\": \"Tay\",\n\t\"email\" : \"dontay0209@gmail.com\",\n\t\"password\": \"123456\"\n}"
+								},
+								"url": {
+									"raw": "https://kampong.app/api/auth/register",
+									"host": [
+										"https://kampong.app"
+									],
+									"path": [
+										"api",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "119"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"77-Pg7qeEO3uDqVsWURpBso+yQa+kE\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 29 Jul 2020 18:24:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": \"http://localhost:5000/api/auth/register/e69f4085f4f847a4983af536ab653a29a27c2b85/confirmemail\"\n}"
+						}
+					]
+				},
+				{
 					"name": "Activate Account (via Email Confirmation)",
 					"event": [
 						{
@@ -1207,7 +1435,7 @@
 							"raw": "{\n\t\"name\": \"Don\",\n\t\"email\" : \"don@gmail.com\",\n\t\"password\": \"123456\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirmemail",
+							"raw": "https://kampong.app/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirm-email",
 							"host": [
 								"https://kampong.app"
 							],
@@ -1216,7 +1444,7 @@
 								"auth",
 								"register",
 								"81a1890b0135b02edeeb41dae93a4dba38d4a51d",
-								"confirmemail"
+								"confirm-email"
 							]
 						},
 						"description": "Activates user account via confirmation of email address used in user registration. Permission: Public."
@@ -1369,14 +1597,14 @@
 							"raw": "{\n\t\"email\": \"dontay0209@gmail.com\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/auth/forgetpassword",
+							"raw": "https://kampong.app/api/auth/forget-password",
 							"host": [
 								"https://kampong.app"
 							],
 							"path": [
 								"api",
 								"auth",
-								"forgetpassword"
+								"forget-password"
 							]
 						},
 						"description": "Generate a reset password token and sends email to user when user forgets password. Token expires in 10min, after which user must send another 'Forget Password' request again. (Permission: Public)\n\nField rules:\nAll fields required unless otherwise stated.\nemail: Valid email address only. Email address will be canonicalized."
@@ -1581,14 +1809,14 @@
 							"raw": "{\n\t\"password\": \"Abcd123!\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/auth/resetpassword/9cd4383ffdde29ce4850d7752d8fce0e384cca71",
+							"raw": "https://kampong.app/api/auth/reset-password/9cd4383ffdde29ce4850d7752d8fce0e384cca71",
 							"host": [
 								"https://kampong.app"
 							],
 							"path": [
 								"api",
 								"auth",
-								"resetpassword",
+								"reset-password",
 								"9cd4383ffdde29ce4850d7752d8fce0e384cca71"
 							]
 						},
