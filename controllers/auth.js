@@ -67,7 +67,7 @@ exports.register = asyncHandler(async (req, res, next) => {
             return query.batch([createUser, createProfile, createPendingUser]);
         });
 
-        sendTokenResponse(createUserQueries[0], 200, res, true);
+        sendTokenResponse(createUserQueries[0], 200, res);
     } catch (err) {
         return next(new ErrorResponse('Email could not be sent. Please register for an account again.', 409));
     }
@@ -182,7 +182,6 @@ exports.forgetPassword = asyncHandler(async (req, res, next) => {
             data: resetPasswordUrl, // confirmationUrl given in response
         });
     } catch (err) {
-        console.error(err);
         // delete data from ForgetPasswordUsers table, if error
         await db.one('DELETE FROM ForgetPasswordUsers WHERE email = $1 RETURNING *', email);
 
