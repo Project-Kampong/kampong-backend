@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const dotenv = require('dotenv');
@@ -61,9 +62,21 @@ app.use(errorHandler);
 // Set static folder
 app.use(express.static('client/build'));
 
-app.use('/api-docs', express.static('public'));
+app.get('/api-docs', (req, res) => {
+    const apiDocsPath = path.resolve(__dirname, 'public', 'index.html');
+    res.sendFile(apiDocsPath);
+});
 
-app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')));
+// Serve frontend homepage
+app.get('*', (req, res) => {
+    const homePath = path.resolve(__dirname, 'client', 'build', 'index.html');
+    if (fs.existsSync(homePath)) {
+        res.sendFile(homePath);
+    } else {
+        const apiDocsPath = path.resolve(__dirname, 'public', 'index.html');
+        res.sendFile(apiDocsPath);
+    }
+});
 
 const PORT = process.env.PORT || 5000;
 
