@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "b09bd8c5-776a-4d8c-8b71-f528c017cb08",
-		"name": "Kampong API v0.1.2b",
+		"name": "Kampong API vv0.1.3",
 		"description": "Backend API for Project Kampong.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -38,9 +38,9 @@
 							"raw": "{\n\t\"email\" : \"user@gmail.com\",\n\t\"password\": \"Abc1234!\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/auth/login",
+							"raw": "{{URL}}/api/auth/login",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -68,9 +68,9 @@
 									"raw": "{\n\t\"email\" : \"don@gmail.com\",\n\t\"password\": \"1234567\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/login",
+									"raw": "{{URL}}/api/auth/login",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -128,9 +128,9 @@
 									"raw": "{\n\t\"email\" : \"don@gmail.com\",\n\t\"password\": \"123456\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/login",
+									"raw": "{{URL}}/api/auth/login",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -193,9 +193,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/auth/me",
+							"raw": "{{URL}}/api/auth/me",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -212,9 +212,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/auth/me",
+									"raw": "{{URL}}/api/auth/me",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -261,9 +261,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/auth/me",
+									"raw": "{{URL}}/api/auth/me",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -369,9 +369,9 @@
 							"raw": "{\n\t\"email\": \"don@gmail.com\",\n\t\"first_name\": \"Don\",\n\t\"last_name\": \"Tay\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/auth/update-details",
+							"raw": "{{URL}}/api/auth/update-details",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -399,9 +399,9 @@
 									"raw": "{\n\t\"email\": \"gmail.com\",\n\t\"first_name\": \"Don\",\n\t\"last_name\": \"Taylor\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/updatedetails",
+									"raw": "{{URL}}/api/auth/updatedetails",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -459,9 +459,9 @@
 									"raw": "{\n\t\"email\": \"don@gmail.com\",\n\t\"first_name\": \"Don\",\n\t\"last_name\": \"Taylor\",\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/updatedetails",
+									"raw": "{{URL}}/api/auth/updatedetails",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -519,9 +519,9 @@
 									"raw": "{\n\t\"email\": \"don@gmail.com\",\n\t\"first_name\": \"Don\",\n\t\"last_name\": \"Taylor\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/updatedetails",
+									"raw": "{{URL}}/api/auth/updatedetails",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -595,9 +595,9 @@
 							"raw": "{\n\t\"oldPassword\": \"Abc1234!\",\n\t\"newPassword\": \"Abcd123!\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/auth/update-password",
+							"raw": "{{URL}}/api/auth/update-password",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -625,9 +625,9 @@
 									"raw": "{\n\t\"oldPassword\": \"123456\",\n\t\"newPassword\": \"1234567\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/updatepassword",
+									"raw": "{{URL}}/api/auth/updatepassword",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -685,9 +685,9 @@
 									"raw": "{\n\t\"oldPassword\": \"123456\",\n\t\"newPassword\": \"12345\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/updatepassword",
+									"raw": "{{URL}}/api/auth/updatepassword",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -745,9 +745,9 @@
 									"raw": "{\n\t\"oldPassword\": \"123456\",\n\t\"newPassword\": \"1234567\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/updatepassword",
+									"raw": "{{URL}}/api/auth/updatepassword",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -818,9 +818,9 @@
 							}
 						],
 						"url": {
-							"raw": "https://kampong.app/api/auth/logout",
+							"raw": "{{URL}}/api/auth/logout",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -845,9 +845,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/auth/logout",
+									"raw": "{{URL}}/api/auth/logout",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -906,9 +906,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/auth/logout",
+									"raw": "{{URL}}/api/auth/logout",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -980,9 +980,9 @@
 							"raw": "{\n\t\"first_name\": \"Don\",\n\t\"last_name\": \"Tay\",\n\t\"email\" : \"dontay0209@gmail.com\",\n\t\"password\": \"Abc1234!\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/auth/register",
+							"raw": "{{URL}}/api/auth/register",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -1010,9 +1010,9 @@
 									"raw": "{\n\t\"first_name\": \"Bon\",\n\t\"last_name\": \"Tan\",\n\t\"email\" : \"bon@gmail.com\",\n\t\"password\": \"12345\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/register",
+									"raw": "{{URL}}/api/auth/register",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -1070,9 +1070,9 @@
 									"raw": "{\n\t\"first_name\": \"Don\",\n\t\"last_name\": \"Tay\",\n\t\"email\" : \"dontay0209@gmail.com\",\n\t\"password\": \"123456\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/register",
+									"raw": "{{URL}}/api/auth/register",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -1130,9 +1130,9 @@
 									"raw": "{\n\t\"first_name\": \"Don\",\n\t\"last_name\": \"Tay\",\n\t\"email\" : \"don@gmail.com\",\n\t\"password\": \"123456\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/register",
+									"raw": "{{URL}}/api/auth/register",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -1207,9 +1207,9 @@
 							"raw": "{\n\t\"first_name\": \"Don\",\n\t\"last_name\": \"Tay\",\n\t\"email\" : \"dontay0209@gmail.com\",\n\t\"password\": \"Abc1234!\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/auth/register/resend-confirm-email",
+							"raw": "{{URL}}/api/auth/register/resend-confirm-email",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -1238,9 +1238,9 @@
 									"raw": "{\n\t\"first_name\": \"Don\",\n\t\"last_name\": \"Tay\",\n\t\"email\" : \"don@gmail.com\",\n\t\"password\": \"123456\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/register",
+									"raw": "{{URL}}/api/auth/register",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -1298,9 +1298,9 @@
 									"raw": "{\n\t\"first_name\": \"Bon\",\n\t\"last_name\": \"Tan\",\n\t\"email\" : \"bon@gmail.com\",\n\t\"password\": \"12345\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/register",
+									"raw": "{{URL}}/api/auth/register",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -1358,9 +1358,9 @@
 									"raw": "{\n\t\"first_name\": \"Don\",\n\t\"last_name\": \"Tay\",\n\t\"email\" : \"dontay0209@gmail.com\",\n\t\"password\": \"123456\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/register",
+									"raw": "{{URL}}/api/auth/register",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -1435,9 +1435,9 @@
 							"raw": "{\n\t\"name\": \"Don\",\n\t\"email\" : \"don@gmail.com\",\n\t\"password\": \"123456\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirm-email",
+							"raw": "{{URL}}/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirm-email",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -1467,9 +1467,9 @@
 									"raw": "{\n\t\"name\": \"Don\",\n\t\"email\" : \"don@gmail.com\",\n\t\"password\": \"123456\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/register/e69f4085f4f847a4983af536ab653a29a27c2b85/confirmemail",
+									"raw": "{{URL}}/api/auth/register/e69f4085f4f847a4983af536ab653a29a27c2b85/confirmemail",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -1529,9 +1529,9 @@
 									"raw": "{\n\t\"name\": \"Don\",\n\t\"email\" : \"don@gmail.com\",\n\t\"password\": \"123456\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/register/e69f4085f4f847a4983af536ab653a29a27c2b85/confirmemail",
+									"raw": "{{URL}}/api/auth/register/e69f4085f4f847a4983af536ab653a29a27c2b85/confirmemail",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -1597,9 +1597,9 @@
 							"raw": "{\n\t\"email\": \"dontay0209@gmail.com\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/auth/forget-password",
+							"raw": "{{URL}}/api/auth/forget-password",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -1627,9 +1627,9 @@
 									"raw": "{\n\t\"email\": \"dontay0209@gmail.com\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/forgetpassword",
+									"raw": "{{URL}}/api/auth/forgetpassword",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -1687,9 +1687,9 @@
 									"raw": "{\n\t\"email\": \"dontay0200@gmail.com\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/forgetpassword",
+									"raw": "{{URL}}/api/auth/forgetpassword",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -1747,9 +1747,9 @@
 									"raw": "{\n\t\"email\": \"dontay02\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/forgetpassword",
+									"raw": "{{URL}}/api/auth/forgetpassword",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -1809,9 +1809,9 @@
 							"raw": "{\n\t\"password\": \"Abcd123!\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/auth/reset-password/9cd4383ffdde29ce4850d7752d8fce0e384cca71",
+							"raw": "{{URL}}/api/auth/reset-password/9cd4383ffdde29ce4850d7752d8fce0e384cca71",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -1840,9 +1840,9 @@
 									"raw": "{\n\t\"password\": \"123456\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/resetpassword/e79e570c0043e023ab34f38e9ea55bf9ca1da215",
+									"raw": "{{URL}}/api/auth/resetpassword/e79e570c0043e023ab34f38e9ea55bf9ca1da215",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -1905,9 +1905,9 @@
 									"raw": "{\n\t\"password\": \"123456\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/resetpassword/e79e570c0043e023ab34f38e9ea55bf9ca1da219",
+									"raw": "{{URL}}/api/auth/resetpassword/e79e570c0043e023ab34f38e9ea55bf9ca1da219",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -1966,9 +1966,9 @@
 									"raw": "{\n\t\"password\": \"12345\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/resetpassword/e79e570c0043e023ab34f38e9ea55bf9ca1da215",
+									"raw": "{{URL}}/api/auth/resetpassword/e79e570c0043e023ab34f38e9ea55bf9ca1da215",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -2041,9 +2041,9 @@
 							"raw": "{\n\t\"email\" : \"admin@gmail.com\",\n\t\"password\": \"Abc1234!\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/auth/login",
+							"raw": "{{URL}}/api/auth/login",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -2071,9 +2071,9 @@
 									"raw": "{\n\t\"email\" : \"don@gmail.com\",\n\t\"password\": \"123456\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/login",
+									"raw": "{{URL}}/api/auth/login",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -2135,9 +2135,9 @@
 									"raw": "{\n\t\"email\" : \"don@gmail.com\",\n\t\"password\": \"1234567\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/auth/login",
+									"raw": "{{URL}}/api/auth/login",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -2225,9 +2225,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/users?page=1&limit=30&sort=user_id,first_name&role=user",
+							"raw": "{{URL}}/api/users?page=1&limit=30&sort=user_id,first_name&role=user",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -2261,9 +2261,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/users?page=1&limit=30&select=user_id,first_name,email&sort=user_id,first_name&role=user",
+									"raw": "{{URL}}/api/users?page=1&limit=30&select=user_id,first_name,email&sort=user_id,first_name&role=user",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -2331,9 +2331,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/users?page=1&limit=30&select=user_id,first_name,email&sort=user_id,first_name&role=user",
+									"raw": "{{URL}}/api/users?page=1&limit=30&select=user_id,first_name,email&sort=user_id,first_name&role=user",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -2413,9 +2413,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb",
+							"raw": "{{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -2432,9 +2432,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb",
+									"raw": "{{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -2481,9 +2481,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/users/1",
+									"raw": "{{URL}}/api/users/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -2553,9 +2553,9 @@
 							"raw": "{\n\t\"first_name\": \"Con\",\n\t\"last_name\": \"Jobs\",\n\t\"email\": \"Con@gmail.com\",\n\t\"password\": \"Abc1234!\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/users",
+							"raw": "{{URL}}/api/users",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -2582,9 +2582,9 @@
 									"raw": "{\n\t\"first_name\": \"Con\",\n\t\"last_name\": \"Jobs\",\n\t\"email\": \"Congmail.com\",\n\t\"password\": \"123456\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/users",
+									"raw": "{{URL}}/api/users",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -2641,9 +2641,9 @@
 									"raw": "{\n\t\"first_name\": \"Con\",\n\t\"last_name\": \"Jobs\",\n\t\"email\": \"Con@gmail.com\",\n\t\"password\": \"123456\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/users",
+									"raw": "{{URL}}/api/users",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -2700,9 +2700,9 @@
 									"raw": "{\n\t\"first_name\": \"Con\",\n\t\"last_name\": \"Jobs\",\n\t\"email\": \"Con@gmail.com\",\n\t\"password\": \"123456\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/users",
+									"raw": "{{URL}}/api/users",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -2759,9 +2759,9 @@
 									"raw": "{\n\t\"first_name\": \"Con\",\n\t\"last_name\": \"Jobs\",\n\t\"email\": \"Con@gmail.com\",\n\t\"password\": \"123456\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/users",
+									"raw": "{{URL}}/api/users",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -2866,9 +2866,9 @@
 							"raw": "{\n\t\"name\": \"Aaron\",\n\t\"email\": \"aaron@gmail.com\",\n\t\"password\": \"Abc1234!\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb",
+							"raw": "{{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -2896,9 +2896,9 @@
 									"raw": "{\n\t\"name\": \"Aaron\",\n\t\"email\": \"aaron@gmail.com\",\n\t\"password\": \"123456\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb",
+									"raw": "{{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -2992,9 +2992,9 @@
 									"raw": "{\n\t\"first_name\": \"Aaron\",\n\t\"last_name\": \"Tan\",\n\t\"email\": \"aaron@gmail.com\",\n\t\"password\": \"123456\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/users/9",
+									"raw": "{{URL}}/api/users/9",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -3052,9 +3052,9 @@
 									"raw": "{\n\t\"first_name\": \"Aaron\",\n\t\"last_name\": \"Tan\",\n\t\"email\": \"aaron@gmail.com\",\n\t\"password\": \"123456\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/users/1000",
+									"raw": "{{URL}}/api/users/1000",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -3121,9 +3121,9 @@
 							}
 						],
 						"url": {
-							"raw": "https://kampong.app/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb",
+							"raw": "{{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -3148,9 +3148,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/users/1",
+									"raw": "{{URL}}/api/users/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -3205,9 +3205,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/users/1000",
+									"raw": "{{URL}}/api/users/1000",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -3262,9 +3262,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb",
+									"raw": "{{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -3349,9 +3349,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listing-comments",
+							"raw": "{{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listing-comments",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -3369,9 +3369,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listing-comments",
+									"raw": "{{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listing-comments",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -3457,9 +3457,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/participants",
+							"raw": "{{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/participants",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -3477,9 +3477,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/participants",
+									"raw": "{{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/participants",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -3563,9 +3563,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/users/122/participants",
+									"raw": "{{URL}}/api/users/122/participants",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -3615,9 +3615,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner",
+							"raw": "{{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -3636,9 +3636,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner",
+									"raw": "{{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -3723,9 +3723,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/users/221/listings/owner",
+									"raw": "{{URL}}/api/users/221/listings/owner",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -3776,9 +3776,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/likes",
+							"raw": "{{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/likes",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -3796,9 +3796,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/users/221/likes",
+									"raw": "{{URL}}/api/users/221/likes",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -3846,9 +3846,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/likes",
+									"raw": "{{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/likes",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -3963,9 +3963,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles",
+							"raw": "{{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -3983,9 +3983,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles",
+									"raw": "{{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -4092,9 +4092,9 @@
 							"raw": "{\n\t\"nickname\": \"don-tay\",\n\t\"about\": \"Updated about me\",\n\t\"gender\": \"m\",\n\t\"dob\": \"2000-07-18 00:00:00.746876+08\",\n\t\"interest\": \"Graphic Design\",\n\t\"phone\": \"91231234\",\n\t\"facebook_link\": \"www.facebook.com\",\n\t\"twitter_link\": \"www.twitter.com\",\n\t\"instagram_link\": \"www.instagram.com\",\n\t\"linkedin_link\": \"www.linkedin.com\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles",
+							"raw": "{{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -4123,9 +4123,9 @@
 									"raw": "{\n\t\"nickname\": \"don-tay\",\n\t\"about\": \"Updated about me\",\n\t\"gender\": \"m\",\n\t\"dob\": \"2000-07-18 00:00:00.746876+08\",\n\t\"interest\": \"Graphic Design\",\n\t\"phone\": \"91231234\",\n\t\"facebook_link\": \"www.facebook.com\",\n\t\"twitter_link\": \"www.twitter.com\",\n\t\"instagram_link\": \"www.instagram.com\",\n\t\"linkedin_link\": \"www.linkedin.com\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb/profiles",
+									"raw": "{{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb/profiles",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -4220,9 +4220,9 @@
 									"raw": "{\n\t\"nickname\": \"don-tay\",\n\t\"profile_picture\": \"https://robohash.org/explicaboquiafacere.bmp?size=50x50&set=set1\",\n\t\"about\": \"Updated about me\",\n\t\"gender\": \"m\",\n\t\"dob\": \"2000-07-18 00:00:00.746876+08\",\n\t\"interest\": \"Graphic Design\",\n\t\"phone\": \"91231234\",\n\t\"facebook_link\": \"www.facebook.com\",\n\t\"twitter_link\": \"www.twitter.com\",\n\t\"instagram_link\": \"www.instagram.com\",\n\t\"linkedin_link\": \"www.linkedin.com\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb/profiles",
+									"raw": "{{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb/profiles",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -4281,9 +4281,9 @@
 									"raw": "{\n\t\"nickname\": \"don-tay\",\n\t\"profile_picture\": \"https://robohash.org/explicaboquiafacere.bmp?size=50x50&set=set1\",\n\t\"about\": \"Updated about me\",\n\t\"gender\": \"m\",\n\t\"dob\": \"2000-07-18 00:00:00.746876+08\",\n\t\"interest\": \"Graphic Design\",\n\t\"phone\": \"91231234\",\n\t\"facebook_link\": \"invalid URL link\",\n\t\"twitter_link\": \"www.twitter.com\",\n\t\"instagram_link\": \"www.instagram.com\",\n\t\"linkedin_link\": \"www.linkedin.com\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb/profiles",
+									"raw": "{{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb/profiles",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -4342,9 +4342,9 @@
 									"raw": "{\n\t\"nickname\": \"don-tay\",\n\t\"about\": \"Updated about me\",\n\t\"gender\": \"m\",\n\t\"dob\": \"2000-07-18 00:00:00.746876+08\",\n\t\"interest\": \"Graphic Design\",\n\t\"phone\": \"91231234\",\n\t\"facebook_link\": \"www.facebook.com\",\n\t\"twitter_link\": \"www.twitter.com\",\n\t\"instagram_link\": \"www.instagram.com\",\n\t\"linkedin_link\": \"www.linkedin.com\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca2fff/profiles",
+									"raw": "{{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca2fff/profiles",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -4422,9 +4422,9 @@
 							]
 						},
 						"url": {
-							"raw": "https://kampong.app/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles/upload-photo",
+							"raw": "{{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles/upload-photo",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -4461,9 +4461,9 @@
 									]
 								},
 								"url": {
-									"raw": "https://kampong.app/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles/upload-photo",
+									"raw": "{{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles/upload-photo",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -4571,9 +4571,9 @@
 							"raw": "{\n\t\"is_verified\": true\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles/verify",
+							"raw": "{{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles/verify",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -4603,9 +4603,9 @@
 									"raw": "{\n\t\"is_verified\": true\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles/verify",
+									"raw": "{{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles/verify",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -4721,9 +4721,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listings",
+							"raw": "{{URL}}/api/listings",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -4739,9 +4739,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings",
+									"raw": "{{URL}}/api/listings",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -4789,9 +4789,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listings/search-title?title=kampong&limit=10&sensitivity=10",
+							"raw": "{{URL}}/api/listings/search-title?title=kampong&limit=10&sensitivity=10",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -4822,9 +4822,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/search-title?title=kampong&limit=abc",
+									"raw": "{{URL}}/api/listings/search-title?title=kampong&limit=abc",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -4917,9 +4917,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/search-title?title=kampong&limit=10&sensitivity=10",
+									"raw": "{{URL}}/api/listings/search-title?title=kampong&limit=10&sensitivity=10",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -5018,9 +5018,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae",
+							"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -5037,9 +5037,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/121",
+									"raw": "{{URL}}/api/listings/121",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -5086,9 +5086,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae",
+									"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -5173,9 +5173,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-comments",
+							"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-comments",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -5193,9 +5193,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-comments",
+									"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-comments",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -5281,9 +5281,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-locations",
+							"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-locations",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -5301,9 +5301,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-locations",
+									"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-locations",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -5389,9 +5389,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-skills",
+							"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-skills",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -5409,9 +5409,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-skills",
+									"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-skills",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -5495,9 +5495,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/121/listing-skills",
+									"raw": "{{URL}}/api/listings/121/listing-skills",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -5547,9 +5547,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-updates",
+							"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-updates",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -5567,9 +5567,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-updates",
+									"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-updates",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -5653,9 +5653,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/121/listing-skills",
+									"raw": "{{URL}}/api/listings/121/listing-skills",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -5705,9 +5705,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/faqs",
+							"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/faqs",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -5725,9 +5725,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/faqs",
+									"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/faqs",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -5811,9 +5811,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/31/faqs",
+									"raw": "{{URL}}/api/listings/31/faqs",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -5863,9 +5863,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/hashtags",
+							"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/hashtags",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -5883,9 +5883,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/hashtags",
+									"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/hashtags",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -5969,9 +5969,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/52/hashtags",
+									"raw": "{{URL}}/api/listings/52/hashtags",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -6021,9 +6021,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/jobs",
+							"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/jobs",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -6041,9 +6041,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/jobs",
+									"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/jobs",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -6127,9 +6127,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/231/jobs",
+									"raw": "{{URL}}/api/listings/231/jobs",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -6179,9 +6179,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/likes",
+							"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/likes",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -6199,9 +6199,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/likes",
+									"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/likes",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -6285,9 +6285,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/221/likes",
+									"raw": "{{URL}}/api/listings/221/likes",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -6337,9 +6337,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/milestones",
+							"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/milestones",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -6357,9 +6357,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/milestones",
+									"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/milestones",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -6443,9 +6443,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/23/milestones",
+									"raw": "{{URL}}/api/listings/23/milestones",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -6495,9 +6495,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/participants",
+							"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/participants",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -6515,9 +6515,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/121/participants",
+									"raw": "{{URL}}/api/listings/121/participants",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -6565,9 +6565,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/participants",
+									"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/participants",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -6760,9 +6760,9 @@
 							]
 						},
 						"url": {
-							"raw": "https://kampong.app/api/listings",
+							"raw": "{{URL}}/api/listings",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -6789,9 +6789,9 @@
 									"raw": "{\n    \"title\": \"New title 1\",\n    \"category\": \"test category\",\n    \"about\": \"test about\",\n    \"tagline\": \"test tagline\",\n    \"mission\": \"test mission\",\n    \"listing_url\": \"www.test.com\",\n    \"pic1\": \"https://robohash.org/fugitporrofacilis.bmp?size=50x50&set=set1\",\n    \"pic2\": \"https://robohash.org/velitvoluptasmodi.bmp?size=50x50&set=set1\",\n    \"pic3\": \"https://robohash.org/temporanamharum.png?size=50x50&set=set1\",\n    \"pic4\": \"https://robohash.org/doloremaliasnulla.bmp?size=50x50&set=set1\",\n    \"pic5\": \"https://robohash.org/omnisrecusandaeesse.jpg?size=50x50&set=set1\",\n    \"is_published\": \"false\",\n    \"start_date\": \"2019-08-15 16:45:43.41585+08\",\n    \"end_date\": \"2020-07-17 16:45:43.41585+08\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listings",
+									"raw": "{{URL}}/api/listings",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -6933,9 +6933,9 @@
 									]
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listings",
+									"raw": "{{URL}}/api/listings",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -7107,9 +7107,9 @@
 									]
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listings",
+									"raw": "{{URL}}/api/listings",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -7262,9 +7262,9 @@
 							]
 						},
 						"url": {
-							"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae",
+							"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -7369,9 +7369,9 @@
 									}
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listings/1",
+									"raw": "{{URL}}/api/listings/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -7513,9 +7513,9 @@
 									]
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae",
+									"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -7609,9 +7609,9 @@
 									"raw": "{\n    \"title\": \"\",\n    \"category\": \"Updated category\",\n    \"about\": \"Updated about\",\n    \"tagline\": \"Updated tagline\",\n    \"mission\": \"Updated mission\",\n    \"listing_url\": \"www.updated-test.com\",\n    \"pic1\": \"https://robohash.org/voluptatemcommodisint.bmp?size=50x50&set=set1\",\n    \"pic2\": \"https://robohash.org/illoipsaquos.bmp?size=50x50&set=set1\",\n    \"pic3\": \"https://robohash.org/oditautqui.png?size=50x50&set=set1\",\n    \"pic4\": \"https://robohash.org/eaetnon.jpg?size=50x50&set=set1\",\n    \"pic5\": \"https://robohash.org/fugittemporeiusto.bmp?size=50x50&set=set1\",\n    \"is_published\": \"true\",\n    \"start_date\": \"2018-08-15 16:45:43.41585+08\",\n    \"end_date\": \"2020-01-30 16:45:43.41585+08\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listings/1",
+									"raw": "{{URL}}/api/listings/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -7725,9 +7725,9 @@
 							]
 						},
 						"url": {
-							"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/upload-photo",
+							"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/upload-photo",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -7799,9 +7799,9 @@
 									]
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/photo",
+									"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/photo",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -7903,9 +7903,9 @@
 									]
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/photo",
+									"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/photo",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -7976,9 +7976,9 @@
 							"raw": "{\n    \"is_verified\": \"true\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/verify",
+							"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/verify",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -8007,9 +8007,9 @@
 									"raw": "{\n    \"is_verified\": \"true\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listings/4/verify",
+									"raw": "{{URL}}/api/listings/4/verify",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -8068,9 +8068,9 @@
 									"raw": "{\n    \"is_verified\": \"true\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/verify",
+									"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/verify",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -8165,9 +8165,9 @@
 									"raw": "{\n    \"is_verified\": \"\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listings/4/verify",
+									"raw": "{{URL}}/api/listings/4/verify",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -8235,9 +8235,9 @@
 							}
 						],
 						"url": {
-							"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/deactivate",
+							"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/deactivate",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -8266,9 +8266,9 @@
 									"raw": "{\n    \"is_verified\": \"true\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listings/4/deactivate",
+									"raw": "{{URL}}/api/listings/4/deactivate",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -8324,9 +8324,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/deactivate",
+									"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/deactivate",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -8422,9 +8422,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listings/e411bd80-d5cf-49ac-b847-18c9fc13377a",
+							"raw": "{{URL}}/api/listings/e411bd80-d5cf-49ac-b847-18c9fc13377a",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -8441,9 +8441,9 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/21",
+									"raw": "{{URL}}/api/listings/21",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -8490,9 +8490,9 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/e411bd80-d5cf-49ac-b847-18c9fc13377a",
+									"raw": "{{URL}}/api/listings/e411bd80-d5cf-49ac-b847-18c9fc13377a",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -8539,9 +8539,9 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/20",
+									"raw": "{{URL}}/api/listings/20",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -8619,9 +8619,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listing-comments",
+							"raw": "{{URL}}/api/listing-comments",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -8637,9 +8637,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listing-comments",
+									"raw": "{{URL}}/api/listing-comments",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -8723,9 +8723,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listing-comments/1",
+							"raw": "{{URL}}/api/listing-comments/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -8742,9 +8742,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listing-comments/1",
+									"raw": "{{URL}}/api/listing-comments/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -8829,9 +8829,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listing-comments/3/children",
+							"raw": "{{URL}}/api/listing-comments/3/children",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -8849,9 +8849,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listing-comments/3/children",
+									"raw": "{{URL}}/api/listing-comments/3/children",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -8958,9 +8958,9 @@
 							"raw": "{\n\t\"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\",\n\t\"comment\": \"Very intersting!\",\n\t\"reply_to_id\": \"1\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/listing-comments",
+							"raw": "{{URL}}/api/listing-comments",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -8987,9 +8987,9 @@
 									"raw": "{\n\t\"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\",\n\t\"comment\": \"Very intersting!\",\n\t\"reply_to_id\": \"1\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listing-comments",
+									"raw": "{{URL}}/api/listing-comments",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -9094,9 +9094,9 @@
 							"raw": "{\n\t\"comment\": \"Updated Comment!\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/listing-comments/1",
+							"raw": "{{URL}}/api/listing-comments/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -9124,9 +9124,9 @@
 									"raw": "{\n\t\"comment\": \"Updated Comment!\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listing-comments/1",
+									"raw": "{{URL}}/api/listing-comments/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -9193,9 +9193,9 @@
 							}
 						],
 						"url": {
-							"raw": "https://kampong.app/api/listing-comments/1/deactivate",
+							"raw": "{{URL}}/api/listing-comments/1/deactivate",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -9221,9 +9221,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/listing-comments/1/deactivate",
+									"raw": "{{URL}}/api/listing-comments/1/deactivate",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -9327,9 +9327,9 @@
 							}
 						],
 						"url": {
-							"raw": "https://kampong.app/api/listing-comments/1",
+							"raw": "{{URL}}/api/listing-comments/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -9354,9 +9354,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/listing-comments/1",
+									"raw": "{{URL}}/api/listing-comments/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -9434,9 +9434,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listings/stories",
+							"raw": "{{URL}}/api/listings/stories",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -9453,9 +9453,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/stories",
+									"raw": "{{URL}}/api/listings/stories",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -9504,9 +9504,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories",
+							"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -9524,9 +9524,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/132/stories",
+									"raw": "{{URL}}/api/listings/132/stories",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -9610,9 +9610,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories",
+									"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -9719,9 +9719,9 @@
 							"raw": "{\n    \"overview\": \"Mental Health for Youth\",\n    \"problem\": \"There is insufficient knowledge about mental health.\",\n    \"solution\": \"We aim to champion mental health awareness by launching a campaign to promote mental well-being in schools\",\n    \"outcome\": \"We hope that schools will implement mental health education into their curriculum, and implement programmes around mental health advocacy.\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories",
+							"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -9750,9 +9750,9 @@
 									"raw": "{\n    \"overview\": \"Mental Health for Youth\",\n    \"problem\": \"There is insufficient knowledge about mental health.\",\n    \"solution\": \"We aim to champion mental health awareness by launching a campaign to promote mental well-being in schools\",\n    \"outcome\": \"We hope that schools will implement mental health education into their curriculum, and implement programmes around mental health advocacy.\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories",
+									"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -9847,9 +9847,9 @@
 									"raw": "{\n    \"overview\": \"Mental Health for Youth\",\n    \"problem\": \"There is insufficient knowledge about mental health.\",\n    \"solution\": \"We aim to champion mental health awareness by launching a campaign to promote mental well-being in schools\",\n    \"outcome\": \"We hope that schools will implement mental health education into their curriculum, and implement programmes around mental health advocacy.\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listings/123/stories",
+									"raw": "{{URL}}/api/listings/123/stories",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -9914,9 +9914,9 @@
 									}
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listings/1/stories",
+									"raw": "{{URL}}/api/listings/1/stories",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -9995,9 +9995,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listing-skills",
+							"raw": "{{URL}}/api/listing-skills",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -10013,9 +10013,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listing-skills",
+									"raw": "{{URL}}/api/listing-skills",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -10063,9 +10063,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listing-skills/1",
+							"raw": "{{URL}}/api/listing-skills/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -10082,9 +10082,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listingskills/1",
+									"raw": "{{URL}}/api/listingskills/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -10154,9 +10154,9 @@
 							"raw": "{\n\t\"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\",\n\t\"skill_id\": 6\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/listing-skills",
+							"raw": "{{URL}}/api/listing-skills",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -10183,9 +10183,9 @@
 									"raw": "{\n\t\"listing_id\": 1,\n\t\"skill_id\": 200\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listing-skills",
+									"raw": "{{URL}}/api/listing-skills",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -10242,9 +10242,9 @@
 									"raw": "{\n\t\"listing_id\": 1,\n\t\"skill_id\": 5\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listing-skills",
+									"raw": "{{URL}}/api/listing-skills",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -10301,9 +10301,9 @@
 									"raw": "{\n\t\"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\",\n\t\"skill_id\": 6\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listing-skills",
+									"raw": "{{URL}}/api/listing-skills",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -10408,9 +10408,9 @@
 							"raw": "{\n\t\"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\",\n\t\"skill\": \"Junior Data Analyst\",\n    \"skill_description\": \"Analyse complex data and present findings to key stakeholders\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/listing-skills/add-skill",
+							"raw": "{{URL}}/api/listing-skills/add-skill",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -10438,9 +10438,9 @@
 									"raw": "{\n\t\"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\",\n\t\"skill\": \"Junior Data Analyst\",\n    \"skill_description\": \"Analyse complex data and present findings to key stakeholders\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listing-skills/add-skill",
+									"raw": "{{URL}}/api/listing-skills/add-skill",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -10534,9 +10534,9 @@
 									"raw": "{\n\t\"listing_id\": 1,\n\t\"skill_id\": 5\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listing-skills",
+									"raw": "{{URL}}/api/listing-skills",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -10593,9 +10593,9 @@
 									"raw": "{\n\t\"listing_id\": 1,\n\t\"skill_id\": 200\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listing-skills",
+									"raw": "{{URL}}/api/listing-skills",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -10661,9 +10661,9 @@
 							}
 						],
 						"url": {
-							"raw": "https://kampong.app/api/listing-skills/1",
+							"raw": "{{URL}}/api/listing-skills/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -10688,9 +10688,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/listing-skills/1",
+									"raw": "{{URL}}/api/listing-skills/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -10745,9 +10745,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/listing-skills/24",
+									"raw": "{{URL}}/api/listing-skills/24",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -10838,9 +10838,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/listing-skills/300",
+									"raw": "{{URL}}/api/listing-skills/300",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -10918,9 +10918,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listing-locations",
+							"raw": "{{URL}}/api/listing-locations",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -10936,9 +10936,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listing-locations",
+									"raw": "{{URL}}/api/listing-locations",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -11022,9 +11022,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listing-locations/1",
+							"raw": "{{URL}}/api/listing-locations/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -11041,9 +11041,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listing-locations/1",
+									"raw": "{{URL}}/api/listing-locations/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -11149,9 +11149,9 @@
 							"raw": "{\n\t\"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\",\n\t\"location_id\": 6\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/listing-locations",
+							"raw": "{{URL}}/api/listing-locations",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -11178,9 +11178,9 @@
 									"raw": "{\n\t\"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\",\n\t\"location_id\": 7\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listing-locations",
+									"raw": "{{URL}}/api/listing-locations",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -11282,9 +11282,9 @@
 							}
 						],
 						"url": {
-							"raw": "https://kampong.app/api/listing-locations/1",
+							"raw": "{{URL}}/api/listing-locations/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -11309,9 +11309,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/listing-locations/1",
+									"raw": "{{URL}}/api/listing-locations/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -11425,9 +11425,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/featured-listings",
+							"raw": "{{URL}}/api/featured-listings",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -11443,9 +11443,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/featured-listings",
+									"raw": "{{URL}}/api/featured-listings",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -11529,9 +11529,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/featured-listings/1",
+							"raw": "{{URL}}/api/featured-listings/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -11548,9 +11548,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/featured-listings/2",
+									"raw": "{{URL}}/api/featured-listings/2",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -11656,9 +11656,9 @@
 							"raw": "{\n\t\"listing_id\": \"1276b4eb-df3a-4de3-bcae-a450ed96eeac\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/featured-listings",
+							"raw": "{{URL}}/api/featured-listings",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -11685,9 +11685,9 @@
 									"raw": "{\n\t\"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/featured-listings",
+									"raw": "{{URL}}/api/featured-listings",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -11780,9 +11780,9 @@
 									"raw": "{\n\t\"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/featured-listings",
+									"raw": "{{URL}}/api/featured-listings",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -11884,9 +11884,9 @@
 							}
 						],
 						"url": {
-							"raw": "https://kampong.app/api/featured-listings/1",
+							"raw": "{{URL}}/api/featured-listings/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -11911,9 +11911,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/featured-listings/5",
+									"raw": "{{URL}}/api/featured-listings/5",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -12004,9 +12004,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/featured-listings/5",
+									"raw": "{{URL}}/api/featured-listings/5",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -12120,9 +12120,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/locations",
+							"raw": "{{URL}}/api/locations",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -12138,9 +12138,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/locations",
+									"raw": "{{URL}}/api/locations",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -12224,9 +12224,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/locations/3/listings",
+							"raw": "{{URL}}/api/locations/3/listings",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -12244,9 +12244,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/locations/3/listings",
+									"raw": "{{URL}}/api/locations/3/listings",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -12332,9 +12332,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/locations/1",
+							"raw": "{{URL}}/api/locations/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -12351,9 +12351,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/locations/2",
+									"raw": "{{URL}}/api/locations/2",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -12459,9 +12459,9 @@
 							"raw": "{\n\t\"location\": \"new location\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/locations",
+							"raw": "{{URL}}/api/locations",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -12488,9 +12488,9 @@
 									"raw": "{\n\t\"location\": \"new location\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/locations",
+									"raw": "{{URL}}/api/locations",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -12583,9 +12583,9 @@
 									"raw": "{\n\t\"location\": \"new location\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/locations",
+									"raw": "{{URL}}/api/locations",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -12687,9 +12687,9 @@
 							}
 						],
 						"url": {
-							"raw": "https://kampong.app/api/locations/1",
+							"raw": "{{URL}}/api/locations/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -12714,9 +12714,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/locations/1",
+									"raw": "{{URL}}/api/locations/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -12807,9 +12807,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/locations/1",
+									"raw": "{{URL}}/api/locations/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -12923,9 +12923,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listing-updates",
+							"raw": "{{URL}}/api/listing-updates",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -12941,9 +12941,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listing-updates",
+									"raw": "{{URL}}/api/listing-updates",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -12991,9 +12991,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listing-updates/1",
+							"raw": "{{URL}}/api/listing-updates/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -13010,9 +13010,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listing-updates/1",
+									"raw": "{{URL}}/api/listing-updates/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -13059,9 +13059,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listing-updates/132",
+									"raw": "{{URL}}/api/listing-updates/132",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -13187,9 +13187,9 @@
 							]
 						},
 						"url": {
-							"raw": "https://kampong.app/api/listing-updates",
+							"raw": "{{URL}}/api/listing-updates",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -13270,9 +13270,9 @@
 									]
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listing-updates",
+									"raw": "{{URL}}/api/listing-updates",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -13385,9 +13385,9 @@
 									]
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listing-updates",
+									"raw": "{{URL}}/api/listing-updates",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -13536,9 +13536,9 @@
 							]
 						},
 						"url": {
-							"raw": "https://kampong.app/api/listing-updates/2",
+							"raw": "{{URL}}/api/listing-updates/2",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -13610,9 +13610,9 @@
 									]
 								},
 								"url": {
-									"raw": "https://kampong.app/api/listing-updates/2",
+									"raw": "{{URL}}/api/listing-updates/2",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -13715,9 +13715,9 @@
 							}
 						],
 						"url": {
-							"raw": "https://kampong.app/api/listing-updates/1",
+							"raw": "{{URL}}/api/listing-updates/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -13742,9 +13742,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/listing-updates/523",
+									"raw": "{{URL}}/api/listing-updates/523",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -13799,9 +13799,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/listing-updates/55",
+									"raw": "{{URL}}/api/listing-updates/55",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -13879,9 +13879,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/milestones",
+							"raw": "{{URL}}/api/milestones",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -13897,9 +13897,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/milestones",
+									"raw": "{{URL}}/api/milestones",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -13947,9 +13947,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/milestones/1",
+							"raw": "{{URL}}/api/milestones/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -13966,9 +13966,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/milestones/132",
+									"raw": "{{URL}}/api/milestones/132",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -14015,9 +14015,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/milestones/1",
+									"raw": "{{URL}}/api/milestones/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -14087,9 +14087,9 @@
 							"raw": "{\n\t\"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\",\n\t\"description\": \"First $1000 raised! Raised our 1st $1000 for our benficiary in our 1st ever flag drive.\",\n\t\"date\": \"2020-01-30 16:45:43.41585+08\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/milestones",
+							"raw": "{{URL}}/api/milestones",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -14116,9 +14116,9 @@
 									"raw": "{\n\t\"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\",\n\t\"description\": \"First $1000 raised! Raised our 1st $1000 for our benficiary in our 1st ever flag drive.\",\n\t\"date\": \"2020-01-30 16:45:43.41585+08\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/milestones",
+									"raw": "{{URL}}/api/milestones",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -14211,9 +14211,9 @@
 									"raw": "{\n\t\"listing_id\": 1,\n\t\"description\": \" \",\n\t\"date\": \"2020-01-30 16:45:43.41585+08\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/milestones",
+									"raw": "{{URL}}/api/milestones",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -14282,9 +14282,9 @@
 							"raw": "{\n\t\"description\": \"New Milestone Achieved!\",\n\t\"date\": \"2020-03-04 16:45:43.41585+08\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/milestones/1",
+							"raw": "{{URL}}/api/milestones/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -14312,9 +14312,9 @@
 									"raw": "{\n\t\"description\": \"New Milestone Achieved!\",\n\t\"date\": \"2020-03-04 16:45:43.41585+08\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/milestones/1",
+									"raw": "{{URL}}/api/milestones/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -14372,9 +14372,9 @@
 									"raw": "{\n\t\"description\": \"New Milestone Achieved!\",\n\t\"date\": \"12341234\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/milestones/1",
+									"raw": "{{URL}}/api/milestones/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -14432,9 +14432,9 @@
 									"raw": "{\n\t\"description\": \"New Milestone Achieved!\",\n\t\"date\": \"2020-03-04 16:45:43.41585+08\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/milestones/132",
+									"raw": "{{URL}}/api/milestones/132",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -14501,9 +14501,9 @@
 							}
 						],
 						"url": {
-							"raw": "https://kampong.app/api/milestones/1",
+							"raw": "{{URL}}/api/milestones/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -14528,9 +14528,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/milestones/1",
+									"raw": "{{URL}}/api/milestones/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -14585,9 +14585,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/milestones/144",
+									"raw": "{{URL}}/api/milestones/144",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -14665,9 +14665,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/milestones",
+							"raw": "{{URL}}/api/milestones",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -14683,9 +14683,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/hashtags",
+									"raw": "{{URL}}/api/hashtags",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -14733,9 +14733,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/hashtags/1",
+							"raw": "{{URL}}/api/hashtags/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -14752,9 +14752,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/hashtags/132",
+									"raw": "{{URL}}/api/hashtags/132",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -14801,9 +14801,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/hashtags/1",
+									"raw": "{{URL}}/api/hashtags/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -14873,9 +14873,9 @@
 							"raw": "{\n\t\"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\",\n\t\"tag\": \"#shine-a-light\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/hashtags",
+							"raw": "{{URL}}/api/hashtags",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -14902,9 +14902,9 @@
 									"raw": "{\n\t\"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\",\n\t\"tag\": \"#shine-a-light\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/hashtags",
+									"raw": "{{URL}}/api/hashtags",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -14997,9 +14997,9 @@
 									"raw": "{\n\t\"listing_id\": 1,\n\t\"description\": \" \",\n\t\"date\": \"2020-01-30 16:45:43.41585+08\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/milestones",
+									"raw": "{{URL}}/api/milestones",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -15068,9 +15068,9 @@
 							"raw": "{\n\t\"tag\": \"#hello\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/hashtags/1",
+							"raw": "{{URL}}/api/hashtags/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -15098,9 +15098,9 @@
 									"raw": "{\n\t\"tag\": \"#hello\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/hashtags/1",
+									"raw": "{{URL}}/api/hashtags/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -15164,9 +15164,9 @@
 									}
 								},
 								"url": {
-									"raw": "https://kampong.app/api/hashtags/132",
+									"raw": "{{URL}}/api/hashtags/132",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -15233,9 +15233,9 @@
 							}
 						],
 						"url": {
-							"raw": "https://kampong.app/api/hashtags/1",
+							"raw": "{{URL}}/api/hashtags/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -15260,9 +15260,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/hashtags/123",
+									"raw": "{{URL}}/api/hashtags/123",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -15317,9 +15317,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/hashtags/1",
+									"raw": "{{URL}}/api/hashtags/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -15397,9 +15397,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/skills",
+							"raw": "{{URL}}/api/skills",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -15415,9 +15415,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/skills",
+									"raw": "{{URL}}/api/skills",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -15465,9 +15465,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/skills/1",
+							"raw": "{{URL}}/api/skills/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -15484,9 +15484,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/skills/101",
+									"raw": "{{URL}}/api/skills/101",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -15533,9 +15533,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/skills/1",
+									"raw": "{{URL}}/api/skills/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -15605,9 +15605,9 @@
 							"raw": "{\n\t\"skill\": \"Microsoft Powerpoint\",\n\t\"skill_group\": \"Microsoft Office Tools\",\n    \"skill_description\": \"Proficient in Microsoft Office apps\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/skills",
+							"raw": "{{URL}}/api/skills",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -15634,9 +15634,9 @@
 									"raw": "{\n\t\"skill\": \"Microsoft Powerpoint\",\n\t\"skill_group\": \"Microsoft Office Tools\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/skills",
+									"raw": "{{URL}}/api/skills",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -15729,9 +15729,9 @@
 									"raw": "{\n\t\"skill\": \"$ making\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/skills",
+									"raw": "{{URL}}/api/skills",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -15788,9 +15788,9 @@
 									"raw": "{\n\t\"skill\": \"Microsoft Powerpoint\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/skills",
+									"raw": "{{URL}}/api/skills",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -15859,9 +15859,9 @@
 							"raw": "{\n\t\"skill\": \"Microsoft Word\",\n\t\"skill_group\": \"Microsoft Suite\",\n    \"skill_description\": \"Microsoft suite of apps\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/skills/1",
+							"raw": "{{URL}}/api/skills/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -15889,9 +15889,9 @@
 									"raw": "{\n\t\"skill\": \"Microsoft Word\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/skills/1",
+									"raw": "{{URL}}/api/skills/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -15949,9 +15949,9 @@
 									"raw": "{\n\t\"skill\": \"Microsoft Word\",\n\t\"skill_group\": \"Microsoft Suite\",\n    \"skill_description\": \"Microsoft suite of apps\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/skills/1",
+									"raw": "{{URL}}/api/skills/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -16045,9 +16045,9 @@
 									"raw": "{\n\t\"skill\": \"#programming\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/skills/1",
+									"raw": "{{URL}}/api/skills/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -16114,9 +16114,9 @@
 							}
 						],
 						"url": {
-							"raw": "https://kampong.app/api/skills/1",
+							"raw": "{{URL}}/api/skills/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -16141,9 +16141,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/skills/1",
+									"raw": "{{URL}}/api/skills/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -16198,9 +16198,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/skills/1",
+									"raw": "{{URL}}/api/skills/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -16255,9 +16255,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/skills/100",
+									"raw": "{{URL}}/api/skills/100",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -16335,9 +16335,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/faqs",
+							"raw": "{{URL}}/api/faqs",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -16353,9 +16353,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/faqs",
+									"raw": "{{URL}}/api/faqs",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -16403,9 +16403,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/faqs/1",
+							"raw": "{{URL}}/api/faqs/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -16422,9 +16422,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/faqs/1",
+									"raw": "{{URL}}/api/faqs/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -16471,9 +16471,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/faqs/100",
+									"raw": "{{URL}}/api/faqs/100",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -16543,9 +16543,9 @@
 							"raw": "{\n\t\"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\",\n\t\"question\": \"What roles are available for me?\",\n\t\"answer\": \"Refer to our job listings for the latest roles!\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/faqs",
+							"raw": "{{URL}}/api/faqs",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -16572,9 +16572,9 @@
 									"raw": "{\n\t\"question\": \"What roles are available for me?\",\n\t\"answer\": \"Refer to our job listings for the latest roles!\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/faqs",
+									"raw": "{{URL}}/api/faqs",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -16631,9 +16631,9 @@
 									"raw": "{\n\t\"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\",\n\t\"question\": \"What roles are available for me?\",\n\t\"answer\": \"Refer to our job listings for the latest roles!\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/faqs",
+									"raw": "{{URL}}/api/faqs",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -16726,9 +16726,9 @@
 									"raw": "{\n\t\"listing_id\": 1,\n\t\"question\": \"What roles are available for me?\",\n\t\"answer\": \"Refer to our job listings for the latest roles!\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/faqs",
+									"raw": "{{URL}}/api/faqs",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -16797,9 +16797,9 @@
 							"raw": "{\n\t\"question\": \"What is the commitment like?\",\n\t\"answer\": \"It varies! Refer to our individual job listings for more details!\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/faqs/1",
+							"raw": "{{URL}}/api/faqs/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -16827,9 +16827,9 @@
 									"raw": "{\n\t\"question\": \"What is the commitment like?\",\n\t\"answer\": \"It varies! Refer to our individual job listings for more details!\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/faqs/100",
+									"raw": "{{URL}}/api/faqs/100",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -16887,9 +16887,9 @@
 									"raw": "{\n\t\"question\": \"What is the commitment like?\",\n\t\"answer\": \"It varies! Refer to our individual job listings for more details!\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/faqs/1",
+									"raw": "{{URL}}/api/faqs/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -16947,9 +16947,9 @@
 									"raw": "{\n\t\"question\": \"What is the commitment like?\",\n\t\"answer\": \"It varies! Refer to our individual job listings for more details!\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/faqs/1",
+									"raw": "{{URL}}/api/faqs/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -17016,9 +17016,9 @@
 							}
 						],
 						"url": {
-							"raw": "https://kampong.app/api/faqs/1",
+							"raw": "{{URL}}/api/faqs/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -17043,9 +17043,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/faqs/1",
+									"raw": "{{URL}}/api/faqs/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -17100,9 +17100,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/faqs/1",
+									"raw": "{{URL}}/api/faqs/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -17157,9 +17157,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/faqs/100",
+									"raw": "{{URL}}/api/faqs/100",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -17237,9 +17237,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/jobs",
+							"raw": "{{URL}}/api/jobs",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -17255,9 +17255,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/jobs",
+									"raw": "{{URL}}/api/jobs",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -17305,9 +17305,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/jobs/1",
+							"raw": "{{URL}}/api/jobs/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -17324,9 +17324,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/jobs/1",
+									"raw": "{{URL}}/api/jobs/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -17396,9 +17396,9 @@
 							"raw": "{\n\t\"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\",\n\t\"job_title\": \"Social Media Manager\",\n\t\"job_description\": \"Manage our social media outreach on Facebook, Instagram and LinkedIn.\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/jobs",
+							"raw": "{{URL}}/api/jobs",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -17425,9 +17425,9 @@
 									"raw": "{\n\t\"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\",\n\t\"job_title\": \"Social Media Manager\",\n\t\"job_description\": \"Manage our social media outreach on Facebook, Instagram and LinkedIn.\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/jobs",
+									"raw": "{{URL}}/api/jobs",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -17520,9 +17520,9 @@
 									"raw": "{\n\t\"listing_id\": 1,\n\t\"job_title\": \"Social Media Manager\",\n\t\"job_description\": \"Manage our social media outreach on Facebook, Instagram and LinkedIn.\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/jobs",
+									"raw": "{{URL}}/api/jobs",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -17579,9 +17579,9 @@
 									"raw": "{\n\t\"listing_id\": 1,\n\t\"job_title\": \"\",\n\t\"job_description\": \"Manage our social media outreach on Facebook, Instagram and LinkedIn.\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/jobs",
+									"raw": "{{URL}}/api/jobs",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -17650,9 +17650,9 @@
 							"raw": "{\n\t\"job_title\": \"Partnership Associate\",\n\t\"job_description\": \"Manage our intitiatives various stakeholders, and source for new partnerships.\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/jobs/1",
+							"raw": "{{URL}}/api/jobs/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -17680,9 +17680,9 @@
 									"raw": "{\n\t\"job_title\": \"  \",\n\t\"job_description\": \"Manage our intitiatives various stakeholders, and source for new partnerships.\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/jobs/1",
+									"raw": "{{URL}}/api/jobs/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -17740,9 +17740,9 @@
 									"raw": "{\n\t\"job_title\": \"Partnership Associate\",\n\t\"job_description\": \"Manage our intitiatives various stakeholders, and source for new partnerships.\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/jobs/2",
+									"raw": "{{URL}}/api/jobs/2",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -17800,9 +17800,9 @@
 									"raw": "{\n\t\"job_title\": \"Partnership Associate\",\n\t\"job_description\": \"Manage our intitiatives various stakeholders, and source for new partnerships.\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/jobs/1",
+									"raw": "{{URL}}/api/jobs/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -17860,9 +17860,9 @@
 									"raw": "{\n\t\"job_title\": \"Partnership Associate\",\n\t\"job_description\": \"Manage our intitiatives various stakeholders, and source for new partnerships.\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/jobs/1",
+									"raw": "{{URL}}/api/jobs/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -17929,9 +17929,9 @@
 							}
 						],
 						"url": {
-							"raw": "https://kampong.app/api/jobs/1/deactivate",
+							"raw": "{{URL}}/api/jobs/1/deactivate",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -17957,9 +17957,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/jobs/1/deactivate",
+									"raw": "{{URL}}/api/jobs/1/deactivate",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -18015,9 +18015,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/jobs/2/deactivate",
+									"raw": "{{URL}}/api/jobs/2/deactivate",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -18085,9 +18085,9 @@
 							}
 						],
 						"url": {
-							"raw": "https://kampong.app/api/jobs/1",
+							"raw": "{{URL}}/api/jobs/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -18112,9 +18112,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/jobs/2",
+									"raw": "{{URL}}/api/jobs/2",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -18169,9 +18169,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/jobs/1",
+									"raw": "{{URL}}/api/jobs/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -18226,9 +18226,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/jobs/100",
+									"raw": "{{URL}}/api/jobs/100",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -18306,9 +18306,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/likes",
+							"raw": "{{URL}}/api/likes",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -18324,9 +18324,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/likes",
+									"raw": "{{URL}}/api/likes",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -18374,9 +18374,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/likes/1",
+							"raw": "{{URL}}/api/likes/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -18393,9 +18393,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/likes/100",
+									"raw": "{{URL}}/api/likes/100",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -18442,9 +18442,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/likes/1",
+									"raw": "{{URL}}/api/likes/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -18514,9 +18514,9 @@
 							"raw": "{\n\t\"listing_id\": \"d95a6c2e-3c33-447c-be0c-be399247dd3f\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/likes",
+							"raw": "{{URL}}/api/likes",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -18543,9 +18543,9 @@
 									"raw": "{\n\t\"listing_id\": 2\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/likes",
+									"raw": "{{URL}}/api/likes",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -18602,9 +18602,9 @@
 									"raw": "{\n\t\"listing_id\": 231\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/likes",
+									"raw": "{{URL}}/api/likes",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -18661,9 +18661,9 @@
 									"raw": "{\n\t\"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/likes",
+									"raw": "{{URL}}/api/likes",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -18765,9 +18765,9 @@
 							}
 						],
 						"url": {
-							"raw": "https://kampong.app/api/likes/1",
+							"raw": "{{URL}}/api/likes/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -18792,9 +18792,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/likes/1",
+									"raw": "{{URL}}/api/likes/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -18849,9 +18849,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/likes/3",
+									"raw": "{{URL}}/api/likes/3",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -18906,9 +18906,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/likes/1",
+									"raw": "{{URL}}/api/likes/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -18963,9 +18963,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/likes/3",
+									"raw": "{{URL}}/api/likes/3",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -19043,9 +19043,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/participants",
+							"raw": "{{URL}}/api/participants",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -19061,9 +19061,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/participants",
+									"raw": "{{URL}}/api/participants",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -19111,9 +19111,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/participants/1",
+							"raw": "{{URL}}/api/participants/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -19130,9 +19130,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/participants/123",
+									"raw": "{{URL}}/api/participants/123",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -19179,9 +19179,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/participants/1",
+									"raw": "{{URL}}/api/participants/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -19251,9 +19251,9 @@
 							"raw": "{\n\t\"listing_id\": \"cf4adc93-3b96-4bbc-8cb0-41e196b145ac\",\n\t\"user_id\": \"f96b2138-1754-4c17-a405-940e20adc601\",\n\t\"joined_on\": \"2019-07-17 15:14:05.023357+08\",\n\t\"end_on\": \"2020-07-17 15:14:05.023357+08\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/participants",
+							"raw": "{{URL}}/api/participants",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -19280,9 +19280,9 @@
 									"raw": "{\n\t\"listing_id\": \"43824166-bee2-426e-8a08-ca2c4e4120ae\",\n\t\"user_id\": \"2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb\",\n\t\"joined_on\": \"2019-07-17 15:14:05.023357+08\",\n\t\"end_on\": \"2020-07-17 15:14:05.023357+08\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/participants",
+									"raw": "{{URL}}/api/participants",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -19375,9 +19375,9 @@
 									"raw": "{\n\t\"listing_id\": 2,\n\t\"user_id\": 5,\n\t\"joined_on\": \"2019-07-17 15:14:05.023357+08\",\n\t\"end_on\": \"2020-07-17 15:14:05.023357+08\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/participants",
+									"raw": "{{URL}}/api/participants",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -19434,9 +19434,9 @@
 									"raw": "{\n\t\"listing_id\": 2,\n\t\"user_id\": 5,\n\t\"joined_on\": \"2019-07-17 15:14:05.023357+08\",\n\t\"end_on\": \"2020-07-17 15:14:05.023357+08\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/participants",
+									"raw": "{{URL}}/api/participants",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -19505,9 +19505,9 @@
 							"raw": "{\n\t\"joined_on\": \"2019-07-17 15:14:05.023357+08\",\n\t\"end_on\": \"2020-07-17 15:14:05.023357+08\"\n}"
 						},
 						"url": {
-							"raw": "https://kampong.app/api/participants/1",
+							"raw": "{{URL}}/api/participants/1",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -19535,9 +19535,9 @@
 									"raw": "{\n\t\"joined_on\": \"2019-07-17 15:14:05.023357+08\",\n\t\"end_on\": \"2020-07-17 15:14:05.023357+08\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/participants/2",
+									"raw": "{{URL}}/api/participants/2",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -19595,9 +19595,9 @@
 									"raw": "{\n\t\"joined_on\": \"2019-07-17 15:14:05.023357+08\",\n\t\"end_on\": \"2020-07-17 15:14:05.023357+08\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/participants/1",
+									"raw": "{{URL}}/api/participants/1",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -19655,9 +19655,9 @@
 									"raw": "{\n\t\"joined_on\": \"2019-07-17 15:14:05.023357+08\",\n\t\"end_on\": \"2020-07-17 15:14:05.023357+08\"\n}"
 								},
 								"url": {
-									"raw": "https://kampong.app/api/participants/132",
+									"raw": "{{URL}}/api/participants/132",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -19724,9 +19724,9 @@
 							}
 						],
 						"url": {
-							"raw": "https://kampong.app/api/participants/11",
+							"raw": "{{URL}}/api/participants/11",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -19751,9 +19751,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/participants/21",
+									"raw": "{{URL}}/api/participants/21",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -19808,9 +19808,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/participants/231",
+									"raw": "{{URL}}/api/participants/231",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -19865,9 +19865,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://kampong.app/api/participants/2",
+									"raw": "{{URL}}/api/participants/2",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -19955,9 +19955,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/jobs/all",
+							"raw": "{{URL}}/api/jobs/all",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -19974,9 +19974,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/jobs/all",
+									"raw": "{{URL}}/api/jobs/all",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -20035,9 +20035,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/jobs/all",
+							"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/jobs/all",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -20056,9 +20056,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/231/jobs/all",
+									"raw": "{{URL}}/api/listings/231/jobs/all",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -20107,9 +20107,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/jobs/all",
+									"raw": "{{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/jobs/all",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -20206,9 +20206,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://kampong.app/api/listings/all",
+							"raw": "{{URL}}/api/listings/all",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -20225,9 +20225,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://kampong.app/api/listings/all",
+									"raw": "{{URL}}/api/listings/all",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -20314,9 +20314,9 @@
 							]
 						},
 						"url": {
-							"raw": "https://kampong.app/api/file-upload",
+							"raw": "{{URL}}/api/file-upload",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -20350,9 +20350,9 @@
 									]
 								},
 								"url": {
-									"raw": "https://kampong.app/api/file-upload",
+									"raw": "{{URL}}/api/file-upload",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
@@ -20437,9 +20437,9 @@
 							]
 						},
 						"url": {
-							"raw": "https://kampong.app/api/file-upload/multi",
+							"raw": "{{URL}}/api/file-upload/multi",
 							"host": [
-								"https://kampong.app"
+								"{{URL}}"
 							],
 							"path": [
 								"api",
@@ -20481,9 +20481,9 @@
 									]
 								},
 								"url": {
-									"raw": "https://kampong.app/api/file-upload/multi",
+									"raw": "{{URL}}/api/file-upload/multi",
 									"host": [
-										"https://kampong.app"
+										"{{URL}}"
 									],
 									"path": [
 										"api",
