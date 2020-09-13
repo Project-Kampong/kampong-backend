@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 -   BREAKING: Route naming for all auth endpoints changed to kebab case to adhere to convention.
+-   Update backend structure to fit new DevOps workflow for both frontend and backend. This repo no longer stores frontend build.
 
 ### [v0.1.2b] - 2020-09-03
 
