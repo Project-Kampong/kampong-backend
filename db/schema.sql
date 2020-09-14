@@ -161,6 +161,7 @@ CREATE TABLE Listings (
 	mission TEXT,
 	listing_url VARCHAR,
 	listing_email VARCHAR(320),
+	listing_status VARCHAR,
 	pic1 VARCHAR,
 	pic2 VARCHAR,
 	pic3 VARCHAR,
