@@ -15,4 +15,4 @@ exports.INVALID_PASSWORD_MSG =
 
 exports.NO_FIELD_UPDATED_MSG = 'At least one field must be updated';
 
-exports.INVALID_LISTING_STATUS_MSG = 'Listing status can only be "Ongoing" or "Complete"';
+exports.INVALID_LISTING_STATUS_MSG = 'Listing status can only be "Ongoing" or "Completed"';
