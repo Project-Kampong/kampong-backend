@@ -9,6 +9,7 @@ const {
     INVALID_EMAIL_MSG,
     INVALID_BOOLEAN_MSG,
     INVALID_TIMESTAMP_MSG,
+    INVALID_LISTING_STATUS_MSG,
     uploadFile,
 } = require('../../utils');
 

@@ -14,3 +14,5 @@ exports.INVALID_PASSWORD_MSG =
     'Please enter a password with 8-25 characters, at least 1 uppercase letter, 1 lowercase letter and 1 special character';
 
 exports.NO_FIELD_UPDATED_MSG = 'At least one field must be updated';
+
+exports.INVALID_LISTING_STATUS_MSG = 'Listing status can only be "Ongoing" or "Complete"';
