@@ -70,7 +70,7 @@ yarn dev
 
 API Documentation is found [here](https://kampong.app/api-docs).
 
-The Postman API Collection is available [here](https://github.com/Project-Kampong/kampong-backend/blob/master/public/index.html), and can be imported into your Postman API client for API testing.
+The Postman API Collection is available [here](https://github.com/Project-Kampong/kampong-backend/blob/master/public/api-docs/index.html), and can be imported into your Postman API client for API testing.
 
 Database schema diagram can be found [here](https://github.com/Project-Kampong/kampong-backend/blob/master/public/kampong-er-diagram.png).
 

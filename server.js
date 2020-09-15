@@ -63,30 +63,10 @@ app.use(errorHandler);
 app.use(express.static('client/build'));
 app.use(express.static(__dirname + '/public'));
 
-const apiDocsPath = path.resolve(__dirname, 'public', 'api-docs.html');
-
-app.get('/api-docs', (req, res) => {
-    res.sendFile(apiDocsPath);
-});
-
-app.get('/about', (req, res) => {
-    const aboutPath = path.resolve(__dirname, 'public', 'about', 'index.html');
-    res.sendFile(aboutPath);
-});
-
-app.get('/story', (req, res) => {
-    const storyPath = path.resolve(__dirname, 'public', 'about', 'story.html');
-    res.sendFile(storyPath);
-});
-
-app.get('/team', (req, res) => {
-    const teamPath = path.resolve(__dirname, 'public', 'about', 'team.html');
-    res.sendFile(teamPath);
-});
-
 // Serve frontend homepage
 app.get('*', (req, res) => {
     const homePath = path.resolve(__dirname, 'client', 'build', 'index.html');
+    const apiDocsPath = path.resolve(__dirname, 'public', 'api-docs', 'index.html');
     const pathToServe = fs.existsSync(homePath) ? homePath : apiDocsPath;
     res.sendFile(pathToServe);
 });
