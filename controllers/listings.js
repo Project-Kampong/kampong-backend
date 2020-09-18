@@ -320,10 +320,11 @@ exports.uploadListingPics = asyncHandler(async (req, res, next) => {
 exports.searchListings = asyncHandler(async (req, res) => {
     let { keyword = '', limit } = req.query;
     limit = isNil(limit) || isNaN(limit) ? 10 : parseInt(limit);
-    const data = { keyword: keyword.toLowerCase(), limit };
+    const data = { keyword: keyword.split(',').join(' | '), limit, whitespace: ' ' };
 
     const rows = await db.manyOrNone(
-        `SELECT * FROM listingsview WHERE LOWER(title) LIKE '%${data.keyword}%' OR LOWER(category) LIKE '%${data.keyword}%' OR '%${data.keyword}%' LIKE ANY(locations) LIMIT ${data.limit}`,
+        'SELECT * FROM listingsview WHERE to_tsvector(title) @@ to_tsquery(${keyword}) OR to_tsvector(category) @@ to_tsquery(${keyword}) OR to_tsvector(array_to_string(locations::text[], ${whitespace})) @@ to_tsquery(${keyword}) LIMIT ${limit}',
+        data,
     );
 
     res.status(200).json({
