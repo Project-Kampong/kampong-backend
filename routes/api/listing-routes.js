@@ -24,7 +24,7 @@ const {
     deleteListing,
     deactivateListing,
     uploadListingPics,
-    searchListingsByTitle,
+    searchListings,
 } = require('../../controllers/listings');
 
 // Include other resource's controllers to access their endpoints
@@ -99,9 +99,8 @@ const validateUpdateListingFields = [
 ];
 
 const validateVerifyListingFields = [check('is_verified', INVALID_BOOLEAN_MSG('is_verified')).isBoolean()];
-const validateSearchByTitleFields = [
-    query('title', INVALID_FIELD_MSG('title')).exists(),
-    query('sensitivity', INVALID_FIELD_MSG('sensitivity')).optional().isNumeric(),
+const validateSearchListingsFields = [
+    query('keyword', INVALID_FIELD_MSG('keyword')).exists(),
     query('limit', INVALID_FIELD_MSG('limit')).optional().isNumeric(),
 ];
 
@@ -119,7 +118,7 @@ router
     );
 
 router.route('/owner').get(getAllListingsOwnedByUser);
-router.route('/search-title').get(validateSearchByTitleFields, checkInputError, searchListingsByTitle);
+router.route('/search').get(validateSearchListingsFields, checkInputError, searchListings);
 router.route('/all').get(protect, authorise('admin'), advancedResults('listings'), getListingsAll);
 
 router.route('/:id').get(getListing);

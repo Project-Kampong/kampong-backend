@@ -7,9 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
+### [v0.1.4] - 2020-09-19
+
 ### Added
 
 -   Static 'About Us' pages
+
+### Changed
+
+-   Landing page search will now search by title, category and locations using full text search.
 
 ### [v0.1.3] - 2020-09-13
 
@@ -172,8 +178,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Internal, dev-only test routes and methods.
 -   API documentation temporarily set up as front-end page to be served, for ease of testing by frontend.
 
-[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.1.3...HEAD
-[v0.1.2b]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.1.3
+[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.1.4...HEAD
+[v0.1.4]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.1.4
+[v0.1.3]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.1.3
 [v0.1.2b]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.1.2b
 [v0.1.1a]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.1.1a
 [v0.1.0b]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.1.0b

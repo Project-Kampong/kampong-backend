@@ -313,19 +313,17 @@ exports.uploadListingPics = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Search listings by title
- * @route   GET /api/listings/search-title?title=:title&sensitivity=:sensitivity&limit=:limit
+ * @desc    Search listings by title, category or location
+ * @route   GET /api/listings/search?keyword=:keyword&limit=:limit
  * @access  Public
  */
-exports.searchListingsByTitle = asyncHandler(async (req, res) => {
-    let { title = '', sensitivity, limit } = req.query;
-    sensitivity = isNil(sensitivity) || isNaN(sensitivity) ? 10 : parseInt(sensitivity);
+exports.searchListings = asyncHandler(async (req, res) => {
+    let { keyword = '', limit } = req.query;
     limit = isNil(limit) || isNaN(limit) ? 10 : parseInt(limit);
-    const data = { title, sensitivity, limit };
-    cleanseData(data);
+    const data = { keyword: keyword.split(',').join(' | '), limit, whitespace: ' ' };
 
     const rows = await db.manyOrNone(
-        'SELECT * FROM listings WHERE levenshtein(title, ${title}) <= ${sensitivity} ORDER BY levenshtein(title, ${title}) LIMIT ${limit}',
+        'SELECT * FROM listingsview WHERE to_tsvector(title) @@ to_tsquery(${keyword}) OR to_tsvector(category) @@ to_tsquery(${keyword}) OR to_tsvector(array_to_string(locations::text[], ${whitespace})) @@ to_tsquery(${keyword}) LIMIT ${limit}',
         data,
     );
 
