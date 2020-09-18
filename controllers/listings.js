@@ -320,11 +320,10 @@ exports.uploadListingPics = asyncHandler(async (req, res, next) => {
 exports.searchListings = asyncHandler(async (req, res) => {
     let { keyword = '', limit } = req.query;
     limit = isNil(limit) || isNaN(limit) ? 10 : parseInt(limit);
-    const data = { keyword, limit };
+    const data = { keyword: keyword.toLowerCase(), limit };
 
     const rows = await db.manyOrNone(
-        'SELECT * FROM listings WHERE title LIKE ${keyword} OR category LIKE ${keyword} UNION SELECT * FROM listings ls JOIN listinglocations lsl ON ls.listing_id = lsl.listing_id LIMIT ${limit}',
-        data,
+        `SELECT * FROM listingsview WHERE LOWER(title) LIKE '%${data.keyword}%' OR LOWER(category) LIKE '%${data.keyword}%' OR '%${data.keyword}%' LIKE ANY(locations) LIMIT ${data.limit}`,
     );
 
     res.status(200).json({
