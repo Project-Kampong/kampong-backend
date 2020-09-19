@@ -45,44 +45,6 @@ As part of the Singapore''s TogetherSG movement, having a shared central network
 ('d95a6c2e-3c33-447c-be0c-be399247dd3f', NULL, NULL, NULL, NULL),
 ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'Integrated fresh-thinking parallelism', 'Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.', 'Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.', 'neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo');
 
-/* Skills mock data population */
-INSERT INTO "public"."skills" ("skill", "skill_group") VALUES
-('Needs Analysis', 'Big Data Analysis'),
-('Quantitative Research', 'Big Data Analysis'),
-('Statistical Analysis', 'Big Data Analysis'),
-('Compiling Statistics', 'Big Data Analysis'),
-('Database Management', 'Big Data Analysis'),
-('Modeling', 'Big Data Analysis'),
-('Data Analytics', 'Big Data Analysis'),
-('Phone Applications', 'Coding and Programming'),
-('Design UIUX', 'Coding and Programming'),
-('Website Building', 'Coding and Programming'),
-('Benchmarking', 'Project Management'),
-('Budget Planning', 'Project Management'),
-('Operations', 'Project Management'),
-('Quality Assurance', 'Project Management'),
-('Scheduling', 'Project Management'),
-('Fund Raiser', 'Project Management'),
-('Administrative', 'Project Management'),
-('Microsoft Office Skills', 'Project Management'),
-('Negotiations', 'Project Management'),
-('Public Speaking', 'Project Management'),
-('Content Management System', 'Social Media Experience'),
-('Digital Marketing', 'Social Media Experience'),
-('Networking', 'Social Media Experience'),
-('Search Engine Optimisation', 'Social Media Experience'),
-('Social Media Platforms', 'Social Media Experience'),
-('Web Analytics', 'Social Media Experience'),
-('Sales', 'Social Media Experience'),
-('Automated Marketing Software', 'Social Media Experience'),
-('Graphic Design', 'Social Media Experience'),
-('Research', 'Writing'),
-('Emails', 'Writing'),
-('Client Relations', 'Writing'),
-('Technical Documentation', 'Writing'),
-('Requirements Gathering', 'Writing');
-
-
 insert into ProfileSkills (user_id, skill_id) values ('f96b2138-1754-4c17-a405-940e20adc601', 1);
 insert into ProfileSkills (user_id, skill_id) values ('f96b2138-1754-4c17-a405-940e20adc601', 2);
 insert into ProfileSkills (user_id, skill_id) values ('f96b2138-1754-4c17-a405-940e20adc601', 3);
@@ -247,7 +209,7 @@ insert into ListingComments (listing_id, user_id, comment, reply_to_id, created_
 insert into ListingComments (listing_id, user_id, comment, reply_to_id, created_on, updated_on) values ('c975a572-452d-4824-8ed5-500b50488436', 'd69a127d-815b-4834-b2b6-54ab398fccad', 'deliver frictionless infrastructures', 2, '2019-10-30 00:32:01', '2020-04-27 21:18:40');
 insert into ListingComments (listing_id, user_id, comment, reply_to_id, created_on, updated_on) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'f997120c-2956-482e-9ba3-81a12b4fecc1', 'recontextualize leading-edge networks', 3, '2020-06-24 21:21:47', '2020-06-21 01:48:47');
 insert into ListingComments (listing_id, user_id, comment, reply_to_id, created_on, updated_on) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'f997120c-2956-482e-9ba3-81a12b4fecc1', 'orchestrate intuitive deliverables', 11, '2019-10-05 15:40:48', '2020-06-08 19:49:10');
-insert into ListingComments (listing_id, user_id, comment, reply_to_id, created_on, updated_on) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 'f997120c-2956-482e-9ba3-81a12b4fecc1', 'orchestrate sexy ROI', null, '2020-04-02 05:24:48', '2019-12-27 16:54:38');
+insert into ListingComments (listing_id, user_id, comment, reply_to_id, created_on, updated_on) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 'f997120c-2956-482e-9ba3-81a12b4fecc1', 'orchestrate high achieving ROI', null, '2020-04-02 05:24:48', '2019-12-27 16:54:38');
 insert into ListingComments (listing_id, user_id, comment, reply_to_id, created_on, updated_on) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'f997120c-2956-482e-9ba3-81a12b4fecc1', 'brand end-to-end web services', null, '2020-05-23 01:54:34', '2020-06-20 12:56:02');
 insert into ListingComments (listing_id, user_id, comment, reply_to_id, created_on, updated_on) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'f997120c-2956-482e-9ba3-81a12b4fecc1', 'grow integrated systems', 11, '2020-05-15 20:35:48', '2019-11-08 04:23:03');
 insert into ListingComments (listing_id, user_id, comment, reply_to_id, created_on, updated_on) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', '2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb', 'implement innovative platforms', 11, '2020-06-17 09:31:57', '2020-07-06 02:43:45');

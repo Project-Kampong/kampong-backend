@@ -68,13 +68,15 @@ yarn dev
 
 ## Documentation
 
-API Documentation is found [here](https://kampong.app/api-docs).
+API Documentation
 
-The Postman API Collection is available [here](https://github.com/Project-Kampong/kampong-backend/blob/master/public/api-docs/index.html), and can be imported into your Postman API client for API testing.
+-   Supported and hosted live on Kampong: https://kampong.app/api-docs
+-   Latest, unreleased version [here](https://github.com/Project-Kampong/kampong-backend/blob/master/public/api-docs/index.md)
+
+The Postman API Collection is available [here](https://github.com/Project-Kampong/kampong-backend/blob/master/public/api-docs/kampong-api.json), and can be imported into your Postman API client for API testing.
 
 Database schema diagram can be found [here](https://github.com/Project-Kampong/kampong-backend/blob/master/public/kampong-er-diagram.png).
 
 ## License
 
--   Version: 1.0.0
 -   License: MIT
