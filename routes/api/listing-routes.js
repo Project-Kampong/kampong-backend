@@ -9,6 +9,7 @@ const {
     INVALID_EMAIL_MSG,
     INVALID_BOOLEAN_MSG,
     INVALID_TIMESTAMP_MSG,
+    INVALID_LISTING_STATUS_MSG,
     uploadFile,
 } = require('../../utils');
 
@@ -61,6 +62,7 @@ const validateCreateListingFields = [
     check('category', INVALID_FIELD_MSG('category')).trim().notEmpty(),
     check('listing_url', INVALID_FIELD_MSG('listing URL')).optional().isURL(),
     check('listing_email', INVALID_EMAIL_MSG).notEmpty().isEmail(),
+    check('listing_status', INVALID_LISTING_STATUS_MSG).notEmpty().isIn(['ongoing', 'completed']),
     check('is_published', INVALID_BOOLEAN_MSG('is_published')).optional().isBoolean(),
     check('start_date', INVALID_TIMESTAMP_MSG('start date')).optional().matches(DATETIME_REGEX),
     check('end_date', INVALID_TIMESTAMP_MSG('end date')).optional().matches(DATETIME_REGEX),
@@ -77,6 +79,7 @@ const validateUpdateListingFields = [
             check('mission').exists(),
             check('listing_url').exists(),
             check('listing_email').exists(),
+            check('listing_status').exists(),
             check('is_published').exists(),
             check('start_date').exists(),
             check('end_date').exists(),
@@ -93,6 +96,7 @@ const validateUpdateListingFields = [
     check('category', INVALID_FIELD_MSG('category')).optional().trim().notEmpty(),
     check('listing_url', INVALID_FIELD_MSG('listing URL')).optional().isURL(),
     check('listing_email', INVALID_EMAIL_MSG).optional().isEmail(),
+    check('listing_status', INVALID_LISTING_STATUS_MSG).optional().isIn(['ongoing', 'completed']),
     check('is_published', INVALID_BOOLEAN_MSG('is_published')).optional().isBoolean(),
     check('start_date', INVALID_TIMESTAMP_MSG('start date')).optional().matches(DATETIME_REGEX),
     check('end_date', INVALID_TIMESTAMP_MSG('end date')).optional().matches(DATETIME_REGEX),
