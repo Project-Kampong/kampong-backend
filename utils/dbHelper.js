@@ -1,4 +1,5 @@
 const path = require('path');
+const { get } = require('lodash');
 const { db, pgp } = require('../db/db');
 
 // Helper to remove undefined values in JSON object
@@ -8,8 +9,10 @@ exports.cleanseData = async (data) => {
 };
 
 exports.checkConn = async () => {
-    const res = await db.query(`select format('database: %s as user: %s',current_database(), user) db_info`);
-    console.log(`Connected to ${res[0].db_info}`.cyan.underline.bold);
+    const dbConnection = await db.connect();
+    const cp = get(dbConnection, 'client.connectionParameters', {});
+    console.log(`Connected to database: ${cp.database} on ${cp.host}:${cp.port} as user ${cp.user}`.cyan.underline.bold);
+    dbConnection.done();
 };
 
 // Helper for linking to external query files:
