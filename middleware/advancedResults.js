@@ -1,31 +1,33 @@
 const asyncHandler = require('./async');
 const { db, pgp } = require('../db/db');
 const { cleanseData } = require('../utils');
+const { isString, get } = require('lodash');
 
 /**
  * Handles select, sort, page, limit and filter request query params.
  * Request query params begin with '?' and separated by '&'
  * 2 additional arguments, join, and on, allow joins to be formed
  * given the table to be joined on, and the column common to both table to join on.
- * If id column is present, the first id column is used to generate the hashId.
- * Use of hashId from queries with multiple id field generated is discouraged,
- * as it may lead to unpredictable outcomes.
- * For select and sort queries, multiple values must be separated
+ * For select queries, multiple values must be separated
  * by commas, and in the order to be parsed as SQL query statements.
+ * Sort query:
+ * Max 1 field can be sorted, and sort order is indicated by a
+ * whitespace after the sort field with the keyword 'asc' or 'desc' (without single quotes).
+ * Will default to 'asc' if any value other than desc is given
  * Filter query:
  * In current implementation, filter queries can check for exact
  * matches on multiple values (separated by single ',').
- * In checking for string matches, it is optional to use ' to enclose string values.
- * Sample request query. ?select=name,password&sort=name,user_role&page=2&limit=2&name='Ron'
+ * In checking for string matches, it is optional to use ' to enclose string values as they will be ignored.
+ * Sample request query. ?select=name,password&sort=name desc&page=2&limit=2&name='Ron'
  * @param {String} model name of SQL table to query
- * @param {String} join name of SQL to form an SQL join with (optional)
+ * @param {String} join name of SQL table to form an SQL join with (optional)
  * @param {String} on column name common to both table to form an SQL join on (required if join is provided)
  */
 const advancedResults = (model, join, on) =>
     asyncHandler(async (req, res, next) => {
         let { select, sort, page = 1, limit = 25 } = req.query;
         select = select ? select.split(',') : '*';
-        sort = sort ? sort.split(',') : sort;
+        sort = isString(sort) ? parseSort(sort) : sort;
         page = parseInt(page);
         limit = parseInt(limit);
 
@@ -78,7 +80,7 @@ const advancedResults = (model, join, on) =>
 
         // Handle sort
         if (format.sort) {
-            query += 'ORDER BY ${sort:name} ';
+            query += 'ORDER BY ${sort.field:name} ${sort.order:raw} ';
         }
 
         // start and end entry number for a page
@@ -120,5 +122,15 @@ const advancedResults = (model, join, on) =>
 
         next();
     });
+
+const parseSort = (rawSortStr) => {
+    const sortAndOrderArr = rawSortStr.split(' ');
+    const orderStr = get(sortAndOrderArr, '1', 'asc');
+    const order = orderStr === 'desc' ? 'DESC' : 'ASC';
+    return {
+        field: sortAndOrderArr[0],
+        order,
+    };
+};
 
 module.exports = advancedResults;

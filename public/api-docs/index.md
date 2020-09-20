@@ -1,209 +1,219 @@
-# Kampong API v0.1.4
+
+# Kampong API
 
 Backend API for Project Kampong.
 
 ## Indices
 
--   [Admin-only Get Soft Deleted](#admin-only-get-soft-deleted)
+* [Admin-only Get Soft Deleted](#admin-only-get-soft-deleted)
 
-    -   [Get All Jobs Including Soft Deletes](#1-get-all-jobs-including-soft-deletes)
-    -   [Get All Jobs for a Listing Including Soft Deletes](#2-get-all-jobs-for-a-listing-including-soft-deletes)
-    -   [Get All Listings Including Soft Deletes](#3-get-all-listings-including-soft-deletes)
+  * [Get All Jobs Including Soft Deletes](#1-get-all-jobs-including-soft-deletes)
+  * [Get All Jobs for a Listing Including Soft Deletes](#2-get-all-jobs-for-a-listing-including-soft-deletes)
+  * [Get All Listings Including Soft Deletes](#3-get-all-listings-including-soft-deletes)
 
--   [Authentication](#authentication)
+* [Authentication](#authentication)
 
-    -   [Activate Account (via Email Confirmation)](<#1-activate-account-(via-email-confirmation)>)
-    -   [Forget Password](#2-forget-password)
-    -   [Get Logged In User via Token](#3-get-logged-in-user-via-token)
-    -   [Login Admin](#4-login-admin)
-    -   [Login User](#5-login-user)
-    -   [Logout User](#6-logout-user)
-    -   [Register User](#7-register-user)
-    -   [Resend Account Activation Email](#8-resend-account-activation-email)
-    -   [Reset Password](#9-reset-password)
-    -   [Update Details](#10-update-details)
-    -   [Update Password](#11-update-password)
+  * [Activate Account (via Email Confirmation)](#1-activate-account-(via-email-confirmation))
+  * [Forget Password](#2-forget-password)
+  * [Get Logged In User via Token](#3-get-logged-in-user-via-token)
+  * [Login Admin](#4-login-admin)
+  * [Login User](#5-login-user)
+  * [Logout User](#6-logout-user)
+  * [Register User](#7-register-user)
+  * [Resend Account Activation Email](#8-resend-account-activation-email)
+  * [Reset Password](#9-reset-password)
+  * [Update Details](#10-update-details)
+  * [Update Password](#11-update-password)
 
--   [Faqs](#faqs)
+* [Faqs](#faqs)
 
-    -   [Create Faq](#1-create-faq)
-    -   [Delete Faq](#2-delete-faq)
-    -   [Get All Faqs](#3-get-all-faqs)
-    -   [Get Single Faq](#4-get-single-faq)
-    -   [Update Faq](#5-update-faq)
+  * [Create Faq](#1-create-faq)
+  * [Delete Faq](#2-delete-faq)
+  * [Get All Faqs](#3-get-all-faqs)
+  * [Get Single Faq](#4-get-single-faq)
+  * [Update Faq](#5-update-faq)
 
--   [Featured Listings](#featured-listings)
+* [Featured Listings](#featured-listings)
 
-    -   [Create Featured Listing](#1-create-featured-listing)
-    -   [Delete Featured Listing](#2-delete-featured-listing)
-    -   [Get All Featured Listings](#3-get-all-featured-listings)
-    -   [Get Single Featured Listings](#4-get-single-featured-listings)
+  * [Create Featured Listing](#1-create-featured-listing)
+  * [Delete Featured Listing](#2-delete-featured-listing)
+  * [Get All Featured Listings](#3-get-all-featured-listings)
+  * [Get Single Featured Listings](#4-get-single-featured-listings)
 
--   [File Upload](#file-upload)
+* [File Upload](#file-upload)
 
-    -   [Multiple file upload](#1-multiple-file-upload)
-    -   [Single file upload](#2-single-file-upload)
+  * [Multiple file upload](#1-multiple-file-upload)
+  * [Single file upload](#2-single-file-upload)
 
--   [Hashtags](#hashtags)
+* [Hashtags](#hashtags)
 
-    -   [Create Hashtag](#1-create-hashtag)
-    -   [Delete Hashtag](#2-delete-hashtag)
-    -   [Get All Hashtags](#3-get-all-hashtags)
-    -   [Get Single Hashtag](#4-get-single-hashtag)
-    -   [Update Hashtag](#5-update-hashtag)
+  * [Create Hashtag](#1-create-hashtag)
+  * [Delete Hashtag](#2-delete-hashtag)
+  * [Get All Hashtags](#3-get-all-hashtags)
+  * [Get Single Hashtag](#4-get-single-hashtag)
+  * [Update Hashtag](#5-update-hashtag)
 
--   [Jobs](#jobs)
+* [Jobs](#jobs)
 
-    -   [Create Job](#1-create-job)
-    -   [Deactivate Job](#2-deactivate-job)
-    -   [Delete Job](#3-delete-job)
-    -   [Get All Jobs](#4-get-all-jobs)
-    -   [Get Single Job](#5-get-single-job)
-    -   [Update Job](#6-update-job)
+  * [Create Job](#1-create-job)
+  * [Deactivate Job](#2-deactivate-job)
+  * [Delete Job](#3-delete-job)
+  * [Get All Jobs](#4-get-all-jobs)
+  * [Get Single Job](#5-get-single-job)
+  * [Update Job](#6-update-job)
 
--   [Likes](#likes)
+* [Likes](#likes)
 
-    -   [Get All Likes](#1-get-all-likes)
-    -   [Get Single Like](#2-get-single-like)
-    -   [Like Listing](#3-like-listing)
-    -   [Unlike Listing](#4-unlike-listing)
+  * [Get All Likes](#1-get-all-likes)
+  * [Get Single Like](#2-get-single-like)
+  * [Like Listing](#3-like-listing)
+  * [Unlike Listing](#4-unlike-listing)
 
--   [Listing Comments](#listing-comments)
+* [Listing Comments](#listing-comments)
 
-    -   [Create Listing Comment](#1-create-listing-comment)
-    -   [Deactivate Listing Comment](#2-deactivate-listing-comment)
-    -   [Delete Listing Comment](#3-delete-listing-comment)
-    -   [Get All Children Comment for Listing Comment](#4-get-all-children-comment-for-listing-comment)
-    -   [Get All Listing Comments](#5-get-all-listing-comments)
-    -   [Get Single Listing Comment](#6-get-single-listing-comment)
-    -   [Update Listing Comment](#7-update-listing-comment)
+  * [Create Listing Comment](#1-create-listing-comment)
+  * [Deactivate Listing Comment](#2-deactivate-listing-comment)
+  * [Delete Listing Comment](#3-delete-listing-comment)
+  * [Get All Children Comment for Listing Comment](#4-get-all-children-comment-for-listing-comment)
+  * [Get All Listing Comments](#5-get-all-listing-comments)
+  * [Get Single Listing Comment](#6-get-single-listing-comment)
+  * [Update Listing Comment](#7-update-listing-comment)
 
--   [Listing Locations](#listing-locations)
+* [Listing Locations](#listing-locations)
 
-    -   [Create Listing Location](#1-create-listing-location)
-    -   [Delete Listing Location](#2-delete-listing-location)
-    -   [Get All Listing Locations](#3-get-all-listing-locations)
-    -   [Get Single Listing Location](#4-get-single-listing-location)
+  * [Create Listing Location](#1-create-listing-location)
+  * [Delete Listing Location](#2-delete-listing-location)
+  * [Get All Listing Locations](#3-get-all-listing-locations)
+  * [Get Single Listing Location](#4-get-single-listing-location)
 
--   [Listing Skills](#listing-skills)
+* [Listing Skills](#listing-skills)
 
-    -   [Create Custom Listing Skill](#1-create-custom-listing-skill)
-    -   [Create Listing Skill](#2-create-listing-skill)
-    -   [Delete Listing Skill](#3-delete-listing-skill)
-    -   [Get All Listing Skills](#4-get-all-listing-skills)
-    -   [Get Single Listing Skill](#5-get-single-listing-skill)
+  * [Create Custom Listing Skill](#1-create-custom-listing-skill)
+  * [Create Listing Skill](#2-create-listing-skill)
+  * [Delete Listing Skill](#3-delete-listing-skill)
+  * [Get All Listing Skills](#4-get-all-listing-skills)
+  * [Get Single Listing Skill](#5-get-single-listing-skill)
 
--   [Listing Stories](#listing-stories)
+* [Listing Stories](#listing-stories)
 
-    -   [Get All Listing Stories](#1-get-all-listing-stories)
-    -   [Get Single Listing Story](#2-get-single-listing-story)
-    -   [Update Listing Story](#3-update-listing-story)
+  * [Get All Listing Stories](#1-get-all-listing-stories)
+  * [Get Single Listing Story](#2-get-single-listing-story)
+  * [Update Listing Story](#3-update-listing-story)
 
--   [Listing Updates](#listing-updates)
+* [Listing Updates](#listing-updates)
 
-    -   [Create Listing Update](#1-create-listing-update)
-    -   [Delete Listing Update](#2-delete-listing-update)
-    -   [Get All Listing Updates](#3-get-all-listing-updates)
-    -   [Get Single Listing Update](#4-get-single-listing-update)
-    -   [Modify Listing Update](#5-modify-listing-update)
+  * [Create Listing Update](#1-create-listing-update)
+  * [Delete Listing Update](#2-delete-listing-update)
+  * [Get All Listing Updates](#3-get-all-listing-updates)
+  * [Get Single Listing Update](#4-get-single-listing-update)
+  * [Modify Listing Update](#5-modify-listing-update)
 
--   [Listings](#listings)
+* [Listings](#listings)
 
-    -   [Create Listing](#1-create-listing)
-    -   [Deactivate Listing](#2-deactivate-listing)
-    -   [Delete Listing](#3-delete-listing)
-    -   [Get All Faqs for a Listing](#4-get-all-faqs-for-a-listing)
-    -   [Get All Hashtags for a Listing](#5-get-all-hashtags-for-a-listing)
-    -   [Get All Jobs for a Listing](#6-get-all-jobs-for-a-listing)
-    -   [Get All Likes for a Listing](#7-get-all-likes-for-a-listing)
-    -   [Get All Listing Comments for a Listing](#8-get-all-listing-comments-for-a-listing)
-    -   [Get All Listing Locations for a Listing](#9-get-all-listing-locations-for-a-listing)
-    -   [Get All Listing Skills for a Listing](#10-get-all-listing-skills-for-a-listing)
-    -   [Get All Listing Updates for a Listing](#11-get-all-listing-updates-for-a-listing)
-    -   [Get All Listings](#12-get-all-listings)
-    -   [Get All Milestones for a Listing](#13-get-all-milestones-for-a-listing)
-    -   [Get All Participants for a Listing](#14-get-all-participants-for-a-listing)
-    -   [Get Single Listing](#15-get-single-listing)
-    -   [Search Listings](#16-search-listings)
-    -   [Update Listing](#17-update-listing)
-    -   [Upload Listing Photos](#18-upload-listing-photos)
-    -   [Verify Listing](#19-verify-listing)
+  * [Create Listing](#1-create-listing)
+  * [Deactivate Listing](#2-deactivate-listing)
+  * [Delete Listing](#3-delete-listing)
+  * [Get All Faqs for a Listing](#4-get-all-faqs-for-a-listing)
+  * [Get All Hashtags for a Listing](#5-get-all-hashtags-for-a-listing)
+  * [Get All Jobs for a Listing](#6-get-all-jobs-for-a-listing)
+  * [Get All Likes for a Listing](#7-get-all-likes-for-a-listing)
+  * [Get All Listing Comments for a Listing](#8-get-all-listing-comments-for-a-listing)
+  * [Get All Listing Locations for a Listing](#9-get-all-listing-locations-for-a-listing)
+  * [Get All Listing Skills for a Listing](#10-get-all-listing-skills-for-a-listing)
+  * [Get All Listing Updates for a Listing](#11-get-all-listing-updates-for-a-listing)
+  * [Get All Listings](#12-get-all-listings)
+  * [Get All Milestones for a Listing](#13-get-all-milestones-for-a-listing)
+  * [Get All Participants for a Listing](#14-get-all-participants-for-a-listing)
+  * [Get Single Listing](#15-get-single-listing)
+  * [Search Listings](#16-search-listings)
+  * [Update Listing](#17-update-listing)
+  * [Upload Listing Photos](#18-upload-listing-photos)
+  * [Verify Listing](#19-verify-listing)
 
--   [Locations](#locations)
+* [Locations](#locations)
 
-    -   [Create Location](#1-create-location)
-    -   [Delete Location](#2-delete-location)
-    -   [Get All Listings for a Location](#3-get-all-listings-for-a-location)
-    -   [Get All Locations](#4-get-all-locations)
-    -   [Get Single Location](#5-get-single-location)
+  * [Create Location](#1-create-location)
+  * [Delete Location](#2-delete-location)
+  * [Get All Listings for a Location](#3-get-all-listings-for-a-location)
+  * [Get All Locations](#4-get-all-locations)
+  * [Get Single Location](#5-get-single-location)
 
--   [Milestones](#milestones)
+* [Milestones](#milestones)
 
-    -   [Create Milestone](#1-create-milestone)
-    -   [Delete Milestone](#2-delete-milestone)
-    -   [Get All Milestones](#3-get-all-milestones)
-    -   [Get Single Milestone](#4-get-single-milestone)
-    -   [Update Milestone](#5-update-milestone)
+  * [Create Milestone](#1-create-milestone)
+  * [Delete Milestone](#2-delete-milestone)
+  * [Get All Milestones](#3-get-all-milestones)
+  * [Get Single Milestone](#4-get-single-milestone)
+  * [Update Milestone](#5-update-milestone)
 
--   [Participants](#participants)
+* [Participants](#participants)
 
-    -   [Create participant](#1-create-participant)
-    -   [Delete Participant](#2-delete-participant)
-    -   [Get All Participants](#3-get-all-participants)
-    -   [Get Single Participant](#4-get-single-participant)
-    -   [Update Participant](#5-update-participant)
+  * [Create participant](#1-create-participant)
+  * [Delete Participant](#2-delete-participant)
+  * [Get All Participants](#3-get-all-participants)
+  * [Get Single Participant](#4-get-single-participant)
+  * [Update Participant](#5-update-participant)
 
--   [Profiles](#profiles)
+* [Profiles](#profiles)
 
-    -   [Get Single Profile](#1-get-single-profile)
-    -   [Update Profile](#2-update-profile)
-    -   [Upload Profile Picture](#3-upload-profile-picture)
-    -   [Verify Profile (by User ID)](<#4-verify-profile-(by-user-id)>)
+  * [Get Single Profile](#1-get-single-profile)
+  * [Update Profile](#2-update-profile)
+  * [Upload Profile Picture](#3-upload-profile-picture)
+  * [Verify Profile (by User ID)](#4-verify-profile-(by-user-id))
 
--   [Skills](#skills)
+* [Skills](#skills)
 
-    -   [Create Skill](#1-create-skill)
-    -   [Delete Skill](#2-delete-skill)
-    -   [Get All Skills](#3-get-all-skills)
-    -   [Get Single Skill](#4-get-single-skill)
-    -   [Update Skill](#5-update-skill)
+  * [Create Skill](#1-create-skill)
+  * [Delete Skill](#2-delete-skill)
+  * [Get All Skills](#3-get-all-skills)
+  * [Get Single Skill](#4-get-single-skill)
+  * [Update Skill](#5-update-skill)
 
--   [Users](#users)
+* [Users](#users)
 
-    -   [Create User](#1-create-user)
-    -   [Delete User](#2-delete-user)
-    -   [Get All Likes for a User](#3-get-all-likes-for-a-user)
-    -   [Get All Listing Comments for a User](#4-get-all-listing-comments-for-a-user)
-    -   [Get All Listing Participation for a User](#5-get-all-listing-participation-for-a-user)
-    -   [Get All Listings Owned by a User](#6-get-all-listings-owned-by-a-user)
-    -   [Get All Users](#7-get-all-users)
-    -   [Get Single User](#8-get-single-user)
-    -   [Update User](#9-update-user)
+  * [Create User](#1-create-user)
+  * [Delete User](#2-delete-user)
+  * [Get All Likes for a User](#3-get-all-likes-for-a-user)
+  * [Get All Listing Comments for a User](#4-get-all-listing-comments-for-a-user)
+  * [Get All Listing Participation for a User](#5-get-all-listing-participation-for-a-user)
+  * [Get All Listings Owned by a User](#6-get-all-listings-owned-by-a-user)
+  * [Get All Users](#7-get-all-users)
+  * [Get Single User](#8-get-single-user)
+  * [Update User](#9-update-user)
 
----
+
+--------
+
 
 ## Admin-only Get Soft Deleted
-
 All GET requests for retrieving all resources, including soft deleted. Admin-only endpoints.
+
+
 
 ### 1. Get All Jobs Including Soft Deletes
 
+
 Get all jobs including soft deletes. Permission: Admin.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/jobs/all
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Jobs Including Soft Deletes (200 OK)
 
-##### I. Example Response: Get All Jobs Including Soft Deletes (200 OK)
 
+
+##### I. Example Response: Get All Jobs Including Soft Deletes (200 OK)
 ```js
 {
     "success": true,
@@ -394,28 +404,37 @@ URL: {{URL}}/api/jobs/all
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 2. Get All Jobs for a Listing Including Soft Deletes
+
 
 Get all jobs for an associated listing including soft deletes. Permission: Admin.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/jobs/all
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Jobs for a Listing Including Soft Deletes (404 Not Found - Non-existent listing id)
 
-##### I. Example Response: Get All Jobs for a Listing Including Soft Deletes (404 Not Found - Non-existent listing id)
 
+
+##### I. Example Response: Get All Jobs for a Listing Including Soft Deletes (404 Not Found - Non-existent listing id)
 ```js
 {
     "success": false,
@@ -423,14 +442,18 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/jobs/all
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ##### II. Example Request: Get All Jobs for a Listing Including Soft Deletes (200 OK)
 
-##### II. Example Response: Get All Jobs for a Listing Including Soft Deletes (200 OK)
 
+
+##### II. Example Response: Get All Jobs for a Listing Including Soft Deletes (200 OK)
 ```js
 {
     "success": true,
@@ -475,28 +498,37 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/jobs/all
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 3. Get All Listings Including Soft Deletes
+
 
 Get all listings including soft deletes. Permission: Admin.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listings/all
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Listings Including Soft Deletes (200 OK)
 
-##### I. Example Response: Get All Listings Including Soft Deletes (200 OK)
 
+
+##### I. Example Response: Get All Listings Including Soft Deletes (200 OK)
 ```js
 {
     "success": true,
@@ -967,19 +999,25 @@ URL: {{URL}}/api/listings/all
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
-## Authentication
 
+
+## Authentication
 User authentication functionality.
+
+
 
 ### 1. Activate Account (via Email Confirmation)
 
+
 Activates user account via confirmation of email address used in user registration. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
@@ -987,15 +1025,18 @@ Type: RAW
 URL: {{URL}}/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirm-email
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"name": "Don",
 	"email" : "don@gmail.com",
@@ -1003,19 +1044,25 @@ URL: {{URL}}/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirm-
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Activate Account (via Email Confirmation) (400 Bad Request - Token expired, invalid, or used)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"name": "Don",
 	"email" : "don@gmail.com",
@@ -1023,8 +1070,9 @@ URL: {{URL}}/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirm-
 }
 ```
 
-##### I. Example Response: Activate Account (via Email Confirmation) (400 Bad Request - Token expired, invalid, or used)
 
+
+##### I. Example Response: Activate Account (via Email Confirmation) (400 Bad Request - Token expired, invalid, or used)
 ```js
 {
     "success": false,
@@ -1032,21 +1080,27 @@ URL: {{URL}}/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirm-
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ##### II. Example Request: Activate Account (via Email Confirmation) (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"name": "Don",
 	"email" : "don@gmail.com",
@@ -1054,8 +1108,9 @@ URL: {{URL}}/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirm-
 }
 ```
 
-##### II. Example Response: Activate Account (via Email Confirmation) (200 OK)
 
+
+##### II. Example Response: Activate Account (via Email Confirmation) (200 OK)
 ```js
 {
     "success": true,
@@ -1063,11 +1118,15 @@ URL: {{URL}}/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirm-
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 2. Forget Password
+
 
 Generate a reset password token and sends email to user when user forgets password. Token expires in 10min, after which user must send another 'Forget Password' request again. (Permission: Public)
 
@@ -1075,7 +1134,8 @@ Field rules:
 All fields required unless otherwise stated.
 email: Valid email address only. Email address will be canonicalized.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: POST
@@ -1083,40 +1143,50 @@ Type: RAW
 URL: {{URL}}/api/auth/forget-password
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"email": "dontay0209@gmail.com"
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Forget Password (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"email": "dontay0209@gmail.com"
 }
 ```
 
-##### I. Example Response: Forget Password (200 OK)
 
+
+##### I. Example Response: Forget Password (200 OK)
 ```js
 {
     "success": true,
@@ -1124,28 +1194,35 @@ URL: {{URL}}/api/auth/forget-password
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Forget Password (404 Not Found - Non-existent user)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"email": "dontay0200@gmail.com"
 }
 ```
 
-##### II. Example Response: Forget Password (404 Not Found - Non-existent user)
 
+
+##### II. Example Response: Forget Password (404 Not Found - Non-existent user)
 ```js
 {
     "success": false,
@@ -1153,28 +1230,35 @@ URL: {{URL}}/api/auth/forget-password
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ##### III. Example Request: Forget Password (400 Bad Request - Invalid email entered)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"email": "dontay02"
 }
 ```
 
-##### III. Example Response: Forget Password (400 Bad Request - Invalid email entered)
 
+
+##### III. Example Response: Forget Password (400 Bad Request - Invalid email entered)
 ```js
 {
     "success": false,
@@ -1182,28 +1266,37 @@ URL: {{URL}}/api/auth/forget-password
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ### 3. Get Logged In User via Token
+
 
 Get details of user in currently logged in session.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/auth/me
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get Logged In User via Token (401 Unauthorised - Not logged in)
 
-##### I. Example Response: Get Logged In User via Token (401 Unauthorised - Not logged in)
 
+
+##### I. Example Response: Get Logged In User via Token (401 Unauthorised - Not logged in)
 ```js
 {
     "success": false,
@@ -1211,14 +1304,18 @@ URL: {{URL}}/api/auth/me
 }
 ```
 
-**_Status Code:_** 401
+
+***Status Code:*** 401
 
 <br>
 
+
+
 ##### II. Example Request: Get Logged In User via Token (200 OK)
 
-##### II. Example Response: Get Logged In User via Token (200 OK)
 
+
+##### II. Example Response: Get Logged In User via Token (200 OK)
 ```js
 {
     "success": true,
@@ -1233,20 +1330,25 @@ URL: {{URL}}/api/auth/me
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 4. Login Admin
+
 
 Login admin user and create token cookie.
 
-Field rules:
+Field rules: 
 All fields required unless otherwise stated.
-email: Valid email address only. Email address will be canonicalized.
+email: Valid email address only. Email address will be canonicalized. 
 password: 8-25 characters. At least 1 uppercase character. At least 1 lowercase character. At least 1 special character.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: POST
@@ -1254,42 +1356,52 @@ Type: RAW
 URL: {{URL}}/api/auth/login
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"email" : "admin@gmail.com",
 	"password": "Abc1234!"
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Login User (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"email" : "don@gmail.com",
 	"password": "123456"
 }
 ```
 
-##### I. Example Response: Login User (200 OK)
 
+
+##### I. Example Response: Login User (200 OK)
 ```js
 {
     "success": true,
@@ -1297,29 +1409,36 @@ URL: {{URL}}/api/auth/login
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Login User (400 Bad Request - Invalid login credentials)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"email" : "don@gmail.com",
 	"password": "1234567"
 }
 ```
 
-##### II. Example Response: Login User (400 Bad Request - Invalid login credentials)
 
+
+##### II. Example Response: Login User (400 Bad Request - Invalid login credentials)
 ```js
 {
     "success": false,
@@ -1327,20 +1446,25 @@ URL: {{URL}}/api/auth/login
 }
 ```
 
-**_Status Code:_** 401
+
+***Status Code:*** 401
 
 <br>
 
+
+
 ### 5. Login User
+
 
 Login user and create token cookie.
 
-Field rules:
+Field rules: 
 All fields required unless otherwise stated.
-email: Valid email address only. Email address will be canonicalized.
+email: Valid email address only. Email address will be canonicalized. 
 password: 8-25 characters. At least 1 uppercase character. At least 1 lowercase character. At least 1 special character.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: POST
@@ -1348,42 +1472,52 @@ Type: RAW
 URL: {{URL}}/api/auth/login
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"email" : "user@gmail.com",
 	"password": "Abc1234!"
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Login User (400 Bad Request - Invalid login credentials)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"email" : "don@gmail.com",
 	"password": "1234567"
 }
 ```
 
-##### I. Example Response: Login User (400 Bad Request - Invalid login credentials)
 
+
+##### I. Example Response: Login User (400 Bad Request - Invalid login credentials)
 ```js
 {
     "success": false,
@@ -1391,29 +1525,36 @@ URL: {{URL}}/api/auth/login
 }
 ```
 
-**_Status Code:_** 401
+
+***Status Code:*** 401
 
 <br>
 
+
+
 ##### II. Example Request: Login User (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"email" : "don@gmail.com",
 	"password": "123456"
 }
 ```
 
-##### II. Example Response: Login User (200 OK)
 
+
+##### II. Example Response: Login User (200 OK)
 ```js
 {
     "success": true,
@@ -1421,28 +1562,37 @@ URL: {{URL}}/api/auth/login
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 6. Logout User
+
 
 Logout and delete token cookie. For current logged in user only.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/auth/logout
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Logout User (200 OK)
 
-##### I. Example Response: Logout User (200 OK)
 
+
+##### I. Example Response: Logout User (200 OK)
 ```js
 {
     "success": true,
@@ -1450,14 +1600,18 @@ URL: {{URL}}/api/auth/logout
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Logout User (401 Unauthorised - Not logged in)
 
-##### II. Example Response: Logout User (401 Unauthorised - Not logged in)
 
+
+##### II. Example Response: Logout User (401 Unauthorised - Not logged in)
 ```js
 {
     "success": false,
@@ -1465,11 +1619,15 @@ URL: {{URL}}/api/auth/logout
 }
 ```
 
-**_Status Code:_** 401
+
+***Status Code:*** 401
 
 <br>
 
+
+
 ### 7. Register User
+
 
 User registration with password encryption, sends confirmation email address to activate account. Token expires in 15min, after which user must register again. Permission: Public.
 
@@ -1480,7 +1638,8 @@ last_name: Alphabets and whitespaces only. Optional.
 email: Valid email address only. Email address will be canonicalized.
 password: 8-25 characters. At least 1 uppercase character. At least 1 lowercase character. At least 1 special character.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: POST
@@ -1488,15 +1647,18 @@ Type: RAW
 URL: {{URL}}/api/auth/register
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"first_name": "Don",
 	"last_name": "Tay",
@@ -1505,19 +1667,25 @@ URL: {{URL}}/api/auth/register
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Register User (400 Bad Request - Invalid email/password requirement)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"first_name": "Bon",
 	"last_name": "Tan",
@@ -1526,8 +1694,9 @@ URL: {{URL}}/api/auth/register
 }
 ```
 
-##### I. Example Response: Register User (400 Bad Request - Invalid email/password requirement)
 
+
+##### I. Example Response: Register User (400 Bad Request - Invalid email/password requirement)
 ```js
 {
     "success": false,
@@ -1535,21 +1704,27 @@ URL: {{URL}}/api/auth/register
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ##### II. Example Request: Register User (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"first_name": "Don",
 	"last_name": "Tay",
@@ -1558,8 +1733,9 @@ URL: {{URL}}/api/auth/register
 }
 ```
 
-##### II. Example Response: Register User (200 OK)
 
+
+##### II. Example Response: Register User (200 OK)
 ```js
 {
     "success": true,
@@ -1567,21 +1743,27 @@ URL: {{URL}}/api/auth/register
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### III. Example Request: Register User (400 Bad Request - User account already exists)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"first_name": "Don",
 	"last_name": "Tay",
@@ -1590,8 +1772,9 @@ URL: {{URL}}/api/auth/register
 }
 ```
 
-##### III. Example Response: Register User (400 Bad Request - User account already exists)
 
+
+##### III. Example Response: Register User (400 Bad Request - User account already exists)
 ```js
 {
     "success": false,
@@ -1599,15 +1782,20 @@ URL: {{URL}}/api/auth/register
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ### 8. Resend Account Activation Email
+
 
 Resend account activation email for unactivated user. Permission: Private.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
@@ -1615,15 +1803,18 @@ Type: RAW
 URL: {{URL}}/api/auth/register/resend-confirm-email
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"first_name": "Don",
 	"last_name": "Tay",
@@ -1632,19 +1823,25 @@ URL: {{URL}}/api/auth/register/resend-confirm-email
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Register User (400 Bad Request - User account already exists)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"first_name": "Don",
 	"last_name": "Tay",
@@ -1653,8 +1850,9 @@ URL: {{URL}}/api/auth/register/resend-confirm-email
 }
 ```
 
-##### I. Example Response: Register User (400 Bad Request - User account already exists)
 
+
+##### I. Example Response: Register User (400 Bad Request - User account already exists)
 ```js
 {
     "success": false,
@@ -1662,21 +1860,27 @@ URL: {{URL}}/api/auth/register/resend-confirm-email
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ##### II. Example Request: Register User (400 Bad Request - Invalid email/password requirement)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"first_name": "Bon",
 	"last_name": "Tan",
@@ -1685,8 +1889,9 @@ URL: {{URL}}/api/auth/register/resend-confirm-email
 }
 ```
 
-##### II. Example Response: Register User (400 Bad Request - Invalid email/password requirement)
 
+
+##### II. Example Response: Register User (400 Bad Request - Invalid email/password requirement)
 ```js
 {
     "success": false,
@@ -1694,21 +1899,27 @@ URL: {{URL}}/api/auth/register/resend-confirm-email
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ##### III. Example Request: Register User (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"first_name": "Don",
 	"last_name": "Tay",
@@ -1717,8 +1928,9 @@ URL: {{URL}}/api/auth/register/resend-confirm-email
 }
 ```
 
-##### III. Example Response: Register User (200 OK)
 
+
+##### III. Example Response: Register User (200 OK)
 ```js
 {
     "success": true,
@@ -1726,11 +1938,15 @@ URL: {{URL}}/api/auth/register/resend-confirm-email
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 9. Reset Password
+
 
 Resets user password, based on reset token sent to user when user submitted a 'Forget Password' request (see 'Forget Password' request). Permission: Public.
 
@@ -1738,7 +1954,8 @@ Field rules:
 All fields required unless otherwise stated.
 password: 8-25 characters. At least 1 uppercase character. At least 1 lowercase character. At least 1 special character.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: PUT
@@ -1746,40 +1963,50 @@ Type: RAW
 URL: {{URL}}/api/auth/reset-password/9cd4383ffdde29ce4850d7752d8fce0e384cca71
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"password": "Abcd123!"
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Reset Password (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"password": "123456"
 }
 ```
 
-##### I. Example Response: Reset Password (200 OK)
 
+
+##### I. Example Response: Reset Password (200 OK)
 ```js
 {
     "success": true,
@@ -1787,28 +2014,35 @@ URL: {{URL}}/api/auth/reset-password/9cd4383ffdde29ce4850d7752d8fce0e384cca71
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Reset Password (400 Bad Request - Invalid reset token link)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"password": "123456"
 }
 ```
 
-##### II. Example Response: Reset Password (400 Bad Request - Invalid reset token link)
 
+
+##### II. Example Response: Reset Password (400 Bad Request - Invalid reset token link)
 ```js
 {
     "success": false,
@@ -1816,28 +2050,35 @@ URL: {{URL}}/api/auth/reset-password/9cd4383ffdde29ce4850d7752d8fce0e384cca71
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ##### III. Example Request: Reset Password (400 Bad Request - Invalid password entered)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"password": "12345"
 }
 ```
 
-##### III. Example Response: Reset Password (400 Bad Request - Invalid password entered)
 
+
+##### III. Example Response: Reset Password (400 Bad Request - Invalid password entered)
 ```js
 {
     "success": false,
@@ -1845,21 +2086,26 @@ URL: {{URL}}/api/auth/reset-password/9cd4383ffdde29ce4850d7752d8fce0e384cca71
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ### 10. Update Details
+
 
 Update logged in user name and email.
 
 Field rules:
 At least 1 field must be updated.
-first_name: Alphabets and whitespaces only.
+first_name: Alphabets and whitespaces only. 
 last_name: Alphabets and whitespaces only.
 email: Valid email address only. Email address will be canonicalized.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: PUT
@@ -1867,15 +2113,18 @@ Type: RAW
 URL: {{URL}}/api/auth/update-details
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"email": "don@gmail.com",
 	"first_name": "Don",
@@ -1883,19 +2132,25 @@ URL: {{URL}}/api/auth/update-details
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Update Details (400 Bad Request - Invalid field entered)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"email": "gmail.com",
 	"first_name": "Don",
@@ -1903,8 +2158,9 @@ URL: {{URL}}/api/auth/update-details
 }
 ```
 
-##### I. Example Response: Update Details (400 Bad Request - Invalid field entered)
 
+
+##### I. Example Response: Update Details (400 Bad Request - Invalid field entered)
 ```js
 {
     "success": false,
@@ -1912,21 +2168,27 @@ URL: {{URL}}/api/auth/update-details
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ##### II. Example Request: Update Details (401 Unauthorised)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"email": "don@gmail.com",
 	"first_name": "Don",
@@ -1934,8 +2196,9 @@ URL: {{URL}}/api/auth/update-details
 }
 ```
 
-##### II. Example Response: Update Details (401 Unauthorised)
 
+
+##### II. Example Response: Update Details (401 Unauthorised)
 ```js
 {
     "success": false,
@@ -1943,21 +2206,27 @@ URL: {{URL}}/api/auth/update-details
 }
 ```
 
-**_Status Code:_** 401
+
+***Status Code:*** 401
 
 <br>
 
+
+
 ##### III. Example Request: Update Details (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"email": "don@gmail.com",
 	"first_name": "Don",
@@ -1965,8 +2234,9 @@ URL: {{URL}}/api/auth/update-details
 }
 ```
 
-##### III. Example Response: Update Details (200 OK)
 
+
+##### III. Example Response: Update Details (200 OK)
 ```js
 {
     "success": true,
@@ -1974,11 +2244,15 @@ URL: {{URL}}/api/auth/update-details
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 11. Update Password
+
 
 Update logged in user password.
 
@@ -1987,7 +2261,8 @@ All fields required unless otherwise stated.
 oldPassword: 8-25 characters. At least 1 uppercase character. At least 1 lowercase character. At least 1 special character.
 newPassword: 8-25 characters. At least 1 uppercase character. At least 1 lowercase character. At least 1 special character.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: PUT
@@ -1995,42 +2270,52 @@ Type: RAW
 URL: {{URL}}/api/auth/update-password
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"oldPassword": "Abc1234!",
 	"newPassword": "Abcd123!"
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Update Password (401 Unauthorised - Invalid old password)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"oldPassword": "123456",
 	"newPassword": "1234567"
 }
 ```
 
-##### I. Example Response: Update Password (401 Unauthorised - Invalid old password)
 
+
+##### I. Example Response: Update Password (401 Unauthorised - Invalid old password)
 ```js
 {
     "success": false,
@@ -2038,29 +2323,36 @@ URL: {{URL}}/api/auth/update-password
 }
 ```
 
-**_Status Code:_** 401
+
+***Status Code:*** 401
 
 <br>
 
+
+
 ##### II. Example Request: Update Password (400 Bad Request - Invalid password requirement)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"oldPassword": "123456",
 	"newPassword": "12345"
 }
 ```
 
-##### II. Example Response: Update Password (400 Bad Request - Invalid password requirement)
 
+
+##### II. Example Response: Update Password (400 Bad Request - Invalid password requirement)
 ```js
 {
     "success": false,
@@ -2068,29 +2360,36 @@ URL: {{URL}}/api/auth/update-password
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ##### III. Example Request: Update Password (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"oldPassword": "123456",
 	"newPassword": "1234567"
 }
 ```
 
-##### III. Example Response: Update Password (200 OK)
 
+
+##### III. Example Response: Update Password (200 OK)
 ```js
 {
     "success": true,
@@ -2098,15 +2397,20 @@ URL: {{URL}}/api/auth/update-password
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
-## Faqs
 
+
+## Faqs
 Faqs CRUD functionality.
 
+
+
 ### 1. Create Faq
+
 
 Create FAQ. Permission: Owner/Admin.
 
@@ -2116,7 +2420,8 @@ listing_id - Valid integer, existing listing id.
 question - Non-empty string.
 answer - Optional.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: POST
@@ -2124,15 +2429,18 @@ Type: RAW
 URL: {{URL}}/api/faqs
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
 	"question": "What roles are available for me?",
@@ -2140,27 +2448,34 @@ URL: {{URL}}/api/faqs
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Create Faq (400 Bad Request - Invalid input field)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"question": "What roles are available for me?",
 	"answer": "Refer to our job listings for the latest roles!"
 }
 ```
 
-##### I. Example Response: Create Faq (400 Bad Request - Invalid input field)
 
+
+##### I. Example Response: Create Faq (400 Bad Request - Invalid input field)
 ```js
 {
     "success": false,
@@ -2168,21 +2483,27 @@ URL: {{URL}}/api/faqs
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ##### II. Example Request: Create Faq (201 Created)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
 	"question": "What roles are available for me?",
@@ -2190,8 +2511,9 @@ URL: {{URL}}/api/faqs
 }
 ```
 
-##### II. Example Response: Create Faq (201 Created)
 
+
+##### II. Example Response: Create Faq (201 Created)
 ```js
 {
     "success": true,
@@ -2204,21 +2526,27 @@ URL: {{URL}}/api/faqs
 }
 ```
 
-**_Status Code:_** 201
+
+***Status Code:*** 201
 
 <br>
 
+
+
 ##### III. Example Request: Create Faq (403 Forbidden - Non-admin and non-listing owner)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": 1,
 	"question": "What roles are available for me?",
@@ -2226,8 +2554,9 @@ URL: {{URL}}/api/faqs
 }
 ```
 
-##### III. Example Response: Create Faq (403 Forbidden - Non-admin and non-listing owner)
 
+
+##### III. Example Response: Create Faq (403 Forbidden - Non-admin and non-listing owner)
 ```js
 {
     "success": false,
@@ -2235,28 +2564,37 @@ URL: {{URL}}/api/faqs
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
+
+
 
 ### 2. Delete Faq
 
+
 Delete FAQ identified by faq id. Permission: Owner/Admin.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: DELETE
-Type:
+Type: 
 URL: {{URL}}/api/faqs/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Delete Faq (403 Forbidden - Non-admin and non-listing owner)
 
-##### I. Example Response: Delete Faq (403 Forbidden - Non-admin and non-listing owner)
 
+
+##### I. Example Response: Delete Faq (403 Forbidden - Non-admin and non-listing owner)
 ```js
 {
     "success": false,
@@ -2264,14 +2602,18 @@ URL: {{URL}}/api/faqs/1
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ##### II. Example Request: Delete Faq (200 OK)
 
-##### II. Example Response: Delete Faq (200 OK)
 
+
+##### II. Example Response: Delete Faq (200 OK)
 ```js
 {
     "success": true,
@@ -2284,14 +2626,18 @@ URL: {{URL}}/api/faqs/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### III. Example Request: Delete Faq (400 Bad Request - Non-existent FAQ)
 
-##### III. Example Response: Delete Faq (400 Bad Request - Non-existent FAQ)
 
+
+##### III. Example Response: Delete Faq (400 Bad Request - Non-existent FAQ)
 ```js
 {
     "success": false,
@@ -2299,28 +2645,37 @@ URL: {{URL}}/api/faqs/1
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ### 3. Get All Faqs
+
 
 Get all FAQs. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/faqs
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Faqs (200 OK)
 
-##### I. Example Response: Get All Faqs (200 OK)
 
+
+##### I. Example Response: Get All Faqs (200 OK)
 ```js
 {
     "success": true,
@@ -2486,28 +2841,37 @@ URL: {{URL}}/api/faqs
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 4. Get Single Faq
+
 
 Get single FAQ. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/faqs/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get Single Faq (200 OK)
 
-##### I. Example Response: Get Single Faq (200 OK)
 
+
+##### I. Example Response: Get Single Faq (200 OK)
 ```js
 {
     "success": true,
@@ -2520,14 +2884,18 @@ URL: {{URL}}/api/faqs/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Get Single Faq (404 Not Found - Non-existent FAQ)
 
-##### II. Example Response: Get Single Faq (404 Not Found - Non-existent FAQ)
 
+
+##### II. Example Response: Get Single Faq (404 Not Found - Non-existent FAQ)
 ```js
 {
     "success": false,
@@ -2535,20 +2903,25 @@ URL: {{URL}}/api/faqs/1
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ### 5. Update Faq
+
 
 Update FAQ identified by faq id. Permission: Owner/Admin.
 
-Field rules:
+Field rules: 
 At least one field must be updated.
-question - Non-empty string.
+question - Non-empty string. 
 answer
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: PUT
@@ -2556,42 +2929,52 @@ Type: RAW
 URL: {{URL}}/api/faqs/1
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"question": "What is the commitment like?",
 	"answer": "It varies! Refer to our individual job listings for more details!"
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Update Faq (400 Bad Request - Non-existent FAQ)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"question": "What is the commitment like?",
 	"answer": "It varies! Refer to our individual job listings for more details!"
 }
 ```
 
-##### I. Example Response: Update Faq (400 Bad Request - Non-existent FAQ)
 
+
+##### I. Example Response: Update Faq (400 Bad Request - Non-existent FAQ)
 ```js
 {
     "success": false,
@@ -2599,29 +2982,36 @@ URL: {{URL}}/api/faqs/1
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ##### II. Example Request: Update Faq (403 Forbidden - Non-admin and non-listing owner)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"question": "What is the commitment like?",
 	"answer": "It varies! Refer to our individual job listings for more details!"
 }
 ```
 
-##### II. Example Response: Update Faq (403 Forbidden - Non-admin and non-listing owner)
 
+
+##### II. Example Response: Update Faq (403 Forbidden - Non-admin and non-listing owner)
 ```js
 {
     "success": false,
@@ -2629,29 +3019,36 @@ URL: {{URL}}/api/faqs/1
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ##### III. Example Request: Update Faq (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"question": "What is the commitment like?",
 	"answer": "It varies! Refer to our individual job listings for more details!"
 }
 ```
 
-##### III. Example Response: Update Faq (200 OK)
 
+
+##### III. Example Response: Update Faq (200 OK)
 ```js
 {
     "success": true,
@@ -2664,15 +3061,20 @@ URL: {{URL}}/api/faqs/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
-## Featured Listings
 
+
+## Featured Listings
 Featured Listings CRUD functionality.
 
+
+
 ### 1. Create Featured Listing
+
 
 Create featured listing. Permission: Admin.
 
@@ -2680,7 +3082,8 @@ Field rules:
 All fields required unless otherwise stated.
 listing_id - Valid integer, existing listing id.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: POST
@@ -2688,40 +3091,50 @@ Type: RAW
 URL: {{URL}}/api/featured-listings
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac"
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Create Featured Listing (201 Created)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae"
 }
 ```
 
-##### I. Example Response: Create Featured Listing (201 Created)
 
+
+##### I. Example Response: Create Featured Listing (201 Created)
 ```js
 {
     "success": true,
@@ -2732,28 +3145,35 @@ URL: {{URL}}/api/featured-listings
 }
 ```
 
-**_Status Code:_** 201
+
+***Status Code:*** 201
 
 <br>
+
+
 
 ##### II. Example Request: Create Featured Listing (403 Forbidden - Non-admin user)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae"
 }
 ```
 
-##### II. Example Response: Create Featured Listing (403 Forbidden - Non-admin user)
 
+
+##### II. Example Response: Create Featured Listing (403 Forbidden - Non-admin user)
 ```js
 {
     "success": false,
@@ -2761,28 +3181,37 @@ URL: {{URL}}/api/featured-listings
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ### 2. Delete Featured Listing
+
 
 Delete featured listing identified by featured listing id. Permission: Admin.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: DELETE
-Type:
+Type: 
 URL: {{URL}}/api/featured-listings/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Delete Featured Listing (200 OK)
 
-##### I. Example Response: Delete Featured Listing (200 OK)
 
+
+##### I. Example Response: Delete Featured Listing (200 OK)
 ```js
 {
     "success": true,
@@ -2793,14 +3222,18 @@ URL: {{URL}}/api/featured-listings/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Delete Featured Listing (403 Forbidden - Non-admin user)
 
-##### II. Example Response: Delete Featured Listing (403 Forbidden - Non-admin user)
 
+
+##### II. Example Response: Delete Featured Listing (403 Forbidden - Non-admin user)
 ```js
 {
     "success": false,
@@ -2808,28 +3241,37 @@ URL: {{URL}}/api/featured-listings/1
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ### 3. Get All Featured Listings
+
 
 Get all featured listings. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/featured-listings
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Featured Listings (200 OK)
 
-##### I. Example Response: Get All Featured Listings (200 OK)
 
+
+##### I. Example Response: Get All Featured Listings (200 OK)
 ```js
 {
     "success": true,
@@ -2848,28 +3290,37 @@ URL: {{URL}}/api/featured-listings
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 4. Get Single Featured Listings
+
 
 Get single featured listing. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/featured-listings/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get Single Featured Listings (200 OK)
 
-##### I. Example Response: Get Single Featured Listings (200 OK)
 
+
+##### I. Example Response: Get Single Featured Listings (200 OK)
 ```js
 {
     "success": true,
@@ -2880,23 +3331,29 @@ URL: {{URL}}/api/featured-listings/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
-## File Upload
 
+
+## File Upload
 File upload endpoints.
+
+
 
 ### 1. Multiple file upload
 
+
 Multiple file upload, response data object shows the upload information made available by the library (multer). Permission: Public.
 
-Field rules:
-All fields required unless otherwise stated.
+Field rules: 
+All fields required unless otherwise stated. 
 files - Collection of up to 3 valid files.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: POST
@@ -2904,24 +3361,32 @@ Type: FORMDATA
 URL: {{URL}}/api/file-upload/multi
 ```
 
-**_Body:_**
 
-| Key   | Value | Description               |
-| ----- | ----- | ------------------------- |
-| files |       | Collection of 5 JPG files |
 
-**_More example Requests/Responses:_**
+***Body:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| files |  | Collection of 5 JPG files |
+
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Multiple file upload (200 OK)
 
-**_Body:_**
 
-| Key   | Value | Description               |
-| ----- | ----- | ------------------------- |
-| files |       | Collection of 3 JPG files |
+
+***Body:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| files |  | Collection of 3 JPG files |
+
+
 
 ##### I. Example Response: Multiple file upload (200 OK)
-
 ```js
 {
     "success": true,
@@ -2935,19 +3400,24 @@ URL: {{URL}}/api/file-upload/multi
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 2. Single file upload
+
 
 Single file upload. Response data object shows the upload information made available by the library (multer). Permission: Public.
 
-Field rules:
-All fields required unless otherwise stated.
+Field rules: 
+All fields required unless otherwise stated. 
 file - Valid file.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: POST
@@ -2955,30 +3425,39 @@ Type: FORMDATA
 URL: {{URL}}/api/file-upload
 ```
 
-**_Body:_**
 
-| Key  | Value | Description   |
-| ---- | ----- | ------------- |
-| file |       | Test jpg file |
 
-**_More example Requests/Responses:_**
+***Body:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| file |  | Test jpg file |
+
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Single file upload (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-| Key  | Value | Description   |
-| ---- | ----- | ------------- |
-| file |       | Test jpg file |
+
+
+***Body:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| file |  | Test jpg file |
+
+
 
 ##### I. Example Response: Single file upload (200 OK)
-
 ```js
 {
     "success": true,
@@ -3004,24 +3483,30 @@ URL: {{URL}}/api/file-upload
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
-## Hashtags
 
+
+## Hashtags
 Listing Hashtags CRUD functionality.
 
+
+
 ### 1. Create Hashtag
+
 
 Create hashtag for listing. Permission: Owner/Admin.
 
 Field rules:
 All fields required unless otherwise stated.
-listing*id - Valid integer, existing listing id.
-tag - String starting with '#' followed by 2-20 alphanumeric and '-'/'*' characters.
+listing_id - Valid integer, existing listing id.
+tag - String starting with '#' followed by 2-20 alphanumeric and '-'/'_' characters.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: POST
@@ -3029,42 +3514,52 @@ Type: RAW
 URL: {{URL}}/api/hashtags
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
 	"tag": "#shine-a-light"
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Create Hashtag (201 Created)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
 	"tag": "#shine-a-light"
 }
 ```
 
-##### I. Example Response: Create Hashtag (201 Created)
 
+
+##### I. Example Response: Create Hashtag (201 Created)
 ```js
 {
     "success": true,
@@ -3076,21 +3571,27 @@ URL: {{URL}}/api/hashtags
 }
 ```
 
-**_Status Code:_** 201
+
+***Status Code:*** 201
 
 <br>
 
+
+
 ##### II. Example Request: Create Milestone (400 Bad Request - Invalid value entered, empty description)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": 1,
 	"description": " ",
@@ -3098,8 +3599,9 @@ URL: {{URL}}/api/hashtags
 }
 ```
 
-##### II. Example Response: Create Milestone (400 Bad Request - Invalid value entered, empty description)
 
+
+##### II. Example Response: Create Milestone (400 Bad Request - Invalid value entered, empty description)
 ```js
 {
     "success": false,
@@ -3107,28 +3609,37 @@ URL: {{URL}}/api/hashtags
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ### 2. Delete Hashtag
+
 
 Delete hashtag identified by hashtag id. Permission: Owner/Admin.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: DELETE
-Type:
+Type: 
 URL: {{URL}}/api/hashtags/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Delete Hashtag (404 Not Found - Non-existent hashtag id)
 
-##### I. Example Response: Delete Hashtag (404 Not Found - Non-existent hashtag id)
 
+
+##### I. Example Response: Delete Hashtag (404 Not Found - Non-existent hashtag id)
 ```js
 {
     "success": false,
@@ -3136,14 +3647,18 @@ URL: {{URL}}/api/hashtags/1
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ##### II. Example Request: Delete Hashtag (200 OK)
 
-##### II. Example Response: Delete Hashtag (200 OK)
 
+
+##### II. Example Response: Delete Hashtag (200 OK)
 ```js
 {
     "success": true,
@@ -3155,28 +3670,37 @@ URL: {{URL}}/api/hashtags/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 3. Get All Hashtags
+
 
 Get all hashtags. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/milestones
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Hashtags (200 OK)
 
-##### I. Example Response: Get All Hashtags (200 OK)
 
+
+##### I. Example Response: Get All Hashtags (200 OK)
 ```js
 {
     "success": true,
@@ -3317,28 +3841,37 @@ URL: {{URL}}/api/milestones
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 4. Get Single Hashtag
+
 
 Get single hashtag. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/hashtags/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get Single Hashtag (404 Not Found - Non-existent hashtag id)
 
-##### I. Example Response: Get Single Hashtag (404 Not Found - Non-existent hashtag id)
 
+
+##### I. Example Response: Get Single Hashtag (404 Not Found - Non-existent hashtag id)
 ```js
 {
     "success": false,
@@ -3346,14 +3879,18 @@ URL: {{URL}}/api/hashtags/1
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ##### II. Example Request: Get Single Hashtag (200 OK)
 
-##### II. Example Response: Get Single Hashtag (200 OK)
 
+
+##### II. Example Response: Get Single Hashtag (200 OK)
 ```js
 {
     "success": true,
@@ -3365,19 +3902,24 @@ URL: {{URL}}/api/hashtags/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 5. Update Hashtag
+
 
 Update hashtag identified by hashtag id. Permission: Owner/Admin.
 
 Field rules:
 At least one field must be updated.
-tag - String starting with '#' followed by 2-20 alphanumeric and '-'/'\_' characters.
+tag - String starting with '#' followed by 2-20 alphanumeric and '-'/'_' characters.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: PUT
@@ -3385,40 +3927,50 @@ Type: RAW
 URL: {{URL}}/api/hashtags/1
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"tag": "#hello"
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Update Hashtag (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"tag": "#hello"
 }
 ```
 
-##### I. Example Response: Update Hashtag (200 OK)
 
+
+##### I. Example Response: Update Hashtag (200 OK)
 ```js
 {
     "success": true,
@@ -3430,28 +3982,35 @@ URL: {{URL}}/api/hashtags/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Update Hashtag (404 Not Found - Non-existent hashtag id)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"tag": "#hello"
 }
 ```
 
-##### II. Example Response: Update Hashtag (404 Not Found - Non-existent hashtag id)
 
+
+##### II. Example Response: Update Hashtag (404 Not Found - Non-existent hashtag id)
 ```js
 {
     "success": false,
@@ -3459,25 +4018,31 @@ URL: {{URL}}/api/hashtags/1
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
-## Jobs
 
+
+## Jobs
 Jobs CRUD functionality.
+
+
 
 ### 1. Create Job
 
+
 Create job. Permission: Owner/Admin.
 
-Field rules:
-All fields required unless otherwise stated.
+Field rules: 
+All fields required unless otherwise stated. 
 listing_id - Valid integer, existing listing id.
 job_title - Non-empty string.
 job_description - Optional.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: POST
@@ -3485,15 +4050,18 @@ Type: RAW
 URL: {{URL}}/api/jobs
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
 	"job_title": "Social Media Manager",
@@ -3501,19 +4069,25 @@ URL: {{URL}}/api/jobs
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Create Job (201 Created)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
 	"job_title": "Social Media Manager",
@@ -3521,8 +4095,9 @@ URL: {{URL}}/api/jobs
 }
 ```
 
-##### I. Example Response: Create Job (201 Created)
 
+
+##### I. Example Response: Create Job (201 Created)
 ```js
 {
     "success": true,
@@ -3536,21 +4111,27 @@ URL: {{URL}}/api/jobs
 }
 ```
 
-**_Status Code:_** 201
+
+***Status Code:*** 201
 
 <br>
 
+
+
 ##### II. Example Request: Create Job (403 Forbidden - Non-admin and non-listing owner)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": 1,
 	"job_title": "Social Media Manager",
@@ -3558,8 +4139,9 @@ URL: {{URL}}/api/jobs
 }
 ```
 
-##### II. Example Response: Create Job (403 Forbidden - Non-admin and non-listing owner)
 
+
+##### II. Example Response: Create Job (403 Forbidden - Non-admin and non-listing owner)
 ```js
 {
     "success": false,
@@ -3567,21 +4149,27 @@ URL: {{URL}}/api/jobs
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ##### III. Example Request: Create Job (400 Bad Request - Invalid value entered)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": 1,
 	"job_title": "",
@@ -3589,8 +4177,9 @@ URL: {{URL}}/api/jobs
 }
 ```
 
-##### III. Example Response: Create Job (400 Bad Request - Invalid value entered)
 
+
+##### III. Example Response: Create Job (400 Bad Request - Invalid value entered)
 ```js
 {
     "success": false,
@@ -3598,28 +4187,37 @@ URL: {{URL}}/api/jobs
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ### 2. Deactivate Job
+
 
 Deactivate (soft delete) job identified by job id. Permission: Owner/Admin.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: PUT
-Type:
+Type: 
 URL: {{URL}}/api/jobs/1/deactivate
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Deactivate Job (200 OK)
 
-##### I. Example Response: Deactivate Job (200 OK)
 
+
+##### I. Example Response: Deactivate Job (200 OK)
 ```js
 {
     "success": true,
@@ -3633,14 +4231,18 @@ URL: {{URL}}/api/jobs/1/deactivate
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Deactivate Job (403 Forbidden - Non-admin and non-listing owner)
 
-##### II. Example Response: Deactivate Job (403 Forbidden - Non-admin and non-listing owner)
 
+
+##### II. Example Response: Deactivate Job (403 Forbidden - Non-admin and non-listing owner)
 ```js
 {
     "success": false,
@@ -3648,28 +4250,37 @@ URL: {{URL}}/api/jobs/1/deactivate
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ### 3. Delete Job
+
 
 Delete job identified by job id. Permission: Admin.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: DELETE
-Type:
+Type: 
 URL: {{URL}}/api/jobs/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Delete Job (403 Forbidden - Non-admin)
 
-##### I. Example Response: Delete Job (403 Forbidden - Non-admin)
 
+
+##### I. Example Response: Delete Job (403 Forbidden - Non-admin)
 ```js
 {
     "success": false,
@@ -3677,14 +4288,18 @@ URL: {{URL}}/api/jobs/1
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ##### II. Example Request: Delete Job (200 OK)
 
-##### II. Example Response: Delete Job (200 OK)
 
+
+##### II. Example Response: Delete Job (200 OK)
 ```js
 {
     "success": true,
@@ -3697,14 +4312,18 @@ URL: {{URL}}/api/jobs/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### III. Example Request: Delete Job (400 Bad Request - Non-existent job id)
 
-##### III. Example Response: Delete Job (400 Bad Request - Non-existent job id)
 
+
+##### III. Example Response: Delete Job (400 Bad Request - Non-existent job id)
 ```js
 {
     "success": false,
@@ -3712,28 +4331,37 @@ URL: {{URL}}/api/jobs/1
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ### 4. Get All Jobs
+
 
 Get all jobs. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/jobs
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Jobs (200 OK)
 
-##### I. Example Response: Get All Jobs (200 OK)
 
+
+##### I. Example Response: Get All Jobs (200 OK)
 ```js
 {
     "success": true,
@@ -3899,28 +4527,37 @@ URL: {{URL}}/api/jobs
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 5. Get Single Job
+
 
 Get single job. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/jobs/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get Single Job (200 OK)
 
-##### I. Example Response: Get Single Job (200 OK)
 
+
+##### I. Example Response: Get Single Job (200 OK)
 ```js
 {
     "success": true,
@@ -3933,20 +4570,25 @@ URL: {{URL}}/api/jobs/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 6. Update Job
+
 
 Update job identified by job id. Permission: Owner/Admin.
 
-Field rules:
+Field rules: 
 At least one field must be updated.
 job_title - Non-empty string.
 job_description
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: PUT
@@ -3954,42 +4596,52 @@ Type: RAW
 URL: {{URL}}/api/jobs/1
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"job_title": "Partnership Associate",
 	"job_description": "Manage our intitiatives various stakeholders, and source for new partnerships."
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Update Job (400 Bad Request - Invalid value entered)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"job_title": "  ",
 	"job_description": "Manage our intitiatives various stakeholders, and source for new partnerships."
 }
 ```
 
-##### I. Example Response: Update Job (400 Bad Request - Invalid value entered)
 
+
+##### I. Example Response: Update Job (400 Bad Request - Invalid value entered)
 ```js
 {
     "success": false,
@@ -3997,29 +4649,36 @@ URL: {{URL}}/api/jobs/1
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ##### II. Example Request: Update Job (403 Forbidden - Non-admin and non-listing owner)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"job_title": "Partnership Associate",
 	"job_description": "Manage our intitiatives various stakeholders, and source for new partnerships."
 }
 ```
 
-##### II. Example Response: Update Job (403 Forbidden - Non-admin and non-listing owner)
 
+
+##### II. Example Response: Update Job (403 Forbidden - Non-admin and non-listing owner)
 ```js
 {
     "success": false,
@@ -4027,29 +4686,36 @@ URL: {{URL}}/api/jobs/1
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ##### III. Example Request: Update Job (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"job_title": "Partnership Associate",
 	"job_description": "Manage our intitiatives various stakeholders, and source for new partnerships."
 }
 ```
 
-##### III. Example Response: Update Job (200 OK)
 
+
+##### III. Example Response: Update Job (200 OK)
 ```js
 {
     "success": true,
@@ -4062,29 +4728,36 @@ URL: {{URL}}/api/jobs/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### IV. Example Request: Update Job (400 Bad Request - Non-existent job)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"job_title": "Partnership Associate",
 	"job_description": "Manage our intitiatives various stakeholders, and source for new partnerships."
 }
 ```
 
-##### IV. Example Response: Update Job (400 Bad Request - Non-existent job)
 
+
+##### IV. Example Response: Update Job (400 Bad Request - Non-existent job)
 ```js
 {
     "success": false,
@@ -4092,32 +4765,42 @@ URL: {{URL}}/api/jobs/1
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
-## Likes
 
+
+## Likes
 Likes (Users-Listings) CRUD functionality.
+
+
 
 ### 1. Get All Likes
 
+
 Get all Likes. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/likes
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Likes (200 OK)
 
-##### I. Example Response: Get All Likes (200 OK)
 
+
+##### I. Example Response: Get All Likes (200 OK)
 ```js
 {
     "success": true,
@@ -4133,28 +4816,37 @@ URL: {{URL}}/api/likes
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 2. Get Single Like
+
 
 Get single Like identified by like_id. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/likes/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get Single Like (404 Not Found - Non-existent like id)
 
-##### I. Example Response: Get Single Like (404 Not Found - Non-existent like id)
 
+
+##### I. Example Response: Get Single Like (404 Not Found - Non-existent like id)
 ```js
 {
     "success": false,
@@ -4162,14 +4854,18 @@ URL: {{URL}}/api/likes/1
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ##### II. Example Request: Get Single Like (200 OK)
 
-##### II. Example Response: Get Single Like (200 OK)
 
+
+##### II. Example Response: Get Single Like (200 OK)
 ```js
 {
     "success": true,
@@ -4181,19 +4877,24 @@ URL: {{URL}}/api/likes/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 3. Like Listing
+
 
 Like a listing. Permission: Private.
 
-Field rules:
-All fields required unless otherwise stated.
+Field rules: 
+All fields required unless otherwise stated. 
 listing_id - Valid integer, existing listing id.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: POST
@@ -4201,40 +4902,50 @@ Type: RAW
 URL: {{URL}}/api/likes
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "d95a6c2e-3c33-447c-be0c-be399247dd3f"
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Like Listing (401 Unauthorized - Non-logged in user cannot like)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": 2
 }
 ```
 
-##### I. Example Response: Like Listing (401 Unauthorized - Non-logged in user cannot like)
 
+
+##### I. Example Response: Like Listing (401 Unauthorized - Non-logged in user cannot like)
 ```js
 {
     "success": false,
@@ -4242,28 +4953,35 @@ URL: {{URL}}/api/likes
 }
 ```
 
-**_Status Code:_** 401
+
+***Status Code:*** 401
 
 <br>
 
+
+
 ##### II. Example Request: Like Listing (400 Bad Request - Non-existent listing id)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": 231
 }
 ```
 
-##### II. Example Response: Like Listing (400 Bad Request - Non-existent listing id)
 
+
+##### II. Example Response: Like Listing (400 Bad Request - Non-existent listing id)
 ```js
 {
     "success": false,
@@ -4271,28 +4989,35 @@ URL: {{URL}}/api/likes
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ##### III. Example Request: Like Listing (201 Created)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae"
 }
 ```
 
-##### III. Example Response: Like Listing (201 Created)
 
+
+##### III. Example Response: Like Listing (201 Created)
 ```js
 {
     "success": true,
@@ -4304,28 +5029,37 @@ URL: {{URL}}/api/likes
 }
 ```
 
-**_Status Code:_** 201
+
+***Status Code:*** 201
 
 <br>
 
+
+
 ### 4. Unlike Listing
+
 
 Unlike a previously liked listing identified by like id. Permission: Private.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: DELETE
-Type:
+Type: 
 URL: {{URL}}/api/likes/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Unlike Listing (404 Not Found - Non-existent listing id)
 
-##### I. Example Response: Unlike Listing (404 Not Found - Non-existent listing id)
 
+
+##### I. Example Response: Unlike Listing (404 Not Found - Non-existent listing id)
 ```js
 {
     "success": false,
@@ -4333,14 +5067,18 @@ URL: {{URL}}/api/likes/1
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ##### II. Example Request: Unlike Listing (401 Unauthorised - Unauthenticated user cannot delete likes)
 
-##### II. Example Response: Unlike Listing (401 Unauthorised - Unauthenticated user cannot delete likes)
 
+
+##### II. Example Response: Unlike Listing (401 Unauthorised - Unauthenticated user cannot delete likes)
 ```js
 {
     "success": false,
@@ -4348,14 +5086,18 @@ URL: {{URL}}/api/likes/1
 }
 ```
 
-**_Status Code:_** 401
+
+***Status Code:*** 401
 
 <br>
 
+
+
 ##### III. Example Request: Unlike Listing (200 OK)
 
-##### III. Example Response: Unlike Listing (200 OK)
 
+
+##### III. Example Response: Unlike Listing (200 OK)
 ```js
 {
     "success": true,
@@ -4367,14 +5109,18 @@ URL: {{URL}}/api/likes/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### IV. Example Request: Unlike Listing (403 Forbidden - Not authorised to delete likes from other users)
 
-##### IV. Example Response: Unlike Listing (403 Forbidden - Not authorised to delete likes from other users)
 
+
+##### IV. Example Response: Unlike Listing (403 Forbidden - Not authorised to delete likes from other users)
 ```js
 {
     "success": false,
@@ -4382,15 +5128,20 @@ URL: {{URL}}/api/likes/1
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
-## Listing Comments
 
+
+## Listing Comments
 Listing Comments CRUD functionality.
 
+
+
 ### 1. Create Listing Comment
+
 
 Create listing comment. Permission: Private.
 
@@ -4400,7 +5151,8 @@ listing_id - Valid integer, existing listing id.
 comment - Non-empty.
 reply_to_id - Valid integer, existing listing comment id. Optional.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: POST
@@ -4408,15 +5160,18 @@ Type: RAW
 URL: {{URL}}/api/listing-comments
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
 	"comment": "Very intersting!",
@@ -4424,19 +5179,25 @@ URL: {{URL}}/api/listing-comments
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Create Listing Comment (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
 	"comment": "Very intersting!",
@@ -4444,8 +5205,9 @@ URL: {{URL}}/api/listing-comments
 }
 ```
 
-##### I. Example Response: Create Listing Comment (200 OK)
 
+
+##### I. Example Response: Create Listing Comment (200 OK)
 ```js
 {
     "success": true,
@@ -4462,11 +5224,15 @@ URL: {{URL}}/api/listing-comments
 }
 ```
 
-**_Status Code:_** 201
+
+***Status Code:*** 201
 
 <br>
 
+
+
 ### 2. Deactivate Listing Comment
+
 
 Deactivate (soft-delete) listing comment identified by listing comment id. Permission: Admin/Owner/Private.
 
@@ -4474,20 +5240,25 @@ Field rules:
 At least one field must be updated.
 comment - Non-empty.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: PUT
-Type:
+Type: 
 URL: {{URL}}/api/listing-comments/1/deactivate
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Deactivate Listing Comment (200 OK)
 
-##### I. Example Response: Deactivate Listing Comment (200 OK)
 
+
+##### I. Example Response: Deactivate Listing Comment (200 OK)
 ```js
 {
     "success": true,
@@ -4497,28 +5268,37 @@ URL: {{URL}}/api/listing-comments/1/deactivate
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 3. Delete Listing Comment
+
 
 Delete listing comment identified by listing comment id. Permission: Admin/Owner/Private.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: DELETE
-Type:
+Type: 
 URL: {{URL}}/api/listing-comments/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Delete Listing Comment (200 OK)
 
-##### I. Example Response: Delete Listing Comment (200 OK)
 
+
+##### I. Example Response: Delete Listing Comment (200 OK)
 ```js
 {
     "success": true,
@@ -4534,28 +5314,37 @@ URL: {{URL}}/api/listing-comments/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 4. Get All Children Comment for Listing Comment
+
 
 Get all children listing comment (ie. listing comment chain) of a listing comment (inclusive). Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listing-comments/3/children
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Children Comment for Listing Comment (200 OK)
 
-##### I. Example Response: Get All Children Comment for Listing Comment (200 OK)
 
+
+##### I. Example Response: Get All Children Comment for Listing Comment (200 OK)
 ```js
 {
     "success": true,
@@ -4636,28 +5425,37 @@ URL: {{URL}}/api/listing-comments/3/children
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 5. Get All Listing Comments
+
 
 Get all listing comments. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listing-comments
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Listing Comments (200 OK)
 
-##### I. Example Response: Get All Listing Comments (200 OK)
 
+
+##### I. Example Response: Get All Listing Comments (200 OK)
 ```js
 {
     "success": true,
@@ -4876,28 +5674,37 @@ URL: {{URL}}/api/listing-comments
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 6. Get Single Listing Comment
+
 
 Get single listing comment. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listing-comments/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get Single Listing Comment (200 OK)
 
-##### I. Example Response: Get Single Listing Comment (200 OK)
 
+
+##### I. Example Response: Get Single Listing Comment (200 OK)
 ```js
 {
     "success": true,
@@ -4916,11 +5723,15 @@ URL: {{URL}}/api/listing-comments/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 7. Update Listing Comment
+
 
 Update listing comment identified by listing comment id. Permission: Admin/Owner/Private.
 
@@ -4928,7 +5739,8 @@ Field rules:
 At least one field must be updated.
 comment - Non-empty.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: PUT
@@ -4936,40 +5748,50 @@ Type: RAW
 URL: {{URL}}/api/listing-comments/1
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"comment": "Updated Comment!"
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Update Listing Comment (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"comment": "Updated Comment!"
 }
 ```
 
-##### I. Example Response: Update Listing Comment (200 OK)
 
+
+##### I. Example Response: Update Listing Comment (200 OK)
 ```js
 {
     "success": true,
@@ -4985,15 +5807,20 @@ URL: {{URL}}/api/listing-comments/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
-## Listing Locations
 
+
+## Listing Locations
 Listing Locations CRUD functionality.
 
+
+
 ### 1. Create Listing Location
+
 
 Create listing location for listing. Permission: Owner/Admin.
 
@@ -5002,7 +5829,8 @@ All fields required unless otherwise stated.
 listing_id - Valid UUID, existing listing id.
 location_id - Valid integer, existing location id.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: POST
@@ -5010,42 +5838,52 @@ Type: RAW
 URL: {{URL}}/api/listing-locations
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
 	"location_id": 6
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Create Listing Location (201 Created)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
 	"location_id": 7
 }
 ```
 
-##### I. Example Response: Create Listing Location (201 Created)
 
+
+##### I. Example Response: Create Listing Location (201 Created)
 ```js
 {
     "success": true,
@@ -5057,28 +5895,37 @@ URL: {{URL}}/api/listing-locations
 }
 ```
 
-**_Status Code:_** 201
+
+***Status Code:*** 201
 
 <br>
 
+
+
 ### 2. Delete Listing Location
+
 
 Delete listing location identified by listing location id. Permission: Owner/Admin.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: DELETE
-Type:
+Type: 
 URL: {{URL}}/api/listing-locations/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Delete Listing Location (200 OK)
 
-##### I. Example Response: Delete Listing Location (200 OK)
 
+
+##### I. Example Response: Delete Listing Location (200 OK)
 ```js
 {
     "success": true,
@@ -5090,28 +5937,37 @@ URL: {{URL}}/api/listing-locations/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 3. Get All Listing Locations
+
 
 Get all listing locations. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listing-locations
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Listing Locations (200 OK)
 
-##### I. Example Response: Get All Listing Locations (200 OK)
 
+
+##### I. Example Response: Get All Listing Locations (200 OK)
 ```js
 {
     "success": true,
@@ -5170,28 +6026,37 @@ URL: {{URL}}/api/listing-locations
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 4. Get Single Listing Location
+
 
 Get single listing location by listing location id. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listing-locations/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get Single Listing Location (200 OK)
 
-##### I. Example Response: Get Single Listing Location (200 OK)
 
+
+##### I. Example Response: Get Single Listing Location (200 OK)
 ```js
 {
     "success": true,
@@ -5204,15 +6069,20 @@ URL: {{URL}}/api/listing-locations/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
-## Listing Skills
 
+
+## Listing Skills
 Listing Skills CRUD functionality.
 
+
+
 ### 1. Create Custom Listing Skill
+
 
 Create custom listing skill for a specified listing id and add skill to skills table (if it skill does not exist). Permission: Owner/Admin.
 
@@ -5221,7 +6091,8 @@ All fields required unless otherwise stated.
 listing_id - Valid integer, existing listing id.
 skill - Non-empty string with alphabets and spaces only.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: POST
@@ -5229,15 +6100,18 @@ Type: RAW
 URL: {{URL}}/api/listing-skills/add-skill
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
 	"skill": "Junior Data Analyst",
@@ -5245,19 +6119,25 @@ URL: {{URL}}/api/listing-skills/add-skill
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Create Custom Listing Skill (201 Created)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
 	"skill": "Junior Data Analyst",
@@ -5265,8 +6145,9 @@ URL: {{URL}}/api/listing-skills/add-skill
 }
 ```
 
-##### I. Example Response: Create Custom Listing Skill (201 Created)
 
+
+##### I. Example Response: Create Custom Listing Skill (201 Created)
 ```js
 {
     "success": true,
@@ -5278,29 +6159,36 @@ URL: {{URL}}/api/listing-skills/add-skill
 }
 ```
 
-**_Status Code:_** 201
+
+***Status Code:*** 201
 
 <br>
 
+
+
 ##### II. Example Request: Create Listing Skill (403 Forbidden - Non-listing owner cannot create listing skill)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": 1,
 	"skill_id": 5
 }
 ```
 
-##### II. Example Response: Create Listing Skill (403 Forbidden - Non-listing owner cannot create listing skill)
 
+
+##### II. Example Response: Create Listing Skill (403 Forbidden - Non-listing owner cannot create listing skill)
 ```js
 {
     "success": false,
@@ -5308,29 +6196,36 @@ URL: {{URL}}/api/listing-skills/add-skill
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ##### III. Example Request: Create Listing Skill (400 Bad Request - Non-existent skill id)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": 1,
 	"skill_id": 200
 }
 ```
 
-##### III. Example Response: Create Listing Skill (400 Bad Request - Non-existent skill id)
 
+
+##### III. Example Response: Create Listing Skill (400 Bad Request - Non-existent skill id)
 ```js
 {
     "success": false,
@@ -5338,11 +6233,15 @@ URL: {{URL}}/api/listing-skills/add-skill
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ### 2. Create Listing Skill
+
 
 Create listing skill. Permission: Owner/Admin.
 
@@ -5351,7 +6250,8 @@ All fields required unless otherwise stated.
 listing_id - Valid integer, existing listing id.
 skill_id - Valid integer, existing skill id.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: POST
@@ -5359,42 +6259,52 @@ Type: RAW
 URL: {{URL}}/api/listing-skills
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
 	"skill_id": 6
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Create Listing Skill (400 Bad Request - Non-existent skill id)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": 1,
 	"skill_id": 200
 }
 ```
 
-##### I. Example Response: Create Listing Skill (400 Bad Request - Non-existent skill id)
 
+
+##### I. Example Response: Create Listing Skill (400 Bad Request - Non-existent skill id)
 ```js
 {
     "success": false,
@@ -5402,29 +6312,36 @@ URL: {{URL}}/api/listing-skills
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ##### II. Example Request: Create Listing Skill (403 Forbidden - Non-listing owner cannot create listing skill)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": 1,
 	"skill_id": 5
 }
 ```
 
-##### II. Example Response: Create Listing Skill (403 Forbidden - Non-listing owner cannot create listing skill)
 
+
+##### II. Example Response: Create Listing Skill (403 Forbidden - Non-listing owner cannot create listing skill)
 ```js
 {
     "success": false,
@@ -5432,29 +6349,36 @@ URL: {{URL}}/api/listing-skills
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ##### III. Example Request: Create Listing Skill (201 Created)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
 	"skill_id": 6
 }
 ```
 
-##### III. Example Response: Create Listing Skill (201 Created)
 
+
+##### III. Example Response: Create Listing Skill (201 Created)
 ```js
 {
     "success": true,
@@ -5466,28 +6390,37 @@ URL: {{URL}}/api/listing-skills
 }
 ```
 
-**_Status Code:_** 201
+
+***Status Code:*** 201
 
 <br>
 
+
+
 ### 3. Delete Listing Skill
+
 
 Delete listing skill identified by listing skill id. Permission: Owner/Admin.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: DELETE
-Type:
+Type: 
 URL: {{URL}}/api/listing-skills/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Delete Listing Skill (403 Forbidden - Non-listing owner cannot delete listing skill)
 
-##### I. Example Response: Delete Listing Skill (403 Forbidden - Non-listing owner cannot delete listing skill)
 
+
+##### I. Example Response: Delete Listing Skill (403 Forbidden - Non-listing owner cannot delete listing skill)
 ```js
 {
     "success": false,
@@ -5495,14 +6428,18 @@ URL: {{URL}}/api/listing-skills/1
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ##### II. Example Request: Delete Listing Skill (200 OK)
 
-##### II. Example Response: Delete Listing Skill (200 OK)
 
+
+##### II. Example Response: Delete Listing Skill (200 OK)
 ```js
 {
     "success": true,
@@ -5514,14 +6451,18 @@ URL: {{URL}}/api/listing-skills/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### III. Example Request: Delete Listing Skill (404 Not Found)
 
-##### III. Example Response: Delete Listing Skill (404 Not Found)
 
+
+##### III. Example Response: Delete Listing Skill (404 Not Found)
 ```js
 {
     "success": false,
@@ -5529,28 +6470,37 @@ URL: {{URL}}/api/listing-skills/1
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ### 4. Get All Listing Skills
+
 
 Get all listing skills. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listing-skills
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Listing Skills (200 OK)
 
-##### I. Example Response: Get All Listing Skills (200 OK)
 
+
+##### I. Example Response: Get All Listing Skills (200 OK)
 ```js
 {
     "success": true,
@@ -5741,28 +6691,37 @@ URL: {{URL}}/api/listing-skills
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 5. Get Single Listing Skill
+
 
 Get single listing skill by listing skill id. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listing-skills/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get Single Listing Skill (200 OK)
 
-##### I. Example Response: Get Single Listing Skill (200 OK)
 
+
+##### I. Example Response: Get Single Listing Skill (200 OK)
 ```js
 {
     "success": true,
@@ -5775,32 +6734,42 @@ URL: {{URL}}/api/listing-skills/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
-## Listing Stories
 
+
+## Listing Stories
 Listing stories CRUD functionality.
+
+
 
 ### 1. Get All Listing Stories
 
+
 Get all listing stories. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listings/stories
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Listing Stories (200 OK)
 
-##### I. Example Response: Get All Listing Stories (200 OK)
 
+
+##### I. Example Response: Get All Listing Stories (200 OK)
 ```js
 {
     "success": true,
@@ -5951,28 +6920,37 @@ URL: {{URL}}/api/listings/stories
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 2. Get Single Listing Story
+
 
 Get single listing story identified by listing id. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get Single Listing Story (404 Not Found - Non-existent listing id)
 
-##### I. Example Response: Get Single Listing Story (404 Not Found - Non-existent listing id)
 
+
+##### I. Example Response: Get Single Listing Story (404 Not Found - Non-existent listing id)
 ```js
 {
     "success": false,
@@ -5980,14 +6958,18 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ##### II. Example Request: Get Single Listing Story (200 OK)
 
-##### II. Example Response: Get Single Listing Story (200 OK)
 
+
+##### II. Example Response: Get Single Listing Story (200 OK)
 ```js
 {
     "success": true,
@@ -6001,11 +6983,15 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 3. Update Listing Story
+
 
 Update listing story identified by listing id. Permission: Admin/Owner.
 
@@ -6013,10 +6999,11 @@ Field rules:
 At least one field must be updated.
 overview
 problem
-solution
+solution 
 outcome
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: PUT
@@ -6024,15 +7011,18 @@ Type: RAW
 URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
     "overview": "Mental Health for Youth",
     "problem": "There is insufficient knowledge about mental health.",
@@ -6041,19 +7031,25 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Update Listing Story (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
     "overview": "Mental Health for Youth",
     "problem": "There is insufficient knowledge about mental health.",
@@ -6062,8 +7058,9 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories
 }
 ```
 
-##### I. Example Response: Update Listing Story (200 OK)
 
+
+##### I. Example Response: Update Listing Story (200 OK)
 ```js
 {
     "success": true,
@@ -6076,21 +7073,27 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Update Listing Story (404 Not Found - Invalid listing id)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
     "overview": "Mental Health for Youth",
     "problem": "There is insufficient knowledge about mental health.",
@@ -6099,8 +7102,9 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories
 }
 ```
 
-##### II. Example Response: Update Listing Story (404 Not Found - Invalid listing id)
 
+
+##### II. Example Response: Update Listing Story (404 Not Found - Invalid listing id)
 ```js
 {
     "success": false,
@@ -6108,21 +7112,27 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ##### III. Example Request: Update Listing Story (400 Bad Request - Invalid fields updated)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
     "title": "Updated title 1",
     "category": "Updated category",
@@ -6136,8 +7146,9 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories
 }
 ```
 
-##### III. Example Response: Update Listing Story (400 Bad Request - Invalid fields updated)
 
+
+##### III. Example Response: Update Listing Story (400 Bad Request - Invalid fields updated)
 ```js
 {
     "success": false,
@@ -6145,15 +7156,20 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
-## Listing Updates
 
+
+## Listing Updates
 Listing Updates CRUD functionality.
 
+
+
 ### 1. Create Listing Update
+
 
 Create listing update. Permission: Owner/Admin.
 
@@ -6168,7 +7184,8 @@ pic4 - Valid JPG/PNG filename and extension text found in pics. Optional.
 pic5 - Valid JPG/PNG filename and extension text found in pics. Optional.
 pics - Valid collection of up to 5 JPG/PNG files. Optional.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: POST
@@ -6176,50 +7193,60 @@ Type: FORMDATA
 URL: {{URL}}/api/listing-updates
 ```
 
-**_Headers:_**
 
-| Key          | Value               | Description    |
-| ------------ | ------------------- | -------------- |
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
 | Content-Type | multipart/form-data | Form Data Type |
 
-**_Body:_**
 
-| Key         | Value                                | Description               |
-| ----------- | ------------------------------------ | ------------------------- |
-| pics        |                                      | Collection of 5 JPG files |
-| listing_id  | 43824166-bee2-426e-8a08-ca2c4e4120ae |                           |
-| description | First Update                         |                           |
-| pic1        | test-pic-1.jpg                       |                           |
-| pic2        | test-pic-2.jpg                       |                           |
-| pic3        | test-pic-3.jpg                       |                           |
-| pic4        | test-pic-4.jpg                       |                           |
-| pic5        | test-pic-5.jpg                       |                           |
 
-**_More example Requests/Responses:_**
+***Body:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| pics |  | Collection of 5 JPG files |
+| listing_id | 43824166-bee2-426e-8a08-ca2c4e4120ae |  |
+| description | First Update |  |
+| pic1 | test-pic-1.jpg |  |
+| pic2 | test-pic-2.jpg |  |
+| pic3 | test-pic-3.jpg |  |
+| pic4 | test-pic-4.jpg |  |
+| pic5 | test-pic-5.jpg |  |
+
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Create Listing Update (401 Unauthorised - User not logged in)
 
-**_Headers:_**
 
-| Key          | Value               | Description    |
-| ------------ | ------------------- | -------------- |
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
 | Content-Type | multipart/form-data | Form Data Type |
 
-**_Body:_**
 
-| Key         | Value          | Description               |
-| ----------- | -------------- | ------------------------- |
-| pics        |                | Collection of 3 JPG files |
-| listing_id  | 1              |                           |
-| description | First Update   |                           |
-| pic1        | test-pic-1.jpg |                           |
-| pic2        | test-pic-2.jpg |                           |
-| pic3        | test-pic-3.jpg |                           |
-| pic4        | test-pic-4.jpg |                           |
-| pic5        | test-pic-5.jpg |                           |
+
+***Body:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| pics |  | Collection of 3 JPG files |
+| listing_id | 1 |  |
+| description | First Update |  |
+| pic1 | test-pic-1.jpg |  |
+| pic2 | test-pic-2.jpg |  |
+| pic3 | test-pic-3.jpg |  |
+| pic4 | test-pic-4.jpg |  |
+| pic5 | test-pic-5.jpg |  |
+
+
 
 ##### I. Example Response: Create Listing Update (401 Unauthorised - User not logged in)
-
 ```js
 {
     "success": false,
@@ -6227,33 +7254,40 @@ URL: {{URL}}/api/listing-updates
 }
 ```
 
-**_Status Code:_** 401
+
+***Status Code:*** 401
 
 <br>
 
+
+
 ##### II. Example Request: Create Listing Update (200 OK)
 
-**_Headers:_**
 
-| Key          | Value               | Description    |
-| ------------ | ------------------- | -------------- |
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
 | Content-Type | multipart/form-data | Form Data Type |
 
-**_Body:_**
 
-| Key         | Value                                | Description               |
-| ----------- | ------------------------------------ | ------------------------- |
-| pics        |                                      | Collection of 5 JPG files |
-| listing_id  | 43824166-bee2-426e-8a08-ca2c4e4120ae |                           |
-| description | First Update                         |                           |
-| pic1        | test-pic-1.jpg                       |                           |
-| pic2        | test-pic-2.jpg                       |                           |
-| pic3        | test-pic-3.jpg                       |                           |
-| pic4        | test-pic-4.jpg                       |                           |
-| pic5        | test-pic-5.jpg                       |                           |
+
+***Body:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| pics |  | Collection of 5 JPG files |
+| listing_id | 43824166-bee2-426e-8a08-ca2c4e4120ae |  |
+| description | First Update |  |
+| pic1 | test-pic-1.jpg |  |
+| pic2 | test-pic-2.jpg |  |
+| pic3 | test-pic-3.jpg |  |
+| pic4 | test-pic-4.jpg |  |
+| pic5 | test-pic-5.jpg |  |
+
+
 
 ##### II. Example Response: Create Listing Update (200 OK)
-
 ```js
 {
     "success": true,
@@ -6272,28 +7306,37 @@ URL: {{URL}}/api/listing-updates
 }
 ```
 
-**_Status Code:_** 201
+
+***Status Code:*** 201
 
 <br>
 
+
+
 ### 2. Delete Listing Update
+
 
 Delete single listing update identified by update id. Permission: Owner/Admin.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: DELETE
-Type:
+Type: 
 URL: {{URL}}/api/listing-updates/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Delete Listing Update (404 Not Found)
 
-##### I. Example Response: Delete Listing Update (404 Not Found)
 
+
+##### I. Example Response: Delete Listing Update (404 Not Found)
 ```js
 {
     "success": false,
@@ -6301,14 +7344,18 @@ URL: {{URL}}/api/listing-updates/1
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ##### II. Example Request: Delete Listing Update (200 OK)
 
-##### II. Example Response: Delete Listing Update (200 OK)
 
+
+##### II. Example Response: Delete Listing Update (200 OK)
 ```js
 {
     "success": true,
@@ -6327,28 +7374,37 @@ URL: {{URL}}/api/listing-updates/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 3. Get All Listing Updates
+
 
 Get all listing updates. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listing-updates
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Listing Updates (200 OK)
 
-##### I. Example Response: Get All Listing Updates (200 OK)
 
+
+##### I. Example Response: Get All Listing Updates (200 OK)
 ```js
 {
     "success": true,
@@ -6689,28 +7745,37 @@ URL: {{URL}}/api/listing-updates
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 4. Get Single Listing Update
+
 
 Get single listing update identified by update id. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listing-updates/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get Single Listing Update (200 OK)
 
-##### I. Example Response: Get Single Listing Update (200 OK)
 
+
+##### I. Example Response: Get Single Listing Update (200 OK)
 ```js
 {
     "success": true,
@@ -6729,14 +7794,18 @@ URL: {{URL}}/api/listing-updates/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Get Single Listing Update (404 Not Found - Non existent listing id)
 
-##### II. Example Response: Get Single Listing Update (404 Not Found - Non existent listing id)
 
+
+##### II. Example Response: Get Single Listing Update (404 Not Found - Non existent listing id)
 ```js
 {
     "success": false,
@@ -6744,11 +7813,15 @@ URL: {{URL}}/api/listing-updates/1
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ### 5. Modify Listing Update
+
 
 Modify listing update identified by update id. Permission: Owner/Admin.
 
@@ -6762,7 +7835,8 @@ pic4 - Valid JPG/PNG filename and extension text found in pics. Optional.
 pic5 - Valid JPG/PNG filename and extension text found in pics. Optional.
 pics - Valid collection of up to 5 JPG/PNG files. Optional.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: PUT
@@ -6770,48 +7844,58 @@ Type: FORMDATA
 URL: {{URL}}/api/listing-updates/2
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-| Key         | Value                   | Description          |
-| ----------- | ----------------------- | -------------------- |
+
+
+***Body:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
 | description | New Milestone Achieved! | Collection of 5 pics |
-| pic1        | test-pic-1.jpg          |                      |
-| pic2        | test-pic-2.jpg          |                      |
-| pic3        | test-pic-3.jpg          |                      |
-| pic4        | test-pic-4.jpg          |                      |
-| pic5        | test-pic-5.jpg          |                      |
-| pics        |                         | Collection of 5 pics |
+| pic1 | test-pic-1.jpg |  |
+| pic2 | test-pic-2.jpg |  |
+| pic3 | test-pic-3.jpg |  |
+| pic4 | test-pic-4.jpg |  |
+| pic5 | test-pic-5.jpg |  |
+| pics |  | Collection of 5 pics |
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Modify Listing Update (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-| Key         | Value                   | Description          |
-| ----------- | ----------------------- | -------------------- |
+
+
+***Body:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
 | description | New Milestone Achieved! | Collection of 5 pics |
-| pic1        | test-pic-1.jpg          |                      |
-| pic2        | test-pic-2.jpg          |                      |
-| pic3        | test-pic-3.jpg          |                      |
-| pic4        | test-pic-4.jpg          |                      |
-| pic5        | test-pic-5.jpg          |                      |
-| pics        |                         | Collection of 5 pics |
+| pic1 | test-pic-1.jpg |  |
+| pic2 | test-pic-2.jpg |  |
+| pic3 | test-pic-3.jpg |  |
+| pic4 | test-pic-4.jpg |  |
+| pic5 | test-pic-5.jpg |  |
+| pics |  | Collection of 5 pics |
+
+
 
 ##### I. Example Response: Modify Listing Update (200 OK)
-
 ```js
 {
     "success": true,
@@ -6830,15 +7914,20 @@ URL: {{URL}}/api/listing-updates/2
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
-## Listings
 
+
+## Listings
 Listings CRUD functionality.
 
+
+
 ### 1. Create Listing
+
 
 Create listing. Permission: Private.
 
@@ -6850,7 +7939,9 @@ about - Optional.
 tagline - Optional.
 mission - Optional.
 listing_url - Valid URL. Optional.
-is_published - Boolean. Optional.
+listing_status - 'ongoing' | 'completed'.
+listing_email - Valid email.
+is_published - Boolean. Optional. Default to false.
 start_date - Valid SQL datetime. Optional. Default to current datetime.
 end_date - Valid SQL datetime. Optional.
 organisation_id - Valid integer and existing organisation id. Optional.
@@ -6861,7 +7952,8 @@ pic4 - Valid JPG/PNG filename and extension text found in pics. Optional.
 pic5 - Valid JPG/PNG filename and extension text found in pics. Optional.
 pics - Valid collection of up to 5 JPG/PNG files. Optional.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: POST
@@ -6869,39 +7961,49 @@ Type: FORMDATA
 URL: {{URL}}/api/listings
 ```
 
-**_Body:_**
 
-| Key          | Value                        | Description |
-| ------------ | ---------------------------- | ----------- |
-| title        | New title 1                  |             |
-| category     | test category                |             |
-| about        | test about                   |             |
-| tagline      | test tagline                 |             |
-| mission      | test mission                 |             |
-| listing_url  | www.test.com                 |             |
-| pic1         | test-pic-1.jpg               |             |
-| pic2         | test-pic-2.jpg               |             |
-| pic3         | test-pic-3.jpg               |             |
-| pic4         | test-pic-4.jpg               |             |
-| pic5         | test-pic-5.jpg               |             |
-| is_published | false                        |             |
-| start_date   | 2019-08-15 16:45:43.41585+08 |             |
-| end_date     | 2020-07-17 16:45:43.41585+08 |             |
-| pics         |                              |             |
 
-**_More example Requests/Responses:_**
+***Body:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| title | New title 1 |  |
+| category | test category |  |
+| about | test about |  |
+| tagline | test tagline |  |
+| mission | test mission |  |
+| listing_url | www.test.com |  |
+| pic1 | test-pic-1.jpg |  |
+| pic2 | test-pic-2.jpg |  |
+| pic3 | test-pic-3.jpg |  |
+| pic4 | test-pic-4.jpg |  |
+| pic5 | test-pic-5.jpg |  |
+| is_published | false |  |
+| start_date | 2019-08-15 16:45:43.41585+08 |  |
+| end_date | 2020-07-17 16:45:43.41585+08 |  |
+| pics |  |  |
+| listing_email | new_listing@gmail.com |  |
+| listing_status | ongoing |  |
+
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Create Listing (401 Unauthorised - Not logged in user)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
     "title": "New title 1",
     "category": "test category",
@@ -6920,8 +8022,9 @@ URL: {{URL}}/api/listings
 }
 ```
 
-##### I. Example Response: Create Listing (401 Unauthorised - Not logged in user)
 
+
+##### I. Example Response: Create Listing (401 Unauthorised - Not logged in user)
 ```js
 {
     "success": false,
@@ -6929,46 +8032,48 @@ URL: {{URL}}/api/listings
 }
 ```
 
-**_Status Code:_** 401
+
+***Status Code:*** 401
 
 <br>
 
-##### II. Example Request: Create Listing (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+##### II. Example Request: Create Listing (201 Created)
 
-**_Body:_**
 
-| Key          | Value                        | Description |
-| ------------ | ---------------------------- | ----------- |
-| title        | New title 1                  |             |
-| category     | test category                |             |
-| about        | test about                   |             |
-| tagline      | test tagline                 |             |
-| mission      | test mission                 |             |
-| listing_url  | www.test.com                 |             |
-| pic1         | test-pic-1.jpg               |             |
-| pic2         | test-pic-2.jpg               |             |
-| pic3         | test-pic-3.jpg               |             |
-| pic4         | test-pic-4.jpg               |             |
-| pic5         | test-pic-5.jpg               |             |
-| is_published | false                        |             |
-| start_date   | 2019-08-15 16:45:43.41585+08 |             |
-| end_date     | 2020-07-17 16:45:43.41585+08 |             |
-| pics         |                              |             |
 
-##### II. Example Response: Create Listing (200 OK)
+***Body:***
 
+| Key | Value | Description |
+| --- | ------|-------------|
+| title | New title 1 |  |
+| category | test category |  |
+| about | test about |  |
+| tagline | test tagline |  |
+| mission | test mission |  |
+| listing_url | www.test.com |  |
+| pic1 | test-pic-1.jpg |  |
+| pic2 | test-pic-2.jpg |  |
+| pic3 | test-pic-3.jpg |  |
+| pic4 | test-pic-4.jpg |  |
+| pic5 | test-pic-5.jpg |  |
+| is_published | false |  |
+| start_date | 2019-08-15 16:45:43.41585+08 |  |
+| end_date | 2020-07-17 16:45:43.41585+08 |  |
+| pics |  |  |
+| listing_email | new_listing@gmail.com |  |
+| listing_status | ongoing |  |
+
+
+
+##### II. Example Response: Create Listing (201 Created)
 ```js
 {
     "success": true,
     "data": [
         {
-            "listing_id": "a9d83f01-a784-4435-ac0b-94dc8ff531e9",
+            "listing_id": "c912bdd2-7cac-4245-af20-b774dbfae225",
             "organisation_id": null,
             "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
             "title": "New title 1",
@@ -6977,20 +8082,22 @@ URL: {{URL}}/api/listings
             "tagline": "test tagline",
             "mission": "test mission",
             "listing_url": "www.test.com",
-            "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1597679350414.jpg",
-            "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-1597679350422.jpg",
-            "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-1597679350453.jpg",
-            "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-1597679350458.jpg",
-            "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-1597679350470.jpg",
+            "listing_email": "new_listing@gmail.com",
+            "listing_status": "ongoing",
+            "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1600580556633.jpg",
+            "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-1600580556637.jpg",
+            "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-1600580556645.jpg",
+            "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-1600580556654.jpg",
+            "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-1600580556658.jpg",
             "is_published": false,
             "is_verified": false,
-            "start_date": "2019-08-15T08:45:43.416Z",
-            "end_date": "2020-07-17T08:45:43.416Z",
-            "created_on": "2020-08-17T15:49:12.925Z",
+            "start_date": "2019-08-15T08:45:43.415Z",
+            "end_date": "2020-07-17T08:45:43.415Z",
+            "created_on": "2020-09-20T05:42:36.963Z",
             "deleted_on": null
         },
         {
-            "listing_id": "a9d83f01-a784-4435-ac0b-94dc8ff531e9",
+            "listing_id": "c912bdd2-7cac-4245-af20-b774dbfae225",
             "overview": null,
             "problem": null,
             "solution": null,
@@ -7000,39 +8107,46 @@ URL: {{URL}}/api/listings
 }
 ```
 
-**_Status Code:_** 201
+
+***Status Code:*** 201
 
 <br>
 
+
+
 ##### III. Example Request: Create Listing (400 Bad Request - Missing title field)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-| Key          | Value                        | Description |
-| ------------ | ---------------------------- | ----------- |
-| category     | test category                |             |
-| about        | test about                   |             |
-| tagline      | test tagline                 |             |
-| mission      | test mission                 |             |
-| listing_url  | www.test.com                 |             |
-| pic1         | test-pic-1.jpg               |             |
-| pic2         | test-pic-2.jpg               |             |
-| pic3         | test-pic-3.jpg               |             |
-| pic4         | test-pic-4.jpg               |             |
-| pic5         | test-pic-5.jpg               |             |
-| is_published | false                        |             |
-| start_date   | 2019-08-15 16:45:43.41585+08 |             |
-| end_date     | 2020-07-17 16:45:43.41585+08 |             |
-| pics         |                              |             |
+
+
+***Body:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| category | test category |  |
+| about | test about |  |
+| tagline | test tagline |  |
+| mission | test mission |  |
+| listing_url | www.test.com |  |
+| pic1 | test-pic-1.jpg |  |
+| pic2 | test-pic-2.jpg |  |
+| pic3 | test-pic-3.jpg |  |
+| pic4 | test-pic-4.jpg |  |
+| pic5 | test-pic-5.jpg |  |
+| is_published | false |  |
+| start_date | 2019-08-15 16:45:43.41585+08 |  |
+| end_date | 2020-07-17 16:45:43.41585+08 |  |
+| pics |  |  |
+
+
 
 ##### III. Example Response: Create Listing (400 Bad Request - Missing title field)
-
 ```js
 {
     "success": false,
@@ -7040,42 +8154,54 @@ URL: {{URL}}/api/listings
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ### 2. Deactivate Listing
+
 
 Deactivate (soft delete) listing. Permission: Owner/Admin.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: PUT
-Type:
+Type: 
 URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/deactivate
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Deactivate Listing (403 Forbidden - Unauthorised deactivation by non-admin non-owner)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
     "is_verified": "true"
 }
 ```
 
-##### I. Example Response: Deactivate Listing (403 Forbidden - Unauthorised deactivation by non-admin non-owner)
 
+
+##### I. Example Response: Deactivate Listing (403 Forbidden - Unauthorised deactivation by non-admin non-owner)
 ```js
 {
     "success": false,
@@ -7083,14 +8209,18 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/deactivate
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ##### II. Example Request: Deactivate Listing (200 OK)
 
-##### II. Example Response: Deactivate Listing (200 OK)
 
+
+##### II. Example Response: Deactivate Listing (200 OK)
 ```js
 {
     "success": true,
@@ -7119,28 +8249,37 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/deactivate
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 3. Delete Listing
+
 
 Delete single listing. Permission: Admin.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: DELETE
-Type:
+Type: 
 URL: {{URL}}/api/listings/e411bd80-d5cf-49ac-b847-18c9fc13377a
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Delete Listing (400 Bad Request - Listing does not exist)
 
-##### I. Example Response: Delete Listing (400 Bad Request - Listing does not exist)
 
+
+##### I. Example Response: Delete Listing (400 Bad Request - Listing does not exist)
 ```js
 {
     "success": false,
@@ -7148,14 +8287,18 @@ URL: {{URL}}/api/listings/e411bd80-d5cf-49ac-b847-18c9fc13377a
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ##### II. Example Request: Delete Listing (200 OK)
 
-##### II. Example Response: Delete Listing (200 OK)
 
+
+##### II. Example Response: Delete Listing (200 OK)
 ```js
 {
     "success": true,
@@ -7191,14 +8334,18 @@ URL: {{URL}}/api/listings/e411bd80-d5cf-49ac-b847-18c9fc13377a
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### III. Example Request: Delete Listing (403 Forbidden - Non-admin and non-listing-owner)
 
-##### III. Example Response: Delete Listing (403 Forbidden - Non-admin and non-listing-owner)
 
+
+##### III. Example Response: Delete Listing (403 Forbidden - Non-admin and non-listing-owner)
 ```js
 {
     "success": false,
@@ -7206,28 +8353,37 @@ URL: {{URL}}/api/listings/e411bd80-d5cf-49ac-b847-18c9fc13377a
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ### 4. Get All Faqs for a Listing
+
 
 Get all faqs for an associated listing. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/faqs
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Faqs for a Listing (200 OK)
 
-##### I. Example Response: Get All Faqs for a Listing (200 OK)
 
+
+##### I. Example Response: Get All Faqs for a Listing (200 OK)
 ```js
 {
     "success": true,
@@ -7267,14 +8423,18 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/faqs
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Get All Faqs for a Listing (404 Not Found - Non-existent listing)
 
-##### II. Example Response: Get All Faqs for a Listing (404 Not Found - Non-existent listing)
 
+
+##### II. Example Response: Get All Faqs for a Listing (404 Not Found - Non-existent listing)
 ```js
 {
     "success": false,
@@ -7282,28 +8442,37 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/faqs
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ### 5. Get All Hashtags for a Listing
+
 
 Get all hashtags for an associated listing. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/hashtags
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Hashtags for a Listing (200 OK)
 
-##### I. Example Response: Get All Hashtags for a Listing (200 OK)
 
+
+##### I. Example Response: Get All Hashtags for a Listing (200 OK)
 ```js
 {
     "success": true,
@@ -7328,14 +8497,18 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/hashtags
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Get All Hashtags for a Listing (404 Not Found - Non-existent listing id)
 
-##### II. Example Response: Get All Hashtags for a Listing (404 Not Found - Non-existent listing id)
 
+
+##### II. Example Response: Get All Hashtags for a Listing (404 Not Found - Non-existent listing id)
 ```js
 {
     "success": false,
@@ -7343,28 +8516,37 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/hashtags
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ### 6. Get All Jobs for a Listing
+
 
 Get all jobs for an associated listing. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/jobs
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Jobs for a Listing (200 OK)
 
-##### I. Example Response: Get All Jobs for a Listing (200 OK)
 
+
+##### I. Example Response: Get All Jobs for a Listing (200 OK)
 ```js
 {
     "success": true,
@@ -7409,14 +8591,18 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/jobs
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Get All Jobs for a Listing (404 Not Found - Non-existent listing id)
 
-##### II. Example Response: Get All Jobs for a Listing (404 Not Found - Non-existent listing id)
 
+
+##### II. Example Response: Get All Jobs for a Listing (404 Not Found - Non-existent listing id)
 ```js
 {
     "success": false,
@@ -7424,28 +8610,37 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/jobs
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ### 7. Get All Likes for a Listing
+
 
 Get all likes for an associated listing. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/likes
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Likes for a Listing (200 OK)
 
-##### I. Example Response: Get All Likes for a Listing (200 OK)
 
+
+##### I. Example Response: Get All Likes for a Listing (200 OK)
 ```js
 {
     "success": true,
@@ -7527,14 +8722,18 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/likes
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Get All Likes for a Listing (404 Not Found - Non-existent listing id)
 
-##### II. Example Response: Get All Likes for a Listing (404 Not Found - Non-existent listing id)
 
+
+##### II. Example Response: Get All Likes for a Listing (404 Not Found - Non-existent listing id)
 ```js
 {
     "success": false,
@@ -7542,28 +8741,37 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/likes
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ### 8. Get All Listing Comments for a Listing
+
 
 Get all listing comments for an associated listing. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-comments
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Listing Comments for a Listing (200 OK)
 
-##### I. Example Response: Get All Listing Comments for a Listing (200 OK)
 
+
+##### I. Example Response: Get All Listing Comments for a Listing (200 OK)
 ```js
 {
     "success": true,
@@ -7657,28 +8865,37 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-comments
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 9. Get All Listing Locations for a Listing
+
 
 Get all listing locations for an associated listing. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-locations
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Listing Locations for a Listing (200 OK)
 
-##### I. Example Response: Get All Listing Locations for a Listing (200 OK)
 
+
+##### I. Example Response: Get All Listing Locations for a Listing (200 OK)
 ```js
 {
     "success": true,
@@ -7706,28 +8923,37 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-locations
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 10. Get All Listing Skills for a Listing
+
 
 Get all listing skills for an associated listing. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-skills
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Listing Skills for a Listing (200 OK)
 
-##### I. Example Response: Get All Listing Skills for a Listing (200 OK)
 
+
+##### I. Example Response: Get All Listing Skills for a Listing (200 OK)
 ```js
 {
     "success": true,
@@ -7761,14 +8987,18 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-skills
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Get All Listing Skills for a Listing (404 Not Found - Non-existent listing id)
 
-##### II. Example Response: Get All Listing Skills for a Listing (404 Not Found - Non-existent listing id)
 
+
+##### II. Example Response: Get All Listing Skills for a Listing (404 Not Found - Non-existent listing id)
 ```js
 {
     "success": false,
@@ -7776,28 +9006,37 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-skills
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ### 11. Get All Listing Updates for a Listing
+
 
 Get all Listing Updates for an associated listing. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-updates
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Listing Updates for a Listing (200 OK)
 
-##### I. Example Response: Get All Listing Updates for a Listing (200 OK)
 
+
+##### I. Example Response: Get All Listing Updates for a Listing (200 OK)
 ```js
 {
     "success": true,
@@ -7831,14 +9070,18 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-updates
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Get All Listing Skills for a Listing (404 Not Found - Non-existent listing id)
 
-##### II. Example Response: Get All Listing Skills for a Listing (404 Not Found - Non-existent listing id)
 
+
+##### II. Example Response: Get All Listing Skills for a Listing (404 Not Found - Non-existent listing id)
 ```js
 {
     "success": false,
@@ -7846,28 +9089,37 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-updates
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ### 12. Get All Listings
+
 
 Get all listings. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listings
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Listings (200 OK)
 
-##### I. Example Response: Get All Listings (200 OK)
 
+
+##### I. Example Response: Get All Listings (200 OK)
 ```js
 {
     "success": true,
@@ -8064,28 +9316,37 @@ URL: {{URL}}/api/listings
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 13. Get All Milestones for a Listing
+
 
 Get all milestones for an associated listing. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/milestones
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Milestones for a Listing (200 OK)
 
-##### I. Example Response: Get All Milestones for a Listing (200 OK)
 
+
+##### I. Example Response: Get All Milestones for a Listing (200 OK)
 ```js
 {
     "success": true,
@@ -8107,14 +9368,18 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/milestones
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Get All Milestones for a Listing (404 Not Found - Non-existent listing id)
 
-##### II. Example Response: Get All Milestones for a Listing (404 Not Found - Non-existent listing id)
 
+
+##### II. Example Response: Get All Milestones for a Listing (404 Not Found - Non-existent listing id)
 ```js
 {
     "success": false,
@@ -8122,28 +9387,37 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/milestones
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ### 14. Get All Participants for a Listing
+
 
 Get all participants for an associated listing. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/participants
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Participants for a Listing (404 Not Found - Non-existent listing)
 
-##### I. Example Response: Get All Participants for a Listing (404 Not Found - Non-existent listing)
 
+
+##### I. Example Response: Get All Participants for a Listing (404 Not Found - Non-existent listing)
 ```js
 {
     "success": false,
@@ -8151,14 +9425,18 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/participants
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ##### II. Example Request: Get All Participants for a Listing (200 OK)
 
-##### II. Example Response: Get All Participants for a Listing (200 OK)
 
+
+##### II. Example Response: Get All Participants for a Listing (200 OK)
 ```js
 {
     "success": true,
@@ -8189,28 +9467,37 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/participants
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 15. Get Single Listing
+
 
 Get single listing by its listing ID. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get Single Listing (404 Not Found)
 
-##### I. Example Response: Get Single Listing (404 Not Found)
 
+
+##### I. Example Response: Get Single Listing (404 Not Found)
 ```js
 {
     "success": false,
@@ -8218,14 +9505,18 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ##### II. Example Request: Get Single Listing (200 OK)
 
-##### II. Example Response: Get Single Listing (200 OK)
 
+
+##### II. Example Response: Get Single Listing (200 OK)
 ```js
 {
     "success": true,
@@ -8267,11 +9558,15 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 16. Search Listings
+
 
 Search for listings by title, category or location. Permission: Public.
 
@@ -8280,34 +9575,43 @@ All fields required unless otherwise stated.
 keyword - Keyword to be searched.
 limit - Optional. Default: 10. Number of results to display.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/listings/search
 ```
 
-**_Query params:_**
 
-| Key     | Value                | Description |
-| ------- | -------------------- | ----------- |
-| keyword | raffles,kampong,2020 |             |
-| limit   | 10                   |             |
 
-**_More example Requests/Responses:_**
+***Query params:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| keyword | raffles,kampong,2020 |  |
+| limit | 10 |  |
+
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Search Listings (200 OK)
 
-**_Query:_**
 
-| Key     | Value                | Description |
-| ------- | -------------------- | ----------- |
-| keyword | raffles,kampong,2020 |             |
-| limit   | 10                   |             |
+
+***Query:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| keyword | raffles,kampong,2020 |  |
+| limit | 10 |  |
+
+
 
 ##### I. Example Response: Search Listings (200 OK)
-
 ```js
 {
     "success": true,
@@ -8411,11 +9715,15 @@ URL: {{URL}}/api/listings/search
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 17. Update Listing
+
 
 Update listing. Permission: Admin/Owner.
 
@@ -8432,7 +9740,8 @@ start_date - Valid SQL datetime. Optional. Default to current datetime.
 end_date - Valid SQL datetime. Optional.
 organisation_id - Valid integer and existing organisation id. Optional.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: PUT
@@ -8440,57 +9749,68 @@ Type: FORMDATA
 URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 ```
 
-**_Body:_**
 
-| Key          | Value                        | Description               |
-| ------------ | ---------------------------- | ------------------------- |
-| title        | Updated title 1              |                           |
-| category     | Updated category             |                           |
-| about        | Updated about                |                           |
-| tagline      | Updated tagline              |                           |
-| mission      | Updated mission              |                           |
-| listing_url  | www.updated-test.com         |                           |
-| is_published | true                         |                           |
-| start_date   | 2018-08-15 16:45:43.41585+08 |                           |
-| end_date     | 2020-01-30 16:45:43.41585+08 |                           |
-| pic1         | test-pic-1.jpg               |                           |
-| pic2         | test-pic-2.jpg               |                           |
-| pic3         | test-pic-3.jpg               |                           |
-| pic4         | test-pic-4.jpg               |                           |
-| pic5         | test-pic-5.jpg               |                           |
-| pics         |                              | Collection of 5 JPG files |
 
-**_More example Requests/Responses:_**
+***Body:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| title | Updated title 1 |  |
+| category | Updated category |  |
+| about | Updated about |  |
+| tagline | Updated tagline |  |
+| mission | Updated mission |  |
+| listing_url | www.updated-test.com |  |
+| is_published | true |  |
+| start_date | 2018-08-15 16:45:43.41585+08 |  |
+| end_date | 2020-01-30 16:45:43.41585+08 |  |
+| pic1 | test-pic-1.jpg |  |
+| pic2 | test-pic-2.jpg |  |
+| pic3 | test-pic-3.jpg |  |
+| pic4 | test-pic-4.jpg |  |
+| pic5 | test-pic-5.jpg |  |
+| pics |  | Collection of 5 JPG files |
+| listing_status | completed |  |
+| listing_email | updated_email@gmail.com |  |
+
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Update Listing (403 Forbidden - Non-admin and non-listing owner)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-| Key          | Value                                                              | Description |
-| ------------ | ------------------------------------------------------------------ | ----------- |
-| title        | Updated title 1                                                    |             |
-| category     | Updated category                                                   |             |
-| about        | Updated about                                                      |             |
-| tagline      | Updated tagline                                                    |             |
-| mission      | Updated mission                                                    |             |
-| listing_url  | www.updated-test.com                                               |             |
-| pic1         | https://robohash.org/voluptatemcommodisint.bmp?size=50x50&set=set1 |             |
-| pic2         | https://robohash.org/illoipsaquos.bmp?size=50x50&set=set1          |             |
-| pic3         | https://robohash.org/oditautqui.png?size=50x50&set=set1            |             |
-| pic4         | https://robohash.org/eaetnon.jpg?size=50x50&set=set1               |             |
-| pic5         | https://robohash.org/fugittemporeiusto.bmp?size=50x50&set=set1     |             |
-| is_published | true                                                               |             |
-| start_date   | 2018-08-15 16:45:43.41585+08                                       |             |
-| end_date     | 2020-01-30 16:45:43.41585+08                                       |             |
+
+
+***Body:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| title | Updated title 1 |  |
+| category | Updated category |  |
+| about | Updated about |  |
+| tagline | Updated tagline |  |
+| mission | Updated mission |  |
+| listing_url | www.updated-test.com |  |
+| pic1 | https://robohash.org/voluptatemcommodisint.bmp?size=50x50&set=set1 |  |
+| pic2 | https://robohash.org/illoipsaquos.bmp?size=50x50&set=set1 |  |
+| pic3 | https://robohash.org/oditautqui.png?size=50x50&set=set1 |  |
+| pic4 | https://robohash.org/eaetnon.jpg?size=50x50&set=set1 |  |
+| pic5 | https://robohash.org/fugittemporeiusto.bmp?size=50x50&set=set1 |  |
+| is_published | true |  |
+| start_date | 2018-08-15 16:45:43.41585+08 |  |
+| end_date | 2020-01-30 16:45:43.41585+08 |  |
+
+
 
 ##### I. Example Response: Update Listing (403 Forbidden - Non-admin and non-listing owner)
-
 ```js
 {
     "success": false,
@@ -8498,71 +9818,27 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
-##### II. Example Request: Update Listing (200 OK)
 
-**_Body:_**
 
-| Key          | Value                        | Description               |
-| ------------ | ---------------------------- | ------------------------- |
-| title        | Updated title 1              |                           |
-| category     | Updated category             |                           |
-| about        | Updated about                |                           |
-| tagline      | Updated tagline              |                           |
-| mission      | Updated mission              |                           |
-| listing_url  | www.updated-test.com         |                           |
-| is_published | true                         |                           |
-| start_date   | 2018-08-15 16:45:43.41585+08 |                           |
-| end_date     | 2020-01-30 16:45:43.41585+08 |                           |
-| pic1         | test-pic-1.jpg               |                           |
-| pic2         | test-pic-2.jpg               |                           |
-| pic3         | test-pic-3.jpg               |                           |
-| pic4         | test-pic-4.jpg               |                           |
-| pic5         | test-pic-5.jpg               |                           |
-| pics         |                              | Collection of 5 JPG files |
+##### II. Example Request: Update Listing (400 Bad Request - Invalid (empty string) title entered)
 
-##### II. Example Response: Update Listing (200 OK)
 
-```js
-{
-    "success": true,
-    "data": {
-        "title": "Updated title 1",
-        "category": "Updated category",
-        "about": "Updated about",
-        "tagline": "Updated tagline",
-        "mission": "Updated mission",
-        "listing_url": "www.updated-test.com",
-        "is_published": true,
-        "start_date": "2018-08-15T08:45:43.416Z",
-        "end_date": "2020-01-30T08:45:43.416Z",
-        "pic1": "test-pic-1.jpg",
-        "pic2": "test-pic-2.jpg",
-        "pic3": "test-pic-3.jpg",
-        "pic4": "test-pic-4.jpg",
-        "pic5": "test-pic-5.jpg"
-    }
-}
-```
+***Headers:***
 
-**_Status Code:_** 200
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-<br>
 
-##### III. Example Request: Update Listing (400 Bad Request - Invalid (empty string) title entered)
 
-**_Headers:_**
+***Body:***
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
-
-**_Body:_**
-
-```js
+```js        
 {
     "title": "",
     "category": "Updated category",
@@ -8581,8 +9857,9 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 }
 ```
 
-##### III. Example Response: Update Listing (400 Bad Request - Invalid (empty string) title entered)
 
+
+##### II. Example Response: Update Listing (400 Bad Request - Invalid (empty string) title entered)
 ```js
 {
     "success": false,
@@ -8590,11 +9867,75 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
+##### III. Example Request: Update Listing (200 OK)
+
+
+
+***Body:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| title | Updated title 1 |  |
+| category | Updated category |  |
+| about | Updated about |  |
+| tagline | Updated tagline |  |
+| mission | Updated mission |  |
+| listing_url | www.updated-test.com |  |
+| is_published | true |  |
+| start_date | 2018-08-15 16:45:43.41585+08 |  |
+| end_date | 2020-01-30 16:45:43.41585+08 |  |
+| pic1 | test-pic-1.jpg |  |
+| pic2 | test-pic-2.jpg |  |
+| pic3 | test-pic-3.jpg |  |
+| pic4 | test-pic-4.jpg |  |
+| pic5 | test-pic-5.jpg |  |
+| pics |  | Collection of 5 JPG files |
+| listing_status | completed |  |
+| listing_email | updated_email@gmail.com |  |
+
+
+
+##### III. Example Response: Update Listing (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "title": "Updated title 1",
+        "category": "Updated category",
+        "about": "Updated about",
+        "tagline": "Updated tagline",
+        "mission": "Updated mission",
+        "listing_url": "www.updated-test.com",
+        "listing_email": "updated_email@gmail.com",
+        "listing_status": "completed",
+        "is_published": true,
+        "start_date": "2018-08-15T08:45:43.415Z",
+        "end_date": "2020-01-30T08:45:43.415Z",
+        "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1600581115622.jpg",
+        "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-1600581115630.jpg",
+        "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-1600581115654.jpg",
+        "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-1600581115659.jpg",
+        "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-1600581115664.jpg"
+    }
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
 ### 18. Upload Listing Photos
+
 
 Upload photos for listing, up to a maximum of 5 photos at once. In the request body JSON, the newly uploaded photo's filename and extension (eg. Pic001.jpg) must be passed as value to one of the 5 keys (pic1, pic2, ..., pic5). Permission: Admin/Owner.
 
@@ -8607,7 +9948,8 @@ pic4 - Valid JPG/PNG filename and extension text found in pics. Optional.
 pic5 - Valid JPG/PNG filename and extension text found in pics. Optional.
 pics - Valid collection of up to 5 JPG/PNG files. Optional.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: PUT
@@ -8615,40 +9957,49 @@ Type: FORMDATA
 URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/upload-photo
 ```
 
-**_Body:_**
 
-| Key  | Value          | Description                                                |
-| ---- | -------------- | ---------------------------------------------------------- |
-| pics |                | Collection of 5 JPG files                                  |
+
+***Body:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| pics |  | Collection of 5 JPG files |
 | pic1 | test-pic-1.jpg | Original filename of new picture, to be uploaded into pic1 |
 | pic2 | test-pic-2.jpg | Original filename of new picture, to be uploaded into pic2 |
 | pic3 | test-pic-3.jpg | Original filename of new picture, to be uploaded into pic3 |
 | pic4 | test-pic-4.jpg | Original filename of new picture, to be uploaded into pic4 |
 | pic5 | test-pic-5.jpg | Original filename of new picture, to be uploaded into pic5 |
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Upload Listing Photos (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-| Key  | Value          | Description                                                |
-| ---- | -------------- | ---------------------------------------------------------- |
-| pics |                | Collection of 5 JPG files                                  |
+
+
+***Body:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| pics |  | Collection of 5 JPG files |
 | pic1 | test-pic-1.jpg | Original filename of new picture, to be uploaded into pic1 |
 | pic2 | test-pic-2.jpg | Original filename of new picture, to be uploaded into pic2 |
 | pic3 | test-pic-3.jpg | Original filename of new picture, to be uploaded into pic3 |
 | pic4 | test-pic-4.jpg | Original filename of new picture, to be uploaded into pic4 |
 | pic5 | test-pic-5.jpg | Original filename of new picture, to be uploaded into pic5 |
 
-##### I. Example Response: Upload Listing Photos (200 OK)
 
+
+##### I. Example Response: Upload Listing Photos (200 OK)
 ```js
 {
     "success": true,
@@ -8662,31 +10013,38 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/upload-photo
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Upload Listing Photos (200 OK - 5 files uploaded, but only 1 valid filename given in requesst body)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-| Key  | Value          | Description                                                |
-| ---- | -------------- | ---------------------------------------------------------- |
-| pics |                | Collection of 5 JPG files                                  |
+
+
+***Body:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| pics |  | Collection of 5 JPG files |
 | pic1 | test-pic-1.jpg | Original filename of new picture, to be uploaded into pic1 |
-| pic2 | DSC00415.jpg   | Original filename of new picture, to be uploaded into pic2 |
-| pic3 | DSC00416.jpg   | Original filename of new picture, to be uploaded into pic3 |
-| pic4 | DSC00424.jpg   | Original filename of new picture, to be uploaded into pic4 |
-| pic5 | DSC00411.jpg   | Original filename of new picture, to be uploaded into pic5 |
+| pic2 | DSC00415.jpg | Original filename of new picture, to be uploaded into pic2 |
+| pic3 | DSC00416.jpg | Original filename of new picture, to be uploaded into pic3 |
+| pic4 | DSC00424.jpg | Original filename of new picture, to be uploaded into pic4 |
+| pic5 | DSC00411.jpg | Original filename of new picture, to be uploaded into pic5 |
+
+
 
 ##### II. Example Response: Upload Listing Photos (200 OK - 5 files uploaded, but only 1 valid filename given in requesst body)
-
 ```js
 {
     "success": true,
@@ -8700,11 +10058,15 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/upload-photo
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 19. Verify Listing
+
 
 Verify listing. Permission: Admin.
 
@@ -8712,7 +10074,8 @@ Field rules:
 All fields are required unless otherwise stated.
 is_verified - Boolean.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: PUT
@@ -8720,40 +10083,50 @@ Type: RAW
 URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/verify
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
     "is_verified": "true"
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Verify Listing (403 Forbidden - Unauthorised verification by non-admin)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
     "is_verified": "true"
 }
 ```
 
-##### I. Example Response: Verify Listing (403 Forbidden - Unauthorised verification by non-admin)
 
+
+##### I. Example Response: Verify Listing (403 Forbidden - Unauthorised verification by non-admin)
 ```js
 {
     "success": false,
@@ -8761,28 +10134,35 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/verify
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ##### II. Example Request: Verify Listing (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
     "is_verified": "true"
 }
 ```
 
-##### II. Example Response: Verify Listing (200 OK)
 
+
+##### II. Example Response: Verify Listing (200 OK)
 ```js
 {
     "success": true,
@@ -8792,28 +10172,35 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/verify
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### III. Example Request: Verify Listing (400 Bad Request - Missing field in request body, or invalid key or value)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
     "is_verified": ""
 }
 ```
 
-##### III. Example Response: Verify Listing (400 Bad Request - Missing field in request body, or invalid key or value)
 
+
+##### III. Example Response: Verify Listing (400 Bad Request - Missing field in request body, or invalid key or value)
 ```js
 {
     "success": false,
@@ -8821,15 +10208,20 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/verify
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
-## Locations
 
+
+## Locations
 Locations CRUD functionality.
 
+
+
 ### 1. Create Location
+
 
 Create listing location for listing. Permission: Admin.
 
@@ -8837,7 +10229,8 @@ Field rules:
 All fields required unless otherwise stated.
 location - Valid string.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: POST
@@ -8845,40 +10238,50 @@ Type: RAW
 URL: {{URL}}/api/locations
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"location": "new location"
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Create Location (201 Created)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"location": "new location"
 }
 ```
 
-##### I. Example Response: Create Location (201 Created)
 
+
+##### I. Example Response: Create Location (201 Created)
 ```js
 {
     "success": true,
@@ -8889,28 +10292,35 @@ URL: {{URL}}/api/locations
 }
 ```
 
-**_Status Code:_** 201
+
+***Status Code:*** 201
 
 <br>
 
+
+
 ##### II. Example Request: Create Location (403 Forbidden - Non-admin)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"location": "new location"
 }
 ```
 
-##### II. Example Response: Create Location (403 Forbidden - Non-admin)
 
+
+##### II. Example Response: Create Location (403 Forbidden - Non-admin)
 ```js
 {
     "success": false,
@@ -8918,28 +10328,37 @@ URL: {{URL}}/api/locations
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ### 2. Delete Location
+
 
 Delete location identified by location id. Permission: Admin.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: DELETE
-Type:
+Type: 
 URL: {{URL}}/api/locations/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Delete Location (200 OK)
 
-##### I. Example Response: Delete Location (200 OK)
 
+
+##### I. Example Response: Delete Location (200 OK)
 ```js
 {
     "success": true,
@@ -8950,14 +10369,18 @@ URL: {{URL}}/api/locations/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Delete Location (403 Forbidden - Non-admin)
 
-##### II. Example Response: Delete Location (403 Forbidden - Non-admin)
 
+
+##### II. Example Response: Delete Location (403 Forbidden - Non-admin)
 ```js
 {
     "success": false,
@@ -8965,28 +10388,37 @@ URL: {{URL}}/api/locations/1
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ### 3. Get All Listings for a Location
+
 
 Get all listings for a location. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/locations/3/listings
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Listings for a Location (200 OK)
 
-##### I. Example Response: Get All Listings for a Location (200 OK)
 
+
+##### I. Example Response: Get All Listings for a Location (200 OK)
 ```js
 {
     "success": true,
@@ -9153,28 +10585,37 @@ URL: {{URL}}/api/locations/3/listings
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 4. Get All Locations
+
 
 Get all locations. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/locations
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Locations (200 OK)
 
-##### I. Example Response: Get All Locations (200 OK)
 
+
+##### I. Example Response: Get All Locations (200 OK)
 ```js
 {
     "success": true,
@@ -9290,28 +10731,37 @@ URL: {{URL}}/api/locations
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 5. Get Single Location
+
 
 Get single location by location id. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/locations/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get Single Location (200 OK)
 
-##### I. Example Response: Get Single Location (200 OK)
 
+
+##### I. Example Response: Get Single Location (200 OK)
 ```js
 {
     "success": true,
@@ -9322,15 +10772,20 @@ URL: {{URL}}/api/locations/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
-## Milestones
 
+
+## Milestones
 Listing Milestones CRUD functionality.
 
+
+
 ### 1. Create Milestone
+
 
 Create milestone. Permission: Owner/Admin.
 
@@ -9340,7 +10795,8 @@ listing_id - Valid integer, existing listing id.
 description - Non-empty.
 date - Valid SQL datetime. Optional.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: POST
@@ -9348,15 +10804,18 @@ Type: RAW
 URL: {{URL}}/api/milestones
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
 	"description": "First $1000 raised! Raised our 1st $1000 for our benficiary in our 1st ever flag drive.",
@@ -9364,19 +10823,25 @@ URL: {{URL}}/api/milestones
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Create Milestone (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
 	"description": "First $1000 raised! Raised our 1st $1000 for our benficiary in our 1st ever flag drive.",
@@ -9384,8 +10849,9 @@ URL: {{URL}}/api/milestones
 }
 ```
 
-##### I. Example Response: Create Milestone (200 OK)
 
+
+##### I. Example Response: Create Milestone (200 OK)
 ```js
 {
     "success": true,
@@ -9398,21 +10864,27 @@ URL: {{URL}}/api/milestones
 }
 ```
 
-**_Status Code:_** 201
+
+***Status Code:*** 201
 
 <br>
 
+
+
 ##### II. Example Request: Create Milestone (400 Bad Request - Invalid value entered, empty description)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": 1,
 	"description": " ",
@@ -9420,8 +10892,9 @@ URL: {{URL}}/api/milestones
 }
 ```
 
-##### II. Example Response: Create Milestone (400 Bad Request - Invalid value entered, empty description)
 
+
+##### II. Example Response: Create Milestone (400 Bad Request - Invalid value entered, empty description)
 ```js
 {
     "success": false,
@@ -9429,28 +10902,37 @@ URL: {{URL}}/api/milestones
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ### 2. Delete Milestone
+
 
 Delete milestone identified by milestone id. Permission: Owner/Admin.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: DELETE
-Type:
+Type: 
 URL: {{URL}}/api/milestones/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Delete Milestone (200 OK)
 
-##### I. Example Response: Delete Milestone (200 OK)
 
+
+##### I. Example Response: Delete Milestone (200 OK)
 ```js
 {
     "success": true,
@@ -9463,14 +10945,18 @@ URL: {{URL}}/api/milestones/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Delete Milestone (404 Not Found - Non-existent milestone id)
 
-##### II. Example Response: Delete Milestone (404 Not Found - Non-existent milestone id)
 
+
+##### II. Example Response: Delete Milestone (404 Not Found - Non-existent milestone id)
 ```js
 {
     "success": false,
@@ -9478,28 +10964,37 @@ URL: {{URL}}/api/milestones/1
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ### 3. Get All Milestones
+
 
 Get all milestones. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/milestones
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Milestones (200 OK)
 
-##### I. Example Response: Get All Milestones (200 OK)
 
+
+##### I. Example Response: Get All Milestones (200 OK)
 ```js
 {
     "success": true,
@@ -9665,28 +11160,37 @@ URL: {{URL}}/api/milestones
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 4. Get Single Milestone
+
 
 Get single milestone. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/milestones/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get Single Milestone (404 Not Found - Non-existent milestone id)
 
-##### I. Example Response: Get Single Milestone (404 Not Found - Non-existent milestone id)
 
+
+##### I. Example Response: Get Single Milestone (404 Not Found - Non-existent milestone id)
 ```js
 {
     "success": false,
@@ -9694,14 +11198,18 @@ URL: {{URL}}/api/milestones/1
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ##### II. Example Request: Get Single Milestone (200 OK)
 
-##### II. Example Response: Get Single Milestone (200 OK)
 
+
+##### II. Example Response: Get Single Milestone (200 OK)
 ```js
 {
     "success": true,
@@ -9714,11 +11222,15 @@ URL: {{URL}}/api/milestones/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 5. Update Milestone
+
 
 Update milestone identified by milestone id. Permission: Owner/Admin.
 
@@ -9727,7 +11239,8 @@ At least one field must be updated.
 description - Non-empty.
 date - Valid SQL datetime.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: PUT
@@ -9735,42 +11248,52 @@ Type: RAW
 URL: {{URL}}/api/milestones/1
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"description": "New Milestone Achieved!",
 	"date": "2020-03-04 16:45:43.41585+08"
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Update Milestone (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"description": "New Milestone Achieved!",
 	"date": "2020-03-04 16:45:43.41585+08"
 }
 ```
 
-##### I. Example Response: Update Milestone (200 OK)
 
+
+##### I. Example Response: Update Milestone (200 OK)
 ```js
 {
     "success": true,
@@ -9783,29 +11306,36 @@ URL: {{URL}}/api/milestones/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Update Milestone (400 Bad Request - Invalid value entered)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"description": "New Milestone Achieved!",
 	"date": "12341234"
 }
 ```
 
-##### II. Example Response: Update Milestone (400 Bad Request - Invalid value entered)
 
+
+##### II. Example Response: Update Milestone (400 Bad Request - Invalid value entered)
 ```js
 {
     "success": false,
@@ -9813,29 +11343,36 @@ URL: {{URL}}/api/milestones/1
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ##### III. Example Request: Update Milestone (404 Not Found - Non-existent milestone id)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"description": "New Milestone Achieved!",
 	"date": "2020-03-04 16:45:43.41585+08"
 }
 ```
 
-##### III. Example Response: Update Milestone (404 Not Found - Non-existent milestone id)
 
+
+##### III. Example Response: Update Milestone (404 Not Found - Non-existent milestone id)
 ```js
 {
     "success": false,
@@ -9843,26 +11380,32 @@ URL: {{URL}}/api/milestones/1
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
-## Participants
 
+
+## Participants
 Participants (Users-Listings) CRUD functionality.
+
+
 
 ### 1. Create participant
 
+
 Create participant. (ie. add user to listing) Permission: Admin/Owner.
 
-Field rules:
-All fields required unless otherwise stated.
+Field rules: 
+All fields required unless otherwise stated. 
 listing_id - Valid integer, existing listing id.
 user_id - Valid integer, existing user id.
 joined_on - Valid SQL datetime. Optional. Defaults to current datetime.
 end_on - Valid SQL datetime. Optional.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: POST
@@ -9870,15 +11413,18 @@ Type: RAW
 URL: {{URL}}/api/participants
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "cf4adc93-3b96-4bbc-8cb0-41e196b145ac",
 	"user_id": "f96b2138-1754-4c17-a405-940e20adc601",
@@ -9887,19 +11433,25 @@ URL: {{URL}}/api/participants
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Create participant (201 Created)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
 	"user_id": "2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb",
@@ -9908,8 +11460,9 @@ URL: {{URL}}/api/participants
 }
 ```
 
-##### I. Example Response: Create participant (201 Created)
 
+
+##### I. Example Response: Create participant (201 Created)
 ```js
 {
     "success": true,
@@ -9923,21 +11476,27 @@ URL: {{URL}}/api/participants
 }
 ```
 
-**_Status Code:_** 201
+
+***Status Code:*** 201
 
 <br>
 
+
+
 ##### II. Example Request: Create participant (400 Bad Request - Entry already exists)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": 2,
 	"user_id": 5,
@@ -9946,8 +11505,9 @@ URL: {{URL}}/api/participants
 }
 ```
 
-##### II. Example Response: Create participant (400 Bad Request - Entry already exists)
 
+
+##### II. Example Response: Create participant (400 Bad Request - Entry already exists)
 ```js
 {
     "success": false,
@@ -9955,21 +11515,27 @@ URL: {{URL}}/api/participants
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ##### III. Example Request: Create participant (403 Forbidden - Non-admin, non-listing owner and not updating self)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"listing_id": 2,
 	"user_id": 5,
@@ -9978,8 +11544,9 @@ URL: {{URL}}/api/participants
 }
 ```
 
-##### III. Example Response: Create participant (403 Forbidden - Non-admin, non-listing owner and not updating self)
 
+
+##### III. Example Response: Create participant (403 Forbidden - Non-admin, non-listing owner and not updating self)
 ```js
 {
     "success": false,
@@ -9987,28 +11554,37 @@ URL: {{URL}}/api/participants
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ### 2. Delete Participant
+
 
 Delete participant identified by participant id. Permission: Admin/Owner/Private.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: DELETE
-Type:
+Type: 
 URL: {{URL}}/api/participants/11
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Delete Participant (200 OK)
 
-##### I. Example Response: Delete Participant (200 OK)
 
+
+##### I. Example Response: Delete Participant (200 OK)
 ```js
 {
     "success": true,
@@ -10022,14 +11598,18 @@ URL: {{URL}}/api/participants/11
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Delete Participant (400 Bad Request - Non-existent participant)
 
-##### II. Example Response: Delete Participant (400 Bad Request - Non-existent participant)
 
+
+##### II. Example Response: Delete Participant (400 Bad Request - Non-existent participant)
 ```js
 {
     "success": false,
@@ -10037,14 +11617,18 @@ URL: {{URL}}/api/participants/11
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ##### III. Example Request: Delete Participant (403 Forbidden - Non-admin, non-listing owner and not updating self)
 
-##### III. Example Response: Delete Participant (403 Forbidden - Non-admin, non-listing owner and not updating self)
 
+
+##### III. Example Response: Delete Participant (403 Forbidden - Non-admin, non-listing owner and not updating self)
 ```js
 {
     "success": false,
@@ -10052,28 +11636,37 @@ URL: {{URL}}/api/participants/11
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ### 3. Get All Participants
+
 
 Get all Participants. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/participants
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Participants (200 OK)
 
-##### I. Example Response: Get All Participants (200 OK)
 
+
+##### I. Example Response: Get All Participants (200 OK)
 ```js
 {
     "success": true,
@@ -10204,28 +11797,37 @@ URL: {{URL}}/api/participants
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 4. Get Single Participant
+
 
 Get single participant identified by participant id. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/participants/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get Single Participant (Non-existent participant id)
 
-##### I. Example Response: Get Single Participant (Non-existent participant id)
 
+
+##### I. Example Response: Get Single Participant (Non-existent participant id)
 ```js
 {
     "success": false,
@@ -10233,14 +11835,18 @@ URL: {{URL}}/api/participants/1
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ##### II. Example Request: Get Single Participant (200 OK)
 
-##### II. Example Response: Get Single Participant (200 OK)
 
+
+##### II. Example Response: Get Single Participant (200 OK)
 ```js
 {
     "success": true,
@@ -10254,20 +11860,25 @@ URL: {{URL}}/api/participants/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 5. Update Participant
+
 
 Update participant identified by participant id. Permission: Admin/Owner/Private.
 
-Field rules:
-At least one field must be updated.
+Field rules: 
+At least one field must be updated. 
 joined_on - Valid SQL datetime.
 end_on - Valid SQL datetime.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: PUT
@@ -10275,42 +11886,52 @@ Type: RAW
 URL: {{URL}}/api/participants/1
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"joined_on": "2019-07-17 15:14:05.023357+08",
 	"end_on": "2020-07-17 15:14:05.023357+08"
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Update Participant (403 Forbidden - Non-admin, non-listing owner and not updating self)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"joined_on": "2019-07-17 15:14:05.023357+08",
 	"end_on": "2020-07-17 15:14:05.023357+08"
 }
 ```
 
-##### I. Example Response: Update Participant (403 Forbidden - Non-admin, non-listing owner and not updating self)
 
+
+##### I. Example Response: Update Participant (403 Forbidden - Non-admin, non-listing owner and not updating self)
 ```js
 {
     "success": false,
@@ -10318,29 +11939,36 @@ URL: {{URL}}/api/participants/1
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ##### II. Example Request: Update Participant (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"joined_on": "2019-07-17 15:14:05.023357+08",
 	"end_on": "2020-07-17 15:14:05.023357+08"
 }
 ```
 
-##### II. Example Response: Update Participant (200 OK)
 
+
+##### II. Example Response: Update Participant (200 OK)
 ```js
 {
     "success": true,
@@ -10354,29 +11982,36 @@ URL: {{URL}}/api/participants/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### III. Example Request: Update Participant (404 Not Found - Non-existent participant id)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"joined_on": "2019-07-17 15:14:05.023357+08",
 	"end_on": "2020-07-17 15:14:05.023357+08"
 }
 ```
 
-##### III. Example Response: Update Participant (404 Not Found - Non-existent participant id)
 
+
+##### III. Example Response: Update Participant (404 Not Found - Non-existent participant id)
 ```js
 {
     "success": false,
@@ -10384,32 +12019,42 @@ URL: {{URL}}/api/participants/1
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
-## Profiles
 
+
+## Profiles
 Profiles CRUD funcitonality by raw User ID.
+
+
 
 ### 1. Get Single Profile
 
+
 Get single user profile identified by user id. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get Single Profile (200 OK)
 
-##### I. Example Response: Get Single Profile (200 OK)
 
+
+##### I. Example Response: Get Single Profile (200 OK)
 ```js
 {
     "success": true,
@@ -10432,11 +12077,15 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 2. Update Profile
+
 
 Update user profile identified by user id. Permission: Admin/Private.
 
@@ -10453,7 +12102,8 @@ twitter_link - Valid URL.
 instagram_link - Valid URL.
 linkedin_link - Valid URL.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: PUT
@@ -10461,15 +12111,18 @@ Type: RAW
 URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"nickname": "don-tay",
 	"about": "Updated about me",
@@ -10484,19 +12137,25 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Update Profile (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"nickname": "don-tay",
 	"about": "Updated about me",
@@ -10511,8 +12170,9 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles
 }
 ```
 
-##### I. Example Response: Update Profile (200 OK)
 
+
+##### I. Example Response: Update Profile (200 OK)
 ```js
 {
     "success": true,
@@ -10531,21 +12191,27 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
-##### II. Example Request: Update Profile (403 Forbidden - Non-admin user updating other user profile)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+##### II. Example Request: Update Profile  (403 Forbidden - Non-admin user updating other user profile)
 
-**_Body:_**
 
-```js
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
 {
 	"nickname": "don-tay",
 	"profile_picture": "https://robohash.org/explicaboquiafacere.bmp?size=50x50&set=set1",
@@ -10561,8 +12227,9 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles
 }
 ```
 
-##### II. Example Response: Update Profile (403 Forbidden - Non-admin user updating other user profile)
 
+
+##### II. Example Response: Update Profile  (403 Forbidden - Non-admin user updating other user profile)
 ```js
 {
     "success": false,
@@ -10570,21 +12237,27 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ##### III. Example Request: Update Profile (400 Bad Request - Invalid field entered)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"nickname": "don-tay",
 	"profile_picture": "https://robohash.org/explicaboquiafacere.bmp?size=50x50&set=set1",
@@ -10600,8 +12273,9 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles
 }
 ```
 
-##### III. Example Response: Update Profile (400 Bad Request - Invalid field entered)
 
+
+##### III. Example Response: Update Profile (400 Bad Request - Invalid field entered)
 ```js
 {
     "success": false,
@@ -10609,21 +12283,27 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ##### IV. Example Request: Update Profile (404 Not Found - Non-existent user id)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"nickname": "don-tay",
 	"about": "Updated about me",
@@ -10638,8 +12318,9 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles
 }
 ```
 
-##### IV. Example Response: Update Profile (404 Not Found - Non-existent user id)
 
+
+##### IV. Example Response: Update Profile (404 Not Found - Non-existent user id)
 ```js
 {
     "success": false,
@@ -10647,11 +12328,15 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ### 3. Upload Profile Picture
+
 
 Upload user profile picture to cloud storage, identified by user id. Permission: Admin/Private.
 
@@ -10659,7 +12344,8 @@ Field rules:
 All fields required unless otherwise stated.
 pic - Single valid JPG/PNG file.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: PUT
@@ -10667,36 +12353,46 @@ Type: FORMDATA
 URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles/upload-photo
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-| Key | Value | Description     |
-| --- | ----- | --------------- |
-| pic |       | Single JPG file |
 
-**_More example Requests/Responses:_**
+
+***Body:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| pic |  | Single JPG file |
+
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Upload Profile Picture (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-| Key | Value | Description     |
-| --- | ----- | --------------- |
-| pic |       | Single JPG file |
+
+
+***Body:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| pic |  | Single JPG file |
+
+
 
 ##### I. Example Response: Upload Profile Picture (200 OK)
-
 ```js
 {
     "success": true,
@@ -10706,11 +12402,15 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles/upload-phot
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 4. Verify Profile (by User ID)
+
 
 Verify user profile identified by user id. Permission: Admin.
 
@@ -10718,7 +12418,8 @@ Field rules:
 At least one field must be updated.
 is_verified - Boolean.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: PUT
@@ -10726,40 +12427,50 @@ Type: RAW
 URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles/verify
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"is_verified": true
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Verify Profile (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"is_verified": true
 }
 ```
 
-##### I. Example Response: Verify Profile (200 OK)
 
+
+##### I. Example Response: Verify Profile (200 OK)
 ```js
 {
     "success": true,
@@ -10769,15 +12480,20 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles/verify
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
-## Skills
 
+
+## Skills
 Skills CRUD functionality.
 
+
+
 ### 1. Create Skill
+
 
 Create skill. Permission: Admin.
 
@@ -10785,7 +12501,8 @@ Field rules:
 All fields required unles otherwise stated.
 skill - Non-empty string with alphabets and spaces only.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: POST
@@ -10793,15 +12510,18 @@ Type: RAW
 URL: {{URL}}/api/skills
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"skill": "Microsoft Powerpoint",
 	"skill_group": "Microsoft Office Tools",
@@ -10809,27 +12529,34 @@ URL: {{URL}}/api/skills
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Create Skill (201 Created)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"skill": "Microsoft Powerpoint",
 	"skill_group": "Microsoft Office Tools"
 }
 ```
 
-##### I. Example Response: Create Skill (201 Created)
 
+
+##### I. Example Response: Create Skill (201 Created)
 ```js
 {
     "success": true,
@@ -10841,28 +12568,35 @@ URL: {{URL}}/api/skills
 }
 ```
 
-**_Status Code:_** 201
+
+***Status Code:*** 201
 
 <br>
 
+
+
 ##### II. Example Request: Create Skill (400 Bad Request - Non-alphabet or non-whitespace character in field)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"skill": "$ making"
 }
 ```
 
-##### II. Example Response: Create Skill (400 Bad Request - Non-alphabet or non-whitespace character in field)
 
+
+##### II. Example Response: Create Skill (400 Bad Request - Non-alphabet or non-whitespace character in field)
 ```js
 {
     "success": false,
@@ -10870,28 +12604,35 @@ URL: {{URL}}/api/skills
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ##### III. Example Request: Create Skill (403 Forbidden - Non-admin user)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"skill": "Microsoft Powerpoint"
 }
 ```
 
-##### III. Example Response: Create Skill (403 Forbidden - Non-admin user)
 
+
+##### III. Example Response: Create Skill (403 Forbidden - Non-admin user)
 ```js
 {
     "success": false,
@@ -10899,28 +12640,37 @@ URL: {{URL}}/api/skills
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
+
+
 
 ### 2. Delete Skill
 
+
 Delete skill identified by skill id. Permission: Admin.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: DELETE
-Type:
+Type: 
 URL: {{URL}}/api/skills/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Delete Skill (403 Forbidden - Non-admin user)
 
-##### I. Example Response: Delete Skill (403 Forbidden - Non-admin user)
 
+
+##### I. Example Response: Delete Skill (403 Forbidden - Non-admin user)
 ```js
 {
     "success": false,
@@ -10928,14 +12678,18 @@ URL: {{URL}}/api/skills/1
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ##### II. Example Request: Delete Skill (200 OK)
 
-##### II. Example Response: Delete Skill (200 OK)
 
+
+##### II. Example Response: Delete Skill (200 OK)
 ```js
 {
     "success": true,
@@ -10946,14 +12700,18 @@ URL: {{URL}}/api/skills/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### III. Example Request: Delete Skill (400 Bad Request - Non-existent skill)
 
-##### III. Example Response: Delete Skill (400 Bad Request - Non-existent skill)
 
+
+##### III. Example Response: Delete Skill (400 Bad Request - Non-existent skill)
 ```js
 {
     "success": false,
@@ -10961,28 +12719,37 @@ URL: {{URL}}/api/skills/1
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ### 3. Get All Skills
+
 
 Get all skills. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/skills
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Skills (200 OK)
 
-##### I. Example Response: Get All Skills (200 OK)
 
+
+##### I. Example Response: Get All Skills (200 OK)
 ```js
 {
     "success": true,
@@ -11098,28 +12865,37 @@ URL: {{URL}}/api/skills
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 4. Get Single Skill
+
 
 Get single skill. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/skills/1
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get Single Skill (404 Not Found - Invalid skill ID)
 
-##### I. Example Response: Get Single Skill (404 Not Found - Invalid skill ID)
 
+
+##### I. Example Response: Get Single Skill (404 Not Found - Invalid skill ID)
 ```js
 {
     "success": false,
@@ -11127,14 +12903,18 @@ URL: {{URL}}/api/skills/1
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ##### II. Example Request: Get Single Skill (200 OK)
 
-##### II. Example Response: Get Single Skill (200 OK)
 
+
+##### II. Example Response: Get Single Skill (200 OK)
 ```js
 {
     "success": true,
@@ -11145,19 +12925,24 @@ URL: {{URL}}/api/skills/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 5. Update Skill
+
 
 Update skill identified by skill id. Permission: Admin.
 
-Field rules:
+Field rules: 
 At least one field must be updated.
 skill - Non-empty string with alphabets and spaces only.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: PUT
@@ -11165,15 +12950,18 @@ Type: RAW
 URL: {{URL}}/api/skills/1
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"skill": "Microsoft Word",
 	"skill_group": "Microsoft Suite",
@@ -11181,26 +12969,33 @@ URL: {{URL}}/api/skills/1
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Update Skill (403 Forbidden - Non-admin user)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"skill": "Microsoft Word"
 }
 ```
 
-##### I. Example Response: Update Skill (403 Forbidden - Non-admin user)
 
+
+##### I. Example Response: Update Skill (403 Forbidden - Non-admin user)
 ```js
 {
     "success": false,
@@ -11208,21 +13003,27 @@ URL: {{URL}}/api/skills/1
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ##### II. Example Request: Update Skill (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"skill": "Microsoft Word",
 	"skill_group": "Microsoft Suite",
@@ -11230,8 +13031,9 @@ URL: {{URL}}/api/skills/1
 }
 ```
 
-##### II. Example Response: Update Skill (200 OK)
 
+
+##### II. Example Response: Update Skill (200 OK)
 ```js
 {
     "success": true,
@@ -11244,28 +13046,35 @@ URL: {{URL}}/api/skills/1
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### III. Example Request: Update Skill (400 Bad Request - Non-alphabet or non-whitespace in field)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"skill": "#programming"
 }
 ```
 
-##### III. Example Response: Update Skill (400 Bad Request - Non-alphabet or non-whitespace in field)
 
+
+##### III. Example Response: Update Skill (400 Bad Request - Non-alphabet or non-whitespace in field)
 ```js
 {
     "success": false,
@@ -11273,26 +13082,32 @@ URL: {{URL}}/api/skills/1
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
-## Users
 
+
+## Users
 Users CRUD functionality.
+
+
 
 ### 1. Create User
 
+
 Create user and user profile. Permission: Admin.
 
-Field rules:
-All fields required unless otherwise stated.
-first_name: Alphabets and whitespaces only.
-last_name: Alphabets and whitespaces only. Optional.
-email: Valid email address only. Email address will be canonicalized.
+Field rules: 
+All fields required unless otherwise stated. 
+first_name: Alphabets and whitespaces only. 
+last_name: Alphabets and whitespaces only. Optional. 
+email: Valid email address only. Email address will be canonicalized. 
 password: 8-25 characters. At least 1 uppercase character. At least 1 lowercase character. At least 1 special character.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: POST
@@ -11300,15 +13115,18 @@ Type: RAW
 URL: {{URL}}/api/users
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"first_name": "Con",
 	"last_name": "Jobs",
@@ -11317,19 +13135,25 @@ URL: {{URL}}/api/users
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Create User (400 Bad Request - Invalid email)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"first_name": "Con",
 	"last_name": "Jobs",
@@ -11338,8 +13162,9 @@ URL: {{URL}}/api/users
 }
 ```
 
-##### I. Example Response: Create User (400 Bad Request - Invalid email)
 
+
+##### I. Example Response: Create User (400 Bad Request - Invalid email)
 ```js
 {
     "success": false,
@@ -11347,21 +13172,27 @@ URL: {{URL}}/api/users
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ##### II. Example Request: Create User (400 Bad Request - Duplicate email)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"first_name": "Con",
 	"last_name": "Jobs",
@@ -11370,8 +13201,9 @@ URL: {{URL}}/api/users
 }
 ```
 
-##### II. Example Response: Create User (400 Bad Request - Duplicate email)
 
+
+##### II. Example Response: Create User (400 Bad Request - Duplicate email)
 ```js
 {
     "success": false,
@@ -11379,21 +13211,27 @@ URL: {{URL}}/api/users
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ##### III. Example Request: Create User (403 Forbidden - Non-admin user)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"first_name": "Con",
 	"last_name": "Jobs",
@@ -11402,8 +13240,9 @@ URL: {{URL}}/api/users
 }
 ```
 
-##### III. Example Response: Create User (403 Forbidden - Non-admin user)
 
+
+##### III. Example Response: Create User (403 Forbidden - Non-admin user)
 ```js
 {
     "success": false,
@@ -11411,21 +13250,27 @@ URL: {{URL}}/api/users
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ##### IV. Example Request: Create User (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"first_name": "Con",
 	"last_name": "Jobs",
@@ -11434,8 +13279,9 @@ URL: {{URL}}/api/users
 }
 ```
 
-##### IV. Example Response: Create User (200 OK)
 
+
+##### IV. Example Response: Create User (200 OK)
 ```js
 {
     "success": true,
@@ -11468,28 +13314,37 @@ URL: {{URL}}/api/users
 }
 ```
 
-**_Status Code:_** 201
+
+***Status Code:*** 201
 
 <br>
 
+
+
 ### 2. Delete User
+
 
 Delete user identified by user id. Permission: Admin.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: DELETE
-Type:
+Type: 
 URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Delete User (403 Forbidden - Non-admin user)
 
-##### I. Example Response: Delete User (403 Forbidden - Non-admin user)
 
+
+##### I. Example Response: Delete User (403 Forbidden - Non-admin user)
 ```js
 {
     "success": false,
@@ -11497,14 +13352,18 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ##### II. Example Request: Delete User (400 Bad Request - Non-existent user)
 
-##### II. Example Response: Delete User (400 Bad Request - Non-existent user)
 
+
+##### II. Example Response: Delete User (400 Bad Request - Non-existent user)
 ```js
 {
     "success": false,
@@ -11512,14 +13371,18 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ##### III. Example Request: Delete User (200 OK)
 
-##### III. Example Response: Delete User (200 OK)
 
+
+##### III. Example Response: Delete User (200 OK)
 ```js
 {
     "success": true,
@@ -11552,28 +13415,37 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 3. Get All Likes for a User
+
 
 Get all likes for an associated user, identified by the user id. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/likes
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Likes for a User (404 Not Found - Non-existent user id)
 
-##### I. Example Response: Get All Likes for a User (404 Not Found - Non-existent user id)
 
+
+##### I. Example Response: Get All Likes for a User (404 Not Found - Non-existent user id)
 ```js
 {
     "success": false,
@@ -11581,14 +13453,18 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/likes
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ##### II. Example Request: Get All Likes for a User (200 OK)
 
-##### II. Example Response: Get All Likes for a User (200 OK)
 
+
+##### II. Example Response: Get All Likes for a User (200 OK)
 ```js
 {
     "success": true,
@@ -11646,28 +13522,37 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/likes
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 4. Get All Listing Comments for a User
+
 
 Get all listing comments for an associated user. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listing-comments
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Listing Comments for a User (200 OK)
 
-##### I. Example Response: Get All Listing Comments for a User (200 OK)
 
+
+##### I. Example Response: Get All Listing Comments for a User (200 OK)
 ```js
 {
     "success": true,
@@ -11725,28 +13610,37 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listing-comments
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ### 5. Get All Listing Participation for a User
+
 
 Get all listing participation for an associated user, identified by the user id. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/participants
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Listing Participation for a User (200 OK)
 
-##### I. Example Response: Get All Listing Participation for a User (200 OK)
 
+
+##### I. Example Response: Get All Listing Participation for a User (200 OK)
 ```js
 {
     "success": true,
@@ -11784,14 +13678,18 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/participants
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Get All Listing Participation for a User (404 Not Found - Non-existent user id)
 
-##### II. Example Response: Get All Listing Participation for a User (404 Not Found - Non-existent user id)
 
+
+##### II. Example Response: Get All Listing Participation for a User (404 Not Found - Non-existent user id)
 ```js
 {
     "success": false,
@@ -11799,28 +13697,37 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/participants
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ### 6. Get All Listings Owned by a User
+
 
 Get all listing owned by an associated user, identified by the user id. Permission: Public.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Listings Owned by a User (200 OK)
 
-##### I. Example Response: Get All Listings Owned by a User (200 OK)
 
+
+##### I. Example Response: Get All Listings Owned by a User (200 OK)
 ```js
 {
     "success": true,
@@ -11860,14 +13767,18 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Get All Listings Owned by a User (404 Not Found - Non-existent user id)
 
-##### II. Example Response: Get All Listings Owned by a User (404 Not Found - Non-existent user id)
 
+
+##### II. Example Response: Get All Listings Owned by a User (404 Not Found - Non-existent user id)
 ```js
 {
     "success": false,
@@ -11875,47 +13786,60 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner
 }
 ```
 
-**_Status Code:_** 404
+
+***Status Code:*** 404
 
 <br>
 
+
+
 ### 7. Get All Users
+
 
 Get all user details. Permission: Admin.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/users
 ```
 
-**_Query params:_**
 
-| Key   | Value              | Description |
-| ----- | ------------------ | ----------- |
-| page  | 1                  |             |
-| limit | 30                 |             |
-| sort  | user_id,first_name |             |
-| role  | user               |             |
 
-**_More example Requests/Responses:_**
+***Query params:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| page | 1 |  |
+| limit | 30 |  |
+| sort | user_id desc |  |
+| role | user |  |
+
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get All Users (200 OK)
 
-**_Query:_**
 
-| Key    | Value                    | Description |
-| ------ | ------------------------ | ----------- |
-| page   | 1                        |             |
-| limit  | 30                       |             |
-| select | user_id,first_name,email |             |
-| sort   | user_id,first_name       |             |
-| role   | user                     |             |
+
+***Query:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| page | 1 |  |
+| limit | 30 |  |
+| select | user_id,first_name,email |  |
+| sort | user_id,first_name |  |
+| role | user |  |
+
+
 
 ##### I. Example Response: Get All Users (200 OK)
-
 ```js
 {
     "success": true,
@@ -12081,24 +14005,30 @@ URL: {{URL}}/api/users
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Get All Users (403 Forbidden - Non-admin user)
 
-**_Query:_**
 
-| Key    | Value                    | Description |
-| ------ | ------------------------ | ----------- |
-| page   | 1                        |             |
-| limit  | 30                       |             |
-| select | user_id,first_name,email |             |
-| sort   | user_id,first_name       |             |
-| role   | user                     |             |
+
+***Query:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| page | 1 |  |
+| limit | 30 |  |
+| select | user_id,first_name,email |  |
+| sort | user_id,first_name |  |
+| role | user |  |
+
+
 
 ##### II. Example Response: Get All Users (403 Forbidden - Non-admin user)
-
 ```js
 {
     "success": false,
@@ -12106,28 +14036,37 @@ URL: {{URL}}/api/users
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ### 8. Get Single User
+
 
 Get single user details identified by user id. Permission: Admin.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: GET
-Type:
+Type: 
 URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Get Single User (200 OK)
 
-##### I. Example Response: Get Single User (200 OK)
 
+
+##### I. Example Response: Get Single User (200 OK)
 ```js
 {
     "success": true,
@@ -12142,14 +14081,18 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Get Single User (403 Forbidden - Non-admin user)
 
-##### II. Example Response: Get Single User (403 Forbidden - Non-admin user)
 
+
+##### II. Example Response: Get Single User (403 Forbidden - Non-admin user)
 ```js
 {
     "success": false,
@@ -12157,22 +14100,27 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ### 9. Update User
+
 
 Update user details identified by user id. Permission: Admin.
 
-Field rules:
-At least one field must be updated.
-first_name: Alphabets and whitespaces only.
-last_name: Alphabets and whitespaces only.
-email: Valid email address only. Email address will be canonicalized.
+Field rules: 
+At least one field must be updated. 
+first_name: Alphabets and whitespaces only. 
+last_name: Alphabets and whitespaces only. 
+email: Valid email address only. Email address will be canonicalized. 
 password: 8-25 characters. At least 1 uppercase character. At least 1 lowercase character. At least 1 special character.
 
-**_Endpoint:_**
+
+***Endpoint:***
 
 ```bash
 Method: PUT
@@ -12180,15 +14128,18 @@ Type: RAW
 URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 ```
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"name": "Aaron",
 	"email": "aaron@gmail.com",
@@ -12196,19 +14147,25 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 }
 ```
 
-**_More example Requests/Responses:_**
+
+
+***More example Requests/Responses:***
+
 
 ##### I. Example Request: Update User (200 OK)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"name": "Aaron",
 	"email": "aaron@gmail.com",
@@ -12216,8 +14173,9 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 }
 ```
 
-##### I. Example Response: Update User (200 OK)
 
+
+##### I. Example Response: Update User (200 OK)
 ```js
 {
     "success": true,
@@ -12232,21 +14190,27 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 }
 ```
 
-**_Status Code:_** 200
+
+***Status Code:*** 200
 
 <br>
 
+
+
 ##### II. Example Request: Update User (403 Forbidden - Non-admin user)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"first_name": "Aaron",
 	"last_name": "Tan",
@@ -12255,8 +14219,9 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 }
 ```
 
-##### II. Example Response: Update User (403 Forbidden - Non-admin user)
 
+
+##### II. Example Response: Update User (403 Forbidden - Non-admin user)
 ```js
 {
     "success": false,
@@ -12264,21 +14229,27 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 }
 ```
 
-**_Status Code:_** 403
+
+***Status Code:*** 403
 
 <br>
 
+
+
 ##### III. Example Request: Update User (400 Bad Request - Non-existent user)
 
-**_Headers:_**
 
-| Key          | Value            | Description |
-| ------------ | ---------------- | ----------- |
-| Content-Type | application/json | JSON Type   |
+***Headers:***
 
-**_Body:_**
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
-```js
+
+
+***Body:***
+
+```js        
 {
 	"first_name": "Aaron",
 	"last_name": "Tan",
@@ -12287,8 +14258,9 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 }
 ```
 
-##### III. Example Response: Update User (400 Bad Request - Non-existent user)
 
+
+##### III. Example Response: Update User (400 Bad Request - Non-existent user)
 ```js
 {
     "success": false,
@@ -12296,12 +14268,13 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 }
 ```
 
-**_Status Code:_** 400
+
+***Status Code:*** 400
 
 <br>
 
+
+
 ---
-
-[Back to top](#kampong-api-v014)
-
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-09-20 00:55:56 by [docgen](https://github.com/thedevsaddam/docgen)
+[Back to top](#kampong-api)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-09-20 14:03:40 by [docgen](https://github.com/thedevsaddam/docgen)

@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "b09bd8c5-776a-4d8c-8b71-f528c017cb08",
-		"name": "Kampong API v0.1.4",
+		"name": "Kampong API",
 		"description": "Backend API for Project Kampong.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -2225,7 +2225,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/api/users?page=1&limit=30&sort=user_id,first_name&role=user",
+							"raw": "{{URL}}/api/users?page=1&limit=30&sort=user_id desc&role=user",
 							"host": [
 								"{{URL}}"
 							],
@@ -2244,7 +2244,7 @@
 								},
 								{
 									"key": "sort",
-									"value": "user_id,first_name"
+									"value": "user_id desc"
 								},
 								{
 									"key": "role",
@@ -6689,6 +6689,16 @@
 										"/Users/dontay/Desktop/kampong/test-assets/test-pic-4.jpg",
 										"/Users/dontay/Desktop/kampong/test-assets/test-pic-5.jpg"
 									]
+								},
+								{
+									"key": "listing_email",
+									"value": "new_listing@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "listing_status",
+									"value": "ongoing",
+									"type": "text"
 								}
 							]
 						},
@@ -6702,7 +6712,7 @@
 								"listings"
 							]
 						},
-						"description": "Create listing. Permission: Private.\n\nField rules:\nAll fields required unless otherwise stated.\ntitle - Non-empty.\ncategory - Non-empty.\nabout - Optional.\ntagline - Optional.\nmission - Optional.\nlisting_url - Valid URL. Optional.\nis_published - Boolean. Optional.\nstart_date - Valid SQL datetime. Optional. Default to current datetime.\nend_date - Valid SQL datetime. Optional.\norganisation_id - Valid integer and existing organisation id. Optional.\npic1 - Valid JPG/PNG filename and extension text found in pics. Optional.\npic2 - Valid JPG/PNG filename and extension text found in pics. Optional.\npic3 - Valid JPG/PNG filename and extension text found in pics. Optional.\npic4 - Valid JPG/PNG filename and extension text found in pics. Optional.\npic5 - Valid JPG/PNG filename and extension text found in pics. Optional.\npics - Valid collection of up to 5 JPG/PNG files. Optional."
+						"description": "Create listing. Permission: Private.\n\nField rules:\nAll fields required unless otherwise stated.\ntitle - Non-empty.\ncategory - Non-empty.\nabout - Optional.\ntagline - Optional.\nmission - Optional.\nlisting_url - Valid URL. Optional.\nlisting_status - 'ongoing' | 'completed'.\nlisting_email - Valid email.\nis_published - Boolean. Optional. Default to false.\nstart_date - Valid SQL datetime. Optional. Default to current datetime.\nend_date - Valid SQL datetime. Optional.\norganisation_id - Valid integer and existing organisation id. Optional.\npic1 - Valid JPG/PNG filename and extension text found in pics. Optional.\npic2 - Valid JPG/PNG filename and extension text found in pics. Optional.\npic3 - Valid JPG/PNG filename and extension text found in pics. Optional.\npic4 - Valid JPG/PNG filename and extension text found in pics. Optional.\npic5 - Valid JPG/PNG filename and extension text found in pics. Optional.\npics - Valid collection of up to 5 JPG/PNG files. Optional."
 					},
 					"response": [
 						{
@@ -6765,7 +6775,7 @@
 							"body": "{\n    \"success\": false,\n    \"error\": \"Not authorised to access this route\"\n}"
 						},
 						{
-							"name": "Create Listing (200 OK)",
+							"name": "Create Listing (201 Created)",
 							"originalRequest": {
 								"method": "POST",
 								"header": [
@@ -6773,7 +6783,8 @@
 										"key": "Content-Type",
 										"value": "application/json",
 										"description": "JSON Type",
-										"type": "text"
+										"type": "text",
+										"disabled": true
 									}
 								],
 								"body": {
@@ -6862,6 +6873,16 @@
 												"/Users/dontay/Desktop/kampong/test-assets/test-pic-4.jpg",
 												"/Users/dontay/Desktop/kampong/test-assets/test-pic-5.jpg"
 											]
+										},
+										{
+											"key": "listing_email",
+											"value": "new_listing@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "listing_status",
+											"value": "ongoing",
+											"type": "text"
 										}
 									]
 								},
@@ -6914,11 +6935,11 @@
 								},
 								{
 									"key": "Date",
-									"value": "Mon, 17 Aug 2020 15:49:10 GMT"
+									"value": "Sun, 20 Sep 2020 05:42:36 GMT"
 								},
 								{
 									"key": "X-RateLimit-Reset",
-									"value": "1597679373"
+									"value": "1600580574"
 								},
 								{
 									"key": "Access-Control-Allow-Origin",
@@ -6930,19 +6951,23 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "1046"
+									"value": "1113"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"416-m/z2w6PC/SAVsrrkPwNYl085guM\""
+									"value": "W/\"459-Z2ywnNBEeR8Ec0idZj7rON32xxg\""
 								},
 								{
 									"key": "Connection",
 									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"listing_id\": \"a9d83f01-a784-4435-ac0b-94dc8ff531e9\",\n            \"organisation_id\": null,\n            \"created_by\": \"f96b2138-1754-4c17-a405-940e20adc601\",\n            \"title\": \"New title 1\",\n            \"category\": \"test category\",\n            \"about\": \"test about\",\n            \"tagline\": \"test tagline\",\n            \"mission\": \"test mission\",\n            \"listing_url\": \"www.test.com\",\n            \"pic1\": \"https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1597679350414.jpg\",\n            \"pic2\": \"https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-1597679350422.jpg\",\n            \"pic3\": \"https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-1597679350453.jpg\",\n            \"pic4\": \"https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-1597679350458.jpg\",\n            \"pic5\": \"https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-1597679350470.jpg\",\n            \"is_published\": false,\n            \"is_verified\": false,\n            \"start_date\": \"2019-08-15T08:45:43.416Z\",\n            \"end_date\": \"2020-07-17T08:45:43.416Z\",\n            \"created_on\": \"2020-08-17T15:49:12.925Z\",\n            \"deleted_on\": null\n        },\n        {\n            \"listing_id\": \"a9d83f01-a784-4435-ac0b-94dc8ff531e9\",\n            \"overview\": null,\n            \"problem\": null,\n            \"solution\": null,\n            \"outcome\": null\n        }\n    ]\n}"
+							"body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"listing_id\": \"c912bdd2-7cac-4245-af20-b774dbfae225\",\n            \"organisation_id\": null,\n            \"created_by\": \"f96b2138-1754-4c17-a405-940e20adc601\",\n            \"title\": \"New title 1\",\n            \"category\": \"test category\",\n            \"about\": \"test about\",\n            \"tagline\": \"test tagline\",\n            \"mission\": \"test mission\",\n            \"listing_url\": \"www.test.com\",\n            \"listing_email\": \"new_listing@gmail.com\",\n            \"listing_status\": \"ongoing\",\n            \"pic1\": \"https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1600580556633.jpg\",\n            \"pic2\": \"https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-1600580556637.jpg\",\n            \"pic3\": \"https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-1600580556645.jpg\",\n            \"pic4\": \"https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-1600580556654.jpg\",\n            \"pic5\": \"https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-1600580556658.jpg\",\n            \"is_published\": false,\n            \"is_verified\": false,\n            \"start_date\": \"2019-08-15T08:45:43.415Z\",\n            \"end_date\": \"2020-07-17T08:45:43.415Z\",\n            \"created_on\": \"2020-09-20T05:42:36.963Z\",\n            \"deleted_on\": null\n        },\n        {\n            \"listing_id\": \"c912bdd2-7cac-4245-af20-b774dbfae225\",\n            \"overview\": null,\n            \"problem\": null,\n            \"solution\": null,\n            \"outcome\": null\n        }\n    ]\n}"
 						},
 						{
 							"name": "Create Listing (400 Bad Request - Missing title field)",
@@ -7191,6 +7216,16 @@
 										"/Users/dontay/Desktop/kampong/test-assets/test-pic-4.jpg",
 										"/Users/dontay/Desktop/kampong/test-assets/test-pic-5.jpg"
 									]
+								},
+								{
+									"key": "listing_status",
+									"value": "completed",
+									"type": "text"
+								},
+								{
+									"key": "listing_email",
+									"value": "updated_email@gmail.com",
+									"type": "text"
 								}
 							]
 						},
@@ -7346,6 +7381,66 @@
 							"body": "{\n    \"success\": false,\n    \"error\": \"User not authorised to update this listing\"\n}"
 						},
 						{
+							"name": "Update Listing (400 Bad Request - Invalid (empty string) title entered)",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"description": "JSON Type",
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"\",\n    \"category\": \"Updated category\",\n    \"about\": \"Updated about\",\n    \"tagline\": \"Updated tagline\",\n    \"mission\": \"Updated mission\",\n    \"listing_url\": \"www.updated-test.com\",\n    \"pic1\": \"https://robohash.org/voluptatemcommodisint.bmp?size=50x50&set=set1\",\n    \"pic2\": \"https://robohash.org/illoipsaquos.bmp?size=50x50&set=set1\",\n    \"pic3\": \"https://robohash.org/oditautqui.png?size=50x50&set=set1\",\n    \"pic4\": \"https://robohash.org/eaetnon.jpg?size=50x50&set=set1\",\n    \"pic5\": \"https://robohash.org/fugittemporeiusto.bmp?size=50x50&set=set1\",\n    \"is_published\": \"true\",\n    \"start_date\": \"2018-08-15 16:45:43.41585+08\",\n    \"end_date\": \"2020-01-30 16:45:43.41585+08\"\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/api/listings/1",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"listings",
+										"1"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "57"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"39-1DFSApLqV2RYMIoP7/aarw68b5s\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Jul 2020 11:42:01 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"error\": \"Please include a valid title.\"\n}"
+						},
+						{
 							"name": "Update Listing (200 OK)",
 							"originalRequest": {
 								"method": "PUT",
@@ -7442,6 +7537,16 @@
 												"/Users/dontay/Desktop/kampong/test-assets/test-pic-4.jpg",
 												"/Users/dontay/Desktop/kampong/test-assets/test-pic-5.jpg"
 											]
+										},
+										{
+											"key": "listing_status",
+											"value": "completed",
+											"type": "text"
+										},
+										{
+											"key": "listing_email",
+											"value": "updated_email@gmail.com",
+											"type": "text"
 										}
 									]
 								},
@@ -7491,15 +7596,15 @@
 								},
 								{
 									"key": "X-RateLimit-Remaining",
-									"value": "197"
+									"value": "199"
 								},
 								{
 									"key": "Date",
-									"value": "Wed, 19 Aug 2020 16:48:50 GMT"
+									"value": "Sun, 20 Sep 2020 05:51:55 GMT"
 								},
 								{
 									"key": "X-RateLimit-Reset",
-									"value": "1597855732"
+									"value": "1600581161"
 								},
 								{
 									"key": "Access-Control-Allow-Origin",
@@ -7511,79 +7616,23 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "416"
+									"value": "817"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"1a0-DSOu4YZSAlSAdmNyCvVvAPo69wU\""
+									"value": "W/\"331-VJM92qxbwKeRMueRl6NDVMLbN/8\""
 								},
 								{
 									"key": "Connection",
 									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"title\": \"Updated title 1\",\n        \"category\": \"Updated category\",\n        \"about\": \"Updated about\",\n        \"tagline\": \"Updated tagline\",\n        \"mission\": \"Updated mission\",\n        \"listing_url\": \"www.updated-test.com\",\n        \"is_published\": true,\n        \"start_date\": \"2018-08-15T08:45:43.416Z\",\n        \"end_date\": \"2020-01-30T08:45:43.416Z\",\n        \"pic1\": \"test-pic-1.jpg\",\n        \"pic2\": \"test-pic-2.jpg\",\n        \"pic3\": \"test-pic-3.jpg\",\n        \"pic4\": \"test-pic-4.jpg\",\n        \"pic5\": \"test-pic-5.jpg\"\n    }\n}"
-						},
-						{
-							"name": "Update Listing (400 Bad Request - Invalid (empty string) title entered)",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [
-									{
-										"description": "JSON Type",
-										"key": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"title\": \"\",\n    \"category\": \"Updated category\",\n    \"about\": \"Updated about\",\n    \"tagline\": \"Updated tagline\",\n    \"mission\": \"Updated mission\",\n    \"listing_url\": \"www.updated-test.com\",\n    \"pic1\": \"https://robohash.org/voluptatemcommodisint.bmp?size=50x50&set=set1\",\n    \"pic2\": \"https://robohash.org/illoipsaquos.bmp?size=50x50&set=set1\",\n    \"pic3\": \"https://robohash.org/oditautqui.png?size=50x50&set=set1\",\n    \"pic4\": \"https://robohash.org/eaetnon.jpg?size=50x50&set=set1\",\n    \"pic5\": \"https://robohash.org/fugittemporeiusto.bmp?size=50x50&set=set1\",\n    \"is_published\": \"true\",\n    \"start_date\": \"2018-08-15 16:45:43.41585+08\",\n    \"end_date\": \"2020-01-30 16:45:43.41585+08\"\n}"
-								},
-								"url": {
-									"raw": "{{URL}}/api/listings/1",
-									"host": [
-										"{{URL}}"
-									],
-									"path": [
-										"api",
-										"listings",
-										"1"
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "X-Powered-By",
-									"value": "Express"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "Content-Length",
-									"value": "57"
-								},
-								{
-									"key": "ETag",
-									"value": "W/\"39-1DFSApLqV2RYMIoP7/aarw68b5s\""
-								},
-								{
-									"key": "Date",
-									"value": "Fri, 17 Jul 2020 11:42:01 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"success\": false,\n    \"error\": \"Please include a valid title.\"\n}"
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"title\": \"Updated title 1\",\n        \"category\": \"Updated category\",\n        \"about\": \"Updated about\",\n        \"tagline\": \"Updated tagline\",\n        \"mission\": \"Updated mission\",\n        \"listing_url\": \"www.updated-test.com\",\n        \"listing_email\": \"updated_email@gmail.com\",\n        \"listing_status\": \"completed\",\n        \"is_published\": true,\n        \"start_date\": \"2018-08-15T08:45:43.415Z\",\n        \"end_date\": \"2020-01-30T08:45:43.415Z\",\n        \"pic1\": \"https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1600581115622.jpg\",\n        \"pic2\": \"https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-1600581115630.jpg\",\n        \"pic3\": \"https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-1600581115654.jpg\",\n        \"pic4\": \"https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-1600581115659.jpg\",\n        \"pic5\": \"https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-1600581115664.jpg\"\n    }\n}"
 						}
 					]
 				},
