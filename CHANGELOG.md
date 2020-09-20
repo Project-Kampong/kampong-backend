@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
+### Added
+
+-   Listings now have `listing_status` field.
+
+### Changed
+
+-   Query params `sort` now accepts `asc` or `desc` but can only sort at most one field.
+
 ### [v0.1.4] - 2020-09-19
 
 ### Added
