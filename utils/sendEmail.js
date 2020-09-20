@@ -15,6 +15,7 @@ const sendEmail = async options => {
   const message = {
     from: `${process.env.FROM_NAME} <${process.env.FROM_EMAIL}>`,
     to: options.email,
+    cc: "cc" in options ? options.cc : undefined,
     subject: options.subject,
     text: options.message
   };
