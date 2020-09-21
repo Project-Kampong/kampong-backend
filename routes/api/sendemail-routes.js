@@ -9,8 +9,8 @@ const { sendEmail } = require('../../controllers/sendEmail');
 
 // Validate input email
 const validateEmail = [
-    check('senderEmail', INVALID_EMAIL_MSG).optional().isEmail(),
-    check('receiverEmail', INVALID_EMAIL_MSG).notEmpty().isEmail()
+    check('senderEmail', INVALID_EMAIL_MSG).optional().isEmail().normalizeEmail(),
+    check('receiverEmail', INVALID_EMAIL_MSG).notEmpty().isEmail().normalizeEmail()
 ];
 
 // Map route to controller
