@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const { get } = require('lodash');
 
 const sendEmail = async options => {
   // set transporter
@@ -15,7 +16,7 @@ const sendEmail = async options => {
   const message = {
     from: `${process.env.FROM_NAME} <${process.env.FROM_EMAIL}>`,
     to: options.email,
-    cc: "cc" in options ? options.cc : undefined,
+    cc: get(options, 'cc', ''),
     subject: options.subject,
     text: options.message
   };
