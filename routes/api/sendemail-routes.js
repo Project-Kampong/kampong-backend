@@ -8,7 +8,12 @@ const { checkInputError } = require('../../middleware/inputValidation');
 const { sendEmail } = require('../../controllers/sendEmail');
 
 // Validate input email
-const validateEmail = check('senderEmail', INVALID_EMAIL_MSG).optional().isEmail();
+const validateEmail = [
+    check('senderEmail', INVALID_EMAIL_MSG).optional().isEmail(),
+    check('receiverEmail', INVALID_EMAIL_MSG).notEmpty().isEmail()
+];
 
 // Map route to controller
-router.route('/sendemail').post(validateEmail, checkInputError, sendEmail);
+router.route('/').post(validateEmail, checkInputError, sendEmail);
+
+module.exports = router;

@@ -12,7 +12,8 @@ exports.sendEmail = asyncHandler(async (req, res, next) => {
             messsage
         });
     } catch (err) {
-        return next(new ErrorResponse('Email cound not be sent. Please try again later.', 409));
+        //return next(new ErrorResponse('Email cound not be sent. Please try again later.', 409));
+        return next(err);
     }
 
     res.status(200).json({
