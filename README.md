@@ -1,8 +1,18 @@
 # Project Kampong API
 
-REST API web service in Node.js, Express, and PostgreSQL for Project Kampong.
+Backend web service in Node.js, Express, and PostgreSQL for Project Kampong.
 
-## Quick start guide
+## Quick Start
+
+### Global dependencies
+
+Latest version of the app has been tested to run on:
+
+```
+- Node v14.12.0
+- Yarn v1.22.5
+- PostgreSQL 13.0
+```
 
 ### Package manager
 
@@ -36,7 +46,7 @@ Skip this step if you already have a PostgreSQL database to connect to.
 
 Under `config/config.env`, fill in `PG_USER`, `PG_HOST`, `PG_NAME`, `PG_PORT`, `PG_PASSWORD` with your PostgreSQL database credentials.
 
-##### Create database tables
+##### Create database tables and import required data
 
 On the command line in the project root directory:
 
