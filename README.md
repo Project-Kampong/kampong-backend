@@ -38,9 +38,9 @@ yarn install
 
 ##### Create a new PostgreSQL database instance
 
-Refer to this [guide](https://www.postgresql.org/docs/current/tutorial-start.html) on creating a PostgreSQL database locally.
+> **_NOTE:_** Skip this step if you already have a PostgreSQL database to connect to.
 
-Skip this step if you already have a PostgreSQL database to connect to.
+Refer to this [guide](https://www.postgresql.org/docs/current/tutorial-start.html) on creating a PostgreSQL database locally.
 
 ##### Connect PostgreSQL database to the Project Kampong web server
 
@@ -62,7 +62,7 @@ On the command line in the project root directory:
 yarn import-data
 ```
 
-If data import fails, run the create database tables command and try again.
+> **_NOTE:_** If data import fails, run the create database tables command and try again.
 
 ### Running the app
 
