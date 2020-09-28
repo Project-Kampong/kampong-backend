@@ -20569,6 +20569,173 @@
 				}
 			],
 			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Send Email",
+			"item": [
+				{
+					"name": "Send email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b98ceb50-2fc0-4098-8b8c-df6f5bb232f4",
+								"exec": [
+									"pm.environment.set(\"TOKEN\", pm.response.json().token)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"receiverEmail\": \"dontay0209@gmail.com\",\n    \"senderEmail\": \"dontay0209@gmail.com\",\n    \"subject\": \"Test Email 1\",\n    \"message\": \"This is a test email.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/send-email",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"send-email"
+							]
+						},
+						"description": "Send email to a single recipient with optional cc of sender's email. Permission: Public.\n\nField rules: \nAll fields required unless otherwise stated. \nreceiverEmail - Valid email address.\nsenderEmail - Valid email address. Optional.\nsubject - Valid text.\nmessage - Valid text.\n"
+					},
+					"response": [
+						{
+							"name": "Send email (200 OK)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"receiverEmail\": \"dontay0209@gmail.com\",\n    \"senderEmail\": \"dontay0209@gmail.com\",\n    \"subject\": \"Test Email 1\",\n    \"message\": \"This is a test email.\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/send-email",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"send-email"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "200"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "199"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 21 Sep 2020 16:38:19 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1600706356"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "26"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1a-pIPrt4esgEyEkX/w62Rnrj9XXdg\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {}\n}"
+						}
+					]
+				}
+			],
+			"description": "Send email endpoints.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6a982d34-8306-4103-b854-f575d3581a36",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "61a9bfc2-92da-4ccd-924f-bcd6b495f1ec",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"event": [
