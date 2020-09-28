@@ -161,6 +161,10 @@ Backend API for Project Kampong.
   * [Upload Profile Picture](#3-upload-profile-picture)
   * [Verify Profile (by User ID)](#4-verify-profile-(by-user-id))
 
+* [Send Email](#send-email)
+
+  * [Send email](#1-send-email)
+
 * [Skills](#skills)
 
   * [Create Skill](#1-create-skill)
@@ -12487,6 +12491,83 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles/verify
 
 
 
+## Send Email
+Send email endpoints.
+
+
+
+### 1. Send email
+
+
+Send email to a single recipient with optional cc of sender's email. Permission: Public.
+
+Field rules: 
+All fields required unless otherwise stated. 
+receiverEmail - Valid email address.
+senderEmail - Valid email address. Optional.
+subject - Valid text.
+message - Valid text.
+
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: {{URL}}/api/send-email
+```
+
+
+
+***Body:***
+
+```js        
+{
+    "receiverEmail": "dontay0209@gmail.com",
+    "senderEmail": "dontay0209@gmail.com",
+    "subject": "Test Email 1",
+    "message": "This is a test email."
+}
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Send email (200 OK)
+
+
+
+***Body:***
+
+```js        
+{
+    "receiverEmail": "dontay0209@gmail.com",
+    "senderEmail": "dontay0209@gmail.com",
+    "subject": "Test Email 1",
+    "message": "This is a test email."
+}
+```
+
+
+
+##### I. Example Response: Send email (200 OK)
+```js
+{
+    "success": true,
+    "data": {}
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
 ## Skills
 Skills CRUD functionality.
 
@@ -14277,4 +14358,4 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-09-20 14:03:40 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-09-28 23:03:31 by [docgen](https://github.com/thedevsaddam/docgen)
