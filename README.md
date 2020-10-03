@@ -24,7 +24,7 @@ Yarn is the recommended package manager for Project Kampong API. Install yarn [h
 
 On the command line in the project root directory:
 
-```
+```bash
 yarn install
 ```
 
@@ -50,7 +50,7 @@ Under `config/config.env`, fill in `PG_USER`, `PG_HOST`, `PG_NAME`, `PG_PORT`, `
 
 On the command line in the project root directory:
 
-```
+```bash
 yarn create-tables
 ```
 
@@ -58,7 +58,7 @@ yarn create-tables
 
 On the command line in the project root directory:
 
-```
+```bash
 yarn import-data
 ```
 
@@ -68,8 +68,9 @@ yarn import-data
 
 On the command line in the project root directory:
 
-```
-#### Run in production
+```bash
+#### Build and run build in production
+yarn build
 yarn start
 
 #### Run in development
