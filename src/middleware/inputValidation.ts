@@ -4,7 +4,7 @@ import { ErrorResponse } from '../utils';
 import { validationResult } from 'express-validator';
 
 export const checkInputError = asyncHandler(async (req, res, next) => {
-    const { errors } = validationResult(req);
+    const errors = validationResult(req).array();
     const uniqueErrors = [...new Set(errors.map((obj) => obj.msg))];
 
     if (!isEmpty(uniqueErrors)) {

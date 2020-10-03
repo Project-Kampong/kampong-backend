@@ -23,7 +23,7 @@ import { isString, get } from 'lodash';
  * @param {String} join name of SQL table to form an SQL join with (optional)
  * @param {String} on column name common to both table to form an SQL join on (required if join is provided)
  */
-export const advancedResults = (model, join?, on?) =>
+export const advancedResults = (model: string, join?: string, on?: string) =>
     asyncHandler(async (req, res, next) => {
         let { select, sort, page = 1, limit = 25 } = req.query;
         select = select ? select.split(',') : '*';
@@ -51,7 +51,7 @@ export const advancedResults = (model, join?, on?) =>
         }
 
         // Copy req.query, if any
-        const reqQuery = { ...req.query };
+        const reqQuery: object = { ...req.query };
 
         // Query fields to exclude from reqQuery
         const removeFields = ['select', 'sort', 'page', 'limit'];
@@ -74,7 +74,7 @@ export const advancedResults = (model, join?, on?) =>
             }
             filterQuery = filterQuery.slice(0, filterQuery.lastIndexOf('AND '));
         }
-        format.filterQuery = filterQuery;
+        Object.assign(format, filterQuery);
 
         query += filterQuery;
 
@@ -87,7 +87,7 @@ export const advancedResults = (model, join?, on?) =>
         const startIndex = (page - 1) * limit;
         const endIndex = page * limit;
 
-        format.startIndex = startIndex;
+        Object.assign(format, startIndex);
 
         const totalEntries = await db.one('SELECT COUNT(*) FROM ${model:name} ${filterQuery:raw}', format);
         const count = parseInt(totalEntries.count);
@@ -97,20 +97,22 @@ export const advancedResults = (model, join?, on?) =>
         let results = await db.manyOrNone(query, format);
 
         // Pagination results
-        const pagination = {};
+        const pagination: object = {};
 
         if (endIndex < count) {
-            pagination.next = {
+            const next = {
                 page: page + 1,
                 limit,
             };
+            Object.assign(pagination, next);
         }
 
         if (startIndex > 0) {
-            pagination.prev = {
+            const prev = {
                 page: page - 1,
                 limit,
             };
+            Object.assign(pagination, prev);
         }
 
         res.advancedResults = {

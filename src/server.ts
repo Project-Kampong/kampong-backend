@@ -2,7 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import express from 'express';
 import dotenv from 'dotenv';
-import colors from 'colors';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import 'colors';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
@@ -10,6 +11,7 @@ import xss from 'xss-clean';
 import rateLimit from 'express-rate-limit';
 import hpp from 'hpp';
 import cors from 'cors';
+import { get } from 'lodash';
 import { checkConn } from './utils';
 import { router as apiRoutes } from './routes';
 import { errorHandler } from './middleware';
@@ -79,7 +81,7 @@ const server = app.listen(PORT, () => {
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err, promise) => {
-    console.log(`Unhandled Error: ${err.message}`.bgRed);
+    console.log(`Unhandled Error: ${get(err, 'message')}`.bgRed);
     // Close server & exit process
     server.close(() => process.exit(1));
 });

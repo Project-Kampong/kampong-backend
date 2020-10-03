@@ -1,4 +1,4 @@
-const { db } = require('../db/db');
+const { db } = require('../database/db');
 const { asyncHandler } = require('../middleware');
 const { cleanseData, ErrorResponse, parseSqlUpdateStmt } = require('../utils');
 

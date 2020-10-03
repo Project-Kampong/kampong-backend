@@ -358,13 +358,14 @@ const sendTokenResponse = (user, statusCode, res, redirectHome = false) => {
 
     // Set cookie options
     const options = {
-        expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000),
+        expires: new Date(Date.now() + parseInt(process.env.JWT_COOKIE_EXPIRE, 10) * 24 * 60 * 60 * 1000),
         httpOnly: false,
     };
 
     // Set secure flag to true if in production (cookie will be sent through https)
     if (process.env.NODE_ENV === 'production') {
-        options.secure = true;
+        const secure = true;
+        Object.assign(options, secure);
     }
 
     if (redirectHome) {

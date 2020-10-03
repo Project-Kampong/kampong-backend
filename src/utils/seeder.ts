@@ -1,4 +1,4 @@
-import colors from 'colors';
+import 'colors';
 import { db } from '../database/db';
 import { checkConn, generateSqlQueryFile } from '../utils';
 import { hashPassword } from './auth';
