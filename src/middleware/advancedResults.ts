@@ -31,7 +31,7 @@ export const advancedResults = (model: string, join?: string, on?: string) =>
         page = parseInt(page);
         limit = parseInt(limit);
 
-        const format = {
+        const format: { [key: string]: any } = {
             select,
             model,
             sort,
@@ -51,7 +51,7 @@ export const advancedResults = (model: string, join?: string, on?: string) =>
         }
 
         // Copy req.query, if any
-        const reqQuery: object = { ...req.query };
+        const reqQuery: { [key: string]: any } = { ...req.query };
 
         // Query fields to exclude from reqQuery
         const removeFields = ['select', 'sort', 'page', 'limit'];
@@ -64,7 +64,7 @@ export const advancedResults = (model: string, join?: string, on?: string) =>
 
         if (Object.keys(reqQuery).length !== 0) {
             filterQuery += 'WHERE ';
-            for (let [key, value] of Object.entries(reqQuery)) {
+            for (const [key, value] of Object.entries(reqQuery)) {
                 const mappedFilter = {
                     key,
                     value: value.split(',').map((str) => str.split(/'/).join('')), // remove all ' for pgp formatter to parse into sql
@@ -74,7 +74,7 @@ export const advancedResults = (model: string, join?: string, on?: string) =>
             }
             filterQuery = filterQuery.slice(0, filterQuery.lastIndexOf('AND '));
         }
-        Object.assign(format, filterQuery);
+        format.filterQuery = filterQuery;
 
         query += filterQuery;
 
@@ -87,32 +87,30 @@ export const advancedResults = (model: string, join?: string, on?: string) =>
         const startIndex = (page - 1) * limit;
         const endIndex = page * limit;
 
-        Object.assign(format, startIndex);
+        format.startIndex = startIndex;
 
         const totalEntries = await db.one('SELECT COUNT(*) FROM ${model:name} ${filterQuery:raw}', format);
         const count = parseInt(totalEntries.count);
 
         query += pgp.as.format('OFFSET ${startIndex} LIMIT ${limit}', format);
 
-        let results = await db.manyOrNone(query, format);
+        const results = await db.manyOrNone(query, format);
 
         // Pagination results
-        const pagination: object = {};
+        const pagination: { [key: string]: any } = {};
 
         if (endIndex < count) {
-            const next = {
+            pagination.next = {
                 page: page + 1,
                 limit,
             };
-            Object.assign(pagination, next);
         }
 
         if (startIndex > 0) {
-            const prev = {
+            pagination.prev = {
                 page: page - 1,
                 limit,
             };
-            Object.assign(pagination, prev);
         }
 
         res.advancedResults = {
