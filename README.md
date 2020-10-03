@@ -1,6 +1,6 @@
 # Project Kampong API
 
-Backend web service in Node.js, Express, and PostgreSQL for Project Kampong.
+Backend web service in TypeScript, Node.js(ts-node), Express, and PostgreSQL for Project Kampong.
 
 ## Quick Start
 

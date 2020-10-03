@@ -9,10 +9,10 @@ const DEFAULT_PASSWORD = 'Abc1234!';
 checkConn();
 
 // Create a QueryFile globally, once per file:
-const schema = generateSqlQueryFile('../db/schema.sql');
-const mockData = generateSqlQueryFile('../db/mock-data.sql');
-const views = generateSqlQueryFile('../db/views.sql');
-const requiredData = generateSqlQueryFile('../db/required-data.sql');
+const schema = generateSqlQueryFile('../database/schema.sql');
+const mockData = generateSqlQueryFile('../database/mock-data.sql');
+const views = generateSqlQueryFile('../database/views.sql');
+const requiredData = generateSqlQueryFile('../database/required-data.sql');
 
 const createTables = async () => {
     try {
