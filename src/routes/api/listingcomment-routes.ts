@@ -1,11 +1,11 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
-const { advancedResults, checkInputError, protect } = require('../../middleware');
-const { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG, INVALID_TIMESTAMP_MSG } = require('../../utils');
+import { advancedResults, checkInputError, protect } from '../../middleware';
+import { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG, INVALID_TIMESTAMP_MSG } from '../../utils';
 
 // import controllers here
-const {
+import {
     getListingComments,
     getListingComment,
     getListingCommentChildren,
@@ -13,7 +13,7 @@ const {
     updateListingComment,
     deleteListingComment,
     deactivateListingComment,
-} = require('../../controllers/listingcomments');
+} from '../../controllers/listingcomments';
 
 // Define input validation chain
 const validateCreateListingCommentFields = [

@@ -2,14 +2,14 @@ import express from 'express';
 export const router = express.Router();
 import { check, oneOf } from 'express-validator';
 import { advancedResults, protect, authorise, checkInputError } from '../../middleware';
-const {
+import {
     ALPHA_WHITESPACE_REGEX,
     INVALID_EMAIL_MSG,
     INVALID_ALPHA_SPACE_MSG,
     INVALID_PASSWORD_MSG,
     NO_FIELD_UPDATED_MSG,
     PASSWORD_REGEX,
-} = require('../../utils');
+} from '../../utils';
 
 // import controllers here
 import { getUsers, getUser, createUser, updateUser, deleteUser } from '../../controllers/users';

@@ -5,13 +5,7 @@ import { advancedResults, protect, authorise, checkInputError } from '../../midd
 import { INVALID_FIELD_MSG, ALPHA_WHITESPACE_REGEX, INVALID_ALPHA_SPACE_MSG } from '../../utils';
 
 // import controllers here
-const {
-    getListingSkills,
-    getListingSkill,
-    createListingSkill,
-    deleteListingSkill,
-    createCustomListingSkill,
-} = require('../../controllers/listingskills');
+import { getListingSkills, getListingSkill, createListingSkill, deleteListingSkill, createCustomListingSkill } from '../../controllers/listingskills';
 
 // Define input validation chain
 const validateCreateListingSkill = [

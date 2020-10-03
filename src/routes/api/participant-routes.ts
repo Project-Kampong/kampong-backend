@@ -1,11 +1,11 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
-const { advancedResults, protect, authorise, checkInputError } = require('../../middleware');
-const { DATETIME_REGEX, INVALID_FIELD_MSG, INVALID_TIMESTAMP_MSG, NO_FIELD_UPDATED_MSG } = require('../../utils');
+import { advancedResults, protect, authorise, checkInputError } from '../../middleware';
+import { DATETIME_REGEX, INVALID_FIELD_MSG, INVALID_TIMESTAMP_MSG, NO_FIELD_UPDATED_MSG } from '../../utils';
 
 // import controllers here
-const { getParticipants, getParticipant, createParticipant, updateParticipant, deleteParticipant } = require('../../controllers/participants');
+import { getParticipants, getParticipant, createParticipant, updateParticipant, deleteParticipant } from '../../controllers/participants';
 
 // Define input validation chain
 const validateCreateParticipantFields = [

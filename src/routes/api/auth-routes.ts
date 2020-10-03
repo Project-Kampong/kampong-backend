@@ -3,7 +3,7 @@ export const router = express.Router();
 import rateLimit from 'express-rate-limit';
 import { check, oneOf } from 'express-validator';
 import { protect, checkInputError } from '../../middleware';
-const {
+import {
     ALPHA_WHITESPACE_REGEX,
     PASSWORD_REGEX,
     INVALID_EMAIL_MSG,
@@ -11,10 +11,10 @@ const {
     INVALID_PASSWORD_MSG,
     NO_FIELD_UPDATED_MSG,
     INVALID_EXISTING_MSG,
-} = require('../../utils');
+} from '../../utils';
 
 // import controllers here
-const {
+import {
     register,
     login,
     logout,
@@ -25,7 +25,7 @@ const {
     forgetPassword,
     resetPassword,
     resendActivationEmail,
-} = require('../../controllers/auth');
+} from '../../controllers/auth';
 
 // input validation chain definition
 const validateRegisterFields = [

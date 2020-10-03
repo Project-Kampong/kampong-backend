@@ -1,6 +1,6 @@
-const { db } = require('../database/db');
-const { asyncHandler } = require('../middleware');
-const { cleanseData, ErrorResponse, parseSqlUpdateStmt } = require('../utils');
+import { db } from '../database/db';
+import { asyncHandler } from '../middleware';
+import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 
 /**
  * @desc    Get all hashtags

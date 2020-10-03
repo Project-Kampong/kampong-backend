@@ -1,6 +1,6 @@
 import { db } from '../database/db';
 import { asyncHandler } from '../middleware';
-import { cleanseData, ErrorResponse } from '../utils';
+import { cleanseData } from '../utils';
 
 /**
  * @desc    Get all locations

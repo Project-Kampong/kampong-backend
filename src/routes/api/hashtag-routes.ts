@@ -1,11 +1,11 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
-const { advancedResults, checkInputError, protect, authorise } = require('../../middleware');
-const { HASHTAG_REGEX, NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } = require('../../utils');
+import { advancedResults, checkInputError, protect, authorise } from '../../middleware';
+import { HASHTAG_REGEX, NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } from '../../utils';
 
 // import controllers here
-const { getHashtags, getHashtag, createHashtag, updateHashtag, deleteHashtag } = require('../../controllers/hashtags');
+import { getHashtags, getHashtag, createHashtag, updateHashtag, deleteHashtag } from '../../controllers/hashtags';
 
 // Define input validation chain
 const validateCreateHashtagFields = [

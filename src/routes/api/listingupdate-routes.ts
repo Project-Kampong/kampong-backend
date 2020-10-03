@@ -1,17 +1,11 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
-const { advancedResults, checkInputError, protect, authorise, mapFilenameToLocation } = require('../../middleware');
-const { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG, uploadFile } = require('../../utils');
+import { advancedResults, checkInputError, protect, authorise, mapFilenameToLocation } from '../../middleware';
+import { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG, uploadFile } from '../../utils';
 
 // import controllers here
-const {
-    getListingUpdates,
-    getListingUpdate,
-    createListingUpdate,
-    modifyListingUpdate,
-    deleteListingUpdate,
-} = require('../../controllers/listingupdates');
+import { getListingUpdates, getListingUpdate, createListingUpdate, modifyListingUpdate, deleteListingUpdate } from '../../controllers/listingupdates';
 
 // Define input validation chain
 const validateCreateListingUpdateFields = [

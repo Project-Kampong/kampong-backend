@@ -2,7 +2,7 @@ import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf, query } from 'express-validator';
 import { advancedResults, checkInputError, protect, authorise, mapFilenameToLocation } from '../../middleware';
-const {
+import {
     DATETIME_REGEX,
     NO_FIELD_UPDATED_MSG,
     INVALID_FIELD_MSG,
@@ -11,10 +11,10 @@ const {
     INVALID_TIMESTAMP_MSG,
     INVALID_LISTING_STATUS_MSG,
     uploadFile,
-} = require('../../utils');
+} from '../../utils';
 
 // import controllers here
-const {
+import {
     getListings,
     getAllListingsOwnedByUser,
     getListingsAll,
@@ -26,7 +26,7 @@ const {
     deactivateListing,
     uploadListingPics,
     searchListings,
-} = require('../../controllers/listings');
+} from '../../controllers/listings';
 
 // Include other resource's controllers to access their endpoints
 import { router as faqRoute } from './faq-routes';

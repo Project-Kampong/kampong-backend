@@ -1,11 +1,11 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
-const { advancedResults, checkInputError, protect } = require('../../middleware');
+import { advancedResults, checkInputError, protect } from '../../middleware';
 import { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } from '../../utils';
 
 // import controllers here
-const { getListingStories, getListingStory, updateListingStory } = require('../../controllers/listingstories');
+import { getListingStories, getListingStory, updateListingStory } from '../../controllers/listingstories';
 
 // Define input validation chain
 const validateUpdateListingStoryFields = [

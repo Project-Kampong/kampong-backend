@@ -5,7 +5,7 @@ import { advancedResults, checkInputError, protect, authorise } from '../../midd
 import { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } from '../../utils';
 
 // import controllers here
-const { getFaqs, getFaq, createFaq, updateFaq, deleteFaq } = require('../../controllers/faqs');
+import { getFaqs, getFaq, createFaq, updateFaq, deleteFaq } from '../../controllers/faqs';
 
 // input validation chain definition
 const validateCreateFaqFields = [
