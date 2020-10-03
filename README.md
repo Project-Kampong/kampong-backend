@@ -77,6 +77,15 @@ yarn start
 yarn dev
 ```
 
+### Run linter
+
+On the command line in the project root directory:
+
+```bash
+#### Lint all files with .ts extension
+yarn eslint . --ext .ts
+```
+
 ## Documentation
 
 API Documentation
