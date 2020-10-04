@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import express from 'express';
 import dotenv from 'dotenv';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import 'colors';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
