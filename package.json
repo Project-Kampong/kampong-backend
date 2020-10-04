@@ -4,9 +4,9 @@
     "description": "Kampong backend API",
     "main": "dist/server.js",
     "scripts": {
-        "start": "tsc -p . && NODE_ENV=production node dist/server.js",
+        "start": "node --max-old-space-size=8192 node_modules/.bin/tsc -p . && NODE_ENV=production node dist/server.js",
         "dev": "nodemon src/server.ts",
-        "build": "tsc -p .",
+        "build": "node --max-old-space-size=8192 node_modules/.bin/ts -p .",
         "create-tables": "ts-node src/utils/seeder.ts -i",
         "import-data": "ts-node src/utils/seeder.ts -d"
     },
