@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+-   TypeScript migration
 -   Listings now have `listing_status` field.
 -   Update dependencies, node v14.12.0, yarn v1.22.5, and PostgreSQL 13.0
 
