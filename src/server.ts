@@ -61,8 +61,8 @@ app.use('/api', apiRoutes);
 app.use(errorHandler);
 
 // Set static folder
-app.use(express.static(__dirname + '../client/build'));
-app.use(express.static(__dirname + '../public'));
+app.use(express.static(path.resolve(__dirname, '..', 'client', 'build')));
+app.use(express.static(path.resolve(__dirname, '..', 'public')));
 
 // Serve frontend homepage
 app.get('*', (req, res) => {
