@@ -324,12 +324,16 @@ export const uploadListingPics = asyncHandler(async (req, res, next) => {
 export const searchListings = asyncHandler(async (req, res) => {
     let { keyword = '', limit } = req.query;
     limit = isNil(limit) || isNaN(limit) ? 10 : parseInt(limit);
-    const data = { keyword: keyword.split(',').join(' | '), limit };
+    const data = { fullTextKeyword: keyword.split(',').join(' | '), partialTextKeyword: keyword.split(',').map((key) => '%' + key + '%'), limit };
 
-    const rows = await db.manyOrNone(
-        "SELECT * FROM listingsview WHERE to_tsvector(title) @@ to_tsquery(${keyword}) OR to_tsvector(category) @@ to_tsquery(${keyword}) OR to_tsvector(array_to_string(locations::text[], ' ')) @@ to_tsquery(${keyword}) LIMIT ${limit}",
-        data,
-    );
+    const searchQuery =
+        "WITH rankedlistings AS (SELECT *, ts_rank_cd(keyword_vector, keyword_query) FROM listingsview, to_tsquery(${fullTextKeyword}) AS keyword_query, to_tsvector(title || ' ' || category || ' ' || array_to_string(locations::text[], ' ')) AS keyword_vector) " +
+        'SELECT * FROM rankedlistings WHERE keyword_vector @@ keyword_query ' +
+        'UNION ' +
+        "SELECT * FROM rankedlistings WHERE title ILIKE ANY (${partialTextKeyword}) OR category ILIKE ANY (${partialTextKeyword}) OR array_to_string(locations::text[], ' ') ILIKE ANY (${partialTextKeyword}) " +
+        'ORDER BY ts_rank_cd LIMIT 2;';
+
+    const rows = await db.manyOrNone(searchQuery, data);
 
     res.status(200).json({
         success: true,
