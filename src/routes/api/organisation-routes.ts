@@ -22,9 +22,9 @@ import {
 
 // Define input validation
 const validateCreateOrganisationFields = [
-    check('name', INVALID_ALPHA_SPACE_MSG('name')).trim().notEmpty().matches(ALPHA_WHITESPACE_REGEX),
-    check('type', INVALID_ALPHA_SPACE_MSG('type')).optional().trim().matches(ALPHA_WHITESPACE_REGEX),
-    check('about', INVALID_ALPHA_SPACE_MSG('about')).trim().notEmpty().matches(ALPHA_WHITESPACE_REGEX),
+    check('name', INVALID_ALPHA_SPACE_MSG('name')).trim().notEmpty(),
+    check('type', INVALID_ALPHA_SPACE_MSG('type')).optional().trim(),
+    check('about', INVALID_ALPHA_SPACE_MSG('about')).trim().notEmpty(),
     check('website_url', INVALID_URL_MSG).optional().trim().isURL(),
     check('handphone', INVALID_PHONE_NUMBER_MSG).trim().notEmpty(),
     check('email', INVALID_EMAIL_MSG).trim().notEmpty().isEmail().normalizeEmail()
@@ -38,9 +38,9 @@ const validateUpdateOrganisationFields = [
         check('website_url').exists(),
         check('handphone').exists(),
         check('email').exists()], NO_FIELD_UPDATED_MSG),
-    check('name', INVALID_ALPHA_SPACE_MSG('name')).optional().trim().notEmpty().matches(ALPHA_WHITESPACE_REGEX),
-    check('type', INVALID_ALPHA_SPACE_MSG('type')).optional().trim().matches(ALPHA_WHITESPACE_REGEX),
-    check('about', INVALID_ALPHA_SPACE_MSG('about')).optional().trim().notEmpty().matches(ALPHA_WHITESPACE_REGEX),
+    check('name', INVALID_ALPHA_SPACE_MSG('name')).optional().trim().notEmpty(),
+    check('type', INVALID_ALPHA_SPACE_MSG('type')).optional().trim(),
+    check('about', INVALID_ALPHA_SPACE_MSG('about')).optional().trim().notEmpty(),
     check('website_url', INVALID_URL_MSG).optional().trim().isURL(),
     check('handphone', INVALID_PHONE_NUMBER_MSG).optional().trim().notEmpty(),
     check('email', INVALID_EMAIL_MSG).optional().trim().notEmpty().isEmail().normalizeEmail()
