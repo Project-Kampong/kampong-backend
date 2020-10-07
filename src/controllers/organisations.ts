@@ -45,10 +45,7 @@ export const createOrganisation = asyncHandler(async (req, res) => {
      * SQL Transaction and creating organisation
      * Returns a json containing organisation data
      */
-    const rows = await db.tx(async (query) => {
-        const createOrganisation = await query.one('INSERT INTO organisations (${this:name}) VALUES (${this:csv}) RETURNING *', data);
-        return await query.one(createOrganisation);
-    });
+    const rows = await db.one('INSERT INTO organisations (${this:name}) VALUES (${this:csv}) RETURNING *', data);
 
     res.status(201).json({
         success: true,
@@ -107,10 +104,7 @@ export const deleteOrganisation = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Organisation does not exist`, 400));
     }
 
-    const rows = await db.tx(async (query) => {
-        const deleteOrganisation = await query.one('DELETE FROM organisations WHERE organisation_id = $1 RETURNING *', req.params.id);
-        return await query.one(deleteOrganisation);
-    });
+    const rows = await db.one('DELETE FROM organisations WHERE organisation_id = $1 RETURNING *', req.params.id);
 
     res.status(200).json({
         success: true,
