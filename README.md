@@ -9,7 +9,7 @@ Backend web service in TypeScript, Node.js(ts-node), Express, and PostgreSQL for
 Latest version of the app has been tested to run on:
 
 ```
-- Node v14.13.0
+- Node v14.13.1
 - Yarn v1.22.5
 - PostgreSQL 13.0
 ```
