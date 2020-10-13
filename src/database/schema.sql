@@ -147,6 +147,14 @@ CREATE TABLE Memberships (
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE
 );
 
+CREATE TABLE Programmes (
+	programme_id SERIAL,
+	organisation_id INTEGER NOT NULL,
+	title VARCHAR NOT NULL,
+	about TEXT,
+	media_url VARCHAR
+);
+
 CREATE TABLE Listings (
 	listing_id VARCHAR,
 	organisation_id INTEGER,
