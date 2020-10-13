@@ -123,11 +123,12 @@ CREATE TABLE ProfileSkills (
 CREATE TABLE Organisations (
 	organisation_id SERIAL,
 	name VARCHAR NOT NULL,
-	TYPE VARCHAR NOT NULL,
+	TYPE VARCHAR,
 	about TEXT,
 	website_url VARCHAR,
 	handphone VARCHAR,
 	email VARCHAR(320),
+	owned_by VARCHAR,
 	is_verified BOOLEAN NOT NULL DEFAULT FALSE,
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	deleted_on TIMESTAMPTZ DEFAULT NULL,

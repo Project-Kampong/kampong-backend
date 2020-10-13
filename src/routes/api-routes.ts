@@ -19,6 +19,7 @@ import { router as skillRoute } from './api/skill-routes';
 import { router as userRoute } from './api/user-routes';
 import { router as uploadRoute } from './api/upload-routes';
 import { router as sendEmailRoute } from './api/sendemail-routes';
+import { router as organisationRoute } from './api/organisation-routes';
 
 // Mount routes
 router.use('/auth', authRoute);
@@ -39,3 +40,4 @@ router.use('/skills', skillRoute);
 router.use('/users', userRoute);
 router.use('/file-upload', uploadRoute);
 router.use('/send-email', sendEmailRoute);
+router.use('/organisations', organisationRoute)
