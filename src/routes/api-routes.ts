@@ -20,6 +20,7 @@ import { router as userRoute } from './api/user-routes';
 import { router as uploadRoute } from './api/upload-routes';
 import { router as sendEmailRoute } from './api/sendemail-routes';
 import { router as organisationRoute } from './api/organisation-routes';
+import { router as programmeRoute } from './api/programme-routes';
 
 // Mount routes
 router.use('/auth', authRoute);
@@ -41,3 +42,4 @@ router.use('/users', userRoute);
 router.use('/file-upload', uploadRoute);
 router.use('/send-email', sendEmailRoute);
 router.use('/organisations', organisationRoute)
+router.use('/programmes', programmeRoute);

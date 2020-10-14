@@ -3,7 +3,6 @@ export const router = express.Router();
 import { check, oneOf } from 'express-validator';
 import { advancedResults, protect, checkInputError } from '../../middleware';
 import {
-    ALPHA_WHITESPACE_REGEX,
     INVALID_URL_MSG,
     INVALID_PHONE_NUMBER_MSG,
     INVALID_EMAIL_MSG,
@@ -19,6 +18,12 @@ import {
     updateOrganisation,
     deleteOrganisation
 } from '../../controllers/organisations';
+
+// Import organisation's controllers
+import { router as programmeRoute } from './programme-routes';
+
+// Re-route this URI to other resource router
+router.use('/:organisation_id/programmes', programmeRoute);
 
 // Define input validation
 const validateCreateOrganisationFields = [
