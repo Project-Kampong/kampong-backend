@@ -7,8 +7,10 @@ jobs:
         runs-on: macos-latest
 
         steps:
+            - name: Check out repository
+              uses: actions/checkout@v2
             - name: Download docgen and generate API Docs
               run: |
                   curl https://raw.githubusercontent.com/thedevsaddam/docgen/v3/install.sh -o install.sh && sudo chmod +x install.sh && sudo ./install.sh
-                  docgen build -i public/api-docs/kampong-api.json -o public/api-docs/index.html
-                  docgen build -i public/api-docs/kampong-api.json -o public/api-docs/index.md -m
+                  docgen build -i ./public/api-docs/kampong-api.json -o ./public/api-docs/index.html
+                  docgen build -i ./public/api-docs/kampong-api.json -o ./public/api-docs/index.md -m
