@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "b09bd8c5-776a-4d8c-8b71-f528c017cb08",
 		"name": "Kampong API",
-		"description": "Backend API for Project Kampong.",
+		"description": "Backend API for Project Kampong",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
