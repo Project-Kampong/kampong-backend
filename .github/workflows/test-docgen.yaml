@@ -1,6 +1,9 @@
-name: Test docgen
+name: Generate API docs on update of kampong-api.json file
 
-on: [push]
+on:
+    push:
+        paths:
+            - 'public/api-docs/kampong-api.json'
 
 jobs:
     build:
