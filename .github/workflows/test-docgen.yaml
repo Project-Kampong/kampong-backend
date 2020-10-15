@@ -14,3 +14,7 @@ jobs:
                   curl https://raw.githubusercontent.com/thedevsaddam/docgen/v3/install.sh -o install.sh && sudo chmod +x install.sh && sudo ./install.sh
                   docgen build -i ./public/api-docs/kampong-api.json -o ./public/api-docs/index.html
                   docgen build -i ./public/api-docs/kampong-api.json -o ./public/api-docs/index.md -m
+            - name: Commit changes and push to current branch
+              uses: stefanzweifel/git-auto-commit-action@v4
+              with:
+                  commit_message: Apply api docs updates
