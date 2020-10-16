@@ -1,6 +1,8 @@
-name: Generate API docs on opening, re-opening or sync of PR
+name: Generate API docs on PR review request or ready for review
 
-on: [pull_request]
+on:
+    pull_request:
+        types: [ready_for_review, review_requested]
 
 jobs:
     build:
