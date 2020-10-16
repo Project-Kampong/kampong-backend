@@ -1,6 +1,6 @@
-name: Generate API docs on update of kampong-api.json file
+name: Generate API docs on opening, re-opening or sync of PR
 
-on: [push]
+on: [pull_request]
 
 jobs:
     build:
