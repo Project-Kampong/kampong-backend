@@ -6,12 +6,21 @@ jobs:
     build:
         runs-on: macos-latest
 
+        strategy:
+            matrix:
+                node-version: [14.x]
+
         steps:
             - name: Check out repository
               uses: actions/checkout@v2
-            - name: Download Postman collection directly into repository
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v1
+              with:
+                  node-version: ${{ matrix.node-version }}
+            - name: Download Postman collection directly into repository and run json formatter script for docgen
               run: |
                   curl -H "x-api-key: ${{secrets.POSTMAN_API_KEY}}" https://api.getpostman.com/collections/b09bd8c5-776a-4d8c-8b71-f528c017cb08 -o ./public/api-docs/kampong-api.json
+                  node .github/utils/formatApiDocs.js
             - name: Download docgen and generate API Docs
               run: |
                   curl https://raw.githubusercontent.com/thedevsaddam/docgen/v3/install.sh -o ~/install.sh && sudo chmod +x ~/install.sh && sudo ~/install.sh
