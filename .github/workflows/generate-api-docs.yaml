@@ -1,0 +1,23 @@
+name: Generate API docs on update of kampong-api.json file
+
+on:
+    push:
+        paths:
+            - 'public/api-docs/kampong-api.json'
+
+jobs:
+    build:
+        runs-on: macos-latest
+
+        steps:
+            - name: Check out repository
+              uses: actions/checkout@v2
+            - name: Download docgen and generate API Docs
+              run: |
+                  curl https://raw.githubusercontent.com/thedevsaddam/docgen/v3/install.sh -o ~/install.sh && sudo chmod +x ~/install.sh && sudo ~/install.sh
+                  docgen build -i ./public/api-docs/kampong-api.json -o ./public/api-docs/index.html
+                  docgen build -i ./public/api-docs/kampong-api.json -o ./public/api-docs/index.md -m
+            - name: Commit changes and push to current branch
+              uses: stefanzweifel/git-auto-commit-action@v4
+              with:
+                  commit_message: Apply api docs updates

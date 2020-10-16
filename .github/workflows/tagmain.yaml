@@ -5,9 +5,10 @@ on:
             - master
 jobs:
     build:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-20.04
         steps:
-            - uses: actions/checkout@master
+            - name: Check out repository
+              uses: actions/checkout@v2
               with:
                   fetch-depth: '0'
             - name: GitHub Tag Bump
