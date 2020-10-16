@@ -1,9 +1,6 @@
 name: Generate API docs on update of kampong-api.json file
 
-on:
-    push:
-        paths:
-            - 'public/api-docs/kampong-api.json'
+on: [push]
 
 jobs:
     build:
@@ -12,6 +9,9 @@ jobs:
         steps:
             - name: Check out repository
               uses: actions/checkout@v2
+            - name: Download Postman collection directly into repository
+              run: |
+                  curl -H "x-api-key: ${{secrets.POSTMAN_API_KEY}}" https://api.getpostman.com/collections/b09bd8c5-776a-4d8c-8b71-f528c017cb08 -o ./public/api-docs/kampong-api.json
             - name: Download docgen and generate API Docs
               run: |
                   curl https://raw.githubusercontent.com/thedevsaddam/docgen/v3/install.sh -o ~/install.sh && sudo chmod +x ~/install.sh && sudo ~/install.sh
