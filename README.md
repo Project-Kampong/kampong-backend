@@ -1,5 +1,7 @@
 # Project Kampong API
 
+![Node CI](https://github.com/Project-Kampong/kampong-backend/workflows/Node%20CI/badge.svg?branch=master)
+
 Backend web service in TypeScript, Node.js(ts-node), Express, and PostgreSQL for Project Kampong.
 
 ## Quick Start
