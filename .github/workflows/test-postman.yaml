@@ -1,0 +1,19 @@
+name: Test download Kampong collection from Postman
+
+on: [push]
+
+jobs:
+    build:
+        runs-on: macos-latest
+
+        steps:
+            - name: Check out repository
+              uses: actions/checkout@v2
+            - name: Download Postman collection directly into repository
+              run: |
+                  curl -H "x-api-key: ${{secret.POSTMAN_API_KEY}}" https://api.getpostman.com/collections/b09bd8c5-776a-4d8c-8b71-f528c017cb08 -o ./public/api-docs/kampong-api.json
+
+            - name: Commit changes and push to current branch
+              uses: stefanzweifel/git-auto-commit-action@v4
+              with:
+                  commit_message: Apply download of Postman collection
