@@ -4,7 +4,7 @@
  <p align="center">Backend web service in TypeScript, NodeJS, Express, and PostgreSQL for Project Kampong.</p>
 </p>
     <p align="center">
-        <img alt="Build Status Passing" src="https://github.com/Project-Kampong/kampong-backend/workflows/Node%20CI/badge.svg?branch=master" />
+        <img alt="Build Passing" src="https://github.com/Project-Kampong/kampong-backend/workflows/Build/badge.svg" />
         <img alt="API Docs Passing" src="https://github.com/Project-Kampong/kampong-backend/workflows/API%20Docs/badge.svg" />
     </p>
 
