@@ -81,13 +81,13 @@ yarn build && yarn start
 yarn dev
 ```
 
-### Run linter
+### Run Prettier formatter
 
 On the command line in the project root directory:
 
 ```bash
-#### Lint all files with .ts extension
-yarn eslint . --ext .ts
+#### Format all files excluding those in .gitignore file
+yarn format
 ```
 
 ## Documentation

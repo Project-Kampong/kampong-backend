@@ -20,4 +20,5 @@ jobs:
             - name: yarn install and build
               run: |
                   yarn install
+                  yarn format
                   yarn build
