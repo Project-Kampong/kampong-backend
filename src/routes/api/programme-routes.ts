@@ -8,8 +8,6 @@ import { INVALID_FIELD_MSG, INVALID_URL_MSG, INVALID_ALPHA_SPACE_MSG, NO_FIELD_U
 import {
     getProgrammes,
     getProgramme,
-    getOrganisationProgrammes,
-    getOrganisationProgramme,
     createProgramme,
     updateProgramme,
     deleteProgramme,
@@ -32,13 +30,10 @@ const validateUpdateProgrammeFields = [
 ];
 
 // Map public routes to controller
-router.route('/').get(advancedResults('programmes'), getProgrammes);
+router.route('/')
+    .get(advancedResults('programmes'), getProgrammes);
 
 router.route('/:id').get(getProgramme);
-
-router.route('/all').get(getOrganisationProgrammes);
-
-router.route('/all/:id').get(getOrganisationProgramme);
 
 // Use auth middleware
 router.use(protect);

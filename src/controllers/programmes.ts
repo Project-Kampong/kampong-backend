@@ -6,8 +6,18 @@ import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
  * @desc    Get all programmes
  * @route   GET /api/programmes
  * @access  Public
+ * @desc    Get all programmes for an organisation
+ * @route   GET /api/organisations/:organisation_id/programmes
+ * @access  Public
  */
 export const getProgrammes = asyncHandler(async (req, res) => {
+    if (req.params.organisation_id) {
+        const rows = await db.manyOrNone('SELECT * FROM programmes WHERE organisation_id = $1', req.params.organisation_id);
+        return res.status(200).json({
+            success: true,
+            data: rows,
+        });
+    }
     res.status(200).json(res.advancedResults);
 });
 
@@ -20,47 +30,6 @@ export const getProgramme = asyncHandler(async (req, res, next) => {
     console.log(req.params);
     const rows = await db.one('SELECT * FROM programmes WHERE programme_id = $1', req.params.id);
     res.status(200).json({
-        success: true,
-        data: rows,
-    });
-});
-
-/**
- * @desc    Get all programmes for an organisation
- * @route   GET /api/organisations/:organisation_id/all
- * @access  Public
- */
-export const getOrganisationProgrammes = asyncHandler(async (req, res, next) => {
-    // if not organisation_id, go to next middleware
-    if (!req.params.organisation_id) {
-        return next();
-    }
-
-    const rows = db.manyOrNone('SELECT * FROM programmes WHERE organisation_id = $1', req.params.organisation_id);
-    return res.status(200).json({
-        success: true,
-        data: rows,
-    });
-});
-
-/**
- * @desc    Get single programme from an organisation
- * @route   GET /api/organisations/:organisation_id/all/:programme_id
- * @access  Public
- */
-export const getOrganisationProgramme = asyncHandler(async (req, res, next) => {
-    console.log(req.params);
-    // if not organisation_id, go to next middleware
-    if (!req.params.organisation_id) {
-        return next();
-    }
-
-    const rows = db.one(
-        'SELECT * FROM programmes WHERE organisation_id = $1 AND programme_id = $2',
-        req.params.organisation_id,
-        req.params.progamme_id,
-    );
-    return res.status(200).json({
         success: true,
         data: rows,
     });
