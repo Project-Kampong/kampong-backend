@@ -78,7 +78,7 @@ CREATE TABLE ForgetPasswordUsers (
 	forgetpass_user_id SERIAL,
 	email VARCHAR(320) UNIQUE NOT NULL,
 	token VARCHAR UNIQUE NOT NULL,
-	expiry TIMESTAMP NOT NULL DEFAULT NOW(),
+	expiry TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	PRIMARY KEY (forgetpass_user_id)
 );
 
@@ -89,7 +89,7 @@ CREATE TABLE Profiles (
 	about TEXT,
 	gender VARCHAR CONSTRAINT gender_enum CHECK (gender IN('m', 'f', 'o', 'u')) DEFAULT 'u',
 	/* m = male, f = female, o = others, u = undisclosed */
-	dob TIMESTAMP,
+	dob TIMESTAMPTZ,
 	occupation TEXT,
 	phone VARCHAR,
 	facebook_link VARCHAR,
@@ -97,7 +97,7 @@ CREATE TABLE Profiles (
 	instagram_link VARCHAR,
 	linkedin_link VARCHAR,
 	is_verified BOOLEAN NOT NULL DEFAULT FALSE,
-	created_on TIMESTAMP NOT NULL DEFAULT NOW(),
+	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	PRIMARY KEY (user_id),
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE
 );
@@ -129,8 +129,8 @@ CREATE TABLE Organisations (
 	handphone VARCHAR,
 	email VARCHAR(320),
 	is_verified BOOLEAN NOT NULL DEFAULT FALSE,
-	created_on TIMESTAMP NOT NULL DEFAULT NOW(),
-	deleted_on TIMESTAMP DEFAULT NULL,
+	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	deleted_on TIMESTAMPTZ DEFAULT NULL,
 	PRIMARY KEY (organisation_id)
 );
 
@@ -139,7 +139,7 @@ CREATE TABLE Memberships (
 	organisation_id INTEGER NOT NULL,
 	user_id VARCHAR NOT NULL,
 	is_owner BOOLEAN NOT NULL DEFAULT FALSE,
-	joined_on TIMESTAMP NOT NULL DEFAULT NOW(),
+	joined_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	PRIMARY KEY (membership_id),
 	UNIQUE (organisation_id, user_id),
 	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE,
@@ -165,10 +165,10 @@ CREATE TABLE Listings (
 	pic5 VARCHAR,
 	is_published BOOLEAN NOT NULL DEFAULT FALSE,
 	is_verified BOOLEAN NOT NULL DEFAULT FALSE,
-	start_date TIMESTAMP NOT NULL DEFAULT NOW(),
-	end_date TIMESTAMP,
-	created_on TIMESTAMP NOT NULL DEFAULT NOW(),
-	deleted_on TIMESTAMP DEFAULT NULL,
+	start_date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	end_date TIMESTAMPTZ,
+	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	deleted_on TIMESTAMPTZ DEFAULT NULL,
 	PRIMARY KEY (listing_id),
 	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE SET NULL,
 	FOREIGN KEY (created_by) REFERENCES Users (user_id) ON DELETE SET NULL
@@ -217,7 +217,7 @@ CREATE TABLE Jobs (
 	listing_id VARCHAR NOT NULL,
 	job_title VARCHAR NOT NULL,
 	job_description TEXT,
-	deleted_on TIMESTAMP DEFAULT NULL,
+	deleted_on TIMESTAMPTZ DEFAULT NULL,
 	PRIMARY KEY (job_id),
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
@@ -255,8 +255,8 @@ CREATE TABLE Participants (
 	participant_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	user_id VARCHAR NOT NULL,
-	joined_on TIMESTAMP NOT NULL DEFAULT NOW(),
-	end_on TIMESTAMP,
+	joined_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	end_on TIMESTAMPTZ,
 	PRIMARY KEY (participant_id),
 	UNIQUE (listing_id, user_id),
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
@@ -277,7 +277,7 @@ CREATE TABLE Milestones (
 	milestone_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	description TEXT NOT NULL,
-	date TIMESTAMP,
+	date TIMESTAMPTZ,
 	PRIMARY KEY (milestone_id),
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
@@ -291,8 +291,8 @@ CREATE TABLE ListingUpdates (
 	pic3 VARCHAR,
 	pic4 VARCHAR,
 	pic5 VARCHAR,
-	created_on TIMESTAMP NOT NULL DEFAULT NOW(),
-	updated_on TIMESTAMP NOT NULL DEFAULT NOW(),
+	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	PRIMARY KEY (listing_update_id),
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
@@ -303,9 +303,9 @@ CREATE TABLE ListingComments (
 	user_id VARCHAR,
 	COMMENT TEXT,
 	reply_to_id INTEGER CONSTRAINT reply_to_other_id CHECK (reply_to_id <> listing_comment_id),
-	created_on TIMESTAMP NOT NULL DEFAULT NOW(),
-	updated_on TIMESTAMP NOT NULL DEFAULT NOW(),
-	deleted_on TIMESTAMP,
+	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	deleted_on TIMESTAMPTZ,
 	PRIMARY KEY (listing_comment_id),
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE SET NULL,
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE SET NULL,
