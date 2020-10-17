@@ -17,7 +17,8 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
             - run: npm install -g yarn
-            - name: yarn install and build
+            - name: Install dependencies, check formatting, and build
               run: |
                   yarn install
+                  yarn prettier --check .
                   yarn build

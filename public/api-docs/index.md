@@ -1,7 +1,7 @@
 
 # Kampong API
 
-Backend API for Project Kampong
+Backend API for Project Kampong.
 
 ## Indices
 
@@ -146,6 +146,14 @@ Backend API for Project Kampong
   * [Get Single Milestone](#4-get-single-milestone)
   * [Update Milestone](#5-update-milestone)
 
+* [Organisations](#organisations)
+
+  * [Create Organisation](#1-create-organisation)
+  * [Delete Organisation](#2-delete-organisation)
+  * [Get All Organisations](#3-get-all-organisations)
+  * [Get Single Organisation](#4-get-single-organisation)
+  * [Update Organisation](#5-update-organisation)
+
 * [Participants](#participants)
 
   * [Create participant](#1-create-participant)
@@ -153,13 +161,6 @@ Backend API for Project Kampong
   * [Get All Participants](#3-get-all-participants)
   * [Get Single Participant](#4-get-single-participant)
   * [Update Participant](#5-update-participant)
-
-* [Profiles](#profiles)
-
-  * [Get Single Profile](#1-get-single-profile)
-  * [Update Profile](#2-update-profile)
-  * [Upload Profile Picture](#3-upload-profile-picture)
-  * [Verify Profile (by User ID)](#4-verify-profile-(by-user-id))
 
 * [Send Email](#send-email)
 
@@ -1053,7 +1054,7 @@ URL: {{URL}}/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirm-
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Activate Account (via Email Confirmation) (400 Bad Request - Token expired, invalid, or used)
+##### I. Example Request: Activate Account (via Email Confirmation) (200 OK)
 
 
 ***Headers:***
@@ -1076,45 +1077,7 @@ URL: {{URL}}/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirm-
 
 
 
-##### I. Example Response: Activate Account (via Email Confirmation) (400 Bad Request - Token expired, invalid, or used)
-```js
-{
-    "success": false,
-    "error": "Invalid account activation link. The user account may have been activated already."
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-##### II. Example Request: Activate Account (via Email Confirmation) (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"name": "Don",
-	"email" : "don@gmail.com",
-	"password": "123456"
-}
-```
-
-
-
-##### II. Example Response: Activate Account (via Email Confirmation) (200 OK)
+##### I. Example Response: Activate Account (via Email Confirmation) (200 OK)
 ```js
 {
     "success": true,
@@ -1124,6 +1087,44 @@ URL: {{URL}}/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirm-
 
 
 ***Status Code:*** 200
+
+<br>
+
+
+
+##### II. Example Request: Activate Account (via Email Confirmation) (400 Bad Request - Token expired, invalid, or used)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"name": "Don",
+	"email" : "don@gmail.com",
+	"password": "123456"
+}
+```
+
+
+
+##### II. Example Response: Activate Account (via Email Confirmation) (400 Bad Request - Token expired, invalid, or used)
+```js
+{
+    "success": false,
+    "error": "Invalid account activation link. The user account may have been activated already."
+}
+```
+
+
+***Status Code:*** 400
 
 <br>
 
@@ -1676,85 +1677,7 @@ URL: {{URL}}/api/auth/register
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Register User (400 Bad Request - Invalid email/password requirement)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"first_name": "Bon",
-	"last_name": "Tan",
-	"email" : "bon@gmail.com",
-	"password": "12345"
-}
-```
-
-
-
-##### I. Example Response: Register User (400 Bad Request - Invalid email/password requirement)
-```js
-{
-    "success": false,
-    "error": "Please enter a password with 6 or more characters."
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-##### II. Example Request: Register User (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"first_name": "Don",
-	"last_name": "Tay",
-	"email" : "dontay0209@gmail.com",
-	"password": "123456"
-}
-```
-
-
-
-##### II. Example Response: Register User (200 OK)
-```js
-{
-    "success": true,
-    "data": "http://localhost:5000/api/auth/register/e69f4085f4f847a4983af536ab653a29a27c2b85/confirmemail"
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-##### III. Example Request: Register User (400 Bad Request - User account already exists)
+##### I. Example Request: Register User (400 Bad Request - User account already exists)
 
 
 ***Headers:***
@@ -1778,7 +1701,7 @@ URL: {{URL}}/api/auth/register
 
 
 
-##### III. Example Response: Register User (400 Bad Request - User account already exists)
+##### I. Example Response: Register User (400 Bad Request - User account already exists)
 ```js
 {
     "success": false,
@@ -1788,6 +1711,84 @@ URL: {{URL}}/api/auth/register
 
 
 ***Status Code:*** 400
+
+<br>
+
+
+
+##### II. Example Request: Register User (400 Bad Request - Invalid email/password requirement)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"first_name": "Bon",
+	"last_name": "Tan",
+	"email" : "bon@gmail.com",
+	"password": "12345"
+}
+```
+
+
+
+##### II. Example Response: Register User (400 Bad Request - Invalid email/password requirement)
+```js
+{
+    "success": false,
+    "error": "Please enter a password with 6 or more characters."
+}
+```
+
+
+***Status Code:*** 400
+
+<br>
+
+
+
+##### III. Example Request: Register User (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"first_name": "Don",
+	"last_name": "Tay",
+	"email" : "dontay0209@gmail.com",
+	"password": "123456"
+}
+```
+
+
+
+##### III. Example Response: Register User (200 OK)
+```js
+{
+    "success": true,
+    "data": "http://localhost:5000/api/auth/register/e69f4085f4f847a4983af536ab653a29a27c2b85/confirmemail"
+}
+```
+
+
+***Status Code:*** 200
 
 <br>
 
@@ -2141,45 +2142,7 @@ URL: {{URL}}/api/auth/update-details
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Update Details (400 Bad Request - Invalid field entered)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"email": "gmail.com",
-	"first_name": "Don",
-	"last_name": "Taylor"
-}
-```
-
-
-
-##### I. Example Response: Update Details (400 Bad Request - Invalid field entered)
-```js
-{
-    "success": false,
-    "error": "Please include a valid email."
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-##### II. Example Request: Update Details (401 Unauthorised)
+##### I. Example Request: Update Details (401 Unauthorised)
 
 
 ***Headers:***
@@ -2202,7 +2165,7 @@ URL: {{URL}}/api/auth/update-details
 
 
 
-##### II. Example Response: Update Details (401 Unauthorised)
+##### I. Example Response: Update Details (401 Unauthorised)
 ```js
 {
     "success": false,
@@ -2217,7 +2180,7 @@ URL: {{URL}}/api/auth/update-details
 
 
 
-##### III. Example Request: Update Details (200 OK)
+##### II. Example Request: Update Details (200 OK)
 
 
 ***Headers:***
@@ -2240,7 +2203,7 @@ URL: {{URL}}/api/auth/update-details
 
 
 
-##### III. Example Response: Update Details (200 OK)
+##### II. Example Response: Update Details (200 OK)
 ```js
 {
     "success": true,
@@ -2250,6 +2213,44 @@ URL: {{URL}}/api/auth/update-details
 
 
 ***Status Code:*** 200
+
+<br>
+
+
+
+##### III. Example Request: Update Details (400 Bad Request - Invalid field entered)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"email": "gmail.com",
+	"first_name": "Don",
+	"last_name": "Taylor"
+}
+```
+
+
+
+##### III. Example Response: Update Details (400 Bad Request - Invalid field entered)
+```js
+{
+    "success": false,
+    "error": "Please include a valid email."
+}
+```
+
+
+***Status Code:*** 400
 
 <br>
 
@@ -2297,7 +2298,7 @@ URL: {{URL}}/api/auth/update-password
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Update Password (401 Unauthorised - Invalid old password)
+##### I. Example Request: Update Password (200 OK)
 
 
 ***Headers:***
@@ -2319,7 +2320,44 @@ URL: {{URL}}/api/auth/update-password
 
 
 
-##### I. Example Response: Update Password (401 Unauthorised - Invalid old password)
+##### I. Example Response: Update Password (200 OK)
+```js
+{
+    "success": true,
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkb25AZ21haWwuY29tIiwiY3JlYXRlZF9vbiI6IjIwMjAtMDctMTdUMDk6NDQ6MTUuMTY4WiIsImlhdCI6MTU5NDk3OTM0NywiZXhwIjoxNTk3NTcxMzQ3fQ.EQJuPrtr28SYc8JHVLxs8_z0Y_4Z9MwY1L-ukBkRSV4"
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+##### II. Example Request: Update Password (401 Unauthorised - Invalid old password)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"oldPassword": "123456",
+	"newPassword": "1234567"
+}
+```
+
+
+
+##### II. Example Response: Update Password (401 Unauthorised - Invalid old password)
 ```js
 {
     "success": false,
@@ -2334,7 +2372,7 @@ URL: {{URL}}/api/auth/update-password
 
 
 
-##### II. Example Request: Update Password (400 Bad Request - Invalid password requirement)
+##### III. Example Request: Update Password (400 Bad Request - Invalid password requirement)
 
 
 ***Headers:***
@@ -2356,7 +2394,7 @@ URL: {{URL}}/api/auth/update-password
 
 
 
-##### II. Example Response: Update Password (400 Bad Request - Invalid password requirement)
+##### III. Example Response: Update Password (400 Bad Request - Invalid password requirement)
 ```js
 {
     "success": false,
@@ -2366,43 +2404,6 @@ URL: {{URL}}/api/auth/update-password
 
 
 ***Status Code:*** 400
-
-<br>
-
-
-
-##### III. Example Request: Update Password (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"oldPassword": "123456",
-	"newPassword": "1234567"
-}
-```
-
-
-
-##### III. Example Response: Update Password (200 OK)
-```js
-{
-    "success": true,
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkb25AZ21haWwuY29tIiwiY3JlYXRlZF9vbiI6IjIwMjAtMDctMTdUMDk6NDQ6MTUuMTY4WiIsImlhdCI6MTU5NDk3OTM0NywiZXhwIjoxNTk3NTcxMzQ3fQ.EQJuPrtr28SYc8JHVLxs8_z0Y_4Z9MwY1L-ukBkRSV4"
-}
-```
-
-
-***Status Code:*** 200
 
 <br>
 
@@ -2457,87 +2458,7 @@ URL: {{URL}}/api/faqs
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Create Faq (400 Bad Request - Invalid input field)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"question": "What roles are available for me?",
-	"answer": "Refer to our job listings for the latest roles!"
-}
-```
-
-
-
-##### I. Example Response: Create Faq (400 Bad Request - Invalid input field)
-```js
-{
-    "success": false,
-    "error": "Please include a valid listing_id."
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-##### II. Example Request: Create Faq (201 Created)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-	"question": "What roles are available for me?",
-	"answer": "Refer to our job listings for the latest roles!"
-}
-```
-
-
-
-##### II. Example Response: Create Faq (201 Created)
-```js
-{
-    "success": true,
-    "data": {
-        "faq_id": 22,
-        "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-        "question": "What roles are available for me?",
-        "answer": "Refer to our job listings for the latest roles!"
-    }
-}
-```
-
-
-***Status Code:*** 201
-
-<br>
-
-
-
-##### III. Example Request: Create Faq (403 Forbidden - Non-admin and non-listing owner)
+##### I. Example Request: Create Faq (403 Forbidden - Non-admin and non-listing owner)
 
 
 ***Headers:***
@@ -2560,7 +2481,7 @@ URL: {{URL}}/api/faqs
 
 
 
-##### III. Example Response: Create Faq (403 Forbidden - Non-admin and non-listing owner)
+##### I. Example Response: Create Faq (403 Forbidden - Non-admin and non-listing owner)
 ```js
 {
     "success": false,
@@ -2570,6 +2491,86 @@ URL: {{URL}}/api/faqs
 
 
 ***Status Code:*** 403
+
+<br>
+
+
+
+##### II. Example Request: Create Faq (400 Bad Request - Invalid input field)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"question": "What roles are available for me?",
+	"answer": "Refer to our job listings for the latest roles!"
+}
+```
+
+
+
+##### II. Example Response: Create Faq (400 Bad Request - Invalid input field)
+```js
+{
+    "success": false,
+    "error": "Please include a valid listing_id."
+}
+```
+
+
+***Status Code:*** 400
+
+<br>
+
+
+
+##### III. Example Request: Create Faq (201 Created)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
+	"question": "What roles are available for me?",
+	"answer": "Refer to our job listings for the latest roles!"
+}
+```
+
+
+
+##### III. Example Response: Create Faq (201 Created)
+```js
+{
+    "success": true,
+    "data": {
+        "faq_id": 22,
+        "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
+        "question": "What roles are available for me?",
+        "answer": "Refer to our job listings for the latest roles!"
+    }
+}
+```
+
+
+***Status Code:*** 201
 
 <br>
 
@@ -2613,11 +2614,30 @@ URL: {{URL}}/api/faqs/1
 
 
 
-##### II. Example Request: Delete Faq (200 OK)
+##### II. Example Request: Delete Faq (400 Bad Request - Non-existent FAQ)
 
 
 
-##### II. Example Response: Delete Faq (200 OK)
+##### II. Example Response: Delete Faq (400 Bad Request - Non-existent FAQ)
+```js
+{
+    "success": false,
+    "error": "Faq does not exist"
+}
+```
+
+
+***Status Code:*** 400
+
+<br>
+
+
+
+##### III. Example Request: Delete Faq (200 OK)
+
+
+
+##### III. Example Response: Delete Faq (200 OK)
 ```js
 {
     "success": true,
@@ -2632,25 +2652,6 @@ URL: {{URL}}/api/faqs/1
 
 
 ***Status Code:*** 200
-
-<br>
-
-
-
-##### III. Example Request: Delete Faq (400 Bad Request - Non-existent FAQ)
-
-
-
-##### III. Example Response: Delete Faq (400 Bad Request - Non-existent FAQ)
-```js
-{
-    "success": false,
-    "error": "Faq does not exist"
-}
-```
-
-
-***Status Code:*** 400
 
 <br>
 
@@ -2956,7 +2957,7 @@ URL: {{URL}}/api/faqs/1
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Update Faq (400 Bad Request - Non-existent FAQ)
+##### I. Example Request: Update Faq (403 Forbidden - Non-admin and non-listing owner)
 
 
 ***Headers:***
@@ -2978,44 +2979,7 @@ URL: {{URL}}/api/faqs/1
 
 
 
-##### I. Example Response: Update Faq (400 Bad Request - Non-existent FAQ)
-```js
-{
-    "success": false,
-    "error": "Faq does not exist"
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-##### II. Example Request: Update Faq (403 Forbidden - Non-admin and non-listing owner)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"question": "What is the commitment like?",
-	"answer": "It varies! Refer to our individual job listings for more details!"
-}
-```
-
-
-
-##### II. Example Response: Update Faq (403 Forbidden - Non-admin and non-listing owner)
+##### I. Example Response: Update Faq (403 Forbidden - Non-admin and non-listing owner)
 ```js
 {
     "success": false,
@@ -3030,7 +2994,7 @@ URL: {{URL}}/api/faqs/1
 
 
 
-##### III. Example Request: Update Faq (200 OK)
+##### II. Example Request: Update Faq (200 OK)
 
 
 ***Headers:***
@@ -3052,7 +3016,7 @@ URL: {{URL}}/api/faqs/1
 
 
 
-##### III. Example Response: Update Faq (200 OK)
+##### II. Example Response: Update Faq (200 OK)
 ```js
 {
     "success": true,
@@ -3067,6 +3031,43 @@ URL: {{URL}}/api/faqs/1
 
 
 ***Status Code:*** 200
+
+<br>
+
+
+
+##### III. Example Request: Update Faq (400 Bad Request - Non-existent FAQ)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"question": "What is the commitment like?",
+	"answer": "It varies! Refer to our individual job listings for more details!"
+}
+```
+
+
+
+##### III. Example Response: Update Faq (400 Bad Request - Non-existent FAQ)
+```js
+{
+    "success": false,
+    "error": "Faq does not exist"
+}
+```
+
+
+***Status Code:*** 400
 
 <br>
 
@@ -3541,48 +3542,7 @@ URL: {{URL}}/api/hashtags
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Create Hashtag (201 Created)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-	"tag": "#shine-a-light"
-}
-```
-
-
-
-##### I. Example Response: Create Hashtag (201 Created)
-```js
-{
-    "success": true,
-    "data": {
-        "hashtag_id": 12,
-        "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-        "tag": "#shine-a-light"
-    }
-}
-```
-
-
-***Status Code:*** 201
-
-<br>
-
-
-
-##### II. Example Request: Create Milestone (400 Bad Request - Invalid value entered, empty description)
+##### I. Example Request: Create Milestone (400 Bad Request - Invalid value entered, empty description)
 
 
 ***Headers:***
@@ -3605,7 +3565,7 @@ URL: {{URL}}/api/hashtags
 
 
 
-##### II. Example Response: Create Milestone (400 Bad Request - Invalid value entered, empty description)
+##### I. Example Response: Create Milestone (400 Bad Request - Invalid value entered, empty description)
 ```js
 {
     "success": false,
@@ -3615,6 +3575,47 @@ URL: {{URL}}/api/hashtags
 
 
 ***Status Code:*** 400
+
+<br>
+
+
+
+##### II. Example Request: Create Hashtag (201 Created)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
+	"tag": "#shine-a-light"
+}
+```
+
+
+
+##### II. Example Response: Create Hashtag (201 Created)
+```js
+{
+    "success": true,
+    "data": {
+        "hashtag_id": 12,
+        "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
+        "tag": "#shine-a-light"
+    }
+}
+```
+
+
+***Status Code:*** 201
 
 <br>
 
@@ -3639,30 +3640,11 @@ URL: {{URL}}/api/hashtags/1
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Delete Hashtag (404 Not Found - Non-existent hashtag id)
+##### I. Example Request: Delete Hashtag (200 OK)
 
 
 
-##### I. Example Response: Delete Hashtag (404 Not Found - Non-existent hashtag id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
-##### II. Example Request: Delete Hashtag (200 OK)
-
-
-
-##### II. Example Response: Delete Hashtag (200 OK)
+##### I. Example Response: Delete Hashtag (200 OK)
 ```js
 {
     "success": true,
@@ -3676,6 +3658,25 @@ URL: {{URL}}/api/hashtags/1
 
 
 ***Status Code:*** 200
+
+<br>
+
+
+
+##### II. Example Request: Delete Hashtag (404 Not Found - Non-existent hashtag id)
+
+
+
+##### II. Example Response: Delete Hashtag (404 Not Found - Non-existent hashtag id)
+```js
+{
+    "success": false,
+    "error": "Resource not found"
+}
+```
+
+
+***Status Code:*** 404
 
 <br>
 
@@ -3871,30 +3872,11 @@ URL: {{URL}}/api/hashtags/1
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Get Single Hashtag (404 Not Found - Non-existent hashtag id)
+##### I. Example Request: Get Single Hashtag (200 OK)
 
 
 
-##### I. Example Response: Get Single Hashtag (404 Not Found - Non-existent hashtag id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
-##### II. Example Request: Get Single Hashtag (200 OK)
-
-
-
-##### II. Example Response: Get Single Hashtag (200 OK)
+##### I. Example Response: Get Single Hashtag (200 OK)
 ```js
 {
     "success": true,
@@ -3908,6 +3890,25 @@ URL: {{URL}}/api/hashtags/1
 
 
 ***Status Code:*** 200
+
+<br>
+
+
+
+##### II. Example Request: Get Single Hashtag (404 Not Found - Non-existent hashtag id)
+
+
+
+##### II. Example Response: Get Single Hashtag (404 Not Found - Non-existent hashtag id)
+```js
+{
+    "success": false,
+    "error": "Resource not found"
+}
+```
+
+
+***Status Code:*** 404
 
 <br>
 
@@ -3953,7 +3954,7 @@ URL: {{URL}}/api/hashtags/1
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Update Hashtag (200 OK)
+##### I. Example Request: Update Hashtag (404 Not Found - Non-existent hashtag id)
 
 
 ***Headers:***
@@ -3974,7 +3975,43 @@ URL: {{URL}}/api/hashtags/1
 
 
 
-##### I. Example Response: Update Hashtag (200 OK)
+##### I. Example Response: Update Hashtag (404 Not Found - Non-existent hashtag id)
+```js
+{
+    "success": false,
+    "error": "Resource not found"
+}
+```
+
+
+***Status Code:*** 404
+
+<br>
+
+
+
+##### II. Example Request: Update Hashtag (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"tag": "#hello"
+}
+```
+
+
+
+##### II. Example Response: Update Hashtag (200 OK)
 ```js
 {
     "success": true,
@@ -3988,42 +4025,6 @@ URL: {{URL}}/api/hashtags/1
 
 
 ***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Update Hashtag (404 Not Found - Non-existent hashtag id)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"tag": "#hello"
-}
-```
-
-
-
-##### II. Example Response: Update Hashtag (404 Not Found - Non-existent hashtag id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
 
 <br>
 
@@ -4078,7 +4079,7 @@ URL: {{URL}}/api/jobs
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Create Job (201 Created)
+##### I. Example Request: Create Job (400 Bad Request - Invalid value entered)
 
 
 ***Headers:***
@@ -4093,30 +4094,24 @@ URL: {{URL}}/api/jobs
 
 ```js        
 {
-	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-	"job_title": "Social Media Manager",
+	"listing_id": 1,
+	"job_title": "",
 	"job_description": "Manage our social media outreach on Facebook, Instagram and LinkedIn."
 }
 ```
 
 
 
-##### I. Example Response: Create Job (201 Created)
+##### I. Example Response: Create Job (400 Bad Request - Invalid value entered)
 ```js
 {
-    "success": true,
-    "data": {
-        "job_id": 22,
-        "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-        "job_title": "Social Media Manager",
-        "job_description": "Manage our social media outreach on Facebook, Instagram and LinkedIn.",
-        "deleted_on": null
-    }
+    "success": false,
+    "error": "Please include a valid job title."
 }
 ```
 
 
-***Status Code:*** 201
+***Status Code:*** 400
 
 <br>
 
@@ -4160,7 +4155,7 @@ URL: {{URL}}/api/jobs
 
 
 
-##### III. Example Request: Create Job (400 Bad Request - Invalid value entered)
+##### III. Example Request: Create Job (201 Created)
 
 
 ***Headers:***
@@ -4175,24 +4170,30 @@ URL: {{URL}}/api/jobs
 
 ```js        
 {
-	"listing_id": 1,
-	"job_title": "",
+	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
+	"job_title": "Social Media Manager",
 	"job_description": "Manage our social media outreach on Facebook, Instagram and LinkedIn."
 }
 ```
 
 
 
-##### III. Example Response: Create Job (400 Bad Request - Invalid value entered)
+##### III. Example Response: Create Job (201 Created)
 ```js
 {
-    "success": false,
-    "error": "Please include a valid job title."
+    "success": true,
+    "data": {
+        "job_id": 22,
+        "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
+        "job_title": "Social Media Manager",
+        "job_description": "Manage our social media outreach on Facebook, Instagram and LinkedIn.",
+        "deleted_on": null
+    }
 }
 ```
 
 
-***Status Code:*** 400
+***Status Code:*** 201
 
 <br>
 
@@ -4217,11 +4218,30 @@ URL: {{URL}}/api/jobs/1/deactivate
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Deactivate Job (200 OK)
+##### I. Example Request: Deactivate Job (403 Forbidden - Non-admin and non-listing owner)
 
 
 
-##### I. Example Response: Deactivate Job (200 OK)
+##### I. Example Response: Deactivate Job (403 Forbidden - Non-admin and non-listing owner)
+```js
+{
+    "success": false,
+    "error": "Not authorised to update jobs in this listing"
+}
+```
+
+
+***Status Code:*** 403
+
+<br>
+
+
+
+##### II. Example Request: Deactivate Job (200 OK)
+
+
+
+##### II. Example Response: Deactivate Job (200 OK)
 ```js
 {
     "success": true,
@@ -4237,25 +4257,6 @@ URL: {{URL}}/api/jobs/1/deactivate
 
 
 ***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Deactivate Job (403 Forbidden - Non-admin and non-listing owner)
-
-
-
-##### II. Example Response: Deactivate Job (403 Forbidden - Non-admin and non-listing owner)
-```js
-{
-    "success": false,
-    "error": "Not authorised to update jobs in this listing"
-}
-```
-
-
-***Status Code:*** 403
 
 <br>
 
@@ -4280,11 +4281,30 @@ URL: {{URL}}/api/jobs/1
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Delete Job (403 Forbidden - Non-admin)
+##### I. Example Request: Delete Job (400 Bad Request - Non-existent job id)
 
 
 
-##### I. Example Response: Delete Job (403 Forbidden - Non-admin)
+##### I. Example Response: Delete Job (400 Bad Request - Non-existent job id)
+```js
+{
+    "success": false,
+    "error": "Job does not exist"
+}
+```
+
+
+***Status Code:*** 400
+
+<br>
+
+
+
+##### II. Example Request: Delete Job (403 Forbidden - Non-admin)
+
+
+
+##### II. Example Response: Delete Job (403 Forbidden - Non-admin)
 ```js
 {
     "success": false,
@@ -4299,11 +4319,11 @@ URL: {{URL}}/api/jobs/1
 
 
 
-##### II. Example Request: Delete Job (200 OK)
+##### III. Example Request: Delete Job (200 OK)
 
 
 
-##### II. Example Response: Delete Job (200 OK)
+##### III. Example Response: Delete Job (200 OK)
 ```js
 {
     "success": true,
@@ -4318,25 +4338,6 @@ URL: {{URL}}/api/jobs/1
 
 
 ***Status Code:*** 200
-
-<br>
-
-
-
-##### III. Example Request: Delete Job (400 Bad Request - Non-existent job id)
-
-
-
-##### III. Example Response: Delete Job (400 Bad Request - Non-existent job id)
-```js
-{
-    "success": false,
-    "error": "Job does not exist"
-}
-```
-
-
-***Status Code:*** 400
 
 <br>
 
@@ -4623,7 +4624,49 @@ URL: {{URL}}/api/jobs/1
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Update Job (400 Bad Request - Invalid value entered)
+##### I. Example Request: Update Job (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"job_title": "Partnership Associate",
+	"job_description": "Manage our intitiatives various stakeholders, and source for new partnerships."
+}
+```
+
+
+
+##### I. Example Response: Update Job (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "job_id": 1,
+        "listing_id": 1,
+        "job_title": "Partnership Associate",
+        "job_description": "Manage our intitiatives various stakeholders, and source for new partnerships."
+    }
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+##### II. Example Request: Update Job (400 Bad Request - Invalid value entered)
 
 
 ***Headers:***
@@ -4645,7 +4688,7 @@ URL: {{URL}}/api/jobs/1
 
 
 
-##### I. Example Response: Update Job (400 Bad Request - Invalid value entered)
+##### II. Example Response: Update Job (400 Bad Request - Invalid value entered)
 ```js
 {
     "success": false,
@@ -4660,7 +4703,7 @@ URL: {{URL}}/api/jobs/1
 
 
 
-##### II. Example Request: Update Job (403 Forbidden - Non-admin and non-listing owner)
+##### III. Example Request: Update Job (400 Bad Request - Non-existent job)
 
 
 ***Headers:***
@@ -4682,86 +4725,7 @@ URL: {{URL}}/api/jobs/1
 
 
 
-##### II. Example Response: Update Job (403 Forbidden - Non-admin and non-listing owner)
-```js
-{
-    "success": false,
-    "error": "Not authorised to update jobs in this listing"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
-##### III. Example Request: Update Job (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"job_title": "Partnership Associate",
-	"job_description": "Manage our intitiatives various stakeholders, and source for new partnerships."
-}
-```
-
-
-
-##### III. Example Response: Update Job (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "job_id": 1,
-        "listing_id": 1,
-        "job_title": "Partnership Associate",
-        "job_description": "Manage our intitiatives various stakeholders, and source for new partnerships."
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-##### IV. Example Request: Update Job (400 Bad Request - Non-existent job)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"job_title": "Partnership Associate",
-	"job_description": "Manage our intitiatives various stakeholders, and source for new partnerships."
-}
-```
-
-
-
-##### IV. Example Response: Update Job (400 Bad Request - Non-existent job)
+##### III. Example Response: Update Job (400 Bad Request - Non-existent job)
 ```js
 {
     "success": false,
@@ -4771,6 +4735,43 @@ URL: {{URL}}/api/jobs/1
 
 
 ***Status Code:*** 400
+
+<br>
+
+
+
+##### IV. Example Request: Update Job (403 Forbidden - Non-admin and non-listing owner)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"job_title": "Partnership Associate",
+	"job_description": "Manage our intitiatives various stakeholders, and source for new partnerships."
+}
+```
+
+
+
+##### IV. Example Response: Update Job (403 Forbidden - Non-admin and non-listing owner)
+```js
+{
+    "success": false,
+    "error": "Not authorised to update jobs in this listing"
+}
+```
+
+
+***Status Code:*** 403
 
 <br>
 
@@ -4928,43 +4929,7 @@ URL: {{URL}}/api/likes
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Like Listing (401 Unauthorized - Non-logged in user cannot like)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"listing_id": 2
-}
-```
-
-
-
-##### I. Example Response: Like Listing (401 Unauthorized - Non-logged in user cannot like)
-```js
-{
-    "success": false,
-    "error": "Not authorised to access this route"
-}
-```
-
-
-***Status Code:*** 401
-
-<br>
-
-
-
-##### II. Example Request: Like Listing (400 Bad Request - Non-existent listing id)
+##### I. Example Request: Like Listing (400 Bad Request - Non-existent listing id)
 
 
 ***Headers:***
@@ -4985,7 +4950,7 @@ URL: {{URL}}/api/likes
 
 
 
-##### II. Example Response: Like Listing (400 Bad Request - Non-existent listing id)
+##### I. Example Response: Like Listing (400 Bad Request - Non-existent listing id)
 ```js
 {
     "success": false,
@@ -4995,6 +4960,42 @@ URL: {{URL}}/api/likes
 
 
 ***Status Code:*** 400
+
+<br>
+
+
+
+##### II. Example Request: Like Listing (401 Unauthorized - Non-logged in user cannot like)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"listing_id": 2
+}
+```
+
+
+
+##### II. Example Response: Like Listing (401 Unauthorized - Non-logged in user cannot like)
+```js
+{
+    "success": false,
+    "error": "Not authorised to access this route"
+}
+```
+
+
+***Status Code:*** 401
 
 <br>
 
@@ -5059,49 +5060,11 @@ URL: {{URL}}/api/likes/1
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Unlike Listing (404 Not Found - Non-existent listing id)
+##### I. Example Request: Unlike Listing (200 OK)
 
 
 
-##### I. Example Response: Unlike Listing (404 Not Found - Non-existent listing id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
-##### II. Example Request: Unlike Listing (401 Unauthorised - Unauthenticated user cannot delete likes)
-
-
-
-##### II. Example Response: Unlike Listing (401 Unauthorised - Unauthenticated user cannot delete likes)
-```js
-{
-    "success": false,
-    "error": "Not authorised to access this route"
-}
-```
-
-
-***Status Code:*** 401
-
-<br>
-
-
-
-##### III. Example Request: Unlike Listing (200 OK)
-
-
-
-##### III. Example Response: Unlike Listing (200 OK)
+##### I. Example Response: Unlike Listing (200 OK)
 ```js
 {
     "success": true,
@@ -5120,11 +5083,30 @@ URL: {{URL}}/api/likes/1
 
 
 
-##### IV. Example Request: Unlike Listing (403 Forbidden - Not authorised to delete likes from other users)
+##### II. Example Request: Unlike Listing (404 Not Found - Non-existent listing id)
 
 
 
-##### IV. Example Response: Unlike Listing (403 Forbidden - Not authorised to delete likes from other users)
+##### II. Example Response: Unlike Listing (404 Not Found - Non-existent listing id)
+```js
+{
+    "success": false,
+    "error": "Resource not found"
+}
+```
+
+
+***Status Code:*** 404
+
+<br>
+
+
+
+##### III. Example Request: Unlike Listing (403 Forbidden - Not authorised to delete likes from other users)
+
+
+
+##### III. Example Response: Unlike Listing (403 Forbidden - Not authorised to delete likes from other users)
 ```js
 {
     "success": false,
@@ -5134,6 +5116,25 @@ URL: {{URL}}/api/likes/1
 
 
 ***Status Code:*** 403
+
+<br>
+
+
+
+##### IV. Example Request: Unlike Listing (401 Unauthorised - Unauthenticated user cannot delete likes)
+
+
+
+##### IV. Example Response: Unlike Listing (401 Unauthorised - Unauthenticated user cannot delete likes)
+```js
+{
+    "success": false,
+    "error": "Not authorised to access this route"
+}
+```
+
+
+***Status Code:*** 401
 
 <br>
 
@@ -6128,7 +6129,81 @@ URL: {{URL}}/api/listing-skills/add-skill
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Create Custom Listing Skill (201 Created)
+##### I. Example Request: Create Listing Skill (403 Forbidden - Non-listing owner cannot create listing skill)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"listing_id": 1,
+	"skill_id": 5
+}
+```
+
+
+
+##### I. Example Response: Create Listing Skill (403 Forbidden - Non-listing owner cannot create listing skill)
+```js
+{
+    "success": false,
+    "error": "Not authorised to create listing skills for this listing"
+}
+```
+
+
+***Status Code:*** 403
+
+<br>
+
+
+
+##### II. Example Request: Create Listing Skill (400 Bad Request - Non-existent skill id)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"listing_id": 1,
+	"skill_id": 200
+}
+```
+
+
+
+##### II. Example Response: Create Listing Skill (400 Bad Request - Non-existent skill id)
+```js
+{
+    "success": false,
+    "error": "Foreign key value does not exist: Key (skill_id)=(200) is not present in table \"skills\"."
+}
+```
+
+
+***Status Code:*** 400
+
+<br>
+
+
+
+##### III. Example Request: Create Custom Listing Skill (201 Created)
 
 
 ***Headers:***
@@ -6151,7 +6226,7 @@ URL: {{URL}}/api/listing-skills/add-skill
 
 
 
-##### I. Example Response: Create Custom Listing Skill (201 Created)
+##### III. Example Response: Create Custom Listing Skill (201 Created)
 ```js
 {
     "success": true,
@@ -6165,80 +6240,6 @@ URL: {{URL}}/api/listing-skills/add-skill
 
 
 ***Status Code:*** 201
-
-<br>
-
-
-
-##### II. Example Request: Create Listing Skill (403 Forbidden - Non-listing owner cannot create listing skill)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"listing_id": 1,
-	"skill_id": 5
-}
-```
-
-
-
-##### II. Example Response: Create Listing Skill (403 Forbidden - Non-listing owner cannot create listing skill)
-```js
-{
-    "success": false,
-    "error": "Not authorised to create listing skills for this listing"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
-##### III. Example Request: Create Listing Skill (400 Bad Request - Non-existent skill id)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"listing_id": 1,
-	"skill_id": 200
-}
-```
-
-
-
-##### III. Example Response: Create Listing Skill (400 Bad Request - Non-existent skill id)
-```js
-{
-    "success": false,
-    "error": "Foreign key value does not exist: Key (skill_id)=(200) is not present in table \"skills\"."
-}
-```
-
-
-***Status Code:*** 400
 
 <br>
 
@@ -6286,44 +6287,7 @@ URL: {{URL}}/api/listing-skills
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Create Listing Skill (400 Bad Request - Non-existent skill id)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"listing_id": 1,
-	"skill_id": 200
-}
-```
-
-
-
-##### I. Example Response: Create Listing Skill (400 Bad Request - Non-existent skill id)
-```js
-{
-    "success": false,
-    "error": "Foreign key value does not exist: Key (skill_id)=(200) is not present in table \"skills\"."
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-##### II. Example Request: Create Listing Skill (403 Forbidden - Non-listing owner cannot create listing skill)
+##### I. Example Request: Create Listing Skill (403 Forbidden - Non-listing owner cannot create listing skill)
 
 
 ***Headers:***
@@ -6345,7 +6309,7 @@ URL: {{URL}}/api/listing-skills
 
 
 
-##### II. Example Response: Create Listing Skill (403 Forbidden - Non-listing owner cannot create listing skill)
+##### I. Example Response: Create Listing Skill (403 Forbidden - Non-listing owner cannot create listing skill)
 ```js
 {
     "success": false,
@@ -6355,6 +6319,43 @@ URL: {{URL}}/api/listing-skills
 
 
 ***Status Code:*** 403
+
+<br>
+
+
+
+##### II. Example Request: Create Listing Skill (400 Bad Request - Non-existent skill id)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"listing_id": 1,
+	"skill_id": 200
+}
+```
+
+
+
+##### II. Example Response: Create Listing Skill (400 Bad Request - Non-existent skill id)
+```js
+{
+    "success": false,
+    "error": "Foreign key value does not exist: Key (skill_id)=(200) is not present in table \"skills\"."
+}
+```
+
+
+***Status Code:*** 400
 
 <br>
 
@@ -6439,11 +6440,30 @@ URL: {{URL}}/api/listing-skills/1
 
 
 
-##### II. Example Request: Delete Listing Skill (200 OK)
+##### II. Example Request: Delete Listing Skill (404 Not Found)
 
 
 
-##### II. Example Response: Delete Listing Skill (200 OK)
+##### II. Example Response: Delete Listing Skill (404 Not Found)
+```js
+{
+    "success": false,
+    "error": "Resource not found"
+}
+```
+
+
+***Status Code:*** 404
+
+<br>
+
+
+
+##### III. Example Request: Delete Listing Skill (200 OK)
+
+
+
+##### III. Example Response: Delete Listing Skill (200 OK)
 ```js
 {
     "success": true,
@@ -6457,25 +6477,6 @@ URL: {{URL}}/api/listing-skills/1
 
 
 ***Status Code:*** 200
-
-<br>
-
-
-
-##### III. Example Request: Delete Listing Skill (404 Not Found)
-
-
-
-##### III. Example Response: Delete Listing Skill (404 Not Found)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
 
 <br>
 
@@ -7040,7 +7041,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Update Listing Story (200 OK)
+##### I. Example Request: Update Listing Story (400 Bad Request - Invalid fields updated)
 
 
 ***Headers:***
@@ -7055,30 +7056,30 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories
 
 ```js        
 {
-    "overview": "Mental Health for Youth",
-    "problem": "There is insufficient knowledge about mental health.",
-    "solution": "We aim to champion mental health awareness by launching a campaign to promote mental well-being in schools",
-    "outcome": "We hope that schools will implement mental health education into their curriculum, and implement programmes around mental health advocacy."
+    "title": "Updated title 1",
+    "category": "Updated category",
+    "about": "Updated about",
+    "tagline": "Updated tagline",
+    "mission": "Updated mission",
+    "listing_url": "www.updated-test.com",
+    "is_published": "true",
+    "start_date": "2018-08-15 16:45:43.41585+08",
+    "end_date": "2020-01-30 16:45:43.41585+08"
 }
 ```
 
 
 
-##### I. Example Response: Update Listing Story (200 OK)
+##### I. Example Response: Update Listing Story (400 Bad Request - Invalid fields updated)
 ```js
 {
-    "success": true,
-    "data": {
-        "overview": "Mental Health for Youth",
-        "problem": "There is insufficient knowledge about mental health.",
-        "solution": "We aim to champion mental health awareness by launching a campaign to promote mental well-being in schools",
-        "outcome": "We hope that schools will implement mental health education into their curriculum, and implement programmes around mental health advocacy."
-    }
+    "success": false,
+    "error": "At least one field must be updated."
 }
 ```
 
 
-***Status Code:*** 200
+***Status Code:*** 400
 
 <br>
 
@@ -7123,7 +7124,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories
 
 
 
-##### III. Example Request: Update Listing Story (400 Bad Request - Invalid fields updated)
+##### III. Example Request: Update Listing Story (200 OK)
 
 
 ***Headers:***
@@ -7138,30 +7139,30 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories
 
 ```js        
 {
-    "title": "Updated title 1",
-    "category": "Updated category",
-    "about": "Updated about",
-    "tagline": "Updated tagline",
-    "mission": "Updated mission",
-    "listing_url": "www.updated-test.com",
-    "is_published": "true",
-    "start_date": "2018-08-15 16:45:43.41585+08",
-    "end_date": "2020-01-30 16:45:43.41585+08"
+    "overview": "Mental Health for Youth",
+    "problem": "There is insufficient knowledge about mental health.",
+    "solution": "We aim to champion mental health awareness by launching a campaign to promote mental well-being in schools",
+    "outcome": "We hope that schools will implement mental health education into their curriculum, and implement programmes around mental health advocacy."
 }
 ```
 
 
 
-##### III. Example Response: Update Listing Story (400 Bad Request - Invalid fields updated)
+##### III. Example Response: Update Listing Story (200 OK)
 ```js
 {
-    "success": false,
-    "error": "At least one field must be updated."
+    "success": true,
+    "data": {
+        "overview": "Mental Health for Youth",
+        "problem": "There is insufficient knowledge about mental health.",
+        "solution": "We aim to champion mental health awareness by launching a campaign to promote mental well-being in schools",
+        "outcome": "We hope that schools will implement mental health education into their curriculum, and implement programmes around mental health advocacy."
+    }
 }
 ```
 
 
-***Status Code:*** 400
+***Status Code:*** 200
 
 <br>
 
@@ -7336,30 +7337,11 @@ URL: {{URL}}/api/listing-updates/1
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Delete Listing Update (404 Not Found)
+##### I. Example Request: Delete Listing Update (200 OK)
 
 
 
-##### I. Example Response: Delete Listing Update (404 Not Found)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
-##### II. Example Request: Delete Listing Update (200 OK)
-
-
-
-##### II. Example Response: Delete Listing Update (200 OK)
+##### I. Example Response: Delete Listing Update (200 OK)
 ```js
 {
     "success": true,
@@ -7380,6 +7362,25 @@ URL: {{URL}}/api/listing-updates/1
 
 
 ***Status Code:*** 200
+
+<br>
+
+
+
+##### II. Example Request: Delete Listing Update (404 Not Found)
+
+
+
+##### II. Example Response: Delete Listing Update (404 Not Found)
+```js
+{
+    "success": false,
+    "error": "Resource not found"
+}
+```
+
+
+***Status Code:*** 404
 
 <br>
 
@@ -8043,7 +8044,54 @@ URL: {{URL}}/api/listings
 
 
 
-##### II. Example Request: Create Listing (201 Created)
+##### II. Example Request: Create Listing (400 Bad Request - Missing title field)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| category | test category |  |
+| about | test about |  |
+| tagline | test tagline |  |
+| mission | test mission |  |
+| listing_url | www.test.com |  |
+| pic1 | test-pic-1.jpg |  |
+| pic2 | test-pic-2.jpg |  |
+| pic3 | test-pic-3.jpg |  |
+| pic4 | test-pic-4.jpg |  |
+| pic5 | test-pic-5.jpg |  |
+| is_published | false |  |
+| start_date | 2019-08-15 16:45:43.41585+08 |  |
+| end_date | 2020-07-17 16:45:43.41585+08 |  |
+| pics |  |  |
+
+
+
+##### II. Example Response: Create Listing (400 Bad Request - Missing title field)
+```js
+{
+    "success": false,
+    "error": "Please include a valid title."
+}
+```
+
+
+***Status Code:*** 400
+
+<br>
+
+
+
+##### III. Example Request: Create Listing (201 Created)
 
 
 
@@ -8071,7 +8119,7 @@ URL: {{URL}}/api/listings
 
 
 
-##### II. Example Response: Create Listing (201 Created)
+##### III. Example Response: Create Listing (201 Created)
 ```js
 {
     "success": true,
@@ -8113,53 +8161,6 @@ URL: {{URL}}/api/listings
 
 
 ***Status Code:*** 201
-
-<br>
-
-
-
-##### III. Example Request: Create Listing (400 Bad Request - Missing title field)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| category | test category |  |
-| about | test about |  |
-| tagline | test tagline |  |
-| mission | test mission |  |
-| listing_url | www.test.com |  |
-| pic1 | test-pic-1.jpg |  |
-| pic2 | test-pic-2.jpg |  |
-| pic3 | test-pic-3.jpg |  |
-| pic4 | test-pic-4.jpg |  |
-| pic5 | test-pic-5.jpg |  |
-| is_published | false |  |
-| start_date | 2019-08-15 16:45:43.41585+08 |  |
-| end_date | 2020-07-17 16:45:43.41585+08 |  |
-| pics |  |  |
-
-
-
-##### III. Example Response: Create Listing (400 Bad Request - Missing title field)
-```js
-{
-    "success": false,
-    "error": "Please include a valid title."
-}
-```
-
-
-***Status Code:*** 400
 
 <br>
 
@@ -8298,11 +8299,30 @@ URL: {{URL}}/api/listings/e411bd80-d5cf-49ac-b847-18c9fc13377a
 
 
 
-##### II. Example Request: Delete Listing (200 OK)
+##### II. Example Request: Delete Listing (403 Forbidden - Non-admin and non-listing-owner)
 
 
 
-##### II. Example Response: Delete Listing (200 OK)
+##### II. Example Response: Delete Listing (403 Forbidden - Non-admin and non-listing-owner)
+```js
+{
+    "success": false,
+    "error": "User not authorised to delete this listing"
+}
+```
+
+
+***Status Code:*** 403
+
+<br>
+
+
+
+##### III. Example Request: Delete Listing (200 OK)
+
+
+
+##### III. Example Response: Delete Listing (200 OK)
 ```js
 {
     "success": true,
@@ -8345,25 +8365,6 @@ URL: {{URL}}/api/listings/e411bd80-d5cf-49ac-b847-18c9fc13377a
 
 
 
-##### III. Example Request: Delete Listing (403 Forbidden - Non-admin and non-listing-owner)
-
-
-
-##### III. Example Response: Delete Listing (403 Forbidden - Non-admin and non-listing-owner)
-```js
-{
-    "success": false,
-    "error": "User not authorised to delete this listing"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
 ### 4. Get All Faqs for a Listing
 
 
@@ -8383,11 +8384,30 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/faqs
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Get All Faqs for a Listing (200 OK)
+##### I. Example Request: Get All Faqs for a Listing (404 Not Found - Non-existent listing)
 
 
 
-##### I. Example Response: Get All Faqs for a Listing (200 OK)
+##### I. Example Response: Get All Faqs for a Listing (404 Not Found - Non-existent listing)
+```js
+{
+    "success": false,
+    "error": "Resource not found"
+}
+```
+
+
+***Status Code:*** 404
+
+<br>
+
+
+
+##### II. Example Request: Get All Faqs for a Listing (200 OK)
+
+
+
+##### II. Example Response: Get All Faqs for a Listing (200 OK)
 ```js
 {
     "success": true,
@@ -8434,25 +8454,6 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/faqs
 
 
 
-##### II. Example Request: Get All Faqs for a Listing (404 Not Found - Non-existent listing)
-
-
-
-##### II. Example Response: Get All Faqs for a Listing (404 Not Found - Non-existent listing)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
 ### 5. Get All Hashtags for a Listing
 
 
@@ -8472,11 +8473,30 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/hashtags
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Get All Hashtags for a Listing (200 OK)
+##### I. Example Request: Get All Hashtags for a Listing (404 Not Found - Non-existent listing id)
 
 
 
-##### I. Example Response: Get All Hashtags for a Listing (200 OK)
+##### I. Example Response: Get All Hashtags for a Listing (404 Not Found - Non-existent listing id)
+```js
+{
+    "success": false,
+    "error": "Resource not found"
+}
+```
+
+
+***Status Code:*** 404
+
+<br>
+
+
+
+##### II. Example Request: Get All Hashtags for a Listing (200 OK)
+
+
+
+##### II. Example Response: Get All Hashtags for a Listing (200 OK)
 ```js
 {
     "success": true,
@@ -8508,25 +8528,6 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/hashtags
 
 
 
-##### II. Example Request: Get All Hashtags for a Listing (404 Not Found - Non-existent listing id)
-
-
-
-##### II. Example Response: Get All Hashtags for a Listing (404 Not Found - Non-existent listing id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
 ### 6. Get All Jobs for a Listing
 
 
@@ -8546,11 +8547,30 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/jobs
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Get All Jobs for a Listing (200 OK)
+##### I. Example Request: Get All Jobs for a Listing (404 Not Found - Non-existent listing id)
 
 
 
-##### I. Example Response: Get All Jobs for a Listing (200 OK)
+##### I. Example Response: Get All Jobs for a Listing (404 Not Found - Non-existent listing id)
+```js
+{
+    "success": false,
+    "error": "Resource not found"
+}
+```
+
+
+***Status Code:*** 404
+
+<br>
+
+
+
+##### II. Example Request: Get All Jobs for a Listing (200 OK)
+
+
+
+##### II. Example Response: Get All Jobs for a Listing (200 OK)
 ```js
 {
     "success": true,
@@ -8602,25 +8622,6 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/jobs
 
 
 
-##### II. Example Request: Get All Jobs for a Listing (404 Not Found - Non-existent listing id)
-
-
-
-##### II. Example Response: Get All Jobs for a Listing (404 Not Found - Non-existent listing id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
 ### 7. Get All Likes for a Listing
 
 
@@ -8640,11 +8641,30 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/likes
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Get All Likes for a Listing (200 OK)
+##### I. Example Request: Get All Likes for a Listing (404 Not Found - Non-existent listing id)
 
 
 
-##### I. Example Response: Get All Likes for a Listing (200 OK)
+##### I. Example Response: Get All Likes for a Listing (404 Not Found - Non-existent listing id)
+```js
+{
+    "success": false,
+    "error": "Resource not found"
+}
+```
+
+
+***Status Code:*** 404
+
+<br>
+
+
+
+##### II. Example Request: Get All Likes for a Listing (200 OK)
+
+
+
+##### II. Example Response: Get All Likes for a Listing (200 OK)
 ```js
 {
     "success": true,
@@ -8728,25 +8748,6 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/likes
 
 
 ***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Get All Likes for a Listing (404 Not Found - Non-existent listing id)
-
-
-
-##### II. Example Response: Get All Likes for a Listing (404 Not Found - Non-existent listing id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
 
 <br>
 
@@ -8953,11 +8954,30 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-skills
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Get All Listing Skills for a Listing (200 OK)
+##### I. Example Request: Get All Listing Skills for a Listing (404 Not Found - Non-existent listing id)
 
 
 
-##### I. Example Response: Get All Listing Skills for a Listing (200 OK)
+##### I. Example Response: Get All Listing Skills for a Listing (404 Not Found - Non-existent listing id)
+```js
+{
+    "success": false,
+    "error": "Resource not found"
+}
+```
+
+
+***Status Code:*** 404
+
+<br>
+
+
+
+##### II. Example Request: Get All Listing Skills for a Listing (200 OK)
+
+
+
+##### II. Example Response: Get All Listing Skills for a Listing (200 OK)
 ```js
 {
     "success": true,
@@ -8998,25 +9018,6 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-skills
 
 
 
-##### II. Example Request: Get All Listing Skills for a Listing (404 Not Found - Non-existent listing id)
-
-
-
-##### II. Example Response: Get All Listing Skills for a Listing (404 Not Found - Non-existent listing id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
 ### 11. Get All Listing Updates for a Listing
 
 
@@ -9036,11 +9037,30 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-updates
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Get All Listing Updates for a Listing (200 OK)
+##### I. Example Request: Get All Listing Skills for a Listing (404 Not Found - Non-existent listing id)
 
 
 
-##### I. Example Response: Get All Listing Updates for a Listing (200 OK)
+##### I. Example Response: Get All Listing Skills for a Listing (404 Not Found - Non-existent listing id)
+```js
+{
+    "success": false,
+    "error": "Resource not found"
+}
+```
+
+
+***Status Code:*** 404
+
+<br>
+
+
+
+##### II. Example Request: Get All Listing Updates for a Listing (200 OK)
+
+
+
+##### II. Example Response: Get All Listing Updates for a Listing (200 OK)
 ```js
 {
     "success": true,
@@ -9076,25 +9096,6 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-updates
 
 
 ***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Get All Listing Skills for a Listing (404 Not Found - Non-existent listing id)
-
-
-
-##### II. Example Response: Get All Listing Skills for a Listing (404 Not Found - Non-existent listing id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
 
 <br>
 
@@ -9346,11 +9347,30 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/milestones
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Get All Milestones for a Listing (200 OK)
+##### I. Example Request: Get All Milestones for a Listing (404 Not Found - Non-existent listing id)
 
 
 
-##### I. Example Response: Get All Milestones for a Listing (200 OK)
+##### I. Example Response: Get All Milestones for a Listing (404 Not Found - Non-existent listing id)
+```js
+{
+    "success": false,
+    "error": "Listing with id 23 does not exist"
+}
+```
+
+
+***Status Code:*** 404
+
+<br>
+
+
+
+##### II. Example Request: Get All Milestones for a Listing (200 OK)
+
+
+
+##### II. Example Response: Get All Milestones for a Listing (200 OK)
 ```js
 {
     "success": true,
@@ -9374,25 +9394,6 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/milestones
 
 
 ***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Get All Milestones for a Listing (404 Not Found - Non-existent listing id)
-
-
-
-##### II. Example Response: Get All Milestones for a Listing (404 Not Found - Non-existent listing id)
-```js
-{
-    "success": false,
-    "error": "Listing with id 23 does not exist"
-}
-```
-
-
-***Status Code:*** 404
 
 <br>
 
@@ -9594,7 +9595,7 @@ URL: {{URL}}/api/listings/search
 
 | Key | Value | Description |
 | --- | ------|-------------|
-| keyword | raffles,kampong,2020 |  |
+| keyword | woodlands |  |
 | limit | 10 |  |
 
 
@@ -9782,54 +9783,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Update Listing (403 Forbidden - Non-admin and non-listing owner)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| title | Updated title 1 |  |
-| category | Updated category |  |
-| about | Updated about |  |
-| tagline | Updated tagline |  |
-| mission | Updated mission |  |
-| listing_url | www.updated-test.com |  |
-| pic1 | https://robohash.org/voluptatemcommodisint.bmp?size=50x50&set=set1 |  |
-| pic2 | https://robohash.org/illoipsaquos.bmp?size=50x50&set=set1 |  |
-| pic3 | https://robohash.org/oditautqui.png?size=50x50&set=set1 |  |
-| pic4 | https://robohash.org/eaetnon.jpg?size=50x50&set=set1 |  |
-| pic5 | https://robohash.org/fugittemporeiusto.bmp?size=50x50&set=set1 |  |
-| is_published | true |  |
-| start_date | 2018-08-15 16:45:43.41585+08 |  |
-| end_date | 2020-01-30 16:45:43.41585+08 |  |
-
-
-
-##### I. Example Response: Update Listing (403 Forbidden - Non-admin and non-listing owner)
-```js
-{
-    "success": false,
-    "error": "User not authorised to update this listing"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
-##### II. Example Request: Update Listing (400 Bad Request - Invalid (empty string) title entered)
+##### I. Example Request: Update Listing (400 Bad Request - Invalid (empty string) title entered)
 
 
 ***Headers:***
@@ -9863,7 +9817,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 
 
 
-##### II. Example Response: Update Listing (400 Bad Request - Invalid (empty string) title entered)
+##### I. Example Response: Update Listing (400 Bad Request - Invalid (empty string) title entered)
 ```js
 {
     "success": false,
@@ -9873,6 +9827,53 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 
 
 ***Status Code:*** 400
+
+<br>
+
+
+
+##### II. Example Request: Update Listing (403 Forbidden - Non-admin and non-listing owner)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| title | Updated title 1 |  |
+| category | Updated category |  |
+| about | Updated about |  |
+| tagline | Updated tagline |  |
+| mission | Updated mission |  |
+| listing_url | www.updated-test.com |  |
+| pic1 | https://robohash.org/voluptatemcommodisint.bmp?size=50x50&set=set1 |  |
+| pic2 | https://robohash.org/illoipsaquos.bmp?size=50x50&set=set1 |  |
+| pic3 | https://robohash.org/oditautqui.png?size=50x50&set=set1 |  |
+| pic4 | https://robohash.org/eaetnon.jpg?size=50x50&set=set1 |  |
+| pic5 | https://robohash.org/fugittemporeiusto.bmp?size=50x50&set=set1 |  |
+| is_published | true |  |
+| start_date | 2018-08-15 16:45:43.41585+08 |  |
+| end_date | 2020-01-30 16:45:43.41585+08 |  |
+
+
+
+##### II. Example Response: Update Listing (403 Forbidden - Non-admin and non-listing owner)
+```js
+{
+    "success": false,
+    "error": "User not authorised to update this listing"
+}
+```
+
+
+***Status Code:*** 403
 
 <br>
 
@@ -9979,52 +9980,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/upload-photo
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Upload Listing Photos (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| pics |  | Collection of 5 JPG files |
-| pic1 | test-pic-1.jpg | Original filename of new picture, to be uploaded into pic1 |
-| pic2 | test-pic-2.jpg | Original filename of new picture, to be uploaded into pic2 |
-| pic3 | test-pic-3.jpg | Original filename of new picture, to be uploaded into pic3 |
-| pic4 | test-pic-4.jpg | Original filename of new picture, to be uploaded into pic4 |
-| pic5 | test-pic-5.jpg | Original filename of new picture, to be uploaded into pic5 |
-
-
-
-##### I. Example Response: Upload Listing Photos (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1596383394655.jpg",
-        "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-1596383394658.jpg",
-        "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-1596383394662.jpg",
-        "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-1596383394666.jpg",
-        "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-1596383394673.jpg"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Upload Listing Photos (200 OK - 5 files uploaded, but only 1 valid filename given in requesst body)
+##### I. Example Request: Upload Listing Photos (200 OK - 5 files uploaded, but only 1 valid filename given in requesst body)
 
 
 ***Headers:***
@@ -10048,7 +10004,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/upload-photo
 
 
 
-##### II. Example Response: Upload Listing Photos (200 OK - 5 files uploaded, but only 1 valid filename given in requesst body)
+##### I. Example Response: Upload Listing Photos (200 OK - 5 files uploaded, but only 1 valid filename given in requesst body)
 ```js
 {
     "success": true,
@@ -10058,6 +10014,51 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/upload-photo
         "pic3": null,
         "pic4": null,
         "pic5": null
+    }
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+##### II. Example Request: Upload Listing Photos (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| pics |  | Collection of 5 JPG files |
+| pic1 | test-pic-1.jpg | Original filename of new picture, to be uploaded into pic1 |
+| pic2 | test-pic-2.jpg | Original filename of new picture, to be uploaded into pic2 |
+| pic3 | test-pic-3.jpg | Original filename of new picture, to be uploaded into pic3 |
+| pic4 | test-pic-4.jpg | Original filename of new picture, to be uploaded into pic4 |
+| pic5 | test-pic-5.jpg | Original filename of new picture, to be uploaded into pic5 |
+
+
+
+##### II. Example Response: Upload Listing Photos (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1596383394655.jpg",
+        "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-1596383394658.jpg",
+        "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-1596383394662.jpg",
+        "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-1596383394666.jpg",
+        "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-1596383394673.jpg"
     }
 }
 ```
@@ -10145,45 +10146,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/verify
 
 
 
-##### II. Example Request: Verify Listing (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-    "is_verified": "true"
-}
-```
-
-
-
-##### II. Example Response: Verify Listing (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "is_verified": true
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-##### III. Example Request: Verify Listing (400 Bad Request - Missing field in request body, or invalid key or value)
+##### II. Example Request: Verify Listing (400 Bad Request - Missing field in request body, or invalid key or value)
 
 
 ***Headers:***
@@ -10204,7 +10167,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/verify
 
 
 
-##### III. Example Response: Verify Listing (400 Bad Request - Missing field in request body, or invalid key or value)
+##### II. Example Response: Verify Listing (400 Bad Request - Missing field in request body, or invalid key or value)
 ```js
 {
     "success": false,
@@ -10214,6 +10177,44 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/verify
 
 
 ***Status Code:*** 400
+
+<br>
+
+
+
+##### III. Example Request: Verify Listing (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "is_verified": "true"
+}
+```
+
+
+
+##### III. Example Response: Verify Listing (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "is_verified": true
+    }
+}
+```
+
+
+***Status Code:*** 200
 
 <br>
 
@@ -10264,7 +10265,7 @@ URL: {{URL}}/api/locations
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Create Location (201 Created)
+##### I. Example Request: Create Location (403 Forbidden - Non-admin)
 
 
 ***Headers:***
@@ -10285,7 +10286,43 @@ URL: {{URL}}/api/locations
 
 
 
-##### I. Example Response: Create Location (201 Created)
+##### I. Example Response: Create Location (403 Forbidden - Non-admin)
+```js
+{
+    "success": false,
+    "error": "User role user not authorised to access this route"
+}
+```
+
+
+***Status Code:*** 403
+
+<br>
+
+
+
+##### II. Example Request: Create Location (201 Created)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"location": "new location"
+}
+```
+
+
+
+##### II. Example Response: Create Location (201 Created)
 ```js
 {
     "success": true,
@@ -10298,42 +10335,6 @@ URL: {{URL}}/api/locations
 
 
 ***Status Code:*** 201
-
-<br>
-
-
-
-##### II. Example Request: Create Location (403 Forbidden - Non-admin)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"location": "new location"
-}
-```
-
-
-
-##### II. Example Response: Create Location (403 Forbidden - Non-admin)
-```js
-{
-    "success": false,
-    "error": "User role user not authorised to access this route"
-}
-```
-
-
-***Status Code:*** 403
 
 <br>
 
@@ -10358,11 +10359,30 @@ URL: {{URL}}/api/locations/1
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Delete Location (200 OK)
+##### I. Example Request: Delete Location (403 Forbidden - Non-admin)
 
 
 
-##### I. Example Response: Delete Location (200 OK)
+##### I. Example Response: Delete Location (403 Forbidden - Non-admin)
+```js
+{
+    "success": false,
+    "error": "User role user not authorised to access this route"
+}
+```
+
+
+***Status Code:*** 403
+
+<br>
+
+
+
+##### II. Example Request: Delete Location (200 OK)
+
+
+
+##### II. Example Response: Delete Location (200 OK)
 ```js
 {
     "success": true,
@@ -10375,25 +10395,6 @@ URL: {{URL}}/api/locations/1
 
 
 ***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Delete Location (403 Forbidden - Non-admin)
-
-
-
-##### II. Example Response: Delete Location (403 Forbidden - Non-admin)
-```js
-{
-    "success": false,
-    "error": "User role user not authorised to access this route"
-}
-```
-
-
-***Status Code:*** 403
 
 <br>
 
@@ -10832,50 +10833,7 @@ URL: {{URL}}/api/milestones
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Create Milestone (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-	"description": "First $1000 raised! Raised our 1st $1000 for our benficiary in our 1st ever flag drive.",
-	"date": "2020-01-30 16:45:43.41585+08"
-}
-```
-
-
-
-##### I. Example Response: Create Milestone (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "milestone_id": 10,
-        "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-        "description": "First $1000 raised! Raised our 1st $1000 for our benficiary in our 1st ever flag drive.",
-        "date": "2020-01-30T08:45:43.416Z"
-    }
-}
-```
-
-
-***Status Code:*** 201
-
-<br>
-
-
-
-##### II. Example Request: Create Milestone (400 Bad Request - Invalid value entered, empty description)
+##### I. Example Request: Create Milestone (400 Bad Request - Invalid value entered, empty description)
 
 
 ***Headers:***
@@ -10898,7 +10856,7 @@ URL: {{URL}}/api/milestones
 
 
 
-##### II. Example Response: Create Milestone (400 Bad Request - Invalid value entered, empty description)
+##### I. Example Response: Create Milestone (400 Bad Request - Invalid value entered, empty description)
 ```js
 {
     "success": false,
@@ -10908,6 +10866,49 @@ URL: {{URL}}/api/milestones
 
 
 ***Status Code:*** 400
+
+<br>
+
+
+
+##### II. Example Request: Create Milestone (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
+	"description": "First $1000 raised! Raised our 1st $1000 for our benficiary in our 1st ever flag drive.",
+	"date": "2020-01-30 16:45:43.41585+08"
+}
+```
+
+
+
+##### II. Example Response: Create Milestone (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "milestone_id": 10,
+        "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
+        "description": "First $1000 raised! Raised our 1st $1000 for our benficiary in our 1st ever flag drive.",
+        "date": "2020-01-30T08:45:43.416Z"
+    }
+}
+```
+
+
+***Status Code:*** 201
 
 <br>
 
@@ -11190,30 +11191,11 @@ URL: {{URL}}/api/milestones/1
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Get Single Milestone (404 Not Found - Non-existent milestone id)
+##### I. Example Request: Get Single Milestone (200 OK)
 
 
 
-##### I. Example Response: Get Single Milestone (404 Not Found - Non-existent milestone id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
-##### II. Example Request: Get Single Milestone (200 OK)
-
-
-
-##### II. Example Response: Get Single Milestone (200 OK)
+##### I. Example Response: Get Single Milestone (200 OK)
 ```js
 {
     "success": true,
@@ -11228,6 +11210,25 @@ URL: {{URL}}/api/milestones/1
 
 
 ***Status Code:*** 200
+
+<br>
+
+
+
+##### II. Example Request: Get Single Milestone (404 Not Found - Non-existent milestone id)
+
+
+
+##### II. Example Response: Get Single Milestone (404 Not Found - Non-existent milestone id)
+```js
+{
+    "success": false,
+    "error": "Resource not found"
+}
+```
+
+
+***Status Code:*** 404
 
 <br>
 
@@ -11391,6 +11392,610 @@ URL: {{URL}}/api/milestones/1
 
 
 
+## Organisations
+Organisations CRUD functionality.
+
+
+
+### 1. Create Organisation
+
+
+Create organisation. Permission: Private.
+
+Field rules:
+All fields required unles otherwise stated.
+
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: {{URL}}/api/organisations
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"name": "Org 1",
+    "type": "Sponsor",
+    "about": "about org 1",
+    "website_url": "www.testorg1.com",
+    "handphone": 93232224,
+    "email": "testorg1@test.com"
+}
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Create Skill (400 Bad Request - Non-alphabet or non-whitespace character in field)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"skill": "$ making"
+}
+```
+
+
+
+##### I. Example Response: Create Skill (400 Bad Request - Non-alphabet or non-whitespace character in field)
+```js
+{
+    "success": false,
+    "error": "Please include a valid skill with alphabets and spaces only."
+}
+```
+
+
+***Status Code:*** 400
+
+<br>
+
+
+
+##### II. Example Request: Create Skill (403 Forbidden - Non-admin user)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"skill": "Microsoft Powerpoint"
+}
+```
+
+
+
+##### II. Example Response: Create Skill (403 Forbidden - Non-admin user)
+```js
+{
+    "success": false,
+    "error": "User role user not authorised to access this route"
+}
+```
+
+
+***Status Code:*** 403
+
+<br>
+
+
+
+##### III. Example Request: Create Skill (201 Created)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"skill": "Microsoft Powerpoint",
+	"skill_group": "Microsoft Office Tools"
+}
+```
+
+
+
+##### III. Example Response: Create Skill (201 Created)
+```js
+{
+    "success": true,
+    "data": {
+        "skill_id": 16,
+        "skill": "Microsoft Powerpoint",
+        "skill_group": "Microsoft Office Tools"
+    }
+}
+```
+
+
+***Status Code:*** 201
+
+<br>
+
+
+
+### 2. Delete Organisation
+
+
+Delete organisation identified by organisation id. Permission: Owner/Admin.
+
+
+***Endpoint:***
+
+```bash
+Method: DELETE
+Type: 
+URL: {{URL}}/api/organisations/1
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Delete Skill (403 Forbidden - Non-admin user)
+
+
+
+##### I. Example Response: Delete Skill (403 Forbidden - Non-admin user)
+```js
+{
+    "success": false,
+    "error": "User role user not authorised to access this route"
+}
+```
+
+
+***Status Code:*** 403
+
+<br>
+
+
+
+##### II. Example Request: Delete Skill (200 OK)
+
+
+
+##### II. Example Response: Delete Skill (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "skill_id": 1,
+        "skill": "cDNA"
+    }
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+##### III. Example Request: Delete Skill (400 Bad Request - Non-existent skill)
+
+
+
+##### III. Example Response: Delete Skill (400 Bad Request - Non-existent skill)
+```js
+{
+    "success": false,
+    "error": "Skill does not exist"
+}
+```
+
+
+***Status Code:*** 400
+
+<br>
+
+
+
+### 3. Get All Organisations
+
+
+Get all organisations. Permission: Public.
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{URL}}/api/organisations
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Get All Skills (200 OK)
+
+
+
+##### I. Example Response: Get All Skills (200 OK)
+```js
+{
+    "success": true,
+    "count": 25,
+    "pagination": {
+        "next": {
+            "page": 2,
+            "limit": 25
+        }
+    },
+    "data": [
+        {
+            "skill_id": 1,
+            "skill": "cDNA"
+        },
+        {
+            "skill_id": 2,
+            "skill": "Typesetting"
+        },
+        {
+            "skill_id": 3,
+            "skill": "Biochemistry"
+        },
+        {
+            "skill_id": 4,
+            "skill": "WiFi"
+        },
+        {
+            "skill_id": 5,
+            "skill": "Siebel"
+        },
+        {
+            "skill_id": 6,
+            "skill": "JTAPI"
+        },
+        {
+            "skill_id": 7,
+            "skill": "Oilfield"
+        },
+        {
+            "skill_id": 8,
+            "skill": "Kindergarten"
+        },
+        {
+            "skill_id": 9,
+            "skill": "Aerospace Manufacturing"
+        },
+        {
+            "skill_id": 10,
+            "skill": "Mortgage Banking"
+        },
+        {
+            "skill_id": 11,
+            "skill": "Swim Instruction"
+        },
+        {
+            "skill_id": 12,
+            "skill": "Atomic Absorption"
+        },
+        {
+            "skill_id": 13,
+            "skill": "Game Design"
+        },
+        {
+            "skill_id": 14,
+            "skill": "CFI"
+        },
+        {
+            "skill_id": 15,
+            "skill": "Gas Turbines"
+        },
+        {
+            "skill_id": 16,
+            "skill": "ICU"
+        },
+        {
+            "skill_id": 17,
+            "skill": "Nintendo DS"
+        },
+        {
+            "skill_id": 18,
+            "skill": "IoC"
+        },
+        {
+            "skill_id": 19,
+            "skill": "Econometrics"
+        },
+        {
+            "skill_id": 20,
+            "skill": "HBSS"
+        },
+        {
+            "skill_id": 21,
+            "skill": "Obstetrics"
+        },
+        {
+            "skill_id": 22,
+            "skill": "NDF"
+        },
+        {
+            "skill_id": 23,
+            "skill": "Equity Research"
+        },
+        {
+            "skill_id": 24,
+            "skill": "BMI"
+        },
+        {
+            "skill_id": 25,
+            "skill": "Fund Of Funds"
+        }
+    ]
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+### 4. Get Single Organisation
+
+
+Get single organisation. Permission: Public.
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{URL}}/api/organisations1
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Get Single Skill (200 OK)
+
+
+
+##### I. Example Response: Get Single Skill (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "skill_id": 1,
+        "skill": "cDNA"
+    }
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+##### II. Example Request: Get Single Skill (404 Not Found - Invalid skill ID)
+
+
+
+##### II. Example Response: Get Single Skill (404 Not Found - Invalid skill ID)
+```js
+{
+    "success": false,
+    "error": "Resource not found"
+}
+```
+
+
+***Status Code:*** 404
+
+<br>
+
+
+
+### 5. Update Organisation
+
+
+Update Organisation identified by organisation id. Permission: Owner/Admin.
+
+Field rules: 
+At least one field must be updated.
+
+
+***Endpoint:***
+
+```bash
+Method: PUT
+Type: RAW
+URL: {{URL}}/api/organisations/1
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"skill": "Microsoft Word",
+	"skill_group": "Microsoft Suite",
+    "skill_description": "Microsoft suite of apps"
+}
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Update Skill (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"skill": "Microsoft Word",
+	"skill_group": "Microsoft Suite",
+    "skill_description": "Microsoft suite of apps"
+}
+```
+
+
+
+##### I. Example Response: Update Skill (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "skill_id": 1,
+        "skill": "Microsoft Word",
+        "skill_group": "Microsoft Suite",
+        "skill_description": "Microsoft suite of apps"
+    }
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+##### II. Example Request: Update Skill (403 Forbidden - Non-admin user)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"skill": "Microsoft Word"
+}
+```
+
+
+
+##### II. Example Response: Update Skill (403 Forbidden - Non-admin user)
+```js
+{
+    "success": false,
+    "error": "User role user not authorised to access this route"
+}
+```
+
+
+***Status Code:*** 403
+
+<br>
+
+
+
+##### III. Example Request: Update Skill (400 Bad Request - Non-alphabet or non-whitespace in field)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"skill": "#programming"
+}
+```
+
+
+
+##### III. Example Response: Update Skill (400 Bad Request - Non-alphabet or non-whitespace in field)
+```js
+{
+    "success": false,
+    "error": "Please include a valid skill with alphabets and spaces only."
+}
+```
+
+
+***Status Code:*** 400
+
+<br>
+
+
+
 ## Participants
 Participants (Users-Listings) CRUD functionality.
 
@@ -11442,7 +12047,85 @@ URL: {{URL}}/api/participants
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Create participant (201 Created)
+##### I. Example Request: Create participant (400 Bad Request - Entry already exists)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"listing_id": 2,
+	"user_id": 5,
+	"joined_on": "2019-07-17 15:14:05.023357+08",
+	"end_on": "2020-07-17 15:14:05.023357+08"
+}
+```
+
+
+
+##### I. Example Response: Create participant (400 Bad Request - Entry already exists)
+```js
+{
+    "success": false,
+    "error": "Duplicate field value entered: Key (listing_id, user_id)=(2, 5) already exists."
+}
+```
+
+
+***Status Code:*** 400
+
+<br>
+
+
+
+##### II. Example Request: Create participant (403 Forbidden - Non-admin, non-listing owner and not updating self)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"listing_id": 2,
+	"user_id": 5,
+	"joined_on": "2019-07-17 15:14:05.023357+08",
+	"end_on": "2020-07-17 15:14:05.023357+08"
+}
+```
+
+
+
+##### II. Example Response: Create participant (403 Forbidden - Non-admin, non-listing owner and not updating self)
+```js
+{
+    "success": false,
+    "error": "Not authorised to add participants to this listing"
+}
+```
+
+
+***Status Code:*** 403
+
+<br>
+
+
+
+##### III. Example Request: Create participant (201 Created)
 
 
 ***Headers:***
@@ -11466,7 +12149,7 @@ URL: {{URL}}/api/participants
 
 
 
-##### I. Example Response: Create participant (201 Created)
+##### III. Example Response: Create participant (201 Created)
 ```js
 {
     "success": true,
@@ -11482,84 +12165,6 @@ URL: {{URL}}/api/participants
 
 
 ***Status Code:*** 201
-
-<br>
-
-
-
-##### II. Example Request: Create participant (400 Bad Request - Entry already exists)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"listing_id": 2,
-	"user_id": 5,
-	"joined_on": "2019-07-17 15:14:05.023357+08",
-	"end_on": "2020-07-17 15:14:05.023357+08"
-}
-```
-
-
-
-##### II. Example Response: Create participant (400 Bad Request - Entry already exists)
-```js
-{
-    "success": false,
-    "error": "Duplicate field value entered: Key (listing_id, user_id)=(2, 5) already exists."
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-##### III. Example Request: Create participant (403 Forbidden - Non-admin, non-listing owner and not updating self)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"listing_id": 2,
-	"user_id": 5,
-	"joined_on": "2019-07-17 15:14:05.023357+08",
-	"end_on": "2020-07-17 15:14:05.023357+08"
-}
-```
-
-
-
-##### III. Example Response: Create participant (403 Forbidden - Non-admin, non-listing owner and not updating self)
-```js
-{
-    "success": false,
-    "error": "Not authorised to add participants to this listing"
-}
-```
-
-
-***Status Code:*** 403
 
 <br>
 
@@ -11584,26 +12189,20 @@ URL: {{URL}}/api/participants/11
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Delete Participant (200 OK)
+##### I. Example Request: Delete Participant (403 Forbidden - Non-admin, non-listing owner and not updating self)
 
 
 
-##### I. Example Response: Delete Participant (200 OK)
+##### I. Example Response: Delete Participant (403 Forbidden - Non-admin, non-listing owner and not updating self)
 ```js
 {
-    "success": true,
-    "data": {
-        "participant_id": 21,
-        "listing_id": 2,
-        "user_id": 5,
-        "joined_on": "2019-07-17T07:14:05.023Z",
-        "end_on": "2020-07-17T07:14:05.023Z"
-    }
+    "success": false,
+    "error": "Not authorised to update other participants in this listing"
 }
 ```
 
 
-***Status Code:*** 200
+***Status Code:*** 403
 
 <br>
 
@@ -11628,20 +12227,26 @@ URL: {{URL}}/api/participants/11
 
 
 
-##### III. Example Request: Delete Participant (403 Forbidden - Non-admin, non-listing owner and not updating self)
+##### III. Example Request: Delete Participant (200 OK)
 
 
 
-##### III. Example Response: Delete Participant (403 Forbidden - Non-admin, non-listing owner and not updating self)
+##### III. Example Response: Delete Participant (200 OK)
 ```js
 {
-    "success": false,
-    "error": "Not authorised to update other participants in this listing"
+    "success": true,
+    "data": {
+        "participant_id": 21,
+        "listing_id": 2,
+        "user_id": 5,
+        "joined_on": "2019-07-17T07:14:05.023Z",
+        "end_on": "2020-07-17T07:14:05.023Z"
+    }
 }
 ```
 
 
-***Status Code:*** 403
+***Status Code:*** 200
 
 <br>
 
@@ -11827,30 +12432,11 @@ URL: {{URL}}/api/participants/1
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Get Single Participant (Non-existent participant id)
+##### I. Example Request: Get Single Participant (200 OK)
 
 
 
-##### I. Example Response: Get Single Participant (Non-existent participant id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
-##### II. Example Request: Get Single Participant (200 OK)
-
-
-
-##### II. Example Response: Get Single Participant (200 OK)
+##### I. Example Response: Get Single Participant (200 OK)
 ```js
 {
     "success": true,
@@ -11866,6 +12452,25 @@ URL: {{URL}}/api/participants/1
 
 
 ***Status Code:*** 200
+
+<br>
+
+
+
+##### II. Example Request: Get Single Participant (Non-existent participant id)
+
+
+
+##### II. Example Response: Get Single Participant (Non-existent participant id)
+```js
+{
+    "success": false,
+    "error": "Resource not found"
+}
+```
+
+
+***Status Code:*** 404
 
 <br>
 
@@ -12030,467 +12635,6 @@ URL: {{URL}}/api/participants/1
 
 
 
-## Profiles
-Profiles CRUD funcitonality by raw User ID.
-
-
-
-### 1. Get Single Profile
-
-
-Get single user profile identified by user id. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get Single Profile (200 OK)
-
-
-
-##### I. Example Response: Get Single Profile (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
-        "nickname": "User One",
-        "profile_picture": "https://robohash.org/consequaturatquia.jpg?size=500x500&set=set1",
-        "about": "Down-sized disintermediate circuit",
-        "gender": "f",
-        "dob": "2003-09-22T00:32:55.000Z",
-        "interest": "Statistician IV",
-        "phone": "87685829",
-        "facebook_link": "https://tripadvisor.com/ornare/imperdiet.png",
-        "twitter_link": "https://google.com/quis/orci/nullam/molestie/nibh/in/lectus.xml",
-        "instagram_link": "http://1und1.de/in/libero/ut/massa.png",
-        "linkedin_link": "http://i2i.jp/imperdiet/sapien/urna/pretium/nisl/ut.jpg",
-        "is_verified": false,
-        "created_on": "2020-08-17T16:58:38.704Z"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 2. Update Profile
-
-
-Update user profile identified by user id. Permission: Admin/Private.
-
-Field rules:
-At least one field must be updated.
-nickname - Non-empty.
-about
-gender - Enum: 'm', 'f', 'o', 'u'
-dob - Valid SQL Datetime format.
-interest
-phone - Valid phone number internationally.
-facebook_link - Valid URL.
-twitter_link - Valid URL.
-instagram_link - Valid URL.
-linkedin_link - Valid URL.
-
-
-***Endpoint:***
-
-```bash
-Method: PUT
-Type: RAW
-URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles
-```
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"nickname": "don-tay",
-	"about": "Updated about me",
-	"gender": "m",
-	"dob": "2000-07-18 00:00:00.746876+08",
-	"interest": "Graphic Design",
-	"phone": "91231234",
-	"facebook_link": "www.facebook.com",
-	"twitter_link": "www.twitter.com",
-	"instagram_link": "www.instagram.com",
-	"linkedin_link": "www.linkedin.com"
-}
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Update Profile (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"nickname": "don-tay",
-	"about": "Updated about me",
-	"gender": "m",
-	"dob": "2000-07-18 00:00:00.746876+08",
-	"interest": "Graphic Design",
-	"phone": "91231234",
-	"facebook_link": "www.facebook.com",
-	"twitter_link": "www.twitter.com",
-	"instagram_link": "www.instagram.com",
-	"linkedin_link": "www.linkedin.com"
-}
-```
-
-
-
-##### I. Example Response: Update Profile (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "nickname": "don-tay",
-        "about": "Updated about me",
-        "gender": "m",
-        "dob": "2000-07-17T16:00:00.747Z",
-        "interest": "Graphic Design",
-        "phone": "91231234",
-        "facebook_link": "www.facebook.com",
-        "twitter_link": "www.twitter.com",
-        "instagram_link": "www.instagram.com",
-        "linkedin_link": "www.linkedin.com"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Update Profile  (403 Forbidden - Non-admin user updating other user profile)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"nickname": "don-tay",
-	"profile_picture": "https://robohash.org/explicaboquiafacere.bmp?size=50x50&set=set1",
-	"about": "Updated about me",
-	"gender": "m",
-	"dob": "2000-07-18 00:00:00.746876+08",
-	"interest": "Graphic Design",
-	"phone": "91231234",
-	"facebook_link": "www.facebook.com",
-	"twitter_link": "www.twitter.com",
-	"instagram_link": "www.instagram.com",
-	"linkedin_link": "www.linkedin.com"
-}
-```
-
-
-
-##### II. Example Response: Update Profile  (403 Forbidden - Non-admin user updating other user profile)
-```js
-{
-    "success": false,
-    "error": "Not allowed to update other user's profile"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
-##### III. Example Request: Update Profile (400 Bad Request - Invalid field entered)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"nickname": "don-tay",
-	"profile_picture": "https://robohash.org/explicaboquiafacere.bmp?size=50x50&set=set1",
-	"about": "Updated about me",
-	"gender": "m",
-	"dob": "2000-07-18 00:00:00.746876+08",
-	"interest": "Graphic Design",
-	"phone": "91231234",
-	"facebook_link": "invalid URL link",
-	"twitter_link": "www.twitter.com",
-	"instagram_link": "www.instagram.com",
-	"linkedin_link": "www.linkedin.com"
-}
-```
-
-
-
-##### III. Example Response: Update Profile (400 Bad Request - Invalid field entered)
-```js
-{
-    "success": false,
-    "error": "Please include a valid URL."
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-##### IV. Example Request: Update Profile (404 Not Found - Non-existent user id)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"nickname": "don-tay",
-	"about": "Updated about me",
-	"gender": "m",
-	"dob": "2000-07-18 00:00:00.746876+08",
-	"interest": "Graphic Design",
-	"phone": "91231234",
-	"facebook_link": "www.facebook.com",
-	"twitter_link": "www.twitter.com",
-	"instagram_link": "www.instagram.com",
-	"linkedin_link": "www.linkedin.com"
-}
-```
-
-
-
-##### IV. Example Response: Update Profile (404 Not Found - Non-existent user id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
-### 3. Upload Profile Picture
-
-
-Upload user profile picture to cloud storage, identified by user id. Permission: Admin/Private.
-
-Field rules:
-All fields required unless otherwise stated.
-pic - Single valid JPG/PNG file.
-
-
-***Endpoint:***
-
-```bash
-Method: PUT
-Type: FORMDATA
-URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles/upload-photo
-```
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| pic |  | Single JPG file |
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Upload Profile Picture (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| pic |  | Single JPG file |
-
-
-
-##### I. Example Response: Upload Profile Picture (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "profile_picture": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1597683636902.jpg"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 4. Verify Profile (by User ID)
-
-
-Verify user profile identified by user id. Permission: Admin.
-
-Field rules:
-At least one field must be updated.
-is_verified - Boolean.
-
-
-***Endpoint:***
-
-```bash
-Method: PUT
-Type: RAW
-URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles/verify
-```
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"is_verified": true
-}
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Verify Profile (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"is_verified": true
-}
-```
-
-
-
-##### I. Example Response: Verify Profile (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "is_verified": true
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
 ## Send Email
 Send email endpoints.
 
@@ -12615,7 +12759,7 @@ URL: {{URL}}/api/skills
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Create Skill (201 Created)
+##### I. Example Request: Create Skill (403 Forbidden - Non-admin user)
 
 
 ***Headers:***
@@ -12630,27 +12774,22 @@ URL: {{URL}}/api/skills
 
 ```js        
 {
-	"skill": "Microsoft Powerpoint",
-	"skill_group": "Microsoft Office Tools"
+	"skill": "Microsoft Powerpoint"
 }
 ```
 
 
 
-##### I. Example Response: Create Skill (201 Created)
+##### I. Example Response: Create Skill (403 Forbidden - Non-admin user)
 ```js
 {
-    "success": true,
-    "data": {
-        "skill_id": 16,
-        "skill": "Microsoft Powerpoint",
-        "skill_group": "Microsoft Office Tools"
-    }
+    "success": false,
+    "error": "User role user not authorised to access this route"
 }
 ```
 
 
-***Status Code:*** 201
+***Status Code:*** 403
 
 <br>
 
@@ -12692,7 +12831,7 @@ URL: {{URL}}/api/skills
 
 
 
-##### III. Example Request: Create Skill (403 Forbidden - Non-admin user)
+##### III. Example Request: Create Skill (201 Created)
 
 
 ***Headers:***
@@ -12707,22 +12846,27 @@ URL: {{URL}}/api/skills
 
 ```js        
 {
-	"skill": "Microsoft Powerpoint"
+	"skill": "Microsoft Powerpoint",
+	"skill_group": "Microsoft Office Tools"
 }
 ```
 
 
 
-##### III. Example Response: Create Skill (403 Forbidden - Non-admin user)
+##### III. Example Response: Create Skill (201 Created)
 ```js
 {
-    "success": false,
-    "error": "User role user not authorised to access this route"
+    "success": true,
+    "data": {
+        "skill_id": 16,
+        "skill": "Microsoft Powerpoint",
+        "skill_group": "Microsoft Office Tools"
+    }
 }
 ```
 
 
-***Status Code:*** 403
+***Status Code:*** 201
 
 <br>
 
@@ -12972,30 +13116,11 @@ URL: {{URL}}/api/skills/1
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Get Single Skill (404 Not Found - Invalid skill ID)
+##### I. Example Request: Get Single Skill (200 OK)
 
 
 
-##### I. Example Response: Get Single Skill (404 Not Found - Invalid skill ID)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
-##### II. Example Request: Get Single Skill (200 OK)
-
-
-
-##### II. Example Response: Get Single Skill (200 OK)
+##### I. Example Response: Get Single Skill (200 OK)
 ```js
 {
     "success": true,
@@ -13008,6 +13133,25 @@ URL: {{URL}}/api/skills/1
 
 
 ***Status Code:*** 200
+
+<br>
+
+
+
+##### II. Example Request: Get Single Skill (404 Not Found - Invalid skill ID)
+
+
+
+##### II. Example Response: Get Single Skill (404 Not Found - Invalid skill ID)
+```js
+{
+    "success": false,
+    "error": "Resource not found"
+}
+```
+
+
+***Status Code:*** 404
 
 <br>
 
@@ -13091,7 +13235,43 @@ URL: {{URL}}/api/skills/1
 
 
 
-##### II. Example Request: Update Skill (200 OK)
+##### II. Example Request: Update Skill (400 Bad Request - Non-alphabet or non-whitespace in field)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"skill": "#programming"
+}
+```
+
+
+
+##### II. Example Response: Update Skill (400 Bad Request - Non-alphabet or non-whitespace in field)
+```js
+{
+    "success": false,
+    "error": "Please include a valid skill with alphabets and spaces only."
+}
+```
+
+
+***Status Code:*** 400
+
+<br>
+
+
+
+##### III. Example Request: Update Skill (200 OK)
 
 
 ***Headers:***
@@ -13114,7 +13294,7 @@ URL: {{URL}}/api/skills/1
 
 
 
-##### II. Example Response: Update Skill (200 OK)
+##### III. Example Response: Update Skill (200 OK)
 ```js
 {
     "success": true,
@@ -13129,42 +13309,6 @@ URL: {{URL}}/api/skills/1
 
 
 ***Status Code:*** 200
-
-<br>
-
-
-
-##### III. Example Request: Update Skill (400 Bad Request - Non-alphabet or non-whitespace in field)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"skill": "#programming"
-}
-```
-
-
-
-##### III. Example Response: Update Skill (400 Bad Request - Non-alphabet or non-whitespace in field)
-```js
-{
-    "success": false,
-    "error": "Please include a valid skill with alphabets and spaces only."
-}
-```
-
-
-***Status Code:*** 400
 
 <br>
 
@@ -13221,7 +13365,7 @@ URL: {{URL}}/api/users
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Create User (400 Bad Request - Invalid email)
+##### I. Example Request: Create User (403 Forbidden - Non-admin user)
 
 
 ***Headers:***
@@ -13238,23 +13382,23 @@ URL: {{URL}}/api/users
 {
 	"first_name": "Con",
 	"last_name": "Jobs",
-	"email": "Congmail.com",
+	"email": "Con@gmail.com",
 	"password": "123456"
 }
 ```
 
 
 
-##### I. Example Response: Create User (400 Bad Request - Invalid email)
+##### I. Example Response: Create User (403 Forbidden - Non-admin user)
 ```js
 {
     "success": false,
-    "error": "Please include a valid email."
+    "error": "User role user not authorised to access this route"
 }
 ```
 
 
-***Status Code:*** 400
+***Status Code:*** 403
 
 <br>
 
@@ -13299,7 +13443,7 @@ URL: {{URL}}/api/users
 
 
 
-##### III. Example Request: Create User (403 Forbidden - Non-admin user)
+##### III. Example Request: Create User (400 Bad Request - Invalid email)
 
 
 ***Headers:***
@@ -13316,23 +13460,23 @@ URL: {{URL}}/api/users
 {
 	"first_name": "Con",
 	"last_name": "Jobs",
-	"email": "Con@gmail.com",
+	"email": "Congmail.com",
 	"password": "123456"
 }
 ```
 
 
 
-##### III. Example Response: Create User (403 Forbidden - Non-admin user)
+##### III. Example Response: Create User (400 Bad Request - Invalid email)
 ```js
 {
     "success": false,
-    "error": "User role user not authorised to access this route"
+    "error": "Please include a valid email."
 }
 ```
 
 
-***Status Code:*** 403
+***Status Code:*** 400
 
 <br>
 
@@ -13717,11 +13861,30 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/participants
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Get All Listing Participation for a User (200 OK)
+##### I. Example Request: Get All Listing Participation for a User (404 Not Found - Non-existent user id)
 
 
 
-##### I. Example Response: Get All Listing Participation for a User (200 OK)
+##### I. Example Response: Get All Listing Participation for a User (404 Not Found - Non-existent user id)
+```js
+{
+    "success": false,
+    "error": "Resource not found"
+}
+```
+
+
+***Status Code:*** 404
+
+<br>
+
+
+
+##### II. Example Request: Get All Listing Participation for a User (200 OK)
+
+
+
+##### II. Example Response: Get All Listing Participation for a User (200 OK)
 ```js
 {
     "success": true,
@@ -13766,25 +13929,6 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/participants
 
 
 
-##### II. Example Request: Get All Listing Participation for a User (404 Not Found - Non-existent user id)
-
-
-
-##### II. Example Response: Get All Listing Participation for a User (404 Not Found - Non-existent user id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
 ### 6. Get All Listings Owned by a User
 
 
@@ -13804,11 +13948,30 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Get All Listings Owned by a User (200 OK)
+##### I. Example Request: Get All Listings Owned by a User (404 Not Found - Non-existent user id)
 
 
 
-##### I. Example Response: Get All Listings Owned by a User (200 OK)
+##### I. Example Response: Get All Listings Owned by a User (404 Not Found - Non-existent user id)
+```js
+{
+    "success": false,
+    "error": "Resource not found"
+}
+```
+
+
+***Status Code:*** 404
+
+<br>
+
+
+
+##### II. Example Request: Get All Listings Owned by a User (200 OK)
+
+
+
+##### II. Example Response: Get All Listings Owned by a User (200 OK)
 ```js
 {
     "success": true,
@@ -13855,25 +14018,6 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner
 
 
 
-##### II. Example Request: Get All Listings Owned by a User (404 Not Found - Non-existent user id)
-
-
-
-##### II. Example Response: Get All Listings Owned by a User (404 Not Found - Non-existent user id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
 ### 7. Get All Users
 
 
@@ -13904,7 +14048,7 @@ URL: {{URL}}/api/users
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Get All Users (200 OK)
+##### I. Example Request: Get All Users (403 Forbidden - Non-admin user)
 
 
 
@@ -13920,7 +14064,38 @@ URL: {{URL}}/api/users
 
 
 
-##### I. Example Response: Get All Users (200 OK)
+##### I. Example Response: Get All Users (403 Forbidden - Non-admin user)
+```js
+{
+    "success": false,
+    "error": "User role user not authorised to access this route"
+}
+```
+
+
+***Status Code:*** 403
+
+<br>
+
+
+
+##### II. Example Request: Get All Users (200 OK)
+
+
+
+***Query:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| page | 1 |  |
+| limit | 30 |  |
+| select | user_id,first_name,email |  |
+| sort | user_id,first_name |  |
+| role | user |  |
+
+
+
+##### II. Example Response: Get All Users (200 OK)
 ```js
 {
     "success": true,
@@ -14093,37 +14268,6 @@ URL: {{URL}}/api/users
 
 
 
-##### II. Example Request: Get All Users (403 Forbidden - Non-admin user)
-
-
-
-***Query:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| page | 1 |  |
-| limit | 30 |  |
-| select | user_id,first_name,email |  |
-| sort | user_id,first_name |  |
-| role | user |  |
-
-
-
-##### II. Example Response: Get All Users (403 Forbidden - Non-admin user)
-```js
-{
-    "success": false,
-    "error": "User role user not authorised to access this route"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
 ### 8. Get Single User
 
 
@@ -14143,11 +14287,30 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Get Single User (200 OK)
+##### I. Example Request: Get Single User (403 Forbidden - Non-admin user)
 
 
 
-##### I. Example Response: Get Single User (200 OK)
+##### I. Example Response: Get Single User (403 Forbidden - Non-admin user)
+```js
+{
+    "success": false,
+    "error": "User role user not authorised to access this route"
+}
+```
+
+
+***Status Code:*** 403
+
+<br>
+
+
+
+##### II. Example Request: Get Single User (200 OK)
+
+
+
+##### II. Example Response: Get Single User (200 OK)
 ```js
 {
     "success": true,
@@ -14164,25 +14327,6 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 
 
 ***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Get Single User (403 Forbidden - Non-admin user)
-
-
-
-##### II. Example Response: Get Single User (403 Forbidden - Non-admin user)
-```js
-{
-    "success": false,
-    "error": "User role user not authorised to access this route"
-}
-```
-
-
-***Status Code:*** 403
 
 <br>
 
@@ -14233,7 +14377,85 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Update User (200 OK)
+##### I. Example Request: Update User (403 Forbidden - Non-admin user)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"first_name": "Aaron",
+	"last_name": "Tan",
+	"email": "aaron@gmail.com",
+	"password": "123456"
+}
+```
+
+
+
+##### I. Example Response: Update User (403 Forbidden - Non-admin user)
+```js
+{
+    "success": false,
+    "error": "User role user not authorised to access this route"
+}
+```
+
+
+***Status Code:*** 403
+
+<br>
+
+
+
+##### II. Example Request: Update User (400 Bad Request - Non-existent user)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"first_name": "Aaron",
+	"last_name": "Tan",
+	"email": "aaron@gmail.com",
+	"password": "123456"
+}
+```
+
+
+
+##### II. Example Response: Update User (400 Bad Request - Non-existent user)
+```js
+{
+    "success": false,
+    "error": "User does not exist"
+}
+```
+
+
+***Status Code:*** 400
+
+<br>
+
+
+
+##### III. Example Request: Update User (200 OK)
 
 
 ***Headers:***
@@ -14256,7 +14478,7 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 
 
 
-##### I. Example Response: Update User (200 OK)
+##### III. Example Response: Update User (200 OK)
 ```js
 {
     "success": true,
@@ -14278,84 +14500,6 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 
 
 
-##### II. Example Request: Update User (403 Forbidden - Non-admin user)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"first_name": "Aaron",
-	"last_name": "Tan",
-	"email": "aaron@gmail.com",
-	"password": "123456"
-}
-```
-
-
-
-##### II. Example Response: Update User (403 Forbidden - Non-admin user)
-```js
-{
-    "success": false,
-    "error": "User role user not authorised to access this route"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
-##### III. Example Request: Update User (400 Bad Request - Non-existent user)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"first_name": "Aaron",
-	"last_name": "Tan",
-	"email": "aaron@gmail.com",
-	"password": "123456"
-}
-```
-
-
-
-##### III. Example Response: Update User (400 Bad Request - Non-existent user)
-```js
-{
-    "success": false,
-    "error": "User does not exist"
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-10-15 17:23:02 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-10-16 18:22:42 by [docgen](https://github.com/thedevsaddam/docgen)
