@@ -1,8 +1,11 @@
-# Project Kampong API
-
-![Node CI](https://github.com/Project-Kampong/kampong-backend/workflows/Node%20CI/badge.svg?branch=master)
-
-Backend web service in TypeScript, Node.js(ts-node), Express, and PostgreSQL for Project Kampong.
+<p align="center">
+ <img width="200px" src="public/assets/images/logo.png" align="center" alt="Kampong" />
+ <h2 align="center">Kampong Backend Service</h2>
+ <p align="center">Backend web service in TypeScript, NodeJS, Express, and PostgreSQL for Project Kampong.</p>
+</p>
+    <p align="center">
+        <img alt="Build Status Passing" src="https://github.com/Project-Kampong/kampong-backend/workflows/Node%20CI/badge.svg?branch=master" />
+    </p>
 
 ## Quick Start
 
@@ -72,8 +75,7 @@ On the command line in the project root directory:
 
 ```bash
 #### Build and run build in production
-yarn build
-yarn start
+yarn build && yarn start
 
 #### Run in development
 yarn dev
@@ -92,7 +94,7 @@ yarn eslint . --ext .ts
 
 API Documentation
 
--   Supported and hosted live on Kampong: https://kampong.app/api-docs
+-   Supported and running live on Kampong: https://kampong.app/api-docs
 -   Latest, unreleased version [here](https://github.com/Project-Kampong/kampong-backend/blob/master/public/api-docs/index.md)
 
 The Postman API Collection is available [here](https://github.com/Project-Kampong/kampong-backend/blob/master/public/api-docs/kampong-api.json), and can be imported into your Postman API client for API testing.
