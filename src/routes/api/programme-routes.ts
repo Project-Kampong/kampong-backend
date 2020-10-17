@@ -5,13 +5,7 @@ import { advancedResults, protect, checkInputError } from '../../middleware';
 import { INVALID_FIELD_MSG, INVALID_URL_MSG, INVALID_ALPHA_SPACE_MSG, NO_FIELD_UPDATED_MSG } from '../../utils';
 
 // Import organisation controllers
-import {
-    getProgrammes,
-    getProgramme,
-    createProgramme,
-    updateProgramme,
-    deleteProgramme,
-} from '../../controllers/programmes';
+import { getProgrammes, getProgramme, createProgramme, updateProgramme, deleteProgramme } from '../../controllers/programmes';
 
 // Define input validation
 const validateCreateProgrammeFields = [
@@ -30,8 +24,7 @@ const validateUpdateProgrammeFields = [
 ];
 
 // Map public routes to controller
-router.route('/')
-    .get(advancedResults('programmes'), getProgrammes);
+router.route('/').get(advancedResults('programmes'), getProgrammes);
 
 router.route('/:id').get(getProgramme);
 
