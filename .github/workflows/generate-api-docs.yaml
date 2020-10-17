@@ -19,6 +19,10 @@ jobs:
               uses: actions/setup-node@v1
               with:
                   node-version: ${{ matrix.node-version }}
+            - name: Install yarn and dependencies
+              run: |
+                  npm install -g yarn
+                  yarn install
             - name: Download Postman collection directly into repository and run json formatter script for docgen
               run: |
                   curl -H "x-api-key: ${{secrets.POSTMAN_API_KEY}}" https://api.getpostman.com/collections/b09bd8c5-776a-4d8c-8b71-f528c017cb08 -o ./public/api-docs/kampong-api.json
