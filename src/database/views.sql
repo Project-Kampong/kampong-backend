@@ -19,7 +19,8 @@ SELECT
 	p.nickname,
 	p.profile_picture,
 	cll.locations,
-	cll.location_ids
+	cll.location_ids,
+	to_tsvector(l.title || ' ' || l.category || ' ' || array_to_string(cll.locations::text[], ' ')) AS keyword_vector
 FROM
 	Listings l
 	LEFT JOIN CombinedListingLocations cll ON l.listing_id = cll.listing_id
