@@ -17,6 +17,7 @@ export const getProgrammes = asyncHandler(async (req, res) => {
  * @access  Public
  */
 export const getProgramme = asyncHandler(async (req, res, next) => {
+    console.log(req.params);
     const rows = await db.one('SELECT * FROM programmes WHERE programme_id = $1', req.params.id);
     res.status(200).json({
         success: true,
@@ -26,7 +27,7 @@ export const getProgramme = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Get all programmes for an organisation
- * @route   GET /api/organisations/:organisation_id/programmes
+ * @route   GET /api/organisations/:organisation_id/all
  * @access  Public
  */
 export const getOrganisationProgrammes = asyncHandler(async (req, res, next) => {
@@ -44,10 +45,11 @@ export const getOrganisationProgrammes = asyncHandler(async (req, res, next) => 
 
 /**
  * @desc    Get single programme from an organisation
- * @route   GET /api/organisations/:organisation_id/programmes/:programme_id
+ * @route   GET /api/organisations/:organisation_id/all/:programme_id
  * @access  Public
  */
 export const getOrganisationProgramme = asyncHandler(async (req, res, next) => {
+    console.log(req.params);
     // if not organisation_id, go to next middleware
     if (!req.params.organisation_id) {
         return next();

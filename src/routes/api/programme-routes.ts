@@ -1,12 +1,10 @@
 import express from 'express';
-export const router = express.Router();
+export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
 import { advancedResults, protect, checkInputError } from '../../middleware';
 import {
     INVALID_FIELD_MSG,
     INVALID_URL_MSG,
-    INVALID_PHONE_NUMBER_MSG,
-    INVALID_EMAIL_MSG,
     INVALID_ALPHA_SPACE_MSG,
     NO_FIELD_UPDATED_MSG,
 } from '../../utils';
@@ -51,18 +49,18 @@ router
     .route('/:id')
     .get(getProgramme);
 
-// Use auth middleware
-router.use(protect);
-
-// Map routes to controller
 router
     .route('/all')
     .get(getOrganisationProgrammes);
 
 router
-    .route('/:id')
+    .route('/all/:id')
     .get(getOrganisationProgramme);
 
+// Use auth middleware
+router.use(protect);
+
+// Map routes to controller
 router
     .route('/')
     .post(validateCreateProgrammeFields, checkInputError, createProgramme);
