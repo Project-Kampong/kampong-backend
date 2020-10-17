@@ -19,6 +19,10 @@ jobs:
               uses: actions/setup-node@v1
               with:
                   node-version: ${{ matrix.node-version }}
+            - name: Install yarn and dependencies
+              run: |
+                  npm install -g yarn
+                  yarn install
             - name: Download Postman collection directly into repository and run json formatter script for docgen
               run: |
                   curl -H "x-api-key: ${{secrets.POSTMAN_API_KEY}}" https://api.getpostman.com/collections/b09bd8c5-776a-4d8c-8b71-f528c017cb08 -o ./public/api-docs/kampong-api.json
@@ -28,6 +32,8 @@ jobs:
                   curl https://raw.githubusercontent.com/thedevsaddam/docgen/v3/install.sh -o ~/install.sh && sudo chmod +x ~/install.sh && sudo ~/install.sh
                   docgen build -i ./public/api-docs/kampong-api.json -o ./public/api-docs/index.html
                   docgen build -i ./public/api-docs/kampong-api.json -o ./public/api-docs/index.md -m
+            - name: Minify generated html file
+              run: yarn html-minifier --collapse-boolean-attributes --collapse-whitespace --decode-entities --minify-css --minify-js --process-conditional-comments --process-scripts "text/html" --remove-attribute-quotes --remove-comments --remove-empty-attributes --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-style-link-type-attributes --remove-tag-whitespace --sort-attributes --sort-class-name --trim-custom-fragments --use-short-doctype -o public/api-docs/index.html public/api-docs/index.html
             - name: Commit changes and push to current branch
               uses: stefanzweifel/git-auto-commit-action@v4
               with:
