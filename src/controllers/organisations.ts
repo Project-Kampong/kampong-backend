@@ -38,7 +38,7 @@ export const createOrganisation = asyncHandler(async (req, res) => {
         about,
         website_url,
         handphone,
-        email
+        email,
     };
 
     /**
@@ -75,7 +75,7 @@ export const updateOrganisation = asyncHandler(async (req, res, next) => {
         about,
         website_url,
         handphone,
-        email
+        email,
     };
 
     cleanseData(data);

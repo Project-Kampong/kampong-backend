@@ -55,7 +55,11 @@ export const getOrganisationProgramme = asyncHandler(async (req, res, next) => {
         return next();
     }
 
-    const rows = db.one('SELECT * FROM programmes WHERE organisation_id = $1 AND programme_id = $2', req.params.organisation_id, req.params.progamme_id);
+    const rows = db.one(
+        'SELECT * FROM programmes WHERE organisation_id = $1 AND programme_id = $2',
+        req.params.organisation_id,
+        req.params.progamme_id,
+    );
     return res.status(200).json({
         success: true,
         data: rows,
@@ -68,18 +72,13 @@ export const getOrganisationProgramme = asyncHandler(async (req, res, next) => {
  * @access  Owner
  */
 export const createProgramme = asyncHandler(async (req, res) => {
-    const {
-        organisation_id,
-        title,
-        about,
-        media_url
-    } = req.body;
+    const { organisation_id, title, about, media_url } = req.body;
 
     const data = {
         organisation_id,
         title,
         about,
-        media_url
+        media_url,
     };
 
     // remove undefined values in json object
@@ -111,18 +110,13 @@ export const updateProgramme = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Programme does not exist`, 400));
     }
 
-    const {
-        organisation_id,
-        title,
-        about,
-        media_url
-    } = req.body;
+    const { organisation_id, title, about, media_url } = req.body;
 
     const data = {
         organisation_id,
         title,
         about,
-        media_url
+        media_url,
     };
 
     cleanseData(data);

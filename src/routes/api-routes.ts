@@ -42,4 +42,4 @@ router.use('/users', userRoute);
 router.use('/file-upload', uploadRoute);
 router.use('/send-email', sendEmailRoute);
 router.use('/programmes', programmeRoute);
-router.use('/organisations', organisationRoute)
+router.use('/organisations', organisationRoute);
