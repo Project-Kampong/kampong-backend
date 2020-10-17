@@ -5,7 +5,7 @@ import { advancedResults, checkInputError, protect, authorise, mapFilenameToLoca
 import { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG, uploadFile } from '../../utils';
 
 // import controllers here
-import { getListingUpdates, getListingUpdate, createListingUpdate, modifyListingUpdate, deleteListingUpdate } from '../../controllers/listingupdates';
+import { getListingUpdates, getListingUpdate, createListingUpdate, modifyListingUpdate, deleteListingUpdate } from '../../controllers/listingUpdates';
 
 // Define input validation chain
 const validateCreateListingUpdateFields = [

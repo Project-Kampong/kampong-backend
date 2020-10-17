@@ -7,10 +7,10 @@ import { advancedResults, authorise, checkInputError, protect } from '../../midd
 import { INVALID_FIELD_MSG } from '../../utils/inputExceptionMsg';
 
 // Include other resource's controllers to access their endpoints
-import { router as listingRoute } from './listing-routes';
+import { router as listingsRoute } from './listings.route';
 
 // Re-route this URI to other resource router
-router.use('/:listing_id/listings', listingRoute);
+router.use('/:listing_id/listings', listingsRoute);
 
 // Define input validation chain
 const validateCreateLocation = [check('location', INVALID_FIELD_MSG('location')).notEmpty()];

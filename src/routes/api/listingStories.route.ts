@@ -5,7 +5,7 @@ import { advancedResults, checkInputError, protect } from '../../middleware';
 import { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } from '../../utils';
 
 // import controllers here
-import { getListingStories, getListingStory, updateListingStory } from '../../controllers/listingstories';
+import { getListingStories, getListingStory, updateListingStory } from '../../controllers/listingStories';
 
 // Define input validation chain
 const validateUpdateListingStoryFields = [
