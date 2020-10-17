@@ -5,7 +5,7 @@ import { advancedResults, protect, checkInputError } from '../../middleware';
 import { INVALID_FIELD_MSG } from '../../utils';
 
 // import controllers here
-import { getListingLocations, getListingLocation, createListingLocation, deleteListingLocation } from '../../controllers/listinglocations';
+import { getListingLocations, getListingLocation, createListingLocation, deleteListingLocation } from '../../controllers/listingLocations';
 
 // Define input validation chain
 const validateCreateListingLocation = [
