@@ -6,7 +6,9 @@
     <p align="center">
         <img alt="Build Passing" src="https://github.com/Project-Kampong/kampong-backend/workflows/Build/badge.svg" />
         <img alt="API Docs Passing" src="https://github.com/Project-Kampong/kampong-backend/workflows/API%20Docs/badge.svg" />
-    </p>
+        <a href="https://lgtm.com/projects/g/Project-Kampong/kampong-backend/alerts/"><img alt="Total alerts" src="https://img.shields.io/lgtm/alerts/g/Project-Kampong/kampong-backend.svg?logo=lgtm&logoWidth=18"/></a>
+        <a href="https://lgtm.com/projects/g/Project-Kampong/kampong-backend/context:javascript"><img alt="Language grade: JavaScript" src="https://img.shields.io/lgtm/grade/javascript/g/Project-Kampong/kampong-backend.svg?logo=lgtm&logoWidth=18"/></a>
+</p>
 
 ## Quick Start
 
@@ -87,7 +89,7 @@ yarn dev
 On the command line in the project root directory:
 
 ```bash
-#### Format all files excluding those in .gitignore file
+#### Format all files excluding those in .prettierignore file
 yarn format
 ```
 

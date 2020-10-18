@@ -108,7 +108,7 @@ export const updateUser = asyncHandler(async (req, res, next) => {
  */
 export const deleteUser = asyncHandler(async (req, res, next) => {
     // check if user exists
-    const user = await db.one('SELECT * FROM users WHERE user_id = $1', req.params.id);
+    await db.one('SELECT * FROM users WHERE user_id = $1', req.params.id);
 
     const rows = await db.tx(async (query) => {
         const deleteProfile = query.one('DELETE FROM profiles WHERE user_id = $1 RETURNING *', req.params.id);

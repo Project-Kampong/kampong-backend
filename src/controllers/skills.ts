@@ -54,7 +54,7 @@ export const createSkill = asyncHandler(async (req, res) => {
  */
 export const updateSkill = asyncHandler(async (req, res, next) => {
     // check if skill exists, 404 if does not exist
-    const skillExists = await db.one('SELECT * FROM skills WHERE skill_id = $1', req.params.id);
+    await db.one('SELECT * FROM skills WHERE skill_id = $1', req.params.id);
 
     const { skill, skill_group, skill_description } = req.body;
 
