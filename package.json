@@ -14,7 +14,12 @@
         "create-tables": "ts-node src/utils/seeder.ts -i",
         "import-data": "ts-node src/utils/seeder.ts -d",
         "format": "prettier --write .",
-        "heroku-postbuild": "node --max-old-space-size=8192 node_modules/.bin/tsc -p . && yarn create-tables && yarn import-data"
+        "heroku-postbuild": "node --max-old-space-size=8192 node_modules/.bin/tsc -p . && yarn create-tables && yarn import-data",
+        "knex:migrate:make": "knex --knexfile src/database/knexfile.ts migrate:make -x ts",
+        "knex:migrate:latest": "knex --knexfile src/database/knexfile.ts migrate:latest",
+        "knex:migrate:rollback": "knex --knexfile src/database/knexfile.ts migrate:rollback",
+        "knex:seed:make": "knex --knexfile src/database/knexfile.ts seed:make -x ts",
+        "knex:seed:run": "knex --knexfile src/database/knexfile.ts seed:run"
     },
     "license": "MIT",
     "dependencies": {
@@ -49,6 +54,7 @@
         "eslint": "^7.10.0",
         "eslint-config-prettier": "^6.12.0",
         "eslint-plugin-prettier": "^3.1.4",
+        "knex": "^0.21.6",
         "nodemon": "^2.0.5",
         "prettier": "2.1.2",
         "ts-node": "^9.0.0",
