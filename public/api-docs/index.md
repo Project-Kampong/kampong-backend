@@ -9577,7 +9577,7 @@ Search for listings by title, category or location. Permission: Public.
 
 Field rules:
 All fields required unless otherwise stated.
-keyword - Keyword to be searched.
+keyword - Keywords to search for. Each keyword to search must be delimited by a comma.
 limit - Optional. Default: 10. Number of results to display.
 
 
@@ -9595,8 +9595,8 @@ URL: {{URL}}/api/listings/search
 
 | Key | Value | Description |
 | --- | ------|-------------|
-| keyword | woodlands |  |
-| limit | 10 |  |
+| keyword | wood,admiralty |  |
+| limit | 5 |  |
 
 
 
@@ -14502,4 +14502,4 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-10-17 15:00:02 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-10-18 13:14:06 by [docgen](https://github.com/thedevsaddam/docgen)
