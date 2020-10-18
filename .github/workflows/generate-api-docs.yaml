@@ -38,4 +38,4 @@ jobs:
                   commit_message: Apply api docs updates
                   branch: update-api-docs
                   file_pattern: public/api-docs/*
-                  push_options: '-u'
+                  checkout_options: '-b'
