@@ -63,7 +63,7 @@ export const getListing = asyncHandler(async (req, res, next) => {
 export const getAllListingsOwnedByUser = asyncHandler(async (req, res, next) => {
     const userId = req.params.user_id;
     // check if user exists
-    const user = await db.one('SELECT * FROM Users WHERE user_id = $1', userId);
+    await db.one('SELECT * FROM Users WHERE user_id = $1', userId);
 
     const rows = await db.manyOrNone('SELECT * FROM listingsview WHERE created_by = $1', userId);
 
@@ -216,7 +216,7 @@ export const updateListing = asyncHandler(async (req, res, next) => {
  */
 export const verifyListing = asyncHandler(async (req, res, next) => {
     // check if listing exists
-    const isValidListing = await db.one('SELECT * FROM listings WHERE listing_id = $1', req.params.id);
+    await db.one('SELECT * FROM listings WHERE listing_id = $1', req.params.id);
 
     const { is_verified } = req.body;
 
@@ -265,7 +265,7 @@ export const deactivateListing = asyncHandler(async (req, res, next) => {
  */
 export const deleteListing = asyncHandler(async (req, res, next) => {
     // check if listing exists
-    const listing = await db.one('SELECT * FROM listings WHERE listing_id = $1', req.params.id);
+    await db.one('SELECT * FROM listings WHERE listing_id = $1', req.params.id);
 
     // Unauthorised if not admin
     if (req.user.role !== 'admin') {

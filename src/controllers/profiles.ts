@@ -78,7 +78,7 @@ export const verifyProfile = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Invalid user id`, 400));
     }
     // check if user exists
-    const user = await db.one('SELECT * FROM profiles WHERE user_id = $1', req.params.user_id);
+    await db.one('SELECT * FROM profiles WHERE user_id = $1', req.params.user_id);
 
     const { is_verified } = req.body;
 
