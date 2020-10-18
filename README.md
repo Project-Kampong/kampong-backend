@@ -72,6 +72,31 @@ yarn import-data
 
 > **_NOTE:_** If data import fails, run the create database tables command and try again.
 
+##### (EXPERIMENTAL) Database Migration
+
+Database migrations is currently in development, and will be used for version control of database schema in production. For testing purposes, initialize a database locally with database name `knex-test`.
+
+> **_WARNING_**: Feature is a proof of concept, and does not work with the app. This will subsequently be implemented, and the above methods will be deprecated.
+
+On the command line in the project root directory:
+
+```bash
+#### Run all migration scripts that have not been run before
+yarn knex:migrate:latest
+
+#### Run all available seed files
+yarn knex:seed:run
+
+#### Create migration file
+yarn knex:migrate:make
+
+#### Create seed files
+yarn knex:seed:make
+
+#### Rollback the most recent migration
+yarn knex:migrate:rollback
+```
+
 ### Running the app
 
 On the command line in the project root directory:
