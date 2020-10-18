@@ -14,7 +14,7 @@ import { cleanseData, ErrorResponse } from '../utils';
 export const getLikes = asyncHandler(async (req, res) => {
     if (req.params.listing_id) {
         // return 404 error response if listing not found or soft deleted
-        const listing = await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.listing_id);
+        await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.listing_id);
 
         const likes = await db.manyOrNone('SELECT * FROM likes NATURAL JOIN profiles WHERE listing_id = $1', req.params.listing_id);
 
@@ -27,7 +27,7 @@ export const getLikes = asyncHandler(async (req, res) => {
 
     if (req.params.user_id) {
         // return 404 error response if user not found
-        const user = await db.one('SELECT * FROM Users WHERE user_id = $1', req.params.user_id);
+        await db.one('SELECT * FROM Users WHERE user_id = $1', req.params.user_id);
 
         const likes = await db.manyOrNone('SELECT * FROM likes NATURAL JOIN listings WHERE user_id = $1', req.params.user_id);
 
