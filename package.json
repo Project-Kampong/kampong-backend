@@ -18,6 +18,7 @@
         "knex:migrate:make": "knex --knexfile src/database/knexfile.ts migrate:make -x ts",
         "knex:migrate:latest": "knex --knexfile src/database/knexfile.ts migrate:latest",
         "knex:migrate:rollback": "knex --knexfile src/database/knexfile.ts migrate:rollback",
+        "knex:migrate:list": "knex --knexfile src/database/knexfile.ts migrate:list",
         "knex:seed:make": "knex --knexfile src/database/knexfile.ts seed:make -x ts",
         "knex:seed:run": "knex --knexfile src/database/knexfile.ts seed:run"
     },

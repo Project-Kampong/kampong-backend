@@ -74,13 +74,16 @@ yarn import-data
 
 ##### (EXPERIMENTAL) Database Migration
 
-Database migrations is currently in development, and will be used for version control of database schema in production. For testing purposes, initialize a database locally with database name `knex-test`.
+Database migrations is currently in development, and will be used for version control of database schema in production. To test this feature, initialize a new database instance locally with database name `knex-test`, and configure the remaining database credentials in `config.env` for this instance.
 
-> **_WARNING_**: Feature is a proof of concept, and does not work with the app. This will subsequently be implemented, and the above methods will be deprecated.
+> **_WARNING_**: Feature is a proof of concept, and does not work with the app. Reconfigure your `config.env` file should you resume using the app. This will subsequently be implemented, and the above methods will be deprecated.
 
 On the command line in the project root directory:
 
 ```bash
+#### List migrations that have completed and have yet to be run
+yarn knex:migrate:list
+
 #### Run all migration scripts that have not been run before
 yarn knex:migrate:latest
 
@@ -95,6 +98,9 @@ yarn knex:seed:make
 
 #### Rollback the most recent migration
 yarn knex:migrate:rollback
+
+#### Rollback all migration
+yarn knex:migrate:rollback all
 ```
 
 ### Running the app
