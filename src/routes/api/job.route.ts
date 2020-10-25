@@ -24,9 +24,8 @@ router.route('/').get(advancedResults('jobsview'), getJobs);
 router.route('/all').get(protect, advancedResults('jobs'), getJobsAll);
 router.route('/:id').get(getJob);
 
-// all routes below only accessible to admin
+// all routes below only accessible to authenticated users (and listing owner, to be implemented)
 router.use(protect);
-router.use(authorise('user', 'admin'));
 
 // map routes to controller
 router.route('/').post(validateCreateJobFields, checkInputError, createJob);

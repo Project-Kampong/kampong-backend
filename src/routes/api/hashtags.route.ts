@@ -23,7 +23,6 @@ router.route('/:id').get(getHashtag);
 
 // all routes below only accessible to authenticated user
 router.use(protect);
-router.use(authorise('user', 'admin'));
 
 // map routes to controller
 router.route('/').post(validateCreateHashtagFields, checkInputError, createHashtag);

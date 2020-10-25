@@ -1,5 +1,3 @@
-DROP TABLE IF EXISTS Roles CASCADE;
-
 DROP TABLE IF EXISTS Users CASCADE;
 
 DROP TABLE IF EXISTS PendingUsers CASCADE;
@@ -48,22 +46,15 @@ DROP TABLE IF EXISTS Locations CASCADE;
 
 DROP TABLE IF EXISTS ListingLocations CASCADE;
 
-CREATE TABLE Roles (
-	role_id SERIAL,
-	role_name VARCHAR UNIQUE NOT NULL,
-	PRIMARY KEY (role_id)
-);
-
 CREATE TABLE Users (
 	user_id VARCHAR,
 	first_name VARCHAR NOT NULL,
 	last_name VARCHAR,
 	email VARCHAR(320) UNIQUE NOT NULL,
 	password VARCHAR NOT NULL,
-	role VARCHAR NOT NULL DEFAULT 'user',
+	role VARCHAR NOT NULL CHECK (role IN ('admin', 'user')) DEFAULT 'user',
 	is_activated BOOLEAN NOT NULL DEFAULT FALSE,
-	PRIMARY KEY (user_id),
-	FOREIGN KEY (role) REFERENCES Roles (role_name) ON DELETE SET DEFAULT
+	PRIMARY KEY (user_id)
 );
 
 CREATE TABLE PendingUsers (
