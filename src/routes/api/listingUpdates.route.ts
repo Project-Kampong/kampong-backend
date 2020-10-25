@@ -31,9 +31,8 @@ const validateModifyListingUpdateFields = [
 router.route('/').get(advancedResults('listingupdates'), getListingUpdates);
 router.route('/:id').get(getListingUpdate);
 
-// all routes below only accessible to authenticated user
+// all routes below only accessible to authenticated user (specifically, listing owner, to be implemented)
 router.use(protect);
-router.use(authorise('user', 'admin'));
 
 // map routes to controller
 router

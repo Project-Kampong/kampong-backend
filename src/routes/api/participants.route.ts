@@ -24,9 +24,8 @@ const validateUpdateParticipantFields = [
 router.route('/').get(advancedResults('participants'), getParticipants);
 router.route('/:participant_id').get(getParticipant);
 
-// all routes below only accessible to admin
+// all routes below only accessible to admin, specifically, listing owner (to be implemented)
 router.use(protect);
-router.use(authorise('user', 'admin'));
 
 // map routes to controller
 router.route('/').post(validateCreateParticipantFields, checkInputError, createParticipant);

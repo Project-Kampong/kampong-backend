@@ -16,7 +16,7 @@ const validateCreateListingLocation = [
 router.route('/').get(advancedResults('listinglocations', 'locations', 'location_id'), getListingLocations);
 router.route('/:id').get(getListingLocation);
 
-// all routes below only accessible to authenticated user
+// all routes below only accessible to authenticated user, (specifically, listing owners, to be implemented)
 router.use(protect);
 
 // map routes to controller

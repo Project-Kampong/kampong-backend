@@ -22,9 +22,8 @@ const validateCustomSkill = [
 router.route('/').get(advancedResults('listingskills', 'skills', 'skill_id'), getListingSkills);
 router.route('/:id').get(getListingSkill);
 
-// all routes below only accessible to authenticated user
+// all routes below only accessible to authenticated user, specifically listing owners (to be implemented)
 router.use(protect);
-router.use(authorise('user', 'admin'));
 
 // map routes to controller
 router.route('/').post(validateCreateListingSkill, checkInputError, createListingSkill);

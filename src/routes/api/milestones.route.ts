@@ -23,9 +23,8 @@ const validateUpdateMilestoneFields = [
 router.route('/').get(advancedResults('milestones'), getMilestones);
 router.route('/:id').get(getMilestone);
 
-// all routes below only accessible to authenticated user
+// all routes below only accessible to authenticated user, specifically, listing owner (to be implemented)
 router.use(protect);
-router.use(authorise('user', 'admin'));
 
 // map routes to controller
 router.route('/').post(validateCreateMilestoneFields, checkInputError, createMilestone);
