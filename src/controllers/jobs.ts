@@ -13,7 +13,7 @@ import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 export const getJobs = asyncHandler(async (req, res) => {
     if (req.params.listing_id) {
         // return 404 error response if listing not found or soft deleted
-        const listing = await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.listing_id);
+        await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.listing_id);
 
         const jobs = await db.manyOrNone('SELECT * FROM jobsview WHERE listing_id = $1', req.params.listing_id);
         return res.status(200).json({
@@ -36,7 +36,7 @@ export const getJobs = asyncHandler(async (req, res) => {
 export const getJobsAll = asyncHandler(async (req, res) => {
     if (req.params.listing_id) {
         // return 404 error response if listing not found
-        const listing = await db.one('SELECT * FROM listings WHERE listing_id = $1', req.params.listing_id);
+        await db.one('SELECT * FROM listings WHERE listing_id = $1', req.params.listing_id);
 
         const jobs = await db.manyOrNone('SELECT * FROM jobs WHERE listing_id = $1', req.params.listing_id);
         return res.status(200).json({
@@ -165,7 +165,7 @@ export const deactivateJob = asyncHandler(async (req, res, next) => {
  */
 export const deleteJob = asyncHandler(async (req, res, next) => {
     // check if job exists
-    const job = await db.one('SELECT * FROM jobs WHERE job_id = $1', req.params.id);
+    await db.one('SELECT * FROM jobs WHERE job_id = $1', req.params.id);
 
     // check if user is admin
     if (req.user.role !== 'admin') {

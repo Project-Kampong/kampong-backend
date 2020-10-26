@@ -12,7 +12,7 @@ import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 export const getFaqs = asyncHandler(async (req, res) => {
     if (req.params.listing_id) {
         // return 404 error response if listing not found or soft deleted
-        const listing = await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.listing_id);
+        await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.listing_id);
 
         const faqs = await db.manyOrNone('SELECT * FROM faqs WHERE listing_id = $1', req.params.listing_id);
         return res.status(200).json({

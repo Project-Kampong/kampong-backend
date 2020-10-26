@@ -29,31 +29,31 @@ import {
 } from '../../controllers/listings';
 
 // Include other resource's controllers to access their endpoints
-import { router as faqRoute } from './faq-routes';
-import { router as hashtagRoute } from './hashtag-routes';
-import { router as likeRoute } from './like-routes';
-import { router as listingCommentRoute } from './listingcomment-routes';
-import { router as listingLocationRoute } from './listinglocation-routes';
-import { router as listingUpdateRoute } from './listingupdate-routes';
-import { router as milestoneRoute } from './milestone-routes';
-import { router as participantRoute } from './participant-routes';
-import { router as listingSkillRoute } from './listingskill-routes';
-import { router as jobRoute } from './job-routes';
-import { router as storyRoute } from './listingstory-routes';
+import { router as faqsRoute } from './faqs.route';
+import { router as hashtagsRoute } from './hashtags.route';
+import { router as likesRoute } from './likes.route';
+import { router as listingCommentsRoute } from './listingComments.route';
+import { router as listingLocationsRoute } from './listingLocations.route';
+import { router as listingUpdatesRoute } from './listingUpdates.route';
+import { router as milestonesRoute } from './milestones.route';
+import { router as participantsRoute } from './participants.route';
+import { router as listingSkillsRoute } from './listingSkills.route';
+import { router as jobsRoute } from './job.route';
+import { router as listingStoriesRoute } from './listingStories.route';
 
 // Re-route this URI to other resource router
-router.use('/:listing_id/faqs', faqRoute);
-router.use('/:listing_id/hashtags', hashtagRoute);
-router.use('/:listing_id/likes', likeRoute);
-router.use('/:listing_id/listing-comments', listingCommentRoute);
-router.use('/:listing_id/listing-locations', listingLocationRoute);
-router.use('/:listing_id/listing-updates', listingUpdateRoute);
-router.use('/:listing_id/milestones', milestoneRoute);
-router.use('/:listing_id/participants', participantRoute);
-router.use('/stories', storyRoute);
-router.use('/:listing_id/stories', storyRoute);
-router.use('/:listing_id/listing-skills', listingSkillRoute);
-router.use('/:listing_id/jobs', jobRoute);
+router.use('/:listing_id/faqs', faqsRoute);
+router.use('/:listing_id/hashtags', hashtagsRoute);
+router.use('/:listing_id/likes', likesRoute);
+router.use('/:listing_id/listing-comments', listingCommentsRoute);
+router.use('/:listing_id/listing-locations', listingLocationsRoute);
+router.use('/:listing_id/listing-updates', listingUpdatesRoute);
+router.use('/:listing_id/milestones', milestonesRoute);
+router.use('/:listing_id/participants', participantsRoute);
+router.use('/stories', listingStoriesRoute);
+router.use('/:listing_id/stories', listingStoriesRoute);
+router.use('/:listing_id/listing-skills', listingSkillsRoute);
+router.use('/:listing_id/jobs', jobsRoute);
 
 // Define input validation chain
 const validateCreateListingFields = [
