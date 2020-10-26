@@ -40,7 +40,7 @@ export const createOrganisation = asyncHandler(async (req, res) => {
         handphone,
         email,
         locations,
-        story
+        story,
     };
 
     const rows = await db.one('INSERT INTO organisations (${this:name}) VALUES (${this:csv}) RETURNING *', data);
@@ -57,7 +57,6 @@ export const createOrganisation = asyncHandler(async (req, res) => {
  * @access  Admin/Owner
  */
 export const updateOrganisation = asyncHandler(async (req, res, next) => {
-    
     await db.one('SELECT * FROM organisations WHERE organisation_id = $1', req.params.id);
 
     const { name, type, about, website_url, handphone, email, locations, story } = req.body;
@@ -70,7 +69,7 @@ export const updateOrganisation = asyncHandler(async (req, res, next) => {
         handphone,
         email,
         locations,
-        story
+        story,
     };
 
     cleanseData(data);
@@ -91,7 +90,6 @@ export const updateOrganisation = asyncHandler(async (req, res, next) => {
  * @access  Admin/Owner
  */
 export const deleteOrganisation = asyncHandler(async (req, res, next) => {
-
     const rows = await db.one('DELETE FROM organisations WHERE organisation_id = $1 RETURNING *', req.params.id);
 
     res.status(200).json({

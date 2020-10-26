@@ -70,7 +70,6 @@ export const createProgramme = asyncHandler(async (req, res) => {
  * @access  Owner
  */
 export const updateProgramme = asyncHandler(async (req, res, next) => {
-    
     await db.one('SELECT * FROM programmes WHERE programme_id = $1', req.params.id);
 
     const { organisation_id, title, about, media_url } = req.body;

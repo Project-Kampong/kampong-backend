@@ -21,4 +21,4 @@ export const INVALID_URL_MSG = 'Please enter a valid URL';
 
 export const INVALID_PHONE_NUMBER_MSG = 'Please enter a valid phone number';
 
-export const INVALID_LOCATION_MSG = 'Please enter a valid location'
+export const INVALID_LOCATION_MSG = 'Please enter a valid location';
