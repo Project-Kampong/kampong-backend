@@ -13,7 +13,7 @@ import {
     updateListingComment,
     deleteListingComment,
     deactivateListingComment,
-} from '../../controllers/listingcomments';
+} from '../../controllers/listingComments';
 
 // Define input validation chain
 const validateCreateListingCommentFields = [
