@@ -27,7 +27,6 @@ export const getProgrammes = asyncHandler(async (req, res) => {
  * @access  Public
  */
 export const getProgramme = asyncHandler(async (req, res, next) => {
-    console.log(req.params);
     const rows = await db.one('SELECT * FROM programmes WHERE programme_id = $1', req.params.id);
     res.status(200).json({
         success: true,
@@ -71,13 +70,8 @@ export const createProgramme = asyncHandler(async (req, res) => {
  * @access  Owner
  */
 export const updateProgramme = asyncHandler(async (req, res, next) => {
-    // check if programme exists
-    const isValidProgramme = await db.oneOrNone('SELECT * FROM programmes WHERE programme_id = $1', req.params.id);
-
-    // return bad request response if invalid organisation
-    if (!isValidProgramme) {
-        return next(new ErrorResponse(`Programme does not exist`, 400));
-    }
+    
+    await db.one('SELECT * FROM programmes WHERE programme_id = $1', req.params.id);
 
     const { organisation_id, title, about, media_url } = req.body;
 
@@ -109,8 +103,13 @@ export const deleteProgramme = asyncHandler(async (req, res, next) => {
     // check if programme exists
     const programme = await db.one('SELECT * FROM programmes WHERE programme_id = $1', req.params.id);
 
-    // Unauthorised if not owner
+    // Unauthorised if not admin
     if (req.user.role !== 'admin') {
+        return next(new ErrorResponse(`User not authorised to delete this programme`, 403));
+    }
+
+    // Unauthorised if not owner
+    if (req.user.role !== 'owner') {
         return next(new ErrorResponse(`User not authorised to delete this programme`, 403));
     }
 

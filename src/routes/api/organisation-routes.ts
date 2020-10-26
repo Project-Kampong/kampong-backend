@@ -2,7 +2,7 @@ import express from 'express';
 export const router = express.Router();
 import { check, oneOf } from 'express-validator';
 import { advancedResults, protect, checkInputError } from '../../middleware';
-import { INVALID_URL_MSG, INVALID_PHONE_NUMBER_MSG, INVALID_EMAIL_MSG, INVALID_ALPHA_SPACE_MSG, NO_FIELD_UPDATED_MSG } from '../../utils';
+import { INVALID_URL_MSG, INVALID_PHONE_NUMBER_MSG, INVALID_EMAIL_MSG, INVALID_ALPHA_SPACE_MSG, NO_FIELD_UPDATED_MSG, INVALID_LOCATION_MSG } from '../../utils';
 
 // Import organisation controllers
 import { getOrganisations, getOrganisation, createOrganisation, updateOrganisation, deleteOrganisation } from '../../controllers/organisations';
@@ -19,8 +19,10 @@ const validateCreateOrganisationFields = [
     check('type', INVALID_ALPHA_SPACE_MSG('type')).optional().trim(),
     check('about', INVALID_ALPHA_SPACE_MSG('about')).trim().notEmpty(),
     check('website_url', INVALID_URL_MSG).optional().trim().isURL(),
-    check('handphone', INVALID_PHONE_NUMBER_MSG).trim().notEmpty(),
+    check('handphone', INVALID_PHONE_NUMBER_MSG).optional().trim().notEmpty(),
     check('email', INVALID_EMAIL_MSG).trim().notEmpty().isEmail().normalizeEmail(),
+    check('locations', INVALID_LOCATION_MSG).optional().trim(),
+    check('story', INVALID_ALPHA_SPACE_MSG('story')).optional().trim()
 ];
 
 const validateUpdateOrganisationFields = [
@@ -41,6 +43,8 @@ const validateUpdateOrganisationFields = [
     check('website_url', INVALID_URL_MSG).optional().trim().isURL(),
     check('handphone', INVALID_PHONE_NUMBER_MSG).optional().trim().notEmpty(),
     check('email', INVALID_EMAIL_MSG).optional().trim().notEmpty().isEmail().normalizeEmail(),
+    check('locations', INVALID_LOCATION_MSG).optional().trim(),
+    check('story', INVALID_ALPHA_SPACE_MSG('story')).optional().trim()
 ];
 
 // Map public routes to controller

@@ -30,7 +30,7 @@ export const getOrganisation = asyncHandler(async (req, res) => {
  * @access  Private
  */
 export const createOrganisation = asyncHandler(async (req, res) => {
-    const { name, type, about, website_url, handphone, email } = req.body;
+    const { name, type, about, website_url, handphone, email, locations, story } = req.body;
 
     const data = {
         name,
@@ -39,12 +39,10 @@ export const createOrganisation = asyncHandler(async (req, res) => {
         website_url,
         handphone,
         email,
+        locations,
+        story
     };
 
-    /**
-     * SQL Transaction and creating organisation
-     * Returns a json containing organisation data
-     */
     const rows = await db.one('INSERT INTO organisations (${this:name}) VALUES (${this:csv}) RETURNING *', data);
 
     res.status(201).json({
@@ -59,15 +57,10 @@ export const createOrganisation = asyncHandler(async (req, res) => {
  * @access  Admin/Owner
  */
 export const updateOrganisation = asyncHandler(async (req, res, next) => {
-    // check if organisation exists
-    const isValidOrganisation = await db.oneOrNone('SELECT * FROM organisations WHERE organisation_id = $1', req.params.id);
+    
+    await db.one('SELECT * FROM organisations WHERE organisation_id = $1', req.params.id);
 
-    // return bad request response if invalid organisation
-    if (!isValidOrganisation) {
-        return next(new ErrorResponse(`Organisation does not exist`, 400));
-    }
-
-    const { name, type, about, website_url, handphone, email } = req.body;
+    const { name, type, about, website_url, handphone, email, locations, story } = req.body;
 
     const data = {
         name,
@@ -76,6 +69,8 @@ export const updateOrganisation = asyncHandler(async (req, res, next) => {
         website_url,
         handphone,
         email,
+        locations,
+        story
     };
 
     cleanseData(data);
@@ -96,13 +91,6 @@ export const updateOrganisation = asyncHandler(async (req, res, next) => {
  * @access  Admin/Owner
  */
 export const deleteOrganisation = asyncHandler(async (req, res, next) => {
-    // check if organisation exists
-    const organisation = await db.oneOrNone('SELECT * FROM organisations WHERE organisation_id = $1', req.params.id);
-
-    // return bad request response if invalid organisation
-    if (!organisation) {
-        return next(new ErrorResponse(`Organisation does not exist`, 400));
-    }
 
     const rows = await db.one('DELETE FROM organisations WHERE organisation_id = $1 RETURNING *', req.params.id);
 
