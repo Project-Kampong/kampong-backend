@@ -40,9 +40,10 @@ export const register = asyncHandler(async (req, res, next) => {
     // Create confirmation url
     const confirmationUrl = `${req.protocol}://${req.get('host')}/api/auth/register/${token}/confirm-email`;
 
-    const message = `Thank you for joining Project Kampong. Please click on the link to activate your account:
-  \n\n${confirmationUrl}\n\nPlease contact admin@kampong.com immediately if you are not the intended receipient 
-  of this mail.\n\nWelcome on board!\n\nTeam Kampong`;
+    const message =
+        `Thank you for joining Project Kampong. Please click on the link to activate your account:` +
+        `\n\n${confirmationUrl}\n\nPlease contact admin@kampong.com immediately if you are not the ` +
+        `intended receipient of this mail.\n\nWelcome on board!\n\nTeam Kampong`;
 
     try {
         await sendEmail({
@@ -81,7 +82,8 @@ export const register = asyncHandler(async (req, res, next) => {
 export const confirmEmail = asyncHandler(async (req, res, next) => {
     const hashedToken = hashToken(req.params.confirmEmailToken);
 
-    const pendingUserExists = await db.one('SELECT * FROM PendingUsers WHERE token = $1', hashedToken);
+    // Check that pending user exists
+    await db.one('SELECT * FROM PendingUsers WHERE token = $1', hashedToken);
 
     const confirmEmail = await db.tx(async (query) => {
         const deletePendingUser = await query.one('DELETE FROM PendingUsers WHERE token = $1 RETURNING *', hashedToken);

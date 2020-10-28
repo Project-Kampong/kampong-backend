@@ -14,7 +14,7 @@ import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 export const getParticipants = asyncHandler(async (req, res) => {
     if (req.params.listing_id) {
         // return 404 error response if listing not found
-        const listing = await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.listing_id);
+        await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.listing_id);
 
         const participants = await db.manyOrNone('SELECT * FROM Participants WHERE listing_id = $1', req.params.listing_id);
 
@@ -27,7 +27,7 @@ export const getParticipants = asyncHandler(async (req, res) => {
 
     if (req.params.user_id) {
         // return 404 error response if user not found
-        const user = await db.one('SELECT * FROM Users WHERE user_id = $1', req.params.user_id);
+        await db.one('SELECT * FROM Users WHERE user_id = $1', req.params.user_id);
 
         const participants = await db.manyOrNone('SELECT * FROM Participants WHERE user_id = $1', req.params.user_id);
 

@@ -1,6 +1,14 @@
-# Project Kampong API
-
-Backend web service in TypeScript, Node.js(ts-node), Express, and PostgreSQL for Project Kampong.
+<p align="center">
+ <img width="200px" src="public/assets/images/logo.png" align="center" alt="Kampong" />
+ <h2 align="center">Kampong Backend Service</h2>
+ <p align="center">Backend web service in TypeScript, NodeJS, Express, and PostgreSQL for Project Kampong.</p>
+</p>
+    <p align="center">
+        <img alt="Build Passing" src="https://github.com/Project-Kampong/kampong-backend/workflows/Build/badge.svg" />
+        <img alt="API Docs Passing" src="https://github.com/Project-Kampong/kampong-backend/workflows/API%20Docs/badge.svg" />
+        <a href="https://lgtm.com/projects/g/Project-Kampong/kampong-backend/alerts/"><img alt="Total alerts" src="https://img.shields.io/lgtm/alerts/g/Project-Kampong/kampong-backend.svg?logo=lgtm&logoWidth=18"/></a>
+        <a href="https://lgtm.com/projects/g/Project-Kampong/kampong-backend/context:javascript"><img alt="Language grade: JavaScript" src="https://img.shields.io/lgtm/grade/javascript/g/Project-Kampong/kampong-backend.svg?logo=lgtm&logoWidth=18"/></a>
+</p>
 
 ## Quick Start
 
@@ -9,7 +17,7 @@ Backend web service in TypeScript, Node.js(ts-node), Express, and PostgreSQL for
 Latest version of the app has been tested to run on:
 
 ```
-- Node v14.13.0
+- Node v14.14.0
 - Yarn v1.22.5
 - PostgreSQL 13.0
 ```
@@ -70,27 +78,26 @@ On the command line in the project root directory:
 
 ```bash
 #### Build and run build in production
-yarn build
-yarn start
+yarn build && yarn start
 
 #### Run in development
 yarn dev
 ```
 
-### Run linter
+### Run Prettier formatter
 
 On the command line in the project root directory:
 
 ```bash
-#### Lint all files with .ts extension
-yarn eslint . --ext .ts
+#### Format all files excluding those in .prettierignore file
+yarn format
 ```
 
 ## Documentation
 
 API Documentation
 
--   Supported and hosted live on Kampong: https://kampong.app/api-docs
+-   Supported and running live on Kampong: https://kampong.app/api-docs
 -   Latest, unreleased version [here](https://github.com/Project-Kampong/kampong-backend/blob/master/public/api-docs/index.md)
 
 The Postman API Collection is available [here](https://github.com/Project-Kampong/kampong-backend/blob/master/public/api-docs/kampong-api.json), and can be imported into your Postman API client for API testing.

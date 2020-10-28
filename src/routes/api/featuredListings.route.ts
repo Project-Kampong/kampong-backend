@@ -5,7 +5,7 @@ import { advancedResults, protect, authorise, checkInputError } from '../../midd
 import { INVALID_FIELD_MSG } from '../../utils';
 
 // import controllers here
-import { getFeaturedListings, getFeaturedListing, createFeaturedListing, deleteFeaturedListing } from '../../controllers/featuredlistings';
+import { getFeaturedListings, getFeaturedListing, createFeaturedListing, deleteFeaturedListing } from '../../controllers/featuredListings';
 
 // Define input validation chain
 const validateCreateFeaturedListingFields = [check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID()];

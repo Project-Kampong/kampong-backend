@@ -1,14 +1,20 @@
 {
     "name": "kampong-backend",
     "version": "1.0.0",
-    "description": "Kampong backend API",
+    "description": "Kampong Backend API",
     "main": "dist/server.js",
+    "engines": {
+        "node": "14.x",
+        "yarn": "1.x"
+    },
     "scripts": {
         "start": "NODE_ENV=production node dist/server.js",
         "dev": "nodemon src/server.ts",
         "build": "node --max-old-space-size=8192 node_modules/.bin/tsc -p .",
         "create-tables": "ts-node src/utils/seeder.ts -i",
-        "import-data": "ts-node src/utils/seeder.ts -d"
+        "import-data": "ts-node src/utils/seeder.ts -d",
+        "format": "prettier --write .",
+        "heroku-postbuild": "node --max-old-space-size=8192 node_modules/.bin/tsc -p . && yarn create-tables && yarn import-data"
     },
     "license": "MIT",
     "dependencies": {
@@ -31,7 +37,6 @@
         "multer": "^1.4.2",
         "multer-s3": "^2.9.0",
         "nodemailer": "^6.4.11",
-        "nodemon": "^2.0.4",
         "pg-promise": "^10.5.7",
         "xss-clean": "^0.1.1"
     },
@@ -44,6 +49,7 @@
         "eslint": "^7.10.0",
         "eslint-config-prettier": "^6.12.0",
         "eslint-plugin-prettier": "^3.1.4",
+        "nodemon": "^2.0.5",
         "prettier": "2.1.2",
         "ts-node": "^9.0.0",
         "typescript": "^4.0.3"
