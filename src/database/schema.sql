@@ -1,3 +1,5 @@
+DROP TYPE IF EXISTS user_roles CASCADE;
+
 DROP TABLE IF EXISTS Users CASCADE;
 
 DROP TABLE IF EXISTS PendingUsers CASCADE;
@@ -46,13 +48,15 @@ DROP TABLE IF EXISTS Locations CASCADE;
 
 DROP TABLE IF EXISTS ListingLocations CASCADE;
 
+CREATE TYPE user_roles AS ENUM ('admin', 'user');
+
 CREATE TABLE Users (
 	user_id UUID,
 	first_name VARCHAR NOT NULL,
 	last_name VARCHAR,
 	email VARCHAR(320) UNIQUE NOT NULL,
 	password VARCHAR NOT NULL,
-	role VARCHAR NOT NULL CHECK (role IN ('admin', 'user')) DEFAULT 'user',
+	role user_roles NOT NULL DEFAULT 'user',
 	is_activated BOOLEAN NOT NULL DEFAULT FALSE,
 	PRIMARY KEY (user_id)
 );
@@ -66,11 +70,11 @@ CREATE TABLE PendingUsers (
 );
 
 CREATE TABLE ForgetPasswordUsers (
-	forgetpass_user_id SERIAL,
+	forget_password_user_id SERIAL,
 	email VARCHAR(320) UNIQUE NOT NULL,
 	token VARCHAR UNIQUE NOT NULL,
 	expiry TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-	PRIMARY KEY (forgetpass_user_id)
+	PRIMARY KEY (forget_password_user_id)
 );
 
 CREATE TABLE Profiles (
