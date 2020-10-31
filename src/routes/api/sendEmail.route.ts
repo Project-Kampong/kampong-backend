@@ -2,11 +2,10 @@ import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check } from 'express-validator';
 import { INVALID_EMAIL_MSG } from '../../utils/inputExceptionMsg';
-import { checkInputError } from '../../middleware/inputValidation';
+import { checkInputError, protect } from '../../middleware';
 
 // Import sendEmail controller
 import { sendEmailUtil } from '../../controllers/sendEmail';
-import { protect } from 'src/middleware';
 
 // Validate input email
 const validateEmail = [
