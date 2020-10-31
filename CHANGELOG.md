@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   TypeScript migration
 -   Listings now have `listing_status` field.
--   Update dependencies, node v14.14.0, yarn v1.22.5, and PostgreSQL 13.0.
+-   Update dependencies, node v14.15.0, yarn v1.22.10, and PostgreSQL 13.0.
 -   GitHub Actions build script and API docs generator for CI/CD.
 -   Database migration to be handle by knex.
 
