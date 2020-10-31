@@ -47,7 +47,7 @@ DROP TABLE IF EXISTS Locations CASCADE;
 DROP TABLE IF EXISTS ListingLocations CASCADE;
 
 CREATE TABLE Users (
-	user_id VARCHAR,
+	user_id UUID,
 	first_name VARCHAR NOT NULL,
 	last_name VARCHAR,
 	email VARCHAR(320) UNIQUE NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE Users (
 
 CREATE TABLE PendingUsers (
 	pending_user_id SERIAL,
-	user_id VARCHAR UNIQUE NOT NULL,
+	user_id UUID UNIQUE NOT NULL,
 	token VARCHAR UNIQUE NOT NULL,
 	PRIMARY KEY (pending_user_id),
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE
@@ -74,7 +74,7 @@ CREATE TABLE ForgetPasswordUsers (
 );
 
 CREATE TABLE Profiles (
-	user_id VARCHAR,
+	user_id UUID,
 	nickname VARCHAR NOT NULL,
 	profile_picture VARCHAR,
 	about TEXT,
@@ -103,7 +103,7 @@ CREATE TABLE Skills (
 
 CREATE TABLE ProfileSkills (
 	profile_skill_id SERIAL,
-	user_id VARCHAR NOT NULL,
+	user_id UUID NOT NULL,
 	skill_id INTEGER NOT NULL,
 	PRIMARY KEY (profile_skill_id),
 	UNIQUE (user_id, skill_id),
@@ -128,7 +128,7 @@ CREATE TABLE Organisations (
 CREATE TABLE Memberships (
 	membership_id SERIAL,
 	organisation_id INTEGER NOT NULL,
-	user_id VARCHAR NOT NULL,
+	user_id UUID NOT NULL,
 	is_owner BOOLEAN NOT NULL DEFAULT FALSE,
 	joined_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	PRIMARY KEY (membership_id),
@@ -138,9 +138,9 @@ CREATE TABLE Memberships (
 );
 
 CREATE TABLE Listings (
-	listing_id VARCHAR,
+	listing_id UUID,
 	organisation_id INTEGER,
-	created_by VARCHAR,
+	created_by UUID,
 	title VARCHAR NOT NULL,
 	category VARCHAR NOT NULL,
 	about TEXT,
@@ -166,7 +166,7 @@ CREATE TABLE Listings (
 );
 
 CREATE TABLE ListingStories (
-	listing_id VARCHAR,
+	listing_id UUID,
 	overview TEXT,
 	problem TEXT,
 	solution TEXT,
@@ -177,14 +177,14 @@ CREATE TABLE ListingStories (
 
 CREATE TABLE FeaturedListings (
 	featured_listing_id SERIAL,
-	listing_id VARCHAR UNIQUE NOT NULL,
+	listing_id UUID UNIQUE NOT NULL,
 	PRIMARY KEY (featured_listing_id),
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
 CREATE TABLE HashTags (
 	hashtag_id SERIAL,
-	listing_id VARCHAR NOT NULL,
+	listing_id UUID NOT NULL,
 	tag VARCHAR NOT NULL,
 	PRIMARY KEY (hashtag_id),
 	UNIQUE (listing_id, tag),
@@ -193,7 +193,7 @@ CREATE TABLE HashTags (
 
 CREATE TABLE ListingSkills (
 	listing_skill_id SERIAL,
-	listing_id VARCHAR NOT NULL,
+	listing_id UUID NOT NULL,
 	skill_id INTEGER NOT NULL,
 	PRIMARY KEY (listing_skill_id),
 	UNIQUE (listing_id, skill_id),
@@ -205,7 +205,7 @@ CREATE TABLE ListingSkills (
 /* Jobs for a particular listing */
 CREATE TABLE Jobs (
 	job_id SERIAL,
-	listing_id VARCHAR NOT NULL,
+	listing_id UUID NOT NULL,
 	job_title VARCHAR NOT NULL,
 	job_description TEXT,
 	deleted_on TIMESTAMPTZ DEFAULT NULL,
@@ -215,7 +215,7 @@ CREATE TABLE Jobs (
 
 CREATE TABLE FAQs (
 	faq_id SERIAL,
-	listing_id VARCHAR NOT NULL,
+	listing_id UUID NOT NULL,
 	question TEXT NOT NULL,
 	answer TEXT,
 	PRIMARY KEY (faq_id),
@@ -224,8 +224,8 @@ CREATE TABLE FAQs (
 
 CREATE TABLE Likes (
 	like_id SERIAL,
-	user_id VARCHAR NOT NULL,
-	listing_id VARCHAR NOT NULL,
+	user_id UUID NOT NULL,
+	listing_id UUID NOT NULL,
 	PRIMARY KEY (like_id),
 	UNIQUE (user_id, listing_id),
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
@@ -234,8 +234,8 @@ CREATE TABLE Likes (
 
 CREATE TABLE ListingAdmins (
 	listing_admin_id SERIAL,
-	user_id VARCHAR NOT NULL,
-	listing_id VARCHAR NOT NULL,
+	user_id UUID NOT NULL,
+	listing_id UUID NOT NULL,
 	PRIMARY KEY (listing_admin_id),
 	UNIQUE (user_id, listing_id),
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
@@ -244,8 +244,8 @@ CREATE TABLE ListingAdmins (
 
 CREATE TABLE Participants (
 	participant_id SERIAL,
-	listing_id VARCHAR NOT NULL,
-	user_id VARCHAR NOT NULL,
+	listing_id UUID NOT NULL,
+	user_id UUID NOT NULL,
 	joined_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	end_on TIMESTAMPTZ,
 	PRIMARY KEY (participant_id),
@@ -256,8 +256,8 @@ CREATE TABLE Participants (
 
 CREATE TABLE Subscriptions (
 	subscription_id SERIAL,
-	user_id VARCHAR NOT NULL,
-	listing_id VARCHAR NOT NULL,
+	user_id UUID NOT NULL,
+	listing_id UUID NOT NULL,
 	PRIMARY KEY (subscription_id),
 	UNIQUE (user_id, listing_id),
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
@@ -266,7 +266,7 @@ CREATE TABLE Subscriptions (
 
 CREATE TABLE Milestones (
 	milestone_id SERIAL,
-	listing_id VARCHAR NOT NULL,
+	listing_id UUID NOT NULL,
 	description TEXT NOT NULL,
 	date TIMESTAMPTZ,
 	PRIMARY KEY (milestone_id),
@@ -275,7 +275,7 @@ CREATE TABLE Milestones (
 
 CREATE TABLE ListingUpdates (
 	listing_update_id SERIAL,
-	listing_id VARCHAR NOT NULL,
+	listing_id UUID NOT NULL,
 	description TEXT NOT NULL,
 	pic1 VARCHAR,
 	pic2 VARCHAR,
@@ -290,8 +290,8 @@ CREATE TABLE ListingUpdates (
 
 CREATE TABLE ListingComments (
 	listing_comment_id SERIAL,
-	listing_id VARCHAR,
-	user_id VARCHAR,
+	listing_id UUID,
+	user_id UUID,
 	COMMENT TEXT,
 	reply_to_id INTEGER CONSTRAINT reply_to_other_id CHECK (reply_to_id <> listing_comment_id),
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -311,7 +311,7 @@ CREATE TABLE Locations (
 
 CREATE TABLE ListingLocations (
 	listing_location_id SERIAL,
-	listing_id VARCHAR NOT NULL,
+	listing_id UUID NOT NULL,
 	location_id INTEGER NOT NULL,
 	PRIMARY KEY (listing_location_id),
 	UNIQUE (listing_id, location_id),
