@@ -14,6 +14,8 @@ DROP TABLE IF EXISTS ProfileSkills CASCADE;
 
 DROP TABLE IF EXISTS Organisations CASCADE;
 
+DROP TABLE IF EXISTS Programmes CASCADE;
+
 DROP TABLE IF EXISTS Memberships CASCADE;
 
 DROP TABLE IF EXISTS Listings CASCADE;
@@ -123,10 +125,10 @@ CREATE TABLE ProfileSkills (
 CREATE TABLE Organisations (
 	organisation_id SERIAL,
 	name VARCHAR NOT NULL,
-	type VARCHAR,
+	organisation_type VARCHAR,
 	about TEXT,
 	website_url VARCHAR,
-	handphone VARCHAR,
+	phone VARCHAR,
 	email VARCHAR(320),
 	owned_by VARCHAR,
 	locations VARCHAR,
