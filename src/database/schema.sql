@@ -118,14 +118,14 @@ CREATE TABLE ProfileSkills (
 CREATE TABLE Organisations (
 	organisation_id SERIAL,
 	name VARCHAR NOT NULL,
-	TYPE VARCHAR NOT NULL,
+	organisation_type VARCHAR,
 	about TEXT,
 	website_url VARCHAR,
-	handphone VARCHAR,
+	phone VARCHAR,
 	email VARCHAR(320),
 	is_verified BOOLEAN NOT NULL DEFAULT FALSE,
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-	deleted_on TIMESTAMPTZ DEFAULT NULL,
+	deleted_on TIMESTAMPTZ,
 	PRIMARY KEY (organisation_id)
 );
 
@@ -163,7 +163,7 @@ CREATE TABLE Listings (
 	start_date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	end_date TIMESTAMPTZ,
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-	deleted_on TIMESTAMPTZ DEFAULT NULL,
+	deleted_on TIMESTAMPTZ,
 	PRIMARY KEY (listing_id),
 	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE SET NULL,
 	FOREIGN KEY (created_by) REFERENCES Users (user_id) ON DELETE SET NULL
@@ -212,7 +212,7 @@ CREATE TABLE Jobs (
 	listing_id UUID NOT NULL,
 	job_title VARCHAR NOT NULL,
 	job_description TEXT,
-	deleted_on TIMESTAMPTZ DEFAULT NULL,
+	deleted_on TIMESTAMPTZ,
 	PRIMARY KEY (job_id),
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
@@ -271,7 +271,7 @@ CREATE TABLE Subscriptions (
 CREATE TABLE Milestones (
 	milestone_id SERIAL,
 	listing_id UUID NOT NULL,
-	description TEXT NOT NULL,
+	description TEXT,
 	date TIMESTAMPTZ,
 	PRIMARY KEY (milestone_id),
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
@@ -280,7 +280,7 @@ CREATE TABLE Milestones (
 CREATE TABLE ListingUpdates (
 	listing_update_id SERIAL,
 	listing_id UUID NOT NULL,
-	description TEXT NOT NULL,
+	description TEXT,
 	pic1 VARCHAR,
 	pic2 VARCHAR,
 	pic3 VARCHAR,
@@ -296,8 +296,8 @@ CREATE TABLE ListingComments (
 	listing_comment_id SERIAL,
 	listing_id UUID,
 	user_id UUID,
-	COMMENT TEXT,
-	reply_to_id INTEGER CONSTRAINT reply_to_other_id CHECK (reply_to_id <> listing_comment_id),
+	comment TEXT,
+	reply_to_id INTEGER,
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	deleted_on TIMESTAMPTZ,
@@ -309,7 +309,7 @@ CREATE TABLE ListingComments (
 
 CREATE TABLE Locations (
 	location_id SERIAL,
-	LOCATION VARCHAR,
+	LOCATION VARCHAR UNIQUE NOT NULL,
 	PRIMARY KEY (location_id)
 );
 
