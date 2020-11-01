@@ -102,7 +102,7 @@ export const updateOrganisation = asyncHandler(async (req, res, next) => {
     const organisationId: number = parseInt(req.params.id);
     const isOrganisationOwner = await checkOrganisationOwner(userId, organisationId);
 
-    if (!isOrganisationOwner) {
+    if (req.user.role !== 'admin' && !isOrganisationOwner) {
         return next(new ErrorResponse('Not authorised to delete organisation as you are not the organisation owner', 403));
     }
 
@@ -141,7 +141,7 @@ export const deleteOrganisation = asyncHandler(async (req, res, next) => {
     const organisationId: number = parseInt(req.params.id);
     const isOrganisationOwner = await checkOrganisationOwner(userId, organisationId);
 
-    if (!isOrganisationOwner) {
+    if (req.user.role !== 'admin' && !isOrganisationOwner) {
         return next(new ErrorResponse('Not authorised to delete organisation as you are not the organisation owner', 403));
     }
 
