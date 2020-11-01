@@ -131,7 +131,7 @@ CREATE TABLE Organisations (
 	phone VARCHAR,
 	email VARCHAR(320),
 	owned_by VARCHAR,
-	locations VARCHAR,
+	locations VARCHAR[],
 	story TEXT,
 	is_verified BOOLEAN NOT NULL DEFAULT FALSE,
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),

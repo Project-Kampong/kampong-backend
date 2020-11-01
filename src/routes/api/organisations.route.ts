@@ -28,7 +28,7 @@ const validateCreateOrganisationFields = [
     check('website_url', INVALID_URL_MSG).optional().trim().isURL(),
     check('phone', INVALID_PHONE_NUMBER_MSG).optional().trim().notEmpty(),
     check('email', INVALID_EMAIL_MSG).trim().notEmpty().isEmail().normalizeEmail(),
-    check('locations', INVALID_LOCATION_MSG).optional().trim(),
+    check('locations', INVALID_LOCATION_MSG).optional(),
     check('story', INVALID_ALPHA_SPACE_MSG('story')).optional().trim(),
 ];
 
@@ -50,7 +50,7 @@ const validateUpdateOrganisationFields = [
     check('website_url', INVALID_URL_MSG).optional().trim().isURL(),
     check('phone', INVALID_PHONE_NUMBER_MSG).optional().trim().notEmpty(),
     check('email', INVALID_EMAIL_MSG).optional().trim().notEmpty().isEmail().normalizeEmail(),
-    check('locations', INVALID_LOCATION_MSG).optional().trim(),
+    check('locations', INVALID_LOCATION_MSG).optional(),
     check('story', INVALID_ALPHA_SPACE_MSG('story')).optional().trim(),
 ];
 
