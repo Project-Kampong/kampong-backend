@@ -30,14 +30,14 @@ export const getOrganisation = asyncHandler(async (req, res) => {
  * @access  Private
  */
 export const createOrganisation = asyncHandler(async (req, res) => {
-    const { name, type, about, website_url, handphone, email, locations, story } = req.body;
+    const { name, organisation_type, about, website_url, phone, email, locations, story } = req.body;
 
     const data = {
         name,
-        type,
+        organisation_type,
         about,
         website_url,
-        handphone,
+        phone,
         email,
         locations,
         story,
@@ -59,14 +59,14 @@ export const createOrganisation = asyncHandler(async (req, res) => {
 export const updateOrganisation = asyncHandler(async (req, res, next) => {
     await db.one('SELECT * FROM organisations WHERE organisation_id = $1', req.params.id);
 
-    const { name, type, about, website_url, handphone, email, locations, story } = req.body;
+    const { name, organisation_type, about, website_url, phone, email, locations, story } = req.body;
 
     const data = {
         name,
-        type,
+        organisation_type,
         about,
         website_url,
-        handphone,
+        phone,
         email,
         locations,
         story,
