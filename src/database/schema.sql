@@ -156,7 +156,7 @@ CREATE TABLE Programmes (
 	organisation_id INTEGER NOT NULL,
 	title VARCHAR NOT NULL,
 	about TEXT,
-	media_url VARCHAR,
+	media_url VARCHAR[],
 	PRIMARY KEY (programme_id),
 	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE
 );

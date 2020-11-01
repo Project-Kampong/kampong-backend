@@ -12,15 +12,14 @@ const validateCreateProgrammeFields = [
     check('organisation_id', INVALID_FIELD_MSG('organisation id')).notEmpty().isInt(),
     check('title', INVALID_FIELD_MSG('title')).trim().notEmpty(),
     check('about', INVALID_ALPHA_SPACE_MSG('about')).trim().notEmpty(),
-    check('media_url', INVALID_URL_MSG).optional().trim().isURL(),
+    check('media_url', INVALID_URL_MSG).optional(),
 ];
 
 const validateUpdateProgrammeFields = [
-    oneOf([check('organisation_id').exists(), check('title').exists(), check('about').exists(), check('media_url').exists()], NO_FIELD_UPDATED_MSG),
-    check('organisation_id', INVALID_FIELD_MSG('organisation id')).optional().isInt(),
+    oneOf([check('title').exists(), check('about').exists(), check('media_url').exists()], NO_FIELD_UPDATED_MSG),
     check('title', INVALID_FIELD_MSG('title')).optional().trim(),
     check('about', INVALID_ALPHA_SPACE_MSG('about')).optional().trim(),
-    check('media_url', INVALID_URL_MSG).optional().trim().isURL(),
+    check('media_url', INVALID_URL_MSG).optional(),
 ];
 
 // Map public routes to controller

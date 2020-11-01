@@ -15,7 +15,7 @@ import {
 import { getOrganisations, getOrganisation, createOrganisation, updateOrganisation, deleteOrganisation } from '../../controllers/organisations';
 
 // Import organisation's controllers
-import { router as programmeRoute } from './programme-routes';
+import { router as programmeRoute } from './programmes.route';
 
 // Re-route this URI to other resource router
 router.use('/:organisation_id/programmes', programmeRoute);
