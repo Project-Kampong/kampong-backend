@@ -14,6 +14,8 @@ DROP TABLE IF EXISTS ProfileSkills CASCADE;
 
 DROP TABLE IF EXISTS Organisations CASCADE;
 
+DROP TABLE IF EXISTS Programmes CASCADE;
+
 DROP TABLE IF EXISTS Memberships CASCADE;
 
 DROP TABLE IF EXISTS Listings CASCADE;
@@ -123,11 +125,14 @@ CREATE TABLE ProfileSkills (
 CREATE TABLE Organisations (
 	organisation_id SERIAL,
 	name VARCHAR NOT NULL,
-	TYPE VARCHAR NOT NULL,
+	organisation_type VARCHAR,
 	about TEXT,
 	website_url VARCHAR,
-	handphone VARCHAR,
+	phone VARCHAR,
 	email VARCHAR(320),
+	owned_by VARCHAR,
+	locations VARCHAR[],
+	story TEXT,
 	is_verified BOOLEAN NOT NULL DEFAULT FALSE,
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	deleted_on TIMESTAMPTZ DEFAULT NULL,
@@ -144,6 +149,16 @@ CREATE TABLE Memberships (
 	UNIQUE (organisation_id, user_id),
 	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE,
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE
+);
+
+CREATE TABLE Programmes (
+	programme_id SERIAL,
+	organisation_id INTEGER NOT NULL,
+	title VARCHAR NOT NULL,
+	about TEXT,
+	media_url VARCHAR[],
+	PRIMARY KEY (programme_id),
+	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE
 );
 
 CREATE TABLE Listings (

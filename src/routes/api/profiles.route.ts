@@ -2,7 +2,7 @@ import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
 import { advancedResults, checkInputError, protect, authorise, mapSingleFileLocation } from '../../middleware';
-import { DATETIME_REGEX, INVALID_TIMESTAMP_MSG, INVALID_FIELD_MSG, NO_FIELD_UPDATED_MSG, uploadFile } from '../../utils';
+import { DATETIME_REGEX, INVALID_TIMESTAMP_MSG, INVALID_FIELD_MSG, NO_FIELD_UPDATED_MSG, uploadFile, INVALID_PHONE_NUMBER_MSG } from '../../utils';
 
 // import controllers here
 import { getProfiles, getProfile, updateProfile, verifyProfile, uploadPic } from '../../controllers/profiles';
@@ -27,7 +27,7 @@ const validateProfileUpdateFields = [
     ),
     check('nickname', INVALID_FIELD_MSG('nickname')).optional().trim().notEmpty(),
     check('dob').optional().matches(DATETIME_REGEX).withMessage(INVALID_TIMESTAMP_MSG('dob')),
-    check('phone').optional().isMobilePhone('any').withMessage(INVALID_FIELD_MSG('phone number')),
+    check('phone').optional().isMobilePhone('any').withMessage(INVALID_PHONE_NUMBER_MSG),
     check(['facebook_link', 'twitter_link', 'instagram_link', 'linkedin_link']).optional().isURL().withMessage(INVALID_FIELD_MSG('URL')),
 ];
 
