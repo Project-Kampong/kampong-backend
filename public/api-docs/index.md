@@ -1,4 +1,3 @@
-
 # Kampong API
 
 Backend API for Project Kampong.
