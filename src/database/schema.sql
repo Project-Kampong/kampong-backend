@@ -1,5 +1,13 @@
 DROP TYPE IF EXISTS user_roles CASCADE;
 
+CREATE TYPE user_roles AS ENUM ('admin', 'user');
+
+DROP EXTENSION IF EXISTS pg_stat_statements CASCADE;
+
+CREATE EXTENSION pg_stat_statements;
+
+DROP TABLE IF EXISTS Roles CASCADE;
+
 DROP TABLE IF EXISTS Users CASCADE;
 
 DROP TABLE IF EXISTS PendingUsers CASCADE;
@@ -13,6 +21,8 @@ DROP TABLE IF EXISTS Skills CASCADE;
 DROP TABLE IF EXISTS ProfileSkills CASCADE;
 
 DROP TABLE IF EXISTS Organisations CASCADE;
+
+DROP TABLE IF EXISTS Programmes CASCADE;
 
 DROP TABLE IF EXISTS Memberships CASCADE;
 
@@ -47,8 +57,6 @@ DROP TABLE IF EXISTS ListingComments CASCADE;
 DROP TABLE IF EXISTS Locations CASCADE;
 
 DROP TABLE IF EXISTS ListingLocations CASCADE;
-
-CREATE TYPE user_roles AS ENUM ('admin', 'user');
 
 CREATE TABLE Users (
 	user_id UUID,
@@ -123,6 +131,9 @@ CREATE TABLE Organisations (
 	website_url VARCHAR,
 	phone VARCHAR,
 	email VARCHAR(320),
+	owned_by VARCHAR,
+	locations VARCHAR[],
+	story TEXT,
 	is_verified BOOLEAN NOT NULL DEFAULT FALSE,
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	deleted_on TIMESTAMPTZ,
@@ -139,6 +150,16 @@ CREATE TABLE Memberships (
 	UNIQUE (organisation_id, user_id),
 	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE,
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE
+);
+
+CREATE TABLE Programmes (
+	programme_id SERIAL,
+	organisation_id INTEGER NOT NULL,
+	title VARCHAR NOT NULL,
+	about TEXT,
+	media_url VARCHAR[],
+	PRIMARY KEY (programme_id),
+	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE
 );
 
 CREATE TABLE Listings (
