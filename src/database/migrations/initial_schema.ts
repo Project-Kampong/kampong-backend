@@ -1,5 +1,4 @@
 import * as Knex from 'knex';
-import { TableName } from 'pg-promise';
 
 export async function up(knex: Knex): Promise<void> {
     return knex.transaction(async (tx: Knex.Transaction) => {
