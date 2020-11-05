@@ -45,8 +45,21 @@ interface UpdateOrganisationRequestSchema {
  * @desc    Get all organisations
  * @route   GET /api/organisations
  * @access  Public
+ * @desc    Get all organisations for a single listing
+ * @route   GET /api/listings/:listing_id/organisations
+ * @access  Public
  */
 export const getOrganisations = asyncHandler(async (req, res) => {
+    if (req.params.listing_id) {
+        const rows = await db.manyOrNone<Promise<OrganisationSchema[]>>(
+            'SELECT * FROM listingsview WHERE organisation_id = $1',
+            req.params.organisation_id,
+        );
+        return res.status(200).json({
+            success: true,
+            data: rows,
+        });
+    }
     res.status(200).json(res.advancedResults);
 });
 
