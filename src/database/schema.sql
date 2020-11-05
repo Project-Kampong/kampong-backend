@@ -193,6 +193,17 @@ CREATE TABLE Listings (
 	FOREIGN KEY (created_by) REFERENCES Users (user_id) ON DELETE SET NULL
 );
 
+CREATE TABLE ListingOrganisations (
+	listing_organisation_id SERIAL,
+	listing_id VARCHAR NOT NULL,
+	organisation_id INTEGER NOT NULL,
+	PRIMARY KEY (listing_organisation_id),
+	UNIQUE (listing_id, organisation_id),
+	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE,
+	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE
+);
+
+
 CREATE TABLE ListingStories (
 	listing_id VARCHAR,
 	overview TEXT,
