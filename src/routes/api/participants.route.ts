@@ -1,7 +1,7 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
-import { advancedResults, protect, authorise, checkInputError } from '../../middleware';
+import { advancedResults, protect, checkInputError } from '../../middleware';
 import { DATETIME_REGEX, INVALID_FIELD_MSG, INVALID_TIMESTAMP_MSG, NO_FIELD_UPDATED_MSG } from '../../utils';
 
 // import controllers here
@@ -24,9 +24,8 @@ const validateUpdateParticipantFields = [
 router.route('/').get(advancedResults('participants'), getParticipants);
 router.route('/:participant_id').get(getParticipant);
 
-// all routes below only accessible to admin
+// all routes below only accessible to admin, specifically, listing owner (to be implemented)
 router.use(protect);
-router.use(authorise('user', 'admin'));
 
 // map routes to controller
 router.route('/').post(validateCreateParticipantFields, checkInputError, createParticipant);

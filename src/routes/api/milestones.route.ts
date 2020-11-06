@@ -1,7 +1,7 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
-import { advancedResults, protect, authorise, checkInputError } from '../../middleware';
+import { advancedResults, protect, checkInputError } from '../../middleware';
 import { DATETIME_REGEX, NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG, INVALID_TIMESTAMP_MSG } from '../../utils';
 
 // import controllers here
@@ -23,9 +23,8 @@ const validateUpdateMilestoneFields = [
 router.route('/').get(advancedResults('milestones'), getMilestones);
 router.route('/:id').get(getMilestone);
 
-// all routes below only accessible to authenticated user
+// all routes below only accessible to authenticated user, specifically, listing owner (to be implemented)
 router.use(protect);
-router.use(authorise('user', 'admin'));
 
 // map routes to controller
 router.route('/').post(validateCreateMilestoneFields, checkInputError, createMilestone);

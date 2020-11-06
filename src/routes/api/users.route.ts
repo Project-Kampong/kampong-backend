@@ -47,7 +47,7 @@ const validateUpdateUserFields = [
 
 // all route to use protect middleware
 router.use(protect);
-router.use(authorise('admin')); // admin authorisation only
+router.use(authorise('admin')); // admin only route
 
 // map routes to controller
 router.route('/').get(advancedResults('users'), getUsers).post(validateCreateUserFields, checkInputError, createUser);

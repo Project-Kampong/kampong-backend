@@ -1,7 +1,7 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
-import { advancedResults, checkInputError, protect, authorise } from '../../middleware';
+import { advancedResults, checkInputError, protect } from '../../middleware';
 import { HASHTAG_REGEX, NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } from '../../utils';
 
 // import controllers here
@@ -23,7 +23,6 @@ router.route('/:id').get(getHashtag);
 
 // all routes below only accessible to authenticated user
 router.use(protect);
-router.use(authorise('user', 'admin'));
 
 // map routes to controller
 router.route('/').post(validateCreateHashtagFields, checkInputError, createHashtag);

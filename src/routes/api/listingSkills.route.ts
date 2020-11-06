@@ -1,7 +1,7 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check } from 'express-validator';
-import { advancedResults, protect, authorise, checkInputError } from '../../middleware';
+import { advancedResults, protect, checkInputError } from '../../middleware';
 import { INVALID_FIELD_MSG, ALPHA_WHITESPACE_REGEX, INVALID_ALPHA_SPACE_MSG } from '../../utils';
 
 // import controllers here
@@ -22,9 +22,8 @@ const validateCustomSkill = [
 router.route('/').get(advancedResults('listingskills', 'skills', 'skill_id'), getListingSkills);
 router.route('/:id').get(getListingSkill);
 
-// all routes below only accessible to authenticated user
+// all routes below only accessible to authenticated user, specifically listing owners (to be implemented)
 router.use(protect);
-router.use(authorise('user', 'admin'));
 
 // map routes to controller
 router.route('/').post(validateCreateListingSkill, checkInputError, createListingSkill);

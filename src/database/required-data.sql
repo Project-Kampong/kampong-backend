@@ -1,7 +1,3 @@
-/* Create user roles */
-INSERT INTO Roles (role_name) VALUES ('user');
-INSERT INTO Roles (role_name) VALUES ('admin');
-
 /* Skills mock data population */
 INSERT INTO "public"."skills" ("skill", "skill_group") VALUES
 ('Needs Analysis', 'Big Data Analysis'),

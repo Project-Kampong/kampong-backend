@@ -1,6 +1,7 @@
 DROP VIEW IF EXISTS ListingsView CASCADE;
 DROP VIEW IF EXISTS OrganisationsView CASCADE;
 DROP VIEW IF EXISTS JobsView CASCADE;
+DROP VIEW IF EXISTS ListingCommentsView CASCADE;
 
 CREATE VIEW ListingsView AS WITH CombinedListingLocations AS (
 	SELECT
