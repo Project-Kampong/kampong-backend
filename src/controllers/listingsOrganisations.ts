@@ -1,4 +1,4 @@
-import { db } from  '../database/db';
+import { db } from '../database/db';
 import { asyncHandler } from '../middleware';
 import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 
@@ -11,7 +11,7 @@ export const createListingOrganisation = asyncHandler(async (req, res) => {
     const { listing_id, organisation_id } = req.body;
     const data = {
         listing_id,
-        organisation_id
+        organisation_id,
     };
 
     cleanseData(data);
@@ -19,45 +19,6 @@ export const createListingOrganisation = asyncHandler(async (req, res) => {
     const rows = await db.one('INSERT INTO listingsorganisations VALUES (${this:csv}) RETURNING *', data);
 
     res.status(201).json({
-        success: true,
-        data: rows,
-    });
-});
-
-/**
- * @desc    Update an entry in the listings-organisations table
- * @route   PUT /api/listings-organisations/:id
- * @access  Admin/Owner
- */
-export const updateListingOrganisation = asyncHandler(async (req, res, next) => {
-    const userId: string = req.user.user_id;
-    const ids = await db.one('SELECT listing_id, organisation_id FROM listingsorganisations WHERE listing_organisation_id = $1', req.params.id);
-    const table_listing_id: string = ids[0];
-    const table_organisation_id: number = ids[1];
-
-    const isOrganisationOwner = checkOrganisationOwner(userId, table_organisation_id);
-    const isListingOwner = checkListingOwner(userId, table_listing_id);
-    if (req.user.role !== 'admin' && !isListingOwner && !isOrganisationOwner) {
-        return next(new ErrorResponse('Not authorised to update listing organisation as you are not the organisation or listing owner', 403));
-    }
-
-    const {
-        listing_id,
-        organisation_id
-    } = req.body;
-
-    const data = {
-        listing_id,
-        organisation_id
-    };
-
-    cleanseData(data);
-
-    const updateListingOrganisationQuery = parseSqlUpdateStmt(data, 'organisations', 'WHERE organisation_id = $1 RETURNING *', [req.params.id]);
-
-    const rows = db.one(updateListingOrganisationQuery);
-
-    res.status(200).json({
         success: true,
         data: rows,
     });
