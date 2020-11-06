@@ -16,9 +16,11 @@ import { getOrganisations, getOrganisation, createOrganisation, updateOrganisati
 
 // Import organisation's controllers
 import { router as programmeRoute } from './programmes.route';
+import { router as listingsRoute } from './listings.route';
 
 // Re-route this URI to other resource router
 router.use('/:organisation_id/programmes', programmeRoute);
+router.use('/:organisation_id/listings', listingsRoute);
 
 // Define input validation
 const validateCreateOrganisationFields = [

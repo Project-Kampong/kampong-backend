@@ -24,6 +24,8 @@ DROP TABLE IF EXISTS Memberships CASCADE;
 
 DROP TABLE IF EXISTS Listings CASCADE;
 
+DROP TABLE IF EXISTS ListingsOrganisations CASCADE;
+
 DROP TABLE IF EXISTS ListingStories CASCADE;
 
 DROP TABLE IF EXISTS FeaturedListings CASCADE;
@@ -54,22 +56,15 @@ DROP TABLE IF EXISTS Locations CASCADE;
 
 DROP TABLE IF EXISTS ListingLocations CASCADE;
 
-CREATE TABLE Roles (
-	role_id SERIAL,
-	role_name VARCHAR UNIQUE NOT NULL,
-	PRIMARY KEY (role_id)
-);
-
 CREATE TABLE Users (
 	user_id VARCHAR,
 	first_name VARCHAR NOT NULL,
 	last_name VARCHAR,
 	email VARCHAR(320) UNIQUE NOT NULL,
 	password VARCHAR NOT NULL,
-	role VARCHAR NOT NULL DEFAULT 'user',
+	role VARCHAR NOT NULL CHECK (role IN ('admin', 'user')) DEFAULT 'user',
 	is_activated BOOLEAN NOT NULL DEFAULT FALSE,
-	PRIMARY KEY (user_id),
-	FOREIGN KEY (role) REFERENCES Roles (role_name) ON DELETE SET DEFAULT
+	PRIMARY KEY (user_id)
 );
 
 CREATE TABLE PendingUsers (
@@ -167,7 +162,6 @@ CREATE TABLE Programmes (
 
 CREATE TABLE Listings (
 	listing_id VARCHAR,
-	organisation_id INTEGER,
 	created_by VARCHAR,
 	title VARCHAR NOT NULL,
 	category VARCHAR NOT NULL,
@@ -189,11 +183,10 @@ CREATE TABLE Listings (
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	deleted_on TIMESTAMPTZ DEFAULT NULL,
 	PRIMARY KEY (listing_id),
-	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE SET NULL,
 	FOREIGN KEY (created_by) REFERENCES Users (user_id) ON DELETE SET NULL
 );
 
-CREATE TABLE ListingOrganisations (
+CREATE TABLE ListingsOrganisations (
 	listing_organisation_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	organisation_id INTEGER NOT NULL,
@@ -202,7 +195,6 @@ CREATE TABLE ListingOrganisations (
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE,
 	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE
 );
-
 
 CREATE TABLE ListingStories (
 	listing_id VARCHAR,

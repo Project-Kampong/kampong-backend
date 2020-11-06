@@ -26,7 +26,6 @@ interface UpdateProgrammeRequestSchema {
 /**
  * @desc    Get all programmes
  * @route   GET /api/programmes
- * @access  Public
  * @desc    Get all programmes for an organisation
  * @route   GET /api/organisations/:organisation_id/programmes
  * @access  Public
