@@ -32,7 +32,7 @@ export const getListings = asyncHandler(async (req, res) => {
         });
     } else if (req.params.organisation_id) {
         const rows = await db.manyOrNone(
-            'SELECT * FROM organisations o LEFT JOIN listingorganisations lo ON o.organisation_id = lo.organisation_id LEFT JOIN listings l ON lo.listing_id = l.listing_id WHERE o.organisation_id = $1',
+            'SELECT * FROM organisations o LEFT JOIN listingsorganisations lo ON o.organisation_id = lo.organisation_id LEFT JOIN listings l ON lo.listing_id = l.listing_id WHERE o.organisation_id = $1',
             req.params.organisation_id,
         );
         return res.status(200).json({

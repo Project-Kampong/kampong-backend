@@ -1,6 +1,6 @@
 import { db } from '../database/db';
 import { asyncHandler } from '../middleware';
-import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
+import { cleanseData, ErrorResponse } from '../utils';
 
 /**
  * @desc    Create an entry in the listings-organisations table
@@ -16,7 +16,7 @@ export const createListingOrganisation = asyncHandler(async (req, res) => {
 
     cleanseData(data);
 
-    const rows = await db.one('INSERT INTO listingsorganisations VALUES (${this:csv}) RETURNING *', data);
+    const rows = await db.one('INSERT INTO listingsorganisations (listing_id, organisation_id) VALUES (${this:csv}) RETURNING *', data);
 
     res.status(201).json({
         success: true,
@@ -32,11 +32,13 @@ export const createListingOrganisation = asyncHandler(async (req, res) => {
 export const deleteListingOrganisation = asyncHandler(async (req, res, next) => {
     const userId: string = req.user.user_id;
     const ids = await db.one('SELECT listing_id, organisation_id FROM listingsorganisations WHERE listing_organisation_id = $1', req.params.id);
-    const table_listing_id: string = ids[0];
-    const table_organisation_id: number = ids[1];
+    const {
+        listing_id,
+        organisation_id
+    } = ids;
 
-    const isOrganisationOwner = checkOrganisationOwner(userId, table_organisation_id);
-    const isListingOwner = checkListingOwner(userId, table_listing_id);
+    const isOrganisationOwner = checkOrganisationOwner(userId,organisation_id);
+    const isListingOwner = checkListingOwner(userId, listing_id);
     if (req.user.role !== 'admin' && !isListingOwner && !isOrganisationOwner) {
         return next(new ErrorResponse('Not authorised to delete listing organisation as you are not the organisation or listing owner', 403));
     }
