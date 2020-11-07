@@ -161,6 +161,14 @@ Backend API for Project Kampong.
   * [Get Single Participant](#4-get-single-participant)
   * [Update Participant](#5-update-participant)
 
+* [Programmes](#programmes)
+
+  * [Create Programme](#1-create-programme)
+  * [Delete Programme](#2-delete-programme)
+  * [Get All Programmes](#3-get-all-programmes)
+  * [Get Single Programme](#4-get-single-programme)
+  * [Update Programme](#5-update-programme)
+
 * [Send Email](#send-email)
 
   * [Send email](#1-send-email)
@@ -11428,11 +11436,12 @@ URL: {{URL}}/api/organisations
 ```js        
 {
 	"name": "Org 1",
-    "type": "Sponsor",
+    "organisation_type": "Sponsor",
     "about": "about org 1",
     "website_url": "www.testorg1.com",
-    "handphone": 93232224,
-    "email": "testorg1@test.com"
+    "phone": 93232224,
+    "email": "testorg1@test.com",
+    "locations": ["Tampines", "Simei"]
 }
 ```
 
@@ -11441,7 +11450,7 @@ URL: {{URL}}/api/organisations
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Create Skill (400 Bad Request - Non-alphabet or non-whitespace character in field)
+##### I. Example Request: Create Organisation (201 Created)
 
 
 ***Headers:***
@@ -11456,93 +11465,39 @@ URL: {{URL}}/api/organisations
 
 ```js        
 {
-	"skill": "$ making"
+	"name": "Org 1",
+    "organisation_type": "Sponsor",
+    "about": "about org 1",
+    "website_url": "www.testorg1.com",
+    "phone": 93232224,
+    "email": "testorg1@test.com",
+    "locations": ["Tampines", "Simei"]
 }
 ```
 
 
 
-##### I. Example Response: Create Skill (400 Bad Request - Non-alphabet or non-whitespace character in field)
-```js
-{
-    "success": false,
-    "error": "Please include a valid skill with alphabets and spaces only."
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-##### II. Example Request: Create Skill (403 Forbidden - Non-admin user)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"skill": "Microsoft Powerpoint"
-}
-```
-
-
-
-##### II. Example Response: Create Skill (403 Forbidden - Non-admin user)
-```js
-{
-    "success": false,
-    "error": "User role user not authorised to access this route"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
-##### III. Example Request: Create Skill (201 Created)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"skill": "Microsoft Powerpoint",
-	"skill_group": "Microsoft Office Tools"
-}
-```
-
-
-
-##### III. Example Response: Create Skill (201 Created)
+##### I. Example Response: Create Organisation (201 Created)
 ```js
 {
     "success": true,
     "data": {
-        "skill_id": 16,
-        "skill": "Microsoft Powerpoint",
-        "skill_group": "Microsoft Office Tools"
+        "organisation_id": 4,
+        "name": "Org 1",
+        "organisation_type": "Sponsor",
+        "about": "about org 1",
+        "website_url": "www.testorg1.com",
+        "phone": "93232224",
+        "email": "testorg1@test.com",
+        "owned_by": "d69a127d-815b-4834-b2b6-54ab398fccad",
+        "locations": [
+            "Tampines",
+            "Simei"
+        ],
+        "story": null,
+        "is_verified": false,
+        "created_on": "2020-11-01T14:49:37.844Z",
+        "deleted_on": null
     }
 }
 ```
@@ -11565,7 +11520,7 @@ Delete organisation identified by organisation id. Permission: Owner/Admin.
 ```bash
 Method: DELETE
 Type: 
-URL: {{URL}}/api/organisations/1
+URL: {{URL}}/api/organisations/2
 ```
 
 
@@ -11573,15 +11528,15 @@ URL: {{URL}}/api/organisations/1
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Delete Skill (403 Forbidden - Non-admin user)
+##### I. Example Request: Delete Organisation (403 Forbidden - Non-organisation owner)
 
 
 
-##### I. Example Response: Delete Skill (403 Forbidden - Non-admin user)
+##### I. Example Response: Delete Organisation (403 Forbidden - Non-organisation owner)
 ```js
 {
     "success": false,
-    "error": "User role user not authorised to access this route"
+    "error": "Not authorised to delete organisation as you are not the organisation owner"
 }
 ```
 
@@ -11592,42 +11547,37 @@ URL: {{URL}}/api/organisations/1
 
 
 
-##### II. Example Request: Delete Skill (200 OK)
+##### II. Example Request: Delete Organisation (200 OK)
 
 
 
-##### II. Example Response: Delete Skill (200 OK)
+##### II. Example Response: Delete Organisation (200 OK)
 ```js
 {
     "success": true,
     "data": {
-        "skill_id": 1,
-        "skill": "cDNA"
+        "organisation_id": 5,
+        "name": "Org 1",
+        "organisation_type": "Sponsor",
+        "about": "about org 1",
+        "website_url": "www.testorg1.com",
+        "phone": "93232224",
+        "email": "testorg1@test.com",
+        "owned_by": "d69a127d-815b-4834-b2b6-54ab398fccad",
+        "locations": [
+            "Tampines",
+            "Simei"
+        ],
+        "story": null,
+        "is_verified": false,
+        "created_on": "2020-11-01T14:53:30.168Z",
+        "deleted_on": null
     }
 }
 ```
 
 
 ***Status Code:*** 200
-
-<br>
-
-
-
-##### III. Example Request: Delete Skill (400 Bad Request - Non-existent skill)
-
-
-
-##### III. Example Response: Delete Skill (400 Bad Request - Non-existent skill)
-```js
-{
-    "success": false,
-    "error": "Skill does not exist"
-}
-```
-
-
-***Status Code:*** 400
 
 <br>
 
@@ -11652,121 +11602,34 @@ URL: {{URL}}/api/organisations
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Get All Skills (200 OK)
+##### I. Example Request: Get All Organisations (200 OK)
 
 
 
-##### I. Example Response: Get All Skills (200 OK)
+##### I. Example Response: Get All Organisations (200 OK)
 ```js
 {
     "success": true,
-    "count": 25,
-    "pagination": {
-        "next": {
-            "page": 2,
-            "limit": 25
-        }
-    },
+    "count": 1,
+    "pagination": {},
     "data": [
         {
-            "skill_id": 1,
-            "skill": "cDNA"
-        },
-        {
-            "skill_id": 2,
-            "skill": "Typesetting"
-        },
-        {
-            "skill_id": 3,
-            "skill": "Biochemistry"
-        },
-        {
-            "skill_id": 4,
-            "skill": "WiFi"
-        },
-        {
-            "skill_id": 5,
-            "skill": "Siebel"
-        },
-        {
-            "skill_id": 6,
-            "skill": "JTAPI"
-        },
-        {
-            "skill_id": 7,
-            "skill": "Oilfield"
-        },
-        {
-            "skill_id": 8,
-            "skill": "Kindergarten"
-        },
-        {
-            "skill_id": 9,
-            "skill": "Aerospace Manufacturing"
-        },
-        {
-            "skill_id": 10,
-            "skill": "Mortgage Banking"
-        },
-        {
-            "skill_id": 11,
-            "skill": "Swim Instruction"
-        },
-        {
-            "skill_id": 12,
-            "skill": "Atomic Absorption"
-        },
-        {
-            "skill_id": 13,
-            "skill": "Game Design"
-        },
-        {
-            "skill_id": 14,
-            "skill": "CFI"
-        },
-        {
-            "skill_id": 15,
-            "skill": "Gas Turbines"
-        },
-        {
-            "skill_id": 16,
-            "skill": "ICU"
-        },
-        {
-            "skill_id": 17,
-            "skill": "Nintendo DS"
-        },
-        {
-            "skill_id": 18,
-            "skill": "IoC"
-        },
-        {
-            "skill_id": 19,
-            "skill": "Econometrics"
-        },
-        {
-            "skill_id": 20,
-            "skill": "HBSS"
-        },
-        {
-            "skill_id": 21,
-            "skill": "Obstetrics"
-        },
-        {
-            "skill_id": 22,
-            "skill": "NDF"
-        },
-        {
-            "skill_id": 23,
-            "skill": "Equity Research"
-        },
-        {
-            "skill_id": 24,
-            "skill": "BMI"
-        },
-        {
-            "skill_id": 25,
-            "skill": "Fund Of Funds"
+            "organisation_id": 1,
+            "name": "Org 1",
+            "organisation_type": "Sponsor",
+            "about": "about org 1",
+            "website_url": "www.testorg1.com",
+            "phone": "93232224",
+            "email": "testorg1@test.com",
+            "owned_by": null,
+            "locations": [
+                "Tampines",
+                "Simei"
+            ],
+            "story": null,
+            "is_verified": false,
+            "created_on": "2020-11-01T14:14:50.382Z",
+            "deleted_on": null
         }
     ]
 }
@@ -11790,7 +11653,7 @@ Get single organisation. Permission: Public.
 ```bash
 Method: GET
 Type: 
-URL: {{URL}}/api/organisations1
+URL: {{URL}}/api/organisations/1
 ```
 
 
@@ -11798,42 +11661,37 @@ URL: {{URL}}/api/organisations1
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Get Single Skill (200 OK)
+##### I. Example Request: Get Single Organisation (200 OK)
 
 
 
-##### I. Example Response: Get Single Skill (200 OK)
+##### I. Example Response: Get Single Organisation (200 OK)
 ```js
 {
     "success": true,
     "data": {
-        "skill_id": 1,
-        "skill": "cDNA"
+        "organisation_id": 1,
+        "name": "Org 1",
+        "organisation_type": "Sponsor",
+        "about": "about org 1",
+        "website_url": "www.testorg1.com",
+        "phone": "93232224",
+        "email": "testorg1@test.com",
+        "owned_by": null,
+        "locations": [
+            "Tampines",
+            "Simei"
+        ],
+        "story": null,
+        "is_verified": false,
+        "created_on": "2020-11-01T14:14:50.382Z",
+        "deleted_on": null
     }
 }
 ```
 
 
 ***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Get Single Skill (404 Not Found - Invalid skill ID)
-
-
-
-##### II. Example Response: Get Single Skill (404 Not Found - Invalid skill ID)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
 
 <br>
 
@@ -11869,9 +11727,13 @@ URL: {{URL}}/api/organisations/1
 
 ```js        
 {
-	"skill": "Microsoft Word",
-	"skill_group": "Microsoft Suite",
-    "skill_description": "Microsoft suite of apps"
+	"name": "Org 1",
+    "organisation_type": "Sponsor",
+    "about": "about org 1",
+    "website_url": "www.testorg1.com",
+    "phone": 93232224,
+    "email": "testorg1@test.com",
+    "locations": ["Tampines", "Simei"]
 }
 ```
 
@@ -11880,7 +11742,7 @@ URL: {{URL}}/api/organisations/1
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Update Skill (200 OK)
+##### I. Example Request: Update Organisation (200 OK)
 
 
 ***Headers:***
@@ -11895,101 +11757,45 @@ URL: {{URL}}/api/organisations/1
 
 ```js        
 {
-	"skill": "Microsoft Word",
-	"skill_group": "Microsoft Suite",
-    "skill_description": "Microsoft suite of apps"
+	"name": "Org 1",
+    "organisation_type": "Sponsor",
+    "about": "about org 1",
+    "website_url": "www.testorg1.com",
+    "phone": 93232224,
+    "email": "testorg1@test.com",
+    "locations": ["Tampines", "Simei"]
 }
 ```
 
 
 
-##### I. Example Response: Update Skill (200 OK)
+##### I. Example Response: Update Organisation (200 OK)
 ```js
 {
     "success": true,
     "data": {
-        "skill_id": 1,
-        "skill": "Microsoft Word",
-        "skill_group": "Microsoft Suite",
-        "skill_description": "Microsoft suite of apps"
+        "organisation_id": 1,
+        "name": "Org 1",
+        "organisation_type": "Sponsor",
+        "about": "about org 1",
+        "website_url": "www.testorg1.com",
+        "phone": "93232224",
+        "email": "testorg1@test.com",
+        "owned_by": null,
+        "locations": [
+            "Tampines",
+            "Simei"
+        ],
+        "story": null,
+        "is_verified": false,
+        "created_on": "2020-11-01T14:14:50.382Z",
+        "deleted_on": null
     }
 }
 ```
 
 
 ***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Update Skill (403 Forbidden - Non-admin user)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"skill": "Microsoft Word"
-}
-```
-
-
-
-##### II. Example Response: Update Skill (403 Forbidden - Non-admin user)
-```js
-{
-    "success": false,
-    "error": "User role user not authorised to access this route"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
-##### III. Example Request: Update Skill (400 Bad Request - Non-alphabet or non-whitespace in field)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"skill": "#programming"
-}
-```
-
-
-
-##### III. Example Response: Update Skill (400 Bad Request - Non-alphabet or non-whitespace in field)
-```js
-{
-    "success": false,
-    "error": "Please include a valid skill with alphabets and spaces only."
-}
-```
-
-
-***Status Code:*** 400
 
 <br>
 
@@ -12629,6 +12435,334 @@ URL: {{URL}}/api/participants/1
 
 
 ***Status Code:*** 404
+
+<br>
+
+
+
+## Programmes
+Organisations CRUD functionality.
+
+
+
+### 1. Create Programme
+
+
+Create programme. Permission: Admin/Owner.
+
+Field rules:
+All fields required unles otherwise stated.
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: {{URL}}/api/programmes
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"organisation_id": 1,
+    "title": "New Programme 1",
+    "about": "About the new programme...",
+    "media_url": ["https://youtube.com", "https://instagram.com"]
+}
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Create Programme (201 Created)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"organisation_id": 1,
+    "title": "New Programme 1",
+    "about": "About the new programme...",
+    "media_url": ["https://youtube.com", "https://instagram.com"]
+}
+```
+
+
+
+##### I. Example Response: Create Programme (201 Created)
+```js
+{
+    "success": true,
+    "data": {
+        "programme_id": 1,
+        "organisation_id": 1,
+        "title": "New Programme 1",
+        "about": "About the new programme...",
+        "media_url": [
+            "https://youtube.com",
+            "https://instagram.com"
+        ]
+    }
+}
+```
+
+
+***Status Code:*** 201
+
+<br>
+
+
+
+### 2. Delete Programme
+
+
+Delete programme identified by programme id. Permission: Admin/Owner.
+
+
+***Endpoint:***
+
+```bash
+Method: DELETE
+Type: 
+URL: {{URL}}/api/programmes/1
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Delete Programme (200 OK)
+
+
+
+##### I. Example Response: Delete Programme (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "programme_id": 1,
+        "organisation_id": 1,
+        "title": "New Programme 1",
+        "about": "About the new programme...",
+        "media_url": [
+            "https://youtube.com",
+            "https://instagram.com"
+        ]
+    }
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+### 3. Get All Programmes
+
+
+Get all programmes. Permission: Public.
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{URL}}/api/programmes
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Get All Programmes (200 OK)
+
+
+
+##### I. Example Response: Get All Programmes (200 OK)
+```js
+{
+    "success": true,
+    "count": 1,
+    "pagination": {},
+    "data": [
+        {
+            "programme_id": 1,
+            "organisation_id": 1,
+            "title": "New Programme 1",
+            "about": "About the new programme...",
+            "media_url": [
+                "https://youtube.com",
+                "https://instagram.com"
+            ]
+        }
+    ]
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+### 4. Get Single Programme
+
+
+Get single programme. Permission: Public.
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{URL}}/api/programmes/1
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Get Single Programme (200 OK)
+
+
+
+##### I. Example Response: Get Single Programme (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "programme_id": 1,
+        "organisation_id": 1,
+        "title": "New Programme 1",
+        "about": "About the new programme...",
+        "media_url": [
+            "https://youtube.com",
+            "https://instagram.com"
+        ]
+    }
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+### 5. Update Programme
+
+
+Update Programme identified by programme id. Permission: Admin/Owner.
+
+Field rules: 
+At least one field must be updated.
+
+
+***Endpoint:***
+
+```bash
+Method: PUT
+Type: RAW
+URL: {{URL}}/api/programmes/1
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "title": "New Programme 1",
+    "about": "About the new programme...",
+    "media_url": ["https://youtube.com", "https://instagram.com"]
+}
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Update Programme (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "title": "New Programme 1",
+    "about": "About the new programme...",
+    "media_url": ["https://youtube.com", "https://instagram.com"]
+}
+```
+
+
+
+##### I. Example Response: Update Programme (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "programme_id": 1,
+        "organisation_id": 1,
+        "title": "New Programme 1",
+        "about": "About the new programme...",
+        "media_url": [
+            "https://youtube.com",
+            "https://instagram.com"
+        ]
+    }
+}
+```
+
+
+***Status Code:*** 200
 
 <br>
 
