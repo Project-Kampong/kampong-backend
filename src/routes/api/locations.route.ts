@@ -18,7 +18,7 @@ const validateCreateLocation = [check('location', INVALID_FIELD_MSG('location'))
 router.route('/').get(advancedResults('locations'), getLocations);
 router.route('/:id').get(getLocation);
 
-// all routes below only accessible to authenticated user
+// all routes below only accessible to admin
 router.use(protect);
 router.use(authorise('admin'));
 

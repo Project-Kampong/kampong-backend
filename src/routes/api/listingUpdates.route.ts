@@ -1,7 +1,7 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
-import { advancedResults, checkInputError, protect, authorise, mapFilenameToLocation } from '../../middleware';
+import { advancedResults, checkInputError, protect, mapFilenameToLocation } from '../../middleware';
 import { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG, uploadFile } from '../../utils';
 
 // import controllers here
@@ -31,9 +31,8 @@ const validateModifyListingUpdateFields = [
 router.route('/').get(advancedResults('listingupdates'), getListingUpdates);
 router.route('/:id').get(getListingUpdate);
 
-// all routes below only accessible to authenticated user
+// all routes below only accessible to authenticated user (specifically, listing owner, to be implemented)
 router.use(protect);
-router.use(authorise('user', 'admin'));
 
 // map routes to controller
 router

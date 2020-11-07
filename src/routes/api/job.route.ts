@@ -1,7 +1,7 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
-import { advancedResults, checkInputError, protect, authorise } from '../../middleware';
+import { advancedResults, checkInputError, protect } from '../../middleware';
 import { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } from '../../utils';
 
 // import controllers here
@@ -24,9 +24,8 @@ router.route('/').get(advancedResults('jobsview'), getJobs);
 router.route('/all').get(protect, advancedResults('jobs'), getJobsAll);
 router.route('/:id').get(getJob);
 
-// all routes below only accessible to admin
+// all routes below only accessible to authenticated users (and listing owner, to be implemented)
 router.use(protect);
-router.use(authorise('user', 'admin'));
 
 // map routes to controller
 router.route('/').post(validateCreateJobFields, checkInputError, createJob);
