@@ -1,6 +1,6 @@
 import { db } from '../database/db';
 import { asyncHandler } from '../middleware';
-import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
+import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
 
 /**
  * @desc    Get all participants
@@ -72,12 +72,12 @@ export const createParticipant = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    // check if user role, must be listing owner
-    if (req.user.role === 'user') {
-        const isListingOwner = await checkListingOwner(req.user.user_id, data.listing_id);
-        if (!isListingOwner) {
-            return next(new ErrorResponse(`Not authorised to add participants to this listing`, 403));
-        }
+    const isListingOwner = await checkListingOwner(req.user.user_id, listing_id);
+    const isOwnUser = req.user.user_id === user_id;
+
+    // check listing owner or ownself for non-admin users
+    if (!(req.user.role === 'admin' || isListingOwner || isOwnUser)) {
+        return next(new ErrorResponse(`Not authorised to add participant to this listing`, 403));
     }
 
     const rows = await db.one('INSERT INTO participants (${this:name}) VALUES (${this:csv}) RETURNING *', data);
@@ -89,64 +89,20 @@ export const createParticipant = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Update single participant (identified by participant id)
- * @route   PUT /api/participants/:participant_id
- * @access  Admin/Owner/Private
- */
-export const updateParticipant = asyncHandler(async (req, res, next) => {
-    // check for user role, must be listing owner, else must update self
-    if (req.user.role === 'user') {
-        const isListingOwner = await checkListingOwner(req.user.user_id, req.params.listing_id);
-
-        // throws 404 if participant does not exist
-        const participant = await db.one('SELECT * FROM participants WHERE participant_id = $1', req.params.participant_id);
-
-        // if not listing owner and user_id to be updated is not self, 403 response
-        if (!isListingOwner && req.user.user_id !== participant.user_id) {
-            return next(new ErrorResponse(`Not authorised to update other participants in this listing`, 403));
-        }
-    }
-
-    const { joined_on, end_on } = req.body;
-
-    const data = {
-        joined_on,
-        end_on,
-    };
-
-    cleanseData(data);
-
-    const updateParticipantQuery = parseSqlUpdateStmt(data, 'participants', 'WHERE participant_id = $1 RETURNING *', req.params.participant_id);
-
-    const rows = await db.one(updateParticipantQuery);
-
-    res.status(200).json({
-        success: true,
-        data: rows,
-    });
-});
-
-/**
  * @desc    Delete single participant (identified by participant id)
  * @route   DELETE /api/participants/:participant_id
  * @access  Admin/Owner/Private
  */
 export const deleteParticipant = asyncHandler(async (req, res, next) => {
-    // check for user role, must be listing owner, else must update self
-    if (req.user.role === 'user') {
-        const isListingOwner = await checkListingOwner(req.user.user_id, req.params.listing_id);
-        // if not listing owner and user_id to be updated is not self, 403 response
-        if (!isListingOwner && req.user.user_id !== req.params.user_id) {
-            return next(new ErrorResponse(`Not authorised to update other participants in this listing`, 403));
-        }
-    }
-
     // check if participant exists
-    const participant = await db.oneOrNone('SELECT * FROM participants WHERE participant_id = $1', req.params.participant_id);
+    const participant = await db.one('SELECT * FROM participants WHERE participant_id = $1', req.params.participant_id);
 
-    // return bad request response if invalid participant
-    if (!participant) {
-        return next(new ErrorResponse(`Participant does not exist`, 400));
+    const isListingOwner = await checkListingOwner(req.user.user_id, participant.listing_id);
+    const isOwnUser = req.user.user_id === participant.user_id;
+
+    // check listing owner or ownself for non-admin users
+    if (!(req.user.role === 'admin' || isListingOwner || isOwnUser)) {
+        return next(new ErrorResponse(`Not authorised to delete participant from this listing`, 403));
     }
 
     const rows = await db.one('DELETE FROM participants WHERE participant_id = $1 RETURNING *', req.params.participant_id);
@@ -156,8 +112,3 @@ export const deleteParticipant = asyncHandler(async (req, res, next) => {
         data: rows,
     });
 });
-
-const checkListingOwner = async (userId, listingId) => {
-    const owner = await db.one('SELECT created_by FROM Listings WHERE listing_id = $1', listingId);
-    return userId === owner.created_by;
-};

@@ -65,7 +65,7 @@ export const createListingLocation = asyncHandler(async (req, res, next) => {
 
     // check listing owner for non-admin users
     if (!(req.user.role === 'admin' || isListingOwner)) {
-        return next(new ErrorResponse(`Not authorised to delete listing location for this listing`, 403));
+        return next(new ErrorResponse(`Not authorised to add listing location for this listing`, 403));
     }
 
     const rows = await db.one('INSERT INTO ListingLocations (${this:name}) VALUES (${this:csv}) RETURNING *', data);
