@@ -1,3 +1,4 @@
+
 # Kampong API
 
 Backend API for Project Kampong.
@@ -126,8 +127,7 @@ Backend API for Project Kampong.
   * [Get Single Listing](#15-get-single-listing)
   * [Search Listings](#16-search-listings)
   * [Update Listing](#17-update-listing)
-  * [Upload Listing Photos](#18-upload-listing-photos)
-  * [Verify Listing](#19-verify-listing)
+  * [Verify Listing](#18-verify-listing)
 
 * [Locations](#locations)
 
@@ -159,7 +159,14 @@ Backend API for Project Kampong.
   * [Delete Participant](#2-delete-participant)
   * [Get All Participants](#3-get-all-participants)
   * [Get Single Participant](#4-get-single-participant)
-  * [Update Participant](#5-update-participant)
+
+* [Programmes](#programmes)
+
+  * [Create Programme](#1-create-programme)
+  * [Delete Programme](#2-delete-programme)
+  * [Get All Programmes](#3-get-all-programmes)
+  * [Get Single Programme](#4-get-single-programme)
+  * [Update Programme](#5-update-programme)
 
 * [Send Email](#send-email)
 
@@ -7949,45 +7956,52 @@ is_published - Boolean. Optional. Default to false.
 start_date - Valid SQL datetime. Optional. Default to current datetime.
 end_date - Valid SQL datetime. Optional.
 organisation_id - Valid integer and existing organisation id. Optional.
-pic1 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic2 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic3 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic4 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic5 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pics - Valid collection of up to 5 JPG/PNG files. Optional.
+pic1 - Full URL path to uploaded JPG/PNG file. Optional.
+pic2 - Full URL path to uploaded JPG/PNG file. Optional.
+pic3 - Full URL path to uploaded JPG/PNG file. Optional.
+pic4 - Full URL path to uploaded JPG/PNG file. Optional.
+pic5 - Full URL path to uploaded JPG/PNG file. Optional.
 
 
 ***Endpoint:***
 
 ```bash
 Method: POST
-Type: FORMDATA
+Type: RAW
 URL: {{URL}}/api/listings
 ```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
 
 
 ***Body:***
 
-| Key | Value | Description |
-| --- | ------|-------------|
-| title | New title 1 |  |
-| category | test category |  |
-| about | test about |  |
-| tagline | test tagline |  |
-| mission | test mission |  |
-| listing_url | www.test.com |  |
-| pic1 | test-pic-1.jpg |  |
-| pic2 | test-pic-2.jpg |  |
-| pic3 | test-pic-3.jpg |  |
-| pic4 | test-pic-4.jpg |  |
-| pic5 | test-pic-5.jpg |  |
-| is_published | false |  |
-| start_date | 2019-08-15 16:45:43.41585+08 |  |
-| end_date | 2020-07-17 16:45:43.41585+08 |  |
-| pics |  |  |
-| listing_email | new_listing@gmail.com |  |
-| listing_status | ongoing |  |
+```js        
+{
+    "title": "New title 1",
+    "category": "test category",
+    "about": "test about",
+    "tagline": "test tagline",
+    "mission": "test mission",
+    "listing_url": "www.test.com",
+    "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+    "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+    "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+    "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+    "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg",
+    "is_published": false,
+    "start_date": "2019-08-15 16:45:43.41585+08",
+    "end_date": "2020-07-17 16:45:43.41585+08",
+    "listing_email": "new_listing@gmail.com",
+    "listing_status": "ongoing"
+}
+```
 
 
 
@@ -9733,23 +9747,28 @@ Update listing. Permission: Admin/Owner.
 
 Field rules:
 At least one field must be updated.
-title - Non-empty.
-category - Non-empty.
-about - Optional.
-tagline - Optional.
-mission - Optional.
-listing_url - Valid URL. Optional.
-is_published - Boolean. Optional.
-start_date - Valid SQL datetime. Optional. Default to current datetime.
-end_date - Valid SQL datetime. Optional.
-organisation_id - Valid integer and existing organisation id. Optional.
+organisation_id - Valid integer and existing organisation id.
+title - Non-empty string.
+category - Non-empty string.
+about - String.
+tagline - String.
+mission - String.
+listing_url - Valid URL.
+is_published - Boolean. 
+start_date - Valid SQL datetime. Default to current datetime.
+end_date - Valid SQL datetime.
+pic1 - Full URL path to uploaded JPG/PNG file.
+pic2 - Full URL path to uploaded JPG/PNG file. 
+pic3 - Full URL path to uploaded JPG/PNG file. 
+pic4 - Full URL path to uploaded JPG/PNG file. 
+pic5 - Full URL path to uploaded JPG/PNG file.
 
 
 ***Endpoint:***
 
 ```bash
 Method: PUT
-Type: FORMDATA
+Type: RAW
 URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 ```
 
@@ -9757,25 +9776,26 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 
 ***Body:***
 
-| Key | Value | Description |
-| --- | ------|-------------|
-| title | Updated title 1 |  |
-| category | Updated category |  |
-| about | Updated about |  |
-| tagline | Updated tagline |  |
-| mission | Updated mission |  |
-| listing_url | www.updated-test.com |  |
-| is_published | true |  |
-| start_date | 2018-08-15 16:45:43.41585+08 |  |
-| end_date | 2020-01-30 16:45:43.41585+08 |  |
-| pic1 | test-pic-1.jpg |  |
-| pic2 | test-pic-2.jpg |  |
-| pic3 | test-pic-3.jpg |  |
-| pic4 | test-pic-4.jpg |  |
-| pic5 | test-pic-5.jpg |  |
-| pics |  | Collection of 5 JPG files |
-| listing_status | completed |  |
-| listing_email | updated_email@gmail.com |  |
+```js        
+{
+    "title": "Updated title 1",
+    "category": "Updated category",
+    "about": "Updated about",
+    "tagline": "Updated tagline",
+    "mission": "Updated mission",
+    "listing_url": "www.updated-test.com",
+    "is_published": true,
+    "start_date": "2018-08-15 16:45:43.41585+08",
+    "end_date": "2020-01-30 16:45:43.41585+08",
+    "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+    "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+    "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+    "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+    "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg",
+    "listing_status": "completed",
+    "listing_email": "updated_email@gmail.com"
+}
+```
 
 
 
@@ -9884,25 +9904,26 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 
 ***Body:***
 
-| Key | Value | Description |
-| --- | ------|-------------|
-| title | Updated title 1 |  |
-| category | Updated category |  |
-| about | Updated about |  |
-| tagline | Updated tagline |  |
-| mission | Updated mission |  |
-| listing_url | www.updated-test.com |  |
-| is_published | true |  |
-| start_date | 2018-08-15 16:45:43.41585+08 |  |
-| end_date | 2020-01-30 16:45:43.41585+08 |  |
-| pic1 | test-pic-1.jpg |  |
-| pic2 | test-pic-2.jpg |  |
-| pic3 | test-pic-3.jpg |  |
-| pic4 | test-pic-4.jpg |  |
-| pic5 | test-pic-5.jpg |  |
-| pics |  | Collection of 5 JPG files |
-| listing_status | completed |  |
-| listing_email | updated_email@gmail.com |  |
+```js        
+{
+    "title": "Updated title 1",
+    "category": "Updated category",
+    "about": "Updated about",
+    "tagline": "Updated tagline",
+    "mission": "Updated mission",
+    "listing_url": "www.updated-test.com",
+    "is_published": true,
+    "start_date": "2018-08-15 16:45:43.41585+08",
+    "end_date": "2020-01-30 16:45:43.41585+08",
+    "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+    "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+    "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+    "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+    "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg",
+    "listing_status": "completed",
+    "listing_email": "updated_email@gmail.com"
+}
+```
 
 
 
@@ -9911,6 +9932,9 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 {
     "success": true,
     "data": {
+        "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
+        "organisation_id": null,
+        "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
         "title": "Updated title 1",
         "category": "Updated category",
         "about": "Updated about",
@@ -9919,14 +9943,17 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
         "listing_url": "www.updated-test.com",
         "listing_email": "updated_email@gmail.com",
         "listing_status": "completed",
+        "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+        "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+        "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+        "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+        "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg",
         "is_published": true,
+        "is_verified": false,
         "start_date": "2018-08-15T08:45:43.415Z",
         "end_date": "2020-01-30T08:45:43.415Z",
-        "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1600581115622.jpg",
-        "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-1600581115630.jpg",
-        "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-1600581115654.jpg",
-        "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-1600581115659.jpg",
-        "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-1600581115664.jpg"
+        "created_on": "2020-08-20T09:36:45.815Z",
+        "deleted_on": null
     }
 }
 ```
@@ -9938,138 +9965,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 
 
 
-### 18. Upload Listing Photos
-
-
-Upload photos for listing, up to a maximum of 5 photos at once. In the request body JSON, the newly uploaded photo's filename and extension (eg. Pic001.jpg) must be passed as value to one of the 5 keys (pic1, pic2, ..., pic5). Permission: Admin/Owner.
-
-Field rules:
-All fields required unless otherwise stated.
-pic1 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic2 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic3 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic4 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic5 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pics - Valid collection of up to 5 JPG/PNG files. Optional.
-
-
-***Endpoint:***
-
-```bash
-Method: PUT
-Type: FORMDATA
-URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/upload-photo
-```
-
-
-
-***Body:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| pics |  | Collection of 5 JPG files |
-| pic1 | test-pic-1.jpg | Original filename of new picture, to be uploaded into pic1 |
-| pic2 | test-pic-2.jpg | Original filename of new picture, to be uploaded into pic2 |
-| pic3 | test-pic-3.jpg | Original filename of new picture, to be uploaded into pic3 |
-| pic4 | test-pic-4.jpg | Original filename of new picture, to be uploaded into pic4 |
-| pic5 | test-pic-5.jpg | Original filename of new picture, to be uploaded into pic5 |
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Upload Listing Photos (200 OK - 5 files uploaded, but only 1 valid filename given in requesst body)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| pics |  | Collection of 5 JPG files |
-| pic1 | test-pic-1.jpg | Original filename of new picture, to be uploaded into pic1 |
-| pic2 | DSC00415.jpg | Original filename of new picture, to be uploaded into pic2 |
-| pic3 | DSC00416.jpg | Original filename of new picture, to be uploaded into pic3 |
-| pic4 | DSC00424.jpg | Original filename of new picture, to be uploaded into pic4 |
-| pic5 | DSC00411.jpg | Original filename of new picture, to be uploaded into pic5 |
-
-
-
-##### I. Example Response: Upload Listing Photos (200 OK - 5 files uploaded, but only 1 valid filename given in requesst body)
-```js
-{
-    "success": true,
-    "data": {
-        "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1596383242481.jpg",
-        "pic2": null,
-        "pic3": null,
-        "pic4": null,
-        "pic5": null
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Upload Listing Photos (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| pics |  | Collection of 5 JPG files |
-| pic1 | test-pic-1.jpg | Original filename of new picture, to be uploaded into pic1 |
-| pic2 | test-pic-2.jpg | Original filename of new picture, to be uploaded into pic2 |
-| pic3 | test-pic-3.jpg | Original filename of new picture, to be uploaded into pic3 |
-| pic4 | test-pic-4.jpg | Original filename of new picture, to be uploaded into pic4 |
-| pic5 | test-pic-5.jpg | Original filename of new picture, to be uploaded into pic5 |
-
-
-
-##### II. Example Response: Upload Listing Photos (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1596383394655.jpg",
-        "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-1596383394658.jpg",
-        "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-1596383394662.jpg",
-        "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-1596383394666.jpg",
-        "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-1596383394673.jpg"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 19. Verify Listing
+### 18. Verify Listing
 
 
 Verify listing. Permission: Admin.
@@ -11428,11 +11324,12 @@ URL: {{URL}}/api/organisations
 ```js        
 {
 	"name": "Org 1",
-    "type": "Sponsor",
+    "organisation_type": "Sponsor",
     "about": "about org 1",
     "website_url": "www.testorg1.com",
-    "handphone": 93232224,
-    "email": "testorg1@test.com"
+    "phone": 93232224,
+    "email": "testorg1@test.com",
+    "locations": ["Tampines", "Simei"]
 }
 ```
 
@@ -11441,7 +11338,7 @@ URL: {{URL}}/api/organisations
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Create Skill (400 Bad Request - Non-alphabet or non-whitespace character in field)
+##### I. Example Request: Create Organisation (201 Created)
 
 
 ***Headers:***
@@ -11456,93 +11353,39 @@ URL: {{URL}}/api/organisations
 
 ```js        
 {
-	"skill": "$ making"
+	"name": "Org 1",
+    "organisation_type": "Sponsor",
+    "about": "about org 1",
+    "website_url": "www.testorg1.com",
+    "phone": 93232224,
+    "email": "testorg1@test.com",
+    "locations": ["Tampines", "Simei"]
 }
 ```
 
 
 
-##### I. Example Response: Create Skill (400 Bad Request - Non-alphabet or non-whitespace character in field)
-```js
-{
-    "success": false,
-    "error": "Please include a valid skill with alphabets and spaces only."
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-##### II. Example Request: Create Skill (403 Forbidden - Non-admin user)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"skill": "Microsoft Powerpoint"
-}
-```
-
-
-
-##### II. Example Response: Create Skill (403 Forbidden - Non-admin user)
-```js
-{
-    "success": false,
-    "error": "User role user not authorised to access this route"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
-##### III. Example Request: Create Skill (201 Created)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"skill": "Microsoft Powerpoint",
-	"skill_group": "Microsoft Office Tools"
-}
-```
-
-
-
-##### III. Example Response: Create Skill (201 Created)
+##### I. Example Response: Create Organisation (201 Created)
 ```js
 {
     "success": true,
     "data": {
-        "skill_id": 16,
-        "skill": "Microsoft Powerpoint",
-        "skill_group": "Microsoft Office Tools"
+        "organisation_id": 4,
+        "name": "Org 1",
+        "organisation_type": "Sponsor",
+        "about": "about org 1",
+        "website_url": "www.testorg1.com",
+        "phone": "93232224",
+        "email": "testorg1@test.com",
+        "owned_by": "d69a127d-815b-4834-b2b6-54ab398fccad",
+        "locations": [
+            "Tampines",
+            "Simei"
+        ],
+        "story": null,
+        "is_verified": false,
+        "created_on": "2020-11-01T14:49:37.844Z",
+        "deleted_on": null
     }
 }
 ```
@@ -11565,7 +11408,7 @@ Delete organisation identified by organisation id. Permission: Owner/Admin.
 ```bash
 Method: DELETE
 Type: 
-URL: {{URL}}/api/organisations/1
+URL: {{URL}}/api/organisations/2
 ```
 
 
@@ -11573,15 +11416,15 @@ URL: {{URL}}/api/organisations/1
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Delete Skill (403 Forbidden - Non-admin user)
+##### I. Example Request: Delete Organisation (403 Forbidden - Non-organisation owner)
 
 
 
-##### I. Example Response: Delete Skill (403 Forbidden - Non-admin user)
+##### I. Example Response: Delete Organisation (403 Forbidden - Non-organisation owner)
 ```js
 {
     "success": false,
-    "error": "User role user not authorised to access this route"
+    "error": "Not authorised to delete organisation as you are not the organisation owner"
 }
 ```
 
@@ -11592,42 +11435,37 @@ URL: {{URL}}/api/organisations/1
 
 
 
-##### II. Example Request: Delete Skill (200 OK)
+##### II. Example Request: Delete Organisation (200 OK)
 
 
 
-##### II. Example Response: Delete Skill (200 OK)
+##### II. Example Response: Delete Organisation (200 OK)
 ```js
 {
     "success": true,
     "data": {
-        "skill_id": 1,
-        "skill": "cDNA"
+        "organisation_id": 5,
+        "name": "Org 1",
+        "organisation_type": "Sponsor",
+        "about": "about org 1",
+        "website_url": "www.testorg1.com",
+        "phone": "93232224",
+        "email": "testorg1@test.com",
+        "owned_by": "d69a127d-815b-4834-b2b6-54ab398fccad",
+        "locations": [
+            "Tampines",
+            "Simei"
+        ],
+        "story": null,
+        "is_verified": false,
+        "created_on": "2020-11-01T14:53:30.168Z",
+        "deleted_on": null
     }
 }
 ```
 
 
 ***Status Code:*** 200
-
-<br>
-
-
-
-##### III. Example Request: Delete Skill (400 Bad Request - Non-existent skill)
-
-
-
-##### III. Example Response: Delete Skill (400 Bad Request - Non-existent skill)
-```js
-{
-    "success": false,
-    "error": "Skill does not exist"
-}
-```
-
-
-***Status Code:*** 400
 
 <br>
 
@@ -11652,121 +11490,34 @@ URL: {{URL}}/api/organisations
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Get All Skills (200 OK)
+##### I. Example Request: Get All Organisations (200 OK)
 
 
 
-##### I. Example Response: Get All Skills (200 OK)
+##### I. Example Response: Get All Organisations (200 OK)
 ```js
 {
     "success": true,
-    "count": 25,
-    "pagination": {
-        "next": {
-            "page": 2,
-            "limit": 25
-        }
-    },
+    "count": 1,
+    "pagination": {},
     "data": [
         {
-            "skill_id": 1,
-            "skill": "cDNA"
-        },
-        {
-            "skill_id": 2,
-            "skill": "Typesetting"
-        },
-        {
-            "skill_id": 3,
-            "skill": "Biochemistry"
-        },
-        {
-            "skill_id": 4,
-            "skill": "WiFi"
-        },
-        {
-            "skill_id": 5,
-            "skill": "Siebel"
-        },
-        {
-            "skill_id": 6,
-            "skill": "JTAPI"
-        },
-        {
-            "skill_id": 7,
-            "skill": "Oilfield"
-        },
-        {
-            "skill_id": 8,
-            "skill": "Kindergarten"
-        },
-        {
-            "skill_id": 9,
-            "skill": "Aerospace Manufacturing"
-        },
-        {
-            "skill_id": 10,
-            "skill": "Mortgage Banking"
-        },
-        {
-            "skill_id": 11,
-            "skill": "Swim Instruction"
-        },
-        {
-            "skill_id": 12,
-            "skill": "Atomic Absorption"
-        },
-        {
-            "skill_id": 13,
-            "skill": "Game Design"
-        },
-        {
-            "skill_id": 14,
-            "skill": "CFI"
-        },
-        {
-            "skill_id": 15,
-            "skill": "Gas Turbines"
-        },
-        {
-            "skill_id": 16,
-            "skill": "ICU"
-        },
-        {
-            "skill_id": 17,
-            "skill": "Nintendo DS"
-        },
-        {
-            "skill_id": 18,
-            "skill": "IoC"
-        },
-        {
-            "skill_id": 19,
-            "skill": "Econometrics"
-        },
-        {
-            "skill_id": 20,
-            "skill": "HBSS"
-        },
-        {
-            "skill_id": 21,
-            "skill": "Obstetrics"
-        },
-        {
-            "skill_id": 22,
-            "skill": "NDF"
-        },
-        {
-            "skill_id": 23,
-            "skill": "Equity Research"
-        },
-        {
-            "skill_id": 24,
-            "skill": "BMI"
-        },
-        {
-            "skill_id": 25,
-            "skill": "Fund Of Funds"
+            "organisation_id": 1,
+            "name": "Org 1",
+            "organisation_type": "Sponsor",
+            "about": "about org 1",
+            "website_url": "www.testorg1.com",
+            "phone": "93232224",
+            "email": "testorg1@test.com",
+            "owned_by": null,
+            "locations": [
+                "Tampines",
+                "Simei"
+            ],
+            "story": null,
+            "is_verified": false,
+            "created_on": "2020-11-01T14:14:50.382Z",
+            "deleted_on": null
         }
     ]
 }
@@ -11790,7 +11541,7 @@ Get single organisation. Permission: Public.
 ```bash
 Method: GET
 Type: 
-URL: {{URL}}/api/organisations1
+URL: {{URL}}/api/organisations/1
 ```
 
 
@@ -11798,42 +11549,37 @@ URL: {{URL}}/api/organisations1
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Get Single Skill (200 OK)
+##### I. Example Request: Get Single Organisation (200 OK)
 
 
 
-##### I. Example Response: Get Single Skill (200 OK)
+##### I. Example Response: Get Single Organisation (200 OK)
 ```js
 {
     "success": true,
     "data": {
-        "skill_id": 1,
-        "skill": "cDNA"
+        "organisation_id": 1,
+        "name": "Org 1",
+        "organisation_type": "Sponsor",
+        "about": "about org 1",
+        "website_url": "www.testorg1.com",
+        "phone": "93232224",
+        "email": "testorg1@test.com",
+        "owned_by": null,
+        "locations": [
+            "Tampines",
+            "Simei"
+        ],
+        "story": null,
+        "is_verified": false,
+        "created_on": "2020-11-01T14:14:50.382Z",
+        "deleted_on": null
     }
 }
 ```
 
 
 ***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Get Single Skill (404 Not Found - Invalid skill ID)
-
-
-
-##### II. Example Response: Get Single Skill (404 Not Found - Invalid skill ID)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
 
 <br>
 
@@ -11869,9 +11615,13 @@ URL: {{URL}}/api/organisations/1
 
 ```js        
 {
-	"skill": "Microsoft Word",
-	"skill_group": "Microsoft Suite",
-    "skill_description": "Microsoft suite of apps"
+	"name": "Org 1",
+    "organisation_type": "Sponsor",
+    "about": "about org 1",
+    "website_url": "www.testorg1.com",
+    "phone": 93232224,
+    "email": "testorg1@test.com",
+    "locations": ["Tampines", "Simei"]
 }
 ```
 
@@ -11880,7 +11630,7 @@ URL: {{URL}}/api/organisations/1
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Update Skill (200 OK)
+##### I. Example Request: Update Organisation (200 OK)
 
 
 ***Headers:***
@@ -11895,101 +11645,45 @@ URL: {{URL}}/api/organisations/1
 
 ```js        
 {
-	"skill": "Microsoft Word",
-	"skill_group": "Microsoft Suite",
-    "skill_description": "Microsoft suite of apps"
+	"name": "Org 1",
+    "organisation_type": "Sponsor",
+    "about": "about org 1",
+    "website_url": "www.testorg1.com",
+    "phone": 93232224,
+    "email": "testorg1@test.com",
+    "locations": ["Tampines", "Simei"]
 }
 ```
 
 
 
-##### I. Example Response: Update Skill (200 OK)
+##### I. Example Response: Update Organisation (200 OK)
 ```js
 {
     "success": true,
     "data": {
-        "skill_id": 1,
-        "skill": "Microsoft Word",
-        "skill_group": "Microsoft Suite",
-        "skill_description": "Microsoft suite of apps"
+        "organisation_id": 1,
+        "name": "Org 1",
+        "organisation_type": "Sponsor",
+        "about": "about org 1",
+        "website_url": "www.testorg1.com",
+        "phone": "93232224",
+        "email": "testorg1@test.com",
+        "owned_by": null,
+        "locations": [
+            "Tampines",
+            "Simei"
+        ],
+        "story": null,
+        "is_verified": false,
+        "created_on": "2020-11-01T14:14:50.382Z",
+        "deleted_on": null
     }
 }
 ```
 
 
 ***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Update Skill (403 Forbidden - Non-admin user)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"skill": "Microsoft Word"
-}
-```
-
-
-
-##### II. Example Response: Update Skill (403 Forbidden - Non-admin user)
-```js
-{
-    "success": false,
-    "error": "User role user not authorised to access this route"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
-##### III. Example Request: Update Skill (400 Bad Request - Non-alphabet or non-whitespace in field)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"skill": "#programming"
-}
-```
-
-
-
-##### III. Example Response: Update Skill (400 Bad Request - Non-alphabet or non-whitespace in field)
-```js
-{
-    "success": false,
-    "error": "Please include a valid skill with alphabets and spaces only."
-}
-```
-
-
-***Status Code:*** 400
 
 <br>
 
@@ -12475,23 +12169,26 @@ URL: {{URL}}/api/participants/1
 
 
 
-### 5. Update Participant
+## Programmes
+Organisations CRUD functionality.
 
 
-Update participant identified by participant id. Permission: Admin/Owner/Private.
 
-Field rules: 
-At least one field must be updated. 
-joined_on - Valid SQL datetime.
-end_on - Valid SQL datetime.
+### 1. Create Programme
+
+
+Create programme. Permission: Admin/Owner.
+
+Field rules:
+All fields required unles otherwise stated.
 
 
 ***Endpoint:***
 
 ```bash
-Method: PUT
+Method: POST
 Type: RAW
-URL: {{URL}}/api/participants/1
+URL: {{URL}}/api/programmes
 ```
 
 
@@ -12507,8 +12204,10 @@ URL: {{URL}}/api/participants/1
 
 ```js        
 {
-	"joined_on": "2019-07-17 15:14:05.023357+08",
-	"end_on": "2020-07-17 15:14:05.023357+08"
+	"organisation_id": 1,
+    "title": "New Programme 1",
+    "about": "About the new programme...",
+    "media_url": ["https://youtube.com", "https://instagram.com"]
 }
 ```
 
@@ -12517,7 +12216,7 @@ URL: {{URL}}/api/participants/1
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Update Participant (403 Forbidden - Non-admin, non-listing owner and not updating self)
+##### I. Example Request: Create Programme (201 Created)
 
 
 ***Headers:***
@@ -12532,60 +12231,75 @@ URL: {{URL}}/api/participants/1
 
 ```js        
 {
-	"joined_on": "2019-07-17 15:14:05.023357+08",
-	"end_on": "2020-07-17 15:14:05.023357+08"
+	"organisation_id": 1,
+    "title": "New Programme 1",
+    "about": "About the new programme...",
+    "media_url": ["https://youtube.com", "https://instagram.com"]
 }
 ```
 
 
 
-##### I. Example Response: Update Participant (403 Forbidden - Non-admin, non-listing owner and not updating self)
+##### I. Example Response: Create Programme (201 Created)
 ```js
 {
-    "success": false,
-    "error": "Not authorised to update other participants in this listing"
+    "success": true,
+    "data": {
+        "programme_id": 1,
+        "organisation_id": 1,
+        "title": "New Programme 1",
+        "about": "About the new programme...",
+        "media_url": [
+            "https://youtube.com",
+            "https://instagram.com"
+        ]
+    }
 }
 ```
 
 
-***Status Code:*** 403
+***Status Code:*** 201
 
 <br>
 
 
 
-##### II. Example Request: Update Participant (200 OK)
+### 2. Delete Programme
 
 
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
+Delete programme identified by programme id. Permission: Admin/Owner.
 
 
+***Endpoint:***
 
-***Body:***
-
-```js        
-{
-	"joined_on": "2019-07-17 15:14:05.023357+08",
-	"end_on": "2020-07-17 15:14:05.023357+08"
-}
+```bash
+Method: DELETE
+Type: 
+URL: {{URL}}/api/programmes/1
 ```
 
 
 
-##### II. Example Response: Update Participant (200 OK)
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Delete Programme (200 OK)
+
+
+
+##### I. Example Response: Delete Programme (200 OK)
 ```js
 {
     "success": true,
     "data": {
-        "participant_id": 1,
-        "listing_id": 15,
-        "user_id": 1,
-        "joined_on": "2019-07-17T07:14:05.023Z",
-        "end_on": "2020-07-17T07:14:05.023Z"
+        "programme_id": 1,
+        "organisation_id": 1,
+        "title": "New Programme 1",
+        "about": "About the new programme...",
+        "media_url": [
+            "https://youtube.com",
+            "https://instagram.com"
+        ]
     }
 }
 ```
@@ -12597,7 +12311,120 @@ URL: {{URL}}/api/participants/1
 
 
 
-##### III. Example Request: Update Participant (404 Not Found - Non-existent participant id)
+### 3. Get All Programmes
+
+
+Get all programmes. Permission: Public.
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{URL}}/api/programmes
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Get All Programmes (200 OK)
+
+
+
+##### I. Example Response: Get All Programmes (200 OK)
+```js
+{
+    "success": true,
+    "count": 1,
+    "pagination": {},
+    "data": [
+        {
+            "programme_id": 1,
+            "organisation_id": 1,
+            "title": "New Programme 1",
+            "about": "About the new programme...",
+            "media_url": [
+                "https://youtube.com",
+                "https://instagram.com"
+            ]
+        }
+    ]
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+### 4. Get Single Programme
+
+
+Get single programme. Permission: Public.
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{URL}}/api/programmes/1
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Get Single Programme (200 OK)
+
+
+
+##### I. Example Response: Get Single Programme (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "programme_id": 1,
+        "organisation_id": 1,
+        "title": "New Programme 1",
+        "about": "About the new programme...",
+        "media_url": [
+            "https://youtube.com",
+            "https://instagram.com"
+        ]
+    }
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+### 5. Update Programme
+
+
+Update Programme identified by programme id. Permission: Admin/Owner.
+
+Field rules: 
+At least one field must be updated.
+
+
+***Endpoint:***
+
+```bash
+Method: PUT
+Type: RAW
+URL: {{URL}}/api/programmes/1
+```
 
 
 ***Headers:***
@@ -12612,23 +12439,59 @@ URL: {{URL}}/api/participants/1
 
 ```js        
 {
-	"joined_on": "2019-07-17 15:14:05.023357+08",
-	"end_on": "2020-07-17 15:14:05.023357+08"
+    "title": "New Programme 1",
+    "about": "About the new programme...",
+    "media_url": ["https://youtube.com", "https://instagram.com"]
 }
 ```
 
 
 
-##### III. Example Response: Update Participant (404 Not Found - Non-existent participant id)
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Update Programme (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "title": "New Programme 1",
+    "about": "About the new programme...",
+    "media_url": ["https://youtube.com", "https://instagram.com"]
+}
+```
+
+
+
+##### I. Example Response: Update Programme (200 OK)
 ```js
 {
-    "success": false,
-    "error": "Resource not found"
+    "success": true,
+    "data": {
+        "programme_id": 1,
+        "organisation_id": 1,
+        "title": "New Programme 1",
+        "about": "About the new programme...",
+        "media_url": [
+            "https://youtube.com",
+            "https://instagram.com"
+        ]
+    }
 }
 ```
 
 
-***Status Code:*** 404
+***Status Code:*** 200
 
 <br>
 
@@ -14501,4 +14364,4 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-10-31 14:42:23 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-08 08:47:16 by [docgen](https://github.com/thedevsaddam/docgen)
