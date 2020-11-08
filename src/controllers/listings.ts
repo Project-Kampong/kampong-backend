@@ -2,9 +2,8 @@ import moment from 'moment';
 import { v1 as uuidv1 } from 'uuid';
 import { db } from '../database';
 import { asyncHandler } from '../middleware';
-import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
+import { checkListingOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 import { isNil } from 'lodash';
-import { checkListingOwner } from '../utils';
 
 /**
  * @desc    Get all listings
@@ -223,7 +222,7 @@ export const verifyListing = asyncHandler(async (req, res, next) => {
 
     const data = { is_verified };
 
-    const verifyListingQuery = parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING $2:name', [req.params.id, data]);
+    const verifyListingQuery = parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING *', [req.params.id]);
 
     const rows = await db.one(verifyListingQuery);
 

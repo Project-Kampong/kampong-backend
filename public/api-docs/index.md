@@ -11329,7 +11329,8 @@ URL: {{URL}}/api/organisations
     "website_url": "www.testorg1.com",
     "phone": 93232224,
     "email": "testorg1@test.com",
-    "locations": ["Tampines", "Simei"]
+    "locations": ["Tampines", "Simei"],
+    "story": "Founded in 1962, ..."
 }
 ```
 
@@ -14364,4 +14365,4 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-08 08:47:16 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-08 09:12:49 by [docgen](https://github.com/thedevsaddam/docgen)
