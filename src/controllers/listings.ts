@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { v4 as uuidv4 } from 'uuid';
+import { v1 as uuidv1 } from 'uuid';
 import { db } from '../database/db';
 import { asyncHandler } from '../middleware';
 import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
@@ -80,7 +80,7 @@ export const getAllListingsOwnedByUser = asyncHandler(async (req, res, next) => 
  */
 export const createListing = asyncHandler(async (req, res) => {
     const {
-        organisation_id, // NOTE: do not use this field until organisations endpoint is implemented
+        organisation_id,
         title,
         category,
         about,
@@ -100,7 +100,7 @@ export const createListing = asyncHandler(async (req, res) => {
     } = req.body;
 
     const data = {
-        listing_id: uuidv4(),
+        listing_id: uuidv1(),
         created_by: req.user.user_id,
         organisation_id,
         title,
