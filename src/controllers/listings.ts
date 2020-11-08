@@ -233,7 +233,7 @@ export const verifyListing = asyncHandler(async (req, res, next) => {
 
     const data = { is_verified };
 
-    const verifyListingQuery = parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING $2:name', [req.params.id, data]);
+    const verifyListingQuery = parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING *', [req.params.id]);
 
     const rows = await db.one(verifyListingQuery);
 
@@ -317,7 +317,7 @@ export const uploadListingPics = asyncHandler(async (req, res, next) => {
     };
     cleanseData(data);
 
-    const updateListingQuery = parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING $2:name', [req.params.id, data]);
+    const updateListingQuery = parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING *', [req.params.id]);
 
     const rows = await db.one(updateListingQuery);
 

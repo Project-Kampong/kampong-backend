@@ -1,3 +1,4 @@
+
 # Kampong API
 
 Backend API for Project Kampong.
@@ -126,8 +127,7 @@ Backend API for Project Kampong.
   * [Get Single Listing](#15-get-single-listing)
   * [Search Listings](#16-search-listings)
   * [Update Listing](#17-update-listing)
-  * [Upload Listing Photos](#18-upload-listing-photos)
-  * [Verify Listing](#19-verify-listing)
+  * [Verify Listing](#18-verify-listing)
 
 * [Locations](#locations)
 
@@ -159,7 +159,14 @@ Backend API for Project Kampong.
   * [Delete Participant](#2-delete-participant)
   * [Get All Participants](#3-get-all-participants)
   * [Get Single Participant](#4-get-single-participant)
-  * [Update Participant](#5-update-participant)
+
+* [Programmes](#programmes)
+
+  * [Create Programme](#1-create-programme)
+  * [Delete Programme](#2-delete-programme)
+  * [Get All Programmes](#3-get-all-programmes)
+  * [Get Single Programme](#4-get-single-programme)
+  * [Update Programme](#5-update-programme)
 
 * [Programmes](#programmes)
 
@@ -7957,45 +7964,52 @@ is_published - Boolean. Optional. Default to false.
 start_date - Valid SQL datetime. Optional. Default to current datetime.
 end_date - Valid SQL datetime. Optional.
 organisation_id - Valid integer and existing organisation id. Optional.
-pic1 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic2 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic3 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic4 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic5 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pics - Valid collection of up to 5 JPG/PNG files. Optional.
+pic1 - Full URL path to uploaded JPG/PNG file. Optional.
+pic2 - Full URL path to uploaded JPG/PNG file. Optional.
+pic3 - Full URL path to uploaded JPG/PNG file. Optional.
+pic4 - Full URL path to uploaded JPG/PNG file. Optional.
+pic5 - Full URL path to uploaded JPG/PNG file. Optional.
 
 
 ***Endpoint:***
 
 ```bash
 Method: POST
-Type: FORMDATA
+Type: RAW
 URL: {{URL}}/api/listings
 ```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
 
 
 ***Body:***
 
-| Key | Value | Description |
-| --- | ------|-------------|
-| title | New title 1 |  |
-| category | test category |  |
-| about | test about |  |
-| tagline | test tagline |  |
-| mission | test mission |  |
-| listing_url | www.test.com |  |
-| pic1 | test-pic-1.jpg |  |
-| pic2 | test-pic-2.jpg |  |
-| pic3 | test-pic-3.jpg |  |
-| pic4 | test-pic-4.jpg |  |
-| pic5 | test-pic-5.jpg |  |
-| is_published | false |  |
-| start_date | 2019-08-15 16:45:43.41585+08 |  |
-| end_date | 2020-07-17 16:45:43.41585+08 |  |
-| pics |  |  |
-| listing_email | new_listing@gmail.com |  |
-| listing_status | ongoing |  |
+```js        
+{
+    "title": "New title 1",
+    "category": "test category",
+    "about": "test about",
+    "tagline": "test tagline",
+    "mission": "test mission",
+    "listing_url": "www.test.com",
+    "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+    "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+    "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+    "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+    "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg",
+    "is_published": false,
+    "start_date": "2019-08-15 16:45:43.41585+08",
+    "end_date": "2020-07-17 16:45:43.41585+08",
+    "listing_email": "new_listing@gmail.com",
+    "listing_status": "ongoing"
+}
+```
 
 
 
@@ -9741,23 +9755,28 @@ Update listing. Permission: Admin/Owner.
 
 Field rules:
 At least one field must be updated.
-title - Non-empty.
-category - Non-empty.
-about - Optional.
-tagline - Optional.
-mission - Optional.
-listing_url - Valid URL. Optional.
-is_published - Boolean. Optional.
-start_date - Valid SQL datetime. Optional. Default to current datetime.
-end_date - Valid SQL datetime. Optional.
-organisation_id - Valid integer and existing organisation id. Optional.
+organisation_id - Valid integer and existing organisation id.
+title - Non-empty string.
+category - Non-empty string.
+about - String.
+tagline - String.
+mission - String.
+listing_url - Valid URL.
+is_published - Boolean. 
+start_date - Valid SQL datetime. Default to current datetime.
+end_date - Valid SQL datetime.
+pic1 - Full URL path to uploaded JPG/PNG file.
+pic2 - Full URL path to uploaded JPG/PNG file. 
+pic3 - Full URL path to uploaded JPG/PNG file. 
+pic4 - Full URL path to uploaded JPG/PNG file. 
+pic5 - Full URL path to uploaded JPG/PNG file.
 
 
 ***Endpoint:***
 
 ```bash
 Method: PUT
-Type: FORMDATA
+Type: RAW
 URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 ```
 
@@ -9765,25 +9784,26 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 
 ***Body:***
 
-| Key | Value | Description |
-| --- | ------|-------------|
-| title | Updated title 1 |  |
-| category | Updated category |  |
-| about | Updated about |  |
-| tagline | Updated tagline |  |
-| mission | Updated mission |  |
-| listing_url | www.updated-test.com |  |
-| is_published | true |  |
-| start_date | 2018-08-15 16:45:43.41585+08 |  |
-| end_date | 2020-01-30 16:45:43.41585+08 |  |
-| pic1 | test-pic-1.jpg |  |
-| pic2 | test-pic-2.jpg |  |
-| pic3 | test-pic-3.jpg |  |
-| pic4 | test-pic-4.jpg |  |
-| pic5 | test-pic-5.jpg |  |
-| pics |  | Collection of 5 JPG files |
-| listing_status | completed |  |
-| listing_email | updated_email@gmail.com |  |
+```js        
+{
+    "title": "Updated title 1",
+    "category": "Updated category",
+    "about": "Updated about",
+    "tagline": "Updated tagline",
+    "mission": "Updated mission",
+    "listing_url": "www.updated-test.com",
+    "is_published": true,
+    "start_date": "2018-08-15 16:45:43.41585+08",
+    "end_date": "2020-01-30 16:45:43.41585+08",
+    "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+    "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+    "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+    "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+    "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg",
+    "listing_status": "completed",
+    "listing_email": "updated_email@gmail.com"
+}
+```
 
 
 
@@ -9892,25 +9912,26 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 
 ***Body:***
 
-| Key | Value | Description |
-| --- | ------|-------------|
-| title | Updated title 1 |  |
-| category | Updated category |  |
-| about | Updated about |  |
-| tagline | Updated tagline |  |
-| mission | Updated mission |  |
-| listing_url | www.updated-test.com |  |
-| is_published | true |  |
-| start_date | 2018-08-15 16:45:43.41585+08 |  |
-| end_date | 2020-01-30 16:45:43.41585+08 |  |
-| pic1 | test-pic-1.jpg |  |
-| pic2 | test-pic-2.jpg |  |
-| pic3 | test-pic-3.jpg |  |
-| pic4 | test-pic-4.jpg |  |
-| pic5 | test-pic-5.jpg |  |
-| pics |  | Collection of 5 JPG files |
-| listing_status | completed |  |
-| listing_email | updated_email@gmail.com |  |
+```js        
+{
+    "title": "Updated title 1",
+    "category": "Updated category",
+    "about": "Updated about",
+    "tagline": "Updated tagline",
+    "mission": "Updated mission",
+    "listing_url": "www.updated-test.com",
+    "is_published": true,
+    "start_date": "2018-08-15 16:45:43.41585+08",
+    "end_date": "2020-01-30 16:45:43.41585+08",
+    "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+    "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+    "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+    "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+    "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg",
+    "listing_status": "completed",
+    "listing_email": "updated_email@gmail.com"
+}
+```
 
 
 
@@ -9919,6 +9940,9 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 {
     "success": true,
     "data": {
+        "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
+        "organisation_id": null,
+        "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
         "title": "Updated title 1",
         "category": "Updated category",
         "about": "Updated about",
@@ -9927,14 +9951,17 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
         "listing_url": "www.updated-test.com",
         "listing_email": "updated_email@gmail.com",
         "listing_status": "completed",
+        "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+        "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+        "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+        "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+        "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg",
         "is_published": true,
+        "is_verified": false,
         "start_date": "2018-08-15T08:45:43.415Z",
         "end_date": "2020-01-30T08:45:43.415Z",
-        "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1600581115622.jpg",
-        "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-1600581115630.jpg",
-        "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-1600581115654.jpg",
-        "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-1600581115659.jpg",
-        "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-1600581115664.jpg"
+        "created_on": "2020-08-20T09:36:45.815Z",
+        "deleted_on": null
     }
 }
 ```
@@ -9946,138 +9973,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 
 
 
-### 18. Upload Listing Photos
-
-
-Upload photos for listing, up to a maximum of 5 photos at once. In the request body JSON, the newly uploaded photo's filename and extension (eg. Pic001.jpg) must be passed as value to one of the 5 keys (pic1, pic2, ..., pic5). Permission: Admin/Owner.
-
-Field rules:
-All fields required unless otherwise stated.
-pic1 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic2 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic3 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic4 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic5 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pics - Valid collection of up to 5 JPG/PNG files. Optional.
-
-
-***Endpoint:***
-
-```bash
-Method: PUT
-Type: FORMDATA
-URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/upload-photo
-```
-
-
-
-***Body:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| pics |  | Collection of 5 JPG files |
-| pic1 | test-pic-1.jpg | Original filename of new picture, to be uploaded into pic1 |
-| pic2 | test-pic-2.jpg | Original filename of new picture, to be uploaded into pic2 |
-| pic3 | test-pic-3.jpg | Original filename of new picture, to be uploaded into pic3 |
-| pic4 | test-pic-4.jpg | Original filename of new picture, to be uploaded into pic4 |
-| pic5 | test-pic-5.jpg | Original filename of new picture, to be uploaded into pic5 |
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Upload Listing Photos (200 OK - 5 files uploaded, but only 1 valid filename given in requesst body)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| pics |  | Collection of 5 JPG files |
-| pic1 | test-pic-1.jpg | Original filename of new picture, to be uploaded into pic1 |
-| pic2 | DSC00415.jpg | Original filename of new picture, to be uploaded into pic2 |
-| pic3 | DSC00416.jpg | Original filename of new picture, to be uploaded into pic3 |
-| pic4 | DSC00424.jpg | Original filename of new picture, to be uploaded into pic4 |
-| pic5 | DSC00411.jpg | Original filename of new picture, to be uploaded into pic5 |
-
-
-
-##### I. Example Response: Upload Listing Photos (200 OK - 5 files uploaded, but only 1 valid filename given in requesst body)
-```js
-{
-    "success": true,
-    "data": {
-        "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1596383242481.jpg",
-        "pic2": null,
-        "pic3": null,
-        "pic4": null,
-        "pic5": null
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Upload Listing Photos (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| pics |  | Collection of 5 JPG files |
-| pic1 | test-pic-1.jpg | Original filename of new picture, to be uploaded into pic1 |
-| pic2 | test-pic-2.jpg | Original filename of new picture, to be uploaded into pic2 |
-| pic3 | test-pic-3.jpg | Original filename of new picture, to be uploaded into pic3 |
-| pic4 | test-pic-4.jpg | Original filename of new picture, to be uploaded into pic4 |
-| pic5 | test-pic-5.jpg | Original filename of new picture, to be uploaded into pic5 |
-
-
-
-##### II. Example Response: Upload Listing Photos (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1596383394655.jpg",
-        "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-1596383394658.jpg",
-        "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-1596383394662.jpg",
-        "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-1596383394666.jpg",
-        "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-1596383394673.jpg"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 19. Verify Listing
+### 18. Verify Listing
 
 
 Verify listing. Permission: Admin.
@@ -11441,7 +11337,8 @@ URL: {{URL}}/api/organisations
     "website_url": "www.testorg1.com",
     "phone": 93232224,
     "email": "testorg1@test.com",
-    "locations": ["Tampines", "Simei"]
+    "locations": ["Tampines", "Simei"],
+    "story": "Founded in 1962, ..."
 }
 ```
 
@@ -12281,23 +12178,26 @@ URL: {{URL}}/api/participants/1
 
 
 
-### 5. Update Participant
+## Programmes
+Organisations CRUD functionality.
 
 
-Update participant identified by participant id. Permission: Admin/Owner/Private.
 
-Field rules: 
-At least one field must be updated. 
-joined_on - Valid SQL datetime.
-end_on - Valid SQL datetime.
+### 1. Create Programme
+
+
+Create programme. Permission: Admin/Owner.
+
+Field rules:
+All fields required unles otherwise stated.
 
 
 ***Endpoint:***
 
 ```bash
-Method: PUT
+Method: POST
 Type: RAW
-URL: {{URL}}/api/participants/1
+URL: {{URL}}/api/programmes
 ```
 
 
@@ -12313,8 +12213,10 @@ URL: {{URL}}/api/participants/1
 
 ```js        
 {
-	"joined_on": "2019-07-17 15:14:05.023357+08",
-	"end_on": "2020-07-17 15:14:05.023357+08"
+	"organisation_id": 1,
+    "title": "New Programme 1",
+    "about": "About the new programme...",
+    "media_url": ["https://youtube.com", "https://instagram.com"]
 }
 ```
 
@@ -12323,7 +12225,7 @@ URL: {{URL}}/api/participants/1
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Update Participant (403 Forbidden - Non-admin, non-listing owner and not updating self)
+##### I. Example Request: Create Programme (201 Created)
 
 
 ***Headers:***
@@ -12338,60 +12240,75 @@ URL: {{URL}}/api/participants/1
 
 ```js        
 {
-	"joined_on": "2019-07-17 15:14:05.023357+08",
-	"end_on": "2020-07-17 15:14:05.023357+08"
+	"organisation_id": 1,
+    "title": "New Programme 1",
+    "about": "About the new programme...",
+    "media_url": ["https://youtube.com", "https://instagram.com"]
 }
 ```
 
 
 
-##### I. Example Response: Update Participant (403 Forbidden - Non-admin, non-listing owner and not updating self)
+##### I. Example Response: Create Programme (201 Created)
 ```js
 {
-    "success": false,
-    "error": "Not authorised to update other participants in this listing"
+    "success": true,
+    "data": {
+        "programme_id": 1,
+        "organisation_id": 1,
+        "title": "New Programme 1",
+        "about": "About the new programme...",
+        "media_url": [
+            "https://youtube.com",
+            "https://instagram.com"
+        ]
+    }
 }
 ```
 
 
-***Status Code:*** 403
+***Status Code:*** 201
 
 <br>
 
 
 
-##### II. Example Request: Update Participant (200 OK)
+### 2. Delete Programme
 
 
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
+Delete programme identified by programme id. Permission: Admin/Owner.
 
 
+***Endpoint:***
 
-***Body:***
-
-```js        
-{
-	"joined_on": "2019-07-17 15:14:05.023357+08",
-	"end_on": "2020-07-17 15:14:05.023357+08"
-}
+```bash
+Method: DELETE
+Type: 
+URL: {{URL}}/api/programmes/1
 ```
 
 
 
-##### II. Example Response: Update Participant (200 OK)
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Delete Programme (200 OK)
+
+
+
+##### I. Example Response: Delete Programme (200 OK)
 ```js
 {
     "success": true,
     "data": {
-        "participant_id": 1,
-        "listing_id": 15,
-        "user_id": 1,
-        "joined_on": "2019-07-17T07:14:05.023Z",
-        "end_on": "2020-07-17T07:14:05.023Z"
+        "programme_id": 1,
+        "organisation_id": 1,
+        "title": "New Programme 1",
+        "about": "About the new programme...",
+        "media_url": [
+            "https://youtube.com",
+            "https://instagram.com"
+        ]
     }
 }
 ```
@@ -12403,7 +12320,120 @@ URL: {{URL}}/api/participants/1
 
 
 
-##### III. Example Request: Update Participant (404 Not Found - Non-existent participant id)
+### 3. Get All Programmes
+
+
+Get all programmes. Permission: Public.
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{URL}}/api/programmes
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Get All Programmes (200 OK)
+
+
+
+##### I. Example Response: Get All Programmes (200 OK)
+```js
+{
+    "success": true,
+    "count": 1,
+    "pagination": {},
+    "data": [
+        {
+            "programme_id": 1,
+            "organisation_id": 1,
+            "title": "New Programme 1",
+            "about": "About the new programme...",
+            "media_url": [
+                "https://youtube.com",
+                "https://instagram.com"
+            ]
+        }
+    ]
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+### 4. Get Single Programme
+
+
+Get single programme. Permission: Public.
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{URL}}/api/programmes/1
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Get Single Programme (200 OK)
+
+
+
+##### I. Example Response: Get Single Programme (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "programme_id": 1,
+        "organisation_id": 1,
+        "title": "New Programme 1",
+        "about": "About the new programme...",
+        "media_url": [
+            "https://youtube.com",
+            "https://instagram.com"
+        ]
+    }
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+### 5. Update Programme
+
+
+Update Programme identified by programme id. Permission: Admin/Owner.
+
+Field rules: 
+At least one field must be updated.
+
+
+***Endpoint:***
+
+```bash
+Method: PUT
+Type: RAW
+URL: {{URL}}/api/programmes/1
+```
 
 
 ***Headers:***
@@ -12418,23 +12448,59 @@ URL: {{URL}}/api/participants/1
 
 ```js        
 {
-	"joined_on": "2019-07-17 15:14:05.023357+08",
-	"end_on": "2020-07-17 15:14:05.023357+08"
+    "title": "New Programme 1",
+    "about": "About the new programme...",
+    "media_url": ["https://youtube.com", "https://instagram.com"]
 }
 ```
 
 
 
-##### III. Example Response: Update Participant (404 Not Found - Non-existent participant id)
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Update Programme (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "title": "New Programme 1",
+    "about": "About the new programme...",
+    "media_url": ["https://youtube.com", "https://instagram.com"]
+}
+```
+
+
+
+##### I. Example Response: Update Programme (200 OK)
 ```js
 {
-    "success": false,
-    "error": "Resource not found"
+    "success": true,
+    "data": {
+        "programme_id": 1,
+        "organisation_id": 1,
+        "title": "New Programme 1",
+        "about": "About the new programme...",
+        "media_url": [
+            "https://youtube.com",
+            "https://instagram.com"
+        ]
+    }
 }
 ```
 
 
-***Status Code:*** 404
+***Status Code:*** 200
 
 <br>
 
@@ -14635,4 +14701,4 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-10-31 14:42:23 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-08 09:12:49 by [docgen](https://github.com/thedevsaddam/docgen)
