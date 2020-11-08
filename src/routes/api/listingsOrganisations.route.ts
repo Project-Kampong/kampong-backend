@@ -10,8 +10,8 @@ import { createListingOrganisation, deleteListingOrganisation } from '../../cont
 // Define input validation
 const validateCreateListingOrganisationEntryFields = [
     check('listing_id', INVALID_FIELD_MSG('listing id')).isInt(),
-    check('organisation_id', INVALID_FIELD_MSG('organisation id')).isInt()
-]
+    check('organisation_id', INVALID_FIELD_MSG('organisation id')).isInt(),
+];
 
 // Map routes to controller
 router.route('/').post(protect, validateCreateListingOrganisationEntryFields, checkInputError, createListingOrganisation);

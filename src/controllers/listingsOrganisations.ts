@@ -32,12 +32,9 @@ export const createListingOrganisation = asyncHandler(async (req, res) => {
 export const deleteListingOrganisation = asyncHandler(async (req, res, next) => {
     const userId: string = req.user.user_id;
     const ids = await db.one('SELECT listing_id, organisation_id FROM listingsorganisations WHERE listing_organisation_id = $1', req.params.id);
-    const {
-        listing_id,
-        organisation_id
-    } = ids;
+    const { listing_id, organisation_id } = ids;
 
-    const isOrganisationOwner = await checkOrganisationOwner(userId,organisation_id);
+    const isOrganisationOwner = await checkOrganisationOwner(userId, organisation_id);
     const isListingOwner = await checkListingOwner(userId, listing_id);
     if (req.user.role !== 'admin' && !isListingOwner && !isOrganisationOwner) {
         return next(new ErrorResponse('Not authorised to delete listing organisation as you are not the organisation or listing owner', 403));
