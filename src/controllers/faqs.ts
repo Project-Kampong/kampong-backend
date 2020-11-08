@@ -1,6 +1,6 @@
-import { db } from '../database/db';
+import { db } from '../database';
 import { asyncHandler } from '../middleware';
-import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
+import { checkListingOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 
 /**
  * @desc    Get all faqs
@@ -130,8 +130,3 @@ export const deleteFaq = asyncHandler(async (req, res, next) => {
         data: rows,
     });
 });
-
-const checkListingOwner = async (userId: string, listingId: string) => {
-    const owner = await db.one<Promise<{ created_by: string }>>('SELECT created_by FROM Listings WHERE listing_id = $1', listingId);
-    return userId === owner.created_by;
-};
