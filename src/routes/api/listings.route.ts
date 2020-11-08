@@ -1,7 +1,7 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf, query } from 'express-validator';
-import { advancedResults, checkInputError, protect, authorise, mapFilenameToLocation } from '../../middleware';
+import { advancedResults, checkInputError, protect, authorise } from '../../middleware';
 import {
     DATETIME_REGEX,
     NO_FIELD_UPDATED_MSG,
@@ -10,7 +10,6 @@ import {
     INVALID_BOOLEAN_MSG,
     INVALID_TIMESTAMP_MSG,
     INVALID_LISTING_STATUS_MSG,
-    uploadFile,
 } from '../../utils';
 
 // import controllers here
