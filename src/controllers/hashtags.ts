@@ -75,41 +75,6 @@ export const createHashtag = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Update single hashtag
- * @route   PUT /api/hashtags/:id
- * @access  Owner/Admin
- */
-export const updateHashtag = asyncHandler(async (req, res, next) => {
-    // check if hashtag exists
-    const hashtag = await db.one('SELECT * FROM hashtags WHERE hashtag_id = $1', req.params.id);
-
-    // check if listing exists and is listing owner
-    const isListingOwner = await checkListingOwner(req.user.user_id, hashtag.listing_id);
-
-    // Unauthorised if neither admin nor listing owner
-    if (!(req.user.role === 'admin' || isListingOwner)) {
-        return next(new ErrorResponse(`Not authorised to update hashtag for this listing`, 403));
-    }
-
-    const { tag } = req.body;
-
-    const data = {
-        tag,
-    };
-
-    cleanseData(data);
-
-    const updateHashtagQuery = parseSqlUpdateStmt(data, 'hashtags', 'WHERE hashtag_id = $1 RETURNING *', [req.params.id]);
-
-    const rows = await db.one(updateHashtagQuery);
-
-    res.status(200).json({
-        success: true,
-        data: rows,
-    });
-});
-
-/**
  * @desc    Delete single hashtag
  * @route   DELETE /api/hashtags/:id
  * @access  Owner/Admin
