@@ -61,9 +61,11 @@ export const createListingLocation = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
+    const isListingOwner = await checkListingOwner(req.user.user_id, listing_id);
+
     // check listing owner for non-admin users
-    if (req.user.role !== 'admin' && !(await isListingOwner(req.user.user_id, listing_id))) {
-        return next(new ErrorResponse(`Not authorised to add listing location for this listing`, 403));
+    if (!(req.user.role === 'admin' || isListingOwner)) {
+        return next(new ErrorResponse(`Not authorised to delete listing location for this listing`, 403));
     }
 
     const rows = await db.one('INSERT INTO ListingLocations (${this:name}) VALUES (${this:csv}) RETURNING *', data);
@@ -81,10 +83,12 @@ export const createListingLocation = asyncHandler(async (req, res, next) => {
  */
 export const deleteListingLocation = asyncHandler(async (req, res, next) => {
     // check if listinglocation exists
-    const ListingLocation = await db.one('SELECT * FROM ListingLocations WHERE listing_location_id = $1', req.params.id);
+    const listingLocation = await db.one('SELECT * FROM ListingLocations WHERE listing_location_id = $1', req.params.id);
+
+    const isListingOwner = await checkListingOwner(req.user.user_id, listingLocation.listing_id);
 
     // check listing owner for non-admin users
-    if (req.user.role !== 'admin' && !(await isListingOwner(req.user.user_id, ListingLocation.listing_id))) {
+    if (!(req.user.role === 'admin' || isListingOwner)) {
         return next(new ErrorResponse(`Not authorised to delete listing location for this listing`, 403));
     }
 
@@ -96,7 +100,7 @@ export const deleteListingLocation = asyncHandler(async (req, res, next) => {
     });
 });
 
-const isListingOwner = async (userId, listingId) => {
-    const owner = await db.one('SELECT created_by FROM Listings WHERE listing_id = $1', listingId);
+const checkListingOwner = async (userId: string, listingId: string) => {
+    const owner = await db.one<Promise<{ created_by: string }>>('SELECT created_by FROM Listings WHERE listing_id = $1', listingId);
     return userId === owner.created_by;
 };

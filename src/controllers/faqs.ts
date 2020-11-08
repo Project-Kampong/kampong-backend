@@ -54,12 +54,12 @@ export const createFaq = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    // if non-admin ,check if owner of listing
-    if (req.user.role !== 'admin') {
-        const listingOwner = await isListingOwner(req.user.user_id, listing_id);
-        if (!listingOwner) {
-            return next(new ErrorResponse(`Not authorised to create FAQs for this listing`, 403));
-        }
+    // check if listing exists and is listing owner
+    const isListingOwner = await checkListingOwner(req.user.user_id, listing_id);
+
+    // Unauthorised if neither admin nor listing owner
+    if (!(req.user.role === 'admin' || isListingOwner)) {
+        return next(new ErrorResponse(`Not authorised to create FAQs for this listing`, 403));
     }
 
     const rows = await db.one('INSERT INTO faqs (${this:name}) VALUES (${this:csv}) RETURNING *', data);
@@ -77,19 +77,14 @@ export const createFaq = asyncHandler(async (req, res, next) => {
  */
 export const updateFaq = asyncHandler(async (req, res, next) => {
     // check if faq exists
-    const faq = await db.oneOrNone('SELECT * FROM faqs WHERE faq_id = $1', req.params.id);
+    const faq = await db.one('SELECT * FROM faqs WHERE faq_id = $1', req.params.id);
 
-    // return bad request response if invalid faq
-    if (!faq) {
-        return next(new ErrorResponse(`Faq does not exist`, 400));
-    }
+    // check if listing exists and is listing owner
+    const isListingOwner = await checkListingOwner(req.user.user_id, faq.listing_id);
 
-    // if non-admin, check if owner of listing
-    if (req.user.role !== 'admin') {
-        const listingOwner = await isListingOwner(req.user.user_id, faq.listing_id);
-        if (!listingOwner) {
-            return next(new ErrorResponse(`Not authorised to update FAQs in this listing`, 403));
-        }
+    // Unauthorised if neither admin nor listing owner
+    if (!(req.user.role === 'admin' || isListingOwner)) {
+        return next(new ErrorResponse(`Not authorised to update FAQ for this listing`, 403));
     }
 
     const { question, answer } = req.body;
@@ -120,17 +115,12 @@ export const deleteFaq = asyncHandler(async (req, res, next) => {
     // check if faq exists
     const faq = await db.oneOrNone('SELECT * FROM faqs WHERE faq_id = $1', req.params.id);
 
-    // return bad request response if invalid faq
-    if (!faq) {
-        return next(new ErrorResponse(`Faq does not exist`, 400));
-    }
+    // check if listing exists and is listing owner
+    const isListingOwner = await checkListingOwner(req.user.user_id, faq.listing_id);
 
-    // if non-admin, check if owner of listing
-    if (req.user.role !== 'admin') {
-        const listingOwner = await isListingOwner(req.user.user_id, faq.listing_id);
-        if (!listingOwner) {
-            return next(new ErrorResponse(`Not authorised to delete FAQs in this listing`, 403));
-        }
+    // Unauthorised if neither admin nor listing owner
+    if (!(req.user.role === 'admin' || isListingOwner)) {
+        return next(new ErrorResponse(`Not authorised to delete FAQ for this listing`, 403));
     }
 
     const rows = await db.one('DELETE FROM faqs WHERE faq_id = $1 RETURNING *', req.params.id);
@@ -141,7 +131,7 @@ export const deleteFaq = asyncHandler(async (req, res, next) => {
     });
 });
 
-const isListingOwner = async (userId, listingId) => {
-    const owner = await db.one('SELECT created_by FROM Listings WHERE listing_id = $1', listingId);
+const checkListingOwner = async (userId: string, listingId: string) => {
+    const owner = await db.one<Promise<{ created_by: string }>>('SELECT created_by FROM Listings WHERE listing_id = $1', listingId);
     return userId === owner.created_by;
 };

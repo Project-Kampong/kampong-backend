@@ -58,12 +58,12 @@ export const createHashtag = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    // if non-admin ,check if owner of listing
-    if (req.user.role !== 'admin') {
-        const listingOwner = await isListingOwner(req.user.user_id, listing_id);
-        if (!listingOwner) {
-            return next(new ErrorResponse(`Not authorised to create hashtags for this listing`, 403));
-        }
+    // check if listing exists and is listing owner
+    const isListingOwner = await checkListingOwner(req.user.user_id, listing_id);
+
+    // Unauthorised if neither admin nor listing owner
+    if (!(req.user.role === 'admin' || isListingOwner)) {
+        return next(new ErrorResponse(`Not authorised to create hashtags for this listing`, 403));
     }
 
     const rows = await db.one('INSERT INTO hashtags (${this:name}) VALUES (${this:csv}) RETURNING *', data);
@@ -83,12 +83,12 @@ export const updateHashtag = asyncHandler(async (req, res, next) => {
     // check if hashtag exists
     const hashtag = await db.one('SELECT * FROM hashtags WHERE hashtag_id = $1', req.params.id);
 
-    // if non-admin, check if owner of listing
-    if (req.user.role !== 'admin') {
-        const listingOwner = await isListingOwner(req.user.user_id, hashtag.listing_id);
-        if (!listingOwner) {
-            return next(new ErrorResponse(`Not authorised to update hashtags for this listing`, 403));
-        }
+    // check if listing exists and is listing owner
+    const isListingOwner = await checkListingOwner(req.user.user_id, hashtag.listing_id);
+
+    // Unauthorised if neither admin nor listing owner
+    if (!(req.user.role === 'admin' || isListingOwner)) {
+        return next(new ErrorResponse(`Not authorised to update hashtag for this listing`, 403));
     }
 
     const { tag } = req.body;
@@ -118,12 +118,12 @@ export const deleteHashtag = asyncHandler(async (req, res, next) => {
     // check if hashtag exists
     const hashtag = await db.one('SELECT * FROM hashtags WHERE hashtag_id = $1', req.params.id);
 
-    // if non-admin, check if owner of listing
-    if (req.user.role !== 'admin') {
-        const listingOwner = await isListingOwner(req.user.user_id, hashtag.listing_id);
-        if (!listingOwner) {
-            return next(new ErrorResponse(`Not authorised to update hashtags for this listing`, 403));
-        }
+    // check if listing exists and is listing owner
+    const isListingOwner = await checkListingOwner(req.user.user_id, hashtag.listing_id);
+
+    // Unauthorised if neither admin nor listing owner
+    if (!(req.user.role === 'admin' || isListingOwner)) {
+        return next(new ErrorResponse(`Not authorised to delete hashtag for this listing`, 403));
     }
 
     const rows = await db.one('DELETE FROM hashtags WHERE hashtag_id = $1 RETURNING *', req.params.id);
@@ -134,7 +134,7 @@ export const deleteHashtag = asyncHandler(async (req, res, next) => {
     });
 });
 
-const isListingOwner = async (userId, listingId) => {
-    const owner = await db.one('SELECT created_by FROM Listings WHERE listing_id = $1', listingId);
+const checkListingOwner = async (userId: string, listingId: string) => {
+    const owner = await db.one<Promise<{ created_by: string }>>('SELECT created_by FROM Listings WHERE listing_id = $1', listingId);
     return userId === owner.created_by;
 };

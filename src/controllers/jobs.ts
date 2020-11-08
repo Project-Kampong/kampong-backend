@@ -78,12 +78,12 @@ export const createJob = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    // if non-admin ,check if owner of listing
-    if (req.user.role !== 'admin') {
-        const listingOwner = await isListingOwner(req.user.user_id, listing_id);
-        if (!listingOwner) {
-            return next(new ErrorResponse(`Not authorised to create jobs in this listing`, 403));
-        }
+    // check if listing exists and is listing owner
+    const isListingOwner = await checkListingOwner(req.user.user_id, listing_id);
+
+    // Unauthorised if neither admin nor listing owner
+    if (!(req.user.role === 'admin' || isListingOwner)) {
+        return next(new ErrorResponse(`Not authorised to create jobs for this listing`, 403));
     }
 
     const rows = await db.one('INSERT INTO jobs (${this:name}) VALUES (${this:csv}) RETURNING *', data);
@@ -103,12 +103,12 @@ export const updateJob = asyncHandler(async (req, res, next) => {
     // check if job exists and is not soft deleted
     const job = await db.one('SELECT * FROM jobsview WHERE job_id = $1', req.params.id);
 
-    // if non-admin, check if owner of listing
-    if (req.user.role !== 'admin') {
-        const listingOwner = await isListingOwner(req.user.user_id, job.listing_id);
-        if (!listingOwner) {
-            return next(new ErrorResponse(`Not authorised to update jobs in this listing`, 403));
-        }
+    // check if listing exists and is listing owner
+    const isListingOwner = await checkListingOwner(req.user.user_id, job.listing_id);
+
+    // Unauthorised if neither admin nor listing owner
+    if (!(req.user.role === 'admin' || isListingOwner)) {
+        return next(new ErrorResponse(`Not authorised to update jobs for this listing`, 403));
     }
 
     const { job_title, job_description } = req.body;
@@ -139,12 +139,12 @@ export const deactivateJob = asyncHandler(async (req, res, next) => {
     // check if job exists nd not soft deleted
     const job = await db.one('SELECT * FROM jobsview WHERE job_id = $1', req.params.id);
 
-    // if non-admin, check if owner of listing
-    if (req.user.role !== 'admin') {
-        const listingOwner = await isListingOwner(req.user.user_id, job.listing_id);
-        if (!listingOwner) {
-            return next(new ErrorResponse(`Not authorised to delete jobs in this listing`, 403));
-        }
+    // check if listing exists and is listing owner
+    const isListingOwner = await checkListingOwner(req.user.user_id, job.listing_id);
+
+    // Unauthorised if neither admin nor listing owner
+    if (!(req.user.role === 'admin' || isListingOwner)) {
+        return next(new ErrorResponse(`Not authorised to deactivate jobs for this listing`, 403));
     }
 
     const rows = await db.one('UPDATE jobs SET deleted_on=$2 WHERE job_id = $1 RETURNING *', [
@@ -167,11 +167,6 @@ export const deleteJob = asyncHandler(async (req, res, next) => {
     // check if job exists
     await db.one('SELECT * FROM jobs WHERE job_id = $1', req.params.id);
 
-    // check if user is admin
-    if (req.user.role !== 'admin') {
-        return next(new ErrorResponse(`Not authorised to delete jobs in this listing`, 403));
-    }
-
     const rows = await db.one('DELETE FROM jobs WHERE job_id = $1 RETURNING *', req.params.id);
 
     res.status(200).json({
@@ -180,7 +175,7 @@ export const deleteJob = asyncHandler(async (req, res, next) => {
     });
 });
 
-const isListingOwner = async (userId, listingId) => {
-    const owner = await db.one('SELECT created_by FROM Listings WHERE listing_id = $1', listingId);
+const checkListingOwner = async (userId: string, listingId: string) => {
+    const owner = await db.one<Promise<{ created_by: string }>>('SELECT created_by FROM Listings WHERE listing_id = $1', listingId);
     return userId === owner.created_by;
 };
