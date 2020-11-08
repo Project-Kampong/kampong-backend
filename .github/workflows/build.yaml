@@ -6,15 +6,12 @@ jobs:
     build:
         runs-on: ubuntu-20.04
 
-        strategy:
-            node-version: '14'
-
         steps:
             - uses: actions/checkout@v1
-            - name: Use Node.js ${{ node-version }}
+            - name: Use Node.js 14
               uses: actions/setup-node@v1
               with:
-                  node-version: ${{ node-version }}
+                  node-version: '14'
                   check-latest: true
             - run: npm install -g yarn
             - name: Install dependencies, check formatting, and build
