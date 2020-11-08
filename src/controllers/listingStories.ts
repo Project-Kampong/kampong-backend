@@ -53,10 +53,7 @@ export const updateListingStory = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    const updateListingStoryQuery = parseSqlUpdateStmt(data, 'listingstories', 'WHERE listing_id = $1 RETURNING $2:name', [
-        req.params.listing_id,
-        data,
-    ]);
+    const updateListingStoryQuery = parseSqlUpdateStmt(data, 'listingstories', 'WHERE listing_id = $1 RETURNING *', [req.params.listing_id]);
 
     const rows = await db.one(updateListingStoryQuery);
 

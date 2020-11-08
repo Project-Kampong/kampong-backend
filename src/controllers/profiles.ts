@@ -57,7 +57,7 @@ export const updateProfile = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    const updateProfileQuery = parseSqlUpdateStmt(data, 'profiles', 'WHERE user_id = $1 RETURNING $2:name', [req.params.user_id, data]);
+    const updateProfileQuery = parseSqlUpdateStmt(data, 'profiles', 'WHERE user_id = $1 RETURNING *', [req.params.user_id]);
 
     const rows = await db.one(updateProfileQuery);
 
@@ -88,7 +88,7 @@ export const verifyProfile = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    const updateIsVerifiedQuery = parseSqlUpdateStmt(data, 'profiles', 'WHERE user_id = $1 RETURNING $2:name', [req.params.user_id, data]);
+    const updateIsVerifiedQuery = parseSqlUpdateStmt(data, 'profiles', 'WHERE user_id = $1 RETURNING *', [req.params.user_id]);
 
     const rows = await db.one(updateIsVerifiedQuery);
 
@@ -120,7 +120,7 @@ export const uploadPic = asyncHandler(async (req, res, next) => {
         profile_picture,
     };
 
-    const updateProfileQuery = parseSqlUpdateStmt(data, 'profiles', 'WHERE user_id = $1 RETURNING profile_picture', req.params.user_id);
+    const updateProfileQuery = parseSqlUpdateStmt(data, 'profiles', 'WHERE user_id = $1 RETURNING *', [req.params.user_id]);
 
     const rows = await db.one(updateProfileQuery);
 

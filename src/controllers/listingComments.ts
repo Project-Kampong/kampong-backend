@@ -147,10 +147,7 @@ export const deactivateListingComment = asyncHandler(async (req, res, next) => {
         deleted_on: moment().format('YYYY-MM-DD HH:mm:ss.000'),
     };
 
-    const deactivateListingCommentQuery = parseSqlUpdateStmt(data, 'listingcomments', 'WHERE listing_comment_id = $1 RETURNING $2:name', [
-        req.params.id,
-        data,
-    ]);
+    const deactivateListingCommentQuery = parseSqlUpdateStmt(data, 'listingcomments', 'WHERE listing_comment_id = $1 RETURNING *', [req.params.id]);
 
     const rows = await db.one(deactivateListingCommentQuery);
 
