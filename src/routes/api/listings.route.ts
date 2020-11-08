@@ -24,7 +24,6 @@ import {
     verifyListing,
     deleteListing,
     deactivateListing,
-    uploadListingPics,
     searchListings,
 } from '../../controllers/listings';
 
@@ -109,17 +108,7 @@ const validateSearchListingsFields = [
 ];
 
 // map routes to controller
-router
-    .route('/')
-    .get(advancedResults('listingsview'), getListings)
-    .post(
-        protect,
-        uploadFile.array('pics', 5),
-        mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
-        validateCreateListingFields,
-        checkInputError,
-        createListing,
-    );
+router.route('/').get(advancedResults('listingsview'), getListings).post(protect, validateCreateListingFields, checkInputError, createListing);
 
 router.route('/owner').get(getAllListingsOwnedByUser);
 router.route('/search').get(validateSearchListingsFields, checkInputError, searchListings);
@@ -127,29 +116,8 @@ router.route('/all').get(protect, authorise('admin'), advancedResults('listings'
 
 router.route('/:id').get(getListing);
 
-router
-    .route('/:id')
-    .put(
-        protect,
-        authorise('user', 'admin'),
-        uploadFile.array('pics', 5),
-        mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
-        validateUpdateListingFields,
-        checkInputError,
-        updateListing,
-    )
-    .delete(protect, deleteListing);
+router.route('/:id').put(protect, validateUpdateListingFields, checkInputError, updateListing).delete(protect, deleteListing);
 
 router.route('/:id/deactivate').put(protect, deactivateListing);
-
-router
-    .route('/:id/upload-photo')
-    .put(
-        protect,
-        authorise('admin', 'user'),
-        uploadFile.array('pics', 5),
-        mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
-        uploadListingPics,
-    );
 
 router.route('/:id/verify').put(protect, authorise('admin'), validateVerifyListingFields, checkInputError, verifyListing);

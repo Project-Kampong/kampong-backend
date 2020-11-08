@@ -148,11 +148,11 @@ export const createListing = asyncHandler(async (req, res) => {
  * @access  Admin/Owner
  */
 export const updateListing = asyncHandler(async (req, res, next) => {
-    // check if listing exists and is not soft-deleted
-    const listing = await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.id);
+    // check if listing exists and is listing owner
+    const isListingOwner = await checkListingOwner(req.user.user_id, req.params.id);
 
     // Unauthorised if neither admin nor listing owner
-    if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
+    if (!(req.user.role === 'admin' || isListingOwner)) {
         return next(new ErrorResponse(`User not authorised to update this listing`, 403));
     }
 
@@ -239,11 +239,11 @@ export const verifyListing = asyncHandler(async (req, res, next) => {
  */
 
 export const deactivateListing = asyncHandler(async (req, res, next) => {
-    // check if listing exists and not soft-deleted
-    const listing = await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.id);
+    // check if listing exists and is listing owner
+    const isListingOwner = await checkListingOwner(req.user.user_id, req.params.id);
 
     // Unauthorised if neither admin nor listing owner
-    if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
+    if (!(req.user.role === 'admin' || isListingOwner)) {
         return next(new ErrorResponse(`User not authorised to delete this listing`, 403));
     }
 
@@ -281,42 +281,6 @@ export const deleteListing = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Upload multiple (up to 5) new pictures for a particular listing (identified by listing id)
- * @route   PUT /api/listings/:id/upload-photo
- * @access  Admin/Owner
- */
-export const uploadListingPics = asyncHandler(async (req, res, next) => {
-    // check if listing exists
-    const listing = await db.one('SELECT * FROM listings WHERE listing_id = $1', req.params.id);
-
-    // Unauthorised if neither admin nor listing owner
-    if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
-        return next(new ErrorResponse(`User not authorised to upload photo for this listing`, 403));
-    }
-
-    // get mapping of pic number to original filename from req body
-    const { pic1, pic2, pic3, pic4, pic5 } = req.body;
-
-    const data = {
-        pic1,
-        pic2,
-        pic3,
-        pic4,
-        pic5,
-    };
-    cleanseData(data);
-
-    const updateListingQuery = parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING $2:name', [req.params.id, data]);
-
-    const rows = await db.one(updateListingQuery);
-
-    res.status(200).json({
-        success: true,
-        data: rows,
-    });
-});
-
-/**
  * @desc    Search listings by title, category or location
  * @route   GET /api/listings/search?keyword=:keyword&limit=:limit
  * @access  Public
@@ -342,3 +306,8 @@ export const searchListings = asyncHandler(async (req, res) => {
         data: rows,
     });
 });
+
+const checkListingOwner = async (userId: string, listingId: string) => {
+    const owner = await db.one<Promise<{ created_by: string }>>('SELECT created_by FROM Listings WHERE listing_id = $1', listingId);
+    return userId === owner.created_by;
+};
