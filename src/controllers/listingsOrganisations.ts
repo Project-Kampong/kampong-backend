@@ -37,8 +37,8 @@ export const deleteListingOrganisation = asyncHandler(async (req, res, next) => 
         organisation_id
     } = ids;
 
-    const isOrganisationOwner = checkOrganisationOwner(userId,organisation_id);
-    const isListingOwner = checkListingOwner(userId, listing_id);
+    const isOrganisationOwner = await checkOrganisationOwner(userId,organisation_id);
+    const isListingOwner = await checkListingOwner(userId, listing_id);
     if (req.user.role !== 'admin' && !isListingOwner && !isOrganisationOwner) {
         return next(new ErrorResponse('Not authorised to delete listing organisation as you are not the organisation or listing owner', 403));
     }
