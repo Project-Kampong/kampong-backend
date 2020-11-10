@@ -35,7 +35,7 @@ const validateCreateOrganisationFields = [
     check('story', INVALID_ALPHA_SPACE_MSG('story')).optional().trim(),
     check('facebook_link', INVALID_URL_MSG).optional().trim().isURL(),
     check('twitter_link', INVALID_URL_MSG).optional().trim().isURL(),
-    check('instagram_link', INVALID_URL_MSG).optional().trim().isURL()
+    check('instagram_link', INVALID_URL_MSG).optional().trim().isURL(),
 ];
 
 const validateUpdateOrganisationFields = [
@@ -52,7 +52,7 @@ const validateUpdateOrganisationFields = [
             check('story').exists(),
             check('facebook_link').exists(),
             check('twitter_link').exists(),
-            check('instagram_link').exists()
+            check('instagram_link').exists(),
         ],
         NO_FIELD_UPDATED_MSG,
     ),
@@ -67,7 +67,7 @@ const validateUpdateOrganisationFields = [
     check('story', INVALID_ALPHA_SPACE_MSG('story')).optional().trim(),
     check('facebook_link', INVALID_URL_MSG).optional().trim().isURL(),
     check('twitter_link', INVALID_URL_MSG).optional().trim().isURL(),
-    check('instagram_link', INVALID_URL_MSG).optional().trim().isURL()
+    check('instagram_link', INVALID_URL_MSG).optional().trim().isURL(),
 ];
 
 // Map public routes to controller

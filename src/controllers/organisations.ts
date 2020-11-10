@@ -111,7 +111,7 @@ export const createOrganisation = asyncHandler(async (req, res) => {
         instagram_link,
         banner_photo,
         profile_photo,
-        additional_photos
+        additional_photos,
     } = req.body;
 
     const data: CreateOrganisationRequestSchema = {
@@ -172,7 +172,7 @@ export const updateOrganisation = asyncHandler(async (req, res, next) => {
         instagram_link,
         banner_photo,
         profile_photo,
-        additional_photos
+        additional_photos,
     } = req.body;
 
     const data: UpdateOrganisationRequestSchema = {
@@ -190,7 +190,7 @@ export const updateOrganisation = asyncHandler(async (req, res, next) => {
         instagram_link,
         banner_photo,
         profile_photo,
-        additional_photos
+        additional_photos,
     };
 
     cleanseData(data);
