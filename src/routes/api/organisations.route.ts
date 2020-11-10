@@ -1,5 +1,5 @@
 import express from 'express';
-export const router = express.Router();
+export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
 import { advancedResults, protect, checkInputError } from '../../middleware';
 import {
@@ -14,11 +14,13 @@ import {
 // Import organisation controllers
 import { getOrganisations, getOrganisation, createOrganisation, updateOrganisation, deleteOrganisation } from '../../controllers/organisations';
 
-// Import organisation's controllers
+// Import other controllers
 import { router as programmeRoute } from './programmes.route';
+import { router as listingsRoute } from './listings.route';
 
 // Re-route this URI to other resource router
 router.use('/:organisation_id/programmes', programmeRoute);
+router.use('/:organisation_id/listings', listingsRoute);
 
 // Define input validation
 const validateCreateOrganisationFields = [

@@ -168,6 +168,14 @@ Backend API for Project Kampong.
   * [Get Single Programme](#4-get-single-programme)
   * [Update Programme](#5-update-programme)
 
+* [Programmes](#programmes)
+
+  * [Create Programme](#1-create-programme)
+  * [Delete Programme](#2-delete-programme)
+  * [Get All Programmes](#3-get-all-programmes)
+  * [Get Single Programme](#4-get-single-programme)
+  * [Update Programme](#5-update-programme)
+
 * [Send Email](#send-email)
 
   * [Send email](#1-send-email)
@@ -12165,6 +12173,334 @@ URL: {{URL}}/api/participants/1
 
 
 ***Status Code:*** 404
+
+<br>
+
+
+
+## Programmes
+Organisations CRUD functionality.
+
+
+
+### 1. Create Programme
+
+
+Create programme. Permission: Admin/Owner.
+
+Field rules:
+All fields required unles otherwise stated.
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: {{URL}}/api/programmes
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"organisation_id": 1,
+    "title": "New Programme 1",
+    "about": "About the new programme...",
+    "media_url": ["https://youtube.com", "https://instagram.com"]
+}
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Create Programme (201 Created)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"organisation_id": 1,
+    "title": "New Programme 1",
+    "about": "About the new programme...",
+    "media_url": ["https://youtube.com", "https://instagram.com"]
+}
+```
+
+
+
+##### I. Example Response: Create Programme (201 Created)
+```js
+{
+    "success": true,
+    "data": {
+        "programme_id": 1,
+        "organisation_id": 1,
+        "title": "New Programme 1",
+        "about": "About the new programme...",
+        "media_url": [
+            "https://youtube.com",
+            "https://instagram.com"
+        ]
+    }
+}
+```
+
+
+***Status Code:*** 201
+
+<br>
+
+
+
+### 2. Delete Programme
+
+
+Delete programme identified by programme id. Permission: Admin/Owner.
+
+
+***Endpoint:***
+
+```bash
+Method: DELETE
+Type: 
+URL: {{URL}}/api/programmes/1
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Delete Programme (200 OK)
+
+
+
+##### I. Example Response: Delete Programme (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "programme_id": 1,
+        "organisation_id": 1,
+        "title": "New Programme 1",
+        "about": "About the new programme...",
+        "media_url": [
+            "https://youtube.com",
+            "https://instagram.com"
+        ]
+    }
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+### 3. Get All Programmes
+
+
+Get all programmes. Permission: Public.
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{URL}}/api/programmes
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Get All Programmes (200 OK)
+
+
+
+##### I. Example Response: Get All Programmes (200 OK)
+```js
+{
+    "success": true,
+    "count": 1,
+    "pagination": {},
+    "data": [
+        {
+            "programme_id": 1,
+            "organisation_id": 1,
+            "title": "New Programme 1",
+            "about": "About the new programme...",
+            "media_url": [
+                "https://youtube.com",
+                "https://instagram.com"
+            ]
+        }
+    ]
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+### 4. Get Single Programme
+
+
+Get single programme. Permission: Public.
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{URL}}/api/programmes/1
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Get Single Programme (200 OK)
+
+
+
+##### I. Example Response: Get Single Programme (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "programme_id": 1,
+        "organisation_id": 1,
+        "title": "New Programme 1",
+        "about": "About the new programme...",
+        "media_url": [
+            "https://youtube.com",
+            "https://instagram.com"
+        ]
+    }
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+### 5. Update Programme
+
+
+Update Programme identified by programme id. Permission: Admin/Owner.
+
+Field rules: 
+At least one field must be updated.
+
+
+***Endpoint:***
+
+```bash
+Method: PUT
+Type: RAW
+URL: {{URL}}/api/programmes/1
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "title": "New Programme 1",
+    "about": "About the new programme...",
+    "media_url": ["https://youtube.com", "https://instagram.com"]
+}
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Update Programme (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "title": "New Programme 1",
+    "about": "About the new programme...",
+    "media_url": ["https://youtube.com", "https://instagram.com"]
+}
+```
+
+
+
+##### I. Example Response: Update Programme (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "programme_id": 1,
+        "organisation_id": 1,
+        "title": "New Programme 1",
+        "about": "About the new programme...",
+        "media_url": [
+            "https://youtube.com",
+            "https://instagram.com"
+        ]
+    }
+}
+```
+
+
+***Status Code:*** 200
 
 <br>
 
