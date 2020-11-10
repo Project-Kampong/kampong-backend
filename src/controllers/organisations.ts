@@ -25,9 +25,16 @@ interface CreateOrganisationRequestSchema {
     website_url?: string;
     phone?: string;
     email: string;
+    address: string;
     owned_by: string;
     locations: string[];
     story: string;
+    facebook_link: string;
+    twitter_link: string;
+    instagram_link: string;
+    banner_photo: string;
+    profile_photo: string;
+    additional_photos: string[];
 }
 
 interface UpdateOrganisationRequestSchema {
@@ -37,8 +44,15 @@ interface UpdateOrganisationRequestSchema {
     website_url?: string;
     phone?: string;
     email?: string;
+    address?: string;
     locations?: string[];
     story?: string;
+    facebook_link?: string;
+    twitter_link?: string;
+    instagram_link?: string;
+    banner_photo?: string;
+    profile_photo?: string;
+    additional_photos?: string[];
 }
 
 /**
@@ -82,7 +96,24 @@ export const getOrganisation = asyncHandler(async (req, res) => {
  * @access  Private
  */
 export const createOrganisation = asyncHandler(async (req, res) => {
-    const { name, organisation_type, about, website_url, phone, email, locations, story } = req.body;
+    const {
+        name,
+        organisation_type,
+        about,
+        website_url,
+        phone,
+        email,
+        address,
+        locations,
+        story,
+        facebook_link,
+        twitter_link,
+        instagram_link,
+        banner_photo,
+        profile_photo,
+        additional_photos
+    } = req.body;
+
     const data: CreateOrganisationRequestSchema = {
         name,
         organisation_type,
@@ -90,8 +121,15 @@ export const createOrganisation = asyncHandler(async (req, res) => {
         website_url,
         phone,
         email,
+        address,
         locations,
         story,
+        facebook_link,
+        twitter_link,
+        instagram_link,
+        banner_photo,
+        profile_photo,
+        additional_photos,
         owned_by: req.user.user_id,
     };
 
@@ -119,7 +157,23 @@ export const updateOrganisation = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse('Not authorised to delete organisation as you are not the organisation owner', 403));
     }
 
-    const { name, organisation_type, about, website_url, phone, email, locations, story } = req.body;
+    const {
+        name,
+        organisation_type,
+        about,
+        website_url,
+        phone,
+        email,
+        address,
+        locations,
+        story,
+        facebook_link,
+        twitter_link,
+        instagram_link,
+        banner_photo,
+        profile_photo,
+        additional_photos
+    } = req.body;
 
     const data: UpdateOrganisationRequestSchema = {
         name,
@@ -128,8 +182,15 @@ export const updateOrganisation = asyncHandler(async (req, res, next) => {
         website_url,
         phone,
         email,
+        address,
         locations,
         story,
+        facebook_link,
+        twitter_link,
+        instagram_link,
+        banner_photo,
+        profile_photo,
+        additional_photos
     };
 
     cleanseData(data);
