@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+import { v1 as uuidv1 } from 'uuid';
 import { db } from '../database/db';
 import { asyncHandler } from '../middleware';
 import { cleanseData, hashPassword, ErrorResponse, parseSqlUpdateStmt } from '../utils';
@@ -34,7 +34,7 @@ export const createUser = asyncHandler(async (req, res) => {
     const { first_name, last_name, email, password } = req.body;
 
     const data = {
-        user_id: uuidv4(),
+        user_id: uuidv1(),
         first_name,
         last_name,
         email,

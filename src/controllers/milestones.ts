@@ -1,6 +1,6 @@
 import { db } from '../database/db';
 import { asyncHandler } from '../middleware';
-import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
+import { checkListingOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 
 /**
  * @desc    Get all milestones
@@ -59,12 +59,11 @@ export const createMilestone = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    // if non-admin ,check if owner of listing
-    if (req.user.role !== 'admin') {
-        const listingOwner = await isListingOwner(req.user.user_id, listing_id);
-        if (!listingOwner) {
-            return next(new ErrorResponse(`Not authorised to create milestones for this listing`, 403));
-        }
+    const isListingOwner = await checkListingOwner(req.user.user_id, listing_id);
+
+    // check listing owner for non-admin users
+    if (!(req.user.role === 'admin' || isListingOwner)) {
+        return next(new ErrorResponse(`Not authorised to create milestone for this listing`, 403));
     }
 
     const rows = await db.one('INSERT INTO milestones (${this:name}) VALUES (${this:csv}) RETURNING *', data);
@@ -84,12 +83,11 @@ export const updateMilestone = asyncHandler(async (req, res, next) => {
     // check if milestone exists
     const milestone = await db.one('SELECT * FROM milestones WHERE milestone_id = $1', req.params.id);
 
-    // if non-admin, check if owner of listing
-    if (req.user.role !== 'admin') {
-        const listingOwner = await isListingOwner(req.user.user_id, milestone.listing_id);
-        if (!listingOwner) {
-            return next(new ErrorResponse(`Not authorised to update milestones in this listing`, 403));
-        }
+    const isListingOwner = await checkListingOwner(req.user.user_id, milestone.listing_id);
+
+    // check listing owner for non-admin users
+    if (!(req.user.role === 'admin' || isListingOwner)) {
+        return next(new ErrorResponse(`Not authorised to update milestone for this listing`, 403));
     }
 
     const { description, date } = req.body;
@@ -120,12 +118,11 @@ export const deleteMilestone = asyncHandler(async (req, res, next) => {
     // check if milestone exists
     const milestone = await db.one('SELECT * FROM milestones WHERE milestone_id = $1', req.params.id);
 
-    // if non-admin, check if owner of listing
-    if (req.user.role !== 'admin') {
-        const listingOwner = await isListingOwner(req.user.user_id, milestone.listing_id);
-        if (!listingOwner) {
-            return next(new ErrorResponse(`Not authorised to delete milestones in this listing`, 403));
-        }
+    const isListingOwner = await checkListingOwner(req.user.user_id, milestone.listing_id);
+
+    // check listing owner for non-admin users
+    if (!(req.user.role === 'admin' || isListingOwner)) {
+        return next(new ErrorResponse(`Not authorised to delete milestone for this listing`, 403));
     }
 
     const rows = await db.one('DELETE FROM milestones WHERE milestone_id = $1 RETURNING *', req.params.id);
@@ -135,8 +132,3 @@ export const deleteMilestone = asyncHandler(async (req, res, next) => {
         data: rows,
     });
 });
-
-const isListingOwner = async (userId, listingId) => {
-    const owner = await db.one('SELECT created_by FROM Listings WHERE listing_id = $1', listingId);
-    return userId === owner.created_by;
-};
