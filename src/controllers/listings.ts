@@ -1,8 +1,8 @@
 import moment from 'moment';
-import { v4 as uuidv4 } from 'uuid';
-import { db } from '../database/db';
+import { v1 as uuidv1 } from 'uuid';
+import { db } from '../database';
 import { asyncHandler } from '../middleware';
-import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
+import { checkListingOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 import { isNil } from 'lodash';
 
 /**
@@ -91,7 +91,7 @@ export const getAllListingsOwnedByUser = asyncHandler(async (req, res, next) => 
  */
 export const createListing = asyncHandler(async (req, res) => {
     const {
-        organisation_id, // NOTE: do not use this field until organisations endpoint is implemented
+        organisation_id,
         title,
         category,
         about,
@@ -111,7 +111,7 @@ export const createListing = asyncHandler(async (req, res) => {
     } = req.body;
 
     const data = {
-        listing_id: uuidv4(),
+        listing_id: uuidv1(),
         created_by: req.user.user_id,
         organisation_id,
         title,
@@ -159,11 +159,11 @@ export const createListing = asyncHandler(async (req, res) => {
  * @access  Admin/Owner
  */
 export const updateListing = asyncHandler(async (req, res, next) => {
-    // check if listing exists and is not soft-deleted
-    const listing = await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.id);
+    // check if listing exists and is listing owner
+    const isListingOwner = await checkListingOwner(req.user.user_id, req.params.id);
 
     // Unauthorised if neither admin nor listing owner
-    if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
+    if (!(req.user.role === 'admin' || isListingOwner)) {
         return next(new ErrorResponse(`User not authorised to update this listing`, 403));
     }
 
@@ -250,11 +250,11 @@ export const verifyListing = asyncHandler(async (req, res, next) => {
  */
 
 export const deactivateListing = asyncHandler(async (req, res, next) => {
-    // check if listing exists and not soft-deleted
-    const listing = await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.id);
+    // check if listing exists and is listing owner
+    const isListingOwner = await checkListingOwner(req.user.user_id, req.params.id);
 
     // Unauthorised if neither admin nor listing owner
-    if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
+    if (!(req.user.role === 'admin' || isListingOwner)) {
         return next(new ErrorResponse(`User not authorised to delete this listing`, 403));
     }
 
@@ -284,42 +284,6 @@ export const deleteListing = asyncHandler(async (req, res, next) => {
     }
 
     const rows = await db.one('DELETE FROM listings WHERE listing_id = $1 RETURNING *', req.params.id);
-
-    res.status(200).json({
-        success: true,
-        data: rows,
-    });
-});
-
-/**
- * @desc    Upload multiple (up to 5) new pictures for a particular listing (identified by listing id)
- * @route   PUT /api/listings/:id/upload-photo
- * @access  Admin/Owner
- */
-export const uploadListingPics = asyncHandler(async (req, res, next) => {
-    // check if listing exists
-    const listing = await db.one('SELECT * FROM listings WHERE listing_id = $1', req.params.id);
-
-    // Unauthorised if neither admin nor listing owner
-    if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
-        return next(new ErrorResponse(`User not authorised to upload photo for this listing`, 403));
-    }
-
-    // get mapping of pic number to original filename from req body
-    const { pic1, pic2, pic3, pic4, pic5 } = req.body;
-
-    const data = {
-        pic1,
-        pic2,
-        pic3,
-        pic4,
-        pic5,
-    };
-    cleanseData(data);
-
-    const updateListingQuery = parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING *', [req.params.id]);
-
-    const rows = await db.one(updateListingQuery);
 
     res.status(200).json({
         success: true,

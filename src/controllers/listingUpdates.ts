@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { db } from '../database/db';
 import { asyncHandler } from '../middleware';
-import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
+import { checkListingOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 
 /**
  * @desc    Get all listing updates
@@ -64,12 +64,11 @@ export const createListingUpdate = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    // if non-admin ,check if owner of listing
-    if (req.user.role !== 'admin') {
-        const listingOwner = await isListingOwner(req.user.user_id, listing_id);
-        if (!listingOwner) {
-            return next(new ErrorResponse(`Not authorised to create updates for this listing`, 403));
-        }
+    const isListingOwner = await checkListingOwner(req.user.user_id, listing_id);
+
+    // check listing owner for non-admin users
+    if (!(req.user.role === 'admin' || isListingOwner)) {
+        return next(new ErrorResponse(`Not authorised to create listing update for this listing`, 403));
     }
 
     const rows = await db.one('INSERT INTO ListingUpdates (${this:name}) VALUES (${this:csv}) RETURNING *', data);
@@ -89,12 +88,11 @@ export const modifyListingUpdate = asyncHandler(async (req, res, next) => {
     // check if listing update exists
     const listingUpdate = await db.one('SELECT * FROM ListingUpdates WHERE listing_update_id = $1', req.params.id);
 
-    // if non-admin, check if owner of listing
-    if (req.user.role !== 'admin') {
-        const listingOwner = await isListingOwner(req.user.user_id, listingUpdate.listing_id);
-        if (!listingOwner) {
-            return next(new ErrorResponse(`Not authorised to modify updates in this listing`, 403));
-        }
+    const isListingOwner = await checkListingOwner(req.user.user_id, listingUpdate.listing_id);
+
+    // check listing owner for non-admin users
+    if (!(req.user.role === 'admin' || isListingOwner)) {
+        return next(new ErrorResponse(`Not authorised to update listing update for this listing`, 403));
     }
 
     const { description, pic1, pic2, pic3, pic4, pic5 } = req.body;
@@ -130,12 +128,11 @@ export const deleteListingUpdate = asyncHandler(async (req, res, next) => {
     // check if listing update exists
     const listingUpdate = await db.one('SELECT * FROM ListingUpdates WHERE listing_update_id = $1', req.params.id);
 
-    // if non-admin, check if owner of listing
-    if (req.user.role !== 'admin') {
-        const listingOwner = await isListingOwner(req.user.user_id, listingUpdate.listing_id);
-        if (!listingOwner) {
-            return next(new ErrorResponse(`Not authorised to delete updates in this listing`, 403));
-        }
+    const isListingOwner = await checkListingOwner(req.user.user_id, listingUpdate.listing_id);
+
+    // check listing owner for non-admin users
+    if (!(req.user.role === 'admin' || isListingOwner)) {
+        return next(new ErrorResponse(`Not authorised to delete listing update for this listing`, 403));
     }
 
     const rows = await db.one('DELETE FROM ListingUpdates WHERE listing_update_id = $1 RETURNING *', req.params.id);
@@ -145,8 +142,3 @@ export const deleteListingUpdate = asyncHandler(async (req, res, next) => {
         data: rows,
     });
 });
-
-const isListingOwner = async (userId, listingId) => {
-    const owner = await db.one('SELECT created_by FROM Listings WHERE listing_id = $1', listingId);
-    return userId === owner.created_by;
-};

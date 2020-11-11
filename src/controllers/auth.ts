@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { v4 as uuidv4 } from 'uuid';
+import { v1 as uuidv1 } from 'uuid';
 import { checkPassword, cleanseData, ErrorResponse, getSignedJwtToken, hashPassword, parseSqlUpdateStmt, sendEmail } from '../utils';
 import { db } from '../database/db';
 import { asyncHandler } from '../middleware';
@@ -23,7 +23,7 @@ export const register = asyncHandler(async (req, res, next) => {
     const hashedEmailToken = hashToken(token);
 
     const userData = {
-        user_id: uuidv4(),
+        user_id: uuidv1(),
         first_name,
         last_name,
         email,

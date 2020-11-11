@@ -1,6 +1,6 @@
 import { db } from '../database/db';
 import { asyncHandler } from '../middleware';
-import { ErrorResponse } from '../utils';
+import { checkListingOwner, ErrorResponse } from '../utils';
 import { cleanseData } from '../utils/dbHelper';
 
 /**
@@ -59,9 +59,11 @@ export const createCustomListingSkill = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
+    const isListingOwner = await checkListingOwner(req.user.user_id, listing_id);
+
     // check listing owner for non-admin users
-    if (req.user.role !== 'admin' && !(await isListingOwner(req.user.user_id, listing_id))) {
-        return next(new ErrorResponse(`Not authorised to create listing skills for this listing`, 403));
+    if (!(req.user.role === 'admin' || isListingOwner)) {
+        return next(new ErrorResponse(`Not authorised to create custom listing skill for this listing`, 403));
     }
 
     //if skill already exists, just link both listing and skill together in table
@@ -98,9 +100,11 @@ export const createListingSkill = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
+    const isListingOwner = await checkListingOwner(req.user.user_id, listing_id);
+
     // check listing owner for non-admin users
-    if (req.user.role !== 'admin' && !(await isListingOwner(req.user.user_id, listing_id))) {
-        return next(new ErrorResponse(`Not authorised to create listing skills for this listing`, 403));
+    if (!(req.user.role === 'admin' || isListingOwner)) {
+        return next(new ErrorResponse(`Not authorised to create listing skill for this listing`, 403));
     }
 
     const rows = await db.one('INSERT INTO ListingSkills (${this:name}) VALUES (${this:csv}) RETURNING *', data);
@@ -120,9 +124,11 @@ export const deleteListingSkill = asyncHandler(async (req, res, next) => {
     // check if listingskill exists
     const listingSkill = await db.one('SELECT * FROM ListingSkills WHERE listing_skill_id = $1', req.params.id);
 
+    const isListingOwner = await checkListingOwner(req.user.user_id, listingSkill.listing_id);
+
     // check listing owner for non-admin users
-    if (req.user.role !== 'admin' && !(await isListingOwner(req.user.user_id, listingSkill.listing_id))) {
-        return next(new ErrorResponse(`Not authorised to delete listing skills for this listing`, 403));
+    if (!(req.user.role === 'admin' || isListingOwner)) {
+        return next(new ErrorResponse(`Not authorised to delete listing skill for this listing`, 403));
     }
 
     const rows = await db.one('DELETE FROM ListingSkills WHERE listing_skill_id = $1 RETURNING *', req.params.id);
@@ -132,8 +138,3 @@ export const deleteListingSkill = asyncHandler(async (req, res, next) => {
         data: rows,
     });
 });
-
-const isListingOwner = async (userId, listingId) => {
-    const owner = await db.one('SELECT created_by FROM Listings WHERE listing_id = $1', listingId);
-    return userId === owner.created_by;
-};
