@@ -1,6 +1,6 @@
 import { db } from '../database/db';
 import { asyncHandler } from '../middleware';
-import { cleanseData, ErrorResponse } from '../utils';
+import { checkOrganisationOwner, checkListingOwner, cleanseData, ErrorResponse } from '../utils';
 
 /**
  * @desc    Create an entry in the listings-organisations table
@@ -47,13 +47,3 @@ export const deleteListingOrganisation = asyncHandler(async (req, res, next) => 
         data: rows,
     });
 });
-
-const checkOrganisationOwner = async (userId: string, organisationId: number) => {
-    const owner = await db.one<Promise<{ owned_by: string }>>('SELECT owned_by FROM Organisations WHERE organisation_id = $1', organisationId);
-    return userId === owner.owned_by;
-};
-
-const checkListingOwner = async (userId: string, listingId: string) => {
-    const owner = await db.one<Promise<{ created_by: string }>>('SELECT created_by FROM Listings WHERE listing_id = $1', listingId);
-    return userId === owner.created_by;
-};

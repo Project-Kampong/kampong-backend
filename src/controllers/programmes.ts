@@ -1,6 +1,6 @@
 import { db } from '../database/db';
 import { asyncHandler } from '../middleware';
-import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
+import { checkOrganisationOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 
 interface ProgrammeSchema {
     programme_id: number;
@@ -152,10 +152,3 @@ export const deleteProgramme = asyncHandler(async (req, res, next) => {
         data: row,
     });
 });
-
-const checkOrganisationOwner = async (userId: string, organisationId: number) => {
-    const owner = await db.one<Promise<{ owned_by: string }>>('SELECT owned_by FROM Organisations WHERE organisation_id = $1', organisationId);
-    console.log(userId);
-    console.log(owner.owned_by);
-    return userId === owner.owned_by;
-};

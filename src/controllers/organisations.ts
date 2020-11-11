@@ -1,6 +1,6 @@
 import { db } from '../database/db';
 import { asyncHandler } from '../middleware';
-import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
+import { checkOrganisationOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 
 interface OrganisationSchema {
     organisation_id: number;
@@ -63,7 +63,6 @@ interface UpdateOrganisationRequestSchema {
  * @access  Public
  */
 export const getOrganisations = asyncHandler(async (req, res) => {
-    console.log(`Listing ID = ${req.params.listing_id}`);
     if (req.params.listing_id) {
         const rows = await db.manyOrNone<Promise<OrganisationSchema[]>>(
             'SELECT * FROM listings l LEFT JOIN listingsorganisations lo ON l.listing_id = lo.listing_id LEFT JOIN organisations o ON lo.organisation_id = o.organisation_id WHERE l.listing_id = $1',
@@ -226,8 +225,3 @@ export const deleteOrganisation = asyncHandler(async (req, res, next) => {
         data: rows,
     });
 });
-
-const checkOrganisationOwner = async (userId: string, organisationId: number) => {
-    const owner = await db.one<Promise<{ owned_by: string }>>('SELECT owned_by FROM Organisations WHERE organisation_id = $1', organisationId);
-    return userId === owner.owned_by;
-};
