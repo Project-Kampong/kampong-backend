@@ -1,9 +1,10 @@
 import { IDatabase, IMain } from 'pg-promise';
 import { ListingsView } from '../models';
+import { BaseRepository } from './base.repository';
 
-export class ListingsRepository {
-    constructor(private db: IDatabase<any>, private pgp: IMain) {
-        this.db = db;
+export class ListingsRepository extends BaseRepository {
+    constructor(protected db: IDatabase<any>, protected pgp: IMain) {
+        super(db, pgp);
     }
 
     getListingById(listingId: string): Promise<ListingsView> {

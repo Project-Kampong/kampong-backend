@@ -1,21 +1,10 @@
 import { IDatabase, IMain } from 'pg-promise';
 import { CreateFaqSchema, Faqs, UpdateFaqSchema } from '../models';
+import { BaseRepository } from './base.repository';
 
-/**
- * @param db
- * Automated database connection context/interface.
- *
- * If you ever need to access other repositories from this one,
- * you will have to replace type 'IDatabase<any>' with 'any'.
- *
- * @param pgp
- * Library's root, if ever needed, like to access 'helpers'
- * or other namespaces available from the root.
- */
-export class FaqsRepository {
-    constructor(private db: IDatabase<any>, private pgp: IMain) {
-        this.db = db;
-        this.pgp = pgp;
+export class FaqsRepository extends BaseRepository {
+    constructor(protected db: IDatabase<any>, protected pgp: IMain) {
+        super(db, pgp);
     }
 
     getAllFaqsForListing(listingId: string): Promise<Faqs[]> {
