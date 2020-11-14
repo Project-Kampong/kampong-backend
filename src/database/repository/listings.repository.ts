@@ -1,6 +1,6 @@
-import { db } from '../database';
+import { IDatabase, IMain } from 'pg-promise';
 
-class ListingsViewSchema {
+interface ListingsViewSchema {
     listing_id: string;
     organisation_id: number;
     created_by: string;
@@ -29,7 +29,11 @@ class ListingsViewSchema {
 }
 
 export class ListingsRepository {
-    static getListingById(listingId: string): Promise<ListingsViewSchema> {
-        return db.one('SELECT * FROM listingsview WHERE listing_id = $1', listingId);
+    constructor(private db: IDatabase<any>, private pgp: IMain) {
+        this.db = db;
+    }
+
+    getListingById(listingId: string): Promise<ListingsViewSchema> {
+        return this.db.one('SELECT * FROM listingsview WHERE listing_id = $1', listingId);
     }
 }

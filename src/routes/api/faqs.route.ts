@@ -5,7 +5,9 @@ import { advancedResults, checkInputError, protect, authorise } from '../../midd
 import { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } from '../../utils';
 
 // import controllers here
-import { getFaqs, getFaq, createFaq, updateFaq, deleteFaq } from '../../controllers/faqs';
+import { FaqsController } from '../../controllers/faqs';
+
+const faqsController = new FaqsController();
 
 // input validation chain definition
 const validateCreateFaqFields = [
@@ -20,14 +22,14 @@ const validateUpdateFaqFields = [
     check('answer').optional().trim(),
 ];
 
-router.route('/').get(advancedResults('faqs'), getFaqs);
-router.route('/:id').get(getFaq);
+router.route('/').get(advancedResults('faqs'), faqsController.getFaqs);
+router.route('/:id').get(faqsController.getFaq);
 
 // all routes below only accessible to admin
 router.use(protect);
 router.use(authorise('user', 'admin'));
 
 // map routes to controller
-router.route('/').post(validateCreateFaqFields, checkInputError, createFaq);
+router.route('/').post(validateCreateFaqFields, checkInputError, faqsController.createFaq);
 
-router.route('/:id').put(validateUpdateFaqFields, checkInputError, updateFaq).delete(deleteFaq);
+router.route('/:id').put(validateUpdateFaqFields, checkInputError, faqsController.updateFaq).delete(faqsController.deleteFaq);
