@@ -86,9 +86,7 @@ export const createListingUpdate = asyncHandler(async (req, res, next) => {
  */
 export const modifyListingUpdate = asyncHandler(async (req, res, next) => {
     // check if listing update exists
-    const listingUpdate = await db.one('SELECT * FROM ListingUpdates WHERE listing_update_id = $1', req.params.id);
-
-    const isListingOwner = await checkListingOwner(req.user.user_id, listingUpdate.listing_id);
+    const isListingOwner = await checkListingOwner(req.user.user_id, req.params.id);
 
     // check listing owner for non-admin users
     if (!(req.user.role === 'admin' || isListingOwner)) {
