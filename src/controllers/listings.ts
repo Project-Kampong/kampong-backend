@@ -210,19 +210,21 @@ export const updateListing = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Verify single listing
+ * @desc    Verify or feature single listing
  * @route   PUT /api/listings/:id/verify
  * @access  Admin
  */
-export const verifyListing = asyncHandler(async (req, res, next) => {
+export const verifyOrFeatureListing = asyncHandler(async (req, res, next) => {
     // check if listing exists
     await db.one('SELECT * FROM listings WHERE listing_id = $1', req.params.id);
 
-    const { is_verified } = req.body;
+    const { is_verified, is_featured } = req.body;
 
-    const data = { is_verified };
+    const data = { is_verified, is_featured };
 
-    const verifyListingQuery = parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING *', [req.params.id]);
+    cleanseData(data);
+
+    const verifyListingQuery = parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING *', req.params.id);
 
     const rows = await db.one(verifyListingQuery);
 

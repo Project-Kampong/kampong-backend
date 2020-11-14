@@ -20,7 +20,7 @@ import {
     getListing,
     createListing,
     updateListing,
-    verifyListing,
+    verifyOrFeatureListing,
     deleteListing,
     deactivateListing,
     searchListings,
@@ -100,7 +100,11 @@ const validateUpdateListingFields = [
     check('end_date', INVALID_TIMESTAMP_MSG('end date')).optional().matches(DATETIME_REGEX),
 ];
 
-const validateVerifyListingFields = [check('is_verified', INVALID_BOOLEAN_MSG('is_verified')).isBoolean()];
+const validateVerifyOrFeatureListingFields = [
+    check('is_verified', INVALID_BOOLEAN_MSG('is_verified')).optional().isBoolean(),
+    check('is_featured', INVALID_BOOLEAN_MSG('is_featured')).optional().isBoolean(),
+];
+
 const validateSearchListingsFields = [
     query('keyword', INVALID_FIELD_MSG('keyword')).exists(),
     query('limit', INVALID_FIELD_MSG('limit')).optional().isNumeric(),
@@ -119,4 +123,4 @@ router.route('/:id').put(protect, validateUpdateListingFields, checkInputError, 
 
 router.route('/:id/deactivate').put(protect, deactivateListing);
 
-router.route('/:id/verify').put(protect, authorise('admin'), validateVerifyListingFields, checkInputError, verifyListing);
+router.route('/:id/verify-feature').put(protect, authorise('admin'), validateVerifyOrFeatureListingFields, checkInputError, verifyOrFeatureListing);
