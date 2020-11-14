@@ -35,23 +35,5 @@ router.route('/:id').get(getListingUpdate);
 router.use(protect);
 
 // map routes to controller
-router
-    .route('/')
-    .post(
-        uploadFile.array('pics', 5),
-        mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
-        validateCreateListingUpdateFields,
-        checkInputError,
-        createListingUpdate,
-    );
-
-router
-    .route('/:id')
-    .put(
-        uploadFile.array('pics', 5),
-        mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
-        validateModifyListingUpdateFields,
-        checkInputError,
-        modifyListingUpdate,
-    )
-    .delete(deleteListingUpdate);
+router.route('/').post(validateCreateListingUpdateFields, checkInputError, createListingUpdate);
+router.route('/:id').put(validateModifyListingUpdateFields, checkInputError, modifyListingUpdate).delete(deleteListingUpdate);
