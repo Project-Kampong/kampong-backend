@@ -64,7 +64,7 @@ interface UpdateOrganisationRequestSchema {
  */
 export const getOrganisations = asyncHandler(async (req, res) => {
     if (req.params.listing_id) {
-        const rows = await db.manyOrNone<Promise<OrganisationSchema[]>>(
+        const rows = await db.manyOrNone(
             'SELECT * FROM listings l LEFT JOIN listingsorganisations lo ON l.listing_id = lo.listing_id LEFT JOIN organisations o ON lo.organisation_id = o.organisation_id WHERE l.listing_id = $1',
             req.params.listing_id,
         );
@@ -153,7 +153,7 @@ export const updateOrganisation = asyncHandler(async (req, res, next) => {
     const isOrganisationOwner = await checkOrganisationOwner(userId, organisationId);
 
     if (req.user.role !== 'admin' || !isOrganisationOwner) {
-        return next(new ErrorResponse('Not authorised to delete organisation as you are not the organisation owner', 403));
+        return next(new ErrorResponse('Not authorised to update organisation as you are not the organisation owner', 403));
     }
 
     const {

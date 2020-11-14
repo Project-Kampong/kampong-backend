@@ -15,7 +15,7 @@ export const createListingOrganisation = asyncHandler(async (req, res, next) => 
     const isOrganisationOwner = await checkOrganisationOwner(userId, organisation_id);
     const isListingOwner = await checkListingOwner(userId, listing_id);
     if (req.user.role !== 'admin' || !isListingOwner || !isOrganisationOwner) {
-        return next(new ErrorResponse('Not authorised to delete listing organisation as you are not the organisation or listing owner', 403));
+        return next(new ErrorResponse('Not authorised to create listing organisation as you are not the organisation or listing owner', 403));
     }
 
     const data = {
