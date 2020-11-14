@@ -12,10 +12,6 @@ DROP TABLE IF EXISTS ForgetPasswordUsers CASCADE;
 
 DROP TABLE IF EXISTS Profiles CASCADE;
 
-DROP TABLE IF EXISTS Skills CASCADE;
-
-DROP TABLE IF EXISTS ProfileSkills CASCADE;
-
 DROP TABLE IF EXISTS Organisations CASCADE;
 
 DROP TABLE IF EXISTS Programmes CASCADE;
@@ -29,8 +25,6 @@ DROP TABLE IF EXISTS ListingStories CASCADE;
 DROP TABLE IF EXISTS FeaturedListings CASCADE;
 
 DROP TABLE IF EXISTS HashTags CASCADE;
-
-DROP TABLE IF EXISTS ListingSkills CASCADE;
 
 DROP TABLE IF EXISTS Jobs CASCADE;
 
@@ -99,24 +93,6 @@ CREATE TABLE Profiles (
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	PRIMARY KEY (user_id),
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE
-);
-
-CREATE TABLE Skills (
-	skill_id SERIAL,
-	skill VARCHAR UNIQUE NOT NULL,
-	skill_group VARCHAR,
-	skill_description VARCHAR,
-	PRIMARY KEY (skill_id)
-);
-
-CREATE TABLE ProfileSkills (
-	profile_skill_id SERIAL,
-	user_id VARCHAR NOT NULL,
-	skill_id INTEGER NOT NULL,
-	PRIMARY KEY (profile_skill_id),
-	UNIQUE (user_id, skill_id),
-	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
-	FOREIGN KEY (skill_id) REFERENCES Skills ON DELETE CASCADE
 );
 
 CREATE TABLE Organisations (
@@ -211,17 +187,6 @@ CREATE TABLE HashTags (
 	UNIQUE (listing_id, tag),
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
-
-CREATE TABLE ListingSkills (
-	listing_skill_id SERIAL,
-	listing_id VARCHAR NOT NULL,
-	skill_id INTEGER NOT NULL,
-	PRIMARY KEY (listing_skill_id),
-	UNIQUE (listing_id, skill_id),
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE,
-	FOREIGN KEY (skill_id) REFERENCES Skills ON DELETE CASCADE
-);
-
 
 /* Jobs for a particular listing */
 CREATE TABLE Jobs (

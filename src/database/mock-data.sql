@@ -45,23 +45,6 @@ As part of the Singapore''s TogetherSG movement, having a shared central network
 ('d95a6c2e-3c33-447c-be0c-be399247dd3f', NULL, NULL, NULL, NULL),
 ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'Integrated fresh-thinking parallelism', 'Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.', 'Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.', 'neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo');
 
-insert into ProfileSkills (user_id, skill_id) values ('f96b2138-1754-4c17-a405-940e20adc601', 1);
-insert into ProfileSkills (user_id, skill_id) values ('f96b2138-1754-4c17-a405-940e20adc601', 2);
-insert into ProfileSkills (user_id, skill_id) values ('f96b2138-1754-4c17-a405-940e20adc601', 3);
-insert into ProfileSkills (user_id, skill_id) values ('b7662cd1-a2c9-4054-95e7-078e35ea6fa1', 4);
-insert into ProfileSkills (user_id, skill_id) values ('b7662cd1-a2c9-4054-95e7-078e35ea6fa1', 5);
-insert into ProfileSkills (user_id, skill_id) values ('d69a127d-815b-4834-b2b6-54ab398fccad', 6);
-insert into ProfileSkills (user_id, skill_id) values ('f997120c-2956-482e-9ba3-81a12b4fecc1', 7);
-insert into ProfileSkills (user_id, skill_id) values ('2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb', 8);
-
-INSERT INTO "public"."listingskills" ("listing_id", "skill_id") VALUES
-('c975a572-452d-4824-8ed5-500b50488436', '15'),
-('c975a572-452d-4824-8ed5-500b50488436', '16'),
-('c975a572-452d-4824-8ed5-500b50488436', '17'),
-('1276b4eb-df3a-4de3-bcae-a450ed96eeac', '15'),
-('1276b4eb-df3a-4de3-bcae-a450ed96eeac', '16'),
-('1276b4eb-df3a-4de3-bcae-a450ed96eeac', '17');
-
 /* FAQ mock data population */
 insert into Faqs (listing_id, question, answer) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'consequat nulla nisl nunc nisl duis bibendum felis', '24/7');
 insert into Faqs (listing_id, question, answer) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et magnis dis', 'Graphic Interface');
