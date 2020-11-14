@@ -69,7 +69,7 @@ export const createProgramme = asyncHandler(async (req, res, next) => {
     const organisationId: number = parseInt(organisation_id);
     const isOrganisationOwner = await checkOrganisationOwner(userId, organisationId);
 
-    if (req.user.role !== 'admin' && !isOrganisationOwner) {
+    if (req.user.role !== 'admin' || !isOrganisationOwner) {
         return next(new ErrorResponse('Not authorised to create programme as you are not the organisation owner', 403));
     }
 
@@ -104,7 +104,7 @@ export const updateProgramme = asyncHandler(async (req, res, next) => {
     const userId: string = req.user.user_id;
     const isOrganisationOwner = await checkOrganisationOwner(userId, organisation_id);
 
-    if (req.user.role !== 'admin' && !isOrganisationOwner) {
+    if (req.user.role !== 'admin' || !isOrganisationOwner) {
         return next(new ErrorResponse('Not authorised to update programme as you are not the organisation owner', 403));
     }
 
@@ -141,7 +141,7 @@ export const deleteProgramme = asyncHandler(async (req, res, next) => {
     const userId: string = req.user.user_id;
     const isOrganisationOwner = await checkOrganisationOwner(userId, organisation_id);
 
-    if (req.user.role !== 'admin' && !isOrganisationOwner) {
+    if (req.user.role !== 'admin' || !isOrganisationOwner) {
         return next(new ErrorResponse('Not authorised to delete programme as you are not the organisation owner', 403));
     }
 
