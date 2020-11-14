@@ -3,7 +3,7 @@ import promise from 'bluebird';
 import pgpDriver, { IInitOptions, IDatabase, IMain } from 'pg-promise';
 import { IExtensions, ListingsRepository, FaqsRepository } from './repositories';
 
-type ExtendedProtocol = IDatabase<IExtensions> & IExtensions;
+export type PgpExtendedProtocol = IDatabase<IExtensions> & IExtensions;
 
 // TODO: find out if loading dotenv config in non server/index.js file is good practice, else try pre-loading dotenv files on start-up
 // see: https://medium.com/the-node-js-collection/making-your-node-js-work-everywhere-with-environment-variables-2da8cdf6e786
@@ -24,7 +24,7 @@ const dbConfig: IInitOptions<IExtensions> = {
         }
     },
     // Initialize repositories as singleton here
-    extend(obj: ExtendedProtocol) {
+    extend(obj: PgpExtendedProtocol) {
         obj.faqs = new FaqsRepository(obj, pgp);
         obj.listings = new ListingsRepository(obj, pgp);
     },
@@ -35,7 +35,7 @@ const dbConfig: IInitOptions<IExtensions> = {
 export const pgp: IMain = pgpDriver(dbConfig);
 
 // To be called by main server driver (with loaded env vars)
-export const db: ExtendedProtocol = pgp({
+export const db: PgpExtendedProtocol = pgp({
     host: process.env.PG_HOST,
     port: parseInt(process.env.PG_PORT, 10),
     database: process.env.PG_NAME,
