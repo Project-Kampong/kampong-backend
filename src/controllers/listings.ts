@@ -35,9 +35,13 @@ export const getListings = asyncHandler(async (req, res) => {
             'SELECT * FROM organisations o LEFT JOIN listingsorganisations lo ON o.organisation_id = lo.organisation_id LEFT JOIN listings l ON lo.listing_id = l.listing_id WHERE o.organisation_id = $1',
             req.params.organisation_id,
         );
+
+        // remove null location_id from result
+        const data = rows.filter((row) => row.listing_organisation_id !== null);
+
         return res.status(200).json({
             success: true,
-            data: rows,
+            data,
         });
     }
 
