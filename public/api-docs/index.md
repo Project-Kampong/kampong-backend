@@ -51,7 +51,6 @@ Backend API for Project Kampong.
   * [Delete Hashtag](#2-delete-hashtag)
   * [Get All Hashtags](#3-get-all-hashtags)
   * [Get Single Hashtag](#4-get-single-hashtag)
-  * [Update Hashtag](#5-update-hashtag)
 
 * [Jobs](#jobs)
 
@@ -127,7 +126,12 @@ Backend API for Project Kampong.
   * [Get Single Listing](#15-get-single-listing)
   * [Search Listings](#16-search-listings)
   * [Update Listing](#17-update-listing)
-  * [Verify Listing](#18-verify-listing)
+  * [Verify and/or Feature Listing](#18-verify-andor-feature-listing)
+
+* [Listings - Organisations (Join / Unjoin)](#listings---organisations-(join--unjoin))
+
+  * [Listing join Organisation](#1-listing-join-organisation)
+  * [Listing leave Organisation](#2-listing-leave-organisation)
 
 * [Locations](#locations)
 
@@ -149,9 +153,10 @@ Backend API for Project Kampong.
 
   * [Create Organisation](#1-create-organisation)
   * [Delete Organisation](#2-delete-organisation)
-  * [Get All Organisations](#3-get-all-organisations)
-  * [Get Single Organisation](#4-get-single-organisation)
-  * [Update Organisation](#5-update-organisation)
+  * [Get All Listings for an Organisation](#3-get-all-listings-for-an-organisation)
+  * [Get All Organisations](#4-get-all-organisations)
+  * [Get Single Organisation](#5-get-single-organisation)
+  * [Update Organisation](#6-update-organisation)
 
 * [Participants](#participants)
 
@@ -3920,122 +3925,6 @@ URL: {{URL}}/api/hashtags/1
 
 
 
-### 5. Update Hashtag
-
-
-Update hashtag identified by hashtag id. Permission: Owner/Admin.
-
-Field rules:
-At least one field must be updated.
-tag - String starting with '#' followed by 2-20 alphanumeric and '-'/'_' characters.
-
-
-***Endpoint:***
-
-```bash
-Method: PUT
-Type: RAW
-URL: {{URL}}/api/hashtags/1
-```
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"tag": "#hello"
-}
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Update Hashtag (404 Not Found - Non-existent hashtag id)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"tag": "#hello"
-}
-```
-
-
-
-##### I. Example Response: Update Hashtag (404 Not Found - Non-existent hashtag id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
-##### II. Example Request: Update Hashtag (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"tag": "#hello"
-}
-```
-
-
-
-##### II. Example Response: Update Hashtag (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "hashtag_id": 1,
-        "listing_id": 4,
-        "tag": "#hello"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
 ## Jobs
 Jobs CRUD functionality.
 
@@ -5247,9 +5136,7 @@ URL: {{URL}}/api/listing-comments
 
 Deactivate (soft-delete) listing comment identified by listing comment id. Permission: Admin/Owner/Private.
 
-Field rules:
-At least one field must be updated.
-comment - Non-empty.
+Field rules: None.
 
 
 ***Endpoint:***
@@ -7200,7 +7087,7 @@ pics - Valid collection of up to 5 JPG/PNG files. Optional.
 
 ```bash
 Method: POST
-Type: FORMDATA
+Type: RAW
 URL: {{URL}}/api/listing-updates
 ```
 
@@ -7209,22 +7096,23 @@ URL: {{URL}}/api/listing-updates
 
 | Key | Value | Description |
 | --- | ------|-------------|
-| Content-Type | multipart/form-data | Form Data Type |
+| Content-Type | application/json | JSON Type |
 
 
 
 ***Body:***
 
-| Key | Value | Description |
-| --- | ------|-------------|
-| pics |  | Collection of 5 JPG files |
-| listing_id | 43824166-bee2-426e-8a08-ca2c4e4120ae |  |
-| description | First Update |  |
-| pic1 | test-pic-1.jpg |  |
-| pic2 | test-pic-2.jpg |  |
-| pic3 | test-pic-3.jpg |  |
-| pic4 | test-pic-4.jpg |  |
-| pic5 | test-pic-5.jpg |  |
+```js        
+{
+    "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
+    "description": "First Update",
+    "pic1": "imgur.com/abc",
+    "pic2": "imgur.com/test123",
+    "pic3": "imgur.com/def",
+    "pic4": "imgur.com/fgh",
+    "pic5": "imgur.com/jkl"
+}
+```
 
 
 
@@ -7851,7 +7739,7 @@ pics - Valid collection of up to 5 JPG/PNG files. Optional.
 
 ```bash
 Method: PUT
-Type: FORMDATA
+Type: RAW
 URL: {{URL}}/api/listing-updates/2
 ```
 
@@ -7866,15 +7754,16 @@ URL: {{URL}}/api/listing-updates/2
 
 ***Body:***
 
-| Key | Value | Description |
-| --- | ------|-------------|
-| description | New Milestone Achieved! | Collection of 5 pics |
-| pic1 | test-pic-1.jpg |  |
-| pic2 | test-pic-2.jpg |  |
-| pic3 | test-pic-3.jpg |  |
-| pic4 | test-pic-4.jpg |  |
-| pic5 | test-pic-5.jpg |  |
-| pics |  | Collection of 5 pics |
+```js        
+{
+    "description": "New Milestone Achieved!",
+    "pic1": "test-pic-1.jpg",
+    "pic2": "test-pic-2.jpg",
+    "pic3": "test-pic-3.jpg",
+    "pic4": "test-pic-4.jpg",
+    "pic5": "test-pic-5.jpg"
+}
+```
 
 
 
@@ -9965,14 +9854,14 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 
 
 
-### 18. Verify Listing
+### 18. Verify and/or Feature Listing
 
 
-Verify listing. Permission: Admin.
+Verify and/or Feature listing. Permission: Admin.
 
 Field rules:
-All fields are required unless otherwise stated.
-is_verified - Boolean.
+is_verified - Boolean. Optional.
+is_featured - Boolean. Optional.
 
 
 ***Endpoint:***
@@ -9980,7 +9869,7 @@ is_verified - Boolean.
 ```bash
 Method: PUT
 Type: RAW
-URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/verify
+URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/verify-feature
 ```
 
 
@@ -9996,7 +9885,8 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/verify
 
 ```js        
 {
-    "is_verified": "true"
+    "is_verified": true,
+    "is_featured": true
 }
 ```
 
@@ -10110,6 +10000,167 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/verify
 
 
 ***Status Code:*** 200
+
+<br>
+
+
+
+## Listings - Organisations (Join / Unjoin)
+Endpoints relating to listings (un)joining organisations, and vice-versa
+
+
+
+### 1. Listing join Organisation
+
+
+Listing join organisation. Permission: Listing or Organisation owner.
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: {{URL}}/api/listings-organisations
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+    "organisation_id": 1
+}
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Listing join organisation (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+    "organisation_id": 1
+}
+```
+
+
+
+##### I. Example Response: Listing join organisation (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "listing_organisation_id": 1,
+        "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+        "organisation_id": 1
+    }
+}
+```
+
+
+***Status Code:*** 201
+
+<br>
+
+
+
+### 2. Listing leave Organisation
+
+
+Listing leave organisation. Permission: Listing or Organisation owner.
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: {{URL}}/api/listings-organisations
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+    "organisation_id": 1
+}
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Listing join organisation (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+    "organisation_id": 1
+}
+```
+
+
+
+##### I. Example Response: Listing join organisation (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "listing_organisation_id": 1,
+        "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+        "organisation_id": 1
+    }
+}
+```
+
+
+***Status Code:*** 201
 
 <br>
 
@@ -11323,14 +11374,27 @@ URL: {{URL}}/api/organisations
 
 ```js        
 {
-	"name": "Org 1",
+    "name": "Org 1",
     "organisation_type": "Sponsor",
     "about": "about org 1",
     "website_url": "www.testorg1.com",
     "phone": 93232224,
     "email": "testorg1@test.com",
-    "locations": ["Tampines", "Simei"],
-    "story": "Founded in 1962, ..."
+    "address": "23 Tampines St 31, Singapore 520023",
+    "locations": [
+        "Tampines",
+        "Simei"
+    ],
+    "story": "Founded in 1962, ...",
+    "facebook_link": "facebook.com",
+    "twitter_link": "twitter.com",
+    "instagram_link": "instagram.com",
+    "banner_photo": "imgur.com",
+    "profile_photo": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/group-large-1597985817857.png",
+    "additional_photos": [
+        "pexels.com",
+        "imgur.com"
+    ]
 }
 ```
 
@@ -11354,13 +11418,27 @@ URL: {{URL}}/api/organisations
 
 ```js        
 {
-	"name": "Org 1",
+    "name": "Org 1",
     "organisation_type": "Sponsor",
     "about": "about org 1",
     "website_url": "www.testorg1.com",
     "phone": 93232224,
     "email": "testorg1@test.com",
-    "locations": ["Tampines", "Simei"]
+    "address": "23 Tampines St 31, Singapore 520023",
+    "locations": [
+        "Tampines",
+        "Simei"
+    ],
+    "story": "Founded in 1962, ...",
+    "facebook_link": "facebook.com",
+    "twitter_link": "twitter.com",
+    "instagram_link": "instagram.com",
+    "banner_photo": "imgur.com",
+    "profile_photo": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/group-large-1597985817857.png",
+    "additional_photos": [
+        "pexels.com",
+        "imgur.com"
+    ]
 }
 ```
 
@@ -11371,21 +11449,31 @@ URL: {{URL}}/api/organisations
 {
     "success": true,
     "data": {
-        "organisation_id": 4,
+        "organisation_id": 24,
         "name": "Org 1",
         "organisation_type": "Sponsor",
         "about": "about org 1",
         "website_url": "www.testorg1.com",
         "phone": "93232224",
         "email": "testorg1@test.com",
+        "address": "23 Tampines St 31, Singapore 520023",
         "owned_by": "d69a127d-815b-4834-b2b6-54ab398fccad",
         "locations": [
             "Tampines",
             "Simei"
         ],
-        "story": null,
+        "story": "Founded in 1962, ...",
+        "facebook_link": "facebook.com",
+        "twitter_link": "twitter.com",
+        "instagram_link": "instagram.com",
+        "banner_photo": "imgur.com",
+        "profile_photo": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/group-large-1597985817857.png",
+        "additional_photos": [
+            "pexels.com",
+            "imgur.com"
+        ],
         "is_verified": false,
-        "created_on": "2020-11-01T14:49:37.844Z",
+        "created_on": "2020-11-14T07:50:39.464Z",
         "deleted_on": null
     }
 }
@@ -11472,7 +11560,86 @@ URL: {{URL}}/api/organisations/2
 
 
 
-### 3. Get All Organisations
+### 3. Get All Listings for an Organisation
+
+
+Get all listings for an organisation. Permission: Public.
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{URL}}/api/organisations/1/listings
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Get All Listings for an Organisation (200 OK)
+
+
+
+##### I. Example Response: Get All Listings for an Organisation (200 OK)
+```js
+{
+    "success": true,
+    "data": [
+        {
+            "organisation_id": 1,
+            "name": "Shuffledrive",
+            "organisation_type": "Consultancy",
+            "about": null,
+            "website_url": "microsoft.com",
+            "phone": "8765378253",
+            "email": "mallgood0@slideshare.net",
+            "address": null,
+            "owned_by": null,
+            "locations": null,
+            "story": "Multi-layered regional framework",
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-08-20T20:50:15.047Z",
+            "deleted_on": null,
+            "listing_organisation_id": 1,
+            "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+            "created_by": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
+            "title": "Project Kampong",
+            "category": "Technology",
+            "tagline": "With Kampong you can",
+            "mission": "To build a platform that connects people with ideas and skills to build and track social good project initiatives",
+            "listing_url": "www.test.com",
+            "listing_email": "joinourkampong@gmail.com",
+            "listing_status": "ongoing",
+            "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/kampong%20logo-1597985636566.jpeg",
+            "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/group-large-1597985817857.png",
+            "pic3": null,
+            "pic4": null,
+            "pic5": null,
+            "is_published": false,
+            "start_date": "2020-08-20T20:50:15.047Z",
+            "end_date": null
+        }
+    ]
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+### 4. Get All Organisations
 
 
 Get all organisations. Permission: Public.
@@ -11499,25 +11666,567 @@ URL: {{URL}}/api/organisations
 ```js
 {
     "success": true,
-    "count": 1,
+    "count": 23,
     "pagination": {},
     "data": [
         {
             "organisation_id": 1,
-            "name": "Org 1",
+            "name": "Shuffledrive",
+            "organisation_type": "Consultancy",
+            "about": "Distributed 4th generation forecast",
+            "website_url": "microsoft.com",
+            "phone": "8765378253",
+            "email": "mallgood0@slideshare.net",
+            "address": null,
+            "owned_by": null,
+            "locations": null,
+            "story": "Multi-layered regional framework",
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-11-14T07:01:33.521Z",
+            "deleted_on": null
+        },
+        {
+            "organisation_id": 2,
+            "name": "Thoughtmix",
             "organisation_type": "Sponsor",
-            "about": "about org 1",
-            "website_url": "www.testorg1.com",
-            "phone": "93232224",
-            "email": "testorg1@test.com",
+            "about": "Decentralized empowering artificial intelligence",
+            "website_url": null,
+            "phone": "7578453922",
+            "email": "lspeers1@reddit.com",
+            "address": null,
+            "owned_by": null,
+            "locations": [
+                "Tampines",
+                "Simei"
+            ],
+            "story": "Open-architected empowering toolset",
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-11-14T07:01:33.521Z",
+            "deleted_on": null
+        },
+        {
+            "organisation_id": 3,
+            "name": "Gabvine",
+            "organisation_type": "Consultancy",
+            "about": "Synchronised next generation concept",
+            "website_url": "apache.org",
+            "phone": "7364748602",
+            "email": "bbenton2@miibeian.gov.cn",
+            "address": null,
+            "owned_by": null,
+            "locations": [
+                "Tampines",
+                "Simei"
+            ],
+            "story": "Balanced tangible leverage",
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-11-14T07:01:33.521Z",
+            "deleted_on": null
+        },
+        {
+            "organisation_id": 4,
+            "name": "Skalith",
+            "organisation_type": null,
+            "about": "Compatible content-based secured line",
+            "website_url": "boston.com",
+            "phone": null,
+            "email": "arender3@discuz.net",
+            "address": null,
             "owned_by": null,
             "locations": [
                 "Tampines",
                 "Simei"
             ],
             "story": null,
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
             "is_verified": false,
-            "created_on": "2020-11-01T14:14:50.382Z",
+            "created_on": "2020-11-14T07:01:33.521Z",
+            "deleted_on": null
+        },
+        {
+            "organisation_id": 5,
+            "name": "Avaveo",
+            "organisation_type": "Government",
+            "about": "Customer-focused leading edge customer loyalty",
+            "website_url": null,
+            "phone": "1995709220",
+            "email": "tmarskell4@smh.com.au",
+            "address": null,
+            "owned_by": null,
+            "locations": [
+                "Tampines",
+                "Simei"
+            ],
+            "story": "Assimilated multi-state ability",
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-11-14T07:01:33.521Z",
+            "deleted_on": null
+        },
+        {
+            "organisation_id": 6,
+            "name": "Innotype",
+            "organisation_type": "Government",
+            "about": "Networked asynchronous neural-net",
+            "website_url": "barnesandnoble.com",
+            "phone": "9674796018",
+            "email": "ccusick5@uiuc.edu",
+            "address": null,
+            "owned_by": null,
+            "locations": [
+                "Tampines",
+                "Simei"
+            ],
+            "story": "Seamless multi-tasking archive",
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-11-14T07:01:33.521Z",
+            "deleted_on": null
+        },
+        {
+            "organisation_id": 7,
+            "name": "Browsezoom",
+            "organisation_type": "Sponsor",
+            "about": "Decentralized systemic attitude",
+            "website_url": null,
+            "phone": "7856198648",
+            "email": "sstoneley6@google.com.br",
+            "address": null,
+            "owned_by": null,
+            "locations": [
+                "Tampines",
+                "Simei"
+            ],
+            "story": "Optional analyzing customer loyalty",
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-11-14T07:01:33.521Z",
+            "deleted_on": null
+        },
+        {
+            "organisation_id": 8,
+            "name": "Wikido",
+            "organisation_type": null,
+            "about": "Integrated high-level circuit",
+            "website_url": null,
+            "phone": null,
+            "email": "rvowels7@shinystat.com",
+            "address": null,
+            "owned_by": null,
+            "locations": [
+                "Tampines",
+                "Simei"
+            ],
+            "story": null,
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-11-14T07:01:33.521Z",
+            "deleted_on": null
+        },
+        {
+            "organisation_id": 9,
+            "name": "Teklist",
+            "organisation_type": "Charity",
+            "about": "Programmable real-time customer loyalty",
+            "website_url": "purevolume.com",
+            "phone": "5968240238",
+            "email": "ksaltmarsh8@loc.gov",
+            "address": null,
+            "owned_by": null,
+            "locations": [
+                "Tampines",
+                "Simei"
+            ],
+            "story": "Team-oriented human-resource artificial intelligence",
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-11-14T07:01:33.521Z",
+            "deleted_on": null
+        },
+        {
+            "organisation_id": 10,
+            "name": "Twinder",
+            "organisation_type": "MNC",
+            "about": "Operative attitude-oriented array",
+            "website_url": null,
+            "phone": "6589137746",
+            "email": "teyam9@yale.edu",
+            "address": null,
+            "owned_by": null,
+            "locations": [
+                "Tampines",
+                "Simei"
+            ],
+            "story": "Virtual directional groupware",
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-11-14T07:01:33.521Z",
+            "deleted_on": null
+        },
+        {
+            "organisation_id": 11,
+            "name": "Flashdog",
+            "organisation_type": "MNC",
+            "about": "Quality-focused impactful pricing structure",
+            "website_url": null,
+            "phone": "3878301489",
+            "email": "cwhitlama@macromedia.com",
+            "address": null,
+            "owned_by": null,
+            "locations": [
+                "Tampines",
+                "Simei"
+            ],
+            "story": "Team-oriented modular core",
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-11-14T07:01:33.521Z",
+            "deleted_on": null
+        },
+        {
+            "organisation_id": 12,
+            "name": "Chatterpoint",
+            "organisation_type": null,
+            "about": "Re-engineered system-worthy capability",
+            "website_url": "nih.gov",
+            "phone": null,
+            "email": "cweekeb@webeden.co.uk",
+            "address": null,
+            "owned_by": null,
+            "locations": [
+                "Tampines",
+                "Simei"
+            ],
+            "story": null,
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-11-14T07:01:33.521Z",
+            "deleted_on": null
+        },
+        {
+            "organisation_id": 13,
+            "name": "Fatz",
+            "organisation_type": "MNC",
+            "about": "Decentralized modular hierarchy",
+            "website_url": "intel.com",
+            "phone": "3032094893",
+            "email": "tsessionsc@eventbrite.com",
+            "address": null,
+            "owned_by": null,
+            "locations": [
+                "Tampines",
+                "Simei"
+            ],
+            "story": "User-centric discrete complexity",
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-11-14T07:01:33.521Z",
+            "deleted_on": null
+        },
+        {
+            "organisation_id": 14,
+            "name": "Topicshots",
+            "organisation_type": "Government",
+            "about": "Face to face zero tolerance knowledge user",
+            "website_url": "toplist.cz",
+            "phone": "7078286517",
+            "email": "nharmantd@gnu.org",
+            "address": null,
+            "owned_by": null,
+            "locations": [
+                "Tampines",
+                "Simei"
+            ],
+            "story": "Total maximized encoding",
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-11-14T07:01:33.521Z",
+            "deleted_on": null
+        },
+        {
+            "organisation_id": 15,
+            "name": "Skipfire",
+            "organisation_type": "Consultancy",
+            "about": "User-centric zero tolerance extranet",
+            "website_url": null,
+            "phone": "1777985640",
+            "email": "olenniee@addthis.com",
+            "address": null,
+            "owned_by": null,
+            "locations": [
+                "Tampines",
+                "Simei"
+            ],
+            "story": "Team-oriented solution-oriented internet solution",
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-11-14T07:01:33.521Z",
+            "deleted_on": null
+        },
+        {
+            "organisation_id": 16,
+            "name": "Kazu",
+            "organisation_type": "Government",
+            "about": "Front-line uniform collaboration",
+            "website_url": "printfriendly.com",
+            "phone": "9785011485",
+            "email": "tcarneckf@unc.edu",
+            "address": null,
+            "owned_by": null,
+            "locations": [
+                "Tampines",
+                "Simei"
+            ],
+            "story": "Realigned well-modulated encryption",
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-11-14T07:01:33.521Z",
+            "deleted_on": null
+        },
+        {
+            "organisation_id": 17,
+            "name": "Buzzbean",
+            "organisation_type": null,
+            "about": "Future-proofed demand-driven contingency",
+            "website_url": "craigslist.org",
+            "phone": null,
+            "email": "rpaxfordeg@amazon.de",
+            "address": null,
+            "owned_by": null,
+            "locations": [
+                "Tampines",
+                "Simei"
+            ],
+            "story": null,
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-11-14T07:01:33.521Z",
+            "deleted_on": null
+        },
+        {
+            "organisation_id": 18,
+            "name": "Camimbo",
+            "organisation_type": "MNC",
+            "about": "Cross-group zero defect paradigm",
+            "website_url": "ask.com",
+            "phone": "7043362671",
+            "email": "ocayfordh@theglobeandmail.com",
+            "address": null,
+            "owned_by": null,
+            "locations": [
+                "Tampines",
+                "Simei"
+            ],
+            "story": "Open-source user-facing approach",
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-11-14T07:01:33.521Z",
+            "deleted_on": null
+        },
+        {
+            "organisation_id": 19,
+            "name": "Dynazzy",
+            "organisation_type": "MNC",
+            "about": "Quality-focused national customer loyalty",
+            "website_url": "123-reg.co.uk",
+            "phone": "7631507862",
+            "email": "gjessetti@nih.gov",
+            "address": null,
+            "owned_by": null,
+            "locations": [
+                "Tampines",
+                "Simei"
+            ],
+            "story": "Centralized actuating projection",
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-11-14T07:01:33.521Z",
+            "deleted_on": null
+        },
+        {
+            "organisation_id": 20,
+            "name": "Dynabox",
+            "organisation_type": "Charity",
+            "about": "Multi-tiered zero administration website",
+            "website_url": "army.mil",
+            "phone": "8528916285",
+            "email": "emingardij@prnewswire.com",
+            "address": null,
+            "owned_by": null,
+            "locations": null,
+            "story": "Phased next generation concept",
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-11-14T07:01:33.521Z",
+            "deleted_on": null
+        },
+        {
+            "organisation_id": 21,
+            "name": "Roombo",
+            "organisation_type": "MNC",
+            "about": "Decentralized executive paradigm",
+            "website_url": "rambler.ru",
+            "phone": "5534658919",
+            "email": "kmeesonk@taobao.com",
+            "address": null,
+            "owned_by": null,
+            "locations": null,
+            "story": "Persistent stable function",
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-11-14T07:01:33.521Z",
+            "deleted_on": null
+        },
+        {
+            "organisation_id": 22,
+            "name": "Brainbox",
+            "organisation_type": "Sponsor",
+            "about": "Reduced didactic time-frame",
+            "website_url": "rakuten.co.jp",
+            "phone": "8256694312",
+            "email": "mridgedelll@sourceforge.net",
+            "address": null,
+            "owned_by": null,
+            "locations": null,
+            "story": "Business-focused asynchronous knowledge user",
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-11-14T07:01:33.521Z",
+            "deleted_on": null
+        },
+        {
+            "organisation_id": 23,
+            "name": "Jaxbean",
+            "organisation_type": null,
+            "about": "Diverse reciprocal installation",
+            "website_url": "hatena.ne.jp",
+            "phone": null,
+            "email": "gheggiem@columbia.edu",
+            "address": null,
+            "owned_by": null,
+            "locations": null,
+            "story": null,
+            "facebook_link": null,
+            "twitter_link": null,
+            "instagram_link": null,
+            "banner_photo": null,
+            "profile_photo": null,
+            "additional_photos": null,
+            "is_verified": false,
+            "created_on": "2020-11-14T07:01:33.521Z",
             "deleted_on": null
         }
     ]
@@ -11531,7 +12240,7 @@ URL: {{URL}}/api/organisations
 
 
 
-### 4. Get Single Organisation
+### 5. Get Single Organisation
 
 
 Get single organisation. Permission: Public.
@@ -11560,20 +12269,24 @@ URL: {{URL}}/api/organisations/1
     "success": true,
     "data": {
         "organisation_id": 1,
-        "name": "Org 1",
-        "organisation_type": "Sponsor",
-        "about": "about org 1",
-        "website_url": "www.testorg1.com",
-        "phone": "93232224",
-        "email": "testorg1@test.com",
+        "name": "Shuffledrive",
+        "organisation_type": "Consultancy",
+        "about": "Distributed 4th generation forecast",
+        "website_url": "microsoft.com",
+        "phone": "8765378253",
+        "email": "mallgood0@slideshare.net",
+        "address": null,
         "owned_by": null,
-        "locations": [
-            "Tampines",
-            "Simei"
-        ],
-        "story": null,
+        "locations": null,
+        "story": "Multi-layered regional framework",
+        "facebook_link": null,
+        "twitter_link": null,
+        "instagram_link": null,
+        "banner_photo": null,
+        "profile_photo": null,
+        "additional_photos": null,
         "is_verified": false,
-        "created_on": "2020-11-01T14:14:50.382Z",
+        "created_on": "2020-11-14T07:01:33.521Z",
         "deleted_on": null
     }
 }
@@ -11586,7 +12299,7 @@ URL: {{URL}}/api/organisations/1
 
 
 
-### 5. Update Organisation
+### 6. Update Organisation
 
 
 Update Organisation identified by organisation id. Permission: Owner/Admin.
@@ -11616,13 +12329,27 @@ URL: {{URL}}/api/organisations/1
 
 ```js        
 {
-	"name": "Org 1",
+    "name": "Org 1",
     "organisation_type": "Sponsor",
     "about": "about org 1",
     "website_url": "www.testorg1.com",
     "phone": 93232224,
     "email": "testorg1@test.com",
-    "locations": ["Tampines", "Simei"]
+    "address": "23 Tampines St 31, Singapore 520023",
+    "locations": [
+        "Tampines",
+        "Simei"
+    ],
+    "story": "Founded in 1962, ...",
+    "facebook_link": "facebook.com",
+    "twitter_link": "twitter.com",
+    "instagram_link": "instagram.com",
+    "banner_photo": "imgur.com",
+    "profile_photo": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/group-large-1597985817857.png",
+    "additional_photos": [
+        "pexels.com",
+        "imgur.com"
+    ]
 }
 ```
 
@@ -11646,13 +12373,27 @@ URL: {{URL}}/api/organisations/1
 
 ```js        
 {
-	"name": "Org 1",
+    "name": "Org 1",
     "organisation_type": "Sponsor",
     "about": "about org 1",
     "website_url": "www.testorg1.com",
     "phone": 93232224,
     "email": "testorg1@test.com",
-    "locations": ["Tampines", "Simei"]
+    "address": "23 Tampines St 31, Singapore 520023",
+    "locations": [
+        "Tampines",
+        "Simei"
+    ],
+    "story": "Founded in 1962, ...",
+    "facebook_link": "facebook.com",
+    "twitter_link": "twitter.com",
+    "instagram_link": "instagram.com",
+    "banner_photo": "imgur.com",
+    "profile_photo": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/group-large-1597985817857.png",
+    "additional_photos": [
+        "pexels.com",
+        "imgur.com"
+    ]
 }
 ```
 
@@ -11670,14 +12411,24 @@ URL: {{URL}}/api/organisations/1
         "website_url": "www.testorg1.com",
         "phone": "93232224",
         "email": "testorg1@test.com",
+        "address": "23 Tampines St 31, Singapore 520023",
         "owned_by": null,
         "locations": [
             "Tampines",
             "Simei"
         ],
-        "story": null,
+        "story": "Founded in 1962, ...",
+        "facebook_link": "facebook.com",
+        "twitter_link": "twitter.com",
+        "instagram_link": "instagram.com",
+        "banner_photo": "imgur.com",
+        "profile_photo": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/group-large-1597985817857.png",
+        "additional_photos": [
+            "pexels.com",
+            "imgur.com"
+        ],
         "is_verified": false,
-        "created_on": "2020-11-01T14:14:50.382Z",
+        "created_on": "2020-11-14T07:01:33.521Z",
         "deleted_on": null
     }
 }
@@ -14365,4 +15116,4 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-08 09:12:49 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-14 18:53:12 by [docgen](https://github.com/thedevsaddam/docgen)
