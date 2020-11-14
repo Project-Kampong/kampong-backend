@@ -5,7 +5,7 @@ import { advancedResults, checkInputError, protect, authorise, mapSingleFileLoca
 import { DATETIME_REGEX, INVALID_TIMESTAMP_MSG, INVALID_FIELD_MSG, NO_FIELD_UPDATED_MSG, uploadFile, INVALID_PHONE_NUMBER_MSG } from '../../utils';
 
 // import controllers here
-import { getProfiles, getProfile, updateProfile, verifyProfile, uploadPic } from '../../controllers/profiles';
+import { getProfiles, getProfile, updateProfile, verifyProfile } from '../../controllers/profiles';
 
 // Define input validation chain for routes
 const validateProfileUpdateFields = [
@@ -39,7 +39,5 @@ router.use(protect);
 
 // router takes merged params 'user_id' from user route
 router.route('/').put(authorise('admin', 'user'), validateProfileUpdateFields, checkInputError, updateProfile);
-
-router.route('/upload-photo').put(uploadFile.single('pic'), mapSingleFileLocation('profile_picture'), uploadPic);
 
 router.route('/verify').put(authorise('admin'), [check('is_verified', NO_FIELD_UPDATED_MSG).exists()], checkInputError, verifyProfile);

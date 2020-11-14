@@ -97,35 +97,3 @@ export const verifyProfile = asyncHandler(async (req, res, next) => {
         data: rows,
     });
 });
-
-/**
- * @desc    Upload new or update profile picture by hashed user id
- * @route   PUT /api/users/:user_id/profiles/upload-photo
- * @access  Admin/Private
- */
-export const uploadPic = asyncHandler(async (req, res, next) => {
-    // 400 response for wrong hash decoding
-    if (isNil(req.params.user_id)) {
-        return next(new ErrorResponse(`Invalid user id`, 400));
-    }
-
-    // if non-admin user, throw 403 if not updating self
-    if (req.user.role !== 'admin' && req.user.user_id.toString() !== req.params.user_id) {
-        return next(new ErrorResponse(`Not allowed to update other user's profile picture`, 403));
-    }
-
-    const { profile_picture } = req.body;
-
-    const data = {
-        profile_picture,
-    };
-
-    const updateProfileQuery = parseSqlUpdateStmt(data, 'profiles', 'WHERE user_id = $1 RETURNING *', [req.params.user_id]);
-
-    const rows = await db.one(updateProfileQuery);
-
-    res.status(200).json({
-        success: true,
-        data: rows,
-    });
-});
