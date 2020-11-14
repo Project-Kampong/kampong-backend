@@ -1,5 +1,4 @@
 import { IDatabase, IMain } from 'pg-promise';
-import { parseSqlUpdateStmt } from '../../utils';
 import { CreateFaqSchema, Faqs, UpdateFaqSchema } from '../models';
 
 /**
@@ -16,6 +15,7 @@ import { CreateFaqSchema, Faqs, UpdateFaqSchema } from '../models';
 export class FaqsRepository {
     constructor(private db: IDatabase<any>, private pgp: IMain) {
         this.db = db;
+        this.pgp = pgp;
     }
 
     getAllFaqsForListing(listingId: string): Promise<Faqs[]> {
@@ -31,7 +31,7 @@ export class FaqsRepository {
     }
 
     updateFaqById(updateFaqData: UpdateFaqSchema, faqId: string): Promise<Faqs> {
-        const updateFaqQuery = parseSqlUpdateStmt(updateFaqData, 'faqs', 'WHERE faq_id = $1 RETURNING *', faqId);
+        const updateFaqQuery = this.pgp.helpers.update(updateFaqData, null, 'faqs') + this.pgp.as.format(' WHERE faq_id = $1 RETURNING *', faqId);
         return this.db.one(updateFaqQuery);
     }
 
