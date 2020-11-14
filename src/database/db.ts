@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import Promise from 'bluebird';
 import pgpDriver from 'pg-promise';
 import { IInitOptions, IDatabase, IMain } from 'pg-promise';
-import { IExtensions, ListingsRepository, FaqsRepository } from './repository';
+import { IExtensions, ListingsRepository, FaqsRepository } from './repositories';
 
 type ExtendedProtocol = IDatabase<IExtensions> & IExtensions;
 

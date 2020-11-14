@@ -1,6 +1,4 @@
-import { IDatabase, IMain } from 'pg-promise';
-
-interface ListingsViewSchema {
+export interface ListingsView {
     listing_id: string;
     organisation_id: number;
     created_by: string;
@@ -26,14 +24,4 @@ interface ListingsViewSchema {
     profile_picture: string;
     locations: string[];
     location_ids: number;
-}
-
-export class ListingsRepository {
-    constructor(private db: IDatabase<any>, private pgp: IMain) {
-        this.db = db;
-    }
-
-    getListingById(listingId: string): Promise<ListingsViewSchema> {
-        return this.db.one('SELECT * FROM listingsview WHERE listing_id = $1', listingId);
-    }
 }

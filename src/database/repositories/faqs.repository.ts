@@ -1,23 +1,6 @@
 import { IDatabase, IMain } from 'pg-promise';
 import { parseSqlUpdateStmt } from '../../utils';
-
-interface FaqsSchema {
-    faq_id: number;
-    listing_id: string;
-    question: string;
-    answer: string;
-}
-
-interface CreateFaqSchema {
-    listing_id: string;
-    question: string;
-    answer: string;
-}
-
-interface UpdateFaqSchema {
-    question: string;
-    answer: string;
-}
+import { CreateFaqSchema, Faqs, UpdateFaqSchema } from '../models';
 
 /**
  * @param db
@@ -35,24 +18,24 @@ export class FaqsRepository {
         this.db = db;
     }
 
-    getAllFaqsForListing(listingId: string): Promise<FaqsSchema[]> {
+    getAllFaqsForListing(listingId: string): Promise<Faqs[]> {
         return this.db.manyOrNone('SELECT * FROM faqs WHERE listing_id = $1', listingId);
     }
 
-    getFaqById(faqId: string): Promise<FaqsSchema> {
+    getFaqById(faqId: string): Promise<Faqs> {
         return this.db.one('SELECT * FROM faqs WHERE faq_id = $1', faqId);
     }
 
-    createFaq(createFaqData: CreateFaqSchema): Promise<FaqsSchema> {
+    createFaq(createFaqData: CreateFaqSchema): Promise<Faqs> {
         return this.db.one('INSERT INTO faqs (${this:name}) VALUES (${this:csv}) RETURNING *', createFaqData);
     }
 
-    updateFaqById(updateFaqData: UpdateFaqSchema, faqId: string): Promise<FaqsSchema> {
+    updateFaqById(updateFaqData: UpdateFaqSchema, faqId: string): Promise<Faqs> {
         const updateFaqQuery = parseSqlUpdateStmt(updateFaqData, 'faqs', 'WHERE faq_id = $1 RETURNING *', faqId);
         return this.db.one(updateFaqQuery);
     }
 
-    deleteFaqById(faqId: string): Promise<FaqsSchema> {
+    deleteFaqById(faqId: string): Promise<Faqs> {
         return this.db.one('DELETE FROM faqs WHERE faq_id = $1 RETURNING *', faqId);
     }
 }
