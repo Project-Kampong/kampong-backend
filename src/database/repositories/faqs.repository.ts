@@ -1,9 +1,9 @@
 import { IDatabase, IMain } from 'pg-promise';
-import { CreateFaqSchema, Faqs, UpdateFaqSchema } from '../models';
 import { BaseRepository } from './base.repository';
+import { CreateFaqSchema, Faqs, UpdateFaqSchema } from '../models';
 
 export class FaqsRepository extends BaseRepository {
-    constructor(protected db: IDatabase<any>, protected pgp: IMain) {
+    constructor(protected readonly db: IDatabase<any>, protected readonly pgp: IMain) {
         super(db, pgp);
     }
 

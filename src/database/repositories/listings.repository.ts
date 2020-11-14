@@ -1,9 +1,9 @@
 import { IDatabase, IMain } from 'pg-promise';
-import { ListingsView } from '../models';
 import { BaseRepository } from './base.repository';
+import { ListingsView } from '../models';
 
 export class ListingsRepository extends BaseRepository {
-    constructor(protected db: IDatabase<any>, protected pgp: IMain) {
+    constructor(protected readonly db: IDatabase<any>, protected readonly pgp: IMain) {
         super(db, pgp);
     }
 
