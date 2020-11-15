@@ -5,10 +5,9 @@ import { db } from '../../database';
 import { advancedResults, checkInputError, protect, authorise } from '../../middleware';
 import { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } from '../../utils';
 
-// import controllers here
+// import and initialize controllers here
 import { FaqsController } from '../../controllers/faqs';
-
-const faqsController = new FaqsController(db);
+const faqsController = new FaqsController(db.faqs, db.listings);
 
 // input validation chain definition
 const validateCreateFaqFields = [

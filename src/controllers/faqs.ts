@@ -1,10 +1,11 @@
+import { FaqsRepository, ListingsRepository } from '../database';
 import { asyncHandler } from '../middleware';
 import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
-import { PgpExtendedProtocol } from '../database';
 
 export class FaqsController {
-    constructor(private readonly db: PgpExtendedProtocol) {
-        this.db = db;
+    constructor(private readonly faqsRepository: FaqsRepository, private readonly listingsRepository: ListingsRepository) {
+        this.faqsRepository = faqsRepository;
+        this.listingsRepository = listingsRepository;
     }
 
     /**
@@ -18,12 +19,11 @@ export class FaqsController {
         if (req.params.listing_id) {
             const listingId: string = req.params.listing_id;
             // return 404 error response if listing not found or soft deleted
-            await this.db.listings.getListingById(listingId);
+            await this.listingsRepository.getListingById(listingId);
 
-            const faqs = await this.db.faqs.getAllFaqsForListing(listingId);
+            const faqs = await this.faqsRepository.getAllFaqsForListing(listingId);
             return res.status(200).json({
                 success: true,
-                count: faqs.length,
                 data: faqs,
             });
         }
@@ -38,7 +38,7 @@ export class FaqsController {
      */
     getFaq = asyncHandler(async (req, res) => {
         const faqId: string = req.params.id;
-        const rows = await this.db.faqs.getFaqById(faqId);
+        const rows = await this.faqsRepository.getFaqById(faqId);
         res.status(200).json({
             success: true,
             data: rows,
@@ -69,7 +69,7 @@ export class FaqsController {
             return next(new ErrorResponse(`Not authorised to create FAQs for this listing`, 403));
         }
 
-        const rows = await this.db.faqs.createFaq(data);
+        const rows = await this.faqsRepository.createFaq(data);
 
         res.status(201).json({
             success: true,
@@ -84,7 +84,7 @@ export class FaqsController {
      */
     updateFaq = asyncHandler(async (req, res, next) => {
         // check if faq exists
-        const faq = await this.db.faqs.getFaqById(req.params.id);
+        const faq = await this.faqsRepository.getFaqById(req.params.id);
 
         // check if listing exists and is listing owner
         const isListingOwner = await checkListingOwner(req.user.user_id, faq.listing_id);
@@ -103,7 +103,7 @@ export class FaqsController {
 
         cleanseData(data);
 
-        const rows = await this.db.faqs.updateFaqById(data, req.params.id);
+        const rows = await this.faqsRepository.updateFaqById(data, req.params.id);
 
         res.status(200).json({
             success: true,
@@ -118,7 +118,7 @@ export class FaqsController {
      */
     deleteFaq = asyncHandler(async (req, res, next) => {
         // check if faq exists
-        const faq = await this.db.faqs.getFaqById(req.params.id);
+        const faq = await this.faqsRepository.getFaqById(req.params.id);
 
         // check if listing exists and is listing owner
         const isListingOwner = await checkListingOwner(req.user.user_id, faq.listing_id);
@@ -128,7 +128,7 @@ export class FaqsController {
             return next(new ErrorResponse(`Not authorised to delete FAQ for this listing`, 403));
         }
 
-        const rows = await this.db.faqs.deleteFaqById(req.params.id);
+        const rows = await this.faqsRepository.deleteFaqById(req.params.id);
 
         res.status(200).json({
             success: true,

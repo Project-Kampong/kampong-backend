@@ -1,4 +1,4 @@
-export interface Faqs {
+export interface Faq {
     faq_id: number;
     listing_id: string;
     question: string;
