@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 import { db } from '../database';
 import { asyncHandler } from '../middleware';
 import { checkListingOrCommentOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
@@ -118,7 +118,7 @@ export const updateListingComment = asyncHandler(async (req, res, next) => {
 
     const data = {
         comment,
-        updated_on: moment().format('YYYY-MM-DD HH:mm:ss.000'),
+        updated_on: moment.tz(process.env.DEFAULT_TIMEZONE).toDate(),
     };
 
     cleanseData(data);
@@ -146,7 +146,7 @@ export const deactivateListingComment = asyncHandler(async (req, res, next) => {
     }
 
     const data = {
-        deleted_on: moment().format('YYYY-MM-DD HH:mm:ss.000'),
+        deleted_on: moment.tz(process.env.DEFAULT_TIMEZONE).toDate(),
     };
 
     const deactivateListingCommentQuery = parseSqlUpdateStmt(data, 'listingcomments', 'WHERE listing_comment_id = $1 RETURNING *', [req.params.id]);
