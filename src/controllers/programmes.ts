@@ -1,6 +1,6 @@
 import { db } from '../database/db';
 import { asyncHandler } from '../middleware';
-import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
+import { checkOrganisationOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 
 interface ProgrammeSchema {
     programme_id: number;
@@ -26,7 +26,6 @@ interface UpdateProgrammeRequestSchema {
 /**
  * @desc    Get all programmes
  * @route   GET /api/programmes
- * @access  Public
  * @desc    Get all programmes for an organisation
  * @route   GET /api/organisations/:organisation_id/programmes
  * @access  Public
@@ -70,7 +69,7 @@ export const createProgramme = asyncHandler(async (req, res, next) => {
     const organisationId: number = parseInt(organisation_id);
     const isOrganisationOwner = await checkOrganisationOwner(userId, organisationId);
 
-    if (req.user.role !== 'admin' && !isOrganisationOwner) {
+    if (req.user.role !== 'admin' || !isOrganisationOwner) {
         return next(new ErrorResponse('Not authorised to create programme as you are not the organisation owner', 403));
     }
 
@@ -105,7 +104,7 @@ export const updateProgramme = asyncHandler(async (req, res, next) => {
     const userId: string = req.user.user_id;
     const isOrganisationOwner = await checkOrganisationOwner(userId, organisation_id);
 
-    if (req.user.role !== 'admin' && !isOrganisationOwner) {
+    if (req.user.role !== 'admin' || !isOrganisationOwner) {
         return next(new ErrorResponse('Not authorised to update programme as you are not the organisation owner', 403));
     }
 
@@ -142,7 +141,7 @@ export const deleteProgramme = asyncHandler(async (req, res, next) => {
     const userId: string = req.user.user_id;
     const isOrganisationOwner = await checkOrganisationOwner(userId, organisation_id);
 
-    if (req.user.role !== 'admin' && !isOrganisationOwner) {
+    if (req.user.role !== 'admin' || !isOrganisationOwner) {
         return next(new ErrorResponse('Not authorised to delete programme as you are not the organisation owner', 403));
     }
 
@@ -153,10 +152,3 @@ export const deleteProgramme = asyncHandler(async (req, res, next) => {
         data: row,
     });
 });
-
-const checkOrganisationOwner = async (userId: string, organisationId: number) => {
-    const owner = await db.one<Promise<{ owned_by: string }>>('SELECT owned_by FROM Organisations WHERE organisation_id = $1', organisationId);
-    console.log(userId);
-    console.log(owner.owned_by);
-    return userId === owner.owned_by;
-};

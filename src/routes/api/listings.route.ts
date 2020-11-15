@@ -39,6 +39,7 @@ import { router as participantsRoute } from './participants.route';
 import { router as listingSkillsRoute } from './listingSkills.route';
 import { router as jobsRoute } from './jobs.route';
 import { router as listingStoriesRoute } from './listingStories.route';
+import { router as organisationsRoute } from './organisations.route';
 
 // Re-route this URI to other resource router
 router.use('/:listing_id/faqs', faqsRoute);
@@ -53,6 +54,7 @@ router.use('/stories', listingStoriesRoute);
 router.use('/:listing_id/stories', listingStoriesRoute);
 router.use('/:listing_id/listing-skills', listingSkillsRoute);
 router.use('/:listing_id/jobs', jobsRoute);
+router.use('/:listing_id/organisations', organisationsRoute);
 
 // Define input validation chain
 const validateCreateListingFields = [
