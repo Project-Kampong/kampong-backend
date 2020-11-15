@@ -1,5 +1,5 @@
-import { FaqsRepository, ListingsRepository } from '../database';
 import { asyncHandler } from '../middleware';
+import { FaqsRepository, ListingsRepository } from '../database';
 import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
 
 export class FaqsController {
@@ -15,7 +15,7 @@ export class FaqsController {
      * @route   GET /api/listings/:listing_id/faqs
      * @access  Public
      */
-    getFaqs = asyncHandler(async (req, res) => {
+    getFaqs = async (req, res): Promise<void> => {
         if (req.params.listing_id) {
             const listingId: string = req.params.listing_id;
             // return 404 error response if listing not found or soft deleted
@@ -29,7 +29,7 @@ export class FaqsController {
         }
 
         res.status(200).json(res.advancedResults);
-    });
+    };
 
     /**
      * @desc    Get single faq
