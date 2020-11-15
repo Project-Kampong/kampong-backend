@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 import { v1 as uuidv1 } from 'uuid';
 import { db } from '../database';
 import { asyncHandler } from '../middleware';
@@ -260,7 +260,7 @@ export const deactivateListing = asyncHandler(async (req, res, next) => {
     }
 
     const rows = await db.one('UPDATE listings SET deleted_on=$1 WHERE listing_id = $2 RETURNING *', [
-        moment().format('YYYY-MM-DD HH:mm:ss.000'),
+        moment.tz(process.env.DEFAULT_TIMEZONE).toDate(),
         req.params.id,
     ]);
 
