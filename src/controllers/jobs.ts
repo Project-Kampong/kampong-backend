@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 import { db } from '../database';
 import { asyncHandler } from '../middleware';
 import { checkListingOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
@@ -149,7 +149,7 @@ export const deactivateJob = asyncHandler(async (req, res, next) => {
 
     const rows = await db.one('UPDATE jobs SET deleted_on=$2 WHERE job_id = $1 RETURNING *', [
         req.params.id,
-        moment().format('YYYY-MM-DD HH:mm:ss.000'),
+        moment.tz(process.env.DEFAULT_TIMEZONE).format(),
     ]);
 
     res.status(200).json({

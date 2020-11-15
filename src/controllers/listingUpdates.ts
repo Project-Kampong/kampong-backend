@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 import { db } from '../database/db';
 import { asyncHandler } from '../middleware';
 import { checkListingOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
@@ -102,7 +102,7 @@ export const modifyListingUpdate = asyncHandler(async (req, res, next) => {
         pic3,
         pic4,
         pic5,
-        updated_on: moment().format('YYYY-MM-DD HH:mm:ss.000'),
+        updated_on: moment.tz(process.env.DEFAULT_TIMEZONE).format(),
     };
 
     cleanseData(data);

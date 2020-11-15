@@ -1,6 +1,6 @@
 import aws from 'aws-sdk';
 import dotenv from 'dotenv';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import multer from 'multer';
 import multerS3 from 'multer-s3';
 
@@ -26,7 +26,7 @@ export const uploadFile = multer({
         metadata: (req, file, cb) => {
             cb(null, {
                 filename: file.originalname,
-                uploaded_on: moment().format('YYYY-MM-DD HH:mm:ss.000'),
+                uploaded_on: moment.tz(process.env.DEFAULT_TIMEZONE).format(),
             });
         },
         key: (req, file, cb) => {
