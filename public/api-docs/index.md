@@ -133,6 +133,11 @@ Backend API for Project Kampong.
   * [Listing join Organisation](#1-listing-join-organisation)
   * [Listing leave Organisation](#2-listing-leave-organisation)
 
+* [Listings - Organisations (Join / Unjoin)](#listings---organisations-(join--unjoin))
+
+  * [Listing join Organisation](#1-listing-join-organisation)
+  * [Listing leave Organisation](#2-listing-leave-organisation)
+
 * [Locations](#locations)
 
   * [Create Location](#1-create-location)
@@ -10053,6 +10058,168 @@ Locations CRUD functionality.
 
 
 
+
+### 1. Listing join Organisation
+
+
+Listing join organisation. Permission: Listing or Organisation owner.
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: {{URL}}/api/listings-organisations
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+    "organisation_id": 1
+}
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Listing join organisation (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+    "organisation_id": 1
+}
+```
+
+
+
+##### I. Example Response: Listing join organisation (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "listing_organisation_id": 1,
+        "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+        "organisation_id": 1
+    }
+}
+```
+
+
+***Status Code:*** 201
+
+<br>
+
+
+
+### 2. Listing leave Organisation
+
+
+Listing leave organisation. Permission: Listing or Organisation owner.
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: {{URL}}/api/listings-organisations
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+    "organisation_id": 1
+}
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Listing join organisation (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+    "organisation_id": 1
+}
+```
+
+
+
+##### I. Example Response: Listing join organisation (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "listing_organisation_id": 1,
+        "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+        "organisation_id": 1
+    }
+}
+```
+
+
+***Status Code:*** 201
+
+<br>
+
+
+
+## Locations
+Locations CRUD functionality.
+
+
+
 ### 1. Create Location
 
 
@@ -11474,7 +11641,7 @@ URL: {{URL}}/api/organisations/1/listings
             "organisation_id": 1,
             "name": "Shuffledrive",
             "organisation_type": "Consultancy",
-            "about": null,
+            "about": "Distributed 4th generation forecast",
             "website_url": "microsoft.com",
             "phone": "8765378253",
             "email": "mallgood0@slideshare.net",
