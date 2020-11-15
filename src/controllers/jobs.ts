@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 import { JobsRepository, ListingsRepository } from '../database';
 import { asyncHandler } from '../middleware';
 import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
@@ -129,7 +129,7 @@ export class JobsController {
         }
 
         const data = {
-            deleted_on: moment().toDate(),
+            deleted_on: moment.tz(process.env.DEFAULT_TIMEZONE).toDate(),
         };
 
         const rows = await this.jobsRepository.deactivateJobById(data, req.params.id);

@@ -1,7 +1,7 @@
-import moment from 'moment';
-import { db } from '../database/db';
+import moment from 'moment-timezone';
+import { db } from '../database';
 import { asyncHandler } from '../middleware';
-import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
+import { checkListingOrCommentOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 
 /**
  * @desc    Get all listing comments
@@ -108,8 +108,9 @@ export const createListingComment = asyncHandler(async (req, res, next) => {
  * @access  Admin/Owner/Private
  */
 export const updateListingComment = asyncHandler(async (req, res, next) => {
+    const isListingOrCommentOwner = await checkListingOrCommentOwner(req.user.user_id, req.params.id);
     // check for non-admin, must be listing owner, else must update own comment only
-    if (!(await isListingOrCommentOwner(req.user, req.params.id))) {
+    if (!(req.user.role === 'admin' || isListingOrCommentOwner)) {
         return next(new ErrorResponse(`Not authorised to update other comments in this listing`, 403));
     }
 
@@ -117,7 +118,7 @@ export const updateListingComment = asyncHandler(async (req, res, next) => {
 
     const data = {
         comment,
-        updated_on: moment().format('YYYY-MM-DD HH:mm:ss.000'),
+        updated_on: moment.tz(process.env.DEFAULT_TIMEZONE).toDate(),
     };
 
     cleanseData(data);
@@ -138,13 +139,14 @@ export const updateListingComment = asyncHandler(async (req, res, next) => {
  * @access  Admin/Owner/Private
  */
 export const deactivateListingComment = asyncHandler(async (req, res, next) => {
-    // check for non-admin, must be listing owner, else must update own comment only
-    if (!(await isListingOrCommentOwner(req.user, req.params.id))) {
+    const isListingOrCommentOwner = await checkListingOrCommentOwner(req.user.user_id, req.params.id);
+    // check for non-admin, must be listing owner, else must deactivate own comment only
+    if (!(req.user.role === 'admin' || isListingOrCommentOwner)) {
         return next(new ErrorResponse(`Not authorised to update other comments in this listing`, 403));
     }
 
     const data = {
-        deleted_on: moment().format('YYYY-MM-DD HH:mm:ss.000'),
+        deleted_on: moment.tz(process.env.DEFAULT_TIMEZONE).toDate(),
     };
 
     const deactivateListingCommentQuery = parseSqlUpdateStmt(data, 'listingcomments', 'WHERE listing_comment_id = $1 RETURNING *', [req.params.id]);
@@ -163,8 +165,9 @@ export const deactivateListingComment = asyncHandler(async (req, res, next) => {
  * @access  Admin/Owner/Private
  */
 export const deleteListingComment = asyncHandler(async (req, res, next) => {
-    // check for non-admin, must be listing owner, else must update own comment only
-    if (!(await isListingOrCommentOwner(req.user, req.params.id))) {
+    const isListingOrCommentOwner = await checkListingOrCommentOwner(req.user.user_id, req.params.id);
+    // check for non-admin, must be listing owner, else must deactivate own comment only
+    if (!(req.user.role === 'admin' || isListingOrCommentOwner)) {
         return next(new ErrorResponse(`Not authorised to update other comments in this listing`, 403));
     }
 
@@ -175,21 +178,3 @@ export const deleteListingComment = asyncHandler(async (req, res, next) => {
         data: rows,
     });
 });
-
-// Returns true if is admin, listing, or comment owner
-const isListingOrCommentOwner = async (reqUser, listingCommentId) => {
-    const role = reqUser.role;
-    const userId = reqUser.user_id;
-
-    if (role === 'admin') {
-        return true;
-    }
-    const listingInfo = await db.one(
-        'SELECT created_by, user_id FROM ListingComments lc JOIN Listings l USING (listing_id) WHERE listing_comment_id = $1',
-        listingCommentId,
-    );
-    if (listingInfo.created_by !== userId && listingInfo.user_id !== userId) {
-        return false;
-    }
-    return true;
-};
