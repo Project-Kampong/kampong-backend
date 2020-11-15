@@ -24,9 +24,9 @@ DROP TABLE IF EXISTS Memberships CASCADE;
 
 DROP TABLE IF EXISTS Listings CASCADE;
 
-DROP TABLE IF EXISTS ListingStories CASCADE;
+DROP TABLE IF EXISTS ListingsOrganisations CASCADE;
 
-DROP TABLE IF EXISTS FeaturedListings CASCADE;
+DROP TABLE IF EXISTS ListingStories CASCADE;
 
 DROP TABLE IF EXISTS HashTags CASCADE;
 
@@ -127,9 +127,16 @@ CREATE TABLE Organisations (
 	website_url VARCHAR,
 	phone VARCHAR,
 	email VARCHAR(320),
+	address VARCHAR(320),
 	owned_by VARCHAR,
 	locations VARCHAR[],
 	story TEXT,
+	facebook_link VARCHAR,
+	twitter_link VARCHAR,
+	instagram_link VARCHAR,
+	banner_photo VARCHAR,
+	profile_photo VARCHAR,
+	additional_photos VARCHAR[],
 	is_verified BOOLEAN NOT NULL DEFAULT FALSE,
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	deleted_on TIMESTAMPTZ DEFAULT NULL,
@@ -160,7 +167,6 @@ CREATE TABLE Programmes (
 
 CREATE TABLE Listings (
 	listing_id VARCHAR,
-	organisation_id INTEGER,
 	created_by VARCHAR,
 	title VARCHAR NOT NULL,
 	category VARCHAR NOT NULL,
@@ -177,13 +183,23 @@ CREATE TABLE Listings (
 	pic5 VARCHAR,
 	is_published BOOLEAN NOT NULL DEFAULT FALSE,
 	is_verified BOOLEAN NOT NULL DEFAULT FALSE,
+	is_featured BOOLEAN NOT NULL DEFAULT FALSE,
 	start_date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	end_date TIMESTAMPTZ,
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	deleted_on TIMESTAMPTZ DEFAULT NULL,
 	PRIMARY KEY (listing_id),
-	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE SET NULL,
 	FOREIGN KEY (created_by) REFERENCES Users (user_id) ON DELETE SET NULL
+);
+
+CREATE TABLE ListingsOrganisations (
+	listing_organisation_id SERIAL,
+	listing_id VARCHAR NOT NULL,
+	organisation_id INTEGER NOT NULL,
+	PRIMARY KEY (listing_organisation_id),
+	UNIQUE (listing_id, organisation_id),
+	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE,
+	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE
 );
 
 CREATE TABLE ListingStories (
@@ -193,13 +209,6 @@ CREATE TABLE ListingStories (
 	solution TEXT,
 	outcome TEXT,
 	PRIMARY KEY (listing_id),
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
-);
-
-CREATE TABLE FeaturedListings (
-	featured_listing_id SERIAL,
-	listing_id VARCHAR UNIQUE NOT NULL,
-	PRIMARY KEY (featured_listing_id),
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
