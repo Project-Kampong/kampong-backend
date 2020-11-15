@@ -10,6 +10,8 @@ import { isNil } from 'lodash';
  * @route   GET /api/listings
  * @desc    Get all listings for a location
  * @route   GET /api/locations/:location_id/listings
+ * @desc    Get all listings for an organisation
+ * @route   GET /api/organisations/:organisation_id/listings
  * @access  Public
  */
 export const getListings = asyncHandler(async (req, res) => {
@@ -28,6 +30,19 @@ export const getListings = asyncHandler(async (req, res) => {
             count: data.length,
             data,
         });
+    } else if (req.params.organisation_id) {
+        const rows = await db.manyOrNone(
+            'SELECT * FROM organisations o LEFT JOIN listingsorganisations lo ON o.organisation_id = lo.organisation_id LEFT JOIN listings l ON lo.listing_id = l.listing_id WHERE o.organisation_id = $1',
+            req.params.organisation_id,
+        );
+
+        // remove null location_id from result
+        const data = rows.filter((row) => row.listing_organisation_id !== null);
+
+        return res.status(200).json({
+            success: true,
+            data,
+        });
     }
 
     res.status(200).json(res.advancedResults);
@@ -40,6 +55,16 @@ export const getListings = asyncHandler(async (req, res) => {
  */
 export const getListingsAll = asyncHandler(async (req, res) => {
     res.status(200).json(res.advancedResults);
+});
+
+/**
+ * @desc    Get all featured listings
+ * @route   GET /api/listings/featured
+ * @access  Public
+ */
+export const getFeaturedListings = asyncHandler(async (req, res) => {
+    const rows = await db.manyOrNone('SELECT * FROM featuredlistingsview');
+    res.status(200).json({ success: true, data: rows });
 });
 
 /**
@@ -210,19 +235,21 @@ export const updateListing = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Verify single listing
+ * @desc    Verify or feature single listing
  * @route   PUT /api/listings/:id/verify
  * @access  Admin
  */
-export const verifyListing = asyncHandler(async (req, res, next) => {
+export const verifyOrFeatureListing = asyncHandler(async (req, res, next) => {
     // check if listing exists
     await db.one('SELECT * FROM listings WHERE listing_id = $1', req.params.id);
 
-    const { is_verified } = req.body;
+    const { is_verified, is_featured } = req.body;
 
-    const data = { is_verified };
+    const data = { is_verified, is_featured };
 
-    const verifyListingQuery = parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING *', [req.params.id]);
+    cleanseData(data);
+
+    const verifyListingQuery = parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING *', req.params.id);
 
     const rows = await db.one(verifyListingQuery);
 
