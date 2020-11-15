@@ -3,7 +3,6 @@ export const router = express.Router();
 
 import { router as authRoute } from './api/auth.route';
 import { router as faqsRoute } from './api/faqs.route';
-import { router as featuredListingsRoute } from './api/featuredListings.route';
 import { router as hashtagsRoute } from './api/hashtags.route';
 import { router as jobsRoute } from './api/jobs.route';
 import { router as likesRoute } from './api/likes.route';
@@ -25,7 +24,6 @@ import { router as sendEmailRoute } from './api/sendEmail.route';
 // Mount routes
 router.use('/auth', authRoute);
 router.use('/faqs', faqsRoute);
-router.use('/featured-listings', featuredListingsRoute);
 router.use('/hashtags', hashtagsRoute);
 router.use('/jobs', jobsRoute);
 router.use('/likes', likesRoute);

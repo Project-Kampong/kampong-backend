@@ -15,12 +15,13 @@ import {
 // import controllers here
 import {
     getListings,
+    getFeaturedListings,
     getAllListingsOwnedByUser,
     getListingsAll,
     getListing,
     createListing,
     updateListing,
-    verifyListing,
+    verifyOrFeatureListing,
     deleteListing,
     deactivateListing,
     searchListings,
@@ -100,7 +101,11 @@ const validateUpdateListingFields = [
     check('end_date', INVALID_TIMESTAMP_MSG('end date')).optional().matches(DATETIME_REGEX),
 ];
 
-const validateVerifyListingFields = [check('is_verified', INVALID_BOOLEAN_MSG('is_verified')).isBoolean()];
+const validateVerifyOrFeatureListingFields = [
+    check('is_verified', INVALID_BOOLEAN_MSG('is_verified')).optional().isBoolean(),
+    check('is_featured', INVALID_BOOLEAN_MSG('is_featured')).optional().isBoolean(),
+];
+
 const validateSearchListingsFields = [
     query('keyword', INVALID_FIELD_MSG('keyword')).exists(),
     query('limit', INVALID_FIELD_MSG('limit')).optional().isNumeric(),
@@ -109,6 +114,7 @@ const validateSearchListingsFields = [
 // map routes to controller
 router.route('/').get(advancedResults('listingsview'), getListings).post(protect, validateCreateListingFields, checkInputError, createListing);
 
+router.route('/featured').get(getFeaturedListings);
 router.route('/owner').get(getAllListingsOwnedByUser);
 router.route('/search').get(validateSearchListingsFields, checkInputError, searchListings);
 router.route('/all').get(protect, authorise('admin'), advancedResults('listings'), getListingsAll);
@@ -119,4 +125,4 @@ router.route('/:id').put(protect, validateUpdateListingFields, checkInputError, 
 
 router.route('/:id/deactivate').put(protect, deactivateListing);
 
-router.route('/:id/verify').put(protect, authorise('admin'), validateVerifyListingFields, checkInputError, verifyListing);
+router.route('/:id/verify-feature').put(protect, authorise('admin'), validateVerifyOrFeatureListingFields, checkInputError, verifyOrFeatureListing);

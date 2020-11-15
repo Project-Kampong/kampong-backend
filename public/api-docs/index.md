@@ -10053,6 +10053,168 @@ Locations CRUD functionality.
 
 
 
+
+### 1. Listing join Organisation
+
+
+Listing join organisation. Permission: Listing or Organisation owner.
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: {{URL}}/api/listings-organisations
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+    "organisation_id": 1
+}
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Listing join organisation (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+    "organisation_id": 1
+}
+```
+
+
+
+##### I. Example Response: Listing join organisation (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "listing_organisation_id": 1,
+        "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+        "organisation_id": 1
+    }
+}
+```
+
+
+***Status Code:*** 201
+
+<br>
+
+
+
+### 2. Listing leave Organisation
+
+
+Listing leave organisation. Permission: Listing or Organisation owner.
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: {{URL}}/api/listings-organisations
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+    "organisation_id": 1
+}
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Listing join organisation (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+    "organisation_id": 1
+}
+```
+
+
+
+##### I. Example Response: Listing join organisation (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "listing_organisation_id": 1,
+        "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+        "organisation_id": 1
+    }
+}
+```
+
+
+***Status Code:*** 201
+
+<br>
+
+
+
+## Locations
+Locations CRUD functionality.
+
+
+
 ### 1. Create Location
 
 
@@ -11485,7 +11647,6 @@ URL: {{URL}}/api/organisations/1/listings
             "facebook_link": null,
             "twitter_link": null,
             "instagram_link": null,
-            "banner_photo": null,
             "profile_photo": null,
             "additional_photos": null,
             "is_verified": false,

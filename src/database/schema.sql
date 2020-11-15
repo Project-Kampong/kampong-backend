@@ -26,8 +26,6 @@ DROP TABLE IF EXISTS Listings CASCADE;
 
 DROP TABLE IF EXISTS ListingStories CASCADE;
 
-DROP TABLE IF EXISTS FeaturedListings CASCADE;
-
 DROP TABLE IF EXISTS HashTags CASCADE;
 
 DROP TABLE IF EXISTS ListingSkills CASCADE;
@@ -177,6 +175,7 @@ CREATE TABLE Listings (
 	pic5 VARCHAR,
 	is_published BOOLEAN NOT NULL DEFAULT FALSE,
 	is_verified BOOLEAN NOT NULL DEFAULT FALSE,
+	is_featured BOOLEAN NOT NULL DEFAULT FALSE,
 	start_date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	end_date TIMESTAMPTZ,
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -193,13 +192,6 @@ CREATE TABLE ListingStories (
 	solution TEXT,
 	outcome TEXT,
 	PRIMARY KEY (listing_id),
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
-);
-
-CREATE TABLE FeaturedListings (
-	featured_listing_id SERIAL,
-	listing_id VARCHAR UNIQUE NOT NULL,
-	PRIMARY KEY (featured_listing_id),
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
