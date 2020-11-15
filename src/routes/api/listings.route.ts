@@ -15,6 +15,7 @@ import {
 // import controllers here
 import {
     getListings,
+    getFeaturedListings,
     getAllListingsOwnedByUser,
     getListingsAll,
     getListing,
@@ -113,6 +114,7 @@ const validateSearchListingsFields = [
 // map routes to controller
 router.route('/').get(advancedResults('listingsview'), getListings).post(protect, validateCreateListingFields, checkInputError, createListing);
 
+router.route('/featured').get(getFeaturedListings);
 router.route('/owner').get(getAllListingsOwnedByUser);
 router.route('/search').get(validateSearchListingsFields, checkInputError, searchListings);
 router.route('/all').get(protect, authorise('admin'), advancedResults('listings'), getListingsAll);

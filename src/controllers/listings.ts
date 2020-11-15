@@ -43,6 +43,16 @@ export const getListingsAll = asyncHandler(async (req, res) => {
 });
 
 /**
+ * @desc    Get all featured listings
+ * @route   GET /api/listings/featured
+ * @access  Public
+ */
+export const getFeaturedListings = asyncHandler(async (req, res) => {
+    const rows = await db.manyOrNone('SELECT * FROM featuredlistingsview');
+    res.status(200).json({ success: true, data: rows });
+});
+
+/**
  * @desc    Get single listing by listing id (excludes soft-deleted)
  * @route   GET /api/listings/:id
  * @access  Public
