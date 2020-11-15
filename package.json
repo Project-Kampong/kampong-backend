@@ -14,6 +14,7 @@
         "create-tables": "ts-node src/utils/seeder.ts -i",
         "import-data": "ts-node src/utils/seeder.ts -d",
         "format": "prettier --write .",
+        "test": "jest",
         "heroku-postbuild": "node --max-old-space-size=8192 node_modules/.bin/tsc -p . && yarn create-tables && yarn import-data"
     },
     "license": "MIT",
