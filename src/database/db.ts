@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import promise from 'bluebird';
 import pgpDriver, { IInitOptions, IDatabase, IMain } from 'pg-promise';
 import { IExtensions, ListingsRepository, FaqsRepository, HashtagsRepository } from './repositories';
+import { JobsRepository } from './repositories/jobs.repository';
 
 export type PgpExtendedProtocol = IDatabase<IExtensions> & IExtensions;
 
@@ -27,6 +28,7 @@ const dbConfig: IInitOptions<IExtensions> = {
     extend(obj: PgpExtendedProtocol) {
         obj.faqs = new FaqsRepository(obj, pgp);
         obj.hashtags = new HashtagsRepository(obj, pgp);
+        obj.jobs = new JobsRepository(obj, pgp);
         obj.listings = new ListingsRepository(obj, pgp);
     },
     capSQL: true,
