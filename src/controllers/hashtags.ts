@@ -24,7 +24,7 @@ export class HashtagsController {
 
             return res.status(200).json({
                 success: true,
-                hashtags,
+                data: hashtags,
             });
         }
 
