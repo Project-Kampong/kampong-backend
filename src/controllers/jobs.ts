@@ -149,7 +149,7 @@ export const deactivateJob = asyncHandler(async (req, res, next) => {
 
     const rows = await db.one('UPDATE jobs SET deleted_on=$2 WHERE job_id = $1 RETURNING *', [
         req.params.id,
-        moment.tz(process.env.DEFAULT_TIMEZONE).format(),
+        moment.tz(process.env.DEFAULT_TIMEZONE).toDate(),
     ]);
 
     res.status(200).json({

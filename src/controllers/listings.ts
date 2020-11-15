@@ -248,7 +248,7 @@ export const deactivateListing = asyncHandler(async (req, res, next) => {
     }
 
     const rows = await db.one('UPDATE listings SET deleted_on=$1 WHERE listing_id = $2 RETURNING *', [
-        moment.tz(process.env.DEFAULT_TIMEZONE).format(),
+        moment.tz(process.env.DEFAULT_TIMEZONE).toDate(),
         req.params.id,
     ]);
 
