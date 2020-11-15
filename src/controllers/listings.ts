@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 import { v1 as uuidv1 } from 'uuid';
 import { db } from '../database';
 import { asyncHandler } from '../middleware';
@@ -55,6 +55,16 @@ export const getListings = asyncHandler(async (req, res) => {
  */
 export const getListingsAll = asyncHandler(async (req, res) => {
     res.status(200).json(res.advancedResults);
+});
+
+/**
+ * @desc    Get all featured listings
+ * @route   GET /api/listings/featured
+ * @access  Public
+ */
+export const getFeaturedListings = asyncHandler(async (req, res) => {
+    const rows = await db.manyOrNone('SELECT * FROM featuredlistingsview');
+    res.status(200).json({ success: true, data: rows });
 });
 
 /**
@@ -225,19 +235,21 @@ export const updateListing = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Verify single listing
+ * @desc    Verify or feature single listing
  * @route   PUT /api/listings/:id/verify
  * @access  Admin
  */
-export const verifyListing = asyncHandler(async (req, res, next) => {
+export const verifyOrFeatureListing = asyncHandler(async (req, res, next) => {
     // check if listing exists
     await db.one('SELECT * FROM listings WHERE listing_id = $1', req.params.id);
 
-    const { is_verified } = req.body;
+    const { is_verified, is_featured } = req.body;
 
-    const data = { is_verified };
+    const data = { is_verified, is_featured };
 
-    const verifyListingQuery = parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING *', [req.params.id]);
+    cleanseData(data);
+
+    const verifyListingQuery = parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING *', req.params.id);
 
     const rows = await db.one(verifyListingQuery);
 
@@ -263,7 +275,7 @@ export const deactivateListing = asyncHandler(async (req, res, next) => {
     }
 
     const rows = await db.one('UPDATE listings SET deleted_on=$1 WHERE listing_id = $2 RETURNING *', [
-        moment().format('YYYY-MM-DD HH:mm:ss.000'),
+        moment.tz(process.env.DEFAULT_TIMEZONE).toDate(),
         req.params.id,
     ]);
 

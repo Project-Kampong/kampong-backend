@@ -7,9 +7,8 @@ Backend API for Project Kampong.
 
 * [Admin-only Get Soft Deleted](#admin-only-get-soft-deleted)
 
-  * [Get All Jobs Including Soft Deletes](#1-get-all-jobs-including-soft-deletes)
-  * [Get All Jobs for a Listing Including Soft Deletes](#2-get-all-jobs-for-a-listing-including-soft-deletes)
-  * [Get All Listings Including Soft Deletes](#3-get-all-listings-including-soft-deletes)
+  * [Get All Jobs for a Listing Including Soft Deletes](#1-get-all-jobs-for-a-listing-including-soft-deletes)
+  * [Get All Listings Including Soft Deletes](#2-get-all-listings-including-soft-deletes)
 
 * [Authentication](#authentication)
 
@@ -113,20 +112,21 @@ Backend API for Project Kampong.
   * [Deactivate Listing](#2-deactivate-listing)
   * [Delete Listing](#3-delete-listing)
   * [Get All Faqs for a Listing](#4-get-all-faqs-for-a-listing)
-  * [Get All Hashtags for a Listing](#5-get-all-hashtags-for-a-listing)
-  * [Get All Jobs for a Listing](#6-get-all-jobs-for-a-listing)
-  * [Get All Likes for a Listing](#7-get-all-likes-for-a-listing)
-  * [Get All Listing Comments for a Listing](#8-get-all-listing-comments-for-a-listing)
-  * [Get All Listing Locations for a Listing](#9-get-all-listing-locations-for-a-listing)
-  * [Get All Listing Skills for a Listing](#10-get-all-listing-skills-for-a-listing)
-  * [Get All Listing Updates for a Listing](#11-get-all-listing-updates-for-a-listing)
-  * [Get All Listings](#12-get-all-listings)
-  * [Get All Milestones for a Listing](#13-get-all-milestones-for-a-listing)
-  * [Get All Participants for a Listing](#14-get-all-participants-for-a-listing)
-  * [Get Single Listing](#15-get-single-listing)
-  * [Search Listings](#16-search-listings)
-  * [Update Listing](#17-update-listing)
-  * [Verify and/or Feature Listing](#18-verify-andor-feature-listing)
+  * [Get All Featured Listings](#5-get-all-featured-listings)
+  * [Get All Hashtags for a Listing](#6-get-all-hashtags-for-a-listing)
+  * [Get All Jobs for a Listing](#7-get-all-jobs-for-a-listing)
+  * [Get All Likes for a Listing](#8-get-all-likes-for-a-listing)
+  * [Get All Listing Comments for a Listing](#9-get-all-listing-comments-for-a-listing)
+  * [Get All Listing Locations for a Listing](#10-get-all-listing-locations-for-a-listing)
+  * [Get All Listing Skills for a Listing](#11-get-all-listing-skills-for-a-listing)
+  * [Get All Listing Updates for a Listing](#12-get-all-listing-updates-for-a-listing)
+  * [Get All Listings](#13-get-all-listings)
+  * [Get All Milestones for a Listing](#14-get-all-milestones-for-a-listing)
+  * [Get All Participants for a Listing](#15-get-all-participants-for-a-listing)
+  * [Get Single Listing](#16-get-single-listing)
+  * [Search Listings](#17-search-listings)
+  * [Update Listing](#18-update-listing)
+  * [Verify and/or Feature Listing](#19-verify-andor-feature-listing)
 
 * [Listings - Organisations (Join / Unjoin)](#listings---organisations-(join--unjoin))
 
@@ -206,228 +206,7 @@ All GET requests for retrieving all resources, including soft deleted. Admin-onl
 
 
 
-### 1. Get All Jobs Including Soft Deletes
-
-
-Get all jobs including soft deletes. Permission: Admin.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/jobs/all
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get All Jobs Including Soft Deletes (200 OK)
-
-
-
-##### I. Example Response: Get All Jobs Including Soft Deletes (200 OK)
-```js
-{
-    "success": true,
-    "count": 80,
-    "pagination": {
-        "next": {
-            "page": 2,
-            "limit": 25
-        }
-    },
-    "data": [
-        {
-            "job_id": 1,
-            "listing_id": 8,
-            "job_title": "Account Representative I",
-            "job_description": "Polarised next generation alliance",
-            "hashId": "vn"
-        },
-        {
-            "job_id": 2,
-            "listing_id": 4,
-            "job_title": "Project Manager",
-            "job_description": "Ameliorated 24 hour structure",
-            "hashId": "e3"
-        },
-        {
-            "job_id": 3,
-            "listing_id": 16,
-            "job_title": "Teacher",
-            "job_description": "Enhanced 6th generation portal",
-            "hashId": "GB"
-        },
-        {
-            "job_id": 4,
-            "listing_id": 7,
-            "job_title": "VP Accounting",
-            "job_description": "Multi-channelled local pricing structure",
-            "hashId": "6W"
-        },
-        {
-            "job_id": 5,
-            "listing_id": 12,
-            "job_title": "Office Assistant IV",
-            "job_description": "Vision-oriented explicit moratorium",
-            "hashId": "Wp"
-        },
-        {
-            "job_id": 6,
-            "listing_id": 13,
-            "job_title": "Senior Editor",
-            "job_description": "Devolved high-level protocol",
-            "hashId": "Qp"
-        },
-        {
-            "job_id": 7,
-            "listing_id": 20,
-            "job_title": "Civil Engineer",
-            "job_description": "Front-line optimal algorithm",
-            "hashId": "2V"
-        },
-        {
-            "job_id": 8,
-            "listing_id": 13,
-            "job_title": "Senior Quality Engineer",
-            "job_description": "Exclusive incremental toolset",
-            "hashId": "7B"
-        },
-        {
-            "job_id": 9,
-            "listing_id": 15,
-            "job_title": "Programmer Analyst I",
-            "job_description": "Polarised bifurcated open architecture",
-            "hashId": "Zp"
-        },
-        {
-            "job_id": 10,
-            "listing_id": 5,
-            "job_title": "Paralegal",
-            "job_description": "Networked intangible system engine",
-            "hashId": "yb"
-        },
-        {
-            "job_id": 11,
-            "listing_id": 5,
-            "job_title": "Project Manager",
-            "job_description": "Profound optimizing matrix",
-            "hashId": "g7"
-        },
-        {
-            "job_id": 12,
-            "listing_id": 15,
-            "job_title": "Tax Accountant",
-            "job_description": "Realigned grlisting_id-enabled forecast",
-            "hashId": "mn"
-        },
-        {
-            "job_id": 13,
-            "listing_id": 12,
-            "job_title": "Software Test Engineer II",
-            "job_description": "Right-sized 3rd generation throughput",
-            "hashId": "1r"
-        },
-        {
-            "job_id": 14,
-            "listing_id": 11,
-            "job_title": "Teacher",
-            "job_description": "Universal executive Graphical User Interface",
-            "hashId": "wQ"
-        },
-        {
-            "job_id": 15,
-            "listing_id": 17,
-            "job_title": "Community Outreach Specialist",
-            "job_description": "Monitored asynchronous initiative",
-            "hashId": "zM"
-        },
-        {
-            "job_id": 16,
-            "listing_id": 17,
-            "job_title": "Compensation Analyst",
-            "job_description": "Universal 24 hour protocol",
-            "hashId": "9x"
-        },
-        {
-            "job_id": 17,
-            "listing_id": 5,
-            "job_title": "VP Marketing",
-            "job_description": "Inverse user-facing ability",
-            "hashId": "qw"
-        },
-        {
-            "job_id": 18,
-            "listing_id": 20,
-            "job_title": "Teacher",
-            "job_description": "Phased bottom-line encryption",
-            "hashId": "3M"
-        },
-        {
-            "job_id": 19,
-            "listing_id": 20,
-            "job_title": "Chemical Engineer",
-            "job_description": "Synergistic stable encryption",
-            "hashId": "Yz"
-        },
-        {
-            "job_id": 20,
-            "listing_id": 13,
-            "job_title": "Web Developer IV",
-            "job_description": "Focused encompassing archive",
-            "hashId": "jy"
-        },
-        {
-            "job_id": 21,
-            "listing_id": 16,
-            "job_title": "Assistant Professor",
-            "job_description": "Public-key heuristic encryption",
-            "hashId": "Vk"
-        },
-        {
-            "job_id": 22,
-            "listing_id": 17,
-            "job_title": "Desktop Support Technician",
-            "job_description": "Upgradable upward-trending matrices",
-            "hashId": "Jm"
-        },
-        {
-            "job_id": 23,
-            "listing_id": 6,
-            "job_title": "Account Representative IV",
-            "job_description": "Front-line analyzing portal",
-            "hashId": "Eb"
-        },
-        {
-            "job_id": 24,
-            "listing_id": 2,
-            "job_title": "Help Desk Technician",
-            "job_description": "Optional clear-thinking groupware",
-            "hashId": "xa"
-        },
-        {
-            "job_id": 25,
-            "listing_id": 9,
-            "job_title": "Technical Writer",
-            "job_description": "Phased zero tolerance functionalities",
-            "hashId": "D9"
-        }
-    ]
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 2. Get All Jobs for a Listing Including Soft Deletes
+### 1. Get All Jobs for a Listing Including Soft Deletes
 
 
 Get all jobs for an associated listing including soft deletes. Permission: Admin.
@@ -521,7 +300,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/jobs/all
 
 
 
-### 3. Get All Listings Including Soft Deletes
+### 2. Get All Listings Including Soft Deletes
 
 
 Get all listings including soft deletes. Permission: Admin.
@@ -2598,7 +2377,7 @@ Delete FAQ identified by faq id. Permission: Owner/Admin.
 ```bash
 Method: DELETE
 Type: 
-URL: {{URL}}/api/faqs/1
+URL: {{URL}}/api/faqs/23
 ```
 
 
@@ -2942,7 +2721,7 @@ answer
 ```bash
 Method: PUT
 Type: RAW
-URL: {{URL}}/api/faqs/1
+URL: {{URL}}/api/faqs/23
 ```
 
 
@@ -3643,7 +3422,7 @@ Delete hashtag identified by hashtag id. Permission: Owner/Admin.
 ```bash
 Method: DELETE
 Type: 
-URL: {{URL}}/api/hashtags/1
+URL: {{URL}}/api/hashtags/15
 ```
 
 
@@ -3704,7 +3483,7 @@ Get all hashtags. Permission: Public.
 ```bash
 Method: GET
 Type: 
-URL: {{URL}}/api/milestones
+URL: {{URL}}/api/hashtags
 ```
 
 
@@ -4105,7 +3884,7 @@ Deactivate (soft delete) job identified by job id. Permission: Owner/Admin.
 ```bash
 Method: PUT
 Type: 
-URL: {{URL}}/api/jobs/1/deactivate
+URL: {{URL}}/api/jobs/22/deactivate
 ```
 
 
@@ -4168,7 +3947,7 @@ Delete job identified by job id. Permission: Admin.
 ```bash
 Method: DELETE
 Type: 
-URL: {{URL}}/api/jobs/1
+URL: {{URL}}/api/jobs/22
 ```
 
 
@@ -4493,7 +4272,7 @@ job_description
 ```bash
 Method: PUT
 Type: RAW
-URL: {{URL}}/api/jobs/1
+URL: {{URL}}/api/jobs/22
 ```
 
 
@@ -5144,7 +4923,7 @@ Field rules: None.
 ```bash
 Method: PUT
 Type: 
-URL: {{URL}}/api/listing-comments/1/deactivate
+URL: {{URL}}/api/listing-comments/17/deactivate
 ```
 
 
@@ -5184,7 +4963,7 @@ Delete listing comment identified by listing comment id. Permission: Admin/Owner
 ```bash
 Method: DELETE
 Type: 
-URL: {{URL}}/api/listing-comments/1
+URL: {{URL}}/api/listing-comments/17
 ```
 
 
@@ -5643,7 +5422,7 @@ comment - Non-empty.
 ```bash
 Method: PUT
 Type: RAW
-URL: {{URL}}/api/listing-comments/1
+URL: {{URL}}/api/listing-comments/17
 ```
 
 
@@ -7757,11 +7536,11 @@ URL: {{URL}}/api/listing-updates/2
 ```js        
 {
     "description": "New Milestone Achieved!",
-    "pic1": "test-pic-1.jpg",
-    "pic2": "test-pic-2.jpg",
-    "pic3": "test-pic-3.jpg",
-    "pic4": "test-pic-4.jpg",
-    "pic5": "test-pic-5.jpg"
+    "pic1": "instagram.com",
+    "pic2": "facebook.com",
+    "pic3": "imgur.com",
+    "pic4": "tiktok.com",
+    "pic5": "reddit.com"
 }
 ```
 
@@ -8313,7 +8092,6 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/faqs
 ```js
 {
     "success": true,
-    "count": 5,
     "data": [
         {
             "faq_id": 1,
@@ -8356,7 +8134,112 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/faqs
 
 
 
-### 5. Get All Hashtags for a Listing
+### 5. Get All Featured Listings
+
+
+Get all featured listings. Permission: Public.
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{URL}}/api/listings/featured
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Get All Featured Listings (200 OK)
+
+
+
+##### I. Example Response: Get All Featured Listings (200 OK)
+```js
+{
+    "success": true,
+    "data": [
+        {
+            "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+            "organisation_id": null,
+            "created_by": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
+            "title": "Project Kampong",
+            "category": "Technology",
+            "about": null,
+            "tagline": "With Kampong you can",
+            "mission": "To build a platform that connects people with ideas and skills to build and track social good project initiatives",
+            "listing_url": "www.test.com",
+            "listing_email": "joinourkampong@gmail.com",
+            "listing_status": "ongoing",
+            "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/kampong%20logo-1597985636566.jpeg",
+            "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/group-large-1597985817857.png",
+            "pic3": null,
+            "pic4": null,
+            "pic5": null,
+            "is_published": false,
+            "is_verified": false,
+            "is_featured": true,
+            "start_date": "2020-08-20T20:50:15.047Z",
+            "end_date": null,
+            "created_on": "2020-08-20T20:50:15.047Z",
+            "deleted_on": null,
+            "nickname": "Derrick",
+            "profile_picture": "https://images.pexels.com/photos/2434268/pexels-photo-2434268.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+            "locations": null,
+            "location_ids": null,
+            "keyword_vector": null
+        },
+        {
+            "listing_id": "c975a572-452d-4824-8ed5-500b50488436",
+            "organisation_id": null,
+            "created_by": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
+            "title": "CommStart 2020",
+            "category": "Enterprise",
+            "about": "Team-oriented context-sensitive forecast",
+            "tagline": "Innovating Ideas, Creating Opportunities",
+            "mission": "Cultivating entrepreneurship and community impact",
+            "listing_url": "https://ehow.com/in/imperdiet/et/commodo/vulputate/justo.xml",
+            "listing_email": "commstart2020@gmail.com",
+            "listing_status": "ongoing",
+            "pic1": "https://images.pexels.com/photos/3637796/pexels-photo-3637796.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
+            "pic2": null,
+            "pic3": null,
+            "pic4": null,
+            "pic5": null,
+            "is_published": false,
+            "is_verified": false,
+            "is_featured": true,
+            "start_date": "2020-07-30T05:54:45.000Z",
+            "end_date": null,
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "deleted_on": null,
+            "nickname": "Derrick",
+            "profile_picture": "https://images.pexels.com/photos/2434268/pexels-photo-2434268.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+            "locations": [
+                "Woodlands",
+                "Sembawang"
+            ],
+            "location_ids": [
+                3,
+                4
+            ],
+            "keyword_vector": "'2020':2 'commstart':1 'enterpris':3 'sembawang':5 'woodland':4"
+        }
+    ]
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+### 6. Get All Hashtags for a Listing
 
 
 Get all hashtags for an associated listing. Permission: Public.
@@ -8402,21 +8285,20 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/hashtags
 ```js
 {
     "success": true,
-    "count": 3,
     "data": [
         {
-            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
             "hashtag_id": 1,
+            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
             "tag": "#broker0"
         },
         {
-            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
             "hashtag_id": 2,
+            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
             "tag": "#sandyfirth1"
         },
         {
-            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
             "hashtag_id": 3,
+            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
             "tag": "#tudhope2"
         }
     ]
@@ -8430,7 +8312,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/hashtags
 
 
 
-### 6. Get All Jobs for a Listing
+### 7. Get All Jobs for a Listing
 
 
 Get all jobs for an associated listing. Permission: Public.
@@ -8524,7 +8406,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/jobs
 
 
 
-### 7. Get All Likes for a Listing
+### 8. Get All Likes for a Listing
 
 
 Get all likes for an associated listing. Permission: Public.
@@ -8655,7 +8537,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/likes
 
 
 
-### 8. Get All Listing Comments for a Listing
+### 9. Get All Listing Comments for a Listing
 
 
 Get all listing comments for an associated listing. Permission: Public.
@@ -8779,7 +8661,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-comments
 
 
 
-### 9. Get All Listing Locations for a Listing
+### 10. Get All Listing Locations for a Listing
 
 
 Get all listing locations for an associated listing. Permission: Public.
@@ -8837,7 +8719,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-locations
 
 
 
-### 10. Get All Listing Skills for a Listing
+### 11. Get All Listing Skills for a Listing
 
 
 Get all listing skills for an associated listing. Permission: Public.
@@ -8920,7 +8802,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-skills
 
 
 
-### 11. Get All Listing Updates for a Listing
+### 12. Get All Listing Updates for a Listing
 
 
 Get all Listing Updates for an associated listing. Permission: Public.
@@ -9003,7 +8885,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-updates
 
 
 
-### 12. Get All Listings
+### 13. Get All Listings
 
 
 Get all listings. Permission: Public.
@@ -9230,7 +9112,7 @@ URL: {{URL}}/api/listings
 
 
 
-### 13. Get All Milestones for a Listing
+### 14. Get All Milestones for a Listing
 
 
 Get all milestones for an associated listing. Permission: Public.
@@ -9301,7 +9183,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/milestones
 
 
 
-### 14. Get All Participants for a Listing
+### 15. Get All Participants for a Listing
 
 
 Get all participants for an associated listing. Permission: Public.
@@ -9381,7 +9263,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/participants
 
 
 
-### 15. Get Single Listing
+### 16. Get Single Listing
 
 
 Get single listing by its listing ID. Permission: Public.
@@ -9472,7 +9354,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 
 
 
-### 16. Search Listings
+### 17. Search Listings
 
 
 Search for listings by title, category or location. Permission: Public.
@@ -9629,7 +9511,7 @@ URL: {{URL}}/api/listings/search
 
 
 
-### 17. Update Listing
+### 18. Update Listing
 
 
 Update listing. Permission: Admin/Owner.
@@ -9854,7 +9736,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 
 
 
-### 18. Verify and/or Feature Listing
+### 19. Verify and/or Feature Listing
 
 
 Verify and/or Feature listing. Permission: Admin.
@@ -10056,6 +9938,165 @@ URL: {{URL}}/api/listings-organisations
 | --- | ------|-------------|
 | Content-Type | application/json | JSON Type |
 
+
+
+***Body:***
+
+```js        
+{
+    "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+    "organisation_id": 1
+}
+```
+
+
+
+##### I. Example Response: Listing join organisation (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "listing_organisation_id": 1,
+        "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+        "organisation_id": 1
+    }
+}
+```
+
+
+***Status Code:*** 201
+
+<br>
+
+
+
+### 2. Listing leave Organisation
+
+
+Listing leave organisation. Permission: Listing or Organisation owner.
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: {{URL}}/api/listings-organisations
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+    "organisation_id": 1
+}
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Listing join organisation (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+    "organisation_id": 1
+}
+```
+
+
+
+##### I. Example Response: Listing join organisation (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "listing_organisation_id": 1,
+        "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+        "organisation_id": 1
+    }
+}
+```
+
+
+***Status Code:*** 201
+
+<br>
+
+
+
+## Locations
+Locations CRUD functionality.
+
+
+
+
+### 1. Listing join Organisation
+
+
+Listing join organisation. Permission: Listing or Organisation owner.
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: {{URL}}/api/listings-organisations
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+    "organisation_id": 1
+}
+```
+
+
+
+***More example Requests/Responses:***
+
+##### I. Example Request: Create Location (403 Forbidden - Non-admin)
+
+
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
 
 
 ***Body:***
@@ -15116,4 +15157,4 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-14 18:55:24 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-15 07:15:48 by [docgen](https://github.com/thedevsaddam/docgen)
