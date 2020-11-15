@@ -5,7 +5,7 @@ import { router as authRoute } from './api/auth.route';
 import { router as faqsRoute } from './api/faqs.route';
 import { router as featuredListingsRoute } from './api/featuredListings.route';
 import { router as hashtagsRoute } from './api/hashtags.route';
-import { router as jobsRoute } from './api/job.route';
+import { router as jobsRoute } from './api/jobs.route';
 import { router as likesRoute } from './api/likes.route';
 import { router as listingsRoute } from './api/listings.route';
 import { router as listingCommentsRoute } from './api/listingComments.route';

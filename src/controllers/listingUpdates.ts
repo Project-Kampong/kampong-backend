@@ -1,5 +1,5 @@
-import moment from 'moment';
-import { db } from '../database/db';
+import moment from 'moment-timezone';
+import { db } from '../database';
 import { asyncHandler } from '../middleware';
 import { checkListingOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 
@@ -86,7 +86,12 @@ export const createListingUpdate = asyncHandler(async (req, res, next) => {
  */
 export const modifyListingUpdate = asyncHandler(async (req, res, next) => {
     // check if listing update exists
-    const isListingOwner = await checkListingOwner(req.user.user_id, req.params.id);
+    const { listing_id } = await db.one<Promise<{ listing_id: string }>>(
+        'SELECT listing_id FROM listingupdates WHERE listing_update_id = $1',
+        req.params.id,
+    );
+
+    const isListingOwner = await checkListingOwner(req.user.user_id, listing_id);
 
     // check listing owner for non-admin users
     if (!(req.user.role === 'admin' || isListingOwner)) {
@@ -102,7 +107,7 @@ export const modifyListingUpdate = asyncHandler(async (req, res, next) => {
         pic3,
         pic4,
         pic5,
-        updated_on: moment().format('YYYY-MM-DD HH:mm:ss.000'),
+        updated_on: moment.tz(process.env.DEFAULT_TIMEZONE).toDate(),
     };
 
     cleanseData(data);
