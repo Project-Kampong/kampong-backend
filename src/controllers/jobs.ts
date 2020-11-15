@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { JobsRepository, ListingsRepository } from '../database';
 import { asyncHandler } from '../middleware';
-import { checkListingOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
+import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
 
 export class JobsController {
     constructor(private readonly jobsRepository: JobsRepository, private readonly listingsRepository: ListingsRepository) {
