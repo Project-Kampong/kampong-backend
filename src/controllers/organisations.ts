@@ -1,9 +1,10 @@
+import { v1 as uuidv1 } from 'uuid';
 import { db } from '../database/db';
 import { asyncHandler } from '../middleware';
 import { checkOrganisationOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 
 interface OrganisationSchema {
-    organisation_id: number;
+    organisation_id: string;
     name: string;
     organisation_type: string;
     about: string;
@@ -19,6 +20,7 @@ interface OrganisationSchema {
 }
 
 interface CreateOrganisationRequestSchema {
+    organisation_id: string;
     name: string;
     organisation_type?: string;
     about: string;
@@ -114,6 +116,7 @@ export const createOrganisation = asyncHandler(async (req, res) => {
     } = req.body;
 
     const data: CreateOrganisationRequestSchema = {
+        organisation_id: uuidv1(),
         name,
         organisation_type,
         about,

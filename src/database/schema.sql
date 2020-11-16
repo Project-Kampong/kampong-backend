@@ -120,7 +120,7 @@ CREATE TABLE ProfileSkills (
 );
 
 CREATE TABLE Organisations (
-	organisation_id SERIAL,
+	organisation_id UUID,
 	name VARCHAR NOT NULL,
 	organisation_type VARCHAR,
 	about TEXT,
@@ -145,7 +145,7 @@ CREATE TABLE Organisations (
 
 CREATE TABLE Memberships (
 	membership_id SERIAL,
-	organisation_id INTEGER NOT NULL,
+	organisation_id UUID NOT NULL,
 	user_id VARCHAR NOT NULL,
 	is_owner BOOLEAN NOT NULL DEFAULT FALSE,
 	joined_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -157,7 +157,7 @@ CREATE TABLE Memberships (
 
 CREATE TABLE Programmes (
 	programme_id SERIAL,
-	organisation_id INTEGER NOT NULL,
+	organisation_id UUID NOT NULL,
 	title VARCHAR NOT NULL,
 	about TEXT,
 	media_url VARCHAR[],
@@ -195,7 +195,7 @@ CREATE TABLE Listings (
 CREATE TABLE ListingsOrganisations (
 	listing_organisation_id SERIAL,
 	listing_id VARCHAR NOT NULL,
-	organisation_id INTEGER NOT NULL,
+	organisation_id UUID NOT NULL,
 	PRIMARY KEY (listing_organisation_id),
 	UNIQUE (listing_id, organisation_id),
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE,
