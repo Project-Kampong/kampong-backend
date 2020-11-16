@@ -36,7 +36,6 @@ import { router as listingLocationsRoute } from './listingLocations.route';
 import { router as listingUpdatesRoute } from './listingUpdates.route';
 import { router as milestonesRoute } from './milestones.route';
 import { router as participantsRoute } from './participants.route';
-import { router as listingSkillsRoute } from './listingSkills.route';
 import { router as jobsRoute } from './jobs.route';
 import { router as listingStoriesRoute } from './listingStories.route';
 import { router as organisationsRoute } from './organisations.route';
@@ -52,7 +51,6 @@ router.use('/:listing_id/milestones', milestonesRoute);
 router.use('/:listing_id/participants', participantsRoute);
 router.use('/stories', listingStoriesRoute);
 router.use('/:listing_id/stories', listingStoriesRoute);
-router.use('/:listing_id/listing-skills', listingSkillsRoute);
 router.use('/:listing_id/jobs', jobsRoute);
 router.use('/:listing_id/organisations', organisationsRoute);
 
