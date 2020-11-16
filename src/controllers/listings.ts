@@ -226,6 +226,7 @@ export const updateListing = asyncHandler(async (req, res, next) => {
         pic3,
         pic4,
         pic5,
+        updated_on: moment.tz(process.env.DEFAULT_TIMEZONE).toDate(),
     };
 
     // remove undefined items in json
