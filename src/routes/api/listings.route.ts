@@ -17,7 +17,6 @@ import {
     getListings,
     getFeaturedListings,
     getAllListingsOwnedByUser,
-    getListingsAll,
     getListing,
     createListing,
     updateListing,
@@ -117,7 +116,6 @@ router.route('/').get(advancedResults('listingsview'), getListings).post(protect
 router.route('/featured').get(getFeaturedListings);
 router.route('/owner').get(getAllListingsOwnedByUser);
 router.route('/search').get(validateSearchListingsFields, checkInputError, searchListings);
-router.route('/all').get(protect, authorise('admin'), advancedResults('listings'), getListingsAll);
 
 router.route('/:id').get(getListing);
 

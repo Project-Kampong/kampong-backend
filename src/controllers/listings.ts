@@ -65,15 +65,6 @@ export const getListings = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Get all listings including soft deletes
- * @route   GET /api/listings/all
- * @access  Admin
- */
-export const getListingsAll = asyncHandler(async (req, res) => {
-    res.status(200).json(res.advancedResults);
-});
-
-/**
  * @desc    Get all featured listings
  * @route   GET /api/listings/featured
  * @access  Public

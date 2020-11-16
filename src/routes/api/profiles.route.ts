@@ -1,8 +1,8 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
-import { advancedResults, checkInputError, protect, authorise, mapSingleFileLocation } from '../../middleware';
-import { DATETIME_REGEX, INVALID_TIMESTAMP_MSG, INVALID_FIELD_MSG, NO_FIELD_UPDATED_MSG, uploadFile, INVALID_PHONE_NUMBER_MSG } from '../../utils';
+import { advancedResults, checkInputError, protect, authorise } from '../../middleware';
+import { DATETIME_REGEX, INVALID_TIMESTAMP_MSG, INVALID_FIELD_MSG, NO_FIELD_UPDATED_MSG, INVALID_PHONE_NUMBER_MSG } from '../../utils';
 
 // import controllers here
 import { getProfiles, getProfile, updateProfile, verifyProfile } from '../../controllers/profiles';
