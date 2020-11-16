@@ -8,6 +8,8 @@ import { isNil } from 'lodash';
 /**
  * @desc    Get all listings
  * @route   GET /api/listings
+ * @desc    Get all listings for a listing category
+ * @route   GET /api/categories/:category_name/listings
  * @desc    Get all listings for a location
  * @route   GET /api/locations/:location_id/listings
  * @desc    Get all listings for an organisation
@@ -15,29 +17,43 @@ import { isNil } from 'lodash';
  * @access  Public
  */
 export const getListings = asyncHandler(async (req, res) => {
-    if (req.params.location_id) {
-        // return 404 error response if location not found or soft deleted
-        const locations = await db.many(
-            'SELECT lil.listing_location_id, l.listing_id, lil.location_id FROM listingsview l LEFT JOIN ListingLocations lil ON l.listing_id = lil.listing_id WHERE l.listing_id = $1',
-            req.params.location_id,
+    if (req.params.category_name) {
+        // returns 404 error if category name not found
+        const rows = await db.many(
+            'SELECT * FROM category lc LEFT JOIN listings l ON lc.category_name = l.category WHERE lc.category_name = $1',
+            req.params.category_name,
         );
 
-        // remove null location_id from result
-        const data = locations.filter((lil) => lil.location_id !== null);
+        // remove null listing id from result
+        const data = rows.filter((listing) => listing.listing_id !== null);
 
         return res.status(200).json({
             success: true,
-            count: data.length,
+            data,
+        });
+    }
+    if (req.params.location_id) {
+        // return 404 error response if location with location id not found
+        const rows = await db.many(
+            'SELECT lv.*, lil.location_id FROM Locations l LEFT JOIN ListingLocations lil ON l.location_id = lil.location_id LEFT JOIN listingsview lv ON lil.listing_id = lv.listing_id WHERE l.location_id = $1',
+            req.params.location_id,
+        );
+
+        // remove null listing id from result
+        const data = rows.filter((listing) => listing.listing_id !== null);
+
+        return res.status(200).json({
+            success: true,
             data,
         });
     } else if (req.params.organisation_id) {
         const rows = await db.manyOrNone(
-            'SELECT * FROM organisations o LEFT JOIN listingsorganisations lo ON o.organisation_id = lo.organisation_id LEFT JOIN listings l ON lo.listing_id = l.listing_id WHERE o.organisation_id = $1',
+            'SELECT l.*, lo.listing_organisation_id FROM organisations o LEFT JOIN listingsorganisations lo ON o.organisation_id = lo.organisation_id LEFT JOIN listings l ON lo.listing_id = l.listing_id WHERE o.organisation_id = $1',
             req.params.organisation_id,
         );
 
-        // remove null location_id from result
-        const data = rows.filter((row) => row.listing_organisation_id !== null);
+        // remove null listing id from result
+        const data = rows.filter((listing) => listing.listing_id !== null);
 
         return res.status(200).json({
             success: true,

@@ -1,9 +1,5 @@
 DROP EXTENSION IF EXISTS pg_stat_statements CASCADE;
 
-CREATE EXTENSION pg_stat_statements;
-
-DROP TABLE IF EXISTS Roles CASCADE;
-
 DROP TABLE IF EXISTS Users CASCADE;
 
 DROP TABLE IF EXISTS PendingUsers CASCADE;
@@ -17,6 +13,8 @@ DROP TABLE IF EXISTS Organisations CASCADE;
 DROP TABLE IF EXISTS Programmes CASCADE;
 
 DROP TABLE IF EXISTS Memberships CASCADE;
+
+DROP TABLE IF EXISTS category CASCADE;
 
 DROP TABLE IF EXISTS Listings CASCADE;
 
@@ -47,6 +45,8 @@ DROP TABLE IF EXISTS ListingComments CASCADE;
 DROP TABLE IF EXISTS Locations CASCADE;
 
 DROP TABLE IF EXISTS ListingLocations CASCADE;
+
+CREATE EXTENSION pg_stat_statements;
 
 CREATE TABLE Users (
 	user_id VARCHAR,
@@ -80,8 +80,7 @@ CREATE TABLE Profiles (
 	nickname VARCHAR NOT NULL,
 	profile_picture VARCHAR,
 	about TEXT,
-	gender VARCHAR CONSTRAINT gender_enum CHECK (gender IN('m', 'f', 'o', 'u')) DEFAULT 'u',
-	/* m = male, f = female, o = others, u = undisclosed */
+	gender VARCHAR,
 	dob TIMESTAMPTZ,
 	occupation TEXT,
 	phone VARCHAR,
@@ -141,11 +140,18 @@ CREATE TABLE Programmes (
 	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE
 );
 
+CREATE TABLE category (
+	category_id SERIAL,
+	category_name VARCHAR UNIQUE NOT NULL,
+	category_group VARCHAR,
+	PRIMARY KEY (category_id)
+);
+
 CREATE TABLE Listings (
 	listing_id VARCHAR,
 	created_by VARCHAR,
 	title VARCHAR NOT NULL,
-	category VARCHAR NOT NULL,
+	category VARCHAR,
 	about TEXT,
 	tagline VARCHAR,
 	mission TEXT,
@@ -165,6 +171,7 @@ CREATE TABLE Listings (
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	deleted_on TIMESTAMPTZ DEFAULT NULL,
 	PRIMARY KEY (listing_id),
+	FOREIGN KEY (category) REFERENCES category (category_name) ON DELETE SET NULL,
 	FOREIGN KEY (created_by) REFERENCES Users (user_id) ON DELETE SET NULL
 );
 
@@ -288,7 +295,7 @@ CREATE TABLE ListingComments (
 	listing_id VARCHAR,
 	user_id VARCHAR,
 	COMMENT TEXT,
-	reply_to_id INTEGER CONSTRAINT reply_to_other_id CHECK (reply_to_id <> listing_comment_id),
+	reply_to_id INTEGER,
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	deleted_on TIMESTAMPTZ,
@@ -300,7 +307,8 @@ CREATE TABLE ListingComments (
 
 CREATE TABLE Locations (
 	location_id SERIAL,
-	LOCATION VARCHAR,
+	location VARCHAR,
+	zone VARCHAR,
 	PRIMARY KEY (location_id)
 );
 

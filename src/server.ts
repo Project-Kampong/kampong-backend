@@ -12,7 +12,7 @@ import hpp from 'hpp';
 import cors from 'cors';
 import { get } from 'lodash';
 import { checkConn } from './utils';
-import { router as apiRoutes } from './routes';
+import { apiRouter } from './routes';
 import { errorHandler } from './middleware';
 
 dotenv.config({ path: 'config/config.env' });
@@ -55,7 +55,7 @@ app.use(hpp());
 app.use(cors());
 
 // Mount routers
-app.use('/api', apiRoutes);
+app.use('/api', apiRouter);
 
 // Mount error handler
 app.use(errorHandler);
