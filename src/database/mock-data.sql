@@ -159,12 +159,12 @@ INSERT INTO "public"."milestones" ("listing_id", "description", "date") VALUES
 ('1276b4eb-df3a-4de3-bcae-a450ed96eeac', 'On-Platform Chat', '2020-10-31 16:00:00');
 
 /* ListingAdmins mock data population */
-insert into ListingAdmins (user_id, listing_id) values ('d69a127d-815b-4834-b2b6-54ab398fccad', '43824166-bee2-426e-8a08-ca2c4e4120ae');
-insert into ListingAdmins (user_id, listing_id) values ('d69a127d-815b-4834-b2b6-54ab398fccad', 'c975a572-452d-4824-8ed5-500b50488436');
-insert into ListingAdmins (user_id, listing_id) values ('f997120c-2956-482e-9ba3-81a12b4fecc1', '43824166-bee2-426e-8a08-ca2c4e4120ae');
-insert into ListingAdmins (user_id, listing_id) values ('f997120c-2956-482e-9ba3-81a12b4fecc1', 'd95a6c2e-3c33-447c-be0c-be399247dd3f');
-insert into ListingAdmins (user_id, listing_id) values ('f997120c-2956-482e-9ba3-81a12b4fecc1', 'c975a572-452d-4824-8ed5-500b50488436');
-insert into ListingAdmins (user_id, listing_id) values ('2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb', 'd95a6c2e-3c33-447c-be0c-be399247dd3f');
+insert into listingadmin (user_id, listing_id) values ('d69a127d-815b-4834-b2b6-54ab398fccad', '43824166-bee2-426e-8a08-ca2c4e4120ae');
+insert into listingadmin (user_id, listing_id) values ('d69a127d-815b-4834-b2b6-54ab398fccad', 'c975a572-452d-4824-8ed5-500b50488436');
+insert into listingadmin (user_id, listing_id) values ('f997120c-2956-482e-9ba3-81a12b4fecc1', '43824166-bee2-426e-8a08-ca2c4e4120ae');
+insert into listingadmin (user_id, listing_id) values ('f997120c-2956-482e-9ba3-81a12b4fecc1', 'd95a6c2e-3c33-447c-be0c-be399247dd3f');
+insert into listingadmin (user_id, listing_id) values ('f997120c-2956-482e-9ba3-81a12b4fecc1', 'c975a572-452d-4824-8ed5-500b50488436');
+insert into listingadmin (user_id, listing_id) values ('2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb', 'd95a6c2e-3c33-447c-be0c-be399247dd3f');
 
 insert into ListingUpdates (listing_id, description, pics, created_on, updated_on) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'Horizontal dynamic encoding', ARRAY['https://robohash.org/utetut.bmp?size=500x500&set=set1', 'https://robohash.org/quiserrorlabore.jpg?size=500x500&set=set1', 'https://robohash.org/aspernaturcupiditateerror.png?size=500x500&set=set1', 'https://robohash.org/dolorevenietmaiores.jpg?size=500x500&set=set1', 'https://robohash.org/utconsequaturatque.bmp?size=500x500&set=set1'], '2020-05-05 02:20:02', '2020-04-28 01:06:06');
 insert into ListingUpdates (listing_id, description, pics, created_on, updated_on) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'Inverse eco-centric conglomeration', ARRAY['https://robohash.org/sititaqueiure.jpg?size=500x500&set=set1', 'https://robohash.org/facilisimpeditsoluta.bmp?size=500x500&set=set1', 'https://robohash.org/atquererumvoluptatem.jpg?size=500x500&set=set1', 'https://robohash.org/quietreprehenderit.bmp?size=500x500&set=set1', 'https://robohash.org/suscipittemporeet.png?size=500x500&set=set1'], '2020-07-08 12:26:55', '2020-08-10 10:06:35');
