@@ -18,7 +18,7 @@ DROP TABLE IF EXISTS category CASCADE;
 
 DROP TABLE IF EXISTS Listings CASCADE;
 
-DROP TABLE IF EXISTS ListingsOrganisations CASCADE;
+DROP TABLE IF EXISTS listingorganisation CASCADE;
 
 DROP TABLE IF EXISTS ListingStories CASCADE;
 
@@ -174,7 +174,7 @@ CREATE TABLE Listings (
 	FOREIGN KEY (created_by) REFERENCES Users (user_id) ON DELETE SET NULL
 );
 
-CREATE TABLE ListingsOrganisations (
+CREATE TABLE listingorganisation (
 	listing_organisation_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	organisation_id UUID NOT NULL,
