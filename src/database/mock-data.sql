@@ -140,16 +140,16 @@ INSERT INTO "public"."hashtag" ("listing_id", "tag") VALUES
 ('1276b4eb-df3a-4de3-bcae-a450ed96eeac', '#initiative');
 
 /* Milestones mock data population */
-insert into Milestones (listing_id, description, date) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'De-engineered content-based solution', '2019-06-01 11:27:43');
-insert into Milestones (listing_id, description, date) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'Centralized stable groupware', '2020-07-09 11:30:19');
-insert into Milestones (listing_id, description, date) values ('c975a572-452d-4824-8ed5-500b50488436', 'Future-proofed systemic interface', '2016-11-13 21:27:33');
-insert into Milestones (listing_id, description, date) values ('c975a572-452d-4824-8ed5-500b50488436', 'Pre-emptive static installation', '2015-08-06 09:28:56');
-insert into Milestones (listing_id, description, date) values ('c975a572-452d-4824-8ed5-500b50488436', 'Multi-channelled secondary model', '2016-12-04 03:14:39');
-insert into Milestones (listing_id, description, date) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'Intuitive client-driven knowledge user', '2018-12-16 08:49:35');
-insert into Milestones (listing_id, description, date) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'Monitored attitude-oriented array', '2017-11-23 11:53:21');
-insert into Milestones (listing_id, description, date) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 'Monitored object-oriented access', '2020-01-21 19:04:19');
-insert into Milestones (listing_id, description, date) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'Managed attitude-oriented frame', '2020-02-12 22:30:42');
-INSERT INTO "public"."milestones" ("listing_id", "description", "date") VALUES
+insert into milestone (listing_id, description, date) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'De-engineered content-based solution', '2019-06-01 11:27:43');
+insert into milestone (listing_id, description, date) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'Centralized stable groupware', '2020-07-09 11:30:19');
+insert into milestone (listing_id, description, date) values ('c975a572-452d-4824-8ed5-500b50488436', 'Future-proofed systemic interface', '2016-11-13 21:27:33');
+insert into milestone (listing_id, description, date) values ('c975a572-452d-4824-8ed5-500b50488436', 'Pre-emptive static installation', '2015-08-06 09:28:56');
+insert into milestone (listing_id, description, date) values ('c975a572-452d-4824-8ed5-500b50488436', 'Multi-channelled secondary model', '2016-12-04 03:14:39');
+insert into milestone (listing_id, description, date) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'Intuitive client-driven knowledge user', '2018-12-16 08:49:35');
+insert into milestone (listing_id, description, date) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'Monitored attitude-oriented array', '2017-11-23 11:53:21');
+insert into milestone (listing_id, description, date) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 'Monitored object-oriented access', '2020-01-21 19:04:19');
+insert into milestone (listing_id, description, date) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'Managed attitude-oriented frame', '2020-02-12 22:30:42');
+INSERT INTO "public"."milestone" ("listing_id", "description", "date") VALUES
 ('1276b4eb-df3a-4de3-bcae-a450ed96eeac', 'Profile Listing', '2020-08-21 16:00:00'),
 ('1276b4eb-df3a-4de3-bcae-a450ed96eeac', 'Location', '2020-09-18 16:00:00'),
 ('1276b4eb-df3a-4de3-bcae-a450ed96eeac', 'One-Pager Template for Project Listing Platform', '2020-08-07 16:00:00'),
