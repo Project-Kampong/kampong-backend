@@ -230,11 +230,11 @@ CREATE TABLE Likes (
 CREATE TABLE OrganisationLikes (
 	organisation_like_id SERIAL,
 	organisation_id UUID NOT NULL,
-	like_id SERIAL NOT NULL,
+	user_id VARCHAR NOT NULL,
 	PRIMARY KEY (organisation_like_id),
-	UNIQUE (organisation_id, like_id),
-	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE,
-	FOREIGN KEY (like_id) REFERENCES Likes ON DELETE CASCADE
+	UNIQUE (organisation_id, user_id),
+	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
+	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE
 )
 
 CREATE TABLE ListingAdmins (
