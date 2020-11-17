@@ -33,7 +33,7 @@ interface UpdateProgrammeRequestSchema {
 export const getProgrammes = asyncHandler(async (req, res) => {
     if (req.params.organisation_id) {
         const rows = await db.manyOrNone<Promise<ProgrammeSchema[]>>(
-            'SELECT * FROM programmes WHERE organisation_id = $1',
+            'SELECT * FROM programme WHERE organisation_id = $1',
             req.params.organisation_id,
         );
         return res.status(200).json({
@@ -50,7 +50,7 @@ export const getProgrammes = asyncHandler(async (req, res) => {
  * @access  Public
  */
 export const getProgramme = asyncHandler(async (req, res, next) => {
-    const row = await db.one<Promise<ProgrammeSchema>>('SELECT * FROM programmes WHERE programme_id = $1', req.params.id);
+    const row = await db.one<Promise<ProgrammeSchema>>('SELECT * FROM programme WHERE programme_id = $1', req.params.id);
     res.status(200).json({
         success: true,
         data: row,
@@ -83,7 +83,7 @@ export const createProgramme = asyncHandler(async (req, res, next) => {
     // remove undefined values in json object
     cleanseData(data);
 
-    const row = await db.one<Promise<ProgrammeSchema>>('INSERT INTO programmes (${this:name}) VALUES (${this:csv}) RETURNING *', data);
+    const row = await db.one<Promise<ProgrammeSchema>>('INSERT INTO programme (${this:name}) VALUES (${this:csv}) RETURNING *', data);
 
     res.status(201).json({
         success: true,
@@ -98,7 +98,7 @@ export const createProgramme = asyncHandler(async (req, res, next) => {
  */
 export const updateProgramme = asyncHandler(async (req, res, next) => {
     const { organisation_id } = await db.one<Promise<{ organisation_id: number }>>(
-        'SELECT organisation_id FROM programmes WHERE programme_id = $1',
+        'SELECT organisation_id FROM programme WHERE programme_id = $1',
         req.params.id,
     );
     const userId: string = req.user.user_id;
@@ -118,7 +118,7 @@ export const updateProgramme = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    const updateProgrammeQuery = parseSqlUpdateStmt(data, 'programmes', 'WHERE programme_id = $1 RETURNING *', [req.params.id]);
+    const updateProgrammeQuery = parseSqlUpdateStmt(data, 'programme', 'WHERE programme_id = $1 RETURNING *', [req.params.id]);
 
     const rows = await db.one<Promise<ProgrammeSchema>>(updateProgrammeQuery);
 
@@ -135,7 +135,7 @@ export const updateProgramme = asyncHandler(async (req, res, next) => {
  */
 export const deleteProgramme = asyncHandler(async (req, res, next) => {
     const { organisation_id } = await db.one<Promise<{ organisation_id: number }>>(
-        'SELECT organisation_id FROM programmes WHERE programme_id = $1',
+        'SELECT organisation_id FROM programme WHERE programme_id = $1',
         req.params.id,
     );
     const userId: string = req.user.user_id;
@@ -145,7 +145,7 @@ export const deleteProgramme = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse('Not authorised to delete programme as you are not the organisation owner', 403));
     }
 
-    const row = await db.one<Promise<ProgrammeSchema>>('DELETE FROM programmes WHERE programme_id = $1 RETURNING *', req.params.id);
+    const row = await db.one<Promise<ProgrammeSchema>>('DELETE FROM programme WHERE programme_id = $1 RETURNING *', req.params.id);
 
     res.status(200).json({
         success: true,
