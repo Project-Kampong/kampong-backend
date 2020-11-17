@@ -1,8 +1,8 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
-import { check, oneOf } from 'express-validator';
+import { check } from 'express-validator';
 import { advancedResults, checkInputError, protect } from '../../middleware';
-import { HASHTAG_REGEX, NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } from '../../utils';
+import { HASHTAG_REGEX, INVALID_FIELD_MSG } from '../../utils';
 
 // import controllers here
 import { getHashtags, getHashtag, createHashtag, deleteHashtag } from '../../controllers/hashtags';

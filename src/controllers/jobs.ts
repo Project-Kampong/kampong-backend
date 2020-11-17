@@ -27,29 +27,6 @@ export const getJobs = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Get all jobs including soft deletes
- * @route   GET /api/jobs/all
- * @desc    Get all jobs for a listing including soft deletes
- * @route   GET /api/listings/:listing_id/jobs/all
- * @access  Admin
- */
-export const getJobsAll = asyncHandler(async (req, res) => {
-    if (req.params.listing_id) {
-        // return 404 error response if listing not found
-        await db.one('SELECT * FROM listings WHERE listing_id = $1', req.params.listing_id);
-
-        const jobs = await db.manyOrNone('SELECT * FROM jobs WHERE listing_id = $1', req.params.listing_id);
-        return res.status(200).json({
-            success: true,
-            count: jobs.length,
-            data: jobs,
-        });
-    }
-
-    res.status(200).json(res.advancedResults);
-});
-
-/**
  * @desc    Get single job
  * @route   GET /api/jobs/:id
  * @access  Public

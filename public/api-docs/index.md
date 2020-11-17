@@ -24,6 +24,11 @@ Backend API for Project Kampong.
   * [Update Details](#10-update-details)
   * [Update Password](#11-update-password)
 
+* [Categories](#categories)
+
+  * [Get All Categories](#1-get-all-categories)
+  * [Get All Listings for a Category](#2-get-all-listings-for-a-category)
+
 * [Faqs](#faqs)
 
   * [Create Faq](#1-create-faq)
@@ -77,14 +82,6 @@ Backend API for Project Kampong.
   * [Get All Listing Locations](#3-get-all-listing-locations)
   * [Get Single Listing Location](#4-get-single-listing-location)
 
-* [Listing Skills](#listing-skills)
-
-  * [Create Custom Listing Skill](#1-create-custom-listing-skill)
-  * [Create Listing Skill](#2-create-listing-skill)
-  * [Delete Listing Skill](#3-delete-listing-skill)
-  * [Get All Listing Skills](#4-get-all-listing-skills)
-  * [Get Single Listing Skill](#5-get-single-listing-skill)
-
 * [Listing Stories](#listing-stories)
 
   * [Get All Listing Stories](#1-get-all-listing-stories)
@@ -120,11 +117,6 @@ Backend API for Project Kampong.
   * [Search Listings](#17-search-listings)
   * [Update Listing](#18-update-listing)
   * [Verify and/or Feature Listing](#19-verify-andor-feature-listing)
-
-* [Listings - Organisations (Join / Unjoin)](#listings---organisations-(join--unjoin))
-
-  * [Listing join Organisation](#1-listing-join-organisation)
-  * [Listing leave Organisation](#2-listing-leave-organisation)
 
 * [Listings - Organisations (Join / Unjoin)](#listings---organisations-(join--unjoin))
 
@@ -174,14 +166,6 @@ Backend API for Project Kampong.
 * [Send Email](#send-email)
 
   * [Send email](#1-send-email)
-
-* [Skills](#skills)
-
-  * [Create Skill](#1-create-skill)
-  * [Delete Skill](#2-delete-skill)
-  * [Get All Skills](#3-get-all-skills)
-  * [Get Single Skill](#4-get-single-skill)
-  * [Update Skill](#5-update-skill)
 
 * [Users](#users)
 
@@ -1172,44 +1156,7 @@ URL: {{URL}}/api/auth/login
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Login User (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"email" : "don@gmail.com",
-	"password": "123456"
-}
-```
-
-
-
-##### I. Example Response: Login User (200 OK)
-```js
-{
-    "success": true,
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjcsImVtYWlsIjoicm9uQGdtYWlsLmNvbSIsImNyZWF0ZWRfb24iOiIyMDIwLTA3LTA4VDE3OjQxOjU2LjQzMFoiLCJpYXQiOjE1OTQyMzEyNzgsImV4cCI6MTU5NjgyMzI3OH0.hkr1-C6JWwCIthd2ZUu_W3bxpIQHdCvn8LTnXNWM098"
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Login User (400 Bad Request - Invalid login credentials)
+##### I. Example Request: Login User (400 Bad Request - Invalid login credentials)
 
 
 ***Headers:***
@@ -1231,7 +1178,7 @@ URL: {{URL}}/api/auth/login
 
 
 
-##### II. Example Response: Login User (400 Bad Request - Invalid login credentials)
+##### I. Example Response: Login User (400 Bad Request - Invalid login credentials)
 ```js
 {
     "success": false,
@@ -1241,6 +1188,43 @@ URL: {{URL}}/api/auth/login
 
 
 ***Status Code:*** 401
+
+<br>
+
+
+
+##### II. Example Request: Login Admin (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"email" : "admin@gmail.com",
+	"password": "Abc1234!"
+}
+```
+
+
+
+##### II. Example Response: Login Admin (200 OK)
+```js
+{
+    "success": true,
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5NmIyMTM4LTE3NTQtNGMxNy1hNDA1LTk0MGUyMGFkYzYwMSIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwiaWF0IjoxNjA1NTQ4NjY3LCJleHAiOjE2MDgxNDA2Njd9.0jDnU7Zf-x6tcE3z2Bvmerpe6uRK3QgVpmk1PhzC_Dk"
+}
+```
+
+
+***Status Code:*** 200
 
 <br>
 
@@ -2192,6 +2176,358 @@ URL: {{URL}}/api/auth/update-password
 
 
 ***Status Code:*** 400
+
+<br>
+
+
+
+## Categories
+Listing Categories CRUD functionality.
+
+
+
+### 1. Get All Categories
+
+
+Get all categories. Permission: Public.
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{URL}}/api/categories
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Get All Listing Comments (200 OK)
+
+
+
+##### I. Example Response: Get All Listing Comments (200 OK)
+```js
+{
+    "success": true,
+    "count": 42,
+    "pagination": {
+        "next": {
+            "page": 2,
+            "limit": 25
+        }
+    },
+    "data": [
+        {
+            "listing_category_id": 1,
+            "category_name": "Health",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 2,
+            "category_name": "Marriage",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 3,
+            "category_name": "Education",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 4,
+            "category_name": "Mentorship",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 5,
+            "category_name": "Retirement",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 6,
+            "category_name": "Housing",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 7,
+            "category_name": "Rental Flats",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 8,
+            "category_name": "Family",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 9,
+            "category_name": "Gender",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 10,
+            "category_name": "Elderly",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 11,
+            "category_name": "Youth",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 12,
+            "category_name": "Youth At Risk",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 13,
+            "category_name": "Pre-School",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 14,
+            "category_name": "Race",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 15,
+            "category_name": "Language",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 16,
+            "category_name": "Science",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 17,
+            "category_name": "Art",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 18,
+            "category_name": "Sports",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 19,
+            "category_name": "Poverty",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 20,
+            "category_name": "Inequality",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 21,
+            "category_name": "Recycling",
+            "category_group": "Environment"
+        },
+        {
+            "listing_category_id": 22,
+            "category_name": "Green",
+            "category_group": "Environment"
+        },
+        {
+            "listing_category_id": 23,
+            "category_name": "Water",
+            "category_group": "Environment"
+        },
+        {
+            "listing_category_id": 24,
+            "category_name": "Waste",
+            "category_group": "Environment"
+        },
+        {
+            "listing_category_id": 25,
+            "category_name": "Food",
+            "category_group": "Environment"
+        }
+    ]
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+### 2. Get All Listings for a Category
+
+
+Get all listings for a category, identified by the category name (case-sensitive). Permission: Public.
+
+Req params:
+/api/categories/:category_name/listings
+
+category_name - case-sensitive string
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{URL}}/api/categories/Health/listings
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Get All Listing Comments (200 OK)
+
+
+
+##### I. Example Response: Get All Listing Comments (200 OK)
+```js
+{
+    "success": true,
+    "count": 42,
+    "pagination": {
+        "next": {
+            "page": 2,
+            "limit": 25
+        }
+    },
+    "data": [
+        {
+            "listing_category_id": 1,
+            "category_name": "Health",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 2,
+            "category_name": "Marriage",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 3,
+            "category_name": "Education",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 4,
+            "category_name": "Mentorship",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 5,
+            "category_name": "Retirement",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 6,
+            "category_name": "Housing",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 7,
+            "category_name": "Rental Flats",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 8,
+            "category_name": "Family",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 9,
+            "category_name": "Gender",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 10,
+            "category_name": "Elderly",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 11,
+            "category_name": "Youth",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 12,
+            "category_name": "Youth At Risk",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 13,
+            "category_name": "Pre-School",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 14,
+            "category_name": "Race",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 15,
+            "category_name": "Language",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 16,
+            "category_name": "Science",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 17,
+            "category_name": "Art",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 18,
+            "category_name": "Sports",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 19,
+            "category_name": "Poverty",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 20,
+            "category_name": "Inequality",
+            "category_group": "Social"
+        },
+        {
+            "listing_category_id": 21,
+            "category_name": "Recycling",
+            "category_group": "Environment"
+        },
+        {
+            "listing_category_id": 22,
+            "category_name": "Green",
+            "category_group": "Environment"
+        },
+        {
+            "listing_category_id": 23,
+            "category_name": "Water",
+            "category_group": "Environment"
+        },
+        {
+            "listing_category_id": 24,
+            "category_name": "Waste",
+            "category_group": "Environment"
+        },
+        {
+            "listing_category_id": 25,
+            "category_name": "Food",
+            "category_group": "Environment"
+        }
+    ]
+}
+```
+
+
+***Status Code:*** 200
 
 <br>
 
@@ -5481,671 +5817,6 @@ URL: {{URL}}/api/listing-locations/1
 
 
 
-## Listing Skills
-Listing Skills CRUD functionality.
-
-
-
-### 1. Create Custom Listing Skill
-
-
-Create custom listing skill for a specified listing id and add skill to skills table (if it skill does not exist). Permission: Owner/Admin.
-
-Field rules:
-All fields required unless otherwise stated.
-listing_id - Valid integer, existing listing id.
-skill - Non-empty string with alphabets and spaces only.
-
-
-***Endpoint:***
-
-```bash
-Method: POST
-Type: RAW
-URL: {{URL}}/api/listing-skills/add-skill
-```
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-	"skill": "Junior Data Analyst",
-    "skill_description": "Analyse complex data and present findings to key stakeholders"
-}
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Create Listing Skill (403 Forbidden - Non-listing owner cannot create listing skill)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"listing_id": 1,
-	"skill_id": 5
-}
-```
-
-
-
-##### I. Example Response: Create Listing Skill (403 Forbidden - Non-listing owner cannot create listing skill)
-```js
-{
-    "success": false,
-    "error": "Not authorised to create listing skills for this listing"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
-##### II. Example Request: Create Listing Skill (400 Bad Request - Non-existent skill id)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"listing_id": 1,
-	"skill_id": 200
-}
-```
-
-
-
-##### II. Example Response: Create Listing Skill (400 Bad Request - Non-existent skill id)
-```js
-{
-    "success": false,
-    "error": "Foreign key value does not exist: Key (skill_id)=(200) is not present in table \"skills\"."
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-##### III. Example Request: Create Custom Listing Skill (201 Created)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-	"skill": "Junior Data Analyst",
-    "skill_description": "Analyse complex data and present findings to key stakeholders"
-}
-```
-
-
-
-##### III. Example Response: Create Custom Listing Skill (201 Created)
-```js
-{
-    "success": true,
-    "data": {
-        "listing_skill_id": 11,
-        "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-        "skill_id": 43
-    }
-}
-```
-
-
-***Status Code:*** 201
-
-<br>
-
-
-
-### 2. Create Listing Skill
-
-
-Create listing skill. Permission: Owner/Admin.
-
-Field rules:
-All fields required unless otherwise stated.
-listing_id - Valid integer, existing listing id.
-skill_id - Valid integer, existing skill id.
-
-
-***Endpoint:***
-
-```bash
-Method: POST
-Type: RAW
-URL: {{URL}}/api/listing-skills
-```
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-	"skill_id": 6
-}
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Create Listing Skill (403 Forbidden - Non-listing owner cannot create listing skill)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"listing_id": 1,
-	"skill_id": 5
-}
-```
-
-
-
-##### I. Example Response: Create Listing Skill (403 Forbidden - Non-listing owner cannot create listing skill)
-```js
-{
-    "success": false,
-    "error": "Not authorised to create listing skills for this listing"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
-##### II. Example Request: Create Listing Skill (400 Bad Request - Non-existent skill id)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"listing_id": 1,
-	"skill_id": 200
-}
-```
-
-
-
-##### II. Example Response: Create Listing Skill (400 Bad Request - Non-existent skill id)
-```js
-{
-    "success": false,
-    "error": "Foreign key value does not exist: Key (skill_id)=(200) is not present in table \"skills\"."
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-##### III. Example Request: Create Listing Skill (201 Created)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-	"skill_id": 6
-}
-```
-
-
-
-##### III. Example Response: Create Listing Skill (201 Created)
-```js
-{
-    "success": true,
-    "data": {
-        "listing_skill_id": 24,
-        "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-        "skill_id": 6
-    }
-}
-```
-
-
-***Status Code:*** 201
-
-<br>
-
-
-
-### 3. Delete Listing Skill
-
-
-Delete listing skill identified by listing skill id. Permission: Owner/Admin.
-
-
-***Endpoint:***
-
-```bash
-Method: DELETE
-Type: 
-URL: {{URL}}/api/listing-skills/1
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Delete Listing Skill (403 Forbidden - Non-listing owner cannot delete listing skill)
-
-
-
-##### I. Example Response: Delete Listing Skill (403 Forbidden - Non-listing owner cannot delete listing skill)
-```js
-{
-    "success": false,
-    "error": "Not authorised to create listing skills for this listing"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
-##### II. Example Request: Delete Listing Skill (404 Not Found)
-
-
-
-##### II. Example Response: Delete Listing Skill (404 Not Found)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
-##### III. Example Request: Delete Listing Skill (200 OK)
-
-
-
-##### III. Example Response: Delete Listing Skill (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "listing_skill_id": 24,
-        "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-        "skill_id": 6
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 4. Get All Listing Skills
-
-
-Get all listing skills. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/listing-skills
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get All Listing Skills (200 OK)
-
-
-
-##### I. Example Response: Get All Listing Skills (200 OK)
-```js
-{
-    "success": true,
-    "count": 99,
-    "pagination": {
-        "next": {
-            "page": 2,
-            "limit": 25
-        }
-    },
-    "data": [
-        {
-            "listing_skill_id": 94,
-            "listing_id": 12,
-            "skill_id": 1,
-            "skill": "cDNA",
-            "hashId": "Qxp"
-        },
-        {
-            "listing_skill_id": 48,
-            "listing_id": 2,
-            "skill_id": 1,
-            "skill": "cDNA",
-            "hashId": "6pW"
-        },
-        {
-            "listing_skill_id": 15,
-            "listing_id": 4,
-            "skill_id": 2,
-            "skill": "Typesetting",
-            "hashId": "zM"
-        },
-        {
-            "listing_skill_id": 91,
-            "listing_id": 15,
-            "skill_id": 3,
-            "skill": "Biochemistry",
-            "hashId": "GwB"
-        },
-        {
-            "listing_skill_id": 36,
-            "listing_id": 5,
-            "skill_id": 3,
-            "skill": "Biochemistry",
-            "hashId": "ow"
-        },
-        {
-            "listing_skill_id": 73,
-            "listing_id": 14,
-            "skill_id": 4,
-            "skill": "WiFi",
-            "hashId": "noy"
-        },
-        {
-            "listing_skill_id": 45,
-            "listing_id": 2,
-            "skill_id": 4,
-            "skill": "WiFi",
-            "hashId": "vnn"
-        },
-        {
-            "listing_skill_id": 99,
-            "listing_id": 1,
-            "skill_id": 5,
-            "skill": "Siebel",
-            "hashId": "g47"
-        },
-        {
-            "listing_skill_id": 32,
-            "listing_id": 5,
-            "skill_id": 5,
-            "skill": "Siebel",
-            "hashId": "pe"
-        },
-        {
-            "listing_skill_id": 84,
-            "listing_id": 20,
-            "skill_id": 6,
-            "skill": "JTAPI",
-            "hashId": "Lan"
-        },
-        {
-            "listing_skill_id": 41,
-            "listing_id": 3,
-            "skill_id": 6,
-            "skill": "JTAPI",
-            "hashId": "Ma"
-        },
-        {
-            "listing_skill_id": 26,
-            "listing_id": 5,
-            "skill_id": 6,
-            "skill": "JTAPI",
-            "hashId": "KY"
-        },
-        {
-            "listing_skill_id": 95,
-            "listing_id": 15,
-            "skill_id": 7,
-            "skill": "Oilfield",
-            "hashId": "2pV"
-        },
-        {
-            "listing_skill_id": 85,
-            "listing_id": 19,
-            "skill_id": 7,
-            "skill": "Oilfield",
-            "hashId": "MYa"
-        },
-        {
-            "listing_skill_id": 66,
-            "listing_id": 14,
-            "skill_id": 7,
-            "skill": "Oilfield",
-            "hashId": "J5m"
-        },
-        {
-            "listing_skill_id": 3,
-            "listing_id": 6,
-            "skill_id": 7,
-            "skill": "Oilfield",
-            "hashId": "GB"
-        },
-        {
-            "listing_skill_id": 13,
-            "listing_id": 9,
-            "skill_id": 9,
-            "skill": "Aerospace Manufacturing",
-            "hashId": "1r"
-        },
-        {
-            "listing_skill_id": 6,
-            "listing_id": 1,
-            "skill_id": 9,
-            "skill": "Aerospace Manufacturing",
-            "hashId": "Qp"
-        },
-        {
-            "listing_skill_id": 88,
-            "listing_id": 11,
-            "skill_id": 10,
-            "skill": "Mortgage Banking",
-            "hashId": "dkg"
-        },
-        {
-            "listing_skill_id": 69,
-            "listing_id": 14,
-            "skill_id": 10,
-            "skill": "Mortgage Banking",
-            "hashId": "Da9"
-        },
-        {
-            "listing_skill_id": 55,
-            "listing_id": 15,
-            "skill_id": 10,
-            "skill": "Mortgage Banking",
-            "hashId": "gz7"
-        },
-        {
-            "listing_skill_id": 60,
-            "listing_id": 18,
-            "skill_id": 11,
-            "skill": "Swim Instruction",
-            "hashId": "9rx"
-        },
-        {
-            "listing_skill_id": 44,
-            "listing_id": 5,
-            "skill_id": 13,
-            "skill": "Game Design",
-            "hashId": "d0g"
-        },
-        {
-            "listing_skill_id": 25,
-            "listing_id": 3,
-            "skill_id": 13,
-            "skill": "Game Design",
-            "hashId": "D9"
-        },
-        {
-            "listing_skill_id": 19,
-            "listing_id": 8,
-            "skill_id": 13,
-            "skill": "Game Design",
-            "hashId": "Yz"
-        }
-    ]
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 5. Get Single Listing Skill
-
-
-Get single listing skill by listing skill id. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/listing-skills/1
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get Single Listing Skill (200 OK)
-
-
-
-##### I. Example Response: Get Single Listing Skill (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "skill_id": 25,
-        "listing_skill_id": 1,
-        "listing_id": 8,
-        "skill": "Fund Of Funds"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
 ## Listing Stories
 Listing stories CRUD functionality.
 
@@ -7352,11 +7023,7 @@ is_published - Boolean. Optional. Default to false.
 start_date - Valid SQL datetime. Optional. Default to current datetime.
 end_date - Valid SQL datetime. Optional.
 organisation_id - Valid integer and existing organisation id. Optional.
-pic1 - Full URL path to uploaded JPG/PNG file. Optional.
-pic2 - Full URL path to uploaded JPG/PNG file. Optional.
-pic3 - Full URL path to uploaded JPG/PNG file. Optional.
-pic4 - Full URL path to uploaded JPG/PNG file. Optional.
-pic5 - Full URL path to uploaded JPG/PNG file. Optional.
+pics - Array of URL paths to uploaded JPG/PNG file. Required. Otherwise, pass empty array.
 
 
 ***Endpoint:***
@@ -7381,16 +7048,18 @@ URL: {{URL}}/api/listings
 ```js        
 {
     "title": "New title 1",
-    "category": "test category",
+    "category": "Health",
     "about": "test about",
     "tagline": "test tagline",
     "mission": "test mission",
     "listing_url": "www.test.com",
-    "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
-    "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
-    "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
-    "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
-    "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg",
+    "pics": [
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg"
+    ],
     "is_published": false,
     "start_date": "2019-08-15 16:45:43.41585+08",
     "end_date": "2020-07-17 16:45:43.41585+08",
@@ -7503,28 +7172,38 @@ URL: {{URL}}/api/listings
 ##### III. Example Request: Create Listing (201 Created)
 
 
-
-***Body:***
+***Headers:***
 
 | Key | Value | Description |
 | --- | ------|-------------|
-| title | New title 1 |  |
-| category | test category |  |
-| about | test about |  |
-| tagline | test tagline |  |
-| mission | test mission |  |
-| listing_url | www.test.com |  |
-| pic1 | test-pic-1.jpg |  |
-| pic2 | test-pic-2.jpg |  |
-| pic3 | test-pic-3.jpg |  |
-| pic4 | test-pic-4.jpg |  |
-| pic5 | test-pic-5.jpg |  |
-| is_published | false |  |
-| start_date | 2019-08-15 16:45:43.41585+08 |  |
-| end_date | 2020-07-17 16:45:43.41585+08 |  |
-| pics |  |  |
-| listing_email | new_listing@gmail.com |  |
-| listing_status | ongoing |  |
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "title": "New title 1",
+    "category": "Health",
+    "about": "test about",
+    "tagline": "test tagline",
+    "mission": "test mission",
+    "listing_url": "www.test.com",
+    "pics": [
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg"
+    ],
+    "is_published": false,
+    "start_date": "2019-08-15 16:45:43.41585+08",
+    "end_date": "2020-07-17 16:45:43.41585+08",
+    "listing_email": "new_listing@gmail.com",
+    "listing_status": "ongoing"
+}
+```
 
 
 
@@ -7534,31 +7213,34 @@ URL: {{URL}}/api/listings
     "success": true,
     "data": [
         {
-            "listing_id": "c912bdd2-7cac-4245-af20-b774dbfae225",
-            "organisation_id": null,
+            "listing_id": "0de8f600-28a8-11eb-9eae-89e03086f17e",
             "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
             "title": "New title 1",
-            "category": "test category",
+            "category": "Health",
             "about": "test about",
             "tagline": "test tagline",
             "mission": "test mission",
             "listing_url": "www.test.com",
             "listing_email": "new_listing@gmail.com",
             "listing_status": "ongoing",
-            "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1600580556633.jpg",
-            "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-1600580556637.jpg",
-            "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-1600580556645.jpg",
-            "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-1600580556654.jpg",
-            "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-1600580556658.jpg",
+            "pics": [
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg"
+            ],
             "is_published": false,
             "is_verified": false,
+            "is_featured": false,
             "start_date": "2019-08-15T08:45:43.415Z",
             "end_date": "2020-07-17T08:45:43.415Z",
-            "created_on": "2020-09-20T05:42:36.963Z",
+            "created_on": "2020-11-17T07:39:41.794Z",
+            "updated_on": "2020-11-17T07:39:41.794Z",
             "deleted_on": null
         },
         {
-            "listing_id": "c912bdd2-7cac-4245-af20-b774dbfae225",
+            "listing_id": "0de8f600-28a8-11eb-9eae-89e03086f17e",
             "overview": null,
             "problem": null,
             "solution": null,
@@ -8645,7 +8327,6 @@ URL: {{URL}}/api/listings
     "data": [
         {
             "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
-            "organisation_id": null,
             "created_by": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
             "title": "Project Kampong",
             "category": "Technology",
@@ -8653,94 +8334,101 @@ URL: {{URL}}/api/listings
             "tagline": "With Kampong you can",
             "mission": "To build a platform that connects people with ideas and skills to build and track social good project initiatives",
             "listing_url": "www.test.com",
-            "listing_email": null,
-            "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/kampong%20logo-1597985636566.jpeg",
-            "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/group-large-1597985817857.png",
-            "pic3": null,
-            "pic4": null,
-            "pic5": null,
+            "listing_email": "joinourkampong@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/kampong%20logo-1597985636566.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/group-large-1597985817857.png"
+            ],
             "is_published": false,
             "is_verified": false,
-            "start_date": "2020-08-20T20:50:15.048Z",
+            "is_featured": false,
+            "start_date": "2020-08-20T20:50:15.047Z",
             "end_date": null,
-            "created_on": "2020-08-20T20:50:15.048Z",
+            "created_on": "2020-08-20T20:50:15.047Z",
+            "updated_on": "2020-11-17T07:33:56.159Z",
             "deleted_on": null,
             "nickname": "Derrick",
             "profile_picture": "https://images.pexels.com/photos/2434268/pexels-photo-2434268.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
             "locations": null,
-            "location_ids": null
+            "location_ids": null,
+            "keyword_vector": null
         },
         {
             "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "organisation_id": null,
             "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
             "title": "Rebuilding Homes",
-            "category": "Community",
+            "category": "Housing",
             "about": "Customer-focused dynamic installation",
             "tagline": "Building Better Lives",
             "mission": "Sharing compassion",
             "listing_url": "http://ifeng.com/nisl.jsp",
-            "listing_email": null,
-            "pic1": "https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            "pic2": "https://robohash.org/ipsaiuresed.bmp?size=500x500&set=set1",
-            "pic3": "https://robohash.org/animiautvoluptas.jpg?size=500x500&set=set1",
-            "pic4": "https://robohash.org/fugaidconsequatur.png?size=500x500&set=set1",
-            "pic5": null,
+            "listing_email": "rebuildhome@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                "https://robohash.org/ipsaiuresed.bmp?size=500x500&set=set1",
+                "https://robohash.org/animiautvoluptas.jpg?size=500x500&set=set1",
+                "https://robohash.org/fugaidconsequatur.png?size=500x500&set=set1"
+            ],
             "is_published": false,
             "is_verified": false,
+            "is_featured": false,
             "start_date": "2020-12-01T11:09:20.000Z",
             "end_date": null,
-            "created_on": "2020-08-20T09:36:45.816Z",
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:33:56.159Z",
             "deleted_on": null,
             "nickname": "Wayne",
             "profile_picture": "https://images.pexels.com/photos/1561863/pexels-photo-1561863.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
             "locations": [
-                "01 Raffles Place, Cecil, Marina, Peoples Park",
-                "02 Anson, Tanjong Pagar",
-                "03 Queenstown, Tiong Bahru"
+                "Admiralty",
+                "Kranji",
+                "Woodlands"
             ],
             "location_ids": [
                 1,
                 2,
                 3
-            ]
+            ],
+            "keyword_vector": "'admiralti':4 'home':2 'hous':3 'kranji':5 'rebuild':1 'woodland':6"
         },
         {
             "listing_id": "c975a572-452d-4824-8ed5-500b50488436",
-            "organisation_id": null,
             "created_by": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
             "title": "CommStart 2020",
-            "category": "Enterprise",
+            "category": "Manpower",
             "about": "Team-oriented context-sensitive forecast",
             "tagline": "Innovating Ideas, Creating Opportunities",
             "mission": "Cultivating entrepreneurship and community impact",
             "listing_url": "https://ehow.com/in/imperdiet/et/commodo/vulputate/justo.xml",
-            "listing_email": null,
-            "pic1": "https://images.pexels.com/photos/3637796/pexels-photo-3637796.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-            "pic2": null,
-            "pic3": null,
-            "pic4": null,
-            "pic5": null,
+            "listing_email": "commstart2020@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://images.pexels.com/photos/3637796/pexels-photo-3637796.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+            ],
             "is_published": false,
             "is_verified": false,
+            "is_featured": false,
             "start_date": "2020-07-30T05:54:45.000Z",
             "end_date": null,
-            "created_on": "2020-08-20T09:36:45.816Z",
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:33:56.159Z",
             "deleted_on": null,
             "nickname": "Derrick",
             "profile_picture": "https://images.pexels.com/photos/2434268/pexels-photo-2434268.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
             "locations": [
-                "03 Queenstown, Tiong Bahru",
-                "04 Telok Blangah, Harbourfront"
+                "Woodlands",
+                "Sembawang"
             ],
             "location_ids": [
                 3,
                 4
-            ]
+            ],
+            "keyword_vector": "'2020':2 'commstart':1 'manpow':3 'sembawang':5 'woodland':4"
         },
         {
             "listing_id": "cf4adc93-3b96-4bbc-8cb0-41e196b145ac",
-            "organisation_id": null,
             "created_by": "f997120c-2956-482e-9ba3-81a12b4fecc1",
             "title": "YOUTH Mentorship Programme",
             "category": "Youth",
@@ -8748,86 +8436,96 @@ URL: {{URL}}/api/listings
             "tagline": "Paving the way for the future generations",
             "mission": "Strengthening bonds",
             "listing_url": "https://toplist.cz/aliquam.xml",
-            "listing_email": null,
-            "pic1": "https://images.pexels.com/photos/754769/pexels-photo-754769.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            "pic2": "https://robohash.org/utsednostrum.png?size=500x500&set=set1",
-            "pic3": null,
-            "pic4": "https://robohash.org/laudantiumconsequatursequi.png?size=500x500&set=set1",
-            "pic5": null,
+            "listing_email": "youthmentors@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://images.pexels.com/photos/754769/pexels-photo-754769.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                "https://robohash.org/utsednostrum.png?size=500x500&set=set1",
+                "https://robohash.org/laudantiumconsequatursequi.png?size=500x500&set=set1"
+            ],
             "is_published": false,
             "is_verified": false,
+            "is_featured": false,
             "start_date": "2020-12-25T14:21:11.000Z",
             "end_date": null,
-            "created_on": "2020-08-20T09:36:45.816Z",
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:33:56.159Z",
             "deleted_on": null,
             "nickname": "Viki Tay",
             "profile_picture": "https://images.pexels.com/photos/2426551/pexels-photo-2426551.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
             "locations": [
-                "03 Queenstown, Tiong Bahru",
-                "04 Telok Blangah, Harbourfront"
+                "Woodlands",
+                "Sembawang"
             ],
             "location_ids": [
                 3,
                 4
-            ]
+            ],
+            "keyword_vector": "'mentorship':2 'programm':3 'sembawang':6 'woodland':5 'youth':1,4"
         },
         {
             "listing_id": "d95a6c2e-3c33-447c-be0c-be399247dd3f",
-            "organisation_id": null,
             "created_by": "d69a127d-815b-4834-b2b6-54ab398fccad",
             "title": "Supporting COVID-19 Efforts",
-            "category": "COVID-19",
+            "category": "Health",
             "about": "Triple-buffered client-server installation",
             "tagline": "Emerge stronger together",
             "mission": "streamline web-enabled ROI",
             "listing_url": "https://mtv.com/blandit/mi/in.png",
-            "listing_email": null,
-            "pic1": "https://images.pexels.com/photos/127873/pexels-photo-127873.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            "pic2": null,
-            "pic3": "https://robohash.org/auteligendimagnam.bmp?size=500x500&set=set1",
-            "pic4": null,
-            "pic5": null,
+            "listing_email": "fightcovid@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://images.pexels.com/photos/127873/pexels-photo-127873.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                "https://robohash.org/auteligendimagnam.bmp?size=500x500&set=set1"
+            ],
             "is_published": false,
             "is_verified": false,
+            "is_featured": false,
             "start_date": "2020-01-01T12:54:13.000Z",
             "end_date": null,
-            "created_on": "2020-08-20T09:36:45.816Z",
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:33:56.159Z",
             "deleted_on": null,
             "nickname": "Aaron",
             "profile_picture": "https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
             "locations": [
-                "03 Queenstown, Tiong Bahru"
+                "Woodlands"
             ],
             "location_ids": [
                 3
-            ]
+            ],
+            "keyword_vector": "'-19':3 'covid':2 'effort':4 'health':5 'support':1 'woodland':6"
         },
         {
             "listing_id": "e411bd80-d5cf-49ac-b847-18c9fc13377a",
-            "organisation_id": null,
             "created_by": "2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb",
             "title": "Project Donation Drive",
-            "category": "Elderly Care",
+            "category": "Elderly",
             "about": "Adaptive disintermediate Graphical User Interface",
             "tagline": "Bridging communities",
             "mission": "e-enable dot-com metrics",
             "listing_url": "http://i2i.jp/rhoncus/dui/vel.jpg",
-            "listing_email": null,
-            "pic1": "https://images.pexels.com/photos/339620/pexels-photo-339620.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            "pic2": null,
-            "pic3": "https://robohash.org/atquemolestiasvelit.jpg?size=500x500&set=set1",
-            "pic4": "https://robohash.org/nonquodquam.png?size=500x500&set=set1",
-            "pic5": "https://robohash.org/voluptaslaborumsimilique.png?size=500x500&set=set1",
+            "listing_email": "donationdrive2020@gmail.com",
+            "listing_status": "completed",
+            "pics": [
+                "https://images.pexels.com/photos/339620/pexels-photo-339620.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                "https://robohash.org/atquemolestiasvelit.jpg?size=500x500&set=set1",
+                "https://robohash.org/nonquodquam.png?size=500x500&set=set1",
+                "https://robohash.org/voluptaslaborumsimilique.png?size=500x500&set=set1"
+            ],
             "is_published": false,
             "is_verified": false,
+            "is_featured": false,
             "start_date": "2020-03-19T03:04:15.000Z",
             "end_date": null,
-            "created_on": "2020-08-20T09:36:45.816Z",
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:33:56.159Z",
             "deleted_on": null,
             "nickname": "Constance Tan",
             "profile_picture": "https://images.pexels.com/photos/2426656/pexels-photo-2426656.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
             "locations": null,
-            "location_ids": null
+            "location_ids": null,
+            "keyword_vector": null
         }
     ]
 }
@@ -9123,8 +8821,8 @@ URL: {{URL}}/api/listings/search
 
 | Key | Value | Description |
 | --- | ------|-------------|
-| keyword | raffles,kampong,2020 |  |
-| limit | 10 |  |
+| keyword | wood,admiralty |  |
+| limit | 5 |  |
 
 
 
@@ -9134,99 +8832,150 @@ URL: {{URL}}/api/listings/search
     "success": true,
     "data": [
         {
-            "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
-            "organisation_id": null,
-            "created_by": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
-            "title": "Project Kampong",
-            "category": "Technology",
-            "about": null,
-            "tagline": "With Kampong you can",
-            "mission": "To build a platform that connects people with ideas and skills to build and track social good project initiatives",
-            "listing_url": "www.test.com",
-            "listing_email": null,
-            "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/kampong%20logo-1597985636566.jpeg",
-            "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/group-large-1597985817857.png",
-            "pic3": null,
-            "pic4": null,
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-08-20T20:50:15.048Z",
-            "end_date": null,
-            "created_on": "2020-08-20T20:50:15.048Z",
-            "deleted_on": null,
-            "nickname": "Derrick",
-            "profile_picture": "https://images.pexels.com/photos/2434268/pexels-photo-2434268.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            "locations": null,
-            "location_ids": null
-        },
-        {
             "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "organisation_id": null,
             "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
             "title": "Rebuilding Homes",
-            "category": "Community",
+            "category": "Housing",
             "about": "Customer-focused dynamic installation",
             "tagline": "Building Better Lives",
             "mission": "Sharing compassion",
             "listing_url": "http://ifeng.com/nisl.jsp",
-            "listing_email": null,
-            "pic1": "https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            "pic2": "https://robohash.org/ipsaiuresed.bmp?size=500x500&set=set1",
-            "pic3": "https://robohash.org/animiautvoluptas.jpg?size=500x500&set=set1",
-            "pic4": "https://robohash.org/fugaidconsequatur.png?size=500x500&set=set1",
-            "pic5": null,
+            "listing_email": "rebuildhome@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                "https://robohash.org/ipsaiuresed.bmp?size=500x500&set=set1",
+                "https://robohash.org/animiautvoluptas.jpg?size=500x500&set=set1",
+                "https://robohash.org/fugaidconsequatur.png?size=500x500&set=set1"
+            ],
             "is_published": false,
             "is_verified": false,
+            "is_featured": false,
             "start_date": "2020-12-01T11:09:20.000Z",
             "end_date": null,
-            "created_on": "2020-08-20T09:36:45.816Z",
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:33:56.159Z",
             "deleted_on": null,
             "nickname": "Wayne",
             "profile_picture": "https://images.pexels.com/photos/1561863/pexels-photo-1561863.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
             "locations": [
-                "01 Raffles Place, Cecil, Marina, Peoples Park",
-                "02 Anson, Tanjong Pagar",
-                "03 Queenstown, Tiong Bahru"
+                "Admiralty",
+                "Kranji",
+                "Woodlands"
             ],
             "location_ids": [
                 1,
                 2,
                 3
-            ]
+            ],
+            "keyword_vector": "'admiralti':4 'home':2 'hous':3 'kranji':5 'rebuild':1 'woodland':6",
+            "ts_rank_cd": 0.1
         },
         {
             "listing_id": "c975a572-452d-4824-8ed5-500b50488436",
-            "organisation_id": null,
             "created_by": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
             "title": "CommStart 2020",
-            "category": "Enterprise",
+            "category": "Manpower",
             "about": "Team-oriented context-sensitive forecast",
             "tagline": "Innovating Ideas, Creating Opportunities",
             "mission": "Cultivating entrepreneurship and community impact",
             "listing_url": "https://ehow.com/in/imperdiet/et/commodo/vulputate/justo.xml",
-            "listing_email": null,
-            "pic1": "https://images.pexels.com/photos/3637796/pexels-photo-3637796.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-            "pic2": null,
-            "pic3": null,
-            "pic4": null,
-            "pic5": null,
+            "listing_email": "commstart2020@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://images.pexels.com/photos/3637796/pexels-photo-3637796.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+            ],
             "is_published": false,
             "is_verified": false,
+            "is_featured": false,
             "start_date": "2020-07-30T05:54:45.000Z",
             "end_date": null,
-            "created_on": "2020-08-20T09:36:45.816Z",
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:33:56.159Z",
             "deleted_on": null,
             "nickname": "Derrick",
             "profile_picture": "https://images.pexels.com/photos/2434268/pexels-photo-2434268.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
             "locations": [
-                "03 Queenstown, Tiong Bahru",
-                "04 Telok Blangah, Harbourfront"
+                "Woodlands",
+                "Sembawang"
             ],
             "location_ids": [
                 3,
                 4
-            ]
+            ],
+            "keyword_vector": "'2020':2 'commstart':1 'manpow':3 'sembawang':5 'woodland':4",
+            "ts_rank_cd": 0
+        },
+        {
+            "listing_id": "cf4adc93-3b96-4bbc-8cb0-41e196b145ac",
+            "created_by": "f997120c-2956-482e-9ba3-81a12b4fecc1",
+            "title": "YOUTH Mentorship Programme",
+            "category": "Youth",
+            "about": "Cloned 4th generation matrices",
+            "tagline": "Paving the way for the future generations",
+            "mission": "Strengthening bonds",
+            "listing_url": "https://toplist.cz/aliquam.xml",
+            "listing_email": "youthmentors@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://images.pexels.com/photos/754769/pexels-photo-754769.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                "https://robohash.org/utsednostrum.png?size=500x500&set=set1",
+                "https://robohash.org/laudantiumconsequatursequi.png?size=500x500&set=set1"
+            ],
+            "is_published": false,
+            "is_verified": false,
+            "is_featured": false,
+            "start_date": "2020-12-25T14:21:11.000Z",
+            "end_date": null,
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:33:56.159Z",
+            "deleted_on": null,
+            "nickname": "Viki Tay",
+            "profile_picture": "https://images.pexels.com/photos/2426551/pexels-photo-2426551.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+            "locations": [
+                "Woodlands",
+                "Sembawang"
+            ],
+            "location_ids": [
+                3,
+                4
+            ],
+            "keyword_vector": "'mentorship':2 'programm':3 'sembawang':6 'woodland':5 'youth':1,4",
+            "ts_rank_cd": 0
+        },
+        {
+            "listing_id": "d95a6c2e-3c33-447c-be0c-be399247dd3f",
+            "created_by": "d69a127d-815b-4834-b2b6-54ab398fccad",
+            "title": "Supporting COVID-19 Efforts",
+            "category": "Health",
+            "about": "Triple-buffered client-server installation",
+            "tagline": "Emerge stronger together",
+            "mission": "streamline web-enabled ROI",
+            "listing_url": "https://mtv.com/blandit/mi/in.png",
+            "listing_email": "fightcovid@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://images.pexels.com/photos/127873/pexels-photo-127873.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                "https://robohash.org/auteligendimagnam.bmp?size=500x500&set=set1"
+            ],
+            "is_published": false,
+            "is_verified": false,
+            "is_featured": false,
+            "start_date": "2020-01-01T12:54:13.000Z",
+            "end_date": null,
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:33:56.159Z",
+            "deleted_on": null,
+            "nickname": "Aaron",
+            "profile_picture": "https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+            "locations": [
+                "Woodlands"
+            ],
+            "location_ids": [
+                3
+            ],
+            "keyword_vector": "'-19':3 'covid':2 'effort':4 'health':5 'support':1 'woodland':6",
+            "ts_rank_cd": 0
         }
     ]
 }
@@ -9256,11 +9005,7 @@ listing_url - Valid URL.
 is_published - Boolean. 
 start_date - Valid SQL datetime. Default to current datetime.
 end_date - Valid SQL datetime.
-pic1 - Full URL path to uploaded JPG/PNG file.
-pic2 - Full URL path to uploaded JPG/PNG file. 
-pic3 - Full URL path to uploaded JPG/PNG file. 
-pic4 - Full URL path to uploaded JPG/PNG file. 
-pic5 - Full URL path to uploaded JPG/PNG file.
+pics - Array of URL paths to uploaded JPG/PNG file. Required. Otherwise, pass empty array.
 
 
 ***Endpoint:***
@@ -9278,7 +9023,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 ```js        
 {
     "title": "Updated title 1",
-    "category": "Updated category",
+    "category": "Health",
     "about": "Updated about",
     "tagline": "Updated tagline",
     "mission": "Updated mission",
@@ -9286,11 +9031,13 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
     "is_published": true,
     "start_date": "2018-08-15 16:45:43.41585+08",
     "end_date": "2020-01-30 16:45:43.41585+08",
-    "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
-    "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
-    "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
-    "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
-    "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg",
+    "pics": [
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg"
+    ],
     "listing_status": "completed",
     "listing_email": "updated_email@gmail.com"
 }
@@ -9406,7 +9153,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 ```js        
 {
     "title": "Updated title 1",
-    "category": "Updated category",
+    "category": "Health",
     "about": "Updated about",
     "tagline": "Updated tagline",
     "mission": "Updated mission",
@@ -9432,10 +9179,9 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
     "success": true,
     "data": {
         "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-        "organisation_id": null,
         "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
         "title": "Updated title 1",
-        "category": "Updated category",
+        "category": "Health",
         "about": "Updated about",
         "tagline": "Updated tagline",
         "mission": "Updated mission",
@@ -9449,9 +9195,11 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
         "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg",
         "is_published": true,
         "is_verified": false,
+        "is_featured": false,
         "start_date": "2018-08-15T08:45:43.415Z",
         "end_date": "2020-01-30T08:45:43.415Z",
         "created_on": "2020-08-20T09:36:45.815Z",
+        "updated_on": "2020-11-16T17:44:44.189Z",
         "deleted_on": null
     }
 }
@@ -9617,168 +9365,6 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/verify-feature
 
 ## Listings - Organisations (Join / Unjoin)
 Endpoints relating to listings (un)joining organisations, and vice-versa
-
-
-
-### 1. Listing join Organisation
-
-
-Listing join organisation. Permission: Listing or Organisation owner.
-
-
-***Endpoint:***
-
-```bash
-Method: POST
-Type: RAW
-URL: {{URL}}/api/listings-organisations
-```
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-    "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
-    "organisation_id": 1
-}
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Listing join organisation (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-    "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
-    "organisation_id": 1
-}
-```
-
-
-
-##### I. Example Response: Listing join organisation (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "listing_organisation_id": 1,
-        "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
-        "organisation_id": 1
-    }
-}
-```
-
-
-***Status Code:*** 201
-
-<br>
-
-
-
-### 2. Listing leave Organisation
-
-
-Listing leave organisation. Permission: Listing or Organisation owner.
-
-
-***Endpoint:***
-
-```bash
-Method: POST
-Type: RAW
-URL: {{URL}}/api/listings-organisations
-```
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-    "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
-    "organisation_id": 1
-}
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Listing join organisation (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-    "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
-    "organisation_id": 1
-}
-```
-
-
-
-##### I. Example Response: Listing join organisation (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "listing_organisation_id": 1,
-        "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
-        "organisation_id": 1
-    }
-}
-```
-
-
-***Status Code:*** 201
-
-<br>
-
-
-
-## Locations
-Locations CRUD functionality.
-
 
 
 
@@ -10145,45 +9731,19 @@ URL: {{URL}}/api/locations/3/listings
 ```js
 {
     "success": true,
-    "count": 6,
-    "pagination": {},
+    "count": 4,
     "data": [
         {
-            "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
-            "organisation_id": null,
-            "created_by": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
-            "title": "Project Kampong",
-            "category": "Technology",
-            "about": null,
-            "tagline": "With Kampong you can",
-            "mission": "To build a platform that connects people with ideas and skills to build and track social good project initiatives",
-            "listing_url": "www.test.com",
-            "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/kampong%20logo-1597985636566.jpeg",
-            "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/group-large-1597985817857.png",
-            "pic3": null,
-            "pic4": null,
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-08-20T20:50:15.048Z",
-            "end_date": null,
-            "created_on": "2020-08-20T20:50:15.048Z",
-            "deleted_on": null,
-            "nickname": "Derrick",
-            "profile_picture": "https://images.pexels.com/photos/2434268/pexels-photo-2434268.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            "phone": "96831702",
-            "email": "derrick@gmail.com"
-        },
-        {
             "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "organisation_id": null,
             "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
             "title": "Rebuilding Homes",
-            "category": "Community",
+            "category": "Housing",
             "about": "Customer-focused dynamic installation",
             "tagline": "Building Better Lives",
             "mission": "Sharing compassion",
             "listing_url": "http://ifeng.com/nisl.jsp",
+            "listing_email": "rebuildhome@gmail.com",
+            "listing_status": "ongoing",
             "pic1": "https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
             "pic2": "https://robohash.org/ipsaiuresed.bmp?size=500x500&set=set1",
             "pic3": "https://robohash.org/animiautvoluptas.jpg?size=500x500&set=set1",
@@ -10191,25 +9751,37 @@ URL: {{URL}}/api/locations/3/listings
             "pic5": null,
             "is_published": false,
             "is_verified": false,
+            "is_featured": false,
             "start_date": "2020-12-01T11:09:20.000Z",
             "end_date": null,
-            "created_on": "2020-08-20T09:36:45.816Z",
+            "created_on": "2020-08-20T09:36:45.815Z",
             "deleted_on": null,
             "nickname": "Wayne",
             "profile_picture": "https://images.pexels.com/photos/1561863/pexels-photo-1561863.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            "phone": "97690390",
-            "email": "admin@gmail.com"
+            "locations": [
+                "Admiralty",
+                "Kranji",
+                "Woodlands"
+            ],
+            "location_ids": [
+                1,
+                2,
+                3
+            ],
+            "keyword_vector": "'admiralti':4 'home':2 'hous':3 'kranji':5 'rebuild':1 'woodland':6",
+            "location_id": 3
         },
         {
             "listing_id": "c975a572-452d-4824-8ed5-500b50488436",
-            "organisation_id": null,
             "created_by": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
             "title": "CommStart 2020",
-            "category": "Enterprise",
+            "category": "Manpower",
             "about": "Team-oriented context-sensitive forecast",
             "tagline": "Innovating Ideas, Creating Opportunities",
             "mission": "Cultivating entrepreneurship and community impact",
             "listing_url": "https://ehow.com/in/imperdiet/et/commodo/vulputate/justo.xml",
+            "listing_email": "commstart2020@gmail.com",
+            "listing_status": "ongoing",
             "pic1": "https://images.pexels.com/photos/3637796/pexels-photo-3637796.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
             "pic2": null,
             "pic3": null,
@@ -10217,51 +9789,35 @@ URL: {{URL}}/api/locations/3/listings
             "pic5": null,
             "is_published": false,
             "is_verified": false,
+            "is_featured": false,
             "start_date": "2020-07-30T05:54:45.000Z",
             "end_date": null,
-            "created_on": "2020-08-20T09:36:45.816Z",
+            "created_on": "2020-08-20T09:36:45.815Z",
             "deleted_on": null,
             "nickname": "Derrick",
             "profile_picture": "https://images.pexels.com/photos/2434268/pexels-photo-2434268.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            "phone": "96831702",
-            "email": "derrick@gmail.com"
-        },
-        {
-            "listing_id": "cf4adc93-3b96-4bbc-8cb0-41e196b145ac",
-            "organisation_id": null,
-            "created_by": "f997120c-2956-482e-9ba3-81a12b4fecc1",
-            "title": "YOUTH Mentorship Programme",
-            "category": "Youth",
-            "about": "Cloned 4th generation matrices",
-            "tagline": "Paving the way for the future generations",
-            "mission": "Strengthening bonds",
-            "listing_url": "https://toplist.cz/aliquam.xml",
-            "pic1": "https://images.pexels.com/photos/754769/pexels-photo-754769.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            "pic2": "https://robohash.org/utsednostrum.png?size=500x500&set=set1",
-            "pic3": null,
-            "pic4": "https://robohash.org/laudantiumconsequatursequi.png?size=500x500&set=set1",
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-12-25T14:21:11.000Z",
-            "end_date": null,
-            "created_on": "2020-08-20T09:36:45.816Z",
-            "deleted_on": null,
-            "nickname": "Viki Tay",
-            "profile_picture": "https://images.pexels.com/photos/2426551/pexels-photo-2426551.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            "phone": "84428699",
-            "email": "valbrooke3@businessinsider.com"
+            "locations": [
+                "Woodlands",
+                "Sembawang"
+            ],
+            "location_ids": [
+                3,
+                4
+            ],
+            "keyword_vector": "'2020':2 'commstart':1 'manpow':3 'sembawang':5 'woodland':4",
+            "location_id": 3
         },
         {
             "listing_id": "d95a6c2e-3c33-447c-be0c-be399247dd3f",
-            "organisation_id": null,
             "created_by": "d69a127d-815b-4834-b2b6-54ab398fccad",
             "title": "Supporting COVID-19 Efforts",
-            "category": "COVID-19",
+            "category": "Health",
             "about": "Triple-buffered client-server installation",
             "tagline": "Emerge stronger together",
             "mission": "streamline web-enabled ROI",
             "listing_url": "https://mtv.com/blandit/mi/in.png",
+            "listing_email": "fightcovid@gmail.com",
+            "listing_status": "ongoing",
             "pic1": "https://images.pexels.com/photos/127873/pexels-photo-127873.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
             "pic2": null,
             "pic3": "https://robohash.org/auteligendimagnam.bmp?size=500x500&set=set1",
@@ -10269,40 +9825,57 @@ URL: {{URL}}/api/locations/3/listings
             "pic5": null,
             "is_published": false,
             "is_verified": false,
+            "is_featured": false,
             "start_date": "2020-01-01T12:54:13.000Z",
             "end_date": null,
-            "created_on": "2020-08-20T09:36:45.816Z",
+            "created_on": "2020-08-20T09:36:45.815Z",
             "deleted_on": null,
             "nickname": "Aaron",
             "profile_picture": "https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            "phone": "87685829",
-            "email": "user@gmail.com"
+            "locations": [
+                "Woodlands"
+            ],
+            "location_ids": [
+                3
+            ],
+            "keyword_vector": "'-19':3 'covid':2 'effort':4 'health':5 'support':1 'woodland':6",
+            "location_id": 3
         },
         {
-            "listing_id": "e411bd80-d5cf-49ac-b847-18c9fc13377a",
-            "organisation_id": null,
-            "created_by": "2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb",
-            "title": "Project Donation Drive",
-            "category": "Elderly Care",
-            "about": "Adaptive disintermediate Graphical User Interface",
-            "tagline": "Bridging communities",
-            "mission": "e-enable dot-com metrics",
-            "listing_url": "http://i2i.jp/rhoncus/dui/vel.jpg",
-            "pic1": "https://images.pexels.com/photos/339620/pexels-photo-339620.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            "pic2": null,
-            "pic3": "https://robohash.org/atquemolestiasvelit.jpg?size=500x500&set=set1",
-            "pic4": "https://robohash.org/nonquodquam.png?size=500x500&set=set1",
-            "pic5": "https://robohash.org/voluptaslaborumsimilique.png?size=500x500&set=set1",
+            "listing_id": "cf4adc93-3b96-4bbc-8cb0-41e196b145ac",
+            "created_by": "f997120c-2956-482e-9ba3-81a12b4fecc1",
+            "title": "YOUTH Mentorship Programme",
+            "category": "Youth",
+            "about": "Cloned 4th generation matrices",
+            "tagline": "Paving the way for the future generations",
+            "mission": "Strengthening bonds",
+            "listing_url": "https://toplist.cz/aliquam.xml",
+            "listing_email": "youthmentors@gmail.com",
+            "listing_status": "ongoing",
+            "pic1": "https://images.pexels.com/photos/754769/pexels-photo-754769.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+            "pic2": "https://robohash.org/utsednostrum.png?size=500x500&set=set1",
+            "pic3": null,
+            "pic4": "https://robohash.org/laudantiumconsequatursequi.png?size=500x500&set=set1",
+            "pic5": null,
             "is_published": false,
             "is_verified": false,
-            "start_date": "2020-03-19T03:04:15.000Z",
+            "is_featured": false,
+            "start_date": "2020-12-25T14:21:11.000Z",
             "end_date": null,
-            "created_on": "2020-08-20T09:36:45.816Z",
+            "created_on": "2020-08-20T09:36:45.815Z",
             "deleted_on": null,
-            "nickname": "Constance Tan",
-            "profile_picture": "https://images.pexels.com/photos/2426656/pexels-photo-2426656.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            "phone": "84677316",
-            "email": "cstan4@toplist.cz"
+            "nickname": "Viki Tay",
+            "profile_picture": "https://images.pexels.com/photos/2426551/pexels-photo-2426551.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+            "locations": [
+                "Woodlands",
+                "Sembawang"
+            ],
+            "location_ids": [
+                3,
+                4
+            ],
+            "keyword_vector": "'mentorship':2 'programm':3 'sembawang':6 'woodland':5 'youth':1,4",
+            "location_id": 3
         }
     ]
 }
@@ -11343,7 +10916,7 @@ Get all listings for an organisation. Permission: Public.
 ```bash
 Method: GET
 Type: 
-URL: {{URL}}/api/organisations/1/listings
+URL: {{URL}}/api/organisations/8426a370-280e-11eb-aa97-9d0bb1a7de0d/listings
 ```
 
 
@@ -11364,7 +10937,7 @@ URL: {{URL}}/api/organisations/1/listings
             "organisation_id": 1,
             "name": "Shuffledrive",
             "organisation_type": "Consultancy",
-            "about": "Distributed 4th generation forecast",
+            "about": null,
             "website_url": "microsoft.com",
             "phone": "8765378253",
             "email": "mallgood0@slideshare.net",
@@ -13098,608 +12671,6 @@ URL: {{URL}}/api/send-email
 
 
 
-## Skills
-Skills CRUD functionality.
-
-
-
-### 1. Create Skill
-
-
-Create skill. Permission: Admin.
-
-Field rules:
-All fields required unles otherwise stated.
-skill - Non-empty string with alphabets and spaces only.
-
-
-***Endpoint:***
-
-```bash
-Method: POST
-Type: RAW
-URL: {{URL}}/api/skills
-```
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"skill": "Microsoft Powerpoint",
-	"skill_group": "Microsoft Office Tools",
-    "skill_description": "Proficient in Microsoft Office apps"
-}
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Create Skill (403 Forbidden - Non-admin user)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"skill": "Microsoft Powerpoint"
-}
-```
-
-
-
-##### I. Example Response: Create Skill (403 Forbidden - Non-admin user)
-```js
-{
-    "success": false,
-    "error": "User role user not authorised to access this route"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
-##### II. Example Request: Create Skill (400 Bad Request - Non-alphabet or non-whitespace character in field)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"skill": "$ making"
-}
-```
-
-
-
-##### II. Example Response: Create Skill (400 Bad Request - Non-alphabet or non-whitespace character in field)
-```js
-{
-    "success": false,
-    "error": "Please include a valid skill with alphabets and spaces only."
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-##### III. Example Request: Create Skill (201 Created)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"skill": "Microsoft Powerpoint",
-	"skill_group": "Microsoft Office Tools"
-}
-```
-
-
-
-##### III. Example Response: Create Skill (201 Created)
-```js
-{
-    "success": true,
-    "data": {
-        "skill_id": 16,
-        "skill": "Microsoft Powerpoint",
-        "skill_group": "Microsoft Office Tools"
-    }
-}
-```
-
-
-***Status Code:*** 201
-
-<br>
-
-
-
-### 2. Delete Skill
-
-
-Delete skill identified by skill id. Permission: Admin.
-
-
-***Endpoint:***
-
-```bash
-Method: DELETE
-Type: 
-URL: {{URL}}/api/skills/1
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Delete Skill (403 Forbidden - Non-admin user)
-
-
-
-##### I. Example Response: Delete Skill (403 Forbidden - Non-admin user)
-```js
-{
-    "success": false,
-    "error": "User role user not authorised to access this route"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
-##### II. Example Request: Delete Skill (200 OK)
-
-
-
-##### II. Example Response: Delete Skill (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "skill_id": 1,
-        "skill": "cDNA"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-##### III. Example Request: Delete Skill (400 Bad Request - Non-existent skill)
-
-
-
-##### III. Example Response: Delete Skill (400 Bad Request - Non-existent skill)
-```js
-{
-    "success": false,
-    "error": "Skill does not exist"
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-### 3. Get All Skills
-
-
-Get all skills. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/skills
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get All Skills (200 OK)
-
-
-
-##### I. Example Response: Get All Skills (200 OK)
-```js
-{
-    "success": true,
-    "count": 25,
-    "pagination": {
-        "next": {
-            "page": 2,
-            "limit": 25
-        }
-    },
-    "data": [
-        {
-            "skill_id": 1,
-            "skill": "cDNA"
-        },
-        {
-            "skill_id": 2,
-            "skill": "Typesetting"
-        },
-        {
-            "skill_id": 3,
-            "skill": "Biochemistry"
-        },
-        {
-            "skill_id": 4,
-            "skill": "WiFi"
-        },
-        {
-            "skill_id": 5,
-            "skill": "Siebel"
-        },
-        {
-            "skill_id": 6,
-            "skill": "JTAPI"
-        },
-        {
-            "skill_id": 7,
-            "skill": "Oilfield"
-        },
-        {
-            "skill_id": 8,
-            "skill": "Kindergarten"
-        },
-        {
-            "skill_id": 9,
-            "skill": "Aerospace Manufacturing"
-        },
-        {
-            "skill_id": 10,
-            "skill": "Mortgage Banking"
-        },
-        {
-            "skill_id": 11,
-            "skill": "Swim Instruction"
-        },
-        {
-            "skill_id": 12,
-            "skill": "Atomic Absorption"
-        },
-        {
-            "skill_id": 13,
-            "skill": "Game Design"
-        },
-        {
-            "skill_id": 14,
-            "skill": "CFI"
-        },
-        {
-            "skill_id": 15,
-            "skill": "Gas Turbines"
-        },
-        {
-            "skill_id": 16,
-            "skill": "ICU"
-        },
-        {
-            "skill_id": 17,
-            "skill": "Nintendo DS"
-        },
-        {
-            "skill_id": 18,
-            "skill": "IoC"
-        },
-        {
-            "skill_id": 19,
-            "skill": "Econometrics"
-        },
-        {
-            "skill_id": 20,
-            "skill": "HBSS"
-        },
-        {
-            "skill_id": 21,
-            "skill": "Obstetrics"
-        },
-        {
-            "skill_id": 22,
-            "skill": "NDF"
-        },
-        {
-            "skill_id": 23,
-            "skill": "Equity Research"
-        },
-        {
-            "skill_id": 24,
-            "skill": "BMI"
-        },
-        {
-            "skill_id": 25,
-            "skill": "Fund Of Funds"
-        }
-    ]
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 4. Get Single Skill
-
-
-Get single skill. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/skills/1
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get Single Skill (200 OK)
-
-
-
-##### I. Example Response: Get Single Skill (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "skill_id": 1,
-        "skill": "cDNA"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Get Single Skill (404 Not Found - Invalid skill ID)
-
-
-
-##### II. Example Response: Get Single Skill (404 Not Found - Invalid skill ID)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
-### 5. Update Skill
-
-
-Update skill identified by skill id. Permission: Admin.
-
-Field rules: 
-At least one field must be updated.
-skill - Non-empty string with alphabets and spaces only.
-
-
-***Endpoint:***
-
-```bash
-Method: PUT
-Type: RAW
-URL: {{URL}}/api/skills/1
-```
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"skill": "Microsoft Word",
-	"skill_group": "Microsoft Suite",
-    "skill_description": "Microsoft suite of apps"
-}
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Update Skill (403 Forbidden - Non-admin user)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"skill": "Microsoft Word"
-}
-```
-
-
-
-##### I. Example Response: Update Skill (403 Forbidden - Non-admin user)
-```js
-{
-    "success": false,
-    "error": "User role user not authorised to access this route"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
-##### II. Example Request: Update Skill (400 Bad Request - Non-alphabet or non-whitespace in field)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"skill": "#programming"
-}
-```
-
-
-
-##### II. Example Response: Update Skill (400 Bad Request - Non-alphabet or non-whitespace in field)
-```js
-{
-    "success": false,
-    "error": "Please include a valid skill with alphabets and spaces only."
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-##### III. Example Request: Update Skill (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"skill": "Microsoft Word",
-	"skill_group": "Microsoft Suite",
-    "skill_description": "Microsoft suite of apps"
-}
-```
-
-
-
-##### III. Example Response: Update Skill (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "skill_id": 1,
-        "skill": "Microsoft Word",
-        "skill_group": "Microsoft Suite",
-        "skill_description": "Microsoft suite of apps"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
 ## Users
 Users CRUD functionality.
 
@@ -14888,4 +13859,4 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-16 13:29:37 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-17 07:48:53 by [docgen](https://github.com/thedevsaddam/docgen)

@@ -201,7 +201,7 @@ export const resetPassword = asyncHandler(async (req, res, next) => {
     const hashedToken = hashToken(resetToken);
 
     // Look up ForgetPasswordUsers table for token
-    let user = await db.one('SELECT * FROM ForgetPasswordUsers WHERE token = $1', hashedToken);
+    const user = await db.one('SELECT * FROM ForgetPasswordUsers WHERE token = $1', hashedToken);
 
     // Destructure from results
     const { email, expiry } = user;

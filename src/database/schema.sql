@@ -1,9 +1,5 @@
 DROP EXTENSION IF EXISTS pg_stat_statements CASCADE;
 
-CREATE EXTENSION pg_stat_statements;
-
-DROP TABLE IF EXISTS Roles CASCADE;
-
 DROP TABLE IF EXISTS Users CASCADE;
 
 DROP TABLE IF EXISTS PendingUsers CASCADE;
@@ -18,9 +14,11 @@ DROP TABLE IF EXISTS Programmes CASCADE;
 
 DROP TABLE IF EXISTS Memberships CASCADE;
 
+DROP TABLE IF EXISTS category CASCADE;
+
 DROP TABLE IF EXISTS Listings CASCADE;
 
-DROP TABLE IF EXISTS ListingsOrganisations CASCADE;
+DROP TABLE IF EXISTS listingorganisation CASCADE;
 
 DROP TABLE IF EXISTS ListingStories CASCADE;
 
@@ -36,8 +34,6 @@ DROP TABLE IF EXISTS ListingAdmins CASCADE;
 
 DROP TABLE IF EXISTS Participants CASCADE;
 
-DROP TABLE IF EXISTS Subscriptions CASCADE;
-
 DROP TABLE IF EXISTS Milestones CASCADE;
 
 DROP TABLE IF EXISTS ListingUpdates CASCADE;
@@ -47,6 +43,8 @@ DROP TABLE IF EXISTS ListingComments CASCADE;
 DROP TABLE IF EXISTS Locations CASCADE;
 
 DROP TABLE IF EXISTS ListingLocations CASCADE;
+
+CREATE EXTENSION pg_stat_statements;
 
 CREATE TABLE Users (
 	user_id VARCHAR,
@@ -80,8 +78,7 @@ CREATE TABLE Profiles (
 	nickname VARCHAR NOT NULL,
 	profile_picture VARCHAR,
 	about TEXT,
-	gender VARCHAR CONSTRAINT gender_enum CHECK (gender IN('m', 'f', 'o', 'u')) DEFAULT 'u',
-	/* m = male, f = female, o = others, u = undisclosed */
+	gender VARCHAR,
 	dob TIMESTAMPTZ,
 	occupation TEXT,
 	phone VARCHAR,
@@ -141,34 +138,39 @@ CREATE TABLE Programmes (
 	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE
 );
 
+CREATE TABLE category (
+	category_id SERIAL,
+	category_name VARCHAR UNIQUE NOT NULL,
+	category_group VARCHAR,
+	PRIMARY KEY (category_id)
+);
+
 CREATE TABLE Listings (
 	listing_id VARCHAR,
 	created_by VARCHAR,
 	title VARCHAR NOT NULL,
-	category VARCHAR NOT NULL,
+	category VARCHAR,
 	about TEXT,
 	tagline VARCHAR,
 	mission TEXT,
 	listing_url VARCHAR,
 	listing_email VARCHAR(320),
 	listing_status VARCHAR,
-	pic1 VARCHAR,
-	pic2 VARCHAR,
-	pic3 VARCHAR,
-	pic4 VARCHAR,
-	pic5 VARCHAR,
+	pics VARCHAR[],
 	is_published BOOLEAN NOT NULL DEFAULT FALSE,
 	is_verified BOOLEAN NOT NULL DEFAULT FALSE,
 	is_featured BOOLEAN NOT NULL DEFAULT FALSE,
 	start_date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	end_date TIMESTAMPTZ,
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	deleted_on TIMESTAMPTZ DEFAULT NULL,
 	PRIMARY KEY (listing_id),
+	FOREIGN KEY (category) REFERENCES category (category_name) ON DELETE SET NULL,
 	FOREIGN KEY (created_by) REFERENCES Users (user_id) ON DELETE SET NULL
 );
 
-CREATE TABLE ListingsOrganisations (
+CREATE TABLE listingorganisation (
 	listing_organisation_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	organisation_id UUID NOT NULL,
@@ -259,16 +261,6 @@ CREATE TABLE Participants (
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
 
-CREATE TABLE Subscriptions (
-	subscription_id SERIAL,
-	user_id VARCHAR NOT NULL,
-	listing_id VARCHAR NOT NULL,
-	PRIMARY KEY (subscription_id),
-	UNIQUE (user_id, listing_id),
-	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
-);
-
 CREATE TABLE Milestones (
 	milestone_id SERIAL,
 	listing_id VARCHAR NOT NULL,
@@ -298,7 +290,7 @@ CREATE TABLE ListingComments (
 	listing_id VARCHAR,
 	user_id VARCHAR,
 	COMMENT TEXT,
-	reply_to_id INTEGER CONSTRAINT reply_to_other_id CHECK (reply_to_id <> listing_comment_id),
+	reply_to_id INTEGER,
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	deleted_on TIMESTAMPTZ,
@@ -310,7 +302,8 @@ CREATE TABLE ListingComments (
 
 CREATE TABLE Locations (
 	location_id SERIAL,
-	LOCATION VARCHAR,
+	location VARCHAR,
+	zone VARCHAR,
 	PRIMARY KEY (location_id)
 );
 

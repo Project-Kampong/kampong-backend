@@ -17,7 +17,6 @@ import {
     getListings,
     getFeaturedListings,
     getAllListingsOwnedByUser,
-    getListingsAll,
     getListing,
     createListing,
     updateListing,
@@ -59,12 +58,12 @@ const validateCreateListingFields = [
     check('organisation_id', INVALID_FIELD_MSG('organisation id')).optional().isInt(),
     check('title', INVALID_FIELD_MSG('title')).trim().notEmpty(),
     check('category', INVALID_FIELD_MSG('category')).trim().notEmpty(),
-    check('listing_url', INVALID_FIELD_MSG('listing URL')).optional().isURL(),
     check('listing_email', INVALID_EMAIL_MSG).notEmpty().isEmail(),
     check('listing_status', INVALID_LISTING_STATUS_MSG).notEmpty().isIn(['ongoing', 'completed']),
     check('is_published', INVALID_BOOLEAN_MSG('is_published')).optional().isBoolean(),
     check('start_date', INVALID_TIMESTAMP_MSG('start date')).optional().matches(DATETIME_REGEX),
     check('end_date', INVALID_TIMESTAMP_MSG('end date')).optional().matches(DATETIME_REGEX),
+    check('pics', INVALID_FIELD_MSG('pics')).isArray(),
 ];
 
 const validateUpdateListingFields = [
@@ -82,23 +81,19 @@ const validateUpdateListingFields = [
             check('is_published').exists(),
             check('start_date').exists(),
             check('end_date').exists(),
-            check('pic1').exists(),
-            check('pic2').exists(),
-            check('pic3').exists(),
-            check('pic4').exists(),
-            check('pic5').exists(),
+            check('pics').exists(),
         ],
         NO_FIELD_UPDATED_MSG,
     ),
     check('organisation_id', INVALID_FIELD_MSG('organisation id')).optional().isInt(),
     check('title', INVALID_FIELD_MSG('title')).optional().trim().notEmpty(),
     check('category', INVALID_FIELD_MSG('category')).optional().trim().notEmpty(),
-    check('listing_url', INVALID_FIELD_MSG('listing URL')).optional().isURL(),
     check('listing_email', INVALID_EMAIL_MSG).optional().isEmail(),
     check('listing_status', INVALID_LISTING_STATUS_MSG).optional().isIn(['ongoing', 'completed']),
     check('is_published', INVALID_BOOLEAN_MSG('is_published')).optional().isBoolean(),
     check('start_date', INVALID_TIMESTAMP_MSG('start date')).optional().matches(DATETIME_REGEX),
     check('end_date', INVALID_TIMESTAMP_MSG('end date')).optional().matches(DATETIME_REGEX),
+    check('pics', INVALID_FIELD_MSG('pics')).optional().isArray(),
 ];
 
 const validateVerifyOrFeatureListingFields = [
@@ -117,7 +112,6 @@ router.route('/').get(advancedResults('listingsview'), getListings).post(protect
 router.route('/featured').get(getFeaturedListings);
 router.route('/owner').get(getAllListingsOwnedByUser);
 router.route('/search').get(validateSearchListingsFields, checkInputError, searchListings);
-router.route('/all').get(protect, authorise('admin'), advancedResults('listings'), getListingsAll);
 
 router.route('/:id').get(getListing);
 
