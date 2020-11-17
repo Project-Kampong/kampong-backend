@@ -61,13 +61,13 @@ app.use('/api', apiRouter);
 app.use(errorHandler);
 
 // Set static folder
-app.use(express.static(path.resolve(__dirname, '..', 'client', 'build')));
-app.use(express.static(path.resolve(__dirname, '..', 'public')));
+app.use(express.static(path.resolve(__dirname, '../client/build')));
+app.use(express.static(path.resolve(__dirname, '../public')));
 
 // Serve frontend homepage
 app.get('*', (req, res) => {
-    const homePath = path.resolve(__dirname, '..', 'client', 'build', 'index.html');
-    const apiDocsPath = path.resolve(__dirname, '..', 'public', 'api-docs', 'index.html');
+    const homePath = path.resolve(__dirname, '../client/build/index.html');
+    const apiDocsPath = path.resolve(__dirname, '../public/api-docs/index.html');
     const pathToServe = fs.existsSync(homePath) ? homePath : apiDocsPath;
     res.sendFile(pathToServe);
 });

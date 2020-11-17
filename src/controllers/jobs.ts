@@ -4,13 +4,11 @@ import { asyncHandler } from '../middleware';
 import { checkListingOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 
 /**
- * @desc    Get all jobs
- * @route   GET /api/jobs
  * @desc    Get all jobs for a listing
  * @route   GET /api/listings/:listing_id/jobs
  * @access  Public
  */
-export const getJobs = asyncHandler(async (req, res) => {
+export const getJobs = asyncHandler(async (req, res, next) => {
     if (req.params.listing_id) {
         // return 404 error response if listing not found or soft deleted
         await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.listing_id);
@@ -22,21 +20,7 @@ export const getJobs = asyncHandler(async (req, res) => {
             data: jobs,
         });
     }
-
-    res.status(200).json(res.advancedResults);
-});
-
-/**
- * @desc    Get single job
- * @route   GET /api/jobs/:id
- * @access  Public
- */
-export const getJob = asyncHandler(async (req, res) => {
-    const rows = await db.one('SELECT * FROM jobsview WHERE job_id = $1', req.params.id);
-    res.status(200).json({
-        success: true,
-        data: rows,
-    });
+    return next(new ErrorResponse('Invalid route', 404));
 });
 
 /**
