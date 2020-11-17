@@ -1,5 +1,5 @@
 import express from 'express';
-export const router = express.Router();
+export const apiRouter = express.Router();
 
 import { router as authRoute } from './api/auth.route';
 import { router as faqsRoute } from './api/faqs.route';
@@ -7,6 +7,7 @@ import { router as hashtagsRoute } from './api/hashtags.route';
 import { router as jobsRoute } from './api/jobs.route';
 import { router as likesRoute } from './api/likes.route';
 import { router as listingsRoute } from './api/listings.route';
+import { router as categoriesRoute } from './api/categories.route';
 import { router as listingCommentsRoute } from './api/listingComments.route';
 import { router as listingLocationsRoute } from './api/listingLocations.route';
 import { router as listingUpdatesRoute } from './api/listingUpdates.route';

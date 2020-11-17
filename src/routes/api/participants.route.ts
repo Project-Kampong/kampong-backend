@@ -2,7 +2,7 @@ import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check } from 'express-validator';
 import { advancedResults, protect, checkInputError } from '../../middleware';
-import { DATETIME_REGEX, INVALID_FIELD_MSG, INVALID_TIMESTAMP_MSG, NO_FIELD_UPDATED_MSG } from '../../utils';
+import { DATETIME_REGEX, INVALID_FIELD_MSG, INVALID_TIMESTAMP_MSG } from '../../utils';
 
 // import controllers here
 import { getParticipants, getParticipant, createParticipant, deleteParticipant } from '../../controllers/participants';

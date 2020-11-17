@@ -5,7 +5,7 @@ import { advancedResults, authorise, checkInputError, protect } from '../../midd
 import { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } from '../../utils';
 
 // import controllers here
-import { getJobs, getJobsAll, getJob, createJob, updateJob, deleteJob, deactivateJob } from '../../controllers/jobs';
+import { getJobs, getJob, createJob, updateJob, deleteJob, deactivateJob } from '../../controllers/jobs';
 
 // Define input validation chain
 const validateCreateJobFields = [
@@ -21,7 +21,6 @@ const validateUpdateJobFields = [
 ];
 
 router.route('/').get(advancedResults('jobsview'), getJobs);
-router.route('/all').get(protect, advancedResults('jobs'), getJobsAll);
 router.route('/:id').get(getJob);
 
 // all routes below only accessible to authenticated users (and listing owner, to be implemented)
