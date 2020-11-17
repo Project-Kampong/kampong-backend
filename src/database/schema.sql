@@ -313,6 +313,9 @@ CREATE TABLE organisationannouncements (
 	announcement_id SERIAL,
 	organisation_id UUID NOT NULL,
 	ANNOUNCEMENT TEXT NOT NULL,
+	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	deleted_on TIMESTAMPTZ,
 	PRIMARY KEY (announcement_id),
 	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE
 );
