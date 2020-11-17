@@ -306,3 +306,11 @@ CREATE TABLE ListingLocations (
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE,
 	FOREIGN KEY (location_id) REFERENCES Locations ON DELETE CASCADE
 );
+
+CREATE TABLE OrganisationsAnnouncements (
+	announcement_id SERIAL,
+	organisation_id UUID NOT NULL,
+	ANNOUNCEMENT TEXT NOT NULL,
+	PRIMARY KEY (announcement_id)
+	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE
+);
