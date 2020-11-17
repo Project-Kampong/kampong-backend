@@ -60,7 +60,7 @@ export const register = asyncHandler(async (req, res, next) => {
          */
         const createUserQueries = await db.tx(async (query) => {
             const createUser = await query.one('INSERT INTO user (${this:name}) VALUES (${this:csv}) RETURNING *', userData);
-            const createProfile = await query.one('INSERT INTO Profiles (user_id, nickname) VALUES ($1, $2) RETURNING *', [
+            const createProfile = await query.one('INSERT INTO profile (user_id, nickname) VALUES ($1, $2) RETURNING *', [
                 createUser.user_id,
                 nickname,
             ]);

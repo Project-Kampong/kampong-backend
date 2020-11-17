@@ -47,7 +47,7 @@ export const getListingComments = asyncHandler(async (req, res, next) => {
 export const getListingCommentChildren = asyncHandler(async (req, res) => {
     // 404 if listing comment id does not exist
     const rows = await db.many(
-        'WITH RECURSIVE lcinfo AS(SELECT lc.*,p.nickname,p.profile_picture FROM ListingCommentsView lc LEFT JOIN Profiles p ON lc.user_id=p.user_id),recurselc AS(SELECT*FROM lcinfo WHERE listing_comment_id=$1 UNION SELECT lc.*FROM lcinfo lc JOIN recurselc rlc ON rlc.listing_comment_id=lc.reply_to_id)SELECT*FROM recurselc ORDER BY created_on ASC',
+        'WITH RECURSIVE lcinfo AS(SELECT lc.*,p.nickname,p.profile_picture FROM ListingCommentsView lc LEFT JOIN profile p ON lc.user_id=p.user_id),recurselc AS(SELECT*FROM lcinfo WHERE listing_comment_id=$1 UNION SELECT lc.*FROM lcinfo lc JOIN recurselc rlc ON rlc.listing_comment_id=lc.reply_to_id)SELECT*FROM recurselc ORDER BY created_on ASC',
         req.params.id,
     );
 

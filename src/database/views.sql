@@ -26,7 +26,7 @@ SELECT
 FROM
 	Listings l
 	LEFT JOIN CombinedListingLocations cll ON l.listing_id = cll.listing_id
-	LEFT JOIN Profiles p ON l.created_by = p.user_id
+	LEFT JOIN profile p ON l.created_by = p.user_id
 WHERE
 	deleted_on IS NULL;
 
@@ -43,7 +43,7 @@ CREATE VIEW JobsView AS
 CREATE VIEW ListingCommentsView AS
 	SELECT lc.*, p.nickname, p.profile_picture
 	FROM ListingComments lc
-	LEFT JOIN Profiles p
+	LEFT JOIN profile p
 	ON lc.user_id = p.user_id
 	WHERE lc.deleted_on IS NULL;
   

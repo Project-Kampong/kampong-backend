@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS pendinguser CASCADE;
 
 DROP TABLE IF EXISTS forgetpassworduser CASCADE;
 
-DROP TABLE IF EXISTS Profiles CASCADE;
+DROP TABLE IF EXISTS profile CASCADE;
 
 DROP TABLE IF EXISTS Organisations CASCADE;
 
@@ -73,7 +73,7 @@ CREATE TABLE forgetpassworduser (
 	PRIMARY KEY (forgetpass_user_id)
 );
 
-CREATE TABLE Profiles (
+CREATE TABLE profile (
 	user_id VARCHAR,
 	nickname VARCHAR NOT NULL,
 	profile_picture VARCHAR,
@@ -89,7 +89,7 @@ CREATE TABLE Profiles (
 	is_verified BOOLEAN NOT NULL DEFAULT FALSE,
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	PRIMARY KEY (user_id),
-	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE
+	FOREIGN KEY (user_id) REFERENCES user ON DELETE CASCADE
 );
 
 CREATE TABLE Organisations (
