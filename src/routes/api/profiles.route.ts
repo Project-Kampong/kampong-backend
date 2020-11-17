@@ -28,7 +28,6 @@ const validateProfileUpdateFields = [
     check('nickname', INVALID_FIELD_MSG('nickname')).optional().trim().notEmpty(),
     check('dob').optional().matches(DATETIME_REGEX).withMessage(INVALID_TIMESTAMP_MSG('dob')),
     check('phone').optional().isMobilePhone('any').withMessage(INVALID_PHONE_NUMBER_MSG),
-    check(['facebook_link', 'twitter_link', 'instagram_link', 'linkedin_link']).optional().isURL().withMessage(INVALID_FIELD_MSG('URL')),
 ];
 
 // map routes to controller
