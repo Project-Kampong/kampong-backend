@@ -1156,44 +1156,7 @@ URL: {{URL}}/api/auth/login
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Login User (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"email" : "don@gmail.com",
-	"password": "123456"
-}
-```
-
-
-
-##### I. Example Response: Login User (200 OK)
-```js
-{
-    "success": true,
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjcsImVtYWlsIjoicm9uQGdtYWlsLmNvbSIsImNyZWF0ZWRfb24iOiIyMDIwLTA3LTA4VDE3OjQxOjU2LjQzMFoiLCJpYXQiOjE1OTQyMzEyNzgsImV4cCI6MTU5NjgyMzI3OH0.hkr1-C6JWwCIthd2ZUu_W3bxpIQHdCvn8LTnXNWM098"
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Login User (400 Bad Request - Invalid login credentials)
+##### I. Example Request: Login User (400 Bad Request - Invalid login credentials)
 
 
 ***Headers:***
@@ -1215,7 +1178,7 @@ URL: {{URL}}/api/auth/login
 
 
 
-##### II. Example Response: Login User (400 Bad Request - Invalid login credentials)
+##### I. Example Response: Login User (400 Bad Request - Invalid login credentials)
 ```js
 {
     "success": false,
@@ -1225,6 +1188,43 @@ URL: {{URL}}/api/auth/login
 
 
 ***Status Code:*** 401
+
+<br>
+
+
+
+##### II. Example Request: Login Admin (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"email" : "admin@gmail.com",
+	"password": "Abc1234!"
+}
+```
+
+
+
+##### II. Example Response: Login Admin (200 OK)
+```js
+{
+    "success": true,
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5NmIyMTM4LTE3NTQtNGMxNy1hNDA1LTk0MGUyMGFkYzYwMSIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwiaWF0IjoxNjA1NTQ4NjY3LCJleHAiOjE2MDgxNDA2Njd9.0jDnU7Zf-x6tcE3z2Bvmerpe6uRK3QgVpmk1PhzC_Dk"
+}
+```
+
+
+***Status Code:*** 200
 
 <br>
 
@@ -7023,11 +7023,7 @@ is_published - Boolean. Optional. Default to false.
 start_date - Valid SQL datetime. Optional. Default to current datetime.
 end_date - Valid SQL datetime. Optional.
 organisation_id - Valid integer and existing organisation id. Optional.
-pic1 - Full URL path to uploaded JPG/PNG file. Optional.
-pic2 - Full URL path to uploaded JPG/PNG file. Optional.
-pic3 - Full URL path to uploaded JPG/PNG file. Optional.
-pic4 - Full URL path to uploaded JPG/PNG file. Optional.
-pic5 - Full URL path to uploaded JPG/PNG file. Optional.
+pics - Array of URL paths to uploaded JPG/PNG file. Required. Otherwise, pass empty array.
 
 
 ***Endpoint:***
@@ -7052,16 +7048,18 @@ URL: {{URL}}/api/listings
 ```js        
 {
     "title": "New title 1",
-    "category": "test category",
+    "category": "Health",
     "about": "test about",
     "tagline": "test tagline",
     "mission": "test mission",
     "listing_url": "www.test.com",
-    "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
-    "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
-    "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
-    "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
-    "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg",
+    "pics": [
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg"
+    ],
     "is_published": false,
     "start_date": "2019-08-15 16:45:43.41585+08",
     "end_date": "2020-07-17 16:45:43.41585+08",
@@ -7174,28 +7172,38 @@ URL: {{URL}}/api/listings
 ##### III. Example Request: Create Listing (201 Created)
 
 
-
-***Body:***
+***Headers:***
 
 | Key | Value | Description |
 | --- | ------|-------------|
-| title | New title 1 |  |
-| category | test category |  |
-| about | test about |  |
-| tagline | test tagline |  |
-| mission | test mission |  |
-| listing_url | www.test.com |  |
-| pic1 | test-pic-1.jpg |  |
-| pic2 | test-pic-2.jpg |  |
-| pic3 | test-pic-3.jpg |  |
-| pic4 | test-pic-4.jpg |  |
-| pic5 | test-pic-5.jpg |  |
-| is_published | false |  |
-| start_date | 2019-08-15 16:45:43.41585+08 |  |
-| end_date | 2020-07-17 16:45:43.41585+08 |  |
-| pics |  |  |
-| listing_email | new_listing@gmail.com |  |
-| listing_status | ongoing |  |
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+    "title": "New title 1",
+    "category": "Health",
+    "about": "test about",
+    "tagline": "test tagline",
+    "mission": "test mission",
+    "listing_url": "www.test.com",
+    "pics": [
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg"
+    ],
+    "is_published": false,
+    "start_date": "2019-08-15 16:45:43.41585+08",
+    "end_date": "2020-07-17 16:45:43.41585+08",
+    "listing_email": "new_listing@gmail.com",
+    "listing_status": "ongoing"
+}
+```
 
 
 
@@ -7205,31 +7213,34 @@ URL: {{URL}}/api/listings
     "success": true,
     "data": [
         {
-            "listing_id": "c912bdd2-7cac-4245-af20-b774dbfae225",
-            "organisation_id": null,
+            "listing_id": "0de8f600-28a8-11eb-9eae-89e03086f17e",
             "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
             "title": "New title 1",
-            "category": "test category",
+            "category": "Health",
             "about": "test about",
             "tagline": "test tagline",
             "mission": "test mission",
             "listing_url": "www.test.com",
             "listing_email": "new_listing@gmail.com",
             "listing_status": "ongoing",
-            "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1600580556633.jpg",
-            "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-1600580556637.jpg",
-            "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-1600580556645.jpg",
-            "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-1600580556654.jpg",
-            "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-1600580556658.jpg",
+            "pics": [
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg"
+            ],
             "is_published": false,
             "is_verified": false,
+            "is_featured": false,
             "start_date": "2019-08-15T08:45:43.415Z",
             "end_date": "2020-07-17T08:45:43.415Z",
-            "created_on": "2020-09-20T05:42:36.963Z",
+            "created_on": "2020-11-17T07:39:41.794Z",
+            "updated_on": "2020-11-17T07:39:41.794Z",
             "deleted_on": null
         },
         {
-            "listing_id": "c912bdd2-7cac-4245-af20-b774dbfae225",
+            "listing_id": "0de8f600-28a8-11eb-9eae-89e03086f17e",
             "overview": null,
             "problem": null,
             "solution": null,
@@ -8316,7 +8327,6 @@ URL: {{URL}}/api/listings
     "data": [
         {
             "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
-            "organisation_id": null,
             "created_by": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
             "title": "Project Kampong",
             "category": "Technology",
@@ -8324,94 +8334,101 @@ URL: {{URL}}/api/listings
             "tagline": "With Kampong you can",
             "mission": "To build a platform that connects people with ideas and skills to build and track social good project initiatives",
             "listing_url": "www.test.com",
-            "listing_email": null,
-            "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/kampong%20logo-1597985636566.jpeg",
-            "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/group-large-1597985817857.png",
-            "pic3": null,
-            "pic4": null,
-            "pic5": null,
+            "listing_email": "joinourkampong@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/kampong%20logo-1597985636566.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/group-large-1597985817857.png"
+            ],
             "is_published": false,
             "is_verified": false,
-            "start_date": "2020-08-20T20:50:15.048Z",
+            "is_featured": false,
+            "start_date": "2020-08-20T20:50:15.047Z",
             "end_date": null,
-            "created_on": "2020-08-20T20:50:15.048Z",
+            "created_on": "2020-08-20T20:50:15.047Z",
+            "updated_on": "2020-11-17T07:33:56.159Z",
             "deleted_on": null,
             "nickname": "Derrick",
             "profile_picture": "https://images.pexels.com/photos/2434268/pexels-photo-2434268.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
             "locations": null,
-            "location_ids": null
+            "location_ids": null,
+            "keyword_vector": null
         },
         {
             "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "organisation_id": null,
             "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
             "title": "Rebuilding Homes",
-            "category": "Community",
+            "category": "Housing",
             "about": "Customer-focused dynamic installation",
             "tagline": "Building Better Lives",
             "mission": "Sharing compassion",
             "listing_url": "http://ifeng.com/nisl.jsp",
-            "listing_email": null,
-            "pic1": "https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            "pic2": "https://robohash.org/ipsaiuresed.bmp?size=500x500&set=set1",
-            "pic3": "https://robohash.org/animiautvoluptas.jpg?size=500x500&set=set1",
-            "pic4": "https://robohash.org/fugaidconsequatur.png?size=500x500&set=set1",
-            "pic5": null,
+            "listing_email": "rebuildhome@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                "https://robohash.org/ipsaiuresed.bmp?size=500x500&set=set1",
+                "https://robohash.org/animiautvoluptas.jpg?size=500x500&set=set1",
+                "https://robohash.org/fugaidconsequatur.png?size=500x500&set=set1"
+            ],
             "is_published": false,
             "is_verified": false,
+            "is_featured": false,
             "start_date": "2020-12-01T11:09:20.000Z",
             "end_date": null,
-            "created_on": "2020-08-20T09:36:45.816Z",
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:33:56.159Z",
             "deleted_on": null,
             "nickname": "Wayne",
             "profile_picture": "https://images.pexels.com/photos/1561863/pexels-photo-1561863.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
             "locations": [
-                "01 Raffles Place, Cecil, Marina, Peoples Park",
-                "02 Anson, Tanjong Pagar",
-                "03 Queenstown, Tiong Bahru"
+                "Admiralty",
+                "Kranji",
+                "Woodlands"
             ],
             "location_ids": [
                 1,
                 2,
                 3
-            ]
+            ],
+            "keyword_vector": "'admiralti':4 'home':2 'hous':3 'kranji':5 'rebuild':1 'woodland':6"
         },
         {
             "listing_id": "c975a572-452d-4824-8ed5-500b50488436",
-            "organisation_id": null,
             "created_by": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
             "title": "CommStart 2020",
-            "category": "Enterprise",
+            "category": "Manpower",
             "about": "Team-oriented context-sensitive forecast",
             "tagline": "Innovating Ideas, Creating Opportunities",
             "mission": "Cultivating entrepreneurship and community impact",
             "listing_url": "https://ehow.com/in/imperdiet/et/commodo/vulputate/justo.xml",
-            "listing_email": null,
-            "pic1": "https://images.pexels.com/photos/3637796/pexels-photo-3637796.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-            "pic2": null,
-            "pic3": null,
-            "pic4": null,
-            "pic5": null,
+            "listing_email": "commstart2020@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://images.pexels.com/photos/3637796/pexels-photo-3637796.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+            ],
             "is_published": false,
             "is_verified": false,
+            "is_featured": false,
             "start_date": "2020-07-30T05:54:45.000Z",
             "end_date": null,
-            "created_on": "2020-08-20T09:36:45.816Z",
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:33:56.159Z",
             "deleted_on": null,
             "nickname": "Derrick",
             "profile_picture": "https://images.pexels.com/photos/2434268/pexels-photo-2434268.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
             "locations": [
-                "03 Queenstown, Tiong Bahru",
-                "04 Telok Blangah, Harbourfront"
+                "Woodlands",
+                "Sembawang"
             ],
             "location_ids": [
                 3,
                 4
-            ]
+            ],
+            "keyword_vector": "'2020':2 'commstart':1 'manpow':3 'sembawang':5 'woodland':4"
         },
         {
             "listing_id": "cf4adc93-3b96-4bbc-8cb0-41e196b145ac",
-            "organisation_id": null,
             "created_by": "f997120c-2956-482e-9ba3-81a12b4fecc1",
             "title": "YOUTH Mentorship Programme",
             "category": "Youth",
@@ -8419,86 +8436,96 @@ URL: {{URL}}/api/listings
             "tagline": "Paving the way for the future generations",
             "mission": "Strengthening bonds",
             "listing_url": "https://toplist.cz/aliquam.xml",
-            "listing_email": null,
-            "pic1": "https://images.pexels.com/photos/754769/pexels-photo-754769.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            "pic2": "https://robohash.org/utsednostrum.png?size=500x500&set=set1",
-            "pic3": null,
-            "pic4": "https://robohash.org/laudantiumconsequatursequi.png?size=500x500&set=set1",
-            "pic5": null,
+            "listing_email": "youthmentors@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://images.pexels.com/photos/754769/pexels-photo-754769.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                "https://robohash.org/utsednostrum.png?size=500x500&set=set1",
+                "https://robohash.org/laudantiumconsequatursequi.png?size=500x500&set=set1"
+            ],
             "is_published": false,
             "is_verified": false,
+            "is_featured": false,
             "start_date": "2020-12-25T14:21:11.000Z",
             "end_date": null,
-            "created_on": "2020-08-20T09:36:45.816Z",
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:33:56.159Z",
             "deleted_on": null,
             "nickname": "Viki Tay",
             "profile_picture": "https://images.pexels.com/photos/2426551/pexels-photo-2426551.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
             "locations": [
-                "03 Queenstown, Tiong Bahru",
-                "04 Telok Blangah, Harbourfront"
+                "Woodlands",
+                "Sembawang"
             ],
             "location_ids": [
                 3,
                 4
-            ]
+            ],
+            "keyword_vector": "'mentorship':2 'programm':3 'sembawang':6 'woodland':5 'youth':1,4"
         },
         {
             "listing_id": "d95a6c2e-3c33-447c-be0c-be399247dd3f",
-            "organisation_id": null,
             "created_by": "d69a127d-815b-4834-b2b6-54ab398fccad",
             "title": "Supporting COVID-19 Efforts",
-            "category": "COVID-19",
+            "category": "Health",
             "about": "Triple-buffered client-server installation",
             "tagline": "Emerge stronger together",
             "mission": "streamline web-enabled ROI",
             "listing_url": "https://mtv.com/blandit/mi/in.png",
-            "listing_email": null,
-            "pic1": "https://images.pexels.com/photos/127873/pexels-photo-127873.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            "pic2": null,
-            "pic3": "https://robohash.org/auteligendimagnam.bmp?size=500x500&set=set1",
-            "pic4": null,
-            "pic5": null,
+            "listing_email": "fightcovid@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://images.pexels.com/photos/127873/pexels-photo-127873.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                "https://robohash.org/auteligendimagnam.bmp?size=500x500&set=set1"
+            ],
             "is_published": false,
             "is_verified": false,
+            "is_featured": false,
             "start_date": "2020-01-01T12:54:13.000Z",
             "end_date": null,
-            "created_on": "2020-08-20T09:36:45.816Z",
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:33:56.159Z",
             "deleted_on": null,
             "nickname": "Aaron",
             "profile_picture": "https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
             "locations": [
-                "03 Queenstown, Tiong Bahru"
+                "Woodlands"
             ],
             "location_ids": [
                 3
-            ]
+            ],
+            "keyword_vector": "'-19':3 'covid':2 'effort':4 'health':5 'support':1 'woodland':6"
         },
         {
             "listing_id": "e411bd80-d5cf-49ac-b847-18c9fc13377a",
-            "organisation_id": null,
             "created_by": "2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb",
             "title": "Project Donation Drive",
-            "category": "Elderly Care",
+            "category": "Elderly",
             "about": "Adaptive disintermediate Graphical User Interface",
             "tagline": "Bridging communities",
             "mission": "e-enable dot-com metrics",
             "listing_url": "http://i2i.jp/rhoncus/dui/vel.jpg",
-            "listing_email": null,
-            "pic1": "https://images.pexels.com/photos/339620/pexels-photo-339620.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            "pic2": null,
-            "pic3": "https://robohash.org/atquemolestiasvelit.jpg?size=500x500&set=set1",
-            "pic4": "https://robohash.org/nonquodquam.png?size=500x500&set=set1",
-            "pic5": "https://robohash.org/voluptaslaborumsimilique.png?size=500x500&set=set1",
+            "listing_email": "donationdrive2020@gmail.com",
+            "listing_status": "completed",
+            "pics": [
+                "https://images.pexels.com/photos/339620/pexels-photo-339620.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                "https://robohash.org/atquemolestiasvelit.jpg?size=500x500&set=set1",
+                "https://robohash.org/nonquodquam.png?size=500x500&set=set1",
+                "https://robohash.org/voluptaslaborumsimilique.png?size=500x500&set=set1"
+            ],
             "is_published": false,
             "is_verified": false,
+            "is_featured": false,
             "start_date": "2020-03-19T03:04:15.000Z",
             "end_date": null,
-            "created_on": "2020-08-20T09:36:45.816Z",
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:33:56.159Z",
             "deleted_on": null,
             "nickname": "Constance Tan",
             "profile_picture": "https://images.pexels.com/photos/2426656/pexels-photo-2426656.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
             "locations": null,
-            "location_ids": null
+            "location_ids": null,
+            "keyword_vector": null
         }
     ]
 }
@@ -8794,8 +8821,8 @@ URL: {{URL}}/api/listings/search
 
 | Key | Value | Description |
 | --- | ------|-------------|
-| keyword | raffles,kampong,2020 |  |
-| limit | 10 |  |
+| keyword | wood,admiralty |  |
+| limit | 5 |  |
 
 
 
@@ -8805,99 +8832,150 @@ URL: {{URL}}/api/listings/search
     "success": true,
     "data": [
         {
-            "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
-            "organisation_id": null,
-            "created_by": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
-            "title": "Project Kampong",
-            "category": "Technology",
-            "about": null,
-            "tagline": "With Kampong you can",
-            "mission": "To build a platform that connects people with ideas and skills to build and track social good project initiatives",
-            "listing_url": "www.test.com",
-            "listing_email": null,
-            "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/kampong%20logo-1597985636566.jpeg",
-            "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/group-large-1597985817857.png",
-            "pic3": null,
-            "pic4": null,
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-08-20T20:50:15.048Z",
-            "end_date": null,
-            "created_on": "2020-08-20T20:50:15.048Z",
-            "deleted_on": null,
-            "nickname": "Derrick",
-            "profile_picture": "https://images.pexels.com/photos/2434268/pexels-photo-2434268.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            "locations": null,
-            "location_ids": null
-        },
-        {
             "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "organisation_id": null,
             "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
             "title": "Rebuilding Homes",
-            "category": "Community",
+            "category": "Housing",
             "about": "Customer-focused dynamic installation",
             "tagline": "Building Better Lives",
             "mission": "Sharing compassion",
             "listing_url": "http://ifeng.com/nisl.jsp",
-            "listing_email": null,
-            "pic1": "https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            "pic2": "https://robohash.org/ipsaiuresed.bmp?size=500x500&set=set1",
-            "pic3": "https://robohash.org/animiautvoluptas.jpg?size=500x500&set=set1",
-            "pic4": "https://robohash.org/fugaidconsequatur.png?size=500x500&set=set1",
-            "pic5": null,
+            "listing_email": "rebuildhome@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                "https://robohash.org/ipsaiuresed.bmp?size=500x500&set=set1",
+                "https://robohash.org/animiautvoluptas.jpg?size=500x500&set=set1",
+                "https://robohash.org/fugaidconsequatur.png?size=500x500&set=set1"
+            ],
             "is_published": false,
             "is_verified": false,
+            "is_featured": false,
             "start_date": "2020-12-01T11:09:20.000Z",
             "end_date": null,
-            "created_on": "2020-08-20T09:36:45.816Z",
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:33:56.159Z",
             "deleted_on": null,
             "nickname": "Wayne",
             "profile_picture": "https://images.pexels.com/photos/1561863/pexels-photo-1561863.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
             "locations": [
-                "01 Raffles Place, Cecil, Marina, Peoples Park",
-                "02 Anson, Tanjong Pagar",
-                "03 Queenstown, Tiong Bahru"
+                "Admiralty",
+                "Kranji",
+                "Woodlands"
             ],
             "location_ids": [
                 1,
                 2,
                 3
-            ]
+            ],
+            "keyword_vector": "'admiralti':4 'home':2 'hous':3 'kranji':5 'rebuild':1 'woodland':6",
+            "ts_rank_cd": 0.1
         },
         {
             "listing_id": "c975a572-452d-4824-8ed5-500b50488436",
-            "organisation_id": null,
             "created_by": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
             "title": "CommStart 2020",
-            "category": "Enterprise",
+            "category": "Manpower",
             "about": "Team-oriented context-sensitive forecast",
             "tagline": "Innovating Ideas, Creating Opportunities",
             "mission": "Cultivating entrepreneurship and community impact",
             "listing_url": "https://ehow.com/in/imperdiet/et/commodo/vulputate/justo.xml",
-            "listing_email": null,
-            "pic1": "https://images.pexels.com/photos/3637796/pexels-photo-3637796.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-            "pic2": null,
-            "pic3": null,
-            "pic4": null,
-            "pic5": null,
+            "listing_email": "commstart2020@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://images.pexels.com/photos/3637796/pexels-photo-3637796.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+            ],
             "is_published": false,
             "is_verified": false,
+            "is_featured": false,
             "start_date": "2020-07-30T05:54:45.000Z",
             "end_date": null,
-            "created_on": "2020-08-20T09:36:45.816Z",
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:33:56.159Z",
             "deleted_on": null,
             "nickname": "Derrick",
             "profile_picture": "https://images.pexels.com/photos/2434268/pexels-photo-2434268.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
             "locations": [
-                "03 Queenstown, Tiong Bahru",
-                "04 Telok Blangah, Harbourfront"
+                "Woodlands",
+                "Sembawang"
             ],
             "location_ids": [
                 3,
                 4
-            ]
+            ],
+            "keyword_vector": "'2020':2 'commstart':1 'manpow':3 'sembawang':5 'woodland':4",
+            "ts_rank_cd": 0
+        },
+        {
+            "listing_id": "cf4adc93-3b96-4bbc-8cb0-41e196b145ac",
+            "created_by": "f997120c-2956-482e-9ba3-81a12b4fecc1",
+            "title": "YOUTH Mentorship Programme",
+            "category": "Youth",
+            "about": "Cloned 4th generation matrices",
+            "tagline": "Paving the way for the future generations",
+            "mission": "Strengthening bonds",
+            "listing_url": "https://toplist.cz/aliquam.xml",
+            "listing_email": "youthmentors@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://images.pexels.com/photos/754769/pexels-photo-754769.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                "https://robohash.org/utsednostrum.png?size=500x500&set=set1",
+                "https://robohash.org/laudantiumconsequatursequi.png?size=500x500&set=set1"
+            ],
+            "is_published": false,
+            "is_verified": false,
+            "is_featured": false,
+            "start_date": "2020-12-25T14:21:11.000Z",
+            "end_date": null,
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:33:56.159Z",
+            "deleted_on": null,
+            "nickname": "Viki Tay",
+            "profile_picture": "https://images.pexels.com/photos/2426551/pexels-photo-2426551.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+            "locations": [
+                "Woodlands",
+                "Sembawang"
+            ],
+            "location_ids": [
+                3,
+                4
+            ],
+            "keyword_vector": "'mentorship':2 'programm':3 'sembawang':6 'woodland':5 'youth':1,4",
+            "ts_rank_cd": 0
+        },
+        {
+            "listing_id": "d95a6c2e-3c33-447c-be0c-be399247dd3f",
+            "created_by": "d69a127d-815b-4834-b2b6-54ab398fccad",
+            "title": "Supporting COVID-19 Efforts",
+            "category": "Health",
+            "about": "Triple-buffered client-server installation",
+            "tagline": "Emerge stronger together",
+            "mission": "streamline web-enabled ROI",
+            "listing_url": "https://mtv.com/blandit/mi/in.png",
+            "listing_email": "fightcovid@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://images.pexels.com/photos/127873/pexels-photo-127873.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                "https://robohash.org/auteligendimagnam.bmp?size=500x500&set=set1"
+            ],
+            "is_published": false,
+            "is_verified": false,
+            "is_featured": false,
+            "start_date": "2020-01-01T12:54:13.000Z",
+            "end_date": null,
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:33:56.159Z",
+            "deleted_on": null,
+            "nickname": "Aaron",
+            "profile_picture": "https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+            "locations": [
+                "Woodlands"
+            ],
+            "location_ids": [
+                3
+            ],
+            "keyword_vector": "'-19':3 'covid':2 'effort':4 'health':5 'support':1 'woodland':6",
+            "ts_rank_cd": 0
         }
     ]
 }
@@ -8927,11 +9005,7 @@ listing_url - Valid URL.
 is_published - Boolean. 
 start_date - Valid SQL datetime. Default to current datetime.
 end_date - Valid SQL datetime.
-pic1 - Full URL path to uploaded JPG/PNG file.
-pic2 - Full URL path to uploaded JPG/PNG file. 
-pic3 - Full URL path to uploaded JPG/PNG file. 
-pic4 - Full URL path to uploaded JPG/PNG file. 
-pic5 - Full URL path to uploaded JPG/PNG file.
+pics - Array of URL paths to uploaded JPG/PNG file. Required. Otherwise, pass empty array.
 
 
 ***Endpoint:***
@@ -8949,7 +9023,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 ```js        
 {
     "title": "Updated title 1",
-    "category": "Updated category",
+    "category": "Health",
     "about": "Updated about",
     "tagline": "Updated tagline",
     "mission": "Updated mission",
@@ -9077,7 +9151,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 ```js        
 {
     "title": "Updated title 1",
-    "category": "Updated category",
+    "category": "Health",
     "about": "Updated about",
     "tagline": "Updated tagline",
     "mission": "Updated mission",
@@ -9103,10 +9177,9 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
     "success": true,
     "data": {
         "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-        "organisation_id": null,
         "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
         "title": "Updated title 1",
-        "category": "Updated category",
+        "category": "Health",
         "about": "Updated about",
         "tagline": "Updated tagline",
         "mission": "Updated mission",
@@ -9120,9 +9193,11 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
         "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg",
         "is_published": true,
         "is_verified": false,
+        "is_featured": false,
         "start_date": "2018-08-15T08:45:43.415Z",
         "end_date": "2020-01-30T08:45:43.415Z",
         "created_on": "2020-08-20T09:36:45.815Z",
+        "updated_on": "2020-11-16T17:44:44.189Z",
         "deleted_on": null
     }
 }
@@ -13782,4 +13857,4 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-16 17:12:29 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-17 07:43:39 by [docgen](https://github.com/thedevsaddam/docgen)
