@@ -108,19 +108,19 @@ insert into job (listing_id, job_title, job_description) values ('e411bd80-d5cf-
 insert into job (listing_id, job_title, job_description) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'Assistant Professor', 'Public-key heuristic encryption');
 
 /* Likes (User-Listings) mock data population */
-insert into Likes (user_id, listing_id) values ('f96b2138-1754-4c17-a405-940e20adc601', '43824166-bee2-426e-8a08-ca2c4e4120ae');
-insert into Likes (user_id, listing_id) values ('f96b2138-1754-4c17-a405-940e20adc601', 'c975a572-452d-4824-8ed5-500b50488436');
-insert into Likes (user_id, listing_id) values ('f96b2138-1754-4c17-a405-940e20adc601', 'e411bd80-d5cf-49ac-b847-18c9fc13377a');
-insert into Likes (user_id, listing_id) values ('b7662cd1-a2c9-4054-95e7-078e35ea6fa1', '43824166-bee2-426e-8a08-ca2c4e4120ae');
-insert into Likes (user_id, listing_id) values ('b7662cd1-a2c9-4054-95e7-078e35ea6fa1', 'c975a572-452d-4824-8ed5-500b50488436');
-insert into Likes (user_id, listing_id) values ('b7662cd1-a2c9-4054-95e7-078e35ea6fa1', 'e411bd80-d5cf-49ac-b847-18c9fc13377a');
-insert into Likes (user_id, listing_id) values ('d69a127d-815b-4834-b2b6-54ab398fccad', '43824166-bee2-426e-8a08-ca2c4e4120ae');
-insert into Likes (user_id, listing_id) values ('d69a127d-815b-4834-b2b6-54ab398fccad', 'c975a572-452d-4824-8ed5-500b50488436');
-insert into Likes (user_id, listing_id) values ('d69a127d-815b-4834-b2b6-54ab398fccad', 'e411bd80-d5cf-49ac-b847-18c9fc13377a');
-insert into Likes (user_id, listing_id) values ('f997120c-2956-482e-9ba3-81a12b4fecc1', '43824166-bee2-426e-8a08-ca2c4e4120ae');
-insert into Likes (user_id, listing_id) values ('f997120c-2956-482e-9ba3-81a12b4fecc1', 'c975a572-452d-4824-8ed5-500b50488436');
-insert into Likes (user_id, listing_id) values ('f997120c-2956-482e-9ba3-81a12b4fecc1', 'e411bd80-d5cf-49ac-b847-18c9fc13377a');
-insert into Likes (user_id, listing_id) values ('2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb', 'c975a572-452d-4824-8ed5-500b50488436');
+insert into like (user_id, listing_id) values ('f96b2138-1754-4c17-a405-940e20adc601', '43824166-bee2-426e-8a08-ca2c4e4120ae');
+insert into like (user_id, listing_id) values ('f96b2138-1754-4c17-a405-940e20adc601', 'c975a572-452d-4824-8ed5-500b50488436');
+insert into like (user_id, listing_id) values ('f96b2138-1754-4c17-a405-940e20adc601', 'e411bd80-d5cf-49ac-b847-18c9fc13377a');
+insert into like (user_id, listing_id) values ('b7662cd1-a2c9-4054-95e7-078e35ea6fa1', '43824166-bee2-426e-8a08-ca2c4e4120ae');
+insert into like (user_id, listing_id) values ('b7662cd1-a2c9-4054-95e7-078e35ea6fa1', 'c975a572-452d-4824-8ed5-500b50488436');
+insert into like (user_id, listing_id) values ('b7662cd1-a2c9-4054-95e7-078e35ea6fa1', 'e411bd80-d5cf-49ac-b847-18c9fc13377a');
+insert into like (user_id, listing_id) values ('d69a127d-815b-4834-b2b6-54ab398fccad', '43824166-bee2-426e-8a08-ca2c4e4120ae');
+insert into like (user_id, listing_id) values ('d69a127d-815b-4834-b2b6-54ab398fccad', 'c975a572-452d-4824-8ed5-500b50488436');
+insert into like (user_id, listing_id) values ('d69a127d-815b-4834-b2b6-54ab398fccad', 'e411bd80-d5cf-49ac-b847-18c9fc13377a');
+insert into like (user_id, listing_id) values ('f997120c-2956-482e-9ba3-81a12b4fecc1', '43824166-bee2-426e-8a08-ca2c4e4120ae');
+insert into like (user_id, listing_id) values ('f997120c-2956-482e-9ba3-81a12b4fecc1', 'c975a572-452d-4824-8ed5-500b50488436');
+insert into like (user_id, listing_id) values ('f997120c-2956-482e-9ba3-81a12b4fecc1', 'e411bd80-d5cf-49ac-b847-18c9fc13377a');
+insert into like (user_id, listing_id) values ('2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb', 'c975a572-452d-4824-8ed5-500b50488436');
 
 /* HashTags mock data population */
 insert into hashtag (listing_id, tag) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', '#broker0');
