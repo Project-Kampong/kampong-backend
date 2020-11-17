@@ -8,16 +8,14 @@ import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
  * @access  Public
  */
 export const getListingStoryForListing = asyncHandler(async (req, res, next) => {
-    // re-route to next middleware
-    if (!req.params.listing_id) {
-        return next();
+    if (req.params.listing_id) {
+        const rows = await db.one('SELECT * FROM listingstories WHERE listing_id = $1', req.params.listing_id);
+        return res.status(200).json({
+            success: true,
+            data: rows,
+        });
     }
-
-    const rows = await db.one('SELECT * FROM listingstories WHERE listing_id = $1', req.params.listing_id);
-    return res.status(200).json({
-        success: true,
-        data: rows,
-    });
+    return next(new ErrorResponse('Invalid route', 404));
 });
 
 /**
