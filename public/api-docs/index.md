@@ -4769,12 +4769,7 @@ Field rules:
 All fields required unless otherwise stated.
 listing_id - Valid integer, existing listing id.
 description - Non-empty.
-pic1 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic2 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic3 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic4 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic5 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pics - Valid collection of up to 5 JPG/PNG files. Optional.
+pics - Array of URL path to picture.
 
 
 ***Endpoint:***
@@ -4800,11 +4795,13 @@ URL: {{URL}}/api/listing-updates
 {
     "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
     "description": "First Update",
-    "pic1": "imgur.com/abc",
-    "pic2": "imgur.com/test123",
-    "pic3": "imgur.com/def",
-    "pic4": "imgur.com/fgh",
-    "pic5": "imgur.com/jkl"
+    "pics": [
+        "imgur.com/abc",
+        "imgur.com/test123",
+        "imgur.com/def",
+        "imgur.com/fgh",
+        "imgur.com/jkl"
+    ]
 }
 ```
 
@@ -4854,33 +4851,36 @@ URL: {{URL}}/api/listing-updates
 
 
 
-##### II. Example Request: Create Listing Update (200 OK)
+##### II. Example Request: Create Listing Update (201 Created)
 
 
 ***Headers:***
 
 | Key | Value | Description |
 | --- | ------|-------------|
-| Content-Type | multipart/form-data | Form Data Type |
+| Content-Type | application/json | JSON Type |
 
 
 
 ***Body:***
 
-| Key | Value | Description |
-| --- | ------|-------------|
-| pics |  | Collection of 5 JPG files |
-| listing_id | 43824166-bee2-426e-8a08-ca2c4e4120ae |  |
-| description | First Update |  |
-| pic1 | test-pic-1.jpg |  |
-| pic2 | test-pic-2.jpg |  |
-| pic3 | test-pic-3.jpg |  |
-| pic4 | test-pic-4.jpg |  |
-| pic5 | test-pic-5.jpg |  |
+```js        
+{
+    "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
+    "description": "First Update",
+    "pics": [
+        "imgur.com/abc",
+        "imgur.com/test123",
+        "imgur.com/def",
+        "imgur.com/fgh",
+        "imgur.com/jkl"
+    ]
+}
+```
 
 
 
-##### II. Example Response: Create Listing Update (200 OK)
+##### II. Example Response: Create Listing Update (201 Created)
 ```js
 {
     "success": true,
@@ -4888,13 +4888,15 @@ URL: {{URL}}/api/listing-updates
         "listing_update_id": 8,
         "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
         "description": "First Update",
-        "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1597682183704.jpg",
-        "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-1597682183706.jpg",
-        "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-1597682183714.jpg",
-        "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-1597682183726.jpg",
-        "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-1597682183732.jpg",
-        "created_on": "2020-08-17T16:36:24.492Z",
-        "updated_on": "2020-08-17T16:36:24.492Z"
+        "pics": [
+            "imgur.com/abc",
+            "imgur.com/test123",
+            "imgur.com/def",
+            "imgur.com/fgh",
+            "imgur.com/jkl"
+        ],
+        "created_on": "2020-11-17T14:37:48.999Z",
+        "updated_on": "2020-11-17T14:37:48.999Z"
     }
 }
 ```
@@ -4925,41 +4927,11 @@ URL: {{URL}}/api/listing-updates/1
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Delete Listing Update (200 OK)
+##### I. Example Request: Delete Listing Update (404 Not Found)
 
 
 
-##### I. Example Response: Delete Listing Update (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "listing_update_id": 55,
-        "listing_id": 1,
-        "description": "First Update",
-        "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1596957253216.jpg",
-        "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-1596957253217.jpg",
-        "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-1596957253221.jpg",
-        "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-1596957253225.jpg",
-        "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-1596957253235.jpg",
-        "created_on": "2020-08-09T07:14:13.598Z",
-        "updated_on": "2020-08-09T07:14:13.598Z"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Delete Listing Update (404 Not Found)
-
-
-
-##### II. Example Response: Delete Listing Update (404 Not Found)
+##### I. Example Response: Delete Listing Update (404 Not Found)
 ```js
 {
     "success": false,
@@ -4974,6 +4946,38 @@ URL: {{URL}}/api/listing-updates/1
 
 
 
+##### II. Example Request: Delete Listing Update (200 OK)
+
+
+
+##### II. Example Response: Delete Listing Update (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "listing_update_id": 1,
+        "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
+        "description": "Horizontal dynamic encoding",
+        "pics": [
+            "https://robohash.org/utetut.bmp?size=500x500&set=set1",
+            "https://robohash.org/quiserrorlabore.jpg?size=500x500&set=set1",
+            "https://robohash.org/aspernaturcupiditateerror.png?size=500x500&set=set1",
+            "https://robohash.org/dolorevenietmaiores.jpg?size=500x500&set=set1",
+            "https://robohash.org/utconsequaturatque.bmp?size=500x500&set=set1"
+        ],
+        "created_on": "2020-05-04T18:20:02.000Z",
+        "updated_on": "2020-04-27T17:06:06.000Z"
+    }
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
 ### 3. Modify Listing Update
 
 
@@ -4982,12 +4986,7 @@ Modify listing update identified by update id. Permission: Owner/Admin.
 Field rules:
 At least one field must be updated.
 description - Non-empty.
-pic1 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic2 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic3 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic4 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic5 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pics - Valid collection of up to 5 JPG/PNG files. Optional.
+pics - Array of URL path to picture.
 
 
 ***Endpoint:***
@@ -5012,11 +5011,7 @@ URL: {{URL}}/api/listing-updates/2
 ```js        
 {
     "description": "New Milestone Achieved!",
-    "pic1": "instagram.com",
-    "pic2": "facebook.com",
-    "pic3": "imgur.com",
-    "pic4": "tiktok.com",
-    "pic5": "reddit.com"
+    "pics": ["instagram.com", "facebook.com", "imgur.com", "tiktok.com", "reddit.com"]
 }
 ```
 
@@ -5038,15 +5033,12 @@ URL: {{URL}}/api/listing-updates/2
 
 ***Body:***
 
-| Key | Value | Description |
-| --- | ------|-------------|
-| description | New Milestone Achieved! | Collection of 5 pics |
-| pic1 | test-pic-1.jpg |  |
-| pic2 | test-pic-2.jpg |  |
-| pic3 | test-pic-3.jpg |  |
-| pic4 | test-pic-4.jpg |  |
-| pic5 | test-pic-5.jpg |  |
-| pics |  | Collection of 5 pics |
+```js        
+{
+    "description": "New Milestone Achieved!",
+    "pics": ["instagram.com", "facebook.com", "imgur.com", "tiktok.com", "reddit.com"]
+}
+```
 
 
 
@@ -5058,13 +5050,15 @@ URL: {{URL}}/api/listing-updates/2
         "listing_update_id": 2,
         "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
         "description": "New Milestone Achieved!",
-        "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1597682209640.jpg",
-        "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-1597682209642.jpg",
-        "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-1597682209648.jpg",
-        "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-1597682209653.jpg",
-        "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-1597682209660.jpg",
+        "pics": [
+            "instagram.com",
+            "facebook.com",
+            "imgur.com",
+            "tiktok.com",
+            "reddit.com"
+        ],
         "created_on": "2020-07-08T04:26:55.000Z",
-        "updated_on": "2020-08-17T16:36:50.000Z"
+        "updated_on": "2020-11-17T14:38:40.054Z"
     }
 }
 ```
@@ -6339,27 +6333,31 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-updates
     "data": [
         {
             "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "listing_update_id": 1,
-            "description": "Horizontal dynamic encoding",
-            "pic1": "https://robohash.org/utetut.bmp?size=500x500&set=set1",
-            "pic2": "https://robohash.org/quiserrorlabore.jpg?size=500x500&set=set1",
-            "pic3": "https://robohash.org/aspernaturcupiditateerror.png?size=500x500&set=set1",
-            "pic4": "https://robohash.org/dolorevenietmaiores.jpg?size=500x500&set=set1",
-            "pic5": "https://robohash.org/utconsequaturatque.bmp?size=500x500&set=set1",
-            "created_on": "2020-05-04T18:20:02.000Z",
-            "updated_on": "2020-04-27T17:06:06.000Z"
+            "listing_update_id": 8,
+            "description": "First Update",
+            "pics": [
+                "imgur.com/abc",
+                "imgur.com/test123",
+                "imgur.com/def",
+                "imgur.com/fgh",
+                "imgur.com/jkl"
+            ],
+            "created_on": "2020-11-17T14:37:48.999Z",
+            "updated_on": "2020-11-17T14:37:48.999Z"
         },
         {
             "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
             "listing_update_id": 2,
-            "description": "Inverse eco-centric conglomeration",
-            "pic1": "https://robohash.org/sititaqueiure.jpg?size=500x500&set=set1",
-            "pic2": "https://robohash.org/facilisimpeditsoluta.bmp?size=500x500&set=set1",
-            "pic3": "https://robohash.org/atquererumvoluptatem.jpg?size=500x500&set=set1",
-            "pic4": "https://robohash.org/quietreprehenderit.bmp?size=500x500&set=set1",
-            "pic5": "https://robohash.org/suscipittemporeet.png?size=500x500&set=set1",
+            "description": "New Milestone Achieved!",
+            "pics": [
+                "instagram.com",
+                "facebook.com",
+                "imgur.com",
+                "tiktok.com",
+                "reddit.com"
+            ],
             "created_on": "2020-07-08T04:26:55.000Z",
-            "updated_on": "2020-08-10T02:06:35.000Z"
+            "updated_on": "2020-11-17T14:38:40.054Z"
         }
     ]
 }
@@ -11455,4 +11453,4 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-17 14:07:31 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-17 14:44:26 by [docgen](https://github.com/thedevsaddam/docgen)
