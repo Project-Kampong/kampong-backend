@@ -34,8 +34,6 @@ DROP TABLE IF EXISTS ListingAdmins CASCADE;
 
 DROP TABLE IF EXISTS Participants CASCADE;
 
-DROP TABLE IF EXISTS Subscriptions CASCADE;
-
 DROP TABLE IF EXISTS Milestones CASCADE;
 
 DROP TABLE IF EXISTS ListingUpdates CASCADE;
@@ -253,16 +251,6 @@ CREATE TABLE Participants (
 	end_on TIMESTAMPTZ,
 	PRIMARY KEY (participant_id),
 	UNIQUE (listing_id, user_id),
-	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
-);
-
-CREATE TABLE Subscriptions (
-	subscription_id SERIAL,
-	user_id VARCHAR NOT NULL,
-	listing_id VARCHAR NOT NULL,
-	PRIMARY KEY (subscription_id),
-	UNIQUE (user_id, listing_id),
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );
