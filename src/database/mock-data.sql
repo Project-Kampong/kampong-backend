@@ -46,28 +46,28 @@ As part of the Singapore''s TogetherSG movement, having a shared central network
 ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'Integrated fresh-thinking parallelism', 'Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.', 'Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.', 'neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo');
 
 /* FAQ mock data population */
-insert into Faqs (listing_id, question, answer) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'consequat nulla nisl nunc nisl duis bibendum felis', '24/7');
-insert into Faqs (listing_id, question, answer) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et magnis dis', 'Graphic Interface');
-insert into Faqs (listing_id, question, answer) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'mauris vulputate elementum nullam varius nulla facilisi cras', 'conglomeration');
-insert into Faqs (listing_id, question, answer) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'felis donec semper sapien a libero nam dui proin leo odio porttitor', 'Visionary');
-insert into Faqs (listing_id, question, answer) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'congue risus semper porta volutpat quam', 'logistical');
-insert into Faqs (listing_id, question, answer) values ('c975a572-452d-4824-8ed5-500b50488436', 'vel est donec odio justo sollicitudin ut suscipit a', 'neutral');
-insert into Faqs (listing_id, question, answer) values ('c975a572-452d-4824-8ed5-500b50488436', 'odio in hac habitasse platea dictumst maecenas ut massa quis augue', 'analyzer');
-insert into Faqs (listing_id, question, answer) values ('c975a572-452d-4824-8ed5-500b50488436', 'sed sagittis nam congue risus semper porta volutpat quam pede lobortis ligula', '3rd generation');
-insert into Faqs (listing_id, question, answer) values ('c975a572-452d-4824-8ed5-500b50488436', 'cras mi pede malesuada in imperdiet et commodo vulputate justo', 'internet solution');
-insert into Faqs (listing_id, question, answer) values ('c975a572-452d-4824-8ed5-500b50488436', 'vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices', 'superstructure');
-insert into Faqs (listing_id, question, answer) values ('c975a572-452d-4824-8ed5-500b50488436', 'sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque', 'Cloned');
-insert into Faqs (listing_id, question, answer) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'turpis sed ante vivamus tortor duis mattis', 'Managed');
-insert into Faqs (listing_id, question, answer) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'id sapien in sapien iaculis congue', 'Switchable');
-insert into Faqs (listing_id, question, answer) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'ac enim in tempor turpis nec euismod scelerisque quam turpis', 'Fundamental');
-insert into Faqs (listing_id, question, answer) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'cras non velit nec nisi vulputate nonummy', 'solution');
-insert into Faqs (listing_id, question, answer) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 'erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi integer', 'Fully-configurable');
-insert into Faqs (listing_id, question, answer) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 'sagittis sapien cum sociis natoque penatibus et magnis dis', 'workforce');
-insert into Faqs (listing_id, question, answer) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 'nunc viverra dapibus nulla suscipit ligula in lacus', 'framework');
-insert into Faqs (listing_id, question, answer) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus', 'stable');
-insert into Faqs (listing_id, question, answer) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec', 'User-friendly');
-insert into Faqs (listing_id, question, answer) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'ullamcorper purus sit amet nulla quisque arcu libero rutrum ac lobortis', 'client-server');
-INSERT INTO "public"."faqs" ("listing_id", "question", "answer") VALUES
+insert into faq (listing_id, question, answer) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'consequat nulla nisl nunc nisl duis bibendum felis', '24/7');
+insert into faq (listing_id, question, answer) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et magnis dis', 'Graphic Interface');
+insert into faq (listing_id, question, answer) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'mauris vulputate elementum nullam varius nulla facilisi cras', 'conglomeration');
+insert into faq (listing_id, question, answer) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'felis donec semper sapien a libero nam dui proin leo odio porttitor', 'Visionary');
+insert into faq (listing_id, question, answer) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'congue risus semper porta volutpat quam', 'logistical');
+insert into faq (listing_id, question, answer) values ('c975a572-452d-4824-8ed5-500b50488436', 'vel est donec odio justo sollicitudin ut suscipit a', 'neutral');
+insert into faq (listing_id, question, answer) values ('c975a572-452d-4824-8ed5-500b50488436', 'odio in hac habitasse platea dictumst maecenas ut massa quis augue', 'analyzer');
+insert into faq (listing_id, question, answer) values ('c975a572-452d-4824-8ed5-500b50488436', 'sed sagittis nam congue risus semper porta volutpat quam pede lobortis ligula', '3rd generation');
+insert into faq (listing_id, question, answer) values ('c975a572-452d-4824-8ed5-500b50488436', 'cras mi pede malesuada in imperdiet et commodo vulputate justo', 'internet solution');
+insert into faq (listing_id, question, answer) values ('c975a572-452d-4824-8ed5-500b50488436', 'vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices', 'superstructure');
+insert into faq (listing_id, question, answer) values ('c975a572-452d-4824-8ed5-500b50488436', 'sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque', 'Cloned');
+insert into faq (listing_id, question, answer) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'turpis sed ante vivamus tortor duis mattis', 'Managed');
+insert into faq (listing_id, question, answer) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'id sapien in sapien iaculis congue', 'Switchable');
+insert into faq (listing_id, question, answer) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'ac enim in tempor turpis nec euismod scelerisque quam turpis', 'Fundamental');
+insert into faq (listing_id, question, answer) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'cras non velit nec nisi vulputate nonummy', 'solution');
+insert into faq (listing_id, question, answer) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 'erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi integer', 'Fully-configurable');
+insert into faq (listing_id, question, answer) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 'sagittis sapien cum sociis natoque penatibus et magnis dis', 'workforce');
+insert into faq (listing_id, question, answer) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 'nunc viverra dapibus nulla suscipit ligula in lacus', 'framework');
+insert into faq (listing_id, question, answer) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus', 'stable');
+insert into faq (listing_id, question, answer) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec', 'User-friendly');
+insert into faq (listing_id, question, answer) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'ullamcorper purus sit amet nulla quisque arcu libero rutrum ac lobortis', 'client-server');
+INSERT INTO "public"."faq" ("listing_id", "question", "answer") VALUES
 ('1276b4eb-df3a-4de3-bcae-a450ed96eeac', 'Who is behind Project Kampong?', 'Project Kampong is a youth-led platform dedicated to connecting young Singaporean leaders to build social good initiatives, together. By breaking down the barriers youths face in finding ideas and/or members, Project Kampong hopes to create a more level playing field that supports youth to innovate and  pursue their passions.');
 
 /* Participants mock data population */
