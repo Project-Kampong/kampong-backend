@@ -64,6 +64,7 @@ const validateCreateListingFields = [
     check('is_published', INVALID_BOOLEAN_MSG('is_published')).optional().isBoolean(),
     check('start_date', INVALID_TIMESTAMP_MSG('start date')).optional().matches(DATETIME_REGEX),
     check('end_date', INVALID_TIMESTAMP_MSG('end date')).optional().matches(DATETIME_REGEX),
+    check('pics', INVALID_FIELD_MSG('pics')).isArray(),
 ];
 
 const validateUpdateListingFields = [
@@ -81,11 +82,7 @@ const validateUpdateListingFields = [
             check('is_published').exists(),
             check('start_date').exists(),
             check('end_date').exists(),
-            check('pic1').exists(),
-            check('pic2').exists(),
-            check('pic3').exists(),
-            check('pic4').exists(),
-            check('pic5').exists(),
+            check('pics').exists(),
         ],
         NO_FIELD_UPDATED_MSG,
     ),
@@ -98,6 +95,7 @@ const validateUpdateListingFields = [
     check('is_published', INVALID_BOOLEAN_MSG('is_published')).optional().isBoolean(),
     check('start_date', INVALID_TIMESTAMP_MSG('start date')).optional().matches(DATETIME_REGEX),
     check('end_date', INVALID_TIMESTAMP_MSG('end date')).optional().matches(DATETIME_REGEX),
+    check('pics', INVALID_FIELD_MSG('pics')).optional().isArray(),
 ];
 
 const validateVerifyOrFeatureListingFields = [
