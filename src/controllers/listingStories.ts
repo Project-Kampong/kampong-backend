@@ -3,20 +3,11 @@ import { asyncHandler } from '../middleware';
 import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 
 /**
- * @desc    Get all listing stories
- * @route   GET /api/listings/stories
- * @access  Public
- */
-export const getListingStories = asyncHandler(async (req, res) => {
-    res.status(200).json(res.advancedResults);
-});
-
-/**
- * @desc    Get single listing story
+ * @desc    Get listing story for listing
  * @route   GET /api/listings/:listing_id/stories
  * @access  Public
  */
-export const getListingStory = asyncHandler(async (req, res, next) => {
+export const getListingStoryForListing = asyncHandler(async (req, res, next) => {
     // re-route to next middleware
     if (!req.params.listing_id) {
         return next();

@@ -42,20 +42,6 @@ export const getParticipants = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Get single participant (identified by participant id)
- * @route   GET /api/participants/:participant_id
- * @access  Public
- */
-export const getParticipant = asyncHandler(async (req, res) => {
-    const rows = await db.one('SELECT * FROM participants WHERE participant_id = $1', req.params.participant_id);
-
-    res.status(200).json({
-        success: true,
-        data: rows,
-    });
-});
-
-/**
  * @desc    Add participant to listing
  * @route   POST /api/participants
  * @access  Admin/Owner

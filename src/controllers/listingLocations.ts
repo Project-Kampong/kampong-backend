@@ -3,8 +3,6 @@ import { asyncHandler } from '../middleware';
 import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
 
 /**
- * @desc    Get all listing locations
- * @route   GET /api/listing-locations
  * @desc    Get all listing locations for a listing
  * @route   GET /api/listings/:listing_id/listing-locations
  * @access  Public
@@ -26,24 +24,7 @@ export const getListingLocations = asyncHandler(async (req, res, next) => {
             data,
         });
     }
-
-    res.status(200).json(res.advancedResults);
-});
-
-/**
- * @desc    Get single listinglocation by listing location id
- * @route   GET /api/listing-locations/:id
- * @access  Public
- */
-export const getListingLocation = asyncHandler(async (req, res) => {
-    const rows = await db.one(
-        'SELECT * FROM ListingLocations lil JOIN Locations lo ON lil.location_id = lo.location_id WHERE listing_location_id = $1',
-        req.params.id,
-    );
-    res.status(200).json({
-        success: true,
-        data: rows,
-    });
+    return next(new ErrorResponse('Invalid route', 404));
 });
 
 /**

@@ -1,11 +1,11 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
-import { advancedResults, checkInputError, protect } from '../../middleware';
+import { checkInputError, protect } from '../../middleware';
 import { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } from '../../utils';
 
 // import controllers here
-import { getListingUpdates, getListingUpdate, createListingUpdate, modifyListingUpdate, deleteListingUpdate } from '../../controllers/listingUpdates';
+import { getListingUpdatesForListing, createListingUpdate, modifyListingUpdate, deleteListingUpdate } from '../../controllers/listingUpdates';
 
 // Define input validation chain
 const validateCreateListingUpdateFields = [
@@ -28,8 +28,7 @@ const validateModifyListingUpdateFields = [
     check('description', INVALID_FIELD_MSG('description')).optional().trim().notEmpty(),
 ];
 
-router.route('/').get(advancedResults('listingupdates'), getListingUpdates);
-router.route('/:id').get(getListingUpdate);
+router.route('/').get(getListingUpdatesForListing);
 
 // all routes below only accessible to authenticated user (specifically, listing owner, to be implemented)
 router.use(protect);

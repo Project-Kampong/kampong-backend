@@ -3,13 +3,11 @@ import { asyncHandler } from '../middleware';
 import { checkListingOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 
 /**
- * @desc    Get all faqs
- * @route   GET /api/faqs
  * @desc    Get all faqs for a listing
  * @route   GET /api/listings/:listing_id/faqs
  * @access  Public
  */
-export const getFaqs = asyncHandler(async (req, res) => {
+export const getFaqsForListing = asyncHandler(async (req, res, next) => {
     if (req.params.listing_id) {
         // return 404 error response if listing not found or soft deleted
         await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.listing_id);
@@ -22,20 +20,7 @@ export const getFaqs = asyncHandler(async (req, res) => {
         });
     }
 
-    res.status(200).json(res.advancedResults);
-});
-
-/**
- * @desc    Get single faq
- * @route   GET /api/faqs/:id
- * @access  Public
- */
-export const getFaq = asyncHandler(async (req, res) => {
-    const rows = await db.one('SELECT * FROM faqs WHERE faq_id = $1', req.params.id);
-    res.status(200).json({
-        success: true,
-        data: rows,
-    });
+    return next(new ErrorResponse('Invalid route', 404));
 });
 
 /**

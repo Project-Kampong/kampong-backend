@@ -1,11 +1,11 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
-import { advancedResults, checkInputError, protect } from '../../middleware';
+import { checkInputError, protect } from '../../middleware';
 import { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } from '../../utils';
 
 // import controllers here
-import { getListingStories, getListingStory, updateListingStory } from '../../controllers/listingStories';
+import { getListingStoryForListing, updateListingStory } from '../../controllers/listingStories';
 
 // Define input validation chain
 const validateUpdateListingStoryFields = [
@@ -17,7 +17,4 @@ const validateUpdateListingStoryFields = [
 ];
 
 // All routes below use mergedParams from listings route
-router
-    .route('/')
-    .get(getListingStory, advancedResults('listingstories'), getListingStories)
-    .put(protect, validateUpdateListingStoryFields, checkInputError, updateListingStory);
+router.route('/').get(getListingStoryForListing).put(protect, validateUpdateListingStoryFields, checkInputError, updateListingStory);

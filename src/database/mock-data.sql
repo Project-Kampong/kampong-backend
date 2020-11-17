@@ -295,3 +295,5 @@ insert into programmes (organisation_id, title, about, media_url) values ('c9160
 In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.
 
 Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.', ARRAY['https://youtube.com','https://instagram.com']);
+
+INSERT INTO "public"."listingorganisation" ("listing_id", "organisation_id") VALUES ('43824166-bee2-426e-8a08-ca2c4e4120ae', '8426a370-280e-11eb-aa97-9d0bb1a7de0d');

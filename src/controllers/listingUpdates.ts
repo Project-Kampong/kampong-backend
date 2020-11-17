@@ -4,13 +4,11 @@ import { asyncHandler } from '../middleware';
 import { checkListingOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 
 /**
- * @desc    Get all listing updates
- * @route   GET /api/listing-updates
  * @desc    Get all updates for a listing
  * @route   GET /api/listings/:listing_id/listing-updates
  * @access  Public
  */
-export const getListingUpdates = asyncHandler(async (req, res, next) => {
+export const getListingUpdatesForListing = asyncHandler(async (req, res, next) => {
     if (req.params.listing_id) {
         // returns 404 error response if listing not found or soft deleted
         const listingUpdates = await db.many(
@@ -27,21 +25,7 @@ export const getListingUpdates = asyncHandler(async (req, res, next) => {
             data,
         });
     }
-
-    res.status(200).json(res.advancedResults);
-});
-
-/**
- * @desc    Get single listing update (identified by listing update id)
- * @route   GET /api/listing-updates/:id
- * @access  Public
- */
-export const getListingUpdate = asyncHandler(async (req, res) => {
-    const rows = await db.one('SELECT * FROM ListingUpdates WHERE listing_update_id = $1', req.params.id);
-    res.status(200).json({
-        success: true,
-        data: rows,
-    });
+    return next(new ErrorResponse('Invalid route', 404));
 });
 
 /**

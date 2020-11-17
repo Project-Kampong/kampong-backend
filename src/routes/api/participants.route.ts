@@ -5,7 +5,7 @@ import { advancedResults, protect, checkInputError } from '../../middleware';
 import { DATETIME_REGEX, INVALID_FIELD_MSG, INVALID_TIMESTAMP_MSG } from '../../utils';
 
 // import controllers here
-import { getParticipants, getParticipant, createParticipant, deleteParticipant } from '../../controllers/participants';
+import { getParticipants, createParticipant, deleteParticipant } from '../../controllers/participants';
 
 // Define input validation chain
 const validateCreateParticipantFields = [
@@ -16,7 +16,6 @@ const validateCreateParticipantFields = [
 ];
 
 router.route('/').get(advancedResults('participants'), getParticipants);
-router.route('/:participant_id').get(getParticipant);
 
 // all routes below only accessible to admin, specifically, listing owner (to be implemented)
 router.use(protect);

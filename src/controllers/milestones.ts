@@ -3,13 +3,11 @@ import { asyncHandler } from '../middleware';
 import { checkListingOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 
 /**
- * @desc    Get all milestones
- * @route   GET /api/milestones
  * @desc    Get all milestones for a listing
  * @route   GET /api/listings/:listing_id/milestones
  * @access  Public
  */
-export const getMilestones = asyncHandler(async (req, res, next) => {
+export const getMilestonesForListing = asyncHandler(async (req, res, next) => {
     if (req.params.listing_id) {
         // returns 404 error response if listing not found
         const milestones = await db.many(
@@ -26,21 +24,7 @@ export const getMilestones = asyncHandler(async (req, res, next) => {
             data,
         });
     }
-
-    res.status(200).json(res.advancedResults);
-});
-
-/**
- * @desc    Get single milestone
- * @route   GET /api/milestones/:id
- * @access  Public
- */
-export const getMilestone = asyncHandler(async (req, res) => {
-    const rows = await db.one('SELECT * FROM milestones WHERE milestone_id = $1', req.params.id);
-    res.status(200).json({
-        success: true,
-        data: rows,
-    });
+    return next(new ErrorResponse('Invalid route', 404));
 });
 
 /**
