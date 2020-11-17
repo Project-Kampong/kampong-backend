@@ -20,6 +20,7 @@ import { router as usersRoute } from './api/users.route';
 import { router as uploadsRoute } from './api/uploads.route';
 import { router as sendEmailRoute } from './api/sendEmail.route';
 import { router as listingsOrganisationsRoute } from './api/listingsOrganisations.route';
+import { router as organisationAnnouncementsRoute } from './api/organisationAnnoucements.route';
 
 // Mount routes
 apiRouter.use('/auth', authRoute);
@@ -41,3 +42,4 @@ apiRouter.use('/users', usersRoute);
 apiRouter.use('/file-upload', uploadsRoute);
 apiRouter.use('/send-email', sendEmailRoute);
 apiRouter.use('/listings-organisations', listingsOrganisationsRoute);
+apiRouter.use('/announcements', organisationAnnouncementsRoute);
