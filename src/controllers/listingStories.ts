@@ -9,7 +9,7 @@ import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
  */
 export const getListingStoryForListing = asyncHandler(async (req, res, next) => {
     if (req.params.listing_id) {
-        const rows = await db.one('SELECT * FROM listingstories WHERE listing_id = $1', req.params.listing_id);
+        const rows = await db.one('SELECT * FROM listingstory WHERE listing_id = $1', req.params.listing_id);
         return res.status(200).json({
             success: true,
             data: rows,
@@ -42,7 +42,7 @@ export const updateListingStory = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    const updateListingStoryQuery = parseSqlUpdateStmt(data, 'listingstories', 'WHERE listing_id = $1 RETURNING *', [req.params.listing_id]);
+    const updateListingStoryQuery = parseSqlUpdateStmt(data, 'listingstory', 'WHERE listing_id = $1 RETURNING *', [req.params.listing_id]);
 
     const rows = await db.one(updateListingStoryQuery);
 

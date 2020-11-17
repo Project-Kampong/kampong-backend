@@ -20,7 +20,7 @@ DROP TABLE IF EXISTS listing CASCADE;
 
 DROP TABLE IF EXISTS listingorganisation CASCADE;
 
-DROP TABLE IF EXISTS ListingStories CASCADE;
+DROP TABLE IF EXISTS listingstory CASCADE;
 
 DROP TABLE IF EXISTS HashTags CASCADE;
 
@@ -180,7 +180,7 @@ CREATE TABLE listingorganisation (
 	FOREIGN KEY (organisation_id) REFERENCES organisation ON DELETE CASCADE
 );
 
-CREATE TABLE ListingStories (
+CREATE TABLE listingstory (
 	listing_id VARCHAR,
 	overview TEXT,
 	problem TEXT,

@@ -23,7 +23,7 @@ INSERT INTO "public"."listing" ("listing_id", "created_by", "title", "category",
 ('e411bd80-d5cf-49ac-b847-18c9fc13377a', '2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb', 'Project Donation Drive', 'Elderly', 'Adaptive disintermediate Graphical User Interface', 'Bridging communities', 'e-enable dot-com metrics', 'http://i2i.jp/rhoncus/dui/vel.jpg', ARRAY['https://images.pexels.com/photos/339620/pexels-photo-339620.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'https://robohash.org/atquemolestiasvelit.jpg?size=500x500&set=set1', 'https://robohash.org/nonquodquam.png?size=500x500&set=set1', 'https://robohash.org/voluptaslaborumsimilique.png?size=500x500&set=set1'], 'f', 'f', '2020-03-19 11:04:15', NULL, '2020-08-20 17:36:45.815638', NULL, 'completed', 'donationdrive2020@gmail.com');
 
 /* ListingStories with paragraphed text */
-INSERT INTO "public"."listingstories" ("listing_id", "overview", "problem", "solution", "outcome") VALUES
+INSERT INTO "public"."listingstory" ("listing_id", "overview", "problem", "solution", "outcome") VALUES
 ('1276b4eb-df3a-4de3-bcae-a450ed96eeac', 'Formed in Sept 2019, a result of the Youth Action Challenge under the Ministry of Culture, Community, and Youth (MCCY), National Youth Council (NYC) and People''s Association Youth Movement (PAYM). PKG hopes to understand the existing gaps in the communication & information network systems which are utilized in the Social Sector in Singapore. 
 
 

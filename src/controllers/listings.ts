@@ -156,7 +156,7 @@ export const createListing = asyncHandler(async (req, res) => {
      */
     const rows = await db.tx(async (query) => {
         const createListing = await query.one('INSERT INTO listing (${this:name}) VALUES (${this:csv}) RETURNING *', data);
-        const createListingStory = await query.one('INSERT INTO listingstories (listing_id) VALUES ($1) RETURNING *', createListing.listing_id);
+        const createListingStory = await query.one('INSERT INTO listingstory (listing_id) VALUES ($1) RETURNING *', createListing.listing_id);
         return query.batch([createListing, createListingStory]);
     });
 
