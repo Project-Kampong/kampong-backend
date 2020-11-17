@@ -235,7 +235,7 @@ CREATE TABLE OrganisationLikes (
 	UNIQUE (organisation_id, user_id),
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
 	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE
-)
+);
 
 CREATE TABLE ListingAdmins (
 	listing_admin_id SERIAL,
