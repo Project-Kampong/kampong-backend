@@ -1,15 +1,13 @@
 import { db } from '../database';
 import { asyncHandler } from '../middleware';
-import { checkListingOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
+import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
 
 /**
- * @desc    Get all hashtags
- * @route   GET /api/hashtags
  * @desc    Get all hashtags for a listing
  * @route   GET /api/listings/:listing_id/hashtags
  * @access  Public
  */
-export const getHashtags = asyncHandler(async (req, res, next) => {
+export const getHashtagsForListing = asyncHandler(async (req, res, next) => {
     if (req.params.listing_id) {
         // returns 404 error response if listing not found or soft deleted
         const hashtags = await db.many(
@@ -27,20 +25,7 @@ export const getHashtags = asyncHandler(async (req, res, next) => {
         });
     }
 
-    res.status(200).json(res.advancedResults);
-});
-
-/**
- * @desc    Get single hashtag
- * @route   GET /api/hashtags/:id
- * @access  Public
- */
-export const getHashtag = asyncHandler(async (req, res) => {
-    const rows = await db.one('SELECT * FROM hashtags WHERE hashtag_id = $1', req.params.id);
-    res.status(200).json({
-        success: true,
-        data: rows,
-    });
+    return next(new ErrorResponse('Invalid route', 404));
 });
 
 /**

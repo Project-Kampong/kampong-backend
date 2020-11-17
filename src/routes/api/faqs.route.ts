@@ -1,11 +1,11 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
-import { advancedResults, checkInputError, protect, authorise } from '../../middleware';
+import { checkInputError, protect, authorise } from '../../middleware';
 import { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } from '../../utils';
 
 // import controllers here
-import { getFaqs, getFaq, createFaq, updateFaq, deleteFaq } from '../../controllers/faqs';
+import { getFaqsForListing, createFaq, updateFaq, deleteFaq } from '../../controllers/faqs';
 
 // input validation chain definition
 const validateCreateFaqFields = [
@@ -20,8 +20,7 @@ const validateUpdateFaqFields = [
     check('answer').optional().trim(),
 ];
 
-router.route('/').get(advancedResults('faqs'), getFaqs);
-router.route('/:id').get(getFaq);
+router.route('/').get(getFaqsForListing);
 
 // all routes below only accessible to admin
 router.use(protect);

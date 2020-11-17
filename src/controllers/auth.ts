@@ -381,7 +381,7 @@ const sendTokenResponse = (user, statusCode, res, redirectHome = false) => {
 };
 
 // Hash pending user token
-const hashToken = (token) => {
+const hashToken = (token: string) => {
     // Hash token and set to confirmPasswordToken field of model
     const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
 

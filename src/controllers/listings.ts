@@ -20,7 +20,7 @@ export const getListings = asyncHandler(async (req, res) => {
     if (req.params.category_name) {
         // returns 404 error if category name not found
         const rows = await db.many(
-            'SELECT * FROM category lc LEFT JOIN listings l ON lc.category_name = l.category WHERE lc.category_name = $1',
+            'SELECT * FROM category lc LEFT JOIN listingsview lv ON lc.category_name = lv.category WHERE lc.category_name = $1',
             req.params.category_name,
         );
 
@@ -48,7 +48,7 @@ export const getListings = asyncHandler(async (req, res) => {
         });
     } else if (req.params.organisation_id) {
         const rows = await db.manyOrNone(
-            'SELECT l.*, lo.listing_organisation_id FROM organisations o LEFT JOIN listingorganisation lo ON o.organisation_id = lo.organisation_id LEFT JOIN listings l ON lo.listing_id = l.listing_id WHERE o.organisation_id = $1',
+            'SELECT lv.*, lo.listing_organisation_id FROM organisations o LEFT JOIN listingorganisation lo ON o.organisation_id = lo.organisation_id LEFT JOIN listingsview lv ON lo.listing_id = lv.listing_id WHERE o.organisation_id = $1',
             req.params.organisation_id,
         );
 
