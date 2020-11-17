@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS listingstory CASCADE;
 
 DROP TABLE IF EXISTS hashtag CASCADE;
 
-DROP TABLE IF EXISTS Jobs CASCADE;
+DROP TABLE IF EXISTS job CASCADE;
 
 DROP TABLE IF EXISTS FAQs CASCADE;
 
@@ -200,7 +200,7 @@ CREATE TABLE hashtag (
 );
 
 /* Jobs for a particular listing */
-CREATE TABLE Jobs (
+CREATE TABLE job (
 	job_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	job_title VARCHAR NOT NULL,

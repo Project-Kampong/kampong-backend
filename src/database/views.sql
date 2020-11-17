@@ -37,7 +37,7 @@ CREATE VIEW OrganisationsView AS
 
 CREATE VIEW JobsView AS
   	SELECT *
-  	FROM Jobs
+  	FROM job
   	WHERE deleted_on IS NULL;
 
 CREATE VIEW ListingCommentsView AS

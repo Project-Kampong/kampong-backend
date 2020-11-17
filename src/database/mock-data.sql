@@ -85,27 +85,27 @@ insert into Participants (listing_id, user_id, joined_on, end_on) values ('d95a6
 insert into Participants (listing_id, user_id, joined_on, end_on) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'f997120c-2956-482e-9ba3-81a12b4fecc1', '2/9/2019', null);
 
 /* Jobs mock data population */
-insert into jobs (listing_id, job_title, job_description) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'Account Representative I', 'Polarised next generation alliance');
-insert into jobs (listing_id, job_title, job_description) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'Project Manager', 'Ameliorated 24 hour structure');
-insert into jobs (listing_id, job_title, job_description) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'Teacher', 'Enhanced 6th generation portal');
-insert into jobs (listing_id, job_title, job_description) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'VP Accounting', 'Multi-channelled local pricing structure');
-insert into jobs (listing_id, job_title, job_description) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'Office Assistant IV', 'Vision-oriented explicit moratorium');
-insert into jobs (listing_id, job_title, job_description) values ('c975a572-452d-4824-8ed5-500b50488436', 'Senior Editor', 'Devolved high-level protocol');
-insert into jobs (listing_id, job_title, job_description) values ('c975a572-452d-4824-8ed5-500b50488436', 'Civil Engineer', 'Front-line optimal algorithm');
-insert into jobs (listing_id, job_title, job_description) values ('c975a572-452d-4824-8ed5-500b50488436', 'Senior Quality Engineer', 'Exclusive incremental toolset');
-insert into jobs (listing_id, job_title, job_description) values ('c975a572-452d-4824-8ed5-500b50488436', 'Programmer Analyst I', 'Polarised bifurcated open architecture');
-insert into jobs (listing_id, job_title, job_description) values ('c975a572-452d-4824-8ed5-500b50488436', 'Paralegal', 'Networked intangible system engine');
-insert into jobs (listing_id, job_title, job_description) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'Project Manager', 'Profound optimizing matrix');
-insert into jobs (listing_id, job_title, job_description) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'Tax Accountant', 'Realigned grlisting_id-enabled forecast');
-insert into jobs (listing_id, job_title, job_description) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'Software Test Engineer II', 'Right-sized 3rd generation throughput');
-insert into jobs (listing_id, job_title, job_description) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'Teacher', 'Universal executive Graphical User Interface');
-insert into jobs (listing_id, job_title, job_description) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'Community Outreach Specialist', 'Monitored asynchronous initiative');
-insert into jobs (listing_id, job_title, job_description) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'Compensation Analyst', 'Universal 24 hour protocol');
-insert into jobs (listing_id, job_title, job_description) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 'VP Marketing', 'Inverse user-facing ability');
-insert into jobs (listing_id, job_title, job_description) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 'Teacher', 'Phased bottom-line encryption');
-insert into jobs (listing_id, job_title, job_description) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'Chemical Engineer', 'Synergistic stable encryption');
-insert into jobs (listing_id, job_title, job_description) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'Web Developer IV', 'Focused encompassing archive');
-insert into jobs (listing_id, job_title, job_description) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'Assistant Professor', 'Public-key heuristic encryption');
+insert into job (listing_id, job_title, job_description) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'Account Representative I', 'Polarised next generation alliance');
+insert into job (listing_id, job_title, job_description) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'Project Manager', 'Ameliorated 24 hour structure');
+insert into job (listing_id, job_title, job_description) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'Teacher', 'Enhanced 6th generation portal');
+insert into job (listing_id, job_title, job_description) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'VP Accounting', 'Multi-channelled local pricing structure');
+insert into job (listing_id, job_title, job_description) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'Office Assistant IV', 'Vision-oriented explicit moratorium');
+insert into job (listing_id, job_title, job_description) values ('c975a572-452d-4824-8ed5-500b50488436', 'Senior Editor', 'Devolved high-level protocol');
+insert into job (listing_id, job_title, job_description) values ('c975a572-452d-4824-8ed5-500b50488436', 'Civil Engineer', 'Front-line optimal algorithm');
+insert into job (listing_id, job_title, job_description) values ('c975a572-452d-4824-8ed5-500b50488436', 'Senior Quality Engineer', 'Exclusive incremental toolset');
+insert into job (listing_id, job_title, job_description) values ('c975a572-452d-4824-8ed5-500b50488436', 'Programmer Analyst I', 'Polarised bifurcated open architecture');
+insert into job (listing_id, job_title, job_description) values ('c975a572-452d-4824-8ed5-500b50488436', 'Paralegal', 'Networked intangible system engine');
+insert into job (listing_id, job_title, job_description) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'Project Manager', 'Profound optimizing matrix');
+insert into job (listing_id, job_title, job_description) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'Tax Accountant', 'Realigned grlisting_id-enabled forecast');
+insert into job (listing_id, job_title, job_description) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'Software Test Engineer II', 'Right-sized 3rd generation throughput');
+insert into job (listing_id, job_title, job_description) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'Teacher', 'Universal executive Graphical User Interface');
+insert into job (listing_id, job_title, job_description) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'Community Outreach Specialist', 'Monitored asynchronous initiative');
+insert into job (listing_id, job_title, job_description) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'Compensation Analyst', 'Universal 24 hour protocol');
+insert into job (listing_id, job_title, job_description) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 'VP Marketing', 'Inverse user-facing ability');
+insert into job (listing_id, job_title, job_description) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 'Teacher', 'Phased bottom-line encryption');
+insert into job (listing_id, job_title, job_description) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'Chemical Engineer', 'Synergistic stable encryption');
+insert into job (listing_id, job_title, job_description) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'Web Developer IV', 'Focused encompassing archive');
+insert into job (listing_id, job_title, job_description) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'Assistant Professor', 'Public-key heuristic encryption');
 
 /* Likes (User-Listings) mock data population */
 insert into Likes (user_id, listing_id) values ('f96b2138-1754-4c17-a405-940e20adc601', '43824166-bee2-426e-8a08-ca2c4e4120ae');

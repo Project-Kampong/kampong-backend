@@ -47,7 +47,7 @@ export const createJob = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Not authorised to create jobs for this listing`, 403));
     }
 
-    const rows = await db.one('INSERT INTO jobs (${this:name}) VALUES (${this:csv}) RETURNING *', data);
+    const rows = await db.one('INSERT INTO job (${this:name}) VALUES (${this:csv}) RETURNING *', data);
 
     res.status(201).json({
         success: true,
@@ -69,7 +69,7 @@ export const updateJob = asyncHandler(async (req, res, next) => {
 
     // Unauthorised if neither admin nor listing owner
     if (!(req.user.role === 'admin' || isListingOwner)) {
-        return next(new ErrorResponse(`Not authorised to update jobs for this listing`, 403));
+        return next(new ErrorResponse(`Not authorised to update job for this listing`, 403));
     }
 
     const { job_title, job_description } = req.body;
@@ -81,7 +81,7 @@ export const updateJob = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    const updateJobQuery = parseSqlUpdateStmt(data, 'jobs', 'WHERE job_id = $1 RETURNING *', [req.params.id]);
+    const updateJobQuery = parseSqlUpdateStmt(data, 'job', 'WHERE job_id = $1 RETURNING *', [req.params.id]);
 
     const rows = await db.one(updateJobQuery);
 
@@ -108,7 +108,7 @@ export const deactivateJob = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Not authorised to deactivate jobs for this listing`, 403));
     }
 
-    const rows = await db.one('UPDATE jobs SET deleted_on=$2 WHERE job_id = $1 RETURNING *', [
+    const rows = await db.one('UPDATE job SET deleted_on=$2 WHERE job_id = $1 RETURNING *', [
         req.params.id,
         moment.tz(process.env.DEFAULT_TIMEZONE).toDate(),
     ]);
@@ -126,9 +126,9 @@ export const deactivateJob = asyncHandler(async (req, res, next) => {
  */
 export const deleteJob = asyncHandler(async (req, res, next) => {
     // check if job exists
-    await db.one('SELECT * FROM jobs WHERE job_id = $1', req.params.id);
+    await db.one('SELECT * FROM job WHERE job_id = $1', req.params.id);
 
-    const rows = await db.one('DELETE FROM jobs WHERE job_id = $1 RETURNING *', req.params.id);
+    const rows = await db.one('DELETE FROM job WHERE job_id = $1 RETURNING *', req.params.id);
 
     res.status(200).json({
         success: true,
