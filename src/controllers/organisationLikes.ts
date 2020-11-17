@@ -4,7 +4,7 @@ import { cleanseData, ErrorResponse } from '../utils';
 
 /**
  * @desc    User like organisation
- * @route   POST /api/likes
+ * @route   POST /api/organisation-likes
  * @access  Private
  */
 export const likeOrganisation = asyncHandler(async (req, res, next) => {
@@ -17,7 +17,7 @@ export const likeOrganisation = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    const rows = await db.one('INSERT INTO organisationLikes (${this:name}) VALUES (${this:csv}) RETURNING *', data);
+    const rows = await db.one('INSERT INTO organisationoikes (${this:name}) VALUES (${this:csv}) RETURNING *', data);
 
     res.status(201).json({
         success: true,
@@ -31,12 +31,12 @@ export const likeOrganisation = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 export const unLikeOrganisation = asyncHandler(async (req, res, next) => {
-    const organisationLike = await db.one('SELECT * FROM OrganisationLikes WHERE organisation_like_id = $1', req.params.organisation_like_id);
+    const organisationLike = await db.one('SELECT * FROM organisationlikes WHERE organisation_like_id = $1', req.params.organisation_like_id);
     if (organisationLike.user_id !== req.user.user_id) {
         return next(new ErrorResponse('Not authorised to access this route', 403));
     }
 
-    const rows = await db.one('DELETE FROM OrganisationLikes WHERE organisation_like_id = $1 RETURNING *', req.params.organisation_like_id);
+    const rows = await db.one('DELETE FROM organisationlikes WHERE organisation_like_id = $1 RETURNING *', req.params.organisation_like_id);
 
     res.status(200).json({
         success: true,
