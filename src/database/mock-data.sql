@@ -123,18 +123,18 @@ insert into Likes (user_id, listing_id) values ('f997120c-2956-482e-9ba3-81a12b4
 insert into Likes (user_id, listing_id) values ('2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb', 'c975a572-452d-4824-8ed5-500b50488436');
 
 /* HashTags mock data population */
-insert into HashTags (listing_id, tag) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', '#broker0');
-insert into HashTags (listing_id, tag) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', '#sandyfirth1');
-insert into HashTags (listing_id, tag) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', '#tudhope2');
-insert into HashTags (listing_id, tag) values ('c975a572-452d-4824-8ed5-500b50488436', '#slatford3');
-insert into HashTags (listing_id, tag) values ('c975a572-452d-4824-8ed5-500b50488436', '#clissell4');
-insert into HashTags (listing_id, tag) values ('c975a572-452d-4824-8ed5-500b50488436', '#bateup5');
-insert into HashTags (listing_id, tag) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', '#smallcomb6');
-insert into HashTags (listing_id, tag) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', '#wyrall7');
-insert into HashTags (listing_id, tag) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', '#boteman8');
-insert into HashTags (listing_id, tag) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', '#joontjes9');
-insert into HashTags (listing_id, tag) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', '#baudina');
-INSERT INTO "public"."hashtags" ("listing_id", "tag") VALUES
+insert into hashtag (listing_id, tag) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', '#broker0');
+insert into hashtag (listing_id, tag) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', '#sandyfirth1');
+insert into hashtag (listing_id, tag) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', '#tudhope2');
+insert into hashtag (listing_id, tag) values ('c975a572-452d-4824-8ed5-500b50488436', '#slatford3');
+insert into hashtag (listing_id, tag) values ('c975a572-452d-4824-8ed5-500b50488436', '#clissell4');
+insert into hashtag (listing_id, tag) values ('c975a572-452d-4824-8ed5-500b50488436', '#bateup5');
+insert into hashtag (listing_id, tag) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', '#smallcomb6');
+insert into hashtag (listing_id, tag) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', '#wyrall7');
+insert into hashtag (listing_id, tag) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', '#boteman8');
+insert into hashtag (listing_id, tag) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', '#joontjes9');
+insert into hashtag (listing_id, tag) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', '#baudina');
+INSERT INTO "public"."hashtag" ("listing_id", "tag") VALUES
 ('1276b4eb-df3a-4de3-bcae-a450ed96eeac', '#kampong'),
 ('1276b4eb-df3a-4de3-bcae-a450ed96eeac', '#socialgood'),
 ('1276b4eb-df3a-4de3-bcae-a450ed96eeac', '#initiative');

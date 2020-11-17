@@ -11,7 +11,7 @@ export const getHashtagsForListing = asyncHandler(async (req, res, next) => {
     if (req.params.listing_id) {
         // returns 404 error response if listing not found or soft deleted
         const hashtags = await db.many(
-            'SELECT l.listing_id, h.hashtag_id, tag FROM listingsview l LEFT JOIN hashtags h ON l.listing_id = h.listing_id WHERE l.listing_id = $1',
+            'SELECT l.listing_id, h.hashtag_id, tag FROM listingsview l LEFT JOIN hashtag h ON l.listing_id = h.listing_id WHERE l.listing_id = $1',
             req.params.listing_id,
         );
 
@@ -51,7 +51,7 @@ export const createHashtag = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Not authorised to create hashtags for this listing`, 403));
     }
 
-    const rows = await db.one('INSERT INTO hashtags (${this:name}) VALUES (${this:csv}) RETURNING *', data);
+    const rows = await db.one('INSERT INTO hashtag (${this:name}) VALUES (${this:csv}) RETURNING *', data);
 
     res.status(201).json({
         success: true,
@@ -66,7 +66,7 @@ export const createHashtag = asyncHandler(async (req, res, next) => {
  */
 export const deleteHashtag = asyncHandler(async (req, res, next) => {
     // check if hashtag exists
-    const hashtag = await db.one('SELECT * FROM hashtags WHERE hashtag_id = $1', req.params.id);
+    const hashtag = await db.one('SELECT * FROM hashtag WHERE hashtag_id = $1', req.params.id);
 
     // check if listing exists and is listing owner
     const isListingOwner = await checkListingOwner(req.user.user_id, hashtag.listing_id);
@@ -76,7 +76,7 @@ export const deleteHashtag = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Not authorised to delete hashtag for this listing`, 403));
     }
 
-    const rows = await db.one('DELETE FROM hashtags WHERE hashtag_id = $1 RETURNING *', req.params.id);
+    const rows = await db.one('DELETE FROM hashtag WHERE hashtag_id = $1 RETURNING *', req.params.id);
 
     res.status(200).json({
         success: true,
