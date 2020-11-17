@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS user CASCADE;
 
 DROP TABLE IF EXISTS pendinguser CASCADE;
 
-DROP TABLE IF EXISTS ForgetPasswordUsers CASCADE;
+DROP TABLE IF EXISTS forgetpassworduser CASCADE;
 
 DROP TABLE IF EXISTS Profiles CASCADE;
 
@@ -65,7 +65,7 @@ CREATE TABLE pendinguser (
 	FOREIGN KEY (user_id) REFERENCES user ON DELETE CASCADE
 );
 
-CREATE TABLE ForgetPasswordUsers (
+CREATE TABLE forgetpassworduser (
 	forgetpass_user_id SERIAL,
 	email VARCHAR(320) UNIQUE NOT NULL,
 	token VARCHAR UNIQUE NOT NULL,
