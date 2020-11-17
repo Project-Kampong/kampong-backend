@@ -41,3 +41,5 @@ apiRouter.use('/users', usersRoute);
 apiRouter.use('/file-upload', uploadsRoute);
 apiRouter.use('/send-email', sendEmailRoute);
 apiRouter.use('/listings-organisations', listingsOrganisationsRoute);
+
+apiRouter.use('/*', (req, res) => res.status(404).json({ success: false, error: `Cannot ${req.method} ${req.originalUrl}` }));
