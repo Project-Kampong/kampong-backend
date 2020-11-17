@@ -27,7 +27,7 @@ export const getLikes = asyncHandler(async (req, res, next) => {
         // return 404 error response if user not found
         await db.one('SELECT * FROM Users WHERE user_id = $1', req.params.user_id);
 
-        const likes = await db.manyOrNone('SELECT * FROM likes NATURAL JOIN listings WHERE user_id = $1', req.params.user_id);
+        const likes = await db.manyOrNone('SELECT * FROM likes NATURAL JOIN listing WHERE user_id = $1', req.params.user_id);
 
         return res.status(200).json({
             success: true,

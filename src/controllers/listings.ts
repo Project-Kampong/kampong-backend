@@ -155,7 +155,7 @@ export const createListing = asyncHandler(async (req, res) => {
      * 2nd json: Listing story entry
      */
     const rows = await db.tx(async (query) => {
-        const createListing = await query.one('INSERT INTO listings (${this:name}) VALUES (${this:csv}) RETURNING *', data);
+        const createListing = await query.one('INSERT INTO listing (${this:name}) VALUES (${this:csv}) RETURNING *', data);
         const createListingStory = await query.one('INSERT INTO listingstories (listing_id) VALUES ($1) RETURNING *', createListing.listing_id);
         return query.batch([createListing, createListingStory]);
     });
@@ -216,7 +216,7 @@ export const updateListing = asyncHandler(async (req, res, next) => {
     // remove undefined items in json
     cleanseData(data);
 
-    const updateListingQuery = parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING *', req.params.id);
+    const updateListingQuery = parseSqlUpdateStmt(data, 'listing', 'WHERE listing_id = $1 RETURNING *', req.params.id);
 
     const rows = await db.one(updateListingQuery);
 
@@ -233,7 +233,7 @@ export const updateListing = asyncHandler(async (req, res, next) => {
  */
 export const verifyOrFeatureListing = asyncHandler(async (req, res, next) => {
     // check if listing exists
-    await db.one('SELECT * FROM listings WHERE listing_id = $1', req.params.id);
+    await db.one('SELECT * FROM listing WHERE listing_id = $1', req.params.id);
 
     const { is_verified, is_featured } = req.body;
 
@@ -241,7 +241,7 @@ export const verifyOrFeatureListing = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    const verifyListingQuery = parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING *', req.params.id);
+    const verifyListingQuery = parseSqlUpdateStmt(data, 'listing', 'WHERE listing_id = $1 RETURNING *', req.params.id);
 
     const rows = await db.one(verifyListingQuery);
 
@@ -266,7 +266,7 @@ export const deactivateListing = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`User not authorised to delete this listing`, 403));
     }
 
-    const rows = await db.one('UPDATE listings SET deleted_on=$1 WHERE listing_id = $2 RETURNING *', [
+    const rows = await db.one('UPDATE listing SET deleted_on=$1 WHERE listing_id = $2 RETURNING *', [
         moment.tz(process.env.DEFAULT_TIMEZONE).toDate(),
         req.params.id,
     ]);
@@ -284,14 +284,14 @@ export const deactivateListing = asyncHandler(async (req, res, next) => {
  */
 export const deleteListing = asyncHandler(async (req, res, next) => {
     // check if listing exists
-    await db.one('SELECT * FROM listings WHERE listing_id = $1', req.params.id);
+    await db.one('SELECT * FROM listing WHERE listing_id = $1', req.params.id);
 
     // Unauthorised if not admin
     if (req.user.role !== 'admin') {
         return next(new ErrorResponse(`User not authorised to delete this listing`, 403));
     }
 
-    const rows = await db.one('DELETE FROM listings WHERE listing_id = $1 RETURNING *', req.params.id);
+    const rows = await db.one('DELETE FROM listing WHERE listing_id = $1 RETURNING *', req.params.id);
 
     res.status(200).json({
         success: true,
@@ -311,11 +311,11 @@ export const searchListings = asyncHandler(async (req, res) => {
     const data = { fullTextKeyword: keyword.split(',').join(' | '), partialTextKeyword: keyword.split(',').map((key) => '%' + key + '%'), limit };
 
     const searchQuery =
-        'WITH rankedlistings AS (SELECT *, ts_rank_cd(keyword_vector, to_tsquery(${fullTextKeyword})) FROM listingsview) ' +
-        'SELECT * FROM rankedlistings WHERE keyword_vector @@ to_tsquery(${fullTextKeyword}) ' +
+        'WITH rankedlisting AS (SELECT *, ts_rank_cd(keyword_vector, to_tsquery(${fullTextKeyword})) FROM listingsview) ' +
+        'SELECT * FROM rankedlisting WHERE keyword_vector @@ to_tsquery(${fullTextKeyword}) ' +
         'UNION ' +
         // ILIKE is expensive query, remove line below if too expensive
-        "SELECT * FROM rankedlistings WHERE title ILIKE ANY (${partialTextKeyword}) OR category ILIKE ANY (${partialTextKeyword}) OR array_to_string(locations::text[], ' ') ILIKE ANY (${partialTextKeyword}) " +
+        "SELECT * FROM rankedlisting WHERE title ILIKE ANY (${partialTextKeyword}) OR category ILIKE ANY (${partialTextKeyword}) OR array_to_string(locations::text[], ' ') ILIKE ANY (${partialTextKeyword}) " +
         'ORDER BY ts_rank_cd DESC LIMIT ${limit}';
 
     const rows = await db.manyOrNone(searchQuery, data);

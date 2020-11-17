@@ -16,7 +16,7 @@ DROP TABLE IF EXISTS membership CASCADE;
 
 DROP TABLE IF EXISTS category CASCADE;
 
-DROP TABLE IF EXISTS Listings CASCADE;
+DROP TABLE IF EXISTS listing CASCADE;
 
 DROP TABLE IF EXISTS listingorganisation CASCADE;
 
@@ -145,7 +145,7 @@ CREATE TABLE category (
 	PRIMARY KEY (category_id)
 );
 
-CREATE TABLE Listings (
+CREATE TABLE listing (
 	listing_id VARCHAR,
 	created_by VARCHAR,
 	title VARCHAR NOT NULL,
@@ -176,7 +176,7 @@ CREATE TABLE listingorganisation (
 	organisation_id UUID NOT NULL,
 	PRIMARY KEY (listing_organisation_id),
 	UNIQUE (listing_id, organisation_id),
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE,
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE,
 	FOREIGN KEY (organisation_id) REFERENCES organisation ON DELETE CASCADE
 );
 
@@ -187,7 +187,7 @@ CREATE TABLE ListingStories (
 	solution TEXT,
 	outcome TEXT,
 	PRIMARY KEY (listing_id),
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
 CREATE TABLE HashTags (
@@ -196,7 +196,7 @@ CREATE TABLE HashTags (
 	tag VARCHAR NOT NULL,
 	PRIMARY KEY (hashtag_id),
 	UNIQUE (listing_id, tag),
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
 /* Jobs for a particular listing */
@@ -207,7 +207,7 @@ CREATE TABLE Jobs (
 	job_description TEXT,
 	deleted_on TIMESTAMPTZ DEFAULT NULL,
 	PRIMARY KEY (job_id),
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
 CREATE TABLE FAQs (
@@ -216,7 +216,7 @@ CREATE TABLE FAQs (
 	question TEXT NOT NULL,
 	answer TEXT,
 	PRIMARY KEY (faq_id),
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
 CREATE TABLE Likes (
@@ -226,7 +226,7 @@ CREATE TABLE Likes (
 	PRIMARY KEY (like_id),
 	UNIQUE (user_id, listing_id),
 	FOREIGN KEY (user_id) REFERENCES user ON DELETE CASCADE,
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
 CREATE TABLE ListingAdmins (
@@ -236,7 +236,7 @@ CREATE TABLE ListingAdmins (
 	PRIMARY KEY (listing_admin_id),
 	UNIQUE (user_id, listing_id),
 	FOREIGN KEY (user_id) REFERENCES user ON DELETE CASCADE,
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
 CREATE TABLE Participants (
@@ -248,7 +248,7 @@ CREATE TABLE Participants (
 	PRIMARY KEY (participant_id),
 	UNIQUE (listing_id, user_id),
 	FOREIGN KEY (user_id) REFERENCES user ON DELETE CASCADE,
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
 CREATE TABLE Milestones (
@@ -257,7 +257,7 @@ CREATE TABLE Milestones (
 	description TEXT NOT NULL,
 	date TIMESTAMPTZ,
 	PRIMARY KEY (milestone_id),
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
 CREATE TABLE ListingUpdates (
@@ -268,7 +268,7 @@ CREATE TABLE ListingUpdates (
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	PRIMARY KEY (listing_update_id),
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
 CREATE TABLE ListingComments (
@@ -281,7 +281,7 @@ CREATE TABLE ListingComments (
 	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	deleted_on TIMESTAMPTZ,
 	PRIMARY KEY (listing_comment_id),
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE SET NULL,
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE SET NULL,
 	FOREIGN KEY (user_id) REFERENCES user ON DELETE SET NULL,
 	FOREIGN KEY (reply_to_id) REFERENCES ListingComments (listing_comment_id) ON DELETE SET NULL
 );
@@ -299,6 +299,6 @@ CREATE TABLE ListingLocations (
 	location_id INTEGER NOT NULL,
 	PRIMARY KEY (listing_location_id),
 	UNIQUE (listing_id, location_id),
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE,
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE,
 	FOREIGN KEY (location_id) REFERENCES Locations ON DELETE CASCADE
 );

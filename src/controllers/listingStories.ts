@@ -25,7 +25,7 @@ export const getListingStoryForListing = asyncHandler(async (req, res, next) => 
  */
 export const updateListingStory = asyncHandler(async (req, res, next) => {
     // check if listing exists
-    const listing = await db.one('SELECT * FROM listings WHERE listing_id = $1', req.params.listing_id);
+    const listing = await db.one('SELECT * FROM listing WHERE listing_id = $1', req.params.listing_id);
     // if non-admin user, throw 403 if not listing owner
     if (req.user.role !== 'admin' && req.user.user_id !== listing.created_by) {
         return next(new ErrorResponse(`Not allowed to update story of listing which you are not the owner of`, 403));

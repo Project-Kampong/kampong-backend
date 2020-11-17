@@ -10,7 +10,7 @@ CREATE VIEW ListingsView AS WITH CombinedListingLocations AS (
 		ARRAY_AGG(lo.location) AS locations,
 		ARRAY_AGG(lo.location_id) AS location_ids
 	FROM
-		Listings ls
+		listing ls
 		JOIN (listinglocations lsl
 			JOIN locations lo ON lsl.location_id = lo.location_id) ON ls.listing_id = lsl.listing_id
 	GROUP BY
@@ -24,7 +24,7 @@ SELECT
 	cll.location_ids,
 	to_tsvector(l.title || ' ' || l.category || ' ' || array_to_string(cll.locations::text[], ' ')) AS keyword_vector
 FROM
-	Listings l
+	listing l
 	LEFT JOIN CombinedListingLocations cll ON l.listing_id = cll.listing_id
 	LEFT JOIN profile p ON l.created_by = p.user_id
 WHERE
