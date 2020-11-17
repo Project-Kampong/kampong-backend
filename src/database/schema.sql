@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS organisation CASCADE;
 
 DROP TABLE IF EXISTS programme CASCADE;
 
-DROP TABLE IF EXISTS Memberships CASCADE;
+DROP TABLE IF EXISTS membership CASCADE;
 
 DROP TABLE IF EXISTS category CASCADE;
 
@@ -116,7 +116,7 @@ CREATE TABLE organisation (
 	PRIMARY KEY (organisation_id)
 );
 
-CREATE TABLE Memberships (
+CREATE TABLE membership (
 	membership_id SERIAL,
 	organisation_id UUID NOT NULL,
 	user_id VARCHAR NOT NULL,
