@@ -44,7 +44,7 @@ DROP TABLE IF EXISTS Locations CASCADE;
 
 DROP TABLE IF EXISTS ListingLocations CASCADE;
 
-DROP TABLE IF EXISTS organisationannouncements CASCADE;
+DROP TABLE IF EXISTS organisationannouncement CASCADE;
 
 CREATE EXTENSION pg_stat_statements;
 
@@ -305,7 +305,7 @@ CREATE TABLE ListingLocations (
 	FOREIGN KEY (location_id) REFERENCES Locations ON DELETE CASCADE
 );
 
-CREATE TABLE organisationannouncements (
+CREATE TABLE organisationannouncement (
 	announcement_id SERIAL,
 	organisation_id UUID NOT NULL,
 	ANNOUNCEMENT TEXT NOT NULL,

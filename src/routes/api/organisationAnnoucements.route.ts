@@ -5,7 +5,7 @@ import { checkInputError, protect } from '../../middleware';
 import { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } from '../../utils';
 
 // Import controllers here
-import { createAnnouncement, updateAnnouncement, deleteAnnouncement } from '../../controllers/organisationAnnouncements';
+import { createAnnouncement, updateAnnouncement, deleteAnnouncement } from '../../controllers/organisationAnnouncement';
 
 // Define input validation chain
 const validateCreateAnnouncementFields = [

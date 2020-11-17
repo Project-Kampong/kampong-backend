@@ -23,7 +23,7 @@ export const createAnnouncement = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    const rows = await db.one('INSERT INTO organisationannouncements (${this:name}) VALUES (${this:csv}) RETURNING *', data);
+    const rows = await db.one('INSERT INTO organisationannouncement (${this:name}) VALUES (${this:csv}) RETURNING *', data);
 
     res.status(201).json({
         success: true,
@@ -39,7 +39,7 @@ export const createAnnouncement = asyncHandler(async (req, res, next) => {
 export const updateAnnouncement = asyncHandler(async (req, res, next) => {
     const { announcement } = req.body;
     const organisationIdObj = await db.one(
-        'SELECT organisation_id FROM organisationannouncements WHERE announcement_id = $1',
+        'SELECT organisation_id FROM organisationannouncement WHERE announcement_id = $1',
         req.params.announcement_id,
     );
     const isOrganisationOwner = await checkOrganisationOwner(req.user.user_id, organisationIdObj.organisation_id);
@@ -57,7 +57,7 @@ export const updateAnnouncement = asyncHandler(async (req, res, next) => {
 
     const updateAnnoucementQuery = parseSqlUpdateStmt(
         data,
-        'organisationannouncements',
+        'organisationannouncement',
         'WHERE announcement_id = $1 RETURNING *',
         req.params.announcement_id,
     );
@@ -77,7 +77,7 @@ export const updateAnnouncement = asyncHandler(async (req, res, next) => {
  */
 export const deleteAnnouncement = asyncHandler(async (req, res, next) => {
     const organisationIdObj = await db.one(
-        'SELECT organisation_id FROM organisationannouncements WHERE announcement_id = $1',
+        'SELECT organisation_id FROM organisationannouncement WHERE announcement_id = $1',
         req.params.announcement_id,
     );
     const isOrganisationOwner = await checkOrganisationOwner(req.user.user_id, organisationIdObj.organisation_id);
@@ -86,7 +86,7 @@ export const deleteAnnouncement = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Not authorised to update an announcement in this organisation`, 403));
     }
 
-    const rows = await db.one('DELETE FROM organisationannouncements WHERE announcement_id = $1 RETURNING *', req.params.announcement_id);
+    const rows = await db.one('DELETE FROM organisationannouncement WHERE announcement_id = $1 RETURNING *', req.params.announcement_id);
 
     res.status(200).json({
         success: true,
