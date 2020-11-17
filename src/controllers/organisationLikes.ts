@@ -34,7 +34,7 @@ export const unLikeOrganisation = asyncHandler(async (req, res, next) => {
     const organisationLike = await db.one('SELECT * FROM OrganisationLikes WHERE organisation_like_id = $1', req.params.organisation_like_id);
     if (organisationLike.user_id !== req.user.user_id) {
         return next(new ErrorResponse('Not authorised to access this route', 403));
-    };
+    }
 
     const rows = await db.one('DELETE FROM OrganisationLikes WHERE organisation_like_id = $1 RETURNING *', req.params.organisation_like_id);
 

@@ -14,6 +14,6 @@ const validateNewLikeFields = [check('organisation_id', INVALID_FIELD_MSG('organ
 router.use(protect);
 
 // Define routes
-router.route('/').post(validateNewLikeFields, checkInputError, likeOrganisation)
+router.route('/').post(validateNewLikeFields, checkInputError, likeOrganisation);
 
 router.delete('/:organisation_like_id', unLikeOrganisation);
