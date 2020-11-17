@@ -1,6 +1,6 @@
 DROP EXTENSION IF EXISTS pg_stat_statements CASCADE;
 
-DROP TABLE IF EXISTS Users CASCADE;
+DROP TABLE IF EXISTS user CASCADE;
 
 DROP TABLE IF EXISTS PendingUsers CASCADE;
 
@@ -46,7 +46,7 @@ DROP TABLE IF EXISTS ListingLocations CASCADE;
 
 CREATE EXTENSION pg_stat_statements;
 
-CREATE TABLE Users (
+CREATE TABLE user (
 	user_id VARCHAR,
 	first_name VARCHAR NOT NULL,
 	last_name VARCHAR,
