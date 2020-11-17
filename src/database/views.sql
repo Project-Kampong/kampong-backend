@@ -32,7 +32,7 @@ WHERE
 
 CREATE VIEW OrganisationsView AS
 	SELECT *
-  	FROM Organisations
+  	FROM organisation
   	WHERE deleted_on IS NULL;
 
 CREATE VIEW JobsView AS

@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS forgetpassworduser CASCADE;
 
 DROP TABLE IF EXISTS profile CASCADE;
 
-DROP TABLE IF EXISTS Organisations CASCADE;
+DROP TABLE IF EXISTS organisation CASCADE;
 
 DROP TABLE IF EXISTS Programmes CASCADE;
 
@@ -92,7 +92,7 @@ CREATE TABLE profile (
 	FOREIGN KEY (user_id) REFERENCES user ON DELETE CASCADE
 );
 
-CREATE TABLE Organisations (
+CREATE TABLE organisation (
 	organisation_id UUID,
 	name VARCHAR NOT NULL,
 	organisation_type VARCHAR,
@@ -124,7 +124,7 @@ CREATE TABLE Memberships (
 	joined_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	PRIMARY KEY (membership_id),
 	UNIQUE (organisation_id, user_id),
-	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE,
+	FOREIGN KEY (organisation_id) REFERENCES organisation ON DELETE CASCADE,
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE
 );
 
@@ -135,7 +135,7 @@ CREATE TABLE Programmes (
 	about TEXT,
 	media_url VARCHAR[],
 	PRIMARY KEY (programme_id),
-	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE
+	FOREIGN KEY (organisation_id) REFERENCES organisation ON DELETE CASCADE
 );
 
 CREATE TABLE category (
@@ -177,7 +177,7 @@ CREATE TABLE listingorganisation (
 	PRIMARY KEY (listing_organisation_id),
 	UNIQUE (listing_id, organisation_id),
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE,
-	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE
+	FOREIGN KEY (organisation_id) REFERENCES organisation ON DELETE CASCADE
 );
 
 CREATE TABLE ListingStories (

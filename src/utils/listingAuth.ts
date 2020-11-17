@@ -6,7 +6,7 @@ export const checkListingOwner = async (userId: string, listingId: string): Prom
 };
 
 export const checkOrganisationOwner = async (userId: string, organisationId: number): Promise<boolean> => {
-    const owner = await db.one<Promise<{ owned_by: string }>>('SELECT owned_by FROM Organisations WHERE organisation_id = $1', organisationId);
+    const owner = await db.one<Promise<{ owned_by: string }>>('SELECT owned_by FROM organisation WHERE organisation_id = $1', organisationId);
     return userId === owner.owned_by;
 };
 

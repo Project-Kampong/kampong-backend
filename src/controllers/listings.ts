@@ -48,7 +48,7 @@ export const getListings = asyncHandler(async (req, res) => {
         });
     } else if (req.params.organisation_id) {
         const rows = await db.manyOrNone(
-            'SELECT lv.*, lo.listing_organisation_id FROM organisations o LEFT JOIN listingorganisation lo ON o.organisation_id = lo.organisation_id LEFT JOIN listingsview lv ON lo.listing_id = lv.listing_id WHERE o.organisation_id = $1',
+            'SELECT lv.*, lo.listing_organisation_id FROM organisation o LEFT JOIN listingorganisation lo ON o.organisation_id = lo.organisation_id LEFT JOIN listingsview lv ON lo.listing_id = lv.listing_id WHERE o.organisation_id = $1',
             req.params.organisation_id,
         );
 
