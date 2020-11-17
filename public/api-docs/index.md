@@ -85,7 +85,7 @@ Backend API for Project Kampong.
 * [Listing Stories](#listing-stories)
 
   * [Get All Listing Stories](#1-get-all-listing-stories)
-  * [Get Single Listing Story](#2-get-single-listing-story)
+  * [Get Listing Story for Listing](#2-get-listing-story-for-listing)
   * [Update Listing Story](#3-update-listing-story)
 
 * [Listing Updates](#listing-updates)
@@ -2381,146 +2381,128 @@ URL: {{URL}}/api/categories/Health/listings
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Get All Listing Comments (200 OK)
+##### I. Example Request: Get All Listings for a Category (200 OK)
 
 
 
-##### I. Example Response: Get All Listing Comments (200 OK)
+##### I. Example Response: Get All Listings for a Category (200 OK)
 ```js
 {
     "success": true,
-    "count": 42,
-    "pagination": {
-        "next": {
-            "page": 2,
-            "limit": 25
-        }
-    },
     "data": [
         {
-            "listing_category_id": 1,
+            "category_id": 1,
             "category_name": "Health",
-            "category_group": "Social"
+            "category_group": "Social",
+            "listing_id": "d95a6c2e-3c33-447c-be0c-be399247dd3f",
+            "created_by": "d69a127d-815b-4834-b2b6-54ab398fccad",
+            "title": "Supporting COVID-19 Efforts",
+            "category": "Health",
+            "about": "Triple-buffered client-server installation",
+            "tagline": "Emerge stronger together",
+            "mission": "streamline web-enabled ROI",
+            "listing_url": "https://mtv.com/blandit/mi/in.png",
+            "listing_email": "fightcovid@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://images.pexels.com/photos/127873/pexels-photo-127873.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                "https://robohash.org/auteligendimagnam.bmp?size=500x500&set=set1"
+            ],
+            "is_published": false,
+            "is_verified": false,
+            "is_featured": false,
+            "start_date": "2020-01-01T12:54:13.000Z",
+            "end_date": null,
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:33:56.159Z",
+            "deleted_on": null,
+            "nickname": "Aaron",
+            "profile_picture": "https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+            "locations": [
+                "Woodlands"
+            ],
+            "location_ids": [
+                3
+            ],
+            "keyword_vector": "'-19':3 'covid':2 'effort':4 'health':5 'support':1 'woodland':6"
         },
         {
-            "listing_category_id": 2,
-            "category_name": "Marriage",
-            "category_group": "Social"
+            "category_id": 1,
+            "category_name": "Health",
+            "category_group": "Social",
+            "listing_id": "0de8f600-28a8-11eb-9eae-89e03086f17e",
+            "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
+            "title": "New title 1",
+            "category": "Health",
+            "about": "test about",
+            "tagline": "test tagline",
+            "mission": "test mission",
+            "listing_url": "www.test.com",
+            "listing_email": "new_listing@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg"
+            ],
+            "is_published": false,
+            "is_verified": false,
+            "is_featured": false,
+            "start_date": "2019-08-15T08:45:43.415Z",
+            "end_date": "2020-07-17T08:45:43.415Z",
+            "created_on": "2020-11-17T07:39:41.794Z",
+            "updated_on": "2020-11-17T07:39:41.794Z",
+            "deleted_on": null,
+            "nickname": "Wayne",
+            "profile_picture": "https://images.pexels.com/photos/1561863/pexels-photo-1561863.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+            "locations": null,
+            "location_ids": null,
+            "keyword_vector": null
         },
         {
-            "listing_category_id": 3,
-            "category_name": "Education",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 4,
-            "category_name": "Mentorship",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 5,
-            "category_name": "Retirement",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 6,
-            "category_name": "Housing",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 7,
-            "category_name": "Rental Flats",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 8,
-            "category_name": "Family",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 9,
-            "category_name": "Gender",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 10,
-            "category_name": "Elderly",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 11,
-            "category_name": "Youth",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 12,
-            "category_name": "Youth At Risk",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 13,
-            "category_name": "Pre-School",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 14,
-            "category_name": "Race",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 15,
-            "category_name": "Language",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 16,
-            "category_name": "Science",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 17,
-            "category_name": "Art",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 18,
-            "category_name": "Sports",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 19,
-            "category_name": "Poverty",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 20,
-            "category_name": "Inequality",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 21,
-            "category_name": "Recycling",
-            "category_group": "Environment"
-        },
-        {
-            "listing_category_id": 22,
-            "category_name": "Green",
-            "category_group": "Environment"
-        },
-        {
-            "listing_category_id": 23,
-            "category_name": "Water",
-            "category_group": "Environment"
-        },
-        {
-            "listing_category_id": 24,
-            "category_name": "Waste",
-            "category_group": "Environment"
-        },
-        {
-            "listing_category_id": 25,
-            "category_name": "Food",
-            "category_group": "Environment"
+            "category_id": 1,
+            "category_name": "Health",
+            "category_group": "Social",
+            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
+            "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
+            "title": "Updated title 1",
+            "category": "Health",
+            "about": "Updated about",
+            "tagline": "Updated tagline",
+            "mission": "Updated mission",
+            "listing_url": "www.updated-test.com",
+            "listing_email": "updated_email@gmail.com",
+            "listing_status": "completed",
+            "pics": [
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg"
+            ],
+            "is_published": true,
+            "is_verified": false,
+            "is_featured": false,
+            "start_date": "2018-08-15T08:45:43.415Z",
+            "end_date": "2020-01-30T08:45:43.415Z",
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:46:43.565Z",
+            "deleted_on": null,
+            "nickname": "Wayne",
+            "profile_picture": "https://images.pexels.com/photos/1561863/pexels-photo-1561863.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+            "locations": [
+                "Admiralty",
+                "Kranji",
+                "Woodlands"
+            ],
+            "location_ids": [
+                1,
+                2,
+                3
+            ],
+            "keyword_vector": "'1':3 'admiralti':5 'health':4 'kranji':6 'titl':2 'updat':1 'woodland':7"
         }
     ]
 }
@@ -6003,10 +5985,10 @@ URL: {{URL}}/api/listings/stories
 
 
 
-### 2. Get Single Listing Story
+### 2. Get Listing Story for Listing
 
 
-Get single listing story identified by listing id. Permission: Public.
+Get listing story for listing, identified by listing id. Permission: Public.
 
 
 ***Endpoint:***
@@ -10934,44 +10916,45 @@ URL: {{URL}}/api/organisations/8426a370-280e-11eb-aa97-9d0bb1a7de0d/listings
     "success": true,
     "data": [
         {
-            "organisation_id": 1,
-            "name": "Shuffledrive",
-            "organisation_type": "Consultancy",
-            "about": null,
-            "website_url": "microsoft.com",
-            "phone": "8765378253",
-            "email": "mallgood0@slideshare.net",
-            "address": null,
-            "owned_by": null,
-            "locations": null,
-            "story": "Multi-layered regional framework",
-            "facebook_link": null,
-            "twitter_link": null,
-            "instagram_link": null,
-            "banner_photo": null,
-            "profile_photo": null,
-            "additional_photos": null,
+            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
+            "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
+            "title": "Updated title 1",
+            "category": "Health",
+            "about": "Updated about",
+            "tagline": "Updated tagline",
+            "mission": "Updated mission",
+            "listing_url": "www.updated-test.com",
+            "listing_email": "updated_email@gmail.com",
+            "listing_status": "completed",
+            "pics": [
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg"
+            ],
+            "is_published": true,
             "is_verified": false,
-            "created_on": "2020-08-20T20:50:15.047Z",
+            "is_featured": false,
+            "start_date": "2018-08-15T08:45:43.415Z",
+            "end_date": "2020-01-30T08:45:43.415Z",
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:46:43.565Z",
             "deleted_on": null,
-            "listing_organisation_id": 1,
-            "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
-            "created_by": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
-            "title": "Project Kampong",
-            "category": "Technology",
-            "tagline": "With Kampong you can",
-            "mission": "To build a platform that connects people with ideas and skills to build and track social good project initiatives",
-            "listing_url": "www.test.com",
-            "listing_email": "joinourkampong@gmail.com",
-            "listing_status": "ongoing",
-            "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/kampong%20logo-1597985636566.jpeg",
-            "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/group-large-1597985817857.png",
-            "pic3": null,
-            "pic4": null,
-            "pic5": null,
-            "is_published": false,
-            "start_date": "2020-08-20T20:50:15.047Z",
-            "end_date": null
+            "nickname": "Wayne",
+            "profile_picture": "https://images.pexels.com/photos/1561863/pexels-photo-1561863.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+            "locations": [
+                "Admiralty",
+                "Kranji",
+                "Woodlands"
+            ],
+            "location_ids": [
+                1,
+                2,
+                3
+            ],
+            "keyword_vector": "'1':3 'admiralti':5 'health':4 'kranji':6 'titl':2 'updat':1 'woodland':7",
+            "listing_organisation_id": 1
         }
     ]
 }
@@ -13859,4 +13842,4 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-17 07:48:53 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-17 13:52:13 by [docgen](https://github.com/thedevsaddam/docgen)
