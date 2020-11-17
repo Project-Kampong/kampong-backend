@@ -2,7 +2,7 @@ DROP EXTENSION IF EXISTS pg_stat_statements CASCADE;
 
 DROP TABLE IF EXISTS user CASCADE;
 
-DROP TABLE IF EXISTS PendingUsers CASCADE;
+DROP TABLE IF EXISTS pendinguser CASCADE;
 
 DROP TABLE IF EXISTS ForgetPasswordUsers CASCADE;
 
@@ -57,12 +57,12 @@ CREATE TABLE user (
 	PRIMARY KEY (user_id)
 );
 
-CREATE TABLE PendingUsers (
+CREATE TABLE pendinguser (
 	pending_user_id SERIAL,
 	user_id VARCHAR UNIQUE NOT NULL,
 	token VARCHAR UNIQUE NOT NULL,
 	PRIMARY KEY (pending_user_id),
-	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE
+	FOREIGN KEY (user_id) REFERENCES user ON DELETE CASCADE
 );
 
 CREATE TABLE ForgetPasswordUsers (
