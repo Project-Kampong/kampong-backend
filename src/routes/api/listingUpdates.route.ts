@@ -11,21 +11,13 @@ import { getListingUpdatesForListing, createListingUpdate, modifyListingUpdate, 
 const validateCreateListingUpdateFields = [
     check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID(),
     check('description', INVALID_FIELD_MSG('description')).trim().notEmpty(),
+    check('pics').isArray(),
 ];
 
 const validateModifyListingUpdateFields = [
-    oneOf(
-        [
-            check('description').exists(),
-            check('pic1').exists(),
-            check('pic2').exists(),
-            check('pic3').exists(),
-            check('pic4').exists(),
-            check('pic5').exists(),
-        ],
-        NO_FIELD_UPDATED_MSG,
-    ),
+    oneOf([check('description').exists(), check('pics').exists()], NO_FIELD_UPDATED_MSG),
     check('description', INVALID_FIELD_MSG('description')).optional().trim().notEmpty(),
+    check('pics').optional().isArray(),
 ];
 
 router.route('/').get(getListingUpdatesForListing);

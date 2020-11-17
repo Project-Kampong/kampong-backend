@@ -34,16 +34,12 @@ export const getListingUpdatesForListing = asyncHandler(async (req, res, next) =
  * @access  Owner/Admin
  */
 export const createListingUpdate = asyncHandler(async (req, res, next) => {
-    const { listing_id, description, pic1, pic2, pic3, pic4, pic5 } = req.body;
+    const { listing_id, description, pics } = req.body;
 
     const data = {
         listing_id,
         description,
-        pic1,
-        pic2,
-        pic3,
-        pic4,
-        pic5,
+        pics,
     };
 
     cleanseData(data);
@@ -82,15 +78,11 @@ export const modifyListingUpdate = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Not authorised to update listing update for this listing`, 403));
     }
 
-    const { description, pic1, pic2, pic3, pic4, pic5 } = req.body;
+    const { description, pics } = req.body;
 
     const data = {
         description,
-        pic1,
-        pic2,
-        pic3,
-        pic4,
-        pic5,
+        pics,
         updated_on: moment.tz(process.env.DEFAULT_TIMEZONE).toDate(),
     };
 
