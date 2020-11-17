@@ -17,8 +17,6 @@ export const NO_FIELD_UPDATED_MSG = 'At least one field must be updated';
 
 export const INVALID_LISTING_STATUS_MSG = 'Listing status can only be "ongoing" or "completed"';
 
-export const INVALID_URL_MSG = 'Please enter a valid URL';
-
 export const INVALID_PHONE_NUMBER_MSG = 'Please enter a valid phone number';
 
 export const INVALID_LOCATION_MSG = 'Please enter a valid location';
