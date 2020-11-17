@@ -42,7 +42,6 @@ export const updateAnnouncement = asyncHandler(async (req, res, next) => {
         'SELECT organisation_id FROM organisationannouncements WHERE announcement_id = $1',
         req.params.announcement_id,
     );
-    console.log(organisationIdObj.organisation_id);
     const isOrganisationOwner = await checkOrganisationOwner(req.user.user_id, organisationIdObj.organisation_id);
 
     if (!(req.user.role === 'admin' || isOrganisationOwner)) {
