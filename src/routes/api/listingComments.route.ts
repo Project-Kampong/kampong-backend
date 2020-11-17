@@ -1,13 +1,12 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
-import { advancedResults, checkInputError, protect } from '../../middleware';
+import { checkInputError, protect } from '../../middleware';
 import { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG, INVALID_TIMESTAMP_MSG } from '../../utils';
 
 // import controllers here
 import {
     getListingComments,
-    getListingComment,
     getListingCommentChildren,
     createListingComment,
     updateListingComment,
@@ -27,8 +26,7 @@ const validateUpdateListingCommentFields = [
     check('comment', INVALID_FIELD_MSG('comment')).optional().trim().notEmpty(),
 ];
 
-router.route('/').get(advancedResults('listingcommentsview'), getListingComments);
-router.route('/:id').get(getListingComment);
+router.route('/').get(getListingComments);
 router.route('/:id/children').get(getListingCommentChildren);
 
 // all routes below only accessible to authenticated user

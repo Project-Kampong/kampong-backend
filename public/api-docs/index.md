@@ -33,9 +33,7 @@ Backend API for Project Kampong.
 
   * [Create Faq](#1-create-faq)
   * [Delete Faq](#2-delete-faq)
-  * [Get All Faqs](#3-get-all-faqs)
-  * [Get Single Faq](#4-get-single-faq)
-  * [Update Faq](#5-update-faq)
+  * [Update Faq](#3-update-faq)
 
 * [File Upload](#file-upload)
 
@@ -46,24 +44,18 @@ Backend API for Project Kampong.
 
   * [Create Hashtag](#1-create-hashtag)
   * [Delete Hashtag](#2-delete-hashtag)
-  * [Get All Hashtags](#3-get-all-hashtags)
-  * [Get Single Hashtag](#4-get-single-hashtag)
 
 * [Jobs](#jobs)
 
   * [Create Job](#1-create-job)
   * [Deactivate Job](#2-deactivate-job)
   * [Delete Job](#3-delete-job)
-  * [Get All Jobs](#4-get-all-jobs)
-  * [Get Single Job](#5-get-single-job)
-  * [Update Job](#6-update-job)
+  * [Update Job](#4-update-job)
 
 * [Likes](#likes)
 
-  * [Get All Likes](#1-get-all-likes)
-  * [Get Single Like](#2-get-single-like)
-  * [Like Listing](#3-like-listing)
-  * [Unlike Listing](#4-unlike-listing)
+  * [Like Listing](#1-like-listing)
+  * [Unlike Listing](#2-unlike-listing)
 
 * [Listing Comments](#listing-comments)
 
@@ -71,30 +63,23 @@ Backend API for Project Kampong.
   * [Deactivate Listing Comment](#2-deactivate-listing-comment)
   * [Delete Listing Comment](#3-delete-listing-comment)
   * [Get All Children Comment for Listing Comment](#4-get-all-children-comment-for-listing-comment)
-  * [Get All Listing Comments](#5-get-all-listing-comments)
-  * [Get Single Listing Comment](#6-get-single-listing-comment)
-  * [Update Listing Comment](#7-update-listing-comment)
+  * [Update Listing Comment](#5-update-listing-comment)
 
 * [Listing Locations](#listing-locations)
 
   * [Create Listing Location](#1-create-listing-location)
   * [Delete Listing Location](#2-delete-listing-location)
-  * [Get All Listing Locations](#3-get-all-listing-locations)
-  * [Get Single Listing Location](#4-get-single-listing-location)
 
 * [Listing Stories](#listing-stories)
 
-  * [Get All Listing Stories](#1-get-all-listing-stories)
-  * [Get Single Listing Story](#2-get-single-listing-story)
-  * [Update Listing Story](#3-update-listing-story)
+  * [Get Listing Story for Listing](#1-get-listing-story-for-listing)
+  * [Update Listing Story](#2-update-listing-story)
 
 * [Listing Updates](#listing-updates)
 
   * [Create Listing Update](#1-create-listing-update)
   * [Delete Listing Update](#2-delete-listing-update)
-  * [Get All Listing Updates](#3-get-all-listing-updates)
-  * [Get Single Listing Update](#4-get-single-listing-update)
-  * [Modify Listing Update](#5-modify-listing-update)
+  * [Modify Listing Update](#3-modify-listing-update)
 
 * [Listings](#listings)
 
@@ -135,9 +120,7 @@ Backend API for Project Kampong.
 
   * [Create Milestone](#1-create-milestone)
   * [Delete Milestone](#2-delete-milestone)
-  * [Get All Milestones](#3-get-all-milestones)
-  * [Get Single Milestone](#4-get-single-milestone)
-  * [Update Milestone](#5-update-milestone)
+  * [Update Milestone](#3-update-milestone)
 
 * [Organisations](#organisations)
 
@@ -152,8 +135,6 @@ Backend API for Project Kampong.
 
   * [Create participant](#1-create-participant)
   * [Delete Participant](#2-delete-participant)
-  * [Get All Participants](#3-get-all-participants)
-  * [Get Single Participant](#4-get-single-participant)
 
 * [Programmes](#programmes)
 
@@ -2381,146 +2362,128 @@ URL: {{URL}}/api/categories/Health/listings
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Get All Listing Comments (200 OK)
+##### I. Example Request: Get All Listings for a Category (200 OK)
 
 
 
-##### I. Example Response: Get All Listing Comments (200 OK)
+##### I. Example Response: Get All Listings for a Category (200 OK)
 ```js
 {
     "success": true,
-    "count": 42,
-    "pagination": {
-        "next": {
-            "page": 2,
-            "limit": 25
-        }
-    },
     "data": [
         {
-            "listing_category_id": 1,
+            "category_id": 1,
             "category_name": "Health",
-            "category_group": "Social"
+            "category_group": "Social",
+            "listing_id": "d95a6c2e-3c33-447c-be0c-be399247dd3f",
+            "created_by": "d69a127d-815b-4834-b2b6-54ab398fccad",
+            "title": "Supporting COVID-19 Efforts",
+            "category": "Health",
+            "about": "Triple-buffered client-server installation",
+            "tagline": "Emerge stronger together",
+            "mission": "streamline web-enabled ROI",
+            "listing_url": "https://mtv.com/blandit/mi/in.png",
+            "listing_email": "fightcovid@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://images.pexels.com/photos/127873/pexels-photo-127873.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                "https://robohash.org/auteligendimagnam.bmp?size=500x500&set=set1"
+            ],
+            "is_published": false,
+            "is_verified": false,
+            "is_featured": false,
+            "start_date": "2020-01-01T12:54:13.000Z",
+            "end_date": null,
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:33:56.159Z",
+            "deleted_on": null,
+            "nickname": "Aaron",
+            "profile_picture": "https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+            "locations": [
+                "Woodlands"
+            ],
+            "location_ids": [
+                3
+            ],
+            "keyword_vector": "'-19':3 'covid':2 'effort':4 'health':5 'support':1 'woodland':6"
         },
         {
-            "listing_category_id": 2,
-            "category_name": "Marriage",
-            "category_group": "Social"
+            "category_id": 1,
+            "category_name": "Health",
+            "category_group": "Social",
+            "listing_id": "0de8f600-28a8-11eb-9eae-89e03086f17e",
+            "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
+            "title": "New title 1",
+            "category": "Health",
+            "about": "test about",
+            "tagline": "test tagline",
+            "mission": "test mission",
+            "listing_url": "www.test.com",
+            "listing_email": "new_listing@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg"
+            ],
+            "is_published": false,
+            "is_verified": false,
+            "is_featured": false,
+            "start_date": "2019-08-15T08:45:43.415Z",
+            "end_date": "2020-07-17T08:45:43.415Z",
+            "created_on": "2020-11-17T07:39:41.794Z",
+            "updated_on": "2020-11-17T07:39:41.794Z",
+            "deleted_on": null,
+            "nickname": "Wayne",
+            "profile_picture": "https://images.pexels.com/photos/1561863/pexels-photo-1561863.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+            "locations": null,
+            "location_ids": null,
+            "keyword_vector": null
         },
         {
-            "listing_category_id": 3,
-            "category_name": "Education",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 4,
-            "category_name": "Mentorship",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 5,
-            "category_name": "Retirement",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 6,
-            "category_name": "Housing",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 7,
-            "category_name": "Rental Flats",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 8,
-            "category_name": "Family",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 9,
-            "category_name": "Gender",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 10,
-            "category_name": "Elderly",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 11,
-            "category_name": "Youth",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 12,
-            "category_name": "Youth At Risk",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 13,
-            "category_name": "Pre-School",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 14,
-            "category_name": "Race",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 15,
-            "category_name": "Language",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 16,
-            "category_name": "Science",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 17,
-            "category_name": "Art",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 18,
-            "category_name": "Sports",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 19,
-            "category_name": "Poverty",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 20,
-            "category_name": "Inequality",
-            "category_group": "Social"
-        },
-        {
-            "listing_category_id": 21,
-            "category_name": "Recycling",
-            "category_group": "Environment"
-        },
-        {
-            "listing_category_id": 22,
-            "category_name": "Green",
-            "category_group": "Environment"
-        },
-        {
-            "listing_category_id": 23,
-            "category_name": "Water",
-            "category_group": "Environment"
-        },
-        {
-            "listing_category_id": 24,
-            "category_name": "Waste",
-            "category_group": "Environment"
-        },
-        {
-            "listing_category_id": 25,
-            "category_name": "Food",
-            "category_group": "Environment"
+            "category_id": 1,
+            "category_name": "Health",
+            "category_group": "Social",
+            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
+            "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
+            "title": "Updated title 1",
+            "category": "Health",
+            "about": "Updated about",
+            "tagline": "Updated tagline",
+            "mission": "Updated mission",
+            "listing_url": "www.updated-test.com",
+            "listing_email": "updated_email@gmail.com",
+            "listing_status": "completed",
+            "pics": [
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg"
+            ],
+            "is_published": true,
+            "is_verified": false,
+            "is_featured": false,
+            "start_date": "2018-08-15T08:45:43.415Z",
+            "end_date": "2020-01-30T08:45:43.415Z",
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:46:43.565Z",
+            "deleted_on": null,
+            "nickname": "Wayne",
+            "profile_picture": "https://images.pexels.com/photos/1561863/pexels-photo-1561863.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+            "locations": [
+                "Admiralty",
+                "Kranji",
+                "Woodlands"
+            ],
+            "location_ids": [
+                1,
+                2,
+                3
+            ],
+            "keyword_vector": "'1':3 'admiralti':5 'health':4 'kranji':6 'titl':2 'updat':1 'woodland':7"
         }
     ]
 }
@@ -2781,265 +2744,7 @@ URL: {{URL}}/api/faqs/23
 
 
 
-### 3. Get All Faqs
-
-
-Get all FAQs. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/faqs
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get All Faqs (200 OK)
-
-
-
-##### I. Example Response: Get All Faqs (200 OK)
-```js
-{
-    "success": true,
-    "count": 25,
-    "pagination": {
-        "next": {
-            "page": 2,
-            "limit": 25
-        }
-    },
-    "data": [
-        {
-            "faq_id": 1,
-            "listing_id": 8,
-            "question": "consequat nulla nisl nunc nisl duis bibendum felis",
-            "answer": "24/7"
-        },
-        {
-            "faq_id": 2,
-            "listing_id": 5,
-            "question": "mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et magnis dis",
-            "answer": "Graphic Interface"
-        },
-        {
-            "faq_id": 3,
-            "listing_id": 15,
-            "question": "mauris vulputate elementum nullam varius nulla facilisi cras",
-            "answer": "conglomeration"
-        },
-        {
-            "faq_id": 4,
-            "listing_id": 5,
-            "question": "felis donec semper sapien a libero nam dui proin leo odio porttitor",
-            "answer": "Visionary"
-        },
-        {
-            "faq_id": 5,
-            "listing_id": 11,
-            "question": "congue risus semper porta volutpat quam",
-            "answer": "logistical"
-        },
-        {
-            "faq_id": 6,
-            "listing_id": 6,
-            "question": "vel est donec odio justo sollicitudin ut suscipit a",
-            "answer": "neutral"
-        },
-        {
-            "faq_id": 7,
-            "listing_id": 19,
-            "question": "odio in hac habitasse platea dictumst maecenas ut massa quis augue",
-            "answer": "analyzer"
-        },
-        {
-            "faq_id": 8,
-            "listing_id": 15,
-            "question": "sed sagittis nam congue risus semper porta volutpat quam pede lobortis ligula",
-            "answer": "3rd generation"
-        },
-        {
-            "faq_id": 9,
-            "listing_id": 19,
-            "question": "cras mi pede malesuada in imperdiet et commodo vulputate justo",
-            "answer": "internet solution"
-        },
-        {
-            "faq_id": 10,
-            "listing_id": 10,
-            "question": "vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices",
-            "answer": "superstructure"
-        },
-        {
-            "faq_id": 11,
-            "listing_id": 15,
-            "question": "sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque",
-            "answer": "Cloned"
-        },
-        {
-            "faq_id": 12,
-            "listing_id": 19,
-            "question": "turpis sed ante vivamus tortor duis mattis",
-            "answer": "Managed"
-        },
-        {
-            "faq_id": 13,
-            "listing_id": 12,
-            "question": "id sapien in sapien iaculis congue",
-            "answer": "Switchable"
-        },
-        {
-            "faq_id": 14,
-            "listing_id": 14,
-            "question": "ac enim in tempor turpis nec euismod scelerisque quam turpis",
-            "answer": "Fundamental"
-        },
-        {
-            "faq_id": 15,
-            "listing_id": 6,
-            "question": "cras non velit nec nisi vulputate nonummy",
-            "answer": "solution"
-        },
-        {
-            "faq_id": 16,
-            "listing_id": 10,
-            "question": "erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi integer",
-            "answer": "Fully-configurable"
-        },
-        {
-            "faq_id": 17,
-            "listing_id": 18,
-            "question": "sagittis sapien cum sociis natoque penatibus et magnis dis",
-            "answer": "workforce"
-        },
-        {
-            "faq_id": 18,
-            "listing_id": 11,
-            "question": "nunc viverra dapibus nulla suscipit ligula in lacus",
-            "answer": "framework"
-        },
-        {
-            "faq_id": 19,
-            "listing_id": 16,
-            "question": "quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus",
-            "answer": "stable"
-        },
-        {
-            "faq_id": 20,
-            "listing_id": 18,
-            "question": "scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec",
-            "answer": "User-friendly"
-        },
-        {
-            "faq_id": 21,
-            "listing_id": 2,
-            "question": "ullamcorper purus sit amet nulla quisque arcu libero rutrum ac lobortis",
-            "answer": "client-server"
-        },
-        {
-            "faq_id": 22,
-            "listing_id": 1,
-            "question": "amet justo morbi ut odio cras mi pede malesuada in",
-            "answer": "Phased"
-        },
-        {
-            "faq_id": 23,
-            "listing_id": 7,
-            "question": "diam erat fermentum justo nec condimentum neque sapien placerat ante",
-            "answer": "executive"
-        },
-        {
-            "faq_id": 24,
-            "listing_id": 1,
-            "question": "ullamcorper augue a suscipit nulla elit ac nulla sed",
-            "answer": "Exclusive"
-        },
-        {
-            "faq_id": 25,
-            "listing_id": 19,
-            "question": "arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus",
-            "answer": "data-warehouse"
-        }
-    ]
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 4. Get Single Faq
-
-
-Get single FAQ. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/faqs/1
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get Single Faq (200 OK)
-
-
-
-##### I. Example Response: Get Single Faq (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "faq_id": 1,
-        "listing_id": 8,
-        "question": "consequat nulla nisl nunc nisl duis bibendum felis",
-        "answer": "24/7"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Get Single Faq (404 Not Found - Non-existent FAQ)
-
-
-
-##### II. Example Response: Get Single Faq (404 Not Found - Non-existent FAQ)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
-### 5. Update Faq
+### 3. Update Faq
 
 
 Update FAQ identified by faq id. Permission: Owner/Admin.
@@ -3536,238 +3241,6 @@ URL: {{URL}}/api/hashtags/15
 
 
 
-### 3. Get All Hashtags
-
-
-Get all hashtags. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/hashtags
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get All Hashtags (200 OK)
-
-
-
-##### I. Example Response: Get All Hashtags (200 OK)
-```js
-{
-    "success": true,
-    "count": 25,
-    "pagination": {
-        "next": {
-            "page": 2,
-            "limit": 25
-        }
-    },
-    "data": [
-        {
-            "hashtag_id": 1,
-            "listing_id": 4,
-            "tag": "#broker0"
-        },
-        {
-            "hashtag_id": 2,
-            "listing_id": 13,
-            "tag": "#sandyfirth1"
-        },
-        {
-            "hashtag_id": 3,
-            "listing_id": 12,
-            "tag": "#tudhope2"
-        },
-        {
-            "hashtag_id": 4,
-            "listing_id": 17,
-            "tag": "#slatford3"
-        },
-        {
-            "hashtag_id": 5,
-            "listing_id": 20,
-            "tag": "#clissell4"
-        },
-        {
-            "hashtag_id": 6,
-            "listing_id": 20,
-            "tag": "#bateup5"
-        },
-        {
-            "hashtag_id": 7,
-            "listing_id": 10,
-            "tag": "#smallcomb6"
-        },
-        {
-            "hashtag_id": 8,
-            "listing_id": 1,
-            "tag": "#wyrall7"
-        },
-        {
-            "hashtag_id": 9,
-            "listing_id": 12,
-            "tag": "#boteman8"
-        },
-        {
-            "hashtag_id": 10,
-            "listing_id": 12,
-            "tag": "#joontjes9"
-        },
-        {
-            "hashtag_id": 11,
-            "listing_id": 12,
-            "tag": "#baudina"
-        },
-        {
-            "hashtag_id": 12,
-            "listing_id": 8,
-            "tag": "#turfittb"
-        },
-        {
-            "hashtag_id": 13,
-            "listing_id": 4,
-            "tag": "#chastelc"
-        },
-        {
-            "hashtag_id": 14,
-            "listing_id": 5,
-            "tag": "#mathand"
-        },
-        {
-            "hashtag_id": 15,
-            "listing_id": 17,
-            "tag": "#vasee"
-        },
-        {
-            "hashtag_id": 16,
-            "listing_id": 8,
-            "tag": "#criplef"
-        },
-        {
-            "hashtag_id": 17,
-            "listing_id": 13,
-            "tag": "#mullesg"
-        },
-        {
-            "hashtag_id": 18,
-            "listing_id": 20,
-            "tag": "#shegogh"
-        },
-        {
-            "hashtag_id": 19,
-            "listing_id": 17,
-            "tag": "#switzeri"
-        },
-        {
-            "hashtag_id": 20,
-            "listing_id": 2,
-            "tag": "#brittinj"
-        },
-        {
-            "hashtag_id": 21,
-            "listing_id": 13,
-            "tag": "#dallmank"
-        },
-        {
-            "hashtag_id": 22,
-            "listing_id": 7,
-            "tag": "#pashl"
-        },
-        {
-            "hashtag_id": 23,
-            "listing_id": 11,
-            "tag": "#apthorpem"
-        },
-        {
-            "hashtag_id": 24,
-            "listing_id": 9,
-            "tag": "#pien"
-        },
-        {
-            "hashtag_id": 25,
-            "listing_id": 6,
-            "tag": "#raybouldo"
-        }
-    ]
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 4. Get Single Hashtag
-
-
-Get single hashtag. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/hashtags/1
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get Single Hashtag (200 OK)
-
-
-
-##### I. Example Response: Get Single Hashtag (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "hashtag_id": 1,
-        "listing_id": 4,
-        "tag": "#broker0"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Get Single Hashtag (404 Not Found - Non-existent hashtag id)
-
-
-
-##### II. Example Response: Get Single Hashtag (404 Not Found - Non-existent hashtag id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
 ## Jobs
 Jobs CRUD functionality.
 
@@ -4081,246 +3554,7 @@ URL: {{URL}}/api/jobs/22
 
 
 
-### 4. Get All Jobs
-
-
-Get all jobs. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/jobs
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get All Jobs (200 OK)
-
-
-
-##### I. Example Response: Get All Jobs (200 OK)
-```js
-{
-    "success": true,
-    "count": 25,
-    "pagination": {
-        "next": {
-            "page": 2,
-            "limit": 25
-        }
-    },
-    "data": [
-        {
-            "job_id": 1,
-            "listing_id": 8,
-            "job_title": "Account Representative I",
-            "job_description": "Polarised next generation alliance"
-        },
-        {
-            "job_id": 2,
-            "listing_id": 4,
-            "job_title": "Project Manager",
-            "job_description": "Ameliorated 24 hour structure"
-        },
-        {
-            "job_id": 3,
-            "listing_id": 16,
-            "job_title": "Teacher",
-            "job_description": "Enhanced 6th generation portal"
-        },
-        {
-            "job_id": 4,
-            "listing_id": 7,
-            "job_title": "VP Accounting",
-            "job_description": "Multi-channelled local pricing structure"
-        },
-        {
-            "job_id": 5,
-            "listing_id": 12,
-            "job_title": "Office Assistant IV",
-            "job_description": "Vision-oriented explicit moratorium"
-        },
-        {
-            "job_id": 6,
-            "listing_id": 13,
-            "job_title": "Senior Editor",
-            "job_description": "Devolved high-level protocol"
-        },
-        {
-            "job_id": 7,
-            "listing_id": 20,
-            "job_title": "Civil Engineer",
-            "job_description": "Front-line optimal algorithm"
-        },
-        {
-            "job_id": 8,
-            "listing_id": 13,
-            "job_title": "Senior Quality Engineer",
-            "job_description": "Exclusive incremental toolset"
-        },
-        {
-            "job_id": 9,
-            "listing_id": 15,
-            "job_title": "Programmer Analyst I",
-            "job_description": "Polarised bifurcated open architecture"
-        },
-        {
-            "job_id": 10,
-            "listing_id": 5,
-            "job_title": "Paralegal",
-            "job_description": "Networked intangible system engine"
-        },
-        {
-            "job_id": 11,
-            "listing_id": 5,
-            "job_title": "Project Manager",
-            "job_description": "Profound optimizing matrix"
-        },
-        {
-            "job_id": 12,
-            "listing_id": 15,
-            "job_title": "Tax Accountant",
-            "job_description": "Realigned grlisting_id-enabled forecast"
-        },
-        {
-            "job_id": 13,
-            "listing_id": 12,
-            "job_title": "Software Test Engineer II",
-            "job_description": "Right-sized 3rd generation throughput"
-        },
-        {
-            "job_id": 14,
-            "listing_id": 11,
-            "job_title": "Teacher",
-            "job_description": "Universal executive Graphical User Interface"
-        },
-        {
-            "job_id": 15,
-            "listing_id": 17,
-            "job_title": "Community Outreach Specialist",
-            "job_description": "Monitored asynchronous initiative"
-        },
-        {
-            "job_id": 16,
-            "listing_id": 17,
-            "job_title": "Compensation Analyst",
-            "job_description": "Universal 24 hour protocol"
-        },
-        {
-            "job_id": 17,
-            "listing_id": 5,
-            "job_title": "VP Marketing",
-            "job_description": "Inverse user-facing ability"
-        },
-        {
-            "job_id": 18,
-            "listing_id": 20,
-            "job_title": "Teacher",
-            "job_description": "Phased bottom-line encryption"
-        },
-        {
-            "job_id": 19,
-            "listing_id": 20,
-            "job_title": "Chemical Engineer",
-            "job_description": "Synergistic stable encryption"
-        },
-        {
-            "job_id": 20,
-            "listing_id": 13,
-            "job_title": "Web Developer IV",
-            "job_description": "Focused encompassing archive"
-        },
-        {
-            "job_id": 21,
-            "listing_id": 16,
-            "job_title": "Assistant Professor",
-            "job_description": "Public-key heuristic encryption"
-        },
-        {
-            "job_id": 22,
-            "listing_id": 17,
-            "job_title": "Desktop Support Technician",
-            "job_description": "Upgradable upward-trending matrices"
-        },
-        {
-            "job_id": 23,
-            "listing_id": 6,
-            "job_title": "Account Representative IV",
-            "job_description": "Front-line analyzing portal"
-        },
-        {
-            "job_id": 24,
-            "listing_id": 2,
-            "job_title": "Help Desk Technician",
-            "job_description": "Optional clear-thinking groupware"
-        },
-        {
-            "job_id": 25,
-            "listing_id": 9,
-            "job_title": "Technical Writer",
-            "job_description": "Phased zero tolerance functionalities"
-        }
-    ]
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 5. Get Single Job
-
-
-Get single job. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/jobs/1
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get Single Job (200 OK)
-
-
-
-##### I. Example Response: Get Single Job (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "job_id": 1,
-        "listing_id": 8,
-        "job_title": "Account Representative I",
-        "job_description": "Polarised next generation alliance"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 6. Update Job
+### 4. Update Job
 
 
 Update job identified by job id. Permission: Owner/Admin.
@@ -4520,114 +3754,7 @@ Likes (Users-Listings) CRUD functionality.
 
 
 
-### 1. Get All Likes
-
-
-Get all Likes. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/likes
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get All Likes (200 OK)
-
-
-
-##### I. Example Response: Get All Likes (200 OK)
-```js
-{
-    "success": true,
-    "count": 1,
-    "pagination": {},
-    "data": [
-        {
-            "like_id": 1,
-            "user_id": 1,
-            "listing_id": 2
-        }
-    ]
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 2. Get Single Like
-
-
-Get single Like identified by like_id. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/likes/1
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get Single Like (404 Not Found - Non-existent like id)
-
-
-
-##### I. Example Response: Get Single Like (404 Not Found - Non-existent like id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
-##### II. Example Request: Get Single Like (200 OK)
-
-
-
-##### II. Example Response: Get Single Like (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "like_id": 1,
-        "user_id": 1,
-        "listing_id": 2
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 3. Like Listing
+### 1. Like Listing
 
 
 Like a listing. Permission: Private.
@@ -4779,7 +3906,7 @@ URL: {{URL}}/api/likes
 
 
 
-### 4. Unlike Listing
+### 2. Unlike Listing
 
 
 Unlike a previously liked listing identified by like id. Permission: Private.
@@ -5173,305 +4300,7 @@ URL: {{URL}}/api/listing-comments/3/children
 
 
 
-### 5. Get All Listing Comments
-
-
-Get all listing comments. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/listing-comments
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get All Listing Comments (200 OK)
-
-
-
-##### I. Example Response: Get All Listing Comments (200 OK)
-```js
-{
-    "success": true,
-    "count": 16,
-    "pagination": {},
-    "data": [
-        {
-            "listing_comment_id": 10,
-            "listing_id": 5,
-            "user_id": 9,
-            "comment": "deliver frictionless infrastructures",
-            "reply_to_id": 2,
-            "created_on": "2019-10-29T16:32:01.000Z",
-            "updated_on": "2020-04-27T13:18:40.000Z",
-            "deleted_on": null,
-            "nickname": "Brenda",
-            "profile_picture": "https://robohash.org/quaerataratione.bmp?size=500x500&set=set1",
-            "hashId": "yb"
-        },
-        {
-            "listing_comment_id": 5,
-            "listing_id": 16,
-            "user_id": 19,
-            "comment": "mesh 24/365 supply-chains",
-            "reply_to_id": null,
-            "created_on": "2020-02-20T20:58:36.000Z",
-            "updated_on": "2020-02-29T23:21:38.000Z",
-            "deleted_on": null,
-            "nickname": "Wylie",
-            "profile_picture": "https://robohash.org/deseruntquiaanimi.bmp?size=500x500&set=set1",
-            "hashId": "Wp"
-        },
-        {
-            "listing_comment_id": 13,
-            "listing_id": 4,
-            "user_id": 27,
-            "comment": "orchestrate sexy ROI",
-            "reply_to_id": null,
-            "created_on": "2020-04-01T21:24:48.000Z",
-            "updated_on": "2019-12-27T08:54:38.000Z",
-            "deleted_on": null,
-            "nickname": "Lyndsay",
-            "profile_picture": "https://robohash.org/solutaquasiquae.jpg?size=500x500&set=set1",
-            "hashId": "1r"
-        },
-        {
-            "listing_comment_id": 8,
-            "listing_id": 9,
-            "user_id": 35,
-            "comment": "harness viral web services",
-            "reply_to_id": 3,
-            "created_on": "2019-11-16T22:38:44.000Z",
-            "updated_on": "2019-12-10T10:58:28.000Z",
-            "deleted_on": null,
-            "nickname": "Brynne",
-            "profile_picture": "https://robohash.org/etharumet.png?size=500x500&set=set1",
-            "hashId": "7B"
-        },
-        {
-            "listing_comment_id": 3,
-            "listing_id": 20,
-            "user_id": 49,
-            "comment": "revolutionize out-of-the-box interfaces",
-            "reply_to_id": 1,
-            "created_on": "2019-11-23T20:26:00.000Z",
-            "updated_on": "2020-08-03T18:55:30.000Z",
-            "deleted_on": null,
-            "nickname": "Wallis",
-            "profile_picture": "https://robohash.org/ullamundevoluptatem.jpg?size=500x500&set=set1",
-            "hashId": "GB"
-        },
-        {
-            "listing_comment_id": 1,
-            "listing_id": 18,
-            "user_id": 51,
-            "comment": "strategize 24/365 users",
-            "reply_to_id": null,
-            "created_on": "2020-03-04T02:03:23.000Z",
-            "updated_on": "2020-08-30T12:09:10.000Z",
-            "deleted_on": null,
-            "nickname": "Leese",
-            "profile_picture": "https://robohash.org/maximeaccusamusminima.bmp?size=500x500&set=set1",
-            "hashId": "vn"
-        },
-        {
-            "listing_comment_id": 7,
-            "listing_id": 3,
-            "user_id": 58,
-            "comment": "incubate leading-edge partnerships",
-            "reply_to_id": null,
-            "created_on": "2020-08-20T15:56:14.000Z",
-            "updated_on": "2019-10-08T09:00:24.000Z",
-            "deleted_on": null,
-            "nickname": "Freddie",
-            "profile_picture": "https://robohash.org/errorillosunt.png?size=500x500&set=set1",
-            "hashId": "2V"
-        },
-        {
-            "listing_comment_id": 4,
-            "listing_id": 19,
-            "user_id": 63,
-            "comment": "benchmark web-enabled experiences",
-            "reply_to_id": null,
-            "created_on": "2019-10-18T06:46:56.000Z",
-            "updated_on": "2020-07-17T13:51:32.000Z",
-            "deleted_on": null,
-            "nickname": "Corny",
-            "profile_picture": "https://robohash.org/autemmolestiasnulla.jpg?size=500x500&set=set1",
-            "hashId": "6W"
-        },
-        {
-            "listing_comment_id": 6,
-            "listing_id": 6,
-            "user_id": 71,
-            "comment": "scale robust platforms",
-            "reply_to_id": 4,
-            "created_on": "2020-01-23T06:20:13.000Z",
-            "updated_on": "2020-06-23T06:17:43.000Z",
-            "deleted_on": null,
-            "nickname": "Skye",
-            "profile_picture": "https://robohash.org/repellendusvoluptatesvoluptatem.jpg?size=500x500&set=set1",
-            "hashId": "Qp"
-        },
-        {
-            "listing_comment_id": 15,
-            "listing_id": 12,
-            "user_id": 72,
-            "comment": "grow integrated systems",
-            "reply_to_id": 11,
-            "created_on": "2020-05-15T12:35:48.000Z",
-            "updated_on": "2019-11-07T20:23:03.000Z",
-            "deleted_on": null,
-            "nickname": "Godwin",
-            "profile_picture": "https://robohash.org/voluptatibusrerumdolorem.png?size=500x500&set=set1",
-            "hashId": "zM"
-        },
-        {
-            "listing_comment_id": 12,
-            "listing_id": 6,
-            "user_id": 79,
-            "comment": "orchestrate intuitive deliverables",
-            "reply_to_id": 11,
-            "created_on": "2019-10-05T07:40:48.000Z",
-            "updated_on": "2020-06-08T11:49:10.000Z",
-            "deleted_on": null,
-            "nickname": "Brittan",
-            "profile_picture": "https://robohash.org/nostrumofficiisipsam.png?size=500x500&set=set1",
-            "hashId": "mn"
-        },
-        {
-            "listing_comment_id": 16,
-            "listing_id": 16,
-            "user_id": 83,
-            "comment": "implement innovative platforms",
-            "reply_to_id": 11,
-            "created_on": "2020-06-17T01:31:57.000Z",
-            "updated_on": "2020-07-05T18:43:45.000Z",
-            "deleted_on": null,
-            "nickname": "Eba",
-            "profile_picture": "https://robohash.org/commodimagnitempora.png?size=500x500&set=set1",
-            "hashId": "9x"
-        },
-        {
-            "listing_comment_id": 11,
-            "listing_id": 2,
-            "user_id": 87,
-            "comment": "recontextualize leading-edge networks",
-            "reply_to_id": 3,
-            "created_on": "2020-06-24T13:21:47.000Z",
-            "updated_on": "2020-06-20T17:48:47.000Z",
-            "deleted_on": null,
-            "nickname": "Paloma",
-            "profile_picture": "https://robohash.org/praesentiumanimiquae.jpg?size=500x500&set=set1",
-            "hashId": "g7"
-        },
-        {
-            "listing_comment_id": 14,
-            "listing_id": 13,
-            "user_id": 88,
-            "comment": "brand end-to-end web services",
-            "reply_to_id": null,
-            "created_on": "2020-05-22T17:54:34.000Z",
-            "updated_on": "2020-06-20T04:56:02.000Z",
-            "deleted_on": null,
-            "nickname": "Magdaia",
-            "profile_picture": null,
-            "hashId": "wQ"
-        },
-        {
-            "listing_comment_id": 2,
-            "listing_id": 4,
-            "user_id": 90,
-            "comment": "visualize dot-com solutions",
-            "reply_to_id": null,
-            "created_on": "2020-02-25T09:57:48.000Z",
-            "updated_on": "2020-07-28T13:38:30.000Z",
-            "deleted_on": null,
-            "nickname": "Maynard",
-            "profile_picture": "https://robohash.org/voluptatemautea.bmp?size=500x500&set=set1",
-            "hashId": "e3"
-        },
-        {
-            "listing_comment_id": 9,
-            "listing_id": 5,
-            "user_id": 100,
-            "comment": "whiteboard best-of-breed deliverables",
-            "reply_to_id": null,
-            "created_on": "2020-03-29T09:51:13.000Z",
-            "updated_on": "2019-11-08T17:45:40.000Z",
-            "deleted_on": null,
-            "nickname": "Michell",
-            "profile_picture": "https://robohash.org/autautid.png?size=500x500&set=set1",
-            "hashId": "Zp"
-        }
-    ]
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 6. Get Single Listing Comment
-
-
-Get single listing comment. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/listing-comments/1
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get Single Listing Comment (200 OK)
-
-
-
-##### I. Example Response: Get Single Listing Comment (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "listing_comment_id": 1,
-        "listing_id": 18,
-        "user_id": 51,
-        "comment": "strategize 24/365 users",
-        "reply_to_id": null,
-        "created_on": "2020-03-04T02:03:23.000Z",
-        "updated_on": "2020-08-30T12:09:10.000Z",
-        "deleted_on": null,
-        "nickname": "Leese",
-        "profile_picture": "https://robohash.org/maximeaccusamusminima.bmp?size=500x500&set=set1"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 7. Update Listing Comment
+### 5. Update Listing Comment
 
 
 Update listing comment identified by listing comment id. Permission: Admin/Owner/Private.
@@ -5685,328 +4514,15 @@ URL: {{URL}}/api/listing-locations/1
 
 
 
-### 3. Get All Listing Locations
-
-
-Get all listing locations. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/listing-locations
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get All Listing Locations (200 OK)
-
-
-
-##### I. Example Response: Get All Listing Locations (200 OK)
-```js
-{
-    "success": true,
-    "count": 8,
-    "pagination": {},
-    "data": [
-        {
-            "listing_location_id": 1,
-            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "location_id": 1,
-            "location": "01 Raffles Place, Cecil, Marina, Peoples Park"
-        },
-        {
-            "listing_location_id": 2,
-            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "location_id": 2,
-            "location": "02 Anson, Tanjong Pagar"
-        },
-        {
-            "listing_location_id": 3,
-            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "location_id": 3,
-            "location": "03 Queenstown, Tiong Bahru"
-        },
-        {
-            "listing_location_id": 4,
-            "listing_id": "c975a572-452d-4824-8ed5-500b50488436",
-            "location_id": 3,
-            "location": "03 Queenstown, Tiong Bahru"
-        },
-        {
-            "listing_location_id": 5,
-            "listing_id": "d95a6c2e-3c33-447c-be0c-be399247dd3f",
-            "location_id": 3,
-            "location": "03 Queenstown, Tiong Bahru"
-        },
-        {
-            "listing_location_id": 6,
-            "listing_id": "cf4adc93-3b96-4bbc-8cb0-41e196b145ac",
-            "location_id": 3,
-            "location": "03 Queenstown, Tiong Bahru"
-        },
-        {
-            "listing_location_id": 7,
-            "listing_id": "c975a572-452d-4824-8ed5-500b50488436",
-            "location_id": 4,
-            "location": "04 Telok Blangah, Harbourfront"
-        },
-        {
-            "listing_location_id": 8,
-            "listing_id": "cf4adc93-3b96-4bbc-8cb0-41e196b145ac",
-            "location_id": 4,
-            "location": "04 Telok Blangah, Harbourfront"
-        }
-    ]
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 4. Get Single Listing Location
-
-
-Get single listing location by listing location id. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/listing-locations/1
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get Single Listing Location (200 OK)
-
-
-
-##### I. Example Response: Get Single Listing Location (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "listing_location_id": 1,
-        "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-        "location_id": 1,
-        "location": "01 Raffles Place, Cecil, Marina, Peoples Park"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
 ## Listing Stories
 Listing stories CRUD functionality.
 
 
 
-### 1. Get All Listing Stories
+### 1. Get Listing Story for Listing
 
 
-Get all listing stories. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/listings/stories
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get All Listing Stories (200 OK)
-
-
-
-##### I. Example Response: Get All Listing Stories (200 OK)
-```js
-{
-    "success": true,
-    "count": 20,
-    "pagination": {},
-    "data": [
-        {
-            "listing_id": 1,
-            "overview": null,
-            "problem": null,
-            "solution": null,
-            "outcome": null
-        },
-        {
-            "listing_id": 2,
-            "overview": "Up-sized hybrid moratorium",
-            "problem": "Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.",
-            "solution": "Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.",
-            "outcome": "nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem id ligula suspendisse"
-        },
-        {
-            "listing_id": 3,
-            "overview": null,
-            "problem": null,
-            "solution": null,
-            "outcome": null
-        },
-        {
-            "listing_id": 4,
-            "overview": "Switchable neutral Graphic Interface",
-            "problem": "Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.",
-            "solution": "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique.",
-            "outcome": "pellentesque quisque porta volutpat erat quisque erat eros viverra eget congue eget semper rutrum nulla nunc"
-        },
-        {
-            "listing_id": 5,
-            "overview": "Integrated fresh-thinking parallelism",
-            "problem": "Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.",
-            "solution": "Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.",
-            "outcome": "neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo"
-        },
-        {
-            "listing_id": 6,
-            "overview": "Configurable impactful support",
-            "problem": "Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.",
-            "solution": "Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.",
-            "outcome": "turpis elementum ligula vehicula consequat morbi a ipsum integer a nibh in quis justo maecenas rhoncus aliquam lacus"
-        },
-        {
-            "listing_id": 7,
-            "overview": "Reverse-engineered 3rd generation productivity",
-            "problem": "Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.",
-            "solution": "Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.",
-            "outcome": "montes nascetur ridiculus mus etiam vel augue vestibulum"
-        },
-        {
-            "listing_id": 8,
-            "overview": null,
-            "problem": null,
-            "solution": null,
-            "outcome": null
-        },
-        {
-            "listing_id": 9,
-            "overview": "Multi-lateral grid-enabled task-force",
-            "problem": "Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.",
-            "solution": "Nullam varius. Nulla facilisi. Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit.",
-            "outcome": "amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque ultrices phasellus id sapien"
-        },
-        {
-            "listing_id": 10,
-            "overview": "Managed dynamic synergy",
-            "problem": "Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.\n\nNullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.",
-            "solution": "Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi.",
-            "outcome": "vel lectus in quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit"
-        },
-        {
-            "listing_id": 11,
-            "overview": "Persevering national array",
-            "problem": "Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.",
-            "solution": "Donec posuere metus vitae ipsum. Aliquam non mauris. Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.",
-            "outcome": "est donec odio justo sollicitudin ut suscipit a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique fusce congue"
-        },
-        {
-            "listing_id": 12,
-            "overview": "Front-line actuating project",
-            "problem": "In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.",
-            "solution": "Etiam faucibus cursus urna. Ut tellus. Nulla ut erat id mauris vulputate elementum. Nullam varius.",
-            "outcome": "imperdiet sapien urna pretium nisl ut volutpat sapien"
-        },
-        {
-            "listing_id": 13,
-            "overview": "Monitored radical help-desk",
-            "problem": "Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\n\nProin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.",
-            "solution": "Integer ac neque. Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl.",
-            "outcome": "maecenas rhoncus aliquam lacus morbi quis tortor id nulla ultrices aliquet maecenas leo odio condimentum id luctus"
-        },
-        {
-            "listing_id": 14,
-            "overview": "Streamlined modular architecture",
-            "problem": "Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.",
-            "solution": "Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst.",
-            "outcome": "curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus sit amet"
-        },
-        {
-            "listing_id": 15,
-            "overview": null,
-            "problem": null,
-            "solution": null,
-            "outcome": null
-        },
-        {
-            "listing_id": 16,
-            "overview": "Cross-platform methodical database",
-            "problem": "Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.\n\nCurabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.",
-            "solution": "Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis.",
-            "outcome": "libero non mattis pulvinar nulla pede ullamcorper augue a"
-        },
-        {
-            "listing_id": 17,
-            "overview": "Synergistic system-worthy productivity",
-            "problem": "Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.\n\nProin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.",
-            "solution": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
-            "outcome": "tincidunt in leo maecenas pulvinar lobortis est phasellus sit"
-        },
-        {
-            "listing_id": 18,
-            "overview": "Stand-alone systematic open system",
-            "problem": "In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.",
-            "solution": "Nunc purus. Phasellus in felis.",
-            "outcome": "volutpat dui maecenas tristique est et tempus semper est quam pharetra magna"
-        },
-        {
-            "listing_id": 19,
-            "overview": "Object-based multi-state model",
-            "problem": "Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.",
-            "solution": "Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl. Aenean lectus. Pellentesque eget nunc.",
-            "outcome": "platea dictumst morbi vestibulum velit id pretium iaculis"
-        },
-        {
-            "listing_id": 20,
-            "overview": "Inverse real-time throughput",
-            "problem": "Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.\n\nPraesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.",
-            "solution": "In congue. Etiam justo. Etiam pretium iaculis justo.",
-            "outcome": "natoque penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien"
-        }
-    ]
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 2. Get Single Listing Story
-
-
-Get single listing story identified by listing id. Permission: Public.
+Get listing story for listing, identified by listing id. Permission: Public.
 
 
 ***Endpoint:***
@@ -6066,7 +4582,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories
 
 
 
-### 3. Update Listing Story
+### 2. Update Listing Story
 
 
 Update listing story identified by listing id. Permission: Admin/Owner.
@@ -6253,12 +4769,7 @@ Field rules:
 All fields required unless otherwise stated.
 listing_id - Valid integer, existing listing id.
 description - Non-empty.
-pic1 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic2 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic3 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic4 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic5 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pics - Valid collection of up to 5 JPG/PNG files. Optional.
+pics - Array of URL path to picture.
 
 
 ***Endpoint:***
@@ -6284,11 +4795,13 @@ URL: {{URL}}/api/listing-updates
 {
     "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
     "description": "First Update",
-    "pic1": "imgur.com/abc",
-    "pic2": "imgur.com/test123",
-    "pic3": "imgur.com/def",
-    "pic4": "imgur.com/fgh",
-    "pic5": "imgur.com/jkl"
+    "pics": [
+        "imgur.com/abc",
+        "imgur.com/test123",
+        "imgur.com/def",
+        "imgur.com/fgh",
+        "imgur.com/jkl"
+    ]
 }
 ```
 
@@ -6338,33 +4851,36 @@ URL: {{URL}}/api/listing-updates
 
 
 
-##### II. Example Request: Create Listing Update (200 OK)
+##### II. Example Request: Create Listing Update (201 Created)
 
 
 ***Headers:***
 
 | Key | Value | Description |
 | --- | ------|-------------|
-| Content-Type | multipart/form-data | Form Data Type |
+| Content-Type | application/json | JSON Type |
 
 
 
 ***Body:***
 
-| Key | Value | Description |
-| --- | ------|-------------|
-| pics |  | Collection of 5 JPG files |
-| listing_id | 43824166-bee2-426e-8a08-ca2c4e4120ae |  |
-| description | First Update |  |
-| pic1 | test-pic-1.jpg |  |
-| pic2 | test-pic-2.jpg |  |
-| pic3 | test-pic-3.jpg |  |
-| pic4 | test-pic-4.jpg |  |
-| pic5 | test-pic-5.jpg |  |
+```js        
+{
+    "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
+    "description": "First Update",
+    "pics": [
+        "imgur.com/abc",
+        "imgur.com/test123",
+        "imgur.com/def",
+        "imgur.com/fgh",
+        "imgur.com/jkl"
+    ]
+}
+```
 
 
 
-##### II. Example Response: Create Listing Update (200 OK)
+##### II. Example Response: Create Listing Update (201 Created)
 ```js
 {
     "success": true,
@@ -6372,13 +4888,15 @@ URL: {{URL}}/api/listing-updates
         "listing_update_id": 8,
         "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
         "description": "First Update",
-        "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1597682183704.jpg",
-        "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-1597682183706.jpg",
-        "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-1597682183714.jpg",
-        "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-1597682183726.jpg",
-        "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-1597682183732.jpg",
-        "created_on": "2020-08-17T16:36:24.492Z",
-        "updated_on": "2020-08-17T16:36:24.492Z"
+        "pics": [
+            "imgur.com/abc",
+            "imgur.com/test123",
+            "imgur.com/def",
+            "imgur.com/fgh",
+            "imgur.com/jkl"
+        ],
+        "created_on": "2020-11-17T14:37:48.999Z",
+        "updated_on": "2020-11-17T14:37:48.999Z"
     }
 }
 ```
@@ -6409,41 +4927,11 @@ URL: {{URL}}/api/listing-updates/1
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Delete Listing Update (200 OK)
+##### I. Example Request: Delete Listing Update (404 Not Found)
 
 
 
-##### I. Example Response: Delete Listing Update (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "listing_update_id": 55,
-        "listing_id": 1,
-        "description": "First Update",
-        "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1596957253216.jpg",
-        "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-1596957253217.jpg",
-        "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-1596957253221.jpg",
-        "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-1596957253225.jpg",
-        "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-1596957253235.jpg",
-        "created_on": "2020-08-09T07:14:13.598Z",
-        "updated_on": "2020-08-09T07:14:13.598Z"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Delete Listing Update (404 Not Found)
-
-
-
-##### II. Example Response: Delete Listing Update (404 Not Found)
+##### I. Example Response: Delete Listing Update (404 Not Found)
 ```js
 {
     "success": false,
@@ -6458,415 +4946,27 @@ URL: {{URL}}/api/listing-updates/1
 
 
 
-### 3. Get All Listing Updates
-
-
-Get all listing updates. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/listing-updates
-```
+##### II. Example Request: Delete Listing Update (200 OK)
 
 
 
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get All Listing Updates (200 OK)
-
-
-
-##### I. Example Response: Get All Listing Updates (200 OK)
-```js
-{
-    "success": true,
-    "count": 50,
-    "pagination": {
-        "next": {
-            "page": 2,
-            "limit": 25
-        }
-    },
-    "data": [
-        {
-            "listing_update_id": 1,
-            "listing_id": 2,
-            "description": "Seamless neutral core",
-            "pic1": "https://robohash.org/doloribusfacerevelit.png?size=500x500&set=set1",
-            "pic2": "https://robohash.org/quaeratquodminima.jpg?size=500x500&set=set1",
-            "pic3": "https://robohash.org/delenitisitrerum.png?size=500x500&set=set1",
-            "pic4": "https://robohash.org/autprovidentqui.bmp?size=500x500&set=set1",
-            "pic5": null,
-            "created_on": "2019-01-14T07:06:44.000Z",
-            "updated_on": "2020-05-28T08:18:12.000Z",
-            "hashId": "vn"
-        },
-        {
-            "listing_update_id": 2,
-            "listing_id": 7,
-            "description": "Intuitive executive open system",
-            "pic1": "https://robohash.org/veritatisvoluptatemminima.bmp?size=500x500&set=set1",
-            "pic2": "https://robohash.org/sedquonam.bmp?size=500x500&set=set1",
-            "pic3": "https://robohash.org/fugiatminimavoluptatem.bmp?size=500x500&set=set1",
-            "pic4": "https://robohash.org/ametconsequaturvoluptatem.png?size=500x500&set=set1",
-            "pic5": "https://robohash.org/fugitvoluptatemsoluta.jpg?size=500x500&set=set1",
-            "created_on": "2020-02-20T09:55:35.000Z",
-            "updated_on": "2020-07-01T20:05:59.000Z",
-            "hashId": "e3"
-        },
-        {
-            "listing_update_id": 3,
-            "listing_id": 2,
-            "description": "Persistent well-modulated complexity",
-            "pic1": "https://robohash.org/quaenullacorporis.jpg?size=500x500&set=set1",
-            "pic2": "https://robohash.org/voluptasatqueeum.png?size=500x500&set=set1",
-            "pic3": "https://robohash.org/sitrecusandaenostrum.bmp?size=500x500&set=set1",
-            "pic4": null,
-            "pic5": null,
-            "created_on": "2019-02-20T14:55:27.000Z",
-            "updated_on": "2020-01-05T06:56:03.000Z",
-            "hashId": "GB"
-        },
-        {
-            "listing_update_id": 4,
-            "listing_id": 4,
-            "description": "Pre-emptive impactful matrix",
-            "pic1": "https://robohash.org/adipisciquocupiditate.jpg?size=500x500&set=set1",
-            "pic2": "https://robohash.org/dolorumetsunt.bmp?size=500x500&set=set1",
-            "pic3": null,
-            "pic4": "https://robohash.org/etquiavoluptatem.bmp?size=500x500&set=set1",
-            "pic5": "https://robohash.org/dolormollitiaut.png?size=500x500&set=set1",
-            "created_on": "2019-09-30T13:40:18.000Z",
-            "updated_on": "2019-11-08T13:12:59.000Z",
-            "hashId": "6W"
-        },
-        {
-            "listing_update_id": 5,
-            "listing_id": 4,
-            "description": "Programmable bifurcated protocol",
-            "pic1": "https://robohash.org/beataeametmollitia.png?size=500x500&set=set1",
-            "pic2": "https://robohash.org/animiquamdolorum.jpg?size=500x500&set=set1",
-            "pic3": null,
-            "pic4": "https://robohash.org/consecteturnamaccusantium.bmp?size=500x500&set=set1",
-            "pic5": "https://robohash.org/isteeasint.jpg?size=500x500&set=set1",
-            "created_on": "2019-11-10T20:39:48.000Z",
-            "updated_on": "2019-09-26T23:35:34.000Z",
-            "hashId": "Wp"
-        },
-        {
-            "listing_update_id": 6,
-            "listing_id": 9,
-            "description": "Realigned next generation open system",
-            "pic1": "https://robohash.org/sedquirerum.png?size=500x500&set=set1",
-            "pic2": "https://robohash.org/delenitisuntin.png?size=500x500&set=set1",
-            "pic3": "https://robohash.org/etquiearum.bmp?size=500x500&set=set1",
-            "pic4": "https://robohash.org/temporeconsecteturdolorem.png?size=500x500&set=set1",
-            "pic5": "https://robohash.org/ipsaeligendierror.png?size=500x500&set=set1",
-            "created_on": "2019-12-13T07:30:01.000Z",
-            "updated_on": "2020-07-13T05:37:05.000Z",
-            "hashId": "Qp"
-        },
-        {
-            "listing_update_id": 7,
-            "listing_id": 15,
-            "description": "Programmable context-sensitive capability",
-            "pic1": "https://robohash.org/modiprovidentminima.jpg?size=500x500&set=set1",
-            "pic2": "https://robohash.org/sitnecessitatibusvel.png?size=500x500&set=set1",
-            "pic3": null,
-            "pic4": null,
-            "pic5": "https://robohash.org/laboriosamestautem.bmp?size=500x500&set=set1",
-            "created_on": "2019-02-18T16:35:28.000Z",
-            "updated_on": "2020-05-13T21:53:21.000Z",
-            "hashId": "2V"
-        },
-        {
-            "listing_update_id": 8,
-            "listing_id": 4,
-            "description": "Polarised motivating task-force",
-            "pic1": "https://robohash.org/remnostrumreprehenderit.jpg?size=500x500&set=set1",
-            "pic2": "https://robohash.org/laudantiumfacilisdoloribus.jpg?size=500x500&set=set1",
-            "pic3": null,
-            "pic4": null,
-            "pic5": "https://robohash.org/quasiquiaeum.png?size=500x500&set=set1",
-            "created_on": "2020-06-06T18:46:11.000Z",
-            "updated_on": "2020-01-08T20:11:32.000Z",
-            "hashId": "7B"
-        },
-        {
-            "listing_update_id": 9,
-            "listing_id": 19,
-            "description": "Cross-group responsive help-desk",
-            "pic1": "https://robohash.org/consequunturvoluptasquia.bmp?size=500x500&set=set1",
-            "pic2": "https://robohash.org/officiarationequasi.jpg?size=500x500&set=set1",
-            "pic3": "https://robohash.org/optionecessitatibussimilique.png?size=500x500&set=set1",
-            "pic4": "https://robohash.org/mollitianonvoluptatum.png?size=500x500&set=set1",
-            "pic5": null,
-            "created_on": "2019-01-10T04:51:54.000Z",
-            "updated_on": "2020-03-03T15:10:30.000Z",
-            "hashId": "Zp"
-        },
-        {
-            "listing_update_id": 10,
-            "listing_id": 7,
-            "description": "Enterprise-wide foreground leverage",
-            "pic1": "https://robohash.org/magnammaximedolor.bmp?size=500x500&set=set1",
-            "pic2": "https://robohash.org/laboreautitaque.jpg?size=500x500&set=set1",
-            "pic3": "https://robohash.org/undemagnidolorum.bmp?size=500x500&set=set1",
-            "pic4": "https://robohash.org/temporibushiceum.bmp?size=500x500&set=set1",
-            "pic5": "https://robohash.org/inciduntiustolabore.png?size=500x500&set=set1",
-            "created_on": "2019-05-04T00:02:16.000Z",
-            "updated_on": "2020-01-17T15:57:21.000Z",
-            "hashId": "yb"
-        },
-        {
-            "listing_update_id": 11,
-            "listing_id": 12,
-            "description": "Reduced exuding initiative",
-            "pic1": "https://robohash.org/cupiditatelaborerepellendus.png?size=500x500&set=set1",
-            "pic2": "https://robohash.org/eadoloremquis.png?size=500x500&set=set1",
-            "pic3": null,
-            "pic4": "https://robohash.org/nesciuntconsecteturautem.jpg?size=500x500&set=set1",
-            "pic5": null,
-            "created_on": "2020-02-12T07:55:10.000Z",
-            "updated_on": "2020-05-27T21:36:45.000Z",
-            "hashId": "g7"
-        },
-        {
-            "listing_update_id": 12,
-            "listing_id": 14,
-            "description": "Fundamental fault-tolerant collaboration",
-            "pic1": "https://robohash.org/utestsit.jpg?size=500x500&set=set1",
-            "pic2": "https://robohash.org/etsintnumquam.bmp?size=500x500&set=set1",
-            "pic3": "https://robohash.org/etestvoluptates.png?size=500x500&set=set1",
-            "pic4": null,
-            "pic5": "https://robohash.org/necessitatibusautnulla.bmp?size=500x500&set=set1",
-            "created_on": "2019-05-14T18:56:25.000Z",
-            "updated_on": "2020-04-07T22:10:02.000Z",
-            "hashId": "mn"
-        },
-        {
-            "listing_update_id": 13,
-            "listing_id": 7,
-            "description": "Seamless exuding help-desk",
-            "pic1": "https://robohash.org/nobisestlabore.bmp?size=500x500&set=set1",
-            "pic2": "https://robohash.org/atqueitaqueet.jpg?size=500x500&set=set1",
-            "pic3": "https://robohash.org/nemoveritatisdistinctio.bmp?size=500x500&set=set1",
-            "pic4": "https://robohash.org/earumsintprovident.bmp?size=500x500&set=set1",
-            "pic5": "https://robohash.org/laudantiumvoluptatespariatur.jpg?size=500x500&set=set1",
-            "created_on": "2019-05-03T23:01:32.000Z",
-            "updated_on": "2020-05-17T09:52:35.000Z",
-            "hashId": "1r"
-        },
-        {
-            "listing_update_id": 14,
-            "listing_id": 14,
-            "description": "Enhanced optimizing process improvement",
-            "pic1": "https://robohash.org/utconsequunturdeserunt.bmp?size=500x500&set=set1",
-            "pic2": null,
-            "pic3": "https://robohash.org/nonitaquepraesentium.png?size=500x500&set=set1",
-            "pic4": null,
-            "pic5": null,
-            "created_on": "2020-06-05T19:14:51.000Z",
-            "updated_on": "2020-02-22T01:42:34.000Z",
-            "hashId": "wQ"
-        },
-        {
-            "listing_update_id": 15,
-            "listing_id": 4,
-            "description": "Profound next generation knowledge base",
-            "pic1": "https://robohash.org/etquosunt.png?size=500x500&set=set1",
-            "pic2": "https://robohash.org/porroetodit.png?size=500x500&set=set1",
-            "pic3": "https://robohash.org/voluptateminprovident.bmp?size=500x500&set=set1",
-            "pic4": null,
-            "pic5": "https://robohash.org/quiaodiosuscipit.jpg?size=500x500&set=set1",
-            "created_on": "2019-06-01T05:30:16.000Z",
-            "updated_on": "2020-02-06T22:27:03.000Z",
-            "hashId": "zM"
-        },
-        {
-            "listing_update_id": 16,
-            "listing_id": 20,
-            "description": "Configurable global archive",
-            "pic1": "https://robohash.org/abeiusofficiis.jpg?size=500x500&set=set1",
-            "pic2": null,
-            "pic3": "https://robohash.org/reiciendisquideserunt.bmp?size=500x500&set=set1",
-            "pic4": null,
-            "pic5": "https://robohash.org/rerumetconsectetur.jpg?size=500x500&set=set1",
-            "created_on": "2020-01-19T20:08:39.000Z",
-            "updated_on": "2020-07-19T10:56:04.000Z",
-            "hashId": "9x"
-        },
-        {
-            "listing_update_id": 17,
-            "listing_id": 20,
-            "description": "Face to face user-facing forecast",
-            "pic1": "https://robohash.org/aadipisciin.png?size=500x500&set=set1",
-            "pic2": "https://robohash.org/explicabosolutanam.png?size=500x500&set=set1",
-            "pic3": "https://robohash.org/voluptatemducimusea.png?size=500x500&set=set1",
-            "pic4": null,
-            "pic5": null,
-            "created_on": "2020-07-12T14:42:21.000Z",
-            "updated_on": "2019-10-28T22:59:22.000Z",
-            "hashId": "qw"
-        },
-        {
-            "listing_update_id": 18,
-            "listing_id": 1,
-            "description": "Open-architected coherent protocol",
-            "pic1": "https://robohash.org/quiaperferendisenim.bmp?size=500x500&set=set1",
-            "pic2": "https://robohash.org/corruptiquasfugit.png?size=500x500&set=set1",
-            "pic3": "https://robohash.org/aliquidaat.jpg?size=500x500&set=set1",
-            "pic4": "https://robohash.org/iureexexplicabo.bmp?size=500x500&set=set1",
-            "pic5": null,
-            "created_on": "2019-08-07T01:59:49.000Z",
-            "updated_on": "2020-05-24T14:39:21.000Z",
-            "hashId": "3M"
-        },
-        {
-            "listing_update_id": 19,
-            "listing_id": 3,
-            "description": "Visionary bi-directional circuit",
-            "pic1": "https://robohash.org/quiavoluptassoluta.bmp?size=500x500&set=set1",
-            "pic2": "https://robohash.org/estoditmolestiae.png?size=500x500&set=set1",
-            "pic3": null,
-            "pic4": "https://robohash.org/assumendaeadolores.png?size=500x500&set=set1",
-            "pic5": null,
-            "created_on": "2019-02-03T14:37:23.000Z",
-            "updated_on": "2020-05-12T00:51:00.000Z",
-            "hashId": "Yz"
-        },
-        {
-            "listing_update_id": 20,
-            "listing_id": 17,
-            "description": "Triple-buffered optimizing emulation",
-            "pic1": "https://robohash.org/oditiureipsa.png?size=500x500&set=set1",
-            "pic2": "https://robohash.org/doloresveritatiscupiditate.png?size=500x500&set=set1",
-            "pic3": "https://robohash.org/iureetmaxime.bmp?size=500x500&set=set1",
-            "pic4": "https://robohash.org/repellatrationeest.bmp?size=500x500&set=set1",
-            "pic5": null,
-            "created_on": "2019-01-27T21:53:56.000Z",
-            "updated_on": "2020-02-12T00:13:24.000Z",
-            "hashId": "jy"
-        },
-        {
-            "listing_update_id": 21,
-            "listing_id": 4,
-            "description": "Business-focused encompassing leverage",
-            "pic1": "https://robohash.org/quodrationemaxime.bmp?size=500x500&set=set1",
-            "pic2": "https://robohash.org/inciduntpossimusin.jpg?size=500x500&set=set1",
-            "pic3": null,
-            "pic4": null,
-            "pic5": "https://robohash.org/voluptatibusexaliquid.png?size=500x500&set=set1",
-            "created_on": "2019-10-09T02:46:14.000Z",
-            "updated_on": "2020-05-22T20:26:20.000Z",
-            "hashId": "Vk"
-        },
-        {
-            "listing_update_id": 22,
-            "listing_id": 17,
-            "description": "Fundamental bandwidth-monitored installation",
-            "pic1": "https://robohash.org/quimaioresprovident.png?size=500x500&set=set1",
-            "pic2": "https://robohash.org/nonharumest.bmp?size=500x500&set=set1",
-            "pic3": "https://robohash.org/saepedoloresex.png?size=500x500&set=set1",
-            "pic4": null,
-            "pic5": "https://robohash.org/suscipitquisquamadipisci.png?size=500x500&set=set1",
-            "created_on": "2019-03-15T19:21:14.000Z",
-            "updated_on": "2019-09-09T13:29:47.000Z",
-            "hashId": "Jm"
-        },
-        {
-            "listing_update_id": 23,
-            "listing_id": 5,
-            "description": "Upgradable contextually-based emulation",
-            "pic1": "https://robohash.org/consequatureligendicorrupti.jpg?size=500x500&set=set1",
-            "pic2": "https://robohash.org/utquiaquisquam.png?size=500x500&set=set1",
-            "pic3": "https://robohash.org/etaperiamquaerat.png?size=500x500&set=set1",
-            "pic4": "https://robohash.org/utipsabeatae.jpg?size=500x500&set=set1",
-            "pic5": null,
-            "created_on": "2020-06-23T05:24:42.000Z",
-            "updated_on": "2020-03-16T02:36:16.000Z",
-            "hashId": "Eb"
-        },
-        {
-            "listing_update_id": 24,
-            "listing_id": 1,
-            "description": "Team-oriented 24 hour contingency",
-            "pic1": "https://robohash.org/quametab.png?size=500x500&set=set1",
-            "pic2": "https://robohash.org/sitnullaet.jpg?size=500x500&set=set1",
-            "pic3": "https://robohash.org/doloremquevoluptasnam.jpg?size=500x500&set=set1",
-            "pic4": "https://robohash.org/maioresnonvoluptatem.bmp?size=500x500&set=set1",
-            "pic5": "https://robohash.org/modiremofficia.png?size=500x500&set=set1",
-            "created_on": "2019-10-21T09:10:52.000Z",
-            "updated_on": "2020-04-22T12:34:01.000Z",
-            "hashId": "xa"
-        },
-        {
-            "listing_update_id": 25,
-            "listing_id": 3,
-            "description": "Function-based next generation neural-net",
-            "pic1": "https://robohash.org/utreprehenderitrem.bmp?size=500x500&set=set1",
-            "pic2": "https://robohash.org/quieumeius.png?size=500x500&set=set1",
-            "pic3": "https://robohash.org/veniamnonest.png?size=500x500&set=set1",
-            "pic4": "https://robohash.org/voluptatumquibusdamcumque.bmp?size=500x500&set=set1",
-            "pic5": null,
-            "created_on": "2019-02-17T21:06:03.000Z",
-            "updated_on": "2019-12-19T15:55:36.000Z",
-            "hashId": "D9"
-        }
-    ]
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 4. Get Single Listing Update
-
-
-Get single listing update identified by update id. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/listing-updates/1
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get Single Listing Update (200 OK)
-
-
-
-##### I. Example Response: Get Single Listing Update (200 OK)
+##### II. Example Response: Delete Listing Update (200 OK)
 ```js
 {
     "success": true,
     "data": {
         "listing_update_id": 1,
-        "listing_id": 2,
-        "description": "Seamless neutral core",
-        "pic1": "https://robohash.org/doloribusfacerevelit.png?size=500x500&set=set1",
-        "pic2": "https://robohash.org/quaeratquodminima.jpg?size=500x500&set=set1",
-        "pic3": "https://robohash.org/delenitisitrerum.png?size=500x500&set=set1",
-        "pic4": "https://robohash.org/autprovidentqui.bmp?size=500x500&set=set1",
-        "pic5": null,
-        "created_on": "2019-01-14T07:06:44.000Z",
-        "updated_on": "2020-05-28T08:18:12.000Z"
+        "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
+        "description": "Horizontal dynamic encoding",
+        "pics": [
+            "https://robohash.org/utetut.bmp?size=500x500&set=set1",
+            "https://robohash.org/quiserrorlabore.jpg?size=500x500&set=set1",
+            "https://robohash.org/aspernaturcupiditateerror.png?size=500x500&set=set1",
+            "https://robohash.org/dolorevenietmaiores.jpg?size=500x500&set=set1",
+            "https://robohash.org/utconsequaturatque.bmp?size=500x500&set=set1"
+        ],
+        "created_on": "2020-05-04T18:20:02.000Z",
+        "updated_on": "2020-04-27T17:06:06.000Z"
     }
 }
 ```
@@ -6878,26 +4978,7 @@ URL: {{URL}}/api/listing-updates/1
 
 
 
-##### II. Example Request: Get Single Listing Update (404 Not Found - Non existent listing id)
-
-
-
-##### II. Example Response: Get Single Listing Update (404 Not Found - Non existent listing id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
-### 5. Modify Listing Update
+### 3. Modify Listing Update
 
 
 Modify listing update identified by update id. Permission: Owner/Admin.
@@ -6905,12 +4986,7 @@ Modify listing update identified by update id. Permission: Owner/Admin.
 Field rules:
 At least one field must be updated.
 description - Non-empty.
-pic1 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic2 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic3 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic4 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pic5 - Valid JPG/PNG filename and extension text found in pics. Optional.
-pics - Valid collection of up to 5 JPG/PNG files. Optional.
+pics - Array of URL path to picture.
 
 
 ***Endpoint:***
@@ -6935,11 +5011,7 @@ URL: {{URL}}/api/listing-updates/2
 ```js        
 {
     "description": "New Milestone Achieved!",
-    "pic1": "instagram.com",
-    "pic2": "facebook.com",
-    "pic3": "imgur.com",
-    "pic4": "tiktok.com",
-    "pic5": "reddit.com"
+    "pics": ["instagram.com", "facebook.com", "imgur.com", "tiktok.com", "reddit.com"]
 }
 ```
 
@@ -6961,15 +5033,12 @@ URL: {{URL}}/api/listing-updates/2
 
 ***Body:***
 
-| Key | Value | Description |
-| --- | ------|-------------|
-| description | New Milestone Achieved! | Collection of 5 pics |
-| pic1 | test-pic-1.jpg |  |
-| pic2 | test-pic-2.jpg |  |
-| pic3 | test-pic-3.jpg |  |
-| pic4 | test-pic-4.jpg |  |
-| pic5 | test-pic-5.jpg |  |
-| pics |  | Collection of 5 pics |
+```js        
+{
+    "description": "New Milestone Achieved!",
+    "pics": ["instagram.com", "facebook.com", "imgur.com", "tiktok.com", "reddit.com"]
+}
+```
 
 
 
@@ -6981,13 +5050,15 @@ URL: {{URL}}/api/listing-updates/2
         "listing_update_id": 2,
         "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
         "description": "New Milestone Achieved!",
-        "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1597682209640.jpg",
-        "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-1597682209642.jpg",
-        "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-1597682209648.jpg",
-        "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-1597682209653.jpg",
-        "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-1597682209660.jpg",
+        "pics": [
+            "instagram.com",
+            "facebook.com",
+            "imgur.com",
+            "tiktok.com",
+            "reddit.com"
+        ],
         "created_on": "2020-07-08T04:26:55.000Z",
-        "updated_on": "2020-08-17T16:36:50.000Z"
+        "updated_on": "2020-11-17T14:38:40.054Z"
     }
 }
 ```
@@ -8262,27 +6333,31 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-updates
     "data": [
         {
             "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "listing_update_id": 1,
-            "description": "Horizontal dynamic encoding",
-            "pic1": "https://robohash.org/utetut.bmp?size=500x500&set=set1",
-            "pic2": "https://robohash.org/quiserrorlabore.jpg?size=500x500&set=set1",
-            "pic3": "https://robohash.org/aspernaturcupiditateerror.png?size=500x500&set=set1",
-            "pic4": "https://robohash.org/dolorevenietmaiores.jpg?size=500x500&set=set1",
-            "pic5": "https://robohash.org/utconsequaturatque.bmp?size=500x500&set=set1",
-            "created_on": "2020-05-04T18:20:02.000Z",
-            "updated_on": "2020-04-27T17:06:06.000Z"
+            "listing_update_id": 8,
+            "description": "First Update",
+            "pics": [
+                "imgur.com/abc",
+                "imgur.com/test123",
+                "imgur.com/def",
+                "imgur.com/fgh",
+                "imgur.com/jkl"
+            ],
+            "created_on": "2020-11-17T14:37:48.999Z",
+            "updated_on": "2020-11-17T14:37:48.999Z"
         },
         {
             "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
             "listing_update_id": 2,
-            "description": "Inverse eco-centric conglomeration",
-            "pic1": "https://robohash.org/sititaqueiure.jpg?size=500x500&set=set1",
-            "pic2": "https://robohash.org/facilisimpeditsoluta.bmp?size=500x500&set=set1",
-            "pic3": "https://robohash.org/atquererumvoluptatem.jpg?size=500x500&set=set1",
-            "pic4": "https://robohash.org/quietreprehenderit.bmp?size=500x500&set=set1",
-            "pic5": "https://robohash.org/suscipittemporeet.png?size=500x500&set=set1",
+            "description": "New Milestone Achieved!",
+            "pics": [
+                "instagram.com",
+                "facebook.com",
+                "imgur.com",
+                "tiktok.com",
+                "reddit.com"
+            ],
             "created_on": "2020-07-08T04:26:55.000Z",
-            "updated_on": "2020-08-10T02:06:35.000Z"
+            "updated_on": "2020-11-17T14:38:40.054Z"
         }
     ]
 }
@@ -10267,265 +8342,7 @@ URL: {{URL}}/api/milestones/1
 
 
 
-### 3. Get All Milestones
-
-
-Get all milestones. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/milestones
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get All Milestones (200 OK)
-
-
-
-##### I. Example Response: Get All Milestones (200 OK)
-```js
-{
-    "success": true,
-    "count": 25,
-    "pagination": {
-        "next": {
-            "page": 2,
-            "limit": 25
-        }
-    },
-    "data": [
-        {
-            "milestone_id": 1,
-            "listing_id": 17,
-            "description": "De-engineered content-based solution",
-            "date": "2019-06-01T03:27:43.000Z"
-        },
-        {
-            "milestone_id": 2,
-            "listing_id": 20,
-            "description": "Centralized stable groupware",
-            "date": "2020-07-09T03:30:19.000Z"
-        },
-        {
-            "milestone_id": 3,
-            "listing_id": 20,
-            "description": "Future-proofed systemic interface",
-            "date": "2016-11-13T13:27:33.000Z"
-        },
-        {
-            "milestone_id": 4,
-            "listing_id": 16,
-            "description": "Pre-emptive static installation",
-            "date": "2015-08-06T01:28:56.000Z"
-        },
-        {
-            "milestone_id": 5,
-            "listing_id": 13,
-            "description": "Multi-channelled secondary model",
-            "date": "2016-12-03T19:14:39.000Z"
-        },
-        {
-            "milestone_id": 6,
-            "listing_id": 17,
-            "description": "Intuitive client-driven knowledge user",
-            "date": "2018-12-16T00:49:35.000Z"
-        },
-        {
-            "milestone_id": 7,
-            "listing_id": 2,
-            "description": "Monitored attitude-oriented array",
-            "date": "2017-11-23T03:53:21.000Z"
-        },
-        {
-            "milestone_id": 8,
-            "listing_id": 13,
-            "description": "Monitored object-oriented access",
-            "date": "2020-01-21T11:04:19.000Z"
-        },
-        {
-            "milestone_id": 9,
-            "listing_id": 9,
-            "description": "Managed attitude-oriented frame",
-            "date": "2020-02-12T14:30:42.000Z"
-        },
-        {
-            "milestone_id": 10,
-            "listing_id": 17,
-            "description": "Robust secondary intranet",
-            "date": "2017-01-05T22:17:44.000Z"
-        },
-        {
-            "milestone_id": 11,
-            "listing_id": 5,
-            "description": "Public-key didactic project",
-            "date": "2015-11-06T10:35:57.000Z"
-        },
-        {
-            "milestone_id": 12,
-            "listing_id": 19,
-            "description": "Re-engineered 24 hour concept",
-            "date": "2021-01-02T11:15:42.000Z"
-        },
-        {
-            "milestone_id": 13,
-            "listing_id": 7,
-            "description": "Profound disintermediate conglomeration",
-            "date": "2016-04-16T15:01:14.000Z"
-        },
-        {
-            "milestone_id": 14,
-            "listing_id": 10,
-            "description": "Public-key optimal website",
-            "date": "2015-07-01T09:06:04.000Z"
-        },
-        {
-            "milestone_id": 15,
-            "listing_id": 15,
-            "description": "Seamless actuating neural-net",
-            "date": "2018-08-26T09:54:07.000Z"
-        },
-        {
-            "milestone_id": 16,
-            "listing_id": 2,
-            "description": "Inverse grid-enabled intranet",
-            "date": "2017-05-19T17:38:17.000Z"
-        },
-        {
-            "milestone_id": 17,
-            "listing_id": 4,
-            "description": "Optional maximized toolset",
-            "date": "2019-08-19T16:46:45.000Z"
-        },
-        {
-            "milestone_id": 18,
-            "listing_id": 8,
-            "description": "Optimized methodical core",
-            "date": "2015-03-10T09:15:57.000Z"
-        },
-        {
-            "milestone_id": 19,
-            "listing_id": 17,
-            "description": "Extended didactic support",
-            "date": "2016-02-04T14:13:02.000Z"
-        },
-        {
-            "milestone_id": 20,
-            "listing_id": 6,
-            "description": "Profound maximized hierarchy",
-            "date": "2017-11-26T19:54:49.000Z"
-        },
-        {
-            "milestone_id": 21,
-            "listing_id": 15,
-            "description": "Polarised non-volatile toolset",
-            "date": "2018-06-28T02:44:49.000Z"
-        },
-        {
-            "milestone_id": 22,
-            "listing_id": 13,
-            "description": "User-centric content-based installation",
-            "date": "2015-08-09T12:42:41.000Z"
-        },
-        {
-            "milestone_id": 23,
-            "listing_id": 17,
-            "description": "Operative neutral function",
-            "date": "2015-08-15T19:18:43.000Z"
-        },
-        {
-            "milestone_id": 24,
-            "listing_id": 14,
-            "description": "Balanced homogeneous access",
-            "date": "2017-05-29T12:58:46.000Z"
-        },
-        {
-            "milestone_id": 25,
-            "listing_id": 9,
-            "description": "Devolved local adapter",
-            "date": "2016-02-12T00:23:01.000Z"
-        }
-    ]
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 4. Get Single Milestone
-
-
-Get single milestone. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/milestones/1
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get Single Milestone (200 OK)
-
-
-
-##### I. Example Response: Get Single Milestone (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "milestone_id": 1,
-        "listing_id": 17,
-        "description": "De-engineered content-based solution",
-        "date": "2019-06-01T03:27:43.000Z"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Get Single Milestone (404 Not Found - Non-existent milestone id)
-
-
-
-##### II. Example Response: Get Single Milestone (404 Not Found - Non-existent milestone id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
-### 5. Update Milestone
+### 3. Update Milestone
 
 
 Update milestone identified by milestone id. Permission: Owner/Admin.
@@ -10934,44 +8751,45 @@ URL: {{URL}}/api/organisations/8426a370-280e-11eb-aa97-9d0bb1a7de0d/listings
     "success": true,
     "data": [
         {
-            "organisation_id": 1,
-            "name": "Shuffledrive",
-            "organisation_type": "Consultancy",
-            "about": null,
-            "website_url": "microsoft.com",
-            "phone": "8765378253",
-            "email": "mallgood0@slideshare.net",
-            "address": null,
-            "owned_by": null,
-            "locations": null,
-            "story": "Multi-layered regional framework",
-            "facebook_link": null,
-            "twitter_link": null,
-            "instagram_link": null,
-            "banner_photo": null,
-            "profile_photo": null,
-            "additional_photos": null,
+            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
+            "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
+            "title": "Updated title 1",
+            "category": "Health",
+            "about": "Updated about",
+            "tagline": "Updated tagline",
+            "mission": "Updated mission",
+            "listing_url": "www.updated-test.com",
+            "listing_email": "updated_email@gmail.com",
+            "listing_status": "completed",
+            "pics": [
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg"
+            ],
+            "is_published": true,
             "is_verified": false,
-            "created_on": "2020-08-20T20:50:15.047Z",
+            "is_featured": false,
+            "start_date": "2018-08-15T08:45:43.415Z",
+            "end_date": "2020-01-30T08:45:43.415Z",
+            "created_on": "2020-08-20T09:36:45.815Z",
+            "updated_on": "2020-11-17T07:46:43.565Z",
             "deleted_on": null,
-            "listing_organisation_id": 1,
-            "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
-            "created_by": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
-            "title": "Project Kampong",
-            "category": "Technology",
-            "tagline": "With Kampong you can",
-            "mission": "To build a platform that connects people with ideas and skills to build and track social good project initiatives",
-            "listing_url": "www.test.com",
-            "listing_email": "joinourkampong@gmail.com",
-            "listing_status": "ongoing",
-            "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/kampong%20logo-1597985636566.jpeg",
-            "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/group-large-1597985817857.png",
-            "pic3": null,
-            "pic4": null,
-            "pic5": null,
-            "is_published": false,
-            "start_date": "2020-08-20T20:50:15.047Z",
-            "end_date": null
+            "nickname": "Wayne",
+            "profile_picture": "https://images.pexels.com/photos/1561863/pexels-photo-1561863.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+            "locations": [
+                "Admiralty",
+                "Kranji",
+                "Woodlands"
+            ],
+            "location_ids": [
+                1,
+                2,
+                3
+            ],
+            "keyword_vector": "'1':3 'admiralti':5 'health':4 'kranji':6 'titl':2 'updat':1 'woodland':7",
+            "listing_organisation_id": 1
         }
     ]
 }
@@ -12037,230 +9855,6 @@ URL: {{URL}}/api/participants/11
 
 
 ***Status Code:*** 200
-
-<br>
-
-
-
-### 3. Get All Participants
-
-
-Get all Participants. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/participants
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get All Participants (200 OK)
-
-
-
-##### I. Example Response: Get All Participants (200 OK)
-```js
-{
-    "success": true,
-    "count": 20,
-    "pagination": {},
-    "data": [
-        {
-            "listing_id": 15,
-            "user_id": 1,
-            "joined_on": "2018-12-18T16:00:00.000Z",
-            "end_on": null
-        },
-        {
-            "listing_id": 13,
-            "user_id": 9,
-            "joined_on": "2018-09-23T16:00:00.000Z",
-            "end_on": null
-        },
-        {
-            "listing_id": 2,
-            "user_id": 16,
-            "joined_on": "2019-10-17T16:00:00.000Z",
-            "end_on": null
-        },
-        {
-            "listing_id": 8,
-            "user_id": 10,
-            "joined_on": "2018-08-20T16:00:00.000Z",
-            "end_on": "2020-09-06T16:00:00.000Z"
-        },
-        {
-            "listing_id": 17,
-            "user_id": 5,
-            "joined_on": "2019-12-13T16:00:00.000Z",
-            "end_on": "2020-09-02T16:00:00.000Z"
-        },
-        {
-            "listing_id": 9,
-            "user_id": 11,
-            "joined_on": "2020-02-21T16:00:00.000Z",
-            "end_on": "2020-08-09T16:00:00.000Z"
-        },
-        {
-            "listing_id": 1,
-            "user_id": 6,
-            "joined_on": "2020-02-11T16:00:00.000Z",
-            "end_on": "2020-09-03T16:00:00.000Z"
-        },
-        {
-            "listing_id": 14,
-            "user_id": 20,
-            "joined_on": "2019-03-20T16:00:00.000Z",
-            "end_on": "2020-09-22T16:00:00.000Z"
-        },
-        {
-            "listing_id": 19,
-            "user_id": 6,
-            "joined_on": "2020-06-12T16:00:00.000Z",
-            "end_on": null
-        },
-        {
-            "listing_id": 13,
-            "user_id": 8,
-            "joined_on": "2019-07-09T16:00:00.000Z",
-            "end_on": null
-        },
-        {
-            "listing_id": 5,
-            "user_id": 20,
-            "joined_on": "2020-02-12T16:00:00.000Z",
-            "end_on": null
-        },
-        {
-            "listing_id": 6,
-            "user_id": 18,
-            "joined_on": "2018-07-24T16:00:00.000Z",
-            "end_on": null
-        },
-        {
-            "listing_id": 10,
-            "user_id": 20,
-            "joined_on": "2019-02-08T16:00:00.000Z",
-            "end_on": null
-        },
-        {
-            "listing_id": 8,
-            "user_id": 16,
-            "joined_on": "2018-11-03T16:00:00.000Z",
-            "end_on": "2020-07-31T16:00:00.000Z"
-        },
-        {
-            "listing_id": 4,
-            "user_id": 5,
-            "joined_on": "2019-11-30T16:00:00.000Z",
-            "end_on": null
-        },
-        {
-            "listing_id": 10,
-            "user_id": 3,
-            "joined_on": "2020-01-20T16:00:00.000Z",
-            "end_on": "2020-07-10T16:00:00.000Z"
-        },
-        {
-            "listing_id": 13,
-            "user_id": 4,
-            "joined_on": "2019-04-19T16:00:00.000Z",
-            "end_on": null
-        },
-        {
-            "listing_id": 6,
-            "user_id": 1,
-            "joined_on": "2020-01-30T16:00:00.000Z",
-            "end_on": "2020-07-06T16:00:00.000Z"
-        },
-        {
-            "listing_id": 3,
-            "user_id": 7,
-            "joined_on": "2020-06-17T16:00:00.000Z",
-            "end_on": "2020-08-02T16:00:00.000Z"
-        },
-        {
-            "listing_id": 4,
-            "user_id": 2,
-            "joined_on": "2019-12-19T16:00:00.000Z",
-            "end_on": null
-        }
-    ]
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 4. Get Single Participant
-
-
-Get single participant identified by participant id. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/participants/1
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get Single Participant (200 OK)
-
-
-
-##### I. Example Response: Get Single Participant (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "participant_id": 1,
-        "listing_id": 15,
-        "user_id": 1,
-        "joined_on": "2018-12-18T16:00:00.000Z",
-        "end_on": null
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-##### II. Example Request: Get Single Participant (Non-existent participant id)
-
-
-
-##### II. Example Response: Get Single Participant (Non-existent participant id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
 
 <br>
 
@@ -13859,4 +11453,4 @@ URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-17 07:48:53 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-17 14:44:26 by [docgen](https://github.com/thedevsaddam/docgen)

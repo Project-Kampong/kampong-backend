@@ -1,11 +1,11 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
-import { advancedResults, authorise, checkInputError, protect } from '../../middleware';
+import { authorise, checkInputError, protect } from '../../middleware';
 import { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } from '../../utils';
 
 // import controllers here
-import { getJobs, getJob, createJob, updateJob, deleteJob, deactivateJob } from '../../controllers/jobs';
+import { getJobs, createJob, updateJob, deleteJob, deactivateJob } from '../../controllers/jobs';
 
 // Define input validation chain
 const validateCreateJobFields = [
@@ -20,8 +20,7 @@ const validateUpdateJobFields = [
     check('job_description').optional().trim(),
 ];
 
-router.route('/').get(advancedResults('jobsview'), getJobs);
-router.route('/:id').get(getJob);
+router.route('/').get(getJobs);
 
 // all routes below only accessible to authenticated users (and listing owner, to be implemented)
 router.use(protect);

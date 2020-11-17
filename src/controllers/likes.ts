@@ -3,15 +3,13 @@ import { asyncHandler } from '../middleware';
 import { cleanseData, ErrorResponse } from '../utils';
 
 /**
- * @desc    Get all likes
- * @route   GET /api/likes
  * @desc    Get all likes (including profile information) for a listing
  * @route   GET /api/listings/:listing_id/likes
  * @desc    Get all likes (including listing information) for a user
  * @route   GET /api/users/:user_id/likes
  * @access  Public
  */
-export const getLikes = asyncHandler(async (req, res) => {
+export const getLikes = asyncHandler(async (req, res, next) => {
     if (req.params.listing_id) {
         // return 404 error response if listing not found or soft deleted
         await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.listing_id);
@@ -38,21 +36,7 @@ export const getLikes = asyncHandler(async (req, res) => {
         });
     }
 
-    res.status(200).json(res.advancedResults);
-});
-
-/**
- * @desc    Get single like (identified by like_id)
- * @route   GET /api/likes/like_id
- * @access  Public
- */
-export const getLike = asyncHandler(async (req, res) => {
-    const rows = await db.one('SELECT * FROM likes WHERE like_id = $1', req.params.like_id);
-
-    res.status(200).json({
-        success: true,
-        data: rows,
-    });
+    return next(new ErrorResponse('Invalid route', 404));
 });
 
 /**
