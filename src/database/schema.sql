@@ -18,7 +18,7 @@ DROP TABLE IF EXISTS category CASCADE;
 
 DROP TABLE IF EXISTS Listings CASCADE;
 
-DROP TABLE IF EXISTS ListingsOrganisations CASCADE;
+DROP TABLE IF EXISTS listingorganisation CASCADE;
 
 DROP TABLE IF EXISTS ListingStories CASCADE;
 
@@ -33,8 +33,6 @@ DROP TABLE IF EXISTS Likes CASCADE;
 DROP TABLE IF EXISTS ListingAdmins CASCADE;
 
 DROP TABLE IF EXISTS Participants CASCADE;
-
-DROP TABLE IF EXISTS Subscriptions CASCADE;
 
 DROP TABLE IF EXISTS Milestones CASCADE;
 
@@ -158,11 +156,7 @@ CREATE TABLE Listings (
 	listing_url VARCHAR,
 	listing_email VARCHAR(320),
 	listing_status VARCHAR,
-	pic1 VARCHAR,
-	pic2 VARCHAR,
-	pic3 VARCHAR,
-	pic4 VARCHAR,
-	pic5 VARCHAR,
+	pics VARCHAR[],
 	is_published BOOLEAN NOT NULL DEFAULT FALSE,
 	is_verified BOOLEAN NOT NULL DEFAULT FALSE,
 	is_featured BOOLEAN NOT NULL DEFAULT FALSE,
@@ -176,7 +170,7 @@ CREATE TABLE Listings (
 	FOREIGN KEY (created_by) REFERENCES Users (user_id) ON DELETE SET NULL
 );
 
-CREATE TABLE ListingsOrganisations (
+CREATE TABLE listingorganisation (
 	listing_organisation_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	organisation_id UUID NOT NULL,
@@ -253,16 +247,6 @@ CREATE TABLE Participants (
 	end_on TIMESTAMPTZ,
 	PRIMARY KEY (participant_id),
 	UNIQUE (listing_id, user_id),
-	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
-);
-
-CREATE TABLE Subscriptions (
-	subscription_id SERIAL,
-	user_id VARCHAR NOT NULL,
-	listing_id VARCHAR NOT NULL,
-	PRIMARY KEY (subscription_id),
-	UNIQUE (user_id, listing_id),
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
 );

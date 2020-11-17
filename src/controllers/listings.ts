@@ -48,7 +48,7 @@ export const getListings = asyncHandler(async (req, res) => {
         });
     } else if (req.params.organisation_id) {
         const rows = await db.manyOrNone(
-            'SELECT l.*, lo.listing_organisation_id FROM organisations o LEFT JOIN listingsorganisations lo ON o.organisation_id = lo.organisation_id LEFT JOIN listings l ON lo.listing_id = l.listing_id WHERE o.organisation_id = $1',
+            'SELECT l.*, lo.listing_organisation_id FROM organisations o LEFT JOIN listingorganisation lo ON o.organisation_id = lo.organisation_id LEFT JOIN listings l ON lo.listing_id = l.listing_id WHERE o.organisation_id = $1',
             req.params.organisation_id,
         );
 
@@ -121,11 +121,7 @@ export const createListing = asyncHandler(async (req, res) => {
         listing_url,
         listing_email,
         listing_status,
-        pic1,
-        pic2,
-        pic3,
-        pic4,
-        pic5,
+        pics,
         is_published,
         start_date,
         end_date,
@@ -143,11 +139,7 @@ export const createListing = asyncHandler(async (req, res) => {
         listing_url,
         listing_email,
         listing_status,
-        pic1,
-        pic2,
-        pic3,
-        pic4,
-        pic5,
+        pics,
         is_published,
         start_date,
         end_date,
@@ -201,11 +193,7 @@ export const updateListing = asyncHandler(async (req, res, next) => {
         is_published,
         start_date,
         end_date,
-        pic1,
-        pic2,
-        pic3,
-        pic4,
-        pic5,
+        pics,
     } = req.body;
 
     const data = {
@@ -221,11 +209,7 @@ export const updateListing = asyncHandler(async (req, res, next) => {
         is_published,
         start_date,
         end_date,
-        pic1,
-        pic2,
-        pic3,
-        pic4,
-        pic5,
+        pics,
         updated_on: moment.tz(process.env.DEFAULT_TIMEZONE).toDate(),
     };
 
