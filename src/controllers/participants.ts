@@ -14,7 +14,7 @@ export const getParticipants = asyncHandler(async (req, res, next) => {
         // return 404 error response if listing not found
         await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.listing_id);
 
-        const participants = await db.manyOrNone('SELECT * FROM Participants WHERE listing_id = $1', req.params.listing_id);
+        const participants = await db.manyOrNone('SELECT * FROM participant WHERE listing_id = $1', req.params.listing_id);
 
         return res.status(200).json({
             success: true,
@@ -27,7 +27,7 @@ export const getParticipants = asyncHandler(async (req, res, next) => {
         // return 404 error response if user not found
         await db.one('SELECT * FROM Users WHERE user_id = $1', req.params.user_id);
 
-        const participants = await db.manyOrNone('SELECT * FROM Participants WHERE user_id = $1', req.params.user_id);
+        const participants = await db.manyOrNone('SELECT * FROM participant WHERE user_id = $1', req.params.user_id);
 
         return res.status(200).json({
             success: true,
@@ -64,7 +64,7 @@ export const createParticipant = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Not authorised to add participant to this listing`, 403));
     }
 
-    const rows = await db.one('INSERT INTO participants (${this:name}) VALUES (${this:csv}) RETURNING *', data);
+    const rows = await db.one('INSERT INTO participant (${this:name}) VALUES (${this:csv}) RETURNING *', data);
 
     res.status(201).json({
         success: true,
@@ -79,7 +79,7 @@ export const createParticipant = asyncHandler(async (req, res, next) => {
  */
 export const deleteParticipant = asyncHandler(async (req, res, next) => {
     // check if participant exists
-    const participant = await db.one('SELECT * FROM participants WHERE participant_id = $1', req.params.participant_id);
+    const participant = await db.one('SELECT * FROM participant WHERE participant_id = $1', req.params.participant_id);
 
     const isListingOwner = await checkListingOwner(req.user.user_id, participant.listing_id);
     const isOwnUser = req.user.user_id === participant.user_id;
@@ -89,7 +89,7 @@ export const deleteParticipant = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Not authorised to delete participant from this listing`, 403));
     }
 
-    const rows = await db.one('DELETE FROM participants WHERE participant_id = $1 RETURNING *', req.params.participant_id);
+    const rows = await db.one('DELETE FROM participant WHERE participant_id = $1 RETURNING *', req.params.participant_id);
 
     res.status(200).json({
         success: true,

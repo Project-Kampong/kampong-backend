@@ -71,18 +71,18 @@ INSERT INTO "public"."faq" ("listing_id", "question", "answer") VALUES
 ('1276b4eb-df3a-4de3-bcae-a450ed96eeac', 'Who is behind Project Kampong?', 'Project Kampong is a youth-led platform dedicated to connecting young Singaporean leaders to build social good initiatives, together. By breaking down the barriers youths face in finding ideas and/or members, Project Kampong hopes to create a more level playing field that supports youth to innovate and  pursue their passions.');
 
 /* Participants mock data population */
-insert into Participants (listing_id, user_id, joined_on, end_on) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'f96b2138-1754-4c17-a405-940e20adc601', '12/19/2018', null);
-insert into Participants (listing_id, user_id, joined_on, end_on) values ('c975a572-452d-4824-8ed5-500b50488436', 'f96b2138-1754-4c17-a405-940e20adc601', '9/24/2018', null);
-insert into Participants (listing_id, user_id, joined_on, end_on) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'b7662cd1-a2c9-4054-95e7-078e35ea6fa1', '10/18/2019', null);
-insert into Participants (listing_id, user_id, joined_on, end_on) values ('c975a572-452d-4824-8ed5-500b50488436', 'b7662cd1-a2c9-4054-95e7-078e35ea6fa1', '8/21/2018', '9/7/2020');
-insert into Participants (listing_id, user_id, joined_on, end_on) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'b7662cd1-a2c9-4054-95e7-078e35ea6fa1', '12/14/2019', '9/3/2020');
-insert into Participants (listing_id, user_id, joined_on, end_on) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'd69a127d-815b-4834-b2b6-54ab398fccad', '2/22/2020', '8/10/2020');
-insert into Participants (listing_id, user_id, joined_on, end_on) values ('c975a572-452d-4824-8ed5-500b50488436', 'd69a127d-815b-4834-b2b6-54ab398fccad', '2/12/2020', '9/4/2020');
-insert into Participants (listing_id, user_id, joined_on, end_on) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'd69a127d-815b-4834-b2b6-54ab398fccad', '3/21/2019', '9/23/2020');
-insert into Participants (listing_id, user_id, joined_on, end_on) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 'd69a127d-815b-4834-b2b6-54ab398fccad', '6/13/2020', null);
-insert into Participants (listing_id, user_id, joined_on, end_on) values ('c975a572-452d-4824-8ed5-500b50488436', 'f997120c-2956-482e-9ba3-81a12b4fecc1', '7/10/2019', null);
-insert into Participants (listing_id, user_id, joined_on, end_on) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'f997120c-2956-482e-9ba3-81a12b4fecc1', '7/25/2018', null);
-insert into Participants (listing_id, user_id, joined_on, end_on) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'f997120c-2956-482e-9ba3-81a12b4fecc1', '2/9/2019', null);
+insert into participant (listing_id, user_id, joined_on, end_on) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'f96b2138-1754-4c17-a405-940e20adc601', '12/19/2018', null);
+insert into participant (listing_id, user_id, joined_on, end_on) values ('c975a572-452d-4824-8ed5-500b50488436', 'f96b2138-1754-4c17-a405-940e20adc601', '9/24/2018', null);
+insert into participant (listing_id, user_id, joined_on, end_on) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'b7662cd1-a2c9-4054-95e7-078e35ea6fa1', '10/18/2019', null);
+insert into participant (listing_id, user_id, joined_on, end_on) values ('c975a572-452d-4824-8ed5-500b50488436', 'b7662cd1-a2c9-4054-95e7-078e35ea6fa1', '8/21/2018', '9/7/2020');
+insert into participant (listing_id, user_id, joined_on, end_on) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'b7662cd1-a2c9-4054-95e7-078e35ea6fa1', '12/14/2019', '9/3/2020');
+insert into participant (listing_id, user_id, joined_on, end_on) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'd69a127d-815b-4834-b2b6-54ab398fccad', '2/22/2020', '8/10/2020');
+insert into participant (listing_id, user_id, joined_on, end_on) values ('c975a572-452d-4824-8ed5-500b50488436', 'd69a127d-815b-4834-b2b6-54ab398fccad', '2/12/2020', '9/4/2020');
+insert into participant (listing_id, user_id, joined_on, end_on) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'd69a127d-815b-4834-b2b6-54ab398fccad', '3/21/2019', '9/23/2020');
+insert into participant (listing_id, user_id, joined_on, end_on) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 'd69a127d-815b-4834-b2b6-54ab398fccad', '6/13/2020', null);
+insert into participant (listing_id, user_id, joined_on, end_on) values ('c975a572-452d-4824-8ed5-500b50488436', 'f997120c-2956-482e-9ba3-81a12b4fecc1', '7/10/2019', null);
+insert into participant (listing_id, user_id, joined_on, end_on) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 'f997120c-2956-482e-9ba3-81a12b4fecc1', '7/25/2018', null);
+insert into participant (listing_id, user_id, joined_on, end_on) values ('e411bd80-d5cf-49ac-b847-18c9fc13377a', 'f997120c-2956-482e-9ba3-81a12b4fecc1', '2/9/2019', null);
 
 /* Jobs mock data population */
 insert into job (listing_id, job_title, job_description) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 'Account Representative I', 'Polarised next generation alliance');
