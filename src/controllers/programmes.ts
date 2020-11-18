@@ -66,10 +66,9 @@ export const createProgramme = asyncHandler(async (req, res, next) => {
     const { organisation_id, title, about, media_url } = req.body;
 
     const userId: string = req.user.user_id;
-    const organisationId: number = parseInt(organisation_id);
-    const isOrganisationOwner = await checkOrganisationOwner(userId, organisationId);
+    const isOrganisationOwner = await checkOrganisationOwner(userId, organisation_id);
 
-    if (req.user.role !== 'admin' || !isOrganisationOwner) {
+    if (req.user.role !== 'admin' && !isOrganisationOwner) {
         return next(new ErrorResponse('Not authorised to create programme as you are not the organisation owner', 403));
     }
 
@@ -97,14 +96,14 @@ export const createProgramme = asyncHandler(async (req, res, next) => {
  * @access  Admin/Owner
  */
 export const updateProgramme = asyncHandler(async (req, res, next) => {
-    const { organisation_id } = await db.one<Promise<{ organisation_id: number }>>(
+    const { organisation_id } = await db.one<Promise<{ organisation_id: string }>>(
         'SELECT organisation_id FROM programme WHERE programme_id = $1',
         req.params.id,
     );
     const userId: string = req.user.user_id;
     const isOrganisationOwner = await checkOrganisationOwner(userId, organisation_id);
 
-    if (req.user.role !== 'admin' || !isOrganisationOwner) {
+    if (req.user.role !== 'admin' && !isOrganisationOwner) {
         return next(new ErrorResponse('Not authorised to update programme as you are not the organisation owner', 403));
     }
 
@@ -134,14 +133,14 @@ export const updateProgramme = asyncHandler(async (req, res, next) => {
  * @access  Admin/Owner
  */
 export const deleteProgramme = asyncHandler(async (req, res, next) => {
-    const { organisation_id } = await db.one<Promise<{ organisation_id: number }>>(
+    const { organisation_id } = await db.one<Promise<{ organisation_id: string }>>(
         'SELECT organisation_id FROM programme WHERE programme_id = $1',
         req.params.id,
     );
     const userId: string = req.user.user_id;
     const isOrganisationOwner = await checkOrganisationOwner(userId, organisation_id);
 
-    if (req.user.role !== 'admin' || !isOrganisationOwner) {
+    if (req.user.role !== 'admin' && !isOrganisationOwner) {
         return next(new ErrorResponse('Not authorised to delete programme as you are not the organisation owner', 403));
     }
 

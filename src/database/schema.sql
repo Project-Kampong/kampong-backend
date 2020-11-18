@@ -1,6 +1,6 @@
 DROP EXTENSION IF EXISTS pg_stat_statements CASCADE;
 
-DROP TABLE IF EXISTS user CASCADE;
+DROP TABLE IF EXISTS loginuser CASCADE;
 
 DROP TABLE IF EXISTS pendinguser CASCADE;
 
@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS job CASCADE;
 
 DROP TABLE IF EXISTS FAQ CASCADE;
 
-DROP TABLE IF EXISTS like CASCADE;
+DROP TABLE IF EXISTS listinglike CASCADE;
 
 DROP TABLE IF EXISTS listingadmin CASCADE;
 
@@ -50,7 +50,7 @@ DROP TABLE IF EXISTS organisationannouncement CASCADE;
 
 CREATE EXTENSION pg_stat_statements;
 
-CREATE TABLE user (
+CREATE TABLE loginuser (
 	user_id VARCHAR,
 	first_name VARCHAR NOT NULL,
 	last_name VARCHAR,
@@ -66,7 +66,7 @@ CREATE TABLE pendinguser (
 	user_id VARCHAR UNIQUE NOT NULL,
 	token VARCHAR UNIQUE NOT NULL,
 	PRIMARY KEY (pending_user_id),
-	FOREIGN KEY (user_id) REFERENCES user ON DELETE CASCADE
+	FOREIGN KEY (user_id) REFERENCES loginuser ON DELETE CASCADE
 );
 
 CREATE TABLE forgetpassworduser (
@@ -93,7 +93,7 @@ CREATE TABLE profile (
 	is_verified BOOLEAN NOT NULL DEFAULT FALSE,
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	PRIMARY KEY (user_id),
-	FOREIGN KEY (user_id) REFERENCES user ON DELETE CASCADE
+	FOREIGN KEY (user_id) REFERENCES loginuser ON DELETE CASCADE
 );
 
 CREATE TABLE organisation (
@@ -129,7 +129,7 @@ CREATE TABLE membership (
 	PRIMARY KEY (membership_id),
 	UNIQUE (organisation_id, user_id),
 	FOREIGN KEY (organisation_id) REFERENCES organisation ON DELETE CASCADE,
-	FOREIGN KEY (user_id) REFERENCES user ON DELETE CASCADE
+	FOREIGN KEY (user_id) REFERENCES loginuser ON DELETE CASCADE
 );
 
 CREATE TABLE programme (
@@ -171,7 +171,7 @@ CREATE TABLE listing (
 	deleted_on TIMESTAMPTZ DEFAULT NULL,
 	PRIMARY KEY (listing_id),
 	FOREIGN KEY (category) REFERENCES category (category_name) ON DELETE SET NULL,
-	FOREIGN KEY (created_by) REFERENCES user (user_id) ON DELETE SET NULL
+	FOREIGN KEY (created_by) REFERENCES loginuser (user_id) ON DELETE SET NULL
 );
 
 CREATE TABLE listingorganisation (
@@ -223,13 +223,13 @@ CREATE TABLE FAQ (
 	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
-CREATE TABLE like (
+CREATE TABLE listinglike (
 	like_id SERIAL,
 	user_id VARCHAR NOT NULL,
 	listing_id VARCHAR NOT NULL,
 	PRIMARY KEY (like_id),
 	UNIQUE (user_id, listing_id),
-	FOREIGN KEY (user_id) REFERENCES user ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES loginuser ON DELETE CASCADE,
 	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
@@ -249,7 +249,7 @@ CREATE TABLE listingadmin (
 	listing_id VARCHAR NOT NULL,
 	PRIMARY KEY (listing_admin_id),
 	UNIQUE (user_id, listing_id),
-	FOREIGN KEY (user_id) REFERENCES user ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES loginuser ON DELETE CASCADE,
 	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
@@ -261,7 +261,7 @@ CREATE TABLE participant (
 	end_on TIMESTAMPTZ,
 	PRIMARY KEY (participant_id),
 	UNIQUE (listing_id, user_id),
-	FOREIGN KEY (user_id) REFERENCES user ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES loginuser ON DELETE CASCADE,
 	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
@@ -296,7 +296,7 @@ CREATE TABLE listingcomment (
 	deleted_on TIMESTAMPTZ,
 	PRIMARY KEY (listing_comment_id),
 	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE SET NULL,
-	FOREIGN KEY (user_id) REFERENCES user ON DELETE SET NULL,
+	FOREIGN KEY (user_id) REFERENCES loginuser ON DELETE SET NULL,
 	FOREIGN KEY (reply_to_id) REFERENCES listingcomment (listing_comment_id) ON DELETE SET NULL
 );
 

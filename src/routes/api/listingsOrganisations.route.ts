@@ -10,7 +10,7 @@ import { createListingOrganisation, deleteListingOrganisation } from '../../cont
 // Define input validation
 const validateCreateListingOrganisationEntryFields = [
     check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID(),
-    check('organisation_id', INVALID_FIELD_MSG('organisation id')).isInt(),
+    check('organisation_id', INVALID_FIELD_MSG('organisation id')).isUUID(),
 ];
 
 // Map routes to controller

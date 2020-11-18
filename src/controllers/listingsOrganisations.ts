@@ -14,7 +14,7 @@ export const createListingOrganisation = asyncHandler(async (req, res, next) => 
     // Chcek permissions
     const isOrganisationOwner = await checkOrganisationOwner(userId, organisation_id);
     const isListingOwner = await checkListingOwner(userId, listing_id);
-    if (req.user.role !== 'admin' || !isListingOwner || !isOrganisationOwner) {
+    if (req.user.role !== 'admin' && !isListingOwner && !isOrganisationOwner) {
         return next(new ErrorResponse('Not authorised to create listing organisation as you are not the organisation or listing owner', 403));
     }
 
@@ -27,7 +27,7 @@ export const createListingOrganisation = asyncHandler(async (req, res, next) => 
 
     const rows = await db.one('INSERT INTO listingorganisation (listing_id, organisation_id) VALUES (${this:csv}) RETURNING *', data);
 
-    res.status(201).json({
+    res.status(200).json({
         success: true,
         data: rows,
     });
@@ -46,7 +46,7 @@ export const deleteListingOrganisation = asyncHandler(async (req, res, next) => 
     // Check permissions
     const isOrganisationOwner = await checkOrganisationOwner(userId, organisation_id);
     const isListingOwner = await checkListingOwner(userId, listing_id);
-    if (req.user.role !== 'admin' || !isListingOwner || !isOrganisationOwner) {
+    if (req.user.role !== 'admin' && !isListingOwner && !isOrganisationOwner) {
         return next(new ErrorResponse('Not authorised to delete listing organisation as you are not the organisation or listing owner', 403));
     }
 

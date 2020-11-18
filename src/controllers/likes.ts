@@ -14,7 +14,7 @@ export const getLikes = asyncHandler(async (req, res, next) => {
         // return 404 error response if listing not found or soft deleted
         await db.one('SELECT * FROM listingview WHERE listing_id = $1', req.params.listing_id);
 
-        const likes = await db.manyOrNone('SELECT * FROM like NATURAL JOIN profile WHERE listing_id = $1', req.params.listing_id);
+        const likes = await db.manyOrNone('SELECT * FROM listinglike NATURAL JOIN profile WHERE listing_id = $1', req.params.listing_id);
 
         return res.status(200).json({
             success: true,
@@ -27,7 +27,7 @@ export const getLikes = asyncHandler(async (req, res, next) => {
         // return 404 error response if user not found
         await db.one('SELECT * FROM Users WHERE user_id = $1', req.params.user_id);
 
-        const likes = await db.manyOrNone('SELECT * FROM like NATURAL JOIN listing WHERE user_id = $1', req.params.user_id);
+        const likes = await db.manyOrNone('SELECT * FROM listinglike NATURAL JOIN listing WHERE user_id = $1', req.params.user_id);
 
         return res.status(200).json({
             success: true,
@@ -54,7 +54,7 @@ export const newLike = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    const rows = await db.one('INSERT INTO like (${this:name}) VALUES (${this:csv}) RETURNING *', data);
+    const rows = await db.one('INSERT INTO listinglike (${this:name}) VALUES (${this:csv}) RETURNING *', data);
 
     res.status(201).json({
         success: true,
@@ -68,13 +68,13 @@ export const newLike = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 export const unLike = asyncHandler(async (req, res, next) => {
-    const like = await db.one('SELECT * FROM like WHERE like_id = $1', req.params.like_id);
+    const listingLike = await db.one('SELECT * FROM listinglike WHERE like_id = $1', req.params.like_id);
 
-    if (like.user_id !== req.user.user_id) {
+    if (listingLike.user_id !== req.user.user_id) {
         return next(new ErrorResponse('Not authorised to access this route', 403));
     }
 
-    const rows = await db.one('DELETE FROM like WHERE like_id = $1 RETURNING *', req.params.like_id);
+    const rows = await db.one('DELETE FROM listinglike WHERE like_id = $1 RETURNING *', req.params.like_id);
 
     res.status(200).json({
         success: true,

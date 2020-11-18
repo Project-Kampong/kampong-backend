@@ -12,7 +12,7 @@ import { asyncHandler } from '../middleware';
 export const register = asyncHandler(async (req, res, next) => {
     // Check if user email already exists
     const { first_name, last_name, email, password } = req.body;
-    const userExists = await db.oneOrNone('SELECT * FROM user WHERE email = $1', email);
+    const userExists = await db.oneOrNone('SELECT * FROM loginuser WHERE email = $1', email);
 
     if (userExists) {
         return next(new ErrorResponse(`Email has already been used.`, 400));
@@ -59,7 +59,7 @@ export const register = asyncHandler(async (req, res, next) => {
          * 2nd json: User profile
          */
         const createUserQueries = await db.tx(async (query) => {
-            const createUser = await query.one('INSERT INTO user (${this:name}) VALUES (${this:csv}) RETURNING *', userData);
+            const createUser = await query.one('INSERT INTO loginuser (${this:name}) VALUES (${this:csv}) RETURNING *', userData);
             const createProfile = await query.one('INSERT INTO profile (user_id, nickname) VALUES ($1, $2) RETURNING *', [
                 createUser.user_id,
                 nickname,
@@ -87,7 +87,7 @@ export const confirmEmail = asyncHandler(async (req, res, next) => {
 
     const confirmEmail = await db.tx(async (query) => {
         const deletePendingUser = await query.one('DELETE FROM pendinguser WHERE token = $1 RETURNING *', hashedToken);
-        const activateUser = await query.one('UPDATE user SET is_activated = TRUE WHERE user_id = $1 RETURNING *', deletePendingUser.user_id);
+        const activateUser = await query.one('UPDATE loginuser SET is_activated = TRUE WHERE user_id = $1 RETURNING *', deletePendingUser.user_id);
         return query.batch([deletePendingUser, activateUser]);
     });
     sendTokenResponse(confirmEmail[1], 200, res, true);
@@ -99,7 +99,10 @@ export const confirmEmail = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 export const resendActivationEmail = asyncHandler(async (req, res, next) => {
-    const pendingUser = await db.one('SELECT * FROM pendinguser pu JOIN user u ON pu.user_id = u.user_id WHERE pu.user_id = $1', req.user.user_id);
+    const pendingUser = await db.one(
+        'SELECT * FROM pendinguser pu JOIN loginuser u ON pu.user_id = u.user_id WHERE pu.user_id = $1',
+        req.user.user_id,
+    );
     const { email, token } = pendingUser;
 
     // Create confirmation url
@@ -132,7 +135,7 @@ export const resendActivationEmail = asyncHandler(async (req, res, next) => {
 export const forgetPassword = asyncHandler(async (req, res, next) => {
     // Check if user email already exists
     const { email } = req.body;
-    const userExists = await db.oneOrNone('SELECT * FROM user WHERE email = $1', email);
+    const userExists = await db.oneOrNone('SELECT * FROM loginuser WHERE email = $1', email);
 
     if (!userExists) {
         return next(new ErrorResponse(`User does not exist.`, 404));
@@ -240,7 +243,7 @@ export const resetPassword = asyncHandler(async (req, res, next) => {
 export const login = asyncHandler(async (req, res, next) => {
     const { email, password } = req.body;
 
-    const user = await db.oneOrNone('SELECT * FROM user WHERE email = $1', email);
+    const user = await db.oneOrNone('SELECT * FROM loginuser WHERE email = $1', email);
 
     // Throw exception if user does not exist
     if (!user) {
@@ -295,7 +298,7 @@ export const getMe = asyncHandler(async (req, res, next) => {
  */
 export const updateDetails = asyncHandler(async (req, res, next) => {
     // check if user exists
-    const user = await db.oneOrNone('SELECT * FROM user WHERE user_id = $1', req.user.user_id);
+    const user = await db.oneOrNone('SELECT * FROM loginuser WHERE user_id = $1', req.user.user_id);
 
     // if user does not exist, return 401 unauthorised response
     if (!user) {
@@ -312,7 +315,7 @@ export const updateDetails = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    const updateUserQuery = parseSqlUpdateStmt(data, 'user', 'WHERE user_id = $1 RETURNING *', [req.user.user_id]);
+    const updateUserQuery = parseSqlUpdateStmt(data, 'loginuser', 'WHERE user_id = $1 RETURNING *', [req.user.user_id]);
 
     const rows = await db.one(updateUserQuery);
 
@@ -326,7 +329,7 @@ export const updateDetails = asyncHandler(async (req, res, next) => {
  */
 export const updatePassword = asyncHandler(async (req, res, next) => {
     // check if user exists
-    const user = await db.oneOrNone('SELECT * FROM user WHERE user_id = $1', req.user.user_id);
+    const user = await db.oneOrNone('SELECT * FROM loginuser WHERE user_id = $1', req.user.user_id);
 
     // if user does not exist, return 401 unauthorised response
     if (!user) {
@@ -346,7 +349,7 @@ export const updatePassword = asyncHandler(async (req, res, next) => {
         password: await hashPassword(newPassword), // hash new password
     };
 
-    const updatePasswordQuery = parseSqlUpdateStmt(data, 'user', 'WHERE user_id = $1 RETURNING *', [req.user.user_id]);
+    const updatePasswordQuery = parseSqlUpdateStmt(data, 'loginuser', 'WHERE user_id = $1 RETURNING *', [req.user.user_id]);
 
     const rows = await db.one(updatePasswordQuery);
 

@@ -9,7 +9,7 @@ import { getProgrammes, getProgramme, createProgramme, updateProgramme, deletePr
 
 // Define input validation
 const validateCreateProgrammeFields = [
-    check('organisation_id', INVALID_FIELD_MSG('organisation id')).notEmpty().isInt(),
+    check('organisation_id', INVALID_FIELD_MSG('organisation id')).notEmpty().isUUID(),
     check('title', INVALID_FIELD_MSG('title')).trim().notEmpty(),
     check('about', INVALID_ALPHA_SPACE_MSG('about')).trim().notEmpty(),
 ];
