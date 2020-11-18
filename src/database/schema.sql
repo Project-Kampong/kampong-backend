@@ -30,6 +30,8 @@ DROP TABLE IF EXISTS FAQs CASCADE;
 
 DROP TABLE IF EXISTS Likes CASCADE;
 
+DROP TABLE IF EXISTS organisationlike CASCADE;
+
 DROP TABLE IF EXISTS ListingAdmins CASCADE;
 
 DROP TABLE IF EXISTS Participants CASCADE;
@@ -229,6 +231,16 @@ CREATE TABLE Likes (
 	UNIQUE (user_id, listing_id),
 	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
 	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+);
+
+CREATE TABLE organisationlike (
+	organisation_like_id SERIAL,
+	organisation_id UUID NOT NULL,
+	user_id VARCHAR NOT NULL,
+	PRIMARY KEY (organisation_like_id),
+	UNIQUE (organisation_id, user_id),
+	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
+	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE
 );
 
 CREATE TABLE ListingAdmins (
