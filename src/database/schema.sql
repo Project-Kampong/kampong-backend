@@ -40,7 +40,7 @@ DROP TABLE IF EXISTS listingupdate CASCADE;
 
 DROP TABLE IF EXISTS listingcomment CASCADE;
 
-DROP TABLE IF EXISTS Locations CASCADE;
+DROP TABLE IF EXISTS location CASCADE;
 
 DROP TABLE IF EXISTS ListingLocations CASCADE;
 
@@ -286,7 +286,7 @@ CREATE TABLE listingcomment (
 	FOREIGN KEY (reply_to_id) REFERENCES listingcomment (listing_comment_id) ON DELETE SET NULL
 );
 
-CREATE TABLE Locations (
+CREATE TABLE location (
 	location_id SERIAL,
 	location VARCHAR,
 	zone VARCHAR,
@@ -300,5 +300,5 @@ CREATE TABLE ListingLocations (
 	PRIMARY KEY (listing_location_id),
 	UNIQUE (listing_id, location_id),
 	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE,
-	FOREIGN KEY (location_id) REFERENCES Locations ON DELETE CASCADE
+	FOREIGN KEY (location_id) REFERENCES location ON DELETE CASCADE
 );

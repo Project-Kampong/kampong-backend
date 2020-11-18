@@ -7,12 +7,12 @@ DROP VIEW IF EXISTS ListingCommentsView CASCADE;
 CREATE VIEW ListingsView AS WITH CombinedListingLocations AS (
 	SELECT
 		ls.listing_id,
-		ARRAY_AGG(lo.location) AS locations,
+		ARRAY_AGG(lo.location) AS location,
 		ARRAY_AGG(lo.location_id) AS location_ids
 	FROM
 		listing ls
 		JOIN (listinglocations lsl
-			JOIN locations lo ON lsl.location_id = lo.location_id) ON ls.listing_id = lsl.listing_id
+			JOIN location lo ON lsl.location_id = lo.location_id) ON ls.listing_id = lsl.listing_id
 	GROUP BY
 		ls.listing_id
 )
