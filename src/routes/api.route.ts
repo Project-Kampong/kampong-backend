@@ -20,6 +20,7 @@ import { router as usersRoute } from './api/users.route';
 import { router as uploadsRoute } from './api/uploads.route';
 import { router as sendEmailRoute } from './api/sendEmail.route';
 import { router as listingsOrganisationsRoute } from './api/listingsOrganisations.route';
+import { router as organisationLikesRoute } from './api/organisationLikes.route';
 
 // Mount routes
 apiRouter.use('/auth', authRoute);
@@ -41,5 +42,6 @@ apiRouter.use('/users', usersRoute);
 apiRouter.use('/file-upload', uploadsRoute);
 apiRouter.use('/send-email', sendEmailRoute);
 apiRouter.use('/listings-organisations', listingsOrganisationsRoute);
+apiRouter.use('/organisation-likes', organisationLikesRoute);
 
 apiRouter.use('/*', (req, res) => res.status(404).json({ success: false, error: `Cannot ${req.method} ${req.originalUrl}` }));
