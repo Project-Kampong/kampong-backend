@@ -12,7 +12,7 @@ import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
 export const getParticipants = asyncHandler(async (req, res, next) => {
     if (req.params.listing_id) {
         // return 404 error response if listing not found
-        await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.listing_id);
+        await db.one('SELECT * FROM listingview WHERE listing_id = $1', req.params.listing_id);
 
         const participants = await db.manyOrNone('SELECT * FROM participant WHERE listing_id = $1', req.params.listing_id);
 

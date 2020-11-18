@@ -20,7 +20,7 @@ export const getListings = asyncHandler(async (req, res) => {
     if (req.params.category_name) {
         // returns 404 error if category name not found
         const rows = await db.many(
-            'SELECT * FROM category lc LEFT JOIN listingsview lv ON lc.category_name = lv.category WHERE lc.category_name = $1',
+            'SELECT * FROM category lc LEFT JOIN listingview lv ON lc.category_name = lv.category WHERE lc.category_name = $1',
             req.params.category_name,
         );
 
@@ -35,7 +35,7 @@ export const getListings = asyncHandler(async (req, res) => {
     if (req.params.location_id) {
         // return 404 error response if location with location id not found
         const rows = await db.many(
-            'SELECT lv.*, lil.location_id FROM location l LEFT JOIN listinglocation lil ON l.location_id = lil.location_id LEFT JOIN listingsview lv ON lil.listing_id = lv.listing_id WHERE l.location_id = $1',
+            'SELECT lv.*, lil.location_id FROM location l LEFT JOIN listinglocation lil ON l.location_id = lil.location_id LEFT JOIN listingview lv ON lil.listing_id = lv.listing_id WHERE l.location_id = $1',
             req.params.location_id,
         );
 
@@ -48,7 +48,7 @@ export const getListings = asyncHandler(async (req, res) => {
         });
     } else if (req.params.organisation_id) {
         const rows = await db.manyOrNone(
-            'SELECT lv.*, lo.listing_organisation_id FROM organisation o LEFT JOIN listingorganisation lo ON o.organisation_id = lo.organisation_id LEFT JOIN listingsview lv ON lo.listing_id = lv.listing_id WHERE o.organisation_id = $1',
+            'SELECT lv.*, lo.listing_organisation_id FROM organisation o LEFT JOIN listingorganisation lo ON o.organisation_id = lo.organisation_id LEFT JOIN listingview lv ON lo.listing_id = lv.listing_id WHERE o.organisation_id = $1',
             req.params.organisation_id,
         );
 
@@ -70,7 +70,7 @@ export const getListings = asyncHandler(async (req, res) => {
  * @access  Public
  */
 export const getFeaturedListings = asyncHandler(async (req, res) => {
-    const rows = await db.manyOrNone('SELECT * FROM featuredlistingsview');
+    const rows = await db.manyOrNone('SELECT * FROM featuredlistingview');
     res.status(200).json({ success: true, data: rows });
 });
 
@@ -80,7 +80,7 @@ export const getFeaturedListings = asyncHandler(async (req, res) => {
  * @access  Public
  */
 export const getListing = asyncHandler(async (req, res, next) => {
-    const rows = await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.id);
+    const rows = await db.one('SELECT * FROM listingview WHERE listing_id = $1', req.params.id);
     res.status(200).json({
         success: true,
         data: rows,
@@ -97,7 +97,7 @@ export const getAllListingsOwnedByUser = asyncHandler(async (req, res, next) => 
     // check if user exists
     await db.one('SELECT * FROM Users WHERE user_id = $1', userId);
 
-    const rows = await db.manyOrNone('SELECT * FROM listingsview WHERE created_by = $1', userId);
+    const rows = await db.manyOrNone('SELECT * FROM listingview WHERE created_by = $1', userId);
 
     res.status(200).json({
         success: true,
@@ -311,7 +311,7 @@ export const searchListings = asyncHandler(async (req, res) => {
     const data = { fullTextKeyword: keyword.split(',').join(' | '), partialTextKeyword: keyword.split(',').map((key) => '%' + key + '%'), limit };
 
     const searchQuery =
-        'WITH rankedlisting AS (SELECT *, ts_rank_cd(keyword_vector, to_tsquery(${fullTextKeyword})) FROM listingsview) ' +
+        'WITH rankedlisting AS (SELECT *, ts_rank_cd(keyword_vector, to_tsquery(${fullTextKeyword})) FROM listingview) ' +
         'SELECT * FROM rankedlisting WHERE keyword_vector @@ to_tsquery(${fullTextKeyword}) ' +
         'UNION ' +
         // ILIKE is expensive query, remove line below if too expensive

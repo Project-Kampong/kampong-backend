@@ -11,7 +11,7 @@ export const getHashtagsForListing = asyncHandler(async (req, res, next) => {
     if (req.params.listing_id) {
         // returns 404 error response if listing not found or soft deleted
         const hashtags = await db.many(
-            'SELECT l.listing_id, h.hashtag_id, tag FROM listingsview l LEFT JOIN hashtag h ON l.listing_id = h.listing_id WHERE l.listing_id = $1',
+            'SELECT l.listing_id, h.hashtag_id, tag FROM listingview l LEFT JOIN hashtag h ON l.listing_id = h.listing_id WHERE l.listing_id = $1',
             req.params.listing_id,
         );
 

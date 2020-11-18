@@ -13,9 +13,9 @@ import { checkListingOrCommentOwner, cleanseData, ErrorResponse, parseSqlUpdateS
 export const getListingComments = asyncHandler(async (req, res, next) => {
     if (req.params.listing_id) {
         // return 404 error response if listing not found or soft deleted
-        await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.listing_id);
+        await db.one('SELECT * FROM listingview WHERE listing_id = $1', req.params.listing_id);
 
-        const listingComments = await db.manyOrNone('SELECT * FROM ListingCommentsView WHERE listing_id = $1', req.params.listing_id);
+        const listingComments = await db.manyOrNone('SELECT * FROM listingcommentview WHERE listing_id = $1', req.params.listing_id);
 
         return res.status(200).json({
             success: true,
@@ -28,7 +28,7 @@ export const getListingComments = asyncHandler(async (req, res, next) => {
         // return 404 error response if user not found
         await db.one('SELECT * FROM Users WHERE user_id = $1', req.params.user_id);
 
-        const listingComments = await db.manyOrNone('SELECT * FROM ListingCommentsView WHERE user_id = $1', req.params.user_id);
+        const listingComments = await db.manyOrNone('SELECT * FROM listingcommentview WHERE user_id = $1', req.params.user_id);
 
         return res.status(200).json({
             success: true,
@@ -47,7 +47,7 @@ export const getListingComments = asyncHandler(async (req, res, next) => {
 export const getListingCommentChildren = asyncHandler(async (req, res) => {
     // 404 if listing comment id does not exist
     const rows = await db.many(
-        'WITH RECURSIVE lcinfo AS(SELECT lc.*,p.nickname,p.profile_picture FROM ListingCommentsView lc LEFT JOIN profile p ON lc.user_id=p.user_id),recurselc AS(SELECT*FROM lcinfo WHERE listing_comment_id=$1 UNION SELECT lc.*FROM lcinfo lc JOIN recurselc rlc ON rlc.listing_comment_id=lc.reply_to_id)SELECT*FROM recurselc ORDER BY created_on ASC',
+        'WITH RECURSIVE lcinfo AS(SELECT lc.*,p.nickname,p.profile_picture FROM listingcommentview lc LEFT JOIN profile p ON lc.user_id=p.user_id),recurselc AS(SELECT*FROM lcinfo WHERE listing_comment_id=$1 UNION SELECT lc.*FROM lcinfo lc JOIN recurselc rlc ON rlc.listing_comment_id=lc.reply_to_id)SELECT*FROM recurselc ORDER BY created_on ASC',
         req.params.id,
     );
 

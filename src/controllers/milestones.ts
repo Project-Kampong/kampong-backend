@@ -11,7 +11,7 @@ export const getMilestonesForListing = asyncHandler(async (req, res, next) => {
     if (req.params.listing_id) {
         // returns 404 error response if listing not found
         const milestones = await db.many(
-            'SELECT l.listing_id, m.milestone_id, description, m.date FROM listingsview l LEFT JOIN milestone m ON l.listing_id = m.listing_id WHERE l.listing_id = $1',
+            'SELECT l.listing_id, m.milestone_id, description, m.date FROM listingview l LEFT JOIN milestone m ON l.listing_id = m.listing_id WHERE l.listing_id = $1',
             req.params.listing_id,
         );
 

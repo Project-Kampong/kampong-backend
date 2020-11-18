@@ -11,9 +11,9 @@ import { checkListingOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } fro
 export const getJobs = asyncHandler(async (req, res, next) => {
     if (req.params.listing_id) {
         // return 404 error response if listing not found or soft deleted
-        await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.listing_id);
+        await db.one('SELECT * FROM listingview WHERE listing_id = $1', req.params.listing_id);
 
-        const jobs = await db.manyOrNone('SELECT * FROM jobsview WHERE listing_id = $1', req.params.listing_id);
+        const jobs = await db.manyOrNone('SELECT * FROM jobview WHERE listing_id = $1', req.params.listing_id);
         return res.status(200).json({
             success: true,
             count: jobs.length,
@@ -62,7 +62,7 @@ export const createJob = asyncHandler(async (req, res, next) => {
  */
 export const updateJob = asyncHandler(async (req, res, next) => {
     // check if job exists and is not soft deleted
-    const job = await db.one('SELECT * FROM jobsview WHERE job_id = $1', req.params.id);
+    const job = await db.one('SELECT * FROM jobview WHERE job_id = $1', req.params.id);
 
     // check if listing exists and is listing owner
     const isListingOwner = await checkListingOwner(req.user.user_id, job.listing_id);
@@ -98,7 +98,7 @@ export const updateJob = asyncHandler(async (req, res, next) => {
  */
 export const deactivateJob = asyncHandler(async (req, res, next) => {
     // check if job exists nd not soft deleted
-    const job = await db.one('SELECT * FROM jobsview WHERE job_id = $1', req.params.id);
+    const job = await db.one('SELECT * FROM jobview WHERE job_id = $1', req.params.id);
 
     // check if listing exists and is listing owner
     const isListingOwner = await checkListingOwner(req.user.user_id, job.listing_id);
