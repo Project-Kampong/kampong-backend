@@ -36,7 +36,7 @@ DROP TABLE IF EXISTS participant CASCADE;
 
 DROP TABLE IF EXISTS milestone CASCADE;
 
-DROP TABLE IF EXISTS ListingUpdates CASCADE;
+DROP TABLE IF EXISTS listingupdate CASCADE;
 
 DROP TABLE IF EXISTS ListingComments CASCADE;
 
@@ -260,7 +260,7 @@ CREATE TABLE milestone (
 	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
-CREATE TABLE ListingUpdates (
+CREATE TABLE listingupdate (
 	listing_update_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	description TEXT NOT NULL,
