@@ -5,11 +5,6 @@ Backend API for Project Kampong.
 
 ## Indices
 
-* [Admin-only Get Soft Deleted](#admin-only-get-soft-deleted)
-
-  * [Get All Jobs for a Listing Including Soft Deletes](#1-get-all-jobs-for-a-listing-including-soft-deletes)
-  * [Get All Listings Including Soft Deletes](#2-get-all-listings-including-soft-deletes)
-
 * [Authentication](#authentication)
 
   * [Activate Account (via Email Confirmation)](#1-activate-account-(via-email-confirmation))
@@ -93,15 +88,14 @@ Backend API for Project Kampong.
   * [Get All Likes for a Listing](#8-get-all-likes-for-a-listing)
   * [Get All Listing Comments for a Listing](#9-get-all-listing-comments-for-a-listing)
   * [Get All Listing Locations for a Listing](#10-get-all-listing-locations-for-a-listing)
-  * [Get All Listing Skills for a Listing](#11-get-all-listing-skills-for-a-listing)
-  * [Get All Listing Updates for a Listing](#12-get-all-listing-updates-for-a-listing)
-  * [Get All Listings](#13-get-all-listings)
-  * [Get All Milestones for a Listing](#14-get-all-milestones-for-a-listing)
-  * [Get All Participants for a Listing](#15-get-all-participants-for-a-listing)
-  * [Get Single Listing](#16-get-single-listing)
-  * [Search Listings](#17-search-listings)
-  * [Update Listing](#18-update-listing)
-  * [Verify and/or Feature Listing](#19-verify-andor-feature-listing)
+  * [Get All Listing Updates for a Listing](#11-get-all-listing-updates-for-a-listing)
+  * [Get All Listings](#12-get-all-listings)
+  * [Get All Milestones for a Listing](#13-get-all-milestones-for-a-listing)
+  * [Get All Participants for a Listing](#14-get-all-participants-for-a-listing)
+  * [Get Single Listing](#15-get-single-listing)
+  * [Search Listings](#16-search-listings)
+  * [Update Listing](#17-update-listing)
+  * [Verify and/or Feature Listing](#18-verify-andor-feature-listing)
 
 * [Listings - Organisations (Join / Unjoin)](#listings---organisations-(join--unjoin))
 
@@ -110,11 +104,8 @@ Backend API for Project Kampong.
 
 * [Locations](#locations)
 
-  * [Create Location](#1-create-location)
-  * [Delete Location](#2-delete-location)
-  * [Get All Listings for a Location](#3-get-all-listings-for-a-location)
-  * [Get All Locations](#4-get-all-locations)
-  * [Get Single Location](#5-get-single-location)
+  * [Get All Listings for a Location](#1-get-all-listings-for-a-location)
+  * [Get All Locations](#2-get-all-locations)
 
 * [Milestones](#milestones)
 
@@ -150,618 +141,13 @@ Backend API for Project Kampong.
 
 * [Users](#users)
 
-  * [Create User](#1-create-user)
-  * [Delete User](#2-delete-user)
-  * [Get All Likes for a User](#3-get-all-likes-for-a-user)
-  * [Get All Listing Comments for a User](#4-get-all-listing-comments-for-a-user)
-  * [Get All Listing Participation for a User](#5-get-all-listing-participation-for-a-user)
-  * [Get All Listings Owned by a User](#6-get-all-listings-owned-by-a-user)
-  * [Get All Users](#7-get-all-users)
-  * [Get Single User](#8-get-single-user)
-  * [Update User](#9-update-user)
+  * [Get All Likes for a User](#1-get-all-likes-for-a-user)
+  * [Get All Listing Comments for a User](#2-get-all-listing-comments-for-a-user)
+  * [Get All Listing Participation for a User](#3-get-all-listing-participation-for-a-user)
+  * [Get All Listings Owned by a User](#4-get-all-listings-owned-by-a-user)
 
 
 --------
-
-
-## Admin-only Get Soft Deleted
-All GET requests for retrieving all resources, including soft deleted. Admin-only endpoints.
-
-
-
-### 1. Get All Jobs for a Listing Including Soft Deletes
-
-
-Get all jobs for an associated listing including soft deletes. Permission: Admin.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/jobs/all
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get All Jobs for a Listing Including Soft Deletes (404 Not Found - Non-existent listing id)
-
-
-
-##### I. Example Response: Get All Jobs for a Listing Including Soft Deletes (404 Not Found - Non-existent listing id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
-##### II. Example Request: Get All Jobs for a Listing Including Soft Deletes (200 OK)
-
-
-
-##### II. Example Response: Get All Jobs for a Listing Including Soft Deletes (200 OK)
-```js
-{
-    "success": true,
-    "count": 5,
-    "data": [
-        {
-            "job_id": 1,
-            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "job_title": "Account Representative I",
-            "job_description": "Polarised next generation alliance",
-            "deleted_on": null
-        },
-        {
-            "job_id": 2,
-            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "job_title": "Project Manager",
-            "job_description": "Ameliorated 24 hour structure",
-            "deleted_on": null
-        },
-        {
-            "job_id": 3,
-            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "job_title": "Teacher",
-            "job_description": "Enhanced 6th generation portal",
-            "deleted_on": null
-        },
-        {
-            "job_id": 4,
-            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "job_title": "VP Accounting",
-            "job_description": "Multi-channelled local pricing structure",
-            "deleted_on": null
-        },
-        {
-            "job_id": 5,
-            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "job_title": "Office Assistant IV",
-            "job_description": "Vision-oriented explicit moratorium",
-            "deleted_on": null
-        }
-    ]
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 2. Get All Listings Including Soft Deletes
-
-
-Get all listings including soft deletes. Permission: Admin.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/listings/all
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get All Listings Including Soft Deletes (200 OK)
-
-
-
-##### I. Example Response: Get All Listings Including Soft Deletes (200 OK)
-```js
-{
-    "success": true,
-    "count": 20,
-    "pagination": {},
-    "data": [
-        {
-            "listing_id": 1,
-            "organisation_id": null,
-            "created_by": 3,
-            "title": "neque libero convallis eget",
-            "category": "Human Resources",
-            "about": "Customer-focused dynamic installation",
-            "tagline": "integrate cross-platform initiatives",
-            "mission": "embrace sticky synergies",
-            "listing_url": "http://ifeng.com/nisl.jsp",
-            "pic1": "https://robohash.org/nesciuntliberovoluptate.jpg?size=500x500&set=set1",
-            "pic2": "https://robohash.org/ipsaiuresed.bmp?size=500x500&set=set1",
-            "pic3": "https://robohash.org/animiautvoluptas.jpg?size=500x500&set=set1",
-            "pic4": "https://robohash.org/fugaidconsequatur.png?size=500x500&set=set1",
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-12-01T11:09:20.000Z",
-            "end_date": null,
-            "created_on": "2020-08-12T13:56:06.402Z",
-            "deleted_on": null,
-            "hashId": "vn"
-        },
-        {
-            "listing_id": 2,
-            "organisation_id": null,
-            "created_by": 7,
-            "title": "vestibulum sed magna at nunc",
-            "category": "Training",
-            "about": "Team-oriented context-sensitive forecast",
-            "tagline": "innovate B2C markets",
-            "mission": "cultivate cutting-edge markets",
-            "listing_url": "https://ehow.com/in/imperdiet/et/commodo/vulputate/justo.xml",
-            "pic1": "https://robohash.org/etpossimusea.png?size=500x500&set=set1",
-            "pic2": null,
-            "pic3": null,
-            "pic4": null,
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-07-30T05:54:45.000Z",
-            "end_date": null,
-            "created_on": "2020-08-12T13:56:06.402Z",
-            "deleted_on": null,
-            "hashId": "e3"
-        },
-        {
-            "listing_id": 3,
-            "organisation_id": null,
-            "created_by": 3,
-            "title": "ipsum integer a nibh in quis justo maecenas rhoncus aliquam",
-            "category": "Research and Development",
-            "about": "Triple-buffered client-server installation",
-            "tagline": "expedite front-end e-services",
-            "mission": "streamline web-enabled ROI",
-            "listing_url": "https://mtv.com/blandit/mi/in.png",
-            "pic1": "https://robohash.org/oditaperiamomnis.bmp?size=500x500&set=set1",
-            "pic2": null,
-            "pic3": "https://robohash.org/auteligendimagnam.bmp?size=500x500&set=set1",
-            "pic4": null,
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-01-01T12:54:13.000Z",
-            "end_date": null,
-            "created_on": "2020-08-12T13:56:06.402Z",
-            "deleted_on": null,
-            "hashId": "GB"
-        },
-        {
-            "listing_id": 4,
-            "organisation_id": null,
-            "created_by": 12,
-            "title": "vehicula consequat morbi a ipsum integer a nibh in quis",
-            "category": "Legal",
-            "about": "Cloned 4th generation matrices",
-            "tagline": "visualize bleeding-edge niches",
-            "mission": "utilize robust ROI",
-            "listing_url": "https://toplist.cz/aliquam.xml",
-            "pic1": "https://robohash.org/quofugadolor.bmp?size=500x500&set=set1",
-            "pic2": "https://robohash.org/utsednostrum.png?size=500x500&set=set1",
-            "pic3": null,
-            "pic4": "https://robohash.org/laudantiumconsequatursequi.png?size=500x500&set=set1",
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-12-25T14:21:11.000Z",
-            "end_date": null,
-            "created_on": "2020-08-12T13:56:06.402Z",
-            "deleted_on": null,
-            "hashId": "6W"
-        },
-        {
-            "listing_id": 5,
-            "organisation_id": null,
-            "created_by": 8,
-            "title": "a odio in hac habitasse platea",
-            "category": "Product Management",
-            "about": "Adaptive disintermediate Graphical User Interface",
-            "tagline": "engineer out-of-the-box solutions",
-            "mission": "e-enable dot-com metrics",
-            "listing_url": "http://i2i.jp/rhoncus/dui/vel.jpg",
-            "pic1": "https://robohash.org/undeveroenim.bmp?size=500x500&set=set1",
-            "pic2": null,
-            "pic3": "https://robohash.org/atquemolestiasvelit.jpg?size=500x500&set=set1",
-            "pic4": "https://robohash.org/nonquodquam.png?size=500x500&set=set1",
-            "pic5": "https://robohash.org/voluptaslaborumsimilique.png?size=500x500&set=set1",
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-03-19T03:04:15.000Z",
-            "end_date": null,
-            "created_on": "2020-08-12T13:56:06.402Z",
-            "deleted_on": null,
-            "hashId": "Wp"
-        },
-        {
-            "listing_id": 6,
-            "organisation_id": null,
-            "created_by": 14,
-            "title": "enim blandit mi in porttitor pede justo eu massa",
-            "category": "Accounting",
-            "about": "Advanced regional monitoring",
-            "tagline": "whiteboard collaborative schemas",
-            "mission": "deploy front-end applications",
-            "listing_url": "http://list-manage.com/nulla/quisque/arcu.xml",
-            "pic1": "https://robohash.org/quaeratvelitsunt.jpg?size=500x500&set=set1",
-            "pic2": "https://robohash.org/quistemporeodit.bmp?size=500x500&set=set1",
-            "pic3": null,
-            "pic4": "https://robohash.org/doloremqueetmolestiae.png?size=500x500&set=set1",
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-05-09T21:55:24.000Z",
-            "end_date": null,
-            "created_on": "2020-08-12T13:56:06.402Z",
-            "deleted_on": null,
-            "hashId": "Qp"
-        },
-        {
-            "listing_id": 7,
-            "organisation_id": null,
-            "created_by": 9,
-            "title": "potenti cras in purus",
-            "category": "Sales",
-            "about": "Diverse local website",
-            "tagline": "deliver real-time e-services",
-            "mission": "seize viral partnerships",
-            "listing_url": "http://pen.io/quam/suspendisse/potenti/nullam/porttitor.jsp",
-            "pic1": "https://robohash.org/aspernaturautanimi.png?size=500x500&set=set1",
-            "pic2": "https://robohash.org/nequeinventoredeleniti.jpg?size=500x500&set=set1",
-            "pic3": null,
-            "pic4": null,
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-12-24T00:10:13.000Z",
-            "end_date": null,
-            "created_on": "2020-08-12T13:56:06.402Z",
-            "deleted_on": null,
-            "hashId": "2V"
-        },
-        {
-            "listing_id": 8,
-            "organisation_id": null,
-            "created_by": 4,
-            "title": "eget orci vehicula condimentum curabitur",
-            "category": "Product Management",
-            "about": "Object-based multi-tasking parallelism",
-            "tagline": "productize dot-com relationships",
-            "mission": "generate transparent initiatives",
-            "listing_url": "http://globo.com/metus/aenean/fermentum/donec.jsp",
-            "pic1": "https://robohash.org/corruptideseruntconsequatur.jpg?size=500x500&set=set1",
-            "pic2": "https://robohash.org/adipiscidolorumasperiores.bmp?size=500x500&set=set1",
-            "pic3": "https://robohash.org/harumquiamet.jpg?size=500x500&set=set1",
-            "pic4": null,
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-01-01T23:09:36.000Z",
-            "end_date": null,
-            "created_on": "2020-08-12T13:56:06.402Z",
-            "deleted_on": null,
-            "hashId": "7B"
-        },
-        {
-            "listing_id": 9,
-            "organisation_id": null,
-            "created_by": 18,
-            "title": "eu massa donec dapibus duis at velit eu est",
-            "category": "Research and Development",
-            "about": "Proactive demand-driven moderator",
-            "tagline": "evolve revolutionary action-items",
-            "mission": "brand global portals",
-            "listing_url": "http://cbsnews.com/quisque/erat/eros/viverra/eget.json",
-            "pic1": "https://robohash.org/repellendusrerumlaborum.png?size=500x500&set=set1",
-            "pic2": "https://robohash.org/omnisaccusamusrerum.bmp?size=500x500&set=set1",
-            "pic3": null,
-            "pic4": null,
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-01-21T05:32:51.000Z",
-            "end_date": null,
-            "created_on": "2020-08-12T13:56:06.402Z",
-            "deleted_on": null,
-            "hashId": "Zp"
-        },
-        {
-            "listing_id": 10,
-            "organisation_id": null,
-            "created_by": 16,
-            "title": "iaculis justo in",
-            "category": "Legal",
-            "about": "Polarised client-server software",
-            "tagline": "transition dynamic platforms",
-            "mission": "redefine seamless schemas",
-            "listing_url": "https://wp.com/nisl/duis/bibendum/felis/sed/interdum/venenatis.jpg",
-            "pic1": "https://robohash.org/aestest.bmp?size=500x500&set=set1",
-            "pic2": null,
-            "pic3": null,
-            "pic4": null,
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-01-11T18:16:58.000Z",
-            "end_date": null,
-            "created_on": "2020-08-12T13:56:06.402Z",
-            "deleted_on": null,
-            "hashId": "yb"
-        },
-        {
-            "listing_id": 11,
-            "organisation_id": null,
-            "created_by": 1,
-            "title": "mauris ullamcorper purus sit amet nulla quisque arcu",
-            "category": "Product Management",
-            "about": "Synchronised intangible knowledge base",
-            "tagline": "disintermediate front-end partnerships",
-            "mission": "iterate cross-platform technologies",
-            "listing_url": "https://slate.com/ultrices/libero/non.jpg",
-            "pic1": "https://robohash.org/voluptatemquosid.png?size=500x500&set=set1",
-            "pic2": null,
-            "pic3": "https://robohash.org/autemullamid.png?size=500x500&set=set1",
-            "pic4": null,
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-10-19T10:31:39.000Z",
-            "end_date": null,
-            "created_on": "2020-08-12T13:56:06.402Z",
-            "deleted_on": null,
-            "hashId": "g7"
-        },
-        {
-            "listing_id": 12,
-            "organisation_id": null,
-            "created_by": 14,
-            "title": "adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam",
-            "category": "Research and Development",
-            "about": "Customer-focused eco-centric conglomeration",
-            "tagline": "harness interactive applications",
-            "mission": "repurpose granular e-business",
-            "listing_url": "https://senate.gov/quisque/ut/erat/curabitur.jpg",
-            "pic1": "https://robohash.org/illomolestiaequasi.bmp?size=500x500&set=set1",
-            "pic2": "https://robohash.org/cupiditatevoluptatemanimi.jpg?size=500x500&set=set1",
-            "pic3": "https://robohash.org/inciduntipsamsuscipit.bmp?size=500x500&set=set1",
-            "pic4": "https://robohash.org/laborumautmolestiae.jpg?size=500x500&set=set1",
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-09-29T10:12:25.000Z",
-            "end_date": null,
-            "created_on": "2020-08-12T13:56:06.402Z",
-            "deleted_on": null,
-            "hashId": "mn"
-        },
-        {
-            "listing_id": 13,
-            "organisation_id": null,
-            "created_by": 15,
-            "title": "sit amet eros suspendisse accumsan tortor quis",
-            "category": "Marketing",
-            "about": "Expanded optimizing software",
-            "tagline": "whiteboard clicks-and-mortar markets",
-            "mission": "incubate back-end web-readiness",
-            "listing_url": "http://vimeo.com/sed/lacus/morbi/sem/mauris.png",
-            "pic1": "https://robohash.org/eligendisedimpedit.bmp?size=500x500&set=set1",
-            "pic2": "https://robohash.org/rerumfaceremagnam.png?size=500x500&set=set1",
-            "pic3": "https://robohash.org/asperioresconsequaturrecusandae.bmp?size=500x500&set=set1",
-            "pic4": null,
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-03-15T21:04:01.000Z",
-            "end_date": null,
-            "created_on": "2020-08-12T13:56:06.402Z",
-            "deleted_on": null,
-            "hashId": "1r"
-        },
-        {
-            "listing_id": 14,
-            "organisation_id": null,
-            "created_by": 9,
-            "title": "elit ac nulla sed vel enim sit amet nunc",
-            "category": "Business Development",
-            "about": "Adaptive scalable array",
-            "tagline": "monetize intuitive applications",
-            "mission": "benchmark leading-edge functionalities",
-            "listing_url": "http://discovery.com/vitae.xml",
-            "pic1": "https://robohash.org/etametmolestiae.bmp?size=500x500&set=set1",
-            "pic2": "https://robohash.org/molestiaebeataeperspiciatis.bmp?size=500x500&set=set1",
-            "pic3": "https://robohash.org/estconsecteturnam.png?size=500x500&set=set1",
-            "pic4": null,
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-04-14T01:14:51.000Z",
-            "end_date": null,
-            "created_on": "2020-08-12T13:56:06.402Z",
-            "deleted_on": null,
-            "hashId": "wQ"
-        },
-        {
-            "listing_id": 15,
-            "organisation_id": null,
-            "created_by": 16,
-            "title": "odio cras mi",
-            "category": "Business Development",
-            "about": "Persevering methodical monitoring",
-            "tagline": "seize frictionless communities",
-            "mission": "deliver dynamic deliverables",
-            "listing_url": "https://nasa.gov/ligula.aspx",
-            "pic1": "https://robohash.org/debitisofficiiset.png?size=500x500&set=set1",
-            "pic2": "https://robohash.org/quaeratnonut.jpg?size=500x500&set=set1",
-            "pic3": null,
-            "pic4": null,
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-02-13T14:34:20.000Z",
-            "end_date": null,
-            "created_on": "2020-08-12T13:56:06.402Z",
-            "deleted_on": null,
-            "hashId": "zM"
-        },
-        {
-            "listing_id": 16,
-            "organisation_id": null,
-            "created_by": 3,
-            "title": "magna vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet",
-            "category": "Training",
-            "about": "Self-enabling incremental solution",
-            "tagline": "evolve proactive e-services",
-            "mission": "generate open-source markets",
-            "listing_url": "http://deviantart.com/enim/sit/amet/nunc/viverra/dapibus.jpg",
-            "pic1": "https://robohash.org/uteosarchitecto.jpg?size=500x500&set=set1",
-            "pic2": "https://robohash.org/quoliberonostrum.jpg?size=500x500&set=set1",
-            "pic3": "https://robohash.org/officiadictaut.png?size=500x500&set=set1",
-            "pic4": null,
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-09-22T16:42:03.000Z",
-            "end_date": null,
-            "created_on": "2020-08-12T13:56:06.402Z",
-            "deleted_on": null,
-            "hashId": "9x"
-        },
-        {
-            "listing_id": 17,
-            "organisation_id": null,
-            "created_by": 9,
-            "title": "velit nec nisi vulputate nonummy maecenas",
-            "category": "Research and Development",
-            "about": "Balanced local local area network",
-            "tagline": "productize visionary mindshare",
-            "mission": "productize enterprise metrics",
-            "listing_url": "http://chicagotribune.com/metus/vitae/ipsum/aliquam/non/mauris/morbi.jpg",
-            "pic1": "https://robohash.org/liberovelitfacilis.bmp?size=500x500&set=set1",
-            "pic2": "https://robohash.org/quamdelenitinesciunt.jpg?size=500x500&set=set1",
-            "pic3": "https://robohash.org/istererumautem.bmp?size=500x500&set=set1",
-            "pic4": null,
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-02-06T16:53:02.000Z",
-            "end_date": null,
-            "created_on": "2020-08-12T13:56:06.402Z",
-            "deleted_on": null,
-            "hashId": "qw"
-        },
-        {
-            "listing_id": 18,
-            "organisation_id": null,
-            "created_by": 6,
-            "title": "lacinia eget tincidunt eget",
-            "category": "Training",
-            "about": "Reactive next generation collaboration",
-            "tagline": "revolutionize next-generation ROI",
-            "mission": "optimize cross-platform bandwidth",
-            "listing_url": "http://china.com.cn/aliquet/maecenas/leo/odio/condimentum/id.html",
-            "pic1": "https://robohash.org/impeditfaceredoloribus.jpg?size=500x500&set=set1",
-            "pic2": "https://robohash.org/sitrecusandaepossimus.bmp?size=500x500&set=set1",
-            "pic3": "https://robohash.org/indolorvero.bmp?size=500x500&set=set1",
-            "pic4": null,
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-02-19T16:36:37.000Z",
-            "end_date": null,
-            "created_on": "2020-08-12T13:56:06.402Z",
-            "deleted_on": null,
-            "hashId": "3M"
-        },
-        {
-            "listing_id": 19,
-            "organisation_id": null,
-            "created_by": 18,
-            "title": "phasellus id sapien in sapien iaculis congue",
-            "category": "Marketing",
-            "about": "Re-contextualized value-added toolset",
-            "tagline": "reinvent virtual mindshare",
-            "mission": "morph front-end channels",
-            "listing_url": "https://bbb.org/vestibulum/ac/est/lacinia/nisi/venenatis.html",
-            "pic1": "https://robohash.org/sitessenumquam.bmp?size=500x500&set=set1",
-            "pic2": "https://robohash.org/asperioreseumblanditiis.bmp?size=500x500&set=set1",
-            "pic3": "https://robohash.org/autsimiliquenon.jpg?size=500x500&set=set1",
-            "pic4": null,
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-07-30T20:45:41.000Z",
-            "end_date": null,
-            "created_on": "2020-08-12T13:56:06.402Z",
-            "deleted_on": null,
-            "hashId": "Yz"
-        },
-        {
-            "listing_id": 20,
-            "organisation_id": null,
-            "created_by": 4,
-            "title": "diam vitae quam suspendisse potenti",
-            "category": "Services",
-            "about": "Synergized dynamic analyzer",
-            "tagline": "integrate clicks-and-mortar ROI",
-            "mission": "revolutionize plug-and-play action-items",
-            "listing_url": "https://nyu.edu/cras/in/purus/eu/magna.json",
-            "pic1": "https://robohash.org/ducimusiustocumque.jpg?size=500x500&set=set1",
-            "pic2": null,
-            "pic3": "https://robohash.org/abautemvoluptatem.bmp?size=500x500&set=set1",
-            "pic4": null,
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-09-25T22:20:51.000Z",
-            "end_date": null,
-            "created_on": "2020-08-12T13:56:06.402Z",
-            "deleted_on": null,
-            "hashId": "jy"
-        }
-    ]
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
 
 
 ## Authentication
@@ -1718,7 +1104,7 @@ password: 8-25 characters. At least 1 uppercase character. At least 1 lowercase 
 ```bash
 Method: PUT
 Type: RAW
-URL: {{URL}}/api/auth/reset-password/9cd4383ffdde29ce4850d7752d8fce0e384cca71
+URL: {{URL}}/api/auth/forget-password/9cd4383ffdde29ce4850d7752d8fce0e384cca71
 ```
 
 
@@ -6200,90 +5586,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-locations
 
 
 
-### 11. Get All Listing Skills for a Listing
-
-
-Get all listing skills for an associated listing. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-skills
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get All Listing Skills for a Listing (404 Not Found - Non-existent listing id)
-
-
-
-##### I. Example Response: Get All Listing Skills for a Listing (404 Not Found - Non-existent listing id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
-##### II. Example Request: Get All Listing Skills for a Listing (200 OK)
-
-
-
-##### II. Example Response: Get All Listing Skills for a Listing (200 OK)
-```js
-{
-    "success": true,
-    "count": 4,
-    "data": [
-        {
-            "listing_skill_id": 1,
-            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "skill_id": 1,
-            "skill": "Auditing"
-        },
-        {
-            "listing_skill_id": 2,
-            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "skill_id": 2,
-            "skill": "Typesetting"
-        },
-        {
-            "listing_skill_id": 3,
-            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "skill_id": 3,
-            "skill": "Copywriting"
-        },
-        {
-            "listing_skill_id": 4,
-            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "skill_id": 4,
-            "skill": "WiFi"
-        }
-    ]
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 12. Get All Listing Updates for a Listing
+### 11. Get All Listing Updates for a Listing
 
 
 Get all Listing Updates for an associated listing. Permission: Public.
@@ -6370,7 +5673,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/listing-updates
 
 
 
-### 13. Get All Listings
+### 12. Get All Listings
 
 
 Get all listings. Permission: Public.
@@ -6613,7 +5916,7 @@ URL: {{URL}}/api/listings
 
 
 
-### 14. Get All Milestones for a Listing
+### 13. Get All Milestones for a Listing
 
 
 Get all milestones for an associated listing. Permission: Public.
@@ -6684,7 +5987,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/milestones
 
 
 
-### 15. Get All Participants for a Listing
+### 14. Get All Participants for a Listing
 
 
 Get all participants for an associated listing. Permission: Public.
@@ -6764,7 +6067,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/participants
 
 
 
-### 16. Get Single Listing
+### 15. Get Single Listing
 
 
 Get single listing by its listing ID. Permission: Public.
@@ -6855,7 +6158,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 
 
 
-### 17. Search Listings
+### 16. Search Listings
 
 
 Search for listings by title, category or location. Permission: Public.
@@ -7063,7 +6366,7 @@ URL: {{URL}}/api/listings/search
 
 
 
-### 18. Update Listing
+### 17. Update Listing
 
 
 Update listing. Permission: Admin/Owner.
@@ -7287,7 +6590,7 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
 
 
 
-### 19. Verify and/or Feature Listing
+### 18. Verify and/or Feature Listing
 
 
 Verify and/or Feature listing. Permission: Admin.
@@ -7471,7 +6774,7 @@ URL: {{URL}}/api/listings-organisations
 ```js        
 {
     "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
-    "organisation_id": 1
+    "organisation_id": "8426a370-280e-11eb-aa97-9d0bb1a7de0d"
 }
 ```
 
@@ -7480,7 +6783,7 @@ URL: {{URL}}/api/listings-organisations
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Listing join organisation (200 OK)
+##### I. Example Request: Listing join Organisation (200 OK)
 
 
 ***Headers:***
@@ -7496,20 +6799,20 @@ URL: {{URL}}/api/listings-organisations
 ```js        
 {
     "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
-    "organisation_id": 1
+    "organisation_id": "8426a370-280e-11eb-aa97-9d0bb1a7de0d"
 }
 ```
 
 
 
-##### I. Example Response: Listing join organisation (200 OK)
+##### I. Example Response: Listing join Organisation (200 OK)
 ```js
 {
     "success": true,
     "data": {
-        "listing_organisation_id": 1,
+        "listing_organisation_id": 2,
         "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
-        "organisation_id": 1
+        "organisation_id": "8426a370-280e-11eb-aa97-9d0bb1a7de0d"
     }
 }
 ```
@@ -7530,9 +6833,9 @@ Listing leave organisation. Permission: Listing or Organisation owner.
 ***Endpoint:***
 
 ```bash
-Method: POST
-Type: RAW
-URL: {{URL}}/api/listings-organisations
+Method: DELETE
+Type: 
+URL: {{URL}}/api/listings-organisations/1
 ```
 
 
@@ -7541,24 +6844,13 @@ URL: {{URL}}/api/listings-organisations
 | Key | Value | Description |
 | --- | ------|-------------|
 | Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-    "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
-    "organisation_id": 1
-}
-```
 
 
 
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Listing join organisation (200 OK)
+##### I. Example Request: Listing leave Organisation (200 OK)
 
 
 ***Headers:***
@@ -7569,205 +6861,14 @@ URL: {{URL}}/api/listings-organisations
 
 
 
-***Body:***
-
-```js        
-{
-    "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
-    "organisation_id": 1
-}
-```
-
-
-
-##### I. Example Response: Listing join organisation (200 OK)
+##### I. Example Response: Listing leave Organisation (200 OK)
 ```js
 {
     "success": true,
     "data": {
         "listing_organisation_id": 1,
-        "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
-        "organisation_id": 1
-    }
-}
-```
-
-
-***Status Code:*** 201
-
-<br>
-
-
-
-## Locations
-Locations CRUD functionality.
-
-
-
-### 1. Create Location
-
-
-Create listing location for listing. Permission: Admin.
-
-Field rules:
-All fields required unless otherwise stated.
-location - Valid string.
-
-
-***Endpoint:***
-
-```bash
-Method: POST
-Type: RAW
-URL: {{URL}}/api/locations
-```
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"location": "new location"
-}
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Create Location (403 Forbidden - Non-admin)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"location": "new location"
-}
-```
-
-
-
-##### I. Example Response: Create Location (403 Forbidden - Non-admin)
-```js
-{
-    "success": false,
-    "error": "User role user not authorised to access this route"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
-##### II. Example Request: Create Location (201 Created)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"location": "new location"
-}
-```
-
-
-
-##### II. Example Response: Create Location (201 Created)
-```js
-{
-    "success": true,
-    "data": {
-        "location_id": 29,
-        "location": "new location"
-    }
-}
-```
-
-
-***Status Code:*** 201
-
-<br>
-
-
-
-### 2. Delete Location
-
-
-Delete location identified by location id. Permission: Admin.
-
-
-***Endpoint:***
-
-```bash
-Method: DELETE
-Type: 
-URL: {{URL}}/api/locations/1
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Delete Location (403 Forbidden - Non-admin)
-
-
-
-##### I. Example Response: Delete Location (403 Forbidden - Non-admin)
-```js
-{
-    "success": false,
-    "error": "User role user not authorised to access this route"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
-##### II. Example Request: Delete Location (200 OK)
-
-
-
-##### II. Example Response: Delete Location (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "location_id": 1,
-        "location": "01 Raffles Place, Cecil, Marina, Peoples Park"
+        "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
+        "organisation_id": "8426a370-280e-11eb-aa97-9d0bb1a7de0d"
     }
 }
 ```
@@ -7779,7 +6880,12 @@ URL: {{URL}}/api/locations/1
 
 
 
-### 3. Get All Listings for a Location
+## Locations
+Locations CRUD functionality.
+
+
+
+### 1. Get All Listings for a Location
 
 
 Get all listings for a location. Permission: Public.
@@ -7963,7 +7069,7 @@ URL: {{URL}}/api/locations/3/listings
 
 
 
-### 4. Get All Locations
+### 2. Get All Locations
 
 
 Get all locations. Permission: Public.
@@ -8099,47 +7205,6 @@ URL: {{URL}}/api/locations
             "location": "25 Kranji, Woodgrove"
         }
     ]
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 5. Get Single Location
-
-
-Get single location by location id. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/locations/1
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get Single Location (200 OK)
-
-
-
-##### I. Example Response: Get Single Location (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "location_id": 2,
-        "location": "02 Anson, Tanjong Pagar"
-    }
 }
 ```
 
@@ -8659,7 +7724,7 @@ Delete organisation identified by organisation id. Permission: Owner/Admin.
 ```bash
 Method: DELETE
 Type: 
-URL: {{URL}}/api/organisations/2
+URL: {{URL}}/api/organisations/c37092c0-280e-11eb-aa97-9d0bb1a7de0d
 ```
 
 
@@ -8695,21 +7760,31 @@ URL: {{URL}}/api/organisations/2
 {
     "success": true,
     "data": {
-        "organisation_id": 5,
+        "organisation_id": "8426a370-280e-11eb-aa97-9d0bb1a7de0d",
         "name": "Org 1",
         "organisation_type": "Sponsor",
         "about": "about org 1",
         "website_url": "www.testorg1.com",
         "phone": "93232224",
         "email": "testorg1@test.com",
-        "owned_by": "d69a127d-815b-4834-b2b6-54ab398fccad",
+        "address": "23 Tampines St 31, Singapore 520023",
+        "owned_by": null,
         "locations": [
             "Tampines",
             "Simei"
         ],
-        "story": null,
+        "story": "Founded in 1962, ...",
+        "facebook_link": "facebook.com",
+        "twitter_link": "twitter.com",
+        "instagram_link": "instagram.com",
+        "banner_photo": "imgur.com",
+        "profile_photo": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/group-large-1597985817857.png",
+        "additional_photos": [
+            "pexels.com",
+            "imgur.com"
+        ],
         "is_verified": false,
-        "created_on": "2020-11-01T14:53:30.168Z",
+        "created_on": "2020-11-18T14:37:13.363Z",
         "deleted_on": null
     }
 }
@@ -9414,7 +8489,7 @@ Get single organisation. Permission: Public.
 ```bash
 Method: GET
 Type: 
-URL: {{URL}}/api/organisations/1
+URL: {{URL}}/api/organisations/8426a370-280e-11eb-aa97-9d0bb1a7de0d
 ```
 
 
@@ -9476,7 +8551,7 @@ At least one field must be updated.
 ```bash
 Method: PUT
 Type: RAW
-URL: {{URL}}/api/organisations/1
+URL: {{URL}}/api/organisations/8426a370-280e-11eb-aa97-9d0bb1a7de0d
 ```
 
 
@@ -9567,7 +8642,7 @@ URL: {{URL}}/api/organisations/1
 {
     "success": true,
     "data": {
-        "organisation_id": 1,
+        "organisation_id": "8426a370-280e-11eb-aa97-9d0bb1a7de0d",
         "name": "Org 1",
         "organisation_type": "Sponsor",
         "about": "about org 1",
@@ -9591,7 +8666,7 @@ URL: {{URL}}/api/organisations/1
             "imgur.com"
         ],
         "is_verified": false,
-        "created_on": "2020-11-14T07:01:33.521Z",
+        "created_on": "2020-11-18T14:37:13.363Z",
         "deleted_on": null
     }
 }
@@ -9895,7 +8970,7 @@ URL: {{URL}}/api/programmes
 
 ```js        
 {
-	"organisation_id": 1,
+	"organisation_id": "8426a370-280e-11eb-aa97-9d0bb1a7de0d",
     "title": "New Programme 1",
     "about": "About the new programme...",
     "media_url": ["https://youtube.com", "https://instagram.com"]
@@ -9922,7 +8997,7 @@ URL: {{URL}}/api/programmes
 
 ```js        
 {
-	"organisation_id": 1,
+	"organisation_id": "8426a370-280e-11eb-aa97-9d0bb1a7de0d",
     "title": "New Programme 1",
     "about": "About the new programme...",
     "media_url": ["https://youtube.com", "https://instagram.com"]
@@ -9936,8 +9011,8 @@ URL: {{URL}}/api/programmes
 {
     "success": true,
     "data": {
-        "programme_id": 1,
-        "organisation_id": 1,
+        "programme_id": 28,
+        "organisation_id": "8426a370-280e-11eb-aa97-9d0bb1a7de0d",
         "title": "New Programme 1",
         "about": "About the new programme...",
         "media_url": [
@@ -10270,335 +9345,7 @@ Users CRUD functionality.
 
 
 
-### 1. Create User
-
-
-Create user and user profile. Permission: Admin.
-
-Field rules: 
-All fields required unless otherwise stated. 
-first_name: Alphabets and whitespaces only. 
-last_name: Alphabets and whitespaces only. Optional. 
-email: Valid email address only. Email address will be canonicalized. 
-password: 8-25 characters. At least 1 uppercase character. At least 1 lowercase character. At least 1 special character.
-
-
-***Endpoint:***
-
-```bash
-Method: POST
-Type: RAW
-URL: {{URL}}/api/users
-```
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"first_name": "Con",
-	"last_name": "Jobs",
-	"email": "Con@gmail.com",
-	"password": "Abc1234!"
-}
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Create User (403 Forbidden - Non-admin user)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"first_name": "Con",
-	"last_name": "Jobs",
-	"email": "Con@gmail.com",
-	"password": "123456"
-}
-```
-
-
-
-##### I. Example Response: Create User (403 Forbidden - Non-admin user)
-```js
-{
-    "success": false,
-    "error": "User role user not authorised to access this route"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
-##### II. Example Request: Create User (400 Bad Request - Duplicate email)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"first_name": "Con",
-	"last_name": "Jobs",
-	"email": "Con@gmail.com",
-	"password": "123456"
-}
-```
-
-
-
-##### II. Example Response: Create User (400 Bad Request - Duplicate email)
-```js
-{
-    "success": false,
-    "error": "Duplicate field value entered: Key (email)=(con@gmail.com) already exists."
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-##### III. Example Request: Create User (400 Bad Request - Invalid email)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"first_name": "Con",
-	"last_name": "Jobs",
-	"email": "Congmail.com",
-	"password": "123456"
-}
-```
-
-
-
-##### III. Example Response: Create User (400 Bad Request - Invalid email)
-```js
-{
-    "success": false,
-    "error": "Please include a valid email."
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-##### IV. Example Request: Create User (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"first_name": "Con",
-	"last_name": "Jobs",
-	"email": "Con@gmail.com",
-	"password": "123456"
-}
-```
-
-
-
-##### IV. Example Response: Create User (200 OK)
-```js
-{
-    "success": true,
-    "data": [
-        {
-            "user_id": "ff5d84ad-a346-403e-8a14-761af7842b16",
-            "first_name": "Con",
-            "last_name": "Jobs",
-            "email": "con@gmail.com",
-            "password": "$2a$10$tdPLAiR7Pq9wBGp930dNKu4DYsJIRyZQXJH5Oxh7iwU4S6hUqn20W",
-            "role": "user"
-        },
-        {
-            "user_id": "ff5d84ad-a346-403e-8a14-761af7842b16",
-            "nickname": "Con Jobs",
-            "profile_picture": null,
-            "about": null,
-            "gender": "u",
-            "dob": null,
-            "interest": null,
-            "phone": null,
-            "facebook_link": null,
-            "twitter_link": null,
-            "instagram_link": null,
-            "linkedin_link": null,
-            "is_verified": false,
-            "created_on": "2020-08-17T16:00:35.825Z"
-        }
-    ]
-}
-```
-
-
-***Status Code:*** 201
-
-<br>
-
-
-
-### 2. Delete User
-
-
-Delete user identified by user id. Permission: Admin.
-
-
-***Endpoint:***
-
-```bash
-Method: DELETE
-Type: 
-URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Delete User (403 Forbidden - Non-admin user)
-
-
-
-##### I. Example Response: Delete User (403 Forbidden - Non-admin user)
-```js
-{
-    "success": false,
-    "error": "User role user not authorised to access this route"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
-##### II. Example Request: Delete User (400 Bad Request - Non-existent user)
-
-
-
-##### II. Example Response: Delete User (400 Bad Request - Non-existent user)
-```js
-{
-    "success": false,
-    "error": "User does not exist"
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-##### III. Example Request: Delete User (200 OK)
-
-
-
-##### III. Example Response: Delete User (200 OK)
-```js
-{
-    "success": true,
-    "data": [
-        {
-            "user_id": "2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb",
-            "first_name": "Konstance",
-            "last_name": "Smitton",
-            "email": "ksmitton4@toplist.cz",
-            "password": "$2a$10$p32UqwhrsXNlNsVWZqnln.QFc5ru8ZWpnPiWb5AKlDBETfLh6ZGIO",
-            "role": "user"
-        },
-        {
-            "user_id": "2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb",
-            "nickname": "Konstance Smitton",
-            "profile_picture": "https://robohash.org/quodprovidenta.png?size=500x500&set=set1",
-            "about": "Front-line non-volatile conglomeration",
-            "gender": "o",
-            "dob": "1996-04-04T12:05:06.000Z",
-            "interest": "Software Engineer II",
-            "phone": "84677316",
-            "facebook_link": "http://51.la/dui/maecenas/tristique/est.json",
-            "twitter_link": "https://mozilla.com/sagittis.jsp",
-            "instagram_link": "http://vk.com/cubilia.html",
-            "linkedin_link": "https://bravesites.com/ut/mauris/eget/massa.jpg",
-            "is_verified": false,
-            "created_on": "2020-08-17T16:26:09.389Z"
-        }
-    ]
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 3. Get All Likes for a User
+### 1. Get All Likes for a User
 
 
 Get all likes for an associated user, identified by the user id. Permission: Public.
@@ -10705,7 +9452,7 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/likes
 
 
 
-### 4. Get All Listing Comments for a User
+### 2. Get All Listing Comments for a User
 
 
 Get all listing comments for an associated user. Permission: Public.
@@ -10793,7 +9540,7 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listing-comments
 
 
 
-### 5. Get All Listing Participation for a User
+### 3. Get All Listing Participation for a User
 
 
 Get all listing participation for an associated user, identified by the user id. Permission: Public.
@@ -10880,7 +9627,7 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/participants
 
 
 
-### 6. Get All Listings Owned by a User
+### 4. Get All Listings Owned by a User
 
 
 Get all listing owned by an associated user, identified by the user id. Permission: Public.
@@ -10969,488 +9716,6 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner
 
 
 
-### 7. Get All Users
-
-
-Get all user details. Permission: Admin.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/users
-```
-
-
-
-***Query params:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| page | 1 |  |
-| limit | 30 |  |
-| sort | user_id desc |  |
-| role | user |  |
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get All Users (403 Forbidden - Non-admin user)
-
-
-
-***Query:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| page | 1 |  |
-| limit | 30 |  |
-| select | user_id,first_name,email |  |
-| sort | user_id,first_name |  |
-| role | user |  |
-
-
-
-##### I. Example Response: Get All Users (403 Forbidden - Non-admin user)
-```js
-{
-    "success": false,
-    "error": "User role user not authorised to access this route"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
-##### II. Example Request: Get All Users (200 OK)
-
-
-
-***Query:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| page | 1 |  |
-| limit | 30 |  |
-| select | user_id,first_name,email |  |
-| sort | user_id,first_name |  |
-| role | user |  |
-
-
-
-##### II. Example Response: Get All Users (200 OK)
-```js
-{
-    "success": true,
-    "count": 30,
-    "pagination": {
-        "next": {
-            "page": 2,
-            "limit": 30
-        }
-    },
-    "data": [
-        {
-            "user_id": 2,
-            "first_name": "Kristi",
-            "email": "krowson1@illinois.edu"
-        },
-        {
-            "user_id": 3,
-            "first_name": "Orbadiah",
-            "email": "ofouracre2@google.ru"
-        },
-        {
-            "user_id": 4,
-            "first_name": "Orel",
-            "email": "orobbert3@reverbnation.com"
-        },
-        {
-            "user_id": 5,
-            "first_name": "Zilvia",
-            "email": "zcove4@smugmug.com"
-        },
-        {
-            "user_id": 6,
-            "first_name": "Jessy",
-            "email": "jvan5@vistaprint.com"
-        },
-        {
-            "user_id": 7,
-            "first_name": "Marcela",
-            "email": "mjosskoviz6@yahoo.co.jp"
-        },
-        {
-            "user_id": 8,
-            "first_name": "Brandi",
-            "email": "bmariaud7@google.ca"
-        },
-        {
-            "user_id": 9,
-            "first_name": "Del",
-            "email": "dbuddell8@telegraph.co.uk"
-        },
-        {
-            "user_id": 10,
-            "first_name": "Amil",
-            "email": "awreiford9@reuters.com"
-        },
-        {
-            "user_id": 11,
-            "first_name": "Karina",
-            "email": "kgringleya@techcrunch.com"
-        },
-        {
-            "user_id": 12,
-            "first_name": "Sara",
-            "email": "sknivettb@digg.com"
-        },
-        {
-            "user_id": 13,
-            "first_name": "Alis",
-            "email": "afrischc@theglobeandmail.com"
-        },
-        {
-            "user_id": 14,
-            "first_name": "Wrennie",
-            "email": "wverrierd@si.edu"
-        },
-        {
-            "user_id": 15,
-            "first_name": "Calv",
-            "email": "chillinge@constantcontact.com"
-        },
-        {
-            "user_id": 16,
-            "first_name": "Lorettalorna",
-            "email": "lstellif@discovery.com"
-        },
-        {
-            "user_id": 17,
-            "first_name": "Madelena",
-            "email": "mdybleg@cocolog-nifty.com"
-        },
-        {
-            "user_id": 18,
-            "first_name": "Avis",
-            "email": "areasunh@sciencedirect.com"
-        },
-        {
-            "user_id": 19,
-            "first_name": "Tiffi",
-            "email": "tmatzkaitisi@trellian.com"
-        },
-        {
-            "user_id": 20,
-            "first_name": "Jillayne",
-            "email": "jgringleyj@e-recht24.de"
-        },
-        {
-            "user_id": 21,
-            "first_name": "Godfree",
-            "email": "ggraftonk@boston.com"
-        },
-        {
-            "user_id": 22,
-            "first_name": "Angie",
-            "email": "amccartyl@vimeo.com"
-        },
-        {
-            "user_id": 23,
-            "first_name": "Rafaellle",
-            "email": "rambersonm@odnoklassniki.ru"
-        },
-        {
-            "user_id": 24,
-            "first_name": "Jeannette",
-            "email": "jgamblinn@indiatimes.com"
-        },
-        {
-            "user_id": 25,
-            "first_name": "Shanan",
-            "email": "sjimeso@liveinternet.ru"
-        },
-        {
-            "user_id": 26,
-            "first_name": "Bevin",
-            "email": "bezelep@twitter.com"
-        },
-        {
-            "user_id": 27,
-            "first_name": "Wald",
-            "email": "wreddleq@java.com"
-        },
-        {
-            "user_id": 28,
-            "first_name": "Tiena",
-            "email": "tmossopr@imdb.com"
-        },
-        {
-            "user_id": 29,
-            "first_name": "Craig",
-            "email": "cfergusons@t-online.de"
-        },
-        {
-            "user_id": 30,
-            "first_name": "Thom",
-            "email": "tmedleyt@gravatar.com"
-        },
-        {
-            "user_id": 31,
-            "first_name": "Wendall",
-            "email": "wspencleyu@ezinearticles.com"
-        }
-    ]
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 8. Get Single User
-
-
-Get single user details identified by user id. Permission: Admin.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get Single User (403 Forbidden - Non-admin user)
-
-
-
-##### I. Example Response: Get Single User (403 Forbidden - Non-admin user)
-```js
-{
-    "success": false,
-    "error": "User role user not authorised to access this route"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
-##### II. Example Request: Get Single User (200 OK)
-
-
-
-##### II. Example Response: Get Single User (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "user_id": 1,
-        "first_name": "Don",
-        "last_name": null,
-        "email": "don@gmail.com",
-        "password": "$2a$10$FtDn8uJkPEeiTD2bNxKN4e0z1AaKGHZxHnbC1b7dbiW96aDqsMkhO",
-        "role": "admin"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 9. Update User
-
-
-Update user details identified by user id. Permission: Admin.
-
-Field rules: 
-At least one field must be updated. 
-first_name: Alphabets and whitespaces only. 
-last_name: Alphabets and whitespaces only. 
-email: Valid email address only. Email address will be canonicalized. 
-password: 8-25 characters. At least 1 uppercase character. At least 1 lowercase character. At least 1 special character.
-
-
-***Endpoint:***
-
-```bash
-Method: PUT
-Type: RAW
-URL: {{URL}}/api/users/2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb
-```
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"name": "Aaron",
-	"email": "aaron@gmail.com",
-	"password": "Abc1234!"
-}
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Update User (403 Forbidden - Non-admin user)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"first_name": "Aaron",
-	"last_name": "Tan",
-	"email": "aaron@gmail.com",
-	"password": "123456"
-}
-```
-
-
-
-##### I. Example Response: Update User (403 Forbidden - Non-admin user)
-```js
-{
-    "success": false,
-    "error": "User role user not authorised to access this route"
-}
-```
-
-
-***Status Code:*** 403
-
-<br>
-
-
-
-##### II. Example Request: Update User (400 Bad Request - Non-existent user)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"first_name": "Aaron",
-	"last_name": "Tan",
-	"email": "aaron@gmail.com",
-	"password": "123456"
-}
-```
-
-
-
-##### II. Example Response: Update User (400 Bad Request - Non-existent user)
-```js
-{
-    "success": false,
-    "error": "User does not exist"
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-##### III. Example Request: Update User (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"name": "Aaron",
-	"email": "aaron@gmail.com",
-	"password": "123456"
-}
-```
-
-
-
-##### III. Example Response: Update User (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "user_id": "2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb",
-        "first_name": "Konstance",
-        "last_name": "Smitton",
-        "email": "aaron@gmail.com",
-        "password": "$2a$10$9kk5gFohDkTR0iu5Q2EUG./ZvueXKSVIfkCwLmtEFFwwb0ojRKqLO",
-        "role": "user"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-18 09:09:20 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-18 15:11:33 by [docgen](https://github.com/thedevsaddam/docgen)
