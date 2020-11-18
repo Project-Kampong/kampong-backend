@@ -2,7 +2,7 @@ import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
 import { db } from '../../database';
-import { advancedResults, authorise, checkInputError, protect } from '../../middleware';
+import { authorise, checkInputError, protect } from '../../middleware';
 import { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } from '../../utils';
 
 // import and initialize controllers here
@@ -22,8 +22,7 @@ const validateUpdateJobFields = [
     check('job_description').optional().trim(),
 ];
 
-router.route('/').get(advancedResults('jobsview'), jobsController.getJobs);
-router.route('/:id').get(jobsController.getJob);
+router.route('/').get(jobsController.getJobs);
 
 // all routes below only accessible to authenticated users (and listing owner, to be implemented)
 router.use(protect);

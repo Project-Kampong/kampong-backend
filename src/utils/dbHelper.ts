@@ -23,7 +23,7 @@ export const generateSqlQueryFile = (file) => {
 
 /**
  * Helper for creating String SQL update statement
- * Sample: parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING *', [req.params.id]);
+ * Sample: parseSqlUpdateStmt(data, 'listing', 'WHERE listing_id = $1 RETURNING *', [req.params.id]);
  * @param {Object} jsonData
  * @param {String} tableString SQL table to be queried
  * @param {String} conditionString SQL string to be appended to update statement (usually WHERE clause and 'RETURNING *')

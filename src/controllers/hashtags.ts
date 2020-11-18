@@ -9,13 +9,11 @@ export class HashtagsController {
     }
 
     /**
-     * @desc    Get all hashtags
-     * @route   GET /api/hashtags
      * @desc    Get all hashtags for a listing
      * @route   GET /api/listings/:listing_id/hashtags
      * @access  Public
      */
-    getHashtags = asyncHandler(async (req, res, next) => {
+    getHashtagsForListing = asyncHandler(async (req, res, next) => {
         if (req.params.listing_id) {
             // return 404 error response if listing not found or soft deleted
             await this.listingsRepository.getListingById(req.params.listing_id);
@@ -28,20 +26,7 @@ export class HashtagsController {
             });
         }
 
-        res.status(200).json(res.advancedResults);
-    });
-
-    /**
-     * @desc    Get single hashtag
-     * @route   GET /api/hashtags/:id
-     * @access  Public
-     */
-    getHashtag = asyncHandler(async (req, res) => {
-        const rows = await this.hashtagsRepository.getHashtagById(req.params.id);
-        res.status(200).json({
-            success: true,
-            data: rows,
-        });
+        return next(new ErrorResponse('Invalid route', 404));
     });
 
     /**

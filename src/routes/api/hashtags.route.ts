@@ -2,7 +2,7 @@ import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check } from 'express-validator';
 import { db } from '../../database';
-import { advancedResults, checkInputError, protect } from '../../middleware';
+import { checkInputError, protect } from '../../middleware';
 import { HASHTAG_REGEX, INVALID_FIELD_MSG } from '../../utils';
 
 // import and initialize controllers here
@@ -15,8 +15,7 @@ const validateCreateHashtagFields = [
     check('tag', INVALID_FIELD_MSG('tag')).matches(HASHTAG_REGEX),
 ];
 
-router.route('/').get(advancedResults('hashtags'), hashtagsController.getHashtags);
-router.route('/:id').get(hashtagsController.getHashtag);
+router.route('/').get(hashtagsController.getHashtagsForListing);
 
 // all routes below only accessible to authenticated user
 router.use(protect);

@@ -3,20 +3,18 @@ import { asyncHandler } from '../middleware';
 import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
 
 /**
- * @desc    Get all participants
- * @route   GET /api/participants
  * @desc    Get all participants for a listing
  * @route   GET /api/listings/:listing_id/participants
  * @desc    Get all participation for a user
  * @route   GET /api/users/:user_id/participants
  * @access  Public
  */
-export const getParticipants = asyncHandler(async (req, res) => {
+export const getParticipants = asyncHandler(async (req, res, next) => {
     if (req.params.listing_id) {
         // return 404 error response if listing not found
-        await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.listing_id);
+        await db.one('SELECT * FROM listingview WHERE listing_id = $1', req.params.listing_id);
 
-        const participants = await db.manyOrNone('SELECT * FROM Participants WHERE listing_id = $1', req.params.listing_id);
+        const participants = await db.manyOrNone('SELECT * FROM participant WHERE listing_id = $1', req.params.listing_id);
 
         return res.status(200).json({
             success: true,
@@ -29,7 +27,7 @@ export const getParticipants = asyncHandler(async (req, res) => {
         // return 404 error response if user not found
         await db.one('SELECT * FROM Users WHERE user_id = $1', req.params.user_id);
 
-        const participants = await db.manyOrNone('SELECT * FROM Participants WHERE user_id = $1', req.params.user_id);
+        const participants = await db.manyOrNone('SELECT * FROM participant WHERE user_id = $1', req.params.user_id);
 
         return res.status(200).json({
             success: true,
@@ -38,21 +36,7 @@ export const getParticipants = asyncHandler(async (req, res) => {
         });
     }
 
-    res.status(200).json(res.advancedResults);
-});
-
-/**
- * @desc    Get single participant (identified by participant id)
- * @route   GET /api/participants/:participant_id
- * @access  Public
- */
-export const getParticipant = asyncHandler(async (req, res) => {
-    const rows = await db.one('SELECT * FROM participants WHERE participant_id = $1', req.params.participant_id);
-
-    res.status(200).json({
-        success: true,
-        data: rows,
-    });
+    return next(new ErrorResponse('Invalid route', 404));
 });
 
 /**
@@ -80,7 +64,7 @@ export const createParticipant = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Not authorised to add participant to this listing`, 403));
     }
 
-    const rows = await db.one('INSERT INTO participants (${this:name}) VALUES (${this:csv}) RETURNING *', data);
+    const rows = await db.one('INSERT INTO participant (${this:name}) VALUES (${this:csv}) RETURNING *', data);
 
     res.status(201).json({
         success: true,
@@ -95,7 +79,7 @@ export const createParticipant = asyncHandler(async (req, res, next) => {
  */
 export const deleteParticipant = asyncHandler(async (req, res, next) => {
     // check if participant exists
-    const participant = await db.one('SELECT * FROM participants WHERE participant_id = $1', req.params.participant_id);
+    const participant = await db.one('SELECT * FROM participant WHERE participant_id = $1', req.params.participant_id);
 
     const isListingOwner = await checkListingOwner(req.user.user_id, participant.listing_id);
     const isOwnUser = req.user.user_id === participant.user_id;
@@ -105,7 +89,7 @@ export const deleteParticipant = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Not authorised to delete participant from this listing`, 403));
     }
 
-    const rows = await db.one('DELETE FROM participants WHERE participant_id = $1 RETURNING *', req.params.participant_id);
+    const rows = await db.one('DELETE FROM participant WHERE participant_id = $1 RETURNING *', req.params.participant_id);
 
     res.status(200).json({
         success: true,

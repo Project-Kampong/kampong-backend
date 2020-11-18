@@ -1,53 +1,54 @@
-DROP VIEW IF EXISTS featuredlistingsview CASCADE;
-DROP VIEW IF EXISTS ListingsView CASCADE;
-DROP VIEW IF EXISTS OrganisationsView CASCADE;
-DROP VIEW IF EXISTS JobsView CASCADE;
-DROP VIEW IF EXISTS ListingCommentsView CASCADE;
+DROP VIEW IF EXISTS featuredlistingview CASCADE;
+DROP VIEW IF EXISTS listingview CASCADE;
+DROP VIEW IF EXISTS organisationview CASCADE;
+DROP VIEW IF EXISTS jobview CASCADE;
+DROP VIEW IF EXISTS listingcommentview CASCADE;
 
-CREATE VIEW ListingsView AS WITH CombinedListingLocations AS (
+CREATE VIEW listingview AS 
+	WITH combinedlistinglocation AS (
+		SELECT
+			ls.listing_id,
+			ARRAY_AGG(lo.location) AS locations,
+			ARRAY_AGG(lo.location_id) AS location_ids
+		FROM
+			listing ls
+			JOIN (listinglocation lsl
+				JOIN location lo ON lsl.location_id = lo.location_id) ON ls.listing_id = lsl.listing_id
+		GROUP BY
+			ls.listing_id
+	)
 	SELECT
-		ls.listing_id,
-		ARRAY_AGG(lo.location) AS locations,
-		ARRAY_AGG(lo.location_id) AS location_ids
+		l.*,
+		p.nickname,
+		p.profile_picture,
+		cll.locations,
+		cll.location_ids,
+		to_tsvector(l.title || ' ' || l.category || ' ' || array_to_string(cll.locations::text[], ' ')) AS keyword_vector
 	FROM
-		Listings ls
-		JOIN (listinglocations lsl
-			JOIN locations lo ON lsl.location_id = lo.location_id) ON ls.listing_id = lsl.listing_id
-	GROUP BY
-		ls.listing_id
-)
-SELECT
-	l.*,
-	p.nickname,
-	p.profile_picture,
-	cll.locations,
-	cll.location_ids,
-	to_tsvector(l.title || ' ' || l.category || ' ' || array_to_string(cll.locations::text[], ' ')) AS keyword_vector
-FROM
-	Listings l
-	LEFT JOIN CombinedListingLocations cll ON l.listing_id = cll.listing_id
-	LEFT JOIN Profiles p ON l.created_by = p.user_id
-WHERE
-	deleted_on IS NULL;
+		listing l
+		LEFT JOIN combinedlistinglocation cll ON l.listing_id = cll.listing_id
+		LEFT JOIN profile p ON l.created_by = p.user_id
+	WHERE
+		deleted_on IS NULL;
 
-CREATE VIEW OrganisationsView AS
+CREATE VIEW organisationview AS
 	SELECT *
-  	FROM Organisations
+  	FROM organisation
   	WHERE deleted_on IS NULL;
 
-CREATE VIEW JobsView AS
+CREATE VIEW jobview AS
   	SELECT *
-  	FROM Jobs
+  	FROM job
   	WHERE deleted_on IS NULL;
 
-CREATE VIEW ListingCommentsView AS
+CREATE VIEW listingcommentview AS
 	SELECT lc.*, p.nickname, p.profile_picture
-	FROM ListingComments lc
-	LEFT JOIN Profiles p
+	FROM listingcomment lc
+	LEFT JOIN profile p
 	ON lc.user_id = p.user_id
 	WHERE lc.deleted_on IS NULL;
   
-CREATE VIEW featuredlistingsview AS
+CREATE VIEW featuredlistingview AS
 	SELECT *
-	FROM listingsview
+	FROM listingview
 	WHERE is_featured = TRUE;

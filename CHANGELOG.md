@@ -10,13 +10,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 -   TypeScript migration
--   Listings now have `listing_status` field.
--   Update dependencies, node v14.14.0, yarn v1.22.5, and PostgreSQL 13.0
+-   Update dependencies, node v14.15.1, yarn v1.22.10, and PostgreSQL 13.1
 -   GitHub Actions build script and API docs generator for CI/CD
 
 ### Changed
 
 -   Query params `sort` now accepts `asc` or `desc` but can only sort at most one field.
+
+### Removed
+
+-   Remove `skills` and `listing_skills`
 
 ### [v0.1.4] - 2020-09-19
 

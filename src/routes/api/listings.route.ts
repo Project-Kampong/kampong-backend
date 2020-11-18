@@ -17,7 +17,6 @@ import {
     getListings,
     getFeaturedListings,
     getAllListingsOwnedByUser,
-    getListingsAll,
     getListing,
     createListing,
     updateListing,
@@ -36,7 +35,6 @@ import { router as listingLocationsRoute } from './listingLocations.route';
 import { router as listingUpdatesRoute } from './listingUpdates.route';
 import { router as milestonesRoute } from './milestones.route';
 import { router as participantsRoute } from './participants.route';
-import { router as listingSkillsRoute } from './listingSkills.route';
 import { router as jobsRoute } from './jobs.route';
 import { router as listingStoriesRoute } from './listingStories.route';
 import { router as organisationsRoute } from './organisations.route';
@@ -52,7 +50,6 @@ router.use('/:listing_id/milestones', milestonesRoute);
 router.use('/:listing_id/participants', participantsRoute);
 router.use('/stories', listingStoriesRoute);
 router.use('/:listing_id/stories', listingStoriesRoute);
-router.use('/:listing_id/listing-skills', listingSkillsRoute);
 router.use('/:listing_id/jobs', jobsRoute);
 router.use('/:listing_id/organisations', organisationsRoute);
 
@@ -61,12 +58,12 @@ const validateCreateListingFields = [
     check('organisation_id', INVALID_FIELD_MSG('organisation id')).optional().isInt(),
     check('title', INVALID_FIELD_MSG('title')).trim().notEmpty(),
     check('category', INVALID_FIELD_MSG('category')).trim().notEmpty(),
-    check('listing_url', INVALID_FIELD_MSG('listing URL')).optional().isURL(),
     check('listing_email', INVALID_EMAIL_MSG).notEmpty().isEmail(),
     check('listing_status', INVALID_LISTING_STATUS_MSG).notEmpty().isIn(['ongoing', 'completed']),
     check('is_published', INVALID_BOOLEAN_MSG('is_published')).optional().isBoolean(),
     check('start_date', INVALID_TIMESTAMP_MSG('start date')).optional().matches(DATETIME_REGEX),
     check('end_date', INVALID_TIMESTAMP_MSG('end date')).optional().matches(DATETIME_REGEX),
+    check('pics', INVALID_FIELD_MSG('pics')).isArray(),
 ];
 
 const validateUpdateListingFields = [
@@ -84,23 +81,19 @@ const validateUpdateListingFields = [
             check('is_published').exists(),
             check('start_date').exists(),
             check('end_date').exists(),
-            check('pic1').exists(),
-            check('pic2').exists(),
-            check('pic3').exists(),
-            check('pic4').exists(),
-            check('pic5').exists(),
+            check('pics').exists(),
         ],
         NO_FIELD_UPDATED_MSG,
     ),
     check('organisation_id', INVALID_FIELD_MSG('organisation id')).optional().isInt(),
     check('title', INVALID_FIELD_MSG('title')).optional().trim().notEmpty(),
     check('category', INVALID_FIELD_MSG('category')).optional().trim().notEmpty(),
-    check('listing_url', INVALID_FIELD_MSG('listing URL')).optional().isURL(),
     check('listing_email', INVALID_EMAIL_MSG).optional().isEmail(),
     check('listing_status', INVALID_LISTING_STATUS_MSG).optional().isIn(['ongoing', 'completed']),
     check('is_published', INVALID_BOOLEAN_MSG('is_published')).optional().isBoolean(),
     check('start_date', INVALID_TIMESTAMP_MSG('start date')).optional().matches(DATETIME_REGEX),
     check('end_date', INVALID_TIMESTAMP_MSG('end date')).optional().matches(DATETIME_REGEX),
+    check('pics', INVALID_FIELD_MSG('pics')).optional().isArray(),
 ];
 
 const validateVerifyOrFeatureListingFields = [
@@ -119,7 +112,6 @@ router.route('/').get(advancedResults('listingsview'), getListings).post(protect
 router.route('/featured').get(getFeaturedListings);
 router.route('/owner').get(getAllListingsOwnedByUser);
 router.route('/search').get(validateSearchListingsFields, checkInputError, searchListings);
-router.route('/all').get(protect, authorise('admin'), advancedResults('listings'), getListingsAll);
 
 router.route('/:id').get(getListing);
 

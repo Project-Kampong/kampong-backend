@@ -10,13 +10,11 @@ export class JobsController {
     }
 
     /**
-     * @desc    Get all jobs
-     * @route   GET /api/jobs
      * @desc    Get all jobs for a listing
      * @route   GET /api/listings/:listing_id/jobs
      * @access  Public
      */
-    getJobs = asyncHandler(async (req, res) => {
+    getJobs = asyncHandler(async (req, res, next) => {
         if (req.params.listing_id) {
             const listingId: string = req.params.listing_id;
             // return 404 error response if listing not found or soft deleted
@@ -29,20 +27,7 @@ export class JobsController {
             });
         }
 
-        res.status(200).json(res.advancedResults);
-    });
-
-    /**
-     * @desc    Get single job
-     * @route   GET /api/jobs/:id
-     * @access  Public
-     */
-    getJob = asyncHandler(async (req, res) => {
-        const row = await this.jobsRepository.getJobById(req.params.id);
-        res.status(200).json({
-            success: true,
-            data: row,
-        });
+        return next(new ErrorResponse('Invalid route', 404));
     });
 
     /**

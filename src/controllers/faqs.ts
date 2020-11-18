@@ -9,13 +9,11 @@ export class FaqsController {
     }
 
     /**
-     * @desc    Get all faqs
-     * @route   GET /api/faqs
      * @desc    Get all faqs for a listing
      * @route   GET /api/listings/:listing_id/faqs
      * @access  Public
      */
-    getFaqs = asyncHandler(async (req, res) => {
+    getFaqsForListing = asyncHandler(async (req, res, next) => {
         if (req.params.listing_id) {
             const listingId: string = req.params.listing_id;
             // return 404 error response if listing not found or soft deleted
@@ -28,21 +26,7 @@ export class FaqsController {
             });
         }
 
-        res.status(200).json(res.advancedResults);
-    });
-
-    /**
-     * @desc    Get single faq
-     * @route   GET /api/faqs/:id
-     * @access  Public
-     */
-    getFaq = asyncHandler(async (req, res) => {
-        const faqId: string = req.params.id;
-        const rows = await this.faqsRepository.getFaqById(faqId);
-        res.status(200).json({
-            success: true,
-            data: rows,
-        });
+        return next(new ErrorResponse('Invalid route', 404));
     });
 
     /**
