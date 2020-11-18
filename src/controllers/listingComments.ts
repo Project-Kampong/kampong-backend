@@ -74,7 +74,7 @@ export const createListingComment = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    const rows = await db.one('INSERT INTO ListingComments (${this:name}) VALUES (${this:csv}) RETURNING *', data);
+    const rows = await db.one('INSERT INTO listingcomment (${this:name}) VALUES (${this:csv}) RETURNING *', data);
 
     res.status(201).json({
         success: true,
@@ -103,7 +103,7 @@ export const updateListingComment = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    const updateListingCommentQuery = parseSqlUpdateStmt(data, 'listingcomments', 'WHERE listing_comment_id = $1 RETURNING *', req.params.id);
+    const updateListingCommentQuery = parseSqlUpdateStmt(data, 'listingcomment', 'WHERE listing_comment_id = $1 RETURNING *', req.params.id);
 
     const rows = await db.one(updateListingCommentQuery);
 
@@ -129,7 +129,7 @@ export const deactivateListingComment = asyncHandler(async (req, res, next) => {
         deleted_on: moment.tz(process.env.DEFAULT_TIMEZONE).toDate(),
     };
 
-    const deactivateListingCommentQuery = parseSqlUpdateStmt(data, 'listingcomments', 'WHERE listing_comment_id = $1 RETURNING *', [req.params.id]);
+    const deactivateListingCommentQuery = parseSqlUpdateStmt(data, 'listingcomment', 'WHERE listing_comment_id = $1 RETURNING *', [req.params.id]);
 
     const rows = await db.one(deactivateListingCommentQuery);
 
@@ -151,7 +151,7 @@ export const deleteListingComment = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Not authorised to update other comments in this listing`, 403));
     }
 
-    const rows = await db.one('DELETE FROM ListingComments WHERE listing_comment_id = $1 RETURNING *', req.params.id);
+    const rows = await db.one('DELETE FROM listingcomment WHERE listing_comment_id = $1 RETURNING *', req.params.id);
 
     res.status(200).json({
         success: true,

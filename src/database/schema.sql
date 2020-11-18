@@ -38,7 +38,7 @@ DROP TABLE IF EXISTS milestone CASCADE;
 
 DROP TABLE IF EXISTS listingupdate CASCADE;
 
-DROP TABLE IF EXISTS ListingComments CASCADE;
+DROP TABLE IF EXISTS listingcomment CASCADE;
 
 DROP TABLE IF EXISTS Locations CASCADE;
 
@@ -271,7 +271,7 @@ CREATE TABLE listingupdate (
 	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
-CREATE TABLE ListingComments (
+CREATE TABLE listingcomment (
 	listing_comment_id SERIAL,
 	listing_id VARCHAR,
 	user_id VARCHAR,
@@ -283,7 +283,7 @@ CREATE TABLE ListingComments (
 	PRIMARY KEY (listing_comment_id),
 	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE SET NULL,
 	FOREIGN KEY (user_id) REFERENCES user ON DELETE SET NULL,
-	FOREIGN KEY (reply_to_id) REFERENCES ListingComments (listing_comment_id) ON DELETE SET NULL
+	FOREIGN KEY (reply_to_id) REFERENCES listingcomment (listing_comment_id) ON DELETE SET NULL
 );
 
 CREATE TABLE Locations (
