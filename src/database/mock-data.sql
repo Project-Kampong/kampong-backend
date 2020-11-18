@@ -193,14 +193,14 @@ insert into listingcomment (listing_id, user_id, comment, reply_to_id, created_o
 insert into listingcomment (listing_id, user_id, comment, reply_to_id, created_on, updated_on) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', '2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb', 'implement innovative platforms', 11, '2020-06-17 09:31:57', '2020-07-06 02:43:45');
 
 /* ListingLocations */
-insert into ListingLocations (listing_id, location_id) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 1);
-insert into ListingLocations (listing_id, location_id) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 2);
-insert into ListingLocations (listing_id, location_id) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 3);
-insert into ListingLocations (listing_id, location_id) values ('c975a572-452d-4824-8ed5-500b50488436', 3);
-insert into ListingLocations (listing_id, location_id) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 3);
-insert into ListingLocations (listing_id, location_id) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 3);
-insert into ListingLocations (listing_id, location_id) values ('c975a572-452d-4824-8ed5-500b50488436', 4);
-insert into ListingLocations (listing_id, location_id) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 4);
+insert into listinglocation (listing_id, location_id) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 1);
+insert into listinglocation (listing_id, location_id) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 2);
+insert into listinglocation (listing_id, location_id) values ('43824166-bee2-426e-8a08-ca2c4e4120ae', 3);
+insert into listinglocation (listing_id, location_id) values ('c975a572-452d-4824-8ed5-500b50488436', 3);
+insert into listinglocation (listing_id, location_id) values ('d95a6c2e-3c33-447c-be0c-be399247dd3f', 3);
+insert into listinglocation (listing_id, location_id) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 3);
+insert into listinglocation (listing_id, location_id) values ('c975a572-452d-4824-8ed5-500b50488436', 4);
+insert into listinglocation (listing_id, location_id) values ('cf4adc93-3b96-4bbc-8cb0-41e196b145ac', 4);
 
 /* Organisations */
 insert into organisation (organisation_id, name, organisation_type, about, website_url, phone, email, locations, story) values ('8426a370-280e-11eb-aa97-9d0bb1a7de0d', 'Shuffledrive', 'Consultancy', 'Distributed 4th generation forecast', 'microsoft.com', '8765378253', 'mallgood0@slideshare.net', null, 'Multi-layered regional framework');

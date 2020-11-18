@@ -4,14 +4,14 @@ DROP VIEW IF EXISTS OrganisationsView CASCADE;
 DROP VIEW IF EXISTS JobsView CASCADE;
 DROP VIEW IF EXISTS ListingCommentsView CASCADE;
 
-CREATE VIEW ListingsView AS WITH CombinedListingLocations AS (
+CREATE VIEW ListingsView AS WITH Combinedlistinglocation AS (
 	SELECT
 		ls.listing_id,
 		ARRAY_AGG(lo.location) AS location,
 		ARRAY_AGG(lo.location_id) AS location_ids
 	FROM
 		listing ls
-		JOIN (listinglocations lsl
+		JOIN (listinglocation lsl
 			JOIN location lo ON lsl.location_id = lo.location_id) ON ls.listing_id = lsl.listing_id
 	GROUP BY
 		ls.listing_id
@@ -25,7 +25,7 @@ SELECT
 	to_tsvector(l.title || ' ' || l.category || ' ' || array_to_string(cll.locations::text[], ' ')) AS keyword_vector
 FROM
 	listing l
-	LEFT JOIN CombinedListingLocations cll ON l.listing_id = cll.listing_id
+	LEFT JOIN Combinedlistinglocation cll ON l.listing_id = cll.listing_id
 	LEFT JOIN profile p ON l.created_by = p.user_id
 WHERE
 	deleted_on IS NULL;

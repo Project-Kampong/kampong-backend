@@ -42,7 +42,7 @@ DROP TABLE IF EXISTS listingcomment CASCADE;
 
 DROP TABLE IF EXISTS location CASCADE;
 
-DROP TABLE IF EXISTS ListingLocations CASCADE;
+DROP TABLE IF EXISTS listinglocation CASCADE;
 
 CREATE EXTENSION pg_stat_statements;
 
@@ -293,7 +293,7 @@ CREATE TABLE location (
 	PRIMARY KEY (location_id)
 );
 
-CREATE TABLE ListingLocations (
+CREATE TABLE listinglocation (
 	listing_location_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	location_id INTEGER NOT NULL,

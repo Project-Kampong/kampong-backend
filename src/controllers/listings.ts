@@ -35,7 +35,7 @@ export const getListings = asyncHandler(async (req, res) => {
     if (req.params.location_id) {
         // return 404 error response if location with location id not found
         const rows = await db.many(
-            'SELECT lv.*, lil.location_id FROM location l LEFT JOIN ListingLocations lil ON l.location_id = lil.location_id LEFT JOIN listingsview lv ON lil.listing_id = lv.listing_id WHERE l.location_id = $1',
+            'SELECT lv.*, lil.location_id FROM location l LEFT JOIN listinglocation lil ON l.location_id = lil.location_id LEFT JOIN listingsview lv ON lil.listing_id = lv.listing_id WHERE l.location_id = $1',
             req.params.location_id,
         );
 
