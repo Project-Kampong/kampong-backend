@@ -32,6 +32,8 @@ DROP TABLE IF EXISTS like CASCADE;
 
 DROP TABLE IF EXISTS listingadmin CASCADE;
 
+DROP TABLE IF EXISTS organisationlike CASCADE;
+
 DROP TABLE IF EXISTS participant CASCADE;
 
 DROP TABLE IF EXISTS milestone CASCADE;
@@ -43,6 +45,8 @@ DROP TABLE IF EXISTS listingcomment CASCADE;
 DROP TABLE IF EXISTS location CASCADE;
 
 DROP TABLE IF EXISTS listinglocation CASCADE;
+
+DROP TABLE IF EXISTS organisationannouncement CASCADE;
 
 CREATE EXTENSION pg_stat_statements;
 
@@ -229,6 +233,16 @@ CREATE TABLE like (
 	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
+CREATE TABLE organisationlike (
+	organisation_like_id SERIAL,
+	organisation_id UUID NOT NULL,
+	user_id VARCHAR NOT NULL,
+	PRIMARY KEY (organisation_like_id),
+	UNIQUE (organisation_id, user_id),
+	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
+	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE
+);
+
 CREATE TABLE listingadmin (
 	listing_admin_id SERIAL,
 	user_id VARCHAR NOT NULL,
@@ -301,4 +315,15 @@ CREATE TABLE listinglocation (
 	UNIQUE (listing_id, location_id),
 	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE,
 	FOREIGN KEY (location_id) REFERENCES location ON DELETE CASCADE
+);
+
+CREATE TABLE organisationannouncement (
+	announcement_id SERIAL,
+	organisation_id UUID NOT NULL,
+	ANNOUNCEMENT TEXT NOT NULL,
+	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	deleted_on TIMESTAMPTZ,
+	PRIMARY KEY (announcement_id),
+	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE
 );
