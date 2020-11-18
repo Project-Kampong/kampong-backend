@@ -1,16 +1,18 @@
 import { mocked } from 'ts-jest/utils';
 import { FaqsController } from './faqs';
 import { FaqsRepository, ListingsRepository } from '../database';
+import { ErrorResponse } from '../utils';
 
 const mockFaqsRepository = mocked(new FaqsRepository(null, null));
 const mockListingsRepository = mocked(new ListingsRepository(null, null));
 
-const mockResponse = () => {
-    const res: { [key: string]: any } = {};
-    res.status = jest.fn().mockReturnValue(res);
-    res.json = jest.fn().mockReturnValue(res);
-    return res;
+const res = {
+    // allows chained json method to be called
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn(),
 };
+
+const next = jest.fn();
 
 let faqsController: FaqsController;
 
@@ -19,12 +21,11 @@ describe('FaqsController', () => {
         faqsController = new FaqsController(mockFaqsRepository, mockListingsRepository);
     });
 
-    describe('getFaqs', () => {
+    describe('#getFaqsForListing', () => {
         describe('when req.params.listing_id is provided', () => {
-            let req, res;
+            let req;
             beforeEach(() => {
                 req = { params: { listing_id: 'a' } };
-                res = mockResponse();
             });
             describe('when no errors', () => {
                 const faqs = [{ faq_id: 1, listing_id: 'a', question: 'Why?', answer: 'Yes' }];
@@ -33,7 +34,7 @@ describe('FaqsController', () => {
                 const expectedResponse = { success: true, data: faqs };
 
                 it('should call res.json with success true and faqs from getAllFaqsForListing', async () => {
-                    await faqsController.getFaqs(req, res);
+                    await faqsController.getFaqsForListing(req, res, next);
 
                     expect(res.status).toHaveBeenCalledWith(200);
                     expect(res.json).toHaveBeenCalledWith(expectedResponse);
@@ -45,7 +46,7 @@ describe('FaqsController', () => {
                 jest.spyOn(mockListingsRepository, 'getListingById').mockRejectedValueOnce(mockError);
 
                 it('should not call res.json and call next instead', () => {
-                    expect(faqsController.getFaqs(req, res)).rejects;
+                    expect(faqsController.getFaqsForListing(req, res, next)).rejects;
 
                     expect(res.status).not.toBeCalled();
                     expect(res.json).not.toBeCalled();
@@ -54,18 +55,16 @@ describe('FaqsController', () => {
         });
 
         describe('when req.params.listing_id is not provided', () => {
-            let req, res;
+            let req;
             beforeEach(() => {
                 req = { params: {} };
-                res = { ...mockResponse(), advancedResults: [1, 2, 3] };
             });
-            describe('when no errors', () => {
-                it('should call res.json with the contents of res.advancedResults', async () => {
-                    await faqsController.getFaqs(req, res);
+            it('should call next with ErrorResponse 404', async () => {
+                await faqsController.getFaqsForListing(req, res, next);
 
-                    expect(res.status).toHaveBeenCalledWith(200);
-                    expect(res.json).toHaveBeenCalledWith(res.advancedResults);
-                });
+                expect(res.status).not.toHaveBeenCalled();
+                expect(res.json).not.toHaveBeenCalled();
+                expect(next).toHaveBeenCalledWith(new ErrorResponse('Invalid route', 404));
             });
         });
     });
