@@ -9,7 +9,7 @@ import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
  */
 export const getListingStoryForListing = asyncHandler(async (req, res, next) => {
     if (req.params.listing_id) {
-        const rows = await db.one('SELECT * FROM listingstories WHERE listing_id = $1', req.params.listing_id);
+        const rows = await db.one('SELECT * FROM listingstory WHERE listing_id = $1', req.params.listing_id);
         return res.status(200).json({
             success: true,
             data: rows,
@@ -25,7 +25,7 @@ export const getListingStoryForListing = asyncHandler(async (req, res, next) => 
  */
 export const updateListingStory = asyncHandler(async (req, res, next) => {
     // check if listing exists
-    const listing = await db.one('SELECT * FROM listings WHERE listing_id = $1', req.params.listing_id);
+    const listing = await db.one('SELECT * FROM listing WHERE listing_id = $1', req.params.listing_id);
     // if non-admin user, throw 403 if not listing owner
     if (req.user.role !== 'admin' && req.user.user_id !== listing.created_by) {
         return next(new ErrorResponse(`Not allowed to update story of listing which you are not the owner of`, 403));
@@ -42,7 +42,7 @@ export const updateListingStory = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    const updateListingStoryQuery = parseSqlUpdateStmt(data, 'listingstories', 'WHERE listing_id = $1 RETURNING *', [req.params.listing_id]);
+    const updateListingStoryQuery = parseSqlUpdateStmt(data, 'listingstory', 'WHERE listing_id = $1 RETURNING *', [req.params.listing_id]);
 
     const rows = await db.one(updateListingStoryQuery);
 

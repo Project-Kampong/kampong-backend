@@ -12,7 +12,7 @@ export const getListingUpdatesForListing = asyncHandler(async (req, res, next) =
     if (req.params.listing_id) {
         // returns 404 error response if listing not found or soft deleted
         const listingUpdates = await db.many(
-            'SELECT l.listing_id, lu.* FROM listingsview l LEFT JOIN ListingUpdates lu ON l.listing_id = lu.listing_id WHERE l.listing_id = $1',
+            'SELECT l.listing_id, lu.* FROM listingview l LEFT JOIN listingupdate lu ON l.listing_id = lu.listing_id WHERE l.listing_id = $1',
             req.params.listing_id,
         );
 
@@ -51,7 +51,7 @@ export const createListingUpdate = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Not authorised to create listing update for this listing`, 403));
     }
 
-    const rows = await db.one('INSERT INTO ListingUpdates (${this:name}) VALUES (${this:csv}) RETURNING *', data);
+    const rows = await db.one('INSERT INTO listingupdate (${this:name}) VALUES (${this:csv}) RETURNING *', data);
 
     res.status(201).json({
         success: true,
@@ -67,7 +67,7 @@ export const createListingUpdate = asyncHandler(async (req, res, next) => {
 export const modifyListingUpdate = asyncHandler(async (req, res, next) => {
     // check if listing update exists
     const { listing_id } = await db.one<Promise<{ listing_id: string }>>(
-        'SELECT listing_id FROM listingupdates WHERE listing_update_id = $1',
+        'SELECT listing_id FROM listingupdate WHERE listing_update_id = $1',
         req.params.id,
     );
 
@@ -88,7 +88,7 @@ export const modifyListingUpdate = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    const modifyUpdateQuery = parseSqlUpdateStmt(data, 'listingupdates', 'WHERE listing_update_id = $1 RETURNING *', [req.params.id]);
+    const modifyUpdateQuery = parseSqlUpdateStmt(data, 'listingupdate', 'WHERE listing_update_id = $1 RETURNING *', [req.params.id]);
 
     const rows = await db.one(modifyUpdateQuery);
 
@@ -105,7 +105,7 @@ export const modifyListingUpdate = asyncHandler(async (req, res, next) => {
  */
 export const deleteListingUpdate = asyncHandler(async (req, res, next) => {
     // check if listing update exists
-    const listingUpdate = await db.one('SELECT * FROM ListingUpdates WHERE listing_update_id = $1', req.params.id);
+    const listingUpdate = await db.one('SELECT * FROM listingupdate WHERE listing_update_id = $1', req.params.id);
 
     const isListingOwner = await checkListingOwner(req.user.user_id, listingUpdate.listing_id);
 
@@ -114,7 +114,7 @@ export const deleteListingUpdate = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Not authorised to delete listing update for this listing`, 403));
     }
 
-    const rows = await db.one('DELETE FROM ListingUpdates WHERE listing_update_id = $1 RETURNING *', req.params.id);
+    const rows = await db.one('DELETE FROM listingupdate WHERE listing_update_id = $1 RETURNING *', req.params.id);
 
     res.status(200).json({
         success: true,

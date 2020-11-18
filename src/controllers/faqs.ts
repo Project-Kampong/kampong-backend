@@ -10,9 +10,9 @@ import { checkListingOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } fro
 export const getFaqsForListing = asyncHandler(async (req, res, next) => {
     if (req.params.listing_id) {
         // return 404 error response if listing not found or soft deleted
-        await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.listing_id);
+        await db.one('SELECT * FROM listingview WHERE listing_id = $1', req.params.listing_id);
 
-        const faqs = await db.manyOrNone('SELECT * FROM faqs WHERE listing_id = $1', req.params.listing_id);
+        const faqs = await db.manyOrNone('SELECT * FROM faq WHERE listing_id = $1', req.params.listing_id);
         return res.status(200).json({
             success: true,
             count: faqs.length,
@@ -47,7 +47,7 @@ export const createFaq = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Not authorised to create FAQs for this listing`, 403));
     }
 
-    const rows = await db.one('INSERT INTO faqs (${this:name}) VALUES (${this:csv}) RETURNING *', data);
+    const rows = await db.one('INSERT INTO faq (${this:name}) VALUES (${this:csv}) RETURNING *', data);
 
     res.status(201).json({
         success: true,
@@ -62,7 +62,7 @@ export const createFaq = asyncHandler(async (req, res, next) => {
  */
 export const updateFaq = asyncHandler(async (req, res, next) => {
     // check if faq exists
-    const faq = await db.one('SELECT * FROM faqs WHERE faq_id = $1', req.params.id);
+    const faq = await db.one('SELECT * FROM faq WHERE faq_id = $1', req.params.id);
 
     // check if listing exists and is listing owner
     const isListingOwner = await checkListingOwner(req.user.user_id, faq.listing_id);
@@ -81,7 +81,7 @@ export const updateFaq = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    const updateFaqQuery = parseSqlUpdateStmt(data, 'faqs', 'WHERE faq_id = $1 RETURNING *', [req.params.id]);
+    const updateFaqQuery = parseSqlUpdateStmt(data, 'faq', 'WHERE faq_id = $1 RETURNING *', [req.params.id]);
 
     const rows = await db.one(updateFaqQuery);
 
@@ -98,7 +98,7 @@ export const updateFaq = asyncHandler(async (req, res, next) => {
  */
 export const deleteFaq = asyncHandler(async (req, res, next) => {
     // check if faq exists
-    const faq = await db.oneOrNone('SELECT * FROM faqs WHERE faq_id = $1', req.params.id);
+    const faq = await db.oneOrNone('SELECT * FROM faq WHERE faq_id = $1', req.params.id);
 
     // check if listing exists and is listing owner
     const isListingOwner = await checkListingOwner(req.user.user_id, faq.listing_id);
@@ -108,7 +108,7 @@ export const deleteFaq = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Not authorised to delete FAQ for this listing`, 403));
     }
 
-    const rows = await db.one('DELETE FROM faqs WHERE faq_id = $1 RETURNING *', req.params.id);
+    const rows = await db.one('DELETE FROM faq WHERE faq_id = $1 RETURNING *', req.params.id);
 
     res.status(200).json({
         success: true,

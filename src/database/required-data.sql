@@ -1,4 +1,4 @@
-INSERT INTO Locations (location, zone) VALUES
+INSERT INTO location (location, zone) VALUES
 ('Admiralty', 'North'),
 ('Kranji', 'North'),
 ('Woodlands', 'North'),

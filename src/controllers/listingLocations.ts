@@ -11,7 +11,7 @@ export const getListingLocations = asyncHandler(async (req, res, next) => {
     if (req.params.listing_id) {
         // return 404 error response if listing not found or soft deleted
         const listingLocations = await db.many(
-            'SELECT lil.listing_location_id, l.listing_id, lil.location_id, lo.location FROM listingsview l LEFT JOIN ListingLocations lil ON l.listing_id = lil.listing_id LEFT JOIN Locations lo ON lil.location_id = lo.location_id WHERE l.listing_id = $1',
+            'SELECT lil.listing_location_id, l.listing_id, lil.location_id, lo.location FROM listingview l LEFT JOIN listinglocation lil ON l.listing_id = lil.listing_id LEFT JOIN location lo ON lil.location_id = lo.location_id WHERE l.listing_id = $1',
             req.params.listing_id,
         );
 
@@ -49,7 +49,7 @@ export const createListingLocation = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Not authorised to add listing location for this listing`, 403));
     }
 
-    const rows = await db.one('INSERT INTO ListingLocations (${this:name}) VALUES (${this:csv}) RETURNING *', data);
+    const rows = await db.one('INSERT INTO listinglocation (${this:name}) VALUES (${this:csv}) RETURNING *', data);
 
     res.status(201).json({
         success: true,
@@ -64,7 +64,7 @@ export const createListingLocation = asyncHandler(async (req, res, next) => {
  */
 export const deleteListingLocation = asyncHandler(async (req, res, next) => {
     // check if listinglocation exists
-    const listingLocation = await db.one('SELECT * FROM ListingLocations WHERE listing_location_id = $1', req.params.id);
+    const listingLocation = await db.one('SELECT * FROM listinglocation WHERE listing_location_id = $1', req.params.id);
 
     const isListingOwner = await checkListingOwner(req.user.user_id, listingLocation.listing_id);
 
@@ -73,7 +73,7 @@ export const deleteListingLocation = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Not authorised to delete listing location for this listing`, 403));
     }
 
-    const rows = await db.one('DELETE FROM ListingLocations WHERE listing_location_id = $1 RETURNING *', req.params.id);
+    const rows = await db.one('DELETE FROM listinglocation WHERE listing_location_id = $1 RETURNING *', req.params.id);
 
     res.status(200).json({
         success: true,

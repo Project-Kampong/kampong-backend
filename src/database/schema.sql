@@ -1,56 +1,56 @@
 DROP EXTENSION IF EXISTS pg_stat_statements CASCADE;
 
-DROP TABLE IF EXISTS Users CASCADE;
+DROP TABLE IF EXISTS loginuser CASCADE;
 
-DROP TABLE IF EXISTS PendingUsers CASCADE;
+DROP TABLE IF EXISTS pendinguser CASCADE;
 
-DROP TABLE IF EXISTS ForgetPasswordUsers CASCADE;
+DROP TABLE IF EXISTS forgetpassworduser CASCADE;
 
-DROP TABLE IF EXISTS Profiles CASCADE;
+DROP TABLE IF EXISTS profile CASCADE;
 
-DROP TABLE IF EXISTS Organisations CASCADE;
+DROP TABLE IF EXISTS organisation CASCADE;
 
-DROP TABLE IF EXISTS Programmes CASCADE;
+DROP TABLE IF EXISTS programme CASCADE;
 
-DROP TABLE IF EXISTS Memberships CASCADE;
+DROP TABLE IF EXISTS membership CASCADE;
 
 DROP TABLE IF EXISTS category CASCADE;
 
-DROP TABLE IF EXISTS Listings CASCADE;
+DROP TABLE IF EXISTS listing CASCADE;
 
 DROP TABLE IF EXISTS listingorganisation CASCADE;
 
-DROP TABLE IF EXISTS ListingStories CASCADE;
+DROP TABLE IF EXISTS listingstory CASCADE;
 
-DROP TABLE IF EXISTS HashTags CASCADE;
+DROP TABLE IF EXISTS hashtag CASCADE;
 
-DROP TABLE IF EXISTS Jobs CASCADE;
+DROP TABLE IF EXISTS job CASCADE;
 
-DROP TABLE IF EXISTS FAQs CASCADE;
+DROP TABLE IF EXISTS FAQ CASCADE;
 
-DROP TABLE IF EXISTS Likes CASCADE;
+DROP TABLE IF EXISTS listinglike CASCADE;
+
+DROP TABLE IF EXISTS listingadmin CASCADE;
 
 DROP TABLE IF EXISTS organisationlike CASCADE;
 
-DROP TABLE IF EXISTS ListingAdmins CASCADE;
+DROP TABLE IF EXISTS participant CASCADE;
 
-DROP TABLE IF EXISTS Participants CASCADE;
+DROP TABLE IF EXISTS milestone CASCADE;
 
-DROP TABLE IF EXISTS Milestones CASCADE;
+DROP TABLE IF EXISTS listingupdate CASCADE;
 
-DROP TABLE IF EXISTS ListingUpdates CASCADE;
+DROP TABLE IF EXISTS listingcomment CASCADE;
 
-DROP TABLE IF EXISTS ListingComments CASCADE;
+DROP TABLE IF EXISTS location CASCADE;
 
-DROP TABLE IF EXISTS Locations CASCADE;
-
-DROP TABLE IF EXISTS ListingLocations CASCADE;
+DROP TABLE IF EXISTS listinglocation CASCADE;
 
 DROP TABLE IF EXISTS organisationannouncement CASCADE;
 
 CREATE EXTENSION pg_stat_statements;
 
-CREATE TABLE Users (
+CREATE TABLE loginuser (
 	user_id VARCHAR,
 	first_name VARCHAR NOT NULL,
 	last_name VARCHAR,
@@ -61,15 +61,15 @@ CREATE TABLE Users (
 	PRIMARY KEY (user_id)
 );
 
-CREATE TABLE PendingUsers (
+CREATE TABLE pendinguser (
 	pending_user_id SERIAL,
 	user_id VARCHAR UNIQUE NOT NULL,
 	token VARCHAR UNIQUE NOT NULL,
 	PRIMARY KEY (pending_user_id),
-	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE
+	FOREIGN KEY (user_id) REFERENCES loginuser ON DELETE CASCADE
 );
 
-CREATE TABLE ForgetPasswordUsers (
+CREATE TABLE forgetpassworduser (
 	forgetpass_user_id SERIAL,
 	email VARCHAR(320) UNIQUE NOT NULL,
 	token VARCHAR UNIQUE NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE ForgetPasswordUsers (
 	PRIMARY KEY (forgetpass_user_id)
 );
 
-CREATE TABLE Profiles (
+CREATE TABLE profile (
 	user_id VARCHAR,
 	nickname VARCHAR NOT NULL,
 	profile_picture VARCHAR,
@@ -93,10 +93,10 @@ CREATE TABLE Profiles (
 	is_verified BOOLEAN NOT NULL DEFAULT FALSE,
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	PRIMARY KEY (user_id),
-	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE
+	FOREIGN KEY (user_id) REFERENCES loginuser ON DELETE CASCADE
 );
 
-CREATE TABLE Organisations (
+CREATE TABLE organisation (
 	organisation_id UUID,
 	name VARCHAR NOT NULL,
 	organisation_type VARCHAR,
@@ -120,7 +120,7 @@ CREATE TABLE Organisations (
 	PRIMARY KEY (organisation_id)
 );
 
-CREATE TABLE Memberships (
+CREATE TABLE membership (
 	membership_id SERIAL,
 	organisation_id UUID NOT NULL,
 	user_id VARCHAR NOT NULL,
@@ -128,18 +128,18 @@ CREATE TABLE Memberships (
 	joined_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	PRIMARY KEY (membership_id),
 	UNIQUE (organisation_id, user_id),
-	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE,
-	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE
+	FOREIGN KEY (organisation_id) REFERENCES organisation ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES loginuser ON DELETE CASCADE
 );
 
-CREATE TABLE Programmes (
+CREATE TABLE programme (
 	programme_id SERIAL,
 	organisation_id UUID NOT NULL,
 	title VARCHAR NOT NULL,
 	about TEXT,
 	media_url VARCHAR[],
 	PRIMARY KEY (programme_id),
-	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE
+	FOREIGN KEY (organisation_id) REFERENCES organisation ON DELETE CASCADE
 );
 
 CREATE TABLE category (
@@ -149,7 +149,7 @@ CREATE TABLE category (
 	PRIMARY KEY (category_id)
 );
 
-CREATE TABLE Listings (
+CREATE TABLE listing (
 	listing_id VARCHAR,
 	created_by VARCHAR,
 	title VARCHAR NOT NULL,
@@ -171,7 +171,7 @@ CREATE TABLE Listings (
 	deleted_on TIMESTAMPTZ DEFAULT NULL,
 	PRIMARY KEY (listing_id),
 	FOREIGN KEY (category) REFERENCES category (category_name) ON DELETE SET NULL,
-	FOREIGN KEY (created_by) REFERENCES Users (user_id) ON DELETE SET NULL
+	FOREIGN KEY (created_by) REFERENCES loginuser (user_id) ON DELETE SET NULL
 );
 
 CREATE TABLE listingorganisation (
@@ -180,57 +180,57 @@ CREATE TABLE listingorganisation (
 	organisation_id UUID NOT NULL,
 	PRIMARY KEY (listing_organisation_id),
 	UNIQUE (listing_id, organisation_id),
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE,
-	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE,
+	FOREIGN KEY (organisation_id) REFERENCES organisation ON DELETE CASCADE
 );
 
-CREATE TABLE ListingStories (
+CREATE TABLE listingstory (
 	listing_id VARCHAR,
 	overview TEXT,
 	problem TEXT,
 	solution TEXT,
 	outcome TEXT,
 	PRIMARY KEY (listing_id),
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
-CREATE TABLE HashTags (
+CREATE TABLE hashtag (
 	hashtag_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	tag VARCHAR NOT NULL,
 	PRIMARY KEY (hashtag_id),
 	UNIQUE (listing_id, tag),
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
 /* Jobs for a particular listing */
-CREATE TABLE Jobs (
+CREATE TABLE job (
 	job_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	job_title VARCHAR NOT NULL,
 	job_description TEXT,
 	deleted_on TIMESTAMPTZ DEFAULT NULL,
 	PRIMARY KEY (job_id),
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
-CREATE TABLE FAQs (
+CREATE TABLE FAQ (
 	faq_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	question TEXT NOT NULL,
 	answer TEXT,
 	PRIMARY KEY (faq_id),
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
-CREATE TABLE Likes (
+CREATE TABLE listinglike (
 	like_id SERIAL,
 	user_id VARCHAR NOT NULL,
 	listing_id VARCHAR NOT NULL,
 	PRIMARY KEY (like_id),
 	UNIQUE (user_id, listing_id),
-	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+	FOREIGN KEY (user_id) REFERENCES loginuser ON DELETE CASCADE,
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
 CREATE TABLE organisationlike (
@@ -243,17 +243,17 @@ CREATE TABLE organisationlike (
 	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE
 );
 
-CREATE TABLE ListingAdmins (
+CREATE TABLE listingadmin (
 	listing_admin_id SERIAL,
 	user_id VARCHAR NOT NULL,
 	listing_id VARCHAR NOT NULL,
 	PRIMARY KEY (listing_admin_id),
 	UNIQUE (user_id, listing_id),
-	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+	FOREIGN KEY (user_id) REFERENCES loginuser ON DELETE CASCADE,
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
-CREATE TABLE Participants (
+CREATE TABLE participant (
 	participant_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	user_id VARCHAR NOT NULL,
@@ -261,20 +261,20 @@ CREATE TABLE Participants (
 	end_on TIMESTAMPTZ,
 	PRIMARY KEY (participant_id),
 	UNIQUE (listing_id, user_id),
-	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+	FOREIGN KEY (user_id) REFERENCES loginuser ON DELETE CASCADE,
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
-CREATE TABLE Milestones (
+CREATE TABLE milestone (
 	milestone_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	description TEXT NOT NULL,
 	date TIMESTAMPTZ,
 	PRIMARY KEY (milestone_id),
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
-CREATE TABLE ListingUpdates (
+CREATE TABLE listingupdate (
 	listing_update_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	description TEXT NOT NULL,
@@ -282,10 +282,10 @@ CREATE TABLE ListingUpdates (
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	PRIMARY KEY (listing_update_id),
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
-CREATE TABLE ListingComments (
+CREATE TABLE listingcomment (
 	listing_comment_id SERIAL,
 	listing_id VARCHAR,
 	user_id VARCHAR,
@@ -295,26 +295,26 @@ CREATE TABLE ListingComments (
 	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	deleted_on TIMESTAMPTZ,
 	PRIMARY KEY (listing_comment_id),
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE SET NULL,
-	FOREIGN KEY (user_id) REFERENCES Users ON DELETE SET NULL,
-	FOREIGN KEY (reply_to_id) REFERENCES ListingComments (listing_comment_id) ON DELETE SET NULL
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE SET NULL,
+	FOREIGN KEY (user_id) REFERENCES loginuser ON DELETE SET NULL,
+	FOREIGN KEY (reply_to_id) REFERENCES listingcomment (listing_comment_id) ON DELETE SET NULL
 );
 
-CREATE TABLE Locations (
+CREATE TABLE location (
 	location_id SERIAL,
 	location VARCHAR,
 	zone VARCHAR,
 	PRIMARY KEY (location_id)
 );
 
-CREATE TABLE ListingLocations (
+CREATE TABLE listinglocation (
 	listing_location_id SERIAL,
 	listing_id VARCHAR NOT NULL,
 	location_id INTEGER NOT NULL,
 	PRIMARY KEY (listing_location_id),
 	UNIQUE (listing_id, location_id),
-	FOREIGN KEY (listing_id) REFERENCES Listings ON DELETE CASCADE,
-	FOREIGN KEY (location_id) REFERENCES Locations ON DELETE CASCADE
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE,
+	FOREIGN KEY (location_id) REFERENCES location ON DELETE CASCADE
 );
 
 CREATE TABLE organisationannouncement (

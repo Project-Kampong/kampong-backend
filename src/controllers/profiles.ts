@@ -22,7 +22,7 @@ export const getProfile = asyncHandler(async (req, res, next) => {
     if (!req.params.user_id) {
         return next();
     }
-    const rows = await db.one('SELECT * FROM profiles WHERE user_id = $1', req.params.user_id);
+    const rows = await db.one('SELECT * FROM profile WHERE user_id = $1', req.params.user_id);
     return res.status(200).json({
         success: true,
         data: rows,
@@ -57,7 +57,7 @@ export const updateProfile = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    const updateProfileQuery = parseSqlUpdateStmt(data, 'profiles', 'WHERE user_id = $1 RETURNING *', [req.params.user_id]);
+    const updateProfileQuery = parseSqlUpdateStmt(data, 'profile', 'WHERE user_id = $1 RETURNING *', [req.params.user_id]);
 
     const rows = await db.one(updateProfileQuery);
 
@@ -78,7 +78,7 @@ export const verifyProfile = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Invalid user id`, 400));
     }
     // check if user exists
-    await db.one('SELECT * FROM profiles WHERE user_id = $1', req.params.user_id);
+    await db.one('SELECT * FROM profile WHERE user_id = $1', req.params.user_id);
 
     const { is_verified } = req.body;
 
@@ -88,7 +88,7 @@ export const verifyProfile = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    const updateIsVerifiedQuery = parseSqlUpdateStmt(data, 'profiles', 'WHERE user_id = $1 RETURNING *', [req.params.user_id]);
+    const updateIsVerifiedQuery = parseSqlUpdateStmt(data, 'profile', 'WHERE user_id = $1 RETURNING *', [req.params.user_id]);
 
     const rows = await db.one(updateIsVerifiedQuery);
 
