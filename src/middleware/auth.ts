@@ -30,7 +30,7 @@ export const protect = asyncHandler(async (req, res, next) => {
         // console.log(decoded);
 
         // Set user request to the token's user id (all protected route has user entry (as JSON) in request)
-        req.user = await db.one('SELECT * FROM users WHERE user_id = $1', decoded.id);
+        req.user = await db.one('SELECT * FROM loginuser WHERE user_id = $1', decoded.id);
 
         next();
     } catch (err) {

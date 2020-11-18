@@ -1,9 +1,10 @@
+import { v1 as uuidv1 } from 'uuid';
 import { db } from '../database/db';
 import { asyncHandler } from '../middleware';
 import { checkOrganisationOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 
 interface OrganisationSchema {
-    organisation_id: number;
+    organisation_id: string;
     name: string;
     organisation_type: string;
     about: string;
@@ -19,6 +20,7 @@ interface OrganisationSchema {
 }
 
 interface CreateOrganisationRequestSchema {
+    organisation_id: string;
     name: string;
     organisation_type?: string;
     about: string;
@@ -65,7 +67,7 @@ interface UpdateOrganisationRequestSchema {
 export const getOrganisations = asyncHandler(async (req, res) => {
     if (req.params.listing_id) {
         const rows = await db.manyOrNone(
-            'SELECT * FROM listings l LEFT JOIN listingsorganisations lo ON l.listing_id = lo.listing_id LEFT JOIN organisations o ON lo.organisation_id = o.organisation_id WHERE l.listing_id = $1',
+            'SELECT * FROM listing l LEFT JOIN listingorganisation lo ON l.listing_id = lo.listing_id LEFT JOIN organisation o ON lo.organisation_id = o.organisation_id WHERE l.listing_id = $1',
             req.params.listing_id,
         );
         return res.status(200).json({
@@ -82,7 +84,7 @@ export const getOrganisations = asyncHandler(async (req, res) => {
  * @access  Public
  */
 export const getOrganisation = asyncHandler(async (req, res) => {
-    const rows = await db.one<Promise<OrganisationSchema>>('SELECT * FROM organisations WHERE organisation_id = $1', req.params.id);
+    const rows = await db.one<Promise<OrganisationSchema>>('SELECT * FROM organisation WHERE organisation_id = $1', req.params.id);
     res.status(200).json({
         success: true,
         data: rows,
@@ -114,6 +116,7 @@ export const createOrganisation = asyncHandler(async (req, res) => {
     } = req.body;
 
     const data: CreateOrganisationRequestSchema = {
+        organisation_id: uuidv1(),
         name,
         organisation_type,
         about,
@@ -134,7 +137,7 @@ export const createOrganisation = asyncHandler(async (req, res) => {
 
     cleanseData(data);
 
-    const rows = await db.one<OrganisationSchema>('INSERT INTO organisations (${this:name}) VALUES (${this:csv}) RETURNING *', data);
+    const rows = await db.one<OrganisationSchema>('INSERT INTO organisation (${this:name}) VALUES (${this:csv}) RETURNING *', data);
 
     res.status(201).json({
         success: true,
@@ -149,10 +152,10 @@ export const createOrganisation = asyncHandler(async (req, res) => {
  */
 export const updateOrganisation = asyncHandler(async (req, res, next) => {
     const userId: string = req.user.user_id;
-    const organisationId: number = parseInt(req.params.id);
-    const isOrganisationOwner = await checkOrganisationOwner(userId, organisationId);
+    const isOrganisationOwner = await checkOrganisationOwner(userId, req.params.id);
 
-    if (req.user.role !== 'admin' || !isOrganisationOwner) {
+    console.log(req.user.role);
+    if (req.user.role !== 'admin' && !isOrganisationOwner) {
         return next(new ErrorResponse('Not authorised to update organisation as you are not the organisation owner', 403));
     }
 
@@ -194,7 +197,7 @@ export const updateOrganisation = asyncHandler(async (req, res, next) => {
 
     cleanseData(data);
 
-    const updateOrganisationQuery = parseSqlUpdateStmt(data, 'organisations', 'WHERE organisation_id = $1 RETURNING *', [req.params.id]);
+    const updateOrganisationQuery = parseSqlUpdateStmt(data, 'organisation', 'WHERE organisation_id = $1 RETURNING *', [req.params.id]);
 
     const rows = await db.one<OrganisationSchema>(updateOrganisationQuery);
 
@@ -211,14 +214,13 @@ export const updateOrganisation = asyncHandler(async (req, res, next) => {
  */
 export const deleteOrganisation = asyncHandler(async (req, res, next) => {
     const userId: string = req.user.user_id;
-    const organisationId: number = parseInt(req.params.id);
-    const isOrganisationOwner = await checkOrganisationOwner(userId, organisationId);
+    const isOrganisationOwner = await checkOrganisationOwner(userId, req.params.id);
 
-    if (req.user.role !== 'admin' || !isOrganisationOwner) {
+    if (req.user.role !== 'admin' && !isOrganisationOwner) {
         return next(new ErrorResponse('Not authorised to delete organisation as you are not the organisation owner', 403));
     }
 
-    const rows = await db.one<OrganisationSchema>('DELETE FROM organisations WHERE organisation_id = $1 RETURNING *', req.params.id);
+    const rows = await db.one<OrganisationSchema>('DELETE FROM organisation WHERE organisation_id = $1 RETURNING *', req.params.id);
 
     res.status(200).json({
         success: true,

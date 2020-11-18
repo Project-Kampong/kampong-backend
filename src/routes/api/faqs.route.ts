@@ -2,7 +2,7 @@ import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
 import { db } from '../../database';
-import { advancedResults, checkInputError, protect, authorise, asyncHandler } from '../../middleware';
+import { checkInputError, protect, authorise, asyncHandler } from '../../middleware';
 import { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } from '../../utils';
 
 // import and initialize controllers here
@@ -22,8 +22,7 @@ const validateUpdateFaqFields = [
     check('answer').optional().trim(),
 ];
 
-router.route('/').get(advancedResults('faqs'), asyncHandler(faqsController.getFaqs));
-router.route('/:id').get(faqsController.getFaq);
+router.route('/').get(asyncHandler(faqsController.getFaqsForListing));
 
 // all routes below only accessible to admin
 router.use(protect);
