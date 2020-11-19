@@ -14,8 +14,17 @@ jobs:
                   node-version: '14'
                   check-latest: true
             - run: npm install -g yarn
-            - name: Install dependencies, check formatting, and build
+            - name: Create config.env file with necessary testing credentials from GitHub secrets
+              uses: SpicyPizza/create-envfile@v1
+              with:
+                  envkey_S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
+                  envkey_S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY }}
+                  envkey_S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+                  envkey_S3_REGION: ${{secrets.S3_REGION}}
+                  file_name: config/config.env
+            - name: Install dependencies, check formatting, test, and build
               run: |
                   yarn install
                   yarn prettier --check .
+                  yarn test
                   yarn build

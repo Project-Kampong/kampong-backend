@@ -1,5 +1,5 @@
-import { FaqsRepository, ListingsRepository } from '../database';
 import { asyncHandler } from '../middleware';
+import { FaqsRepository, ListingsRepository } from '../database';
 import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
 
 export class FaqsController {
@@ -13,7 +13,7 @@ export class FaqsController {
      * @route   GET /api/listings/:listing_id/faqs
      * @access  Public
      */
-    getFaqsForListing = asyncHandler(async (req, res, next) => {
+    getFaqsForListing = async (req, res, next): Promise<void> => {
         if (req.params.listing_id) {
             const listingId: string = req.params.listing_id;
             // return 404 error response if listing not found or soft deleted
@@ -27,7 +27,7 @@ export class FaqsController {
         }
 
         return next(new ErrorResponse('Invalid route', 404));
-    });
+    };
 
     /**
      * @desc    Create faq

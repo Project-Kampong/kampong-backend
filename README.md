@@ -84,6 +84,23 @@ yarn build && yarn start
 yarn dev
 ```
 
+### Run tests
+
+To run tests (written in Jest), on the command line in the project root directory:
+
+```bash
+#### Run entire test suite once
+yarn test
+
+#### Run test in watch mode
+yarn test --watch
+
+#### Update jest snapshot
+yarn test --updateSnapshot
+```
+
+> **_NOTE:_** To run the above commands on specific test file (or files in a directory), append the file or directory path to the respective command.
+
 ### Run Prettier formatter
 
 On the command line in the project root directory:
