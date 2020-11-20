@@ -68,4 +68,36 @@ describe('FaqsController', () => {
             });
         });
     });
+
+    describe('#updateFaq', () => {
+        describe('when faq does not exist', () => {
+            const req = {
+                params: { id: 123 },
+            };
+            jest.spyOn(mockFaqsRepository, 'getFaqById').mockRejectedValue(new Error());
+            it('should not check listing owner, and not call res.json', async () => {
+                expect(faqsController.updateFaq(req, res, next)).rejects;
+
+                expect(res.status).not.toBeCalled();
+                expect(res.json).not.toBeCalled();
+            });
+        });
+
+        describe('when faq exists', () => {
+            jest.spyOn(mockFaqsRepository, 'getFaqById').mockResolvedValueOnce({
+                faq_id: 234,
+                listing_id: 'abc',
+                question: 'why?',
+                answer: 'why not?',
+            });
+            describe('when not listing owner nor admin', () => {
+                const req = {
+                    params: { id: 123 },
+                    user: { role: 'user' },
+                };
+
+                it('should not call res.json and call next with ErrorResponse 403', () => {});
+            });
+        });
+    });
 });
