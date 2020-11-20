@@ -1,11 +1,13 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check } from 'express-validator';
+import { db } from '../../database';
 import { checkInputError, protect } from '../../middleware';
 import { HASHTAG_REGEX, INVALID_FIELD_MSG } from '../../utils';
 
-// import controllers here
-import { getHashtagsForListing, createHashtag, deleteHashtag } from '../../controllers/hashtags';
+// import and initialize controllers here
+import { HashtagsController } from '../../controllers/hashtags';
+const hashtagsController = new HashtagsController(db.hashtags, db.listings);
 
 // Define input validation chain
 const validateCreateHashtagFields = [
@@ -13,12 +15,12 @@ const validateCreateHashtagFields = [
     check('tag', INVALID_FIELD_MSG('tag')).matches(HASHTAG_REGEX),
 ];
 
-router.route('/').get(getHashtagsForListing);
+router.route('/').get(hashtagsController.getHashtagsForListing);
 
 // all routes below only accessible to authenticated user
 router.use(protect);
 
 // map routes to controller
-router.route('/').post(validateCreateHashtagFields, checkInputError, createHashtag);
+router.route('/').post(validateCreateHashtagFields, checkInputError, hashtagsController.createHashtag);
 
-router.route('/:id').delete(deleteHashtag);
+router.route('/:id').delete(hashtagsController.deleteHashtag);

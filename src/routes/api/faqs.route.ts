@@ -1,11 +1,13 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
-import { checkInputError, protect, authorise } from '../../middleware';
+import { db } from '../../database';
+import { checkInputError, protect, authorise, asyncHandler } from '../../middleware';
 import { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } from '../../utils';
 
-// import controllers here
-import { getFaqsForListing, createFaq, updateFaq, deleteFaq } from '../../controllers/faqs';
+// import and initialize controllers here
+import { FaqsController } from '../../controllers/faqs';
+const faqsController = new FaqsController(db.faqs, db.listings);
 
 // input validation chain definition
 const validateCreateFaqFields = [
@@ -20,13 +22,13 @@ const validateUpdateFaqFields = [
     check('answer').optional().trim(),
 ];
 
-router.route('/').get(getFaqsForListing);
+router.route('/').get(asyncHandler(faqsController.getFaqsForListing));
 
 // all routes below only accessible to admin
 router.use(protect);
 router.use(authorise('user', 'admin'));
 
 // map routes to controller
-router.route('/').post(validateCreateFaqFields, checkInputError, createFaq);
+router.route('/').post(validateCreateFaqFields, checkInputError, faqsController.createFaq);
 
-router.route('/:id').put(validateUpdateFaqFields, checkInputError, updateFaq).delete(deleteFaq);
+router.route('/:id').put(validateUpdateFaqFields, checkInputError, faqsController.updateFaq).delete(faqsController.deleteFaq);
