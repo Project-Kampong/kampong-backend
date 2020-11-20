@@ -29,6 +29,9 @@ router.use(protect);
 router.use(authorise('user', 'admin'));
 
 // map routes to controller
-router.route('/').post(validateCreateFaqFields, checkInputError, faqsController.createFaq);
+router.route('/').post(validateCreateFaqFields, checkInputError, asyncHandler(faqsController.createFaq));
 
-router.route('/:id').put(validateUpdateFaqFields, checkInputError, faqsController.updateFaq).delete(faqsController.deleteFaq);
+router
+    .route('/:id')
+    .put(validateUpdateFaqFields, checkInputError, asyncHandler(faqsController.updateFaq))
+    .delete(asyncHandler(faqsController.deleteFaq));

@@ -1,4 +1,3 @@
-import { asyncHandler } from '../middleware';
 import { FaqsRepository, ListingsRepository } from '../database';
 import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
 
@@ -13,7 +12,7 @@ export class FaqsController {
      * @route   GET /api/listings/:listing_id/faqs
      * @access  Public
      */
-    getFaqsForListing = async (req, res, next): Promise<void> => {
+    getFaqsForListing = async (req, res, next) => {
         if (req.params.listing_id) {
             const listingId: string = req.params.listing_id;
             // return 404 error response if listing not found or soft deleted
@@ -34,7 +33,7 @@ export class FaqsController {
      * @route   POST /api/faqs
      * @access  Owner/Admin
      */
-    createFaq = asyncHandler(async (req, res, next) => {
+    createFaq = async (req, res, next) => {
         const { listing_id, question, answer } = req.body;
 
         const data = {
@@ -59,14 +58,14 @@ export class FaqsController {
             success: true,
             data: rows,
         });
-    });
+    };
 
     /**
      * @desc    Update single faq
      * @route   PUT /api/faqs/:id
      * @access  Owner/Admin
      */
-    updateFaq = asyncHandler(async (req, res, next) => {
+    updateFaq = async (req, res, next) => {
         // check if faq exists
         const faq = await this.faqsRepository.getFaqById(req.params.id);
 
@@ -93,14 +92,14 @@ export class FaqsController {
             success: true,
             data: rows,
         });
-    });
+    };
 
     /**
      * @desc    Delete single faq
      * @route   DELETE /api/faqs/:id
      * @access  Owner/Admin
      */
-    deleteFaq = asyncHandler(async (req, res, next) => {
+    deleteFaq = async (req, res, next) => {
         // check if faq exists
         const faq = await this.faqsRepository.getFaqById(req.params.id);
 
@@ -118,5 +117,5 @@ export class FaqsController {
             success: true,
             data: rows,
         });
-    });
+    };
 }
