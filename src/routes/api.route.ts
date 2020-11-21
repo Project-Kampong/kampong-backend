@@ -24,8 +24,8 @@ import { router as organisationAnnouncementsRoute } from './api/organisationAnno
 import { router as organisationLikesRoute } from './api/organisationLikes.route';
 
 class ApiRouter extends BaseRouter {
-    constructor(protected readonly route: express.Router) {
-        super(route);
+    constructor() {
+        super(express.Router());
 
         // Mount routes
         this.route.use('/auth', authRoute);
@@ -55,4 +55,4 @@ class ApiRouter extends BaseRouter {
     }
 }
 
-export const apiRouter = new ApiRouter(express.Router()).getRoute;
+export const apiRouter = new ApiRouter().getRoute;
