@@ -1,7 +1,16 @@
 import { mocked } from 'ts-jest/utils';
 import { FaqsController } from './faqs';
 import { FaqsRepository, ListingsRepository } from '../database';
-import { ErrorResponse } from '../utils';
+
+// Mock imported function checkListingOwner, and leave ErrorResponse unmocked
+jest.mock('../utils', () => {
+    return {
+        ...jest.requireActual('../utils'),
+        checkListingOwner: jest.fn(),
+    };
+});
+import { checkListingOwner, ErrorResponse } from '../utils';
+const mockedCheckListingOwner = mocked(checkListingOwner, true);
 
 const mockFaqsRepository = mocked(new FaqsRepository(null, null));
 const mockListingsRepository = mocked(new ListingsRepository(null, null));
@@ -42,11 +51,10 @@ describe('FaqsController', () => {
             });
 
             describe('when there are errors', () => {
-                const mockError = new Error('mock error');
-                jest.spyOn(mockListingsRepository, 'getListingById').mockRejectedValueOnce(mockError);
+                jest.spyOn(mockListingsRepository, 'getListingById').mockRejectedValueOnce(new Error('listing not found'));
 
                 it('should not call res.json and call next instead', () => {
-                    expect(faqsController.getFaqsForListing(req, res, next)).rejects;
+                    expect(() => faqsController.getFaqsForListing(req, res, next)).rejects;
 
                     expect(res.status).not.toBeCalled();
                     expect(res.json).not.toBeCalled();
@@ -60,11 +68,14 @@ describe('FaqsController', () => {
                 req = { params: {} };
             });
             it('should call next with ErrorResponse 404', async () => {
-                await faqsController.getFaqsForListing(req, res, next);
+                const ret = await faqsController.getFaqsForListing(req, res, next);
 
                 expect(res.status).not.toHaveBeenCalled();
                 expect(res.json).not.toHaveBeenCalled();
+                // 2 ways:
                 expect(next).toHaveBeenCalledWith(new ErrorResponse('Invalid route', 404));
+                // or
+                expect(ret).toEqual(next(new ErrorResponse('Invalid route', 404)));
             });
         });
     });
@@ -74,9 +85,10 @@ describe('FaqsController', () => {
             const req = {
                 params: { id: 123 },
             };
-            jest.spyOn(mockFaqsRepository, 'getFaqById').mockRejectedValue(new Error());
+            const mockError = new Error('abc');
+            jest.spyOn(mockFaqsRepository, 'getFaqById').mockRejectedValueOnce(mockError);
             it('should not check listing owner, and not call res.json', async () => {
-                expect(faqsController.updateFaq(req, res, next)).rejects;
+                await expect(faqsController.updateFaq(req, res, next)).rejects.toThrow(mockError);
 
                 expect(res.status).not.toBeCalled();
                 expect(res.json).not.toBeCalled();
@@ -84,19 +96,65 @@ describe('FaqsController', () => {
         });
 
         describe('when faq exists', () => {
-            jest.spyOn(mockFaqsRepository, 'getFaqById').mockResolvedValueOnce({
-                faq_id: 234,
-                listing_id: 'abc',
-                question: 'why?',
-                answer: 'why not?',
+            beforeEach(() => {
+                jest.spyOn(mockFaqsRepository, 'getFaqById').mockResolvedValueOnce({
+                    faq_id: 234,
+                    listing_id: 'abc',
+                    question: 'why?',
+                    answer: 'why not?',
+                });
             });
             describe('when not listing owner nor admin', () => {
                 const req = {
                     params: { id: 123 },
-                    user: { role: 'user' },
+                    user: { user_id: 'a123', role: 'user' },
                 };
+                mockedCheckListingOwner.mockResolvedValueOnce(false);
 
-                it('should not call res.json and call next with ErrorResponse 403', () => {});
+                it('should not call res.json and call next with ErrorResponse 403', async () => {
+                    await faqsController.updateFaq(req, res, next);
+
+                    expect(res.status).not.toBeCalled();
+                    expect(res.json).not.toBeCalled();
+                    expect(next).toBeCalledWith(new ErrorResponse(`Not authorised to update FAQ for this listing`, 403));
+                });
+            });
+
+            describe('when listing owner', () => {
+                const req = {
+                    params: { id: 123 },
+                    user: { user_id: 'a123', role: 'user' },
+                    body: { question: 'What?', answer: 'Yes' },
+                };
+                beforeEach(() => {
+                    mockedCheckListingOwner.mockResolvedValueOnce(true);
+                });
+                describe('when failed to update faq by id', () => {
+                    const mockError = new Error('failed to update');
+                    jest.spyOn(mockFaqsRepository, 'updateFaqById').mockRejectedValueOnce(mockError);
+                    it('should not call res.json', async () => {
+                        await expect(faqsController.updateFaq(req, res, next)).rejects.toThrow(mockError);
+
+                        expect(res.status).not.toBeCalled();
+                        expect(res.json).not.toBeCalled();
+                    });
+                });
+
+                describe('when successfully update faq by id', () => {
+                    const updatedData = {
+                        faq_id: 234,
+                        listing_id: 'abc',
+                        question: 'why yes?',
+                        answer: 'why not?',
+                    };
+                    jest.spyOn(mockFaqsRepository, 'updateFaqById').mockResolvedValueOnce(updatedData);
+                    it('should call res.json with the updated data', async () => {
+                        await faqsController.updateFaq(req, res, next);
+
+                        expect(res.status).toHaveBeenCalledWith(200);
+                        expect(res.json).toBeCalledWith({ success: true, data: updatedData });
+                    });
+                });
             });
         });
     });
