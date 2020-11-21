@@ -1,7 +1,7 @@
 import express from 'express';
 
 export abstract class BaseRouter {
-    constructor(protected route: express.Router) {
+    constructor(protected readonly route: express.Router) {
         this.route = route;
     }
 

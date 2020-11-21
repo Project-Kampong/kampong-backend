@@ -24,7 +24,7 @@ import { router as organisationAnnouncementsRoute } from './api/organisationAnno
 import { router as organisationLikesRoute } from './api/organisationLikes.route';
 
 class ApiRouter extends BaseRouter {
-    constructor(protected route: express.Router) {
+    constructor(protected readonly route: express.Router) {
         super(route);
 
         // Mount routes
