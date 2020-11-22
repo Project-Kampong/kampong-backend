@@ -54,15 +54,13 @@ Refer to this [guide](https://www.postgresql.org/docs/current/tutorial-start.htm
 
 Under `config/config.env`, fill in `PG_USER`, `PG_HOST`, `PG_NAME`, `PG_PORT`, `PG_PASSWORD` with your PostgreSQL database credentials.
 
-##### Create database tables and import required data
+##### Clear, create database tables and import required data
 
 On the command line in the project root directory:
 
 ```bash
 yarn create-tables && yarn import-required
 ```
-
-> NOTE: Should there be an error in importing seed files, check that you have not previously imported the seed files. Otherwise, consider rolling back all migrations (see [Database Migration](#database-migration)) and re-running the above query.
 
 ##### Populate database with mock data
 
