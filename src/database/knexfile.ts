@@ -11,7 +11,7 @@ module.exports = {
     connection: {
         host: process.env.PG_HOST,
         port: parseInt(process.env.PG_PORT, 10),
-        database: 'knex-test' || process.env.PG_NAME, // TODO: Remove knex-test once ready to add into db
+        database: process.env.PG_NAME,
         user: process.env.PG_USER,
         password: process.env.PG_PASSWORD,
     },

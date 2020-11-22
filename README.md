@@ -59,24 +59,24 @@ Under `config/config.env`, fill in `PG_USER`, `PG_HOST`, `PG_NAME`, `PG_PORT`, `
 On the command line in the project root directory:
 
 ```bash
-yarn create-tables
+yarn create-tables && yarn import-required
 ```
+
+> NOTE: Should there be an error in importing seed files, check that you have not previously imported the seed files. Otherwise, consider rolling back all migrations (see [Database Migration](#database-migration)) and re-running the above query.
 
 ##### Populate database with mock data
 
 On the command line in the project root directory:
 
 ```bash
-yarn import-data
+yarn import-mock
 ```
 
-> **_NOTE:_** If data import fails, run the create database tables command and try again.
+> **_NOTE:_** If mock data import fails, run the create database tables command and try again.
 
-##### (EXPERIMENTAL) Database Migration
+##### Database Migration
 
-Database migrations is currently in development, and will be used for version control of database schema in production. To test this feature, initialize a new database instance locally with database name `knex-test`, and configure the remaining database credentials in `config.env` for this instance.
-
-> **_WARNING_**: Feature is a proof of concept, and does not work with the app. Reconfigure your `config.env` file should you resume using the app. This will subsequently be implemented, and the above methods will be deprecated.
+Migrations are used for version control of database schema in production. To make any changes to the database, create a new migration file.
 
 On the command line in the project root directory:
 
