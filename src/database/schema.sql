@@ -52,7 +52,7 @@ DROP TABLE IF EXISTS listinglocation CASCADE;
 
 DROP TABLE IF EXISTS organisationannouncement CASCADE;
 
-CREATE EXTENSION pg_stat_statements;
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
 
 CREATE TABLE loginuser (
 	user_id UUID,

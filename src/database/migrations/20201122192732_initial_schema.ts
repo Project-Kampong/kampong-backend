@@ -2,7 +2,7 @@ import * as Knex from 'knex';
 
 export async function up(knex: Knex): Promise<void> {
     return knex.transaction(async (tx: Knex.Transaction) => {
-        await tx.schema.raw('CREATE EXTENSION pg_stat_statements');
+        await tx.schema.raw('CREATE EXTENSION IF NOT EXISTS pg_stat_statements');
 
         await tx.schema.createTable('loginuser', (table: Knex.TableBuilder) => {
             table.uuid('user_id').primary();
