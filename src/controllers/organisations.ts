@@ -1,9 +1,10 @@
+import { v1 as uuidv1 } from 'uuid';
 import { db } from '../database/db';
 import { asyncHandler } from '../middleware';
-import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
+import { checkOrganisationOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 
 interface OrganisationSchema {
-    organisation_id: number;
+    organisation_id: string;
     name: string;
     organisation_type: string;
     about: string;
@@ -19,15 +20,23 @@ interface OrganisationSchema {
 }
 
 interface CreateOrganisationRequestSchema {
+    organisation_id: string;
     name: string;
     organisation_type?: string;
     about: string;
     website_url?: string;
     phone?: string;
     email: string;
+    address: string;
     owned_by: string;
     locations: string[];
     story: string;
+    facebook_link: string;
+    twitter_link: string;
+    instagram_link: string;
+    banner_photo: string;
+    profile_photo: string;
+    additional_photos: string[];
 }
 
 interface UpdateOrganisationRequestSchema {
@@ -37,16 +46,35 @@ interface UpdateOrganisationRequestSchema {
     website_url?: string;
     phone?: string;
     email?: string;
+    address?: string;
     locations?: string[];
     story?: string;
+    facebook_link?: string;
+    twitter_link?: string;
+    instagram_link?: string;
+    banner_photo?: string;
+    profile_photo?: string;
+    additional_photos?: string[];
 }
 
 /**
  * @desc    Get all organisations
  * @route   GET /api/organisations
+ * @desc    Get all organisations for a single listing
+ * @route   GET /api/listings/:listing_id/organisations
  * @access  Public
  */
 export const getOrganisations = asyncHandler(async (req, res) => {
+    if (req.params.listing_id) {
+        const rows = await db.manyOrNone(
+            'SELECT * FROM listing l LEFT JOIN listingorganisation lo ON l.listing_id = lo.listing_id LEFT JOIN organisation o ON lo.organisation_id = o.organisation_id WHERE l.listing_id = $1',
+            req.params.listing_id,
+        );
+        return res.status(200).json({
+            success: true,
+            data: rows,
+        });
+    }
     res.status(200).json(res.advancedResults);
 });
 
@@ -56,7 +84,7 @@ export const getOrganisations = asyncHandler(async (req, res) => {
  * @access  Public
  */
 export const getOrganisation = asyncHandler(async (req, res) => {
-    const rows = await db.one<Promise<OrganisationSchema>>('SELECT * FROM organisations WHERE organisation_id = $1', req.params.id);
+    const rows = await db.one<Promise<OrganisationSchema>>('SELECT * FROM organisation WHERE organisation_id = $1', req.params.id);
     res.status(200).json({
         success: true,
         data: rows,
@@ -69,22 +97,47 @@ export const getOrganisation = asyncHandler(async (req, res) => {
  * @access  Private
  */
 export const createOrganisation = asyncHandler(async (req, res) => {
-    const { name, organisation_type, about, website_url, phone, email, locations, story } = req.body;
-    const data: CreateOrganisationRequestSchema = {
+    const {
         name,
         organisation_type,
         about,
         website_url,
         phone,
         email,
+        address,
         locations,
         story,
+        facebook_link,
+        twitter_link,
+        instagram_link,
+        banner_photo,
+        profile_photo,
+        additional_photos,
+    } = req.body;
+
+    const data: CreateOrganisationRequestSchema = {
+        organisation_id: uuidv1(),
+        name,
+        organisation_type,
+        about,
+        website_url,
+        phone,
+        email,
+        address,
+        locations,
+        story,
+        facebook_link,
+        twitter_link,
+        instagram_link,
+        banner_photo,
+        profile_photo,
+        additional_photos,
         owned_by: req.user.user_id,
     };
 
     cleanseData(data);
 
-    const rows = await db.one<OrganisationSchema>('INSERT INTO organisations (${this:name}) VALUES (${this:csv}) RETURNING *', data);
+    const rows = await db.one<OrganisationSchema>('INSERT INTO organisation (${this:name}) VALUES (${this:csv}) RETURNING *', data);
 
     res.status(201).json({
         success: true,
@@ -99,14 +152,30 @@ export const createOrganisation = asyncHandler(async (req, res) => {
  */
 export const updateOrganisation = asyncHandler(async (req, res, next) => {
     const userId: string = req.user.user_id;
-    const organisationId: number = parseInt(req.params.id);
-    const isOrganisationOwner = await checkOrganisationOwner(userId, organisationId);
+    const isOrganisationOwner = await checkOrganisationOwner(userId, req.params.id);
 
+    console.log(req.user.role);
     if (req.user.role !== 'admin' && !isOrganisationOwner) {
-        return next(new ErrorResponse('Not authorised to delete organisation as you are not the organisation owner', 403));
+        return next(new ErrorResponse('Not authorised to update organisation as you are not the organisation owner', 403));
     }
 
-    const { name, organisation_type, about, website_url, phone, email, locations, story } = req.body;
+    const {
+        name,
+        organisation_type,
+        about,
+        website_url,
+        phone,
+        email,
+        address,
+        locations,
+        story,
+        facebook_link,
+        twitter_link,
+        instagram_link,
+        banner_photo,
+        profile_photo,
+        additional_photos,
+    } = req.body;
 
     const data: UpdateOrganisationRequestSchema = {
         name,
@@ -115,13 +184,20 @@ export const updateOrganisation = asyncHandler(async (req, res, next) => {
         website_url,
         phone,
         email,
+        address,
         locations,
         story,
+        facebook_link,
+        twitter_link,
+        instagram_link,
+        banner_photo,
+        profile_photo,
+        additional_photos,
     };
 
     cleanseData(data);
 
-    const updateOrganisationQuery = parseSqlUpdateStmt(data, 'organisations', 'WHERE organisation_id = $1 RETURNING *', [req.params.id]);
+    const updateOrganisationQuery = parseSqlUpdateStmt(data, 'organisation', 'WHERE organisation_id = $1 RETURNING *', [req.params.id]);
 
     const rows = await db.one<OrganisationSchema>(updateOrganisationQuery);
 
@@ -138,22 +214,16 @@ export const updateOrganisation = asyncHandler(async (req, res, next) => {
  */
 export const deleteOrganisation = asyncHandler(async (req, res, next) => {
     const userId: string = req.user.user_id;
-    const organisationId: number = parseInt(req.params.id);
-    const isOrganisationOwner = await checkOrganisationOwner(userId, organisationId);
+    const isOrganisationOwner = await checkOrganisationOwner(userId, req.params.id);
 
     if (req.user.role !== 'admin' && !isOrganisationOwner) {
         return next(new ErrorResponse('Not authorised to delete organisation as you are not the organisation owner', 403));
     }
 
-    const rows = await db.one<OrganisationSchema>('DELETE FROM organisations WHERE organisation_id = $1 RETURNING *', req.params.id);
+    const rows = await db.one<OrganisationSchema>('DELETE FROM organisation WHERE organisation_id = $1 RETURNING *', req.params.id);
 
     res.status(200).json({
         success: true,
         data: rows,
     });
 });
-
-const checkOrganisationOwner = async (userId: string, organisationId: number) => {
-    const owner = await db.one<Promise<{ owned_by: string }>>('SELECT owned_by FROM Organisations WHERE organisation_id = $1', organisationId);
-    return userId === owner.owned_by;
-};

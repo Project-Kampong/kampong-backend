@@ -17,9 +17,9 @@
 Latest version of the app has been tested to run on:
 
 ```
-- Node v14.15.0
+- Node v14.15.1
 - Yarn v1.22.10
-- PostgreSQL 13.0
+- PostgreSQL 13.1
 ```
 
 ### Package manager
@@ -114,6 +114,23 @@ yarn build && yarn start
 #### Run in development
 yarn dev
 ```
+
+### Run tests
+
+To run tests (written in Jest), on the command line in the project root directory:
+
+```bash
+#### Run entire test suite once
+yarn test
+
+#### Run test in watch mode
+yarn test --watch
+
+#### Update jest snapshot
+yarn test --updateSnapshot
+```
+
+> **_NOTE:_** To run the above commands on specific test file (or files in a directory), append the file or directory path to the respective command.
 
 ### Run Prettier formatter
 

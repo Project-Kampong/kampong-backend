@@ -1,7 +1,7 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf, query } from 'express-validator';
-import { advancedResults, checkInputError, protect, authorise, mapFilenameToLocation } from '../../middleware';
+import { advancedResults, checkInputError, protect, authorise } from '../../middleware';
 import {
     DATETIME_REGEX,
     NO_FIELD_UPDATED_MSG,
@@ -10,21 +10,19 @@ import {
     INVALID_BOOLEAN_MSG,
     INVALID_TIMESTAMP_MSG,
     INVALID_LISTING_STATUS_MSG,
-    uploadFile,
 } from '../../utils';
 
 // import controllers here
 import {
     getListings,
+    getFeaturedListings,
     getAllListingsOwnedByUser,
-    getListingsAll,
     getListing,
     createListing,
     updateListing,
-    verifyListing,
+    verifyOrFeatureListing,
     deleteListing,
     deactivateListing,
-    uploadListingPics,
     searchListings,
 } from '../../controllers/listings';
 
@@ -37,9 +35,9 @@ import { router as listingLocationsRoute } from './listingLocations.route';
 import { router as listingUpdatesRoute } from './listingUpdates.route';
 import { router as milestonesRoute } from './milestones.route';
 import { router as participantsRoute } from './participants.route';
-import { router as listingSkillsRoute } from './listingSkills.route';
-import { router as jobsRoute } from './job.route';
+import { router as jobsRoute } from './jobs.route';
 import { router as listingStoriesRoute } from './listingStories.route';
+import { router as organisationsRoute } from './organisations.route';
 
 // Re-route this URI to other resource router
 router.use('/:listing_id/faqs', faqsRoute);
@@ -52,20 +50,20 @@ router.use('/:listing_id/milestones', milestonesRoute);
 router.use('/:listing_id/participants', participantsRoute);
 router.use('/stories', listingStoriesRoute);
 router.use('/:listing_id/stories', listingStoriesRoute);
-router.use('/:listing_id/listing-skills', listingSkillsRoute);
 router.use('/:listing_id/jobs', jobsRoute);
+router.use('/:listing_id/organisations', organisationsRoute);
 
 // Define input validation chain
 const validateCreateListingFields = [
     check('organisation_id', INVALID_FIELD_MSG('organisation id')).optional().isInt(),
     check('title', INVALID_FIELD_MSG('title')).trim().notEmpty(),
     check('category', INVALID_FIELD_MSG('category')).trim().notEmpty(),
-    check('listing_url', INVALID_FIELD_MSG('listing URL')).optional().isURL(),
     check('listing_email', INVALID_EMAIL_MSG).notEmpty().isEmail(),
     check('listing_status', INVALID_LISTING_STATUS_MSG).notEmpty().isIn(['ongoing', 'completed']),
     check('is_published', INVALID_BOOLEAN_MSG('is_published')).optional().isBoolean(),
     check('start_date', INVALID_TIMESTAMP_MSG('start date')).optional().matches(DATETIME_REGEX),
     check('end_date', INVALID_TIMESTAMP_MSG('end date')).optional().matches(DATETIME_REGEX),
+    check('pics', INVALID_FIELD_MSG('pics')).isArray(),
 ];
 
 const validateUpdateListingFields = [
@@ -83,73 +81,42 @@ const validateUpdateListingFields = [
             check('is_published').exists(),
             check('start_date').exists(),
             check('end_date').exists(),
-            check('pic1').exists(),
-            check('pic2').exists(),
-            check('pic3').exists(),
-            check('pic4').exists(),
-            check('pic5').exists(),
+            check('pics').exists(),
         ],
         NO_FIELD_UPDATED_MSG,
     ),
     check('organisation_id', INVALID_FIELD_MSG('organisation id')).optional().isInt(),
     check('title', INVALID_FIELD_MSG('title')).optional().trim().notEmpty(),
     check('category', INVALID_FIELD_MSG('category')).optional().trim().notEmpty(),
-    check('listing_url', INVALID_FIELD_MSG('listing URL')).optional().isURL(),
     check('listing_email', INVALID_EMAIL_MSG).optional().isEmail(),
     check('listing_status', INVALID_LISTING_STATUS_MSG).optional().isIn(['ongoing', 'completed']),
     check('is_published', INVALID_BOOLEAN_MSG('is_published')).optional().isBoolean(),
     check('start_date', INVALID_TIMESTAMP_MSG('start date')).optional().matches(DATETIME_REGEX),
     check('end_date', INVALID_TIMESTAMP_MSG('end date')).optional().matches(DATETIME_REGEX),
+    check('pics', INVALID_FIELD_MSG('pics')).optional().isArray(),
 ];
 
-const validateVerifyListingFields = [check('is_verified', INVALID_BOOLEAN_MSG('is_verified')).isBoolean()];
+const validateVerifyOrFeatureListingFields = [
+    check('is_verified', INVALID_BOOLEAN_MSG('is_verified')).optional().isBoolean(),
+    check('is_featured', INVALID_BOOLEAN_MSG('is_featured')).optional().isBoolean(),
+];
+
 const validateSearchListingsFields = [
     query('keyword', INVALID_FIELD_MSG('keyword')).exists(),
     query('limit', INVALID_FIELD_MSG('limit')).optional().isNumeric(),
 ];
 
 // map routes to controller
-router
-    .route('/')
-    .get(advancedResults('listingsview'), getListings)
-    .post(
-        protect,
-        uploadFile.array('pics', 5),
-        mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
-        validateCreateListingFields,
-        checkInputError,
-        createListing,
-    );
+router.route('/').get(advancedResults('listingsview'), getListings).post(protect, validateCreateListingFields, checkInputError, createListing);
 
+router.route('/featured').get(getFeaturedListings);
 router.route('/owner').get(getAllListingsOwnedByUser);
 router.route('/search').get(validateSearchListingsFields, checkInputError, searchListings);
-router.route('/all').get(protect, authorise('admin'), advancedResults('listings'), getListingsAll);
 
 router.route('/:id').get(getListing);
 
-router
-    .route('/:id')
-    .put(
-        protect,
-        authorise('user', 'admin'),
-        uploadFile.array('pics', 5),
-        mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
-        validateUpdateListingFields,
-        checkInputError,
-        updateListing,
-    )
-    .delete(protect, deleteListing);
+router.route('/:id').put(protect, validateUpdateListingFields, checkInputError, updateListing).delete(protect, deleteListing);
 
 router.route('/:id/deactivate').put(protect, deactivateListing);
 
-router
-    .route('/:id/upload-photo')
-    .put(
-        protect,
-        authorise('admin', 'user'),
-        uploadFile.array('pics', 5),
-        mapFilenameToLocation('pic1', 'pic2', 'pic3', 'pic4', 'pic5'),
-        uploadListingPics,
-    );
-
-router.route('/:id/verify').put(protect, authorise('admin'), validateVerifyListingFields, checkInputError, verifyListing);
+router.route('/:id/verify-feature').put(protect, authorise('admin'), validateVerifyOrFeatureListingFields, checkInputError, verifyOrFeatureListing);

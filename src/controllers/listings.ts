@@ -1,31 +1,62 @@
-import moment from 'moment';
-import { v4 as uuidv4 } from 'uuid';
-import { db } from '../database/db';
+import moment from 'moment-timezone';
+import { v1 as uuidv1 } from 'uuid';
+import { db } from '../database';
 import { asyncHandler } from '../middleware';
-import { cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
+import { checkListingOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
 import { isNil } from 'lodash';
 
 /**
  * @desc    Get all listings
  * @route   GET /api/listings
+ * @desc    Get all listings for a listing category
+ * @route   GET /api/categories/:category_name/listings
  * @desc    Get all listings for a location
  * @route   GET /api/locations/:location_id/listings
+ * @desc    Get all listings for an organisation
+ * @route   GET /api/organisations/:organisation_id/listings
  * @access  Public
  */
 export const getListings = asyncHandler(async (req, res) => {
-    if (req.params.location_id) {
-        // return 404 error response if location not found or soft deleted
-        const locations = await db.many(
-            'SELECT lil.listing_location_id, l.listing_id, lil.location_id FROM listingsview l LEFT JOIN ListingLocations lil ON l.listing_id = lil.listing_id WHERE l.listing_id = $1',
-            req.params.location_id,
+    if (req.params.category_name) {
+        // returns 404 error if category name not found
+        const rows = await db.many(
+            'SELECT * FROM category lc LEFT JOIN listingview lv ON lc.category_name = lv.category WHERE lc.category_name = $1',
+            req.params.category_name,
         );
 
-        // remove null location_id from result
-        const data = locations.filter((lil) => lil.location_id !== null);
+        // remove null listing id from result
+        const data = rows.filter((listing) => listing.listing_id !== null);
 
         return res.status(200).json({
             success: true,
-            count: data.length,
+            data,
+        });
+    }
+    if (req.params.location_id) {
+        // return 404 error response if location with location id not found
+        const rows = await db.many(
+            'SELECT lv.*, lil.location_id FROM location l LEFT JOIN listinglocation lil ON l.location_id = lil.location_id LEFT JOIN listingview lv ON lil.listing_id = lv.listing_id WHERE l.location_id = $1',
+            req.params.location_id,
+        );
+
+        // remove null listing id from result
+        const data = rows.filter((listing) => listing.listing_id !== null);
+
+        return res.status(200).json({
+            success: true,
+            data,
+        });
+    } else if (req.params.organisation_id) {
+        const rows = await db.manyOrNone(
+            'SELECT lv.*, lo.listing_organisation_id FROM organisation o LEFT JOIN listingorganisation lo ON o.organisation_id = lo.organisation_id LEFT JOIN listingview lv ON lo.listing_id = lv.listing_id WHERE o.organisation_id = $1',
+            req.params.organisation_id,
+        );
+
+        // remove null listing id from result
+        const data = rows.filter((listing) => listing.listing_id !== null);
+
+        return res.status(200).json({
+            success: true,
             data,
         });
     }
@@ -34,12 +65,13 @@ export const getListings = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Get all listings including soft deletes
- * @route   GET /api/listings/all
- * @access  Admin
+ * @desc    Get all featured listings
+ * @route   GET /api/listings/featured
+ * @access  Public
  */
-export const getListingsAll = asyncHandler(async (req, res) => {
-    res.status(200).json(res.advancedResults);
+export const getFeaturedListings = asyncHandler(async (req, res) => {
+    const rows = await db.manyOrNone('SELECT * FROM featuredlistingview');
+    res.status(200).json({ success: true, data: rows });
 });
 
 /**
@@ -48,7 +80,7 @@ export const getListingsAll = asyncHandler(async (req, res) => {
  * @access  Public
  */
 export const getListing = asyncHandler(async (req, res, next) => {
-    const rows = await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.id);
+    const rows = await db.one('SELECT * FROM listingview WHERE listing_id = $1', req.params.id);
     res.status(200).json({
         success: true,
         data: rows,
@@ -65,7 +97,7 @@ export const getAllListingsOwnedByUser = asyncHandler(async (req, res, next) => 
     // check if user exists
     await db.one('SELECT * FROM Users WHERE user_id = $1', userId);
 
-    const rows = await db.manyOrNone('SELECT * FROM listingsview WHERE created_by = $1', userId);
+    const rows = await db.manyOrNone('SELECT * FROM listingview WHERE created_by = $1', userId);
 
     res.status(200).json({
         success: true,
@@ -80,7 +112,7 @@ export const getAllListingsOwnedByUser = asyncHandler(async (req, res, next) => 
  */
 export const createListing = asyncHandler(async (req, res) => {
     const {
-        organisation_id, // NOTE: do not use this field until organisations endpoint is implemented
+        organisation_id,
         title,
         category,
         about,
@@ -89,18 +121,14 @@ export const createListing = asyncHandler(async (req, res) => {
         listing_url,
         listing_email,
         listing_status,
-        pic1,
-        pic2,
-        pic3,
-        pic4,
-        pic5,
+        pics,
         is_published,
         start_date,
         end_date,
     } = req.body;
 
     const data = {
-        listing_id: uuidv4(),
+        listing_id: uuidv1(),
         created_by: req.user.user_id,
         organisation_id,
         title,
@@ -111,11 +139,7 @@ export const createListing = asyncHandler(async (req, res) => {
         listing_url,
         listing_email,
         listing_status,
-        pic1,
-        pic2,
-        pic3,
-        pic4,
-        pic5,
+        pics,
         is_published,
         start_date,
         end_date,
@@ -131,8 +155,8 @@ export const createListing = asyncHandler(async (req, res) => {
      * 2nd json: Listing story entry
      */
     const rows = await db.tx(async (query) => {
-        const createListing = await query.one('INSERT INTO listings (${this:name}) VALUES (${this:csv}) RETURNING *', data);
-        const createListingStory = await query.one('INSERT INTO listingstories (listing_id) VALUES ($1) RETURNING *', createListing.listing_id);
+        const createListing = await query.one('INSERT INTO listing (${this:name}) VALUES (${this:csv}) RETURNING *', data);
+        const createListingStory = await query.one('INSERT INTO listingstory (listing_id) VALUES ($1) RETURNING *', createListing.listing_id);
         return query.batch([createListing, createListingStory]);
     });
 
@@ -148,11 +172,11 @@ export const createListing = asyncHandler(async (req, res) => {
  * @access  Admin/Owner
  */
 export const updateListing = asyncHandler(async (req, res, next) => {
-    // check if listing exists and is not soft-deleted
-    const listing = await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.id);
+    // check if listing exists and is listing owner
+    const isListingOwner = await checkListingOwner(req.user.user_id, req.params.id);
 
     // Unauthorised if neither admin nor listing owner
-    if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
+    if (!(req.user.role === 'admin' || isListingOwner)) {
         return next(new ErrorResponse(`User not authorised to update this listing`, 403));
     }
 
@@ -169,11 +193,7 @@ export const updateListing = asyncHandler(async (req, res, next) => {
         is_published,
         start_date,
         end_date,
-        pic1,
-        pic2,
-        pic3,
-        pic4,
-        pic5,
+        pics,
     } = req.body;
 
     const data = {
@@ -189,17 +209,14 @@ export const updateListing = asyncHandler(async (req, res, next) => {
         is_published,
         start_date,
         end_date,
-        pic1,
-        pic2,
-        pic3,
-        pic4,
-        pic5,
+        pics,
+        updated_on: moment.tz(process.env.DEFAULT_TIMEZONE).toDate(),
     };
 
     // remove undefined items in json
     cleanseData(data);
 
-    const updateListingQuery = parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING *', req.params.id);
+    const updateListingQuery = parseSqlUpdateStmt(data, 'listing', 'WHERE listing_id = $1 RETURNING *', req.params.id);
 
     const rows = await db.one(updateListingQuery);
 
@@ -210,19 +227,21 @@ export const updateListing = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Verify single listing
+ * @desc    Verify or feature single listing
  * @route   PUT /api/listings/:id/verify
  * @access  Admin
  */
-export const verifyListing = asyncHandler(async (req, res, next) => {
+export const verifyOrFeatureListing = asyncHandler(async (req, res, next) => {
     // check if listing exists
-    await db.one('SELECT * FROM listings WHERE listing_id = $1', req.params.id);
+    await db.one('SELECT * FROM listing WHERE listing_id = $1', req.params.id);
 
-    const { is_verified } = req.body;
+    const { is_verified, is_featured } = req.body;
 
-    const data = { is_verified };
+    const data = { is_verified, is_featured };
 
-    const verifyListingQuery = parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING $2:name', [req.params.id, data]);
+    cleanseData(data);
+
+    const verifyListingQuery = parseSqlUpdateStmt(data, 'listing', 'WHERE listing_id = $1 RETURNING *', req.params.id);
 
     const rows = await db.one(verifyListingQuery);
 
@@ -239,16 +258,16 @@ export const verifyListing = asyncHandler(async (req, res, next) => {
  */
 
 export const deactivateListing = asyncHandler(async (req, res, next) => {
-    // check if listing exists and not soft-deleted
-    const listing = await db.one('SELECT * FROM listingsview WHERE listing_id = $1', req.params.id);
+    // check if listing exists and is listing owner
+    const isListingOwner = await checkListingOwner(req.user.user_id, req.params.id);
 
     // Unauthorised if neither admin nor listing owner
-    if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
+    if (!(req.user.role === 'admin' || isListingOwner)) {
         return next(new ErrorResponse(`User not authorised to delete this listing`, 403));
     }
 
-    const rows = await db.one('UPDATE listings SET deleted_on=$1 WHERE listing_id = $2 RETURNING *', [
-        moment().format('YYYY-MM-DD HH:mm:ss.000'),
+    const rows = await db.one('UPDATE listing SET deleted_on=$1 WHERE listing_id = $2 RETURNING *', [
+        moment.tz(process.env.DEFAULT_TIMEZONE).toDate(),
         req.params.id,
     ]);
 
@@ -265,50 +284,14 @@ export const deactivateListing = asyncHandler(async (req, res, next) => {
  */
 export const deleteListing = asyncHandler(async (req, res, next) => {
     // check if listing exists
-    await db.one('SELECT * FROM listings WHERE listing_id = $1', req.params.id);
+    await db.one('SELECT * FROM listing WHERE listing_id = $1', req.params.id);
 
     // Unauthorised if not admin
     if (req.user.role !== 'admin') {
         return next(new ErrorResponse(`User not authorised to delete this listing`, 403));
     }
 
-    const rows = await db.one('DELETE FROM listings WHERE listing_id = $1 RETURNING *', req.params.id);
-
-    res.status(200).json({
-        success: true,
-        data: rows,
-    });
-});
-
-/**
- * @desc    Upload multiple (up to 5) new pictures for a particular listing (identified by listing id)
- * @route   PUT /api/listings/:id/upload-photo
- * @access  Admin/Owner
- */
-export const uploadListingPics = asyncHandler(async (req, res, next) => {
-    // check if listing exists
-    const listing = await db.one('SELECT * FROM listings WHERE listing_id = $1', req.params.id);
-
-    // Unauthorised if neither admin nor listing owner
-    if (!(req.user.role === 'admin' || req.user.user_id === listing.created_by)) {
-        return next(new ErrorResponse(`User not authorised to upload photo for this listing`, 403));
-    }
-
-    // get mapping of pic number to original filename from req body
-    const { pic1, pic2, pic3, pic4, pic5 } = req.body;
-
-    const data = {
-        pic1,
-        pic2,
-        pic3,
-        pic4,
-        pic5,
-    };
-    cleanseData(data);
-
-    const updateListingQuery = parseSqlUpdateStmt(data, 'listings', 'WHERE listing_id = $1 RETURNING $2:name', [req.params.id, data]);
-
-    const rows = await db.one(updateListingQuery);
+    const rows = await db.one('DELETE FROM listing WHERE listing_id = $1 RETURNING *', req.params.id);
 
     res.status(200).json({
         success: true,
@@ -328,11 +311,11 @@ export const searchListings = asyncHandler(async (req, res) => {
     const data = { fullTextKeyword: keyword.split(',').join(' | '), partialTextKeyword: keyword.split(',').map((key) => '%' + key + '%'), limit };
 
     const searchQuery =
-        'WITH rankedlistings AS (SELECT *, ts_rank_cd(keyword_vector, to_tsquery(${fullTextKeyword})) FROM listingsview) ' +
-        'SELECT * FROM rankedlistings WHERE keyword_vector @@ to_tsquery(${fullTextKeyword}) ' +
+        'WITH rankedlisting AS (SELECT *, ts_rank_cd(keyword_vector, to_tsquery(${fullTextKeyword})) FROM listingview) ' +
+        'SELECT * FROM rankedlisting WHERE keyword_vector @@ to_tsquery(${fullTextKeyword}) ' +
         'UNION ' +
         // ILIKE is expensive query, remove line below if too expensive
-        "SELECT * FROM rankedlistings WHERE title ILIKE ANY (${partialTextKeyword}) OR category ILIKE ANY (${partialTextKeyword}) OR array_to_string(locations::text[], ' ') ILIKE ANY (${partialTextKeyword}) " +
+        "SELECT * FROM rankedlisting WHERE title ILIKE ANY (${partialTextKeyword}) OR category ILIKE ANY (${partialTextKeyword}) OR array_to_string(locations::text[], ' ') ILIKE ANY (${partialTextKeyword}) " +
         'ORDER BY ts_rank_cd DESC LIMIT ${limit}';
 
     const rows = await db.manyOrNone(searchQuery, data);

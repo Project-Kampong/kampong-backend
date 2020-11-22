@@ -1,11 +1,11 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
-import { advancedResults, checkInputError, protect, authorise, mapSingleFileLocation } from '../../middleware';
-import { DATETIME_REGEX, INVALID_TIMESTAMP_MSG, INVALID_FIELD_MSG, NO_FIELD_UPDATED_MSG, uploadFile, INVALID_PHONE_NUMBER_MSG } from '../../utils';
+import { advancedResults, checkInputError, protect, authorise } from '../../middleware';
+import { DATETIME_REGEX, INVALID_TIMESTAMP_MSG, INVALID_FIELD_MSG, NO_FIELD_UPDATED_MSG, INVALID_PHONE_NUMBER_MSG } from '../../utils';
 
 // import controllers here
-import { getProfiles, getProfile, updateProfile, verifyProfile, uploadPic } from '../../controllers/profiles';
+import { getProfiles, getProfile, updateProfile, verifyProfile } from '../../controllers/profiles';
 
 // Define input validation chain for routes
 const validateProfileUpdateFields = [
@@ -28,7 +28,6 @@ const validateProfileUpdateFields = [
     check('nickname', INVALID_FIELD_MSG('nickname')).optional().trim().notEmpty(),
     check('dob').optional().matches(DATETIME_REGEX).withMessage(INVALID_TIMESTAMP_MSG('dob')),
     check('phone').optional().isMobilePhone('any').withMessage(INVALID_PHONE_NUMBER_MSG),
-    check(['facebook_link', 'twitter_link', 'instagram_link', 'linkedin_link']).optional().isURL().withMessage(INVALID_FIELD_MSG('URL')),
 ];
 
 // map routes to controller
@@ -39,7 +38,5 @@ router.use(protect);
 
 // router takes merged params 'user_id' from user route
 router.route('/').put(authorise('admin', 'user'), validateProfileUpdateFields, checkInputError, updateProfile);
-
-router.route('/upload-photo').put(uploadFile.single('pic'), mapSingleFileLocation('profile_picture'), uploadPic);
 
 router.route('/verify').put(authorise('admin'), [check('is_verified', NO_FIELD_UPDATED_MSG).exists()], checkInputError, verifyProfile);
