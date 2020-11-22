@@ -1,6 +1,6 @@
-DROP TYPE IF EXISTS user_roles CASCADE;
+DROP TYPE IF EXISTS user_role CASCADE;
 
-CREATE TYPE user_roles AS ENUM ('admin', 'user');
+CREATE TYPE user_role AS ENUM ('admin', 'user');
 
 DROP EXTENSION IF EXISTS pg_stat_statements CASCADE;
 
@@ -30,7 +30,7 @@ DROP TABLE IF EXISTS hashtag CASCADE;
 
 DROP TABLE IF EXISTS job CASCADE;
 
-DROP TABLE IF EXISTS FAQ CASCADE;
+DROP TABLE IF EXISTS faq CASCADE;
 
 DROP TABLE IF EXISTS listinglike CASCADE;
 
@@ -55,12 +55,12 @@ DROP TABLE IF EXISTS organisationannouncement CASCADE;
 CREATE EXTENSION pg_stat_statements;
 
 CREATE TABLE loginuser (
-	user_id VARCHAR,
+	user_id UUID,
 	first_name VARCHAR NOT NULL,
 	last_name VARCHAR,
 	email VARCHAR(320) UNIQUE NOT NULL,
 	password VARCHAR NOT NULL,
-	role user_roles NOT NULL DEFAULT 'user',
+	role user_role NOT NULL DEFAULT 'user',
 	is_activated BOOLEAN NOT NULL DEFAULT FALSE,
 	PRIMARY KEY (user_id)
 );
@@ -74,15 +74,16 @@ CREATE TABLE pendinguser (
 );
 
 CREATE TABLE forgetpassworduser (
-	forgetpass_user_id SERIAL,
+	forget_password_user_id SERIAL,
 	email VARCHAR(320) UNIQUE NOT NULL,
 	token VARCHAR UNIQUE NOT NULL,
 	expiry TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-	PRIMARY KEY (forget_password_user_id)
+	PRIMARY KEY (forget_password_user_id),
+	FOREIGN KEY (email) REFERENCES loginuser (email) ON DELETE CASCADE
 );
 
 CREATE TABLE profile (
-	user_id VARCHAR,
+	user_id UUID,
 	nickname VARCHAR NOT NULL,
 	profile_picture VARCHAR,
 	about TEXT,
@@ -109,7 +110,7 @@ CREATE TABLE organisation (
 	phone VARCHAR,
 	email VARCHAR(320),
 	address VARCHAR(320),
-	owned_by VARCHAR,
+	owned_by UUID,
 	locations VARCHAR[],
 	story TEXT,
 	facebook_link VARCHAR,
@@ -121,13 +122,14 @@ CREATE TABLE organisation (
 	is_verified BOOLEAN NOT NULL DEFAULT FALSE,
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	deleted_on TIMESTAMPTZ,
-	PRIMARY KEY (organisation_id)
+	PRIMARY KEY (organisation_id),
+	FOREIGN KEY (owned_by) REFERENCES loginuser (user_id) ON DELETE SET NULL
 );
 
 CREATE TABLE membership (
 	membership_id SERIAL,
 	organisation_id UUID NOT NULL,
-	user_id VARCHAR NOT NULL,
+	user_id UUID NOT NULL,
 	is_owner BOOLEAN NOT NULL DEFAULT FALSE,
 	joined_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	PRIMARY KEY (membership_id),
@@ -154,8 +156,8 @@ CREATE TABLE category (
 );
 
 CREATE TABLE listing (
-	listing_id VARCHAR,
-	created_by VARCHAR,
+	listing_id UUID,
+	created_by UUID,
 	title VARCHAR NOT NULL,
 	category VARCHAR,
 	about TEXT,
@@ -172,7 +174,7 @@ CREATE TABLE listing (
 	end_date TIMESTAMPTZ,
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-	deleted_on TIMESTAMPTZ DEFAULT NULL,
+	deleted_on TIMESTAMPTZ,
 	PRIMARY KEY (listing_id),
 	FOREIGN KEY (category) REFERENCES category (category_name) ON DELETE SET NULL,
 	FOREIGN KEY (created_by) REFERENCES loginuser (user_id) ON DELETE SET NULL
@@ -180,7 +182,7 @@ CREATE TABLE listing (
 
 CREATE TABLE listingorganisation (
 	listing_organisation_id SERIAL,
-	listing_id VARCHAR NOT NULL,
+	listing_id UUID NOT NULL,
 	organisation_id UUID NOT NULL,
 	PRIMARY KEY (listing_organisation_id),
 	UNIQUE (listing_id, organisation_id),
@@ -189,7 +191,7 @@ CREATE TABLE listingorganisation (
 );
 
 CREATE TABLE listingstory (
-	listing_id VARCHAR,
+	listing_id UUID,
 	overview TEXT,
 	problem TEXT,
 	solution TEXT,
@@ -218,7 +220,7 @@ CREATE TABLE job (
 	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
-CREATE TABLE FAQ (
+CREATE TABLE faq (
 	faq_id SERIAL,
 	listing_id UUID NOT NULL,
 	question TEXT NOT NULL,
@@ -240,11 +242,11 @@ CREATE TABLE listinglike (
 CREATE TABLE organisationlike (
 	organisation_like_id SERIAL,
 	organisation_id UUID NOT NULL,
-	user_id VARCHAR NOT NULL,
+	user_id UUID NOT NULL,
 	PRIMARY KEY (organisation_like_id),
 	UNIQUE (organisation_id, user_id),
-	FOREIGN KEY (user_id) REFERENCES Users ON DELETE CASCADE,
-	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE
+	FOREIGN KEY (user_id) REFERENCES loginuser ON DELETE CASCADE,
+	FOREIGN KEY (organisation_id) REFERENCES organisation ON DELETE CASCADE
 );
 
 CREATE TABLE listingadmin (
@@ -280,8 +282,8 @@ CREATE TABLE milestone (
 
 CREATE TABLE listingupdate (
 	listing_update_id SERIAL,
-	listing_id VARCHAR NOT NULL,
-	description TEXT NOT NULL,
+	listing_id UUID NOT NULL,
+	description TEXT,
 	pics VARCHAR[],
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -291,8 +293,8 @@ CREATE TABLE listingupdate (
 
 CREATE TABLE listingcomment (
 	listing_comment_id SERIAL,
-	listing_id VARCHAR,
-	user_id VARCHAR,
+	listing_id UUID,
+	user_id UUID,
 	COMMENT TEXT,
 	reply_to_id INTEGER,
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -306,7 +308,7 @@ CREATE TABLE listingcomment (
 
 CREATE TABLE location (
 	location_id SERIAL,
-	location VARCHAR,
+	location_name VARCHAR,
 	zone VARCHAR,
 	PRIMARY KEY (location_id)
 );
@@ -324,10 +326,10 @@ CREATE TABLE listinglocation (
 CREATE TABLE organisationannouncement (
 	announcement_id SERIAL,
 	organisation_id UUID NOT NULL,
-	ANNOUNCEMENT TEXT NOT NULL,
+	announcement TEXT NOT NULL,
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	deleted_on TIMESTAMPTZ,
 	PRIMARY KEY (announcement_id),
-	FOREIGN KEY (organisation_id) REFERENCES Organisations ON DELETE CASCADE
+	FOREIGN KEY (organisation_id) REFERENCES organisation ON DELETE CASCADE
 );

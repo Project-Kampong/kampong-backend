@@ -8,7 +8,7 @@ CREATE VIEW listingview AS
 	WITH combinedlistinglocation AS (
 		SELECT
 			ls.listing_id,
-			ARRAY_AGG(lo.location) AS locations,
+			ARRAY_AGG(lo.location_name) AS locations,
 			ARRAY_AGG(lo.location_id) AS location_ids
 		FROM
 			listing ls
