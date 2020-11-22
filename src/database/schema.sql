@@ -308,7 +308,7 @@ CREATE TABLE listingcomment (
 
 CREATE TABLE location (
 	location_id SERIAL,
-	location_name VARCHAR,
+	location_name VARCHAR UNIQUE NOT NULL,
 	zone VARCHAR,
 	PRIMARY KEY (location_id)
 );

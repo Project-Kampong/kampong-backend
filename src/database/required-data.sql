@@ -88,4 +88,4 @@ INSERT INTO category (category_name, category_group) VALUES
 ('Innovation', 'Others'), 
 ('Research', 'Others'), 
 ('Manpower', 'Others'), 
-('Design', 'Others')
+('Design', 'Others');

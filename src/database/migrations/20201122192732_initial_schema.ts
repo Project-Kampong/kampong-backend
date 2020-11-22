@@ -208,6 +208,7 @@ export async function up(knex: Knex): Promise<void> {
         await tx.schema.createTable('location', (table: Knex.TableBuilder) => {
             table.increments('location_id').primary();
             table.string('location_name').unique().notNullable();
+            table.string('zone');
         });
 
         await tx.schema.createTable('listinglocation', (table: Knex.TableBuilder) => {
