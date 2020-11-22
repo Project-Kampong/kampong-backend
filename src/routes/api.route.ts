@@ -1,5 +1,5 @@
 import express from 'express';
-export const apiRouter = express.Router();
+import { BaseRouter } from './base.route';
 
 import { router as authRoute } from './api/auth.route';
 import { router as faqsRoute } from './api/faqs.route';
@@ -23,27 +23,36 @@ import { router as listingsOrganisationsRoute } from './api/listingsOrganisation
 import { router as organisationAnnouncementsRoute } from './api/organisationAnnoucements.route';
 import { router as organisationLikesRoute } from './api/organisationLikes.route';
 
-// Mount routes
-apiRouter.use('/auth', authRoute);
-apiRouter.use('/faqs', faqsRoute);
-apiRouter.use('/hashtags', hashtagsRoute);
-apiRouter.use('/jobs', jobsRoute);
-apiRouter.use('/likes', likesRoute);
-apiRouter.use('/listings', listingsRoute);
-apiRouter.use('/categories', categoriesRoute);
-apiRouter.use('/listing-comments', listingCommentsRoute);
-apiRouter.use('/listing-locations', listingLocationsRoute);
-apiRouter.use('/listing-updates', listingUpdatesRoute);
-apiRouter.use('/locations', locationsRoute);
-apiRouter.use('/milestones', milestonesRoute);
-apiRouter.use('/organisations', organisationsRoute);
-apiRouter.use('/participants', participantsRoute);
-apiRouter.use('/programmes', programmesRoute);
-apiRouter.use('/users', usersRoute);
-apiRouter.use('/file-upload', uploadsRoute);
-apiRouter.use('/send-email', sendEmailRoute);
-apiRouter.use('/listings-organisations', listingsOrganisationsRoute);
-apiRouter.use('/announcements', organisationAnnouncementsRoute);
-apiRouter.use('/organisation-likes', organisationLikesRoute);
+class ApiRouter extends BaseRouter {
+    constructor() {
+        super(express.Router());
 
-apiRouter.use('/*', (req, res) => res.status(404).json({ success: false, error: `Cannot ${req.method} ${req.originalUrl}` }));
+        // Mount routes
+        this.route.use('/auth', authRoute);
+        this.route.use('/faqs', faqsRoute);
+        this.route.use('/hashtags', hashtagsRoute);
+        this.route.use('/jobs', jobsRoute);
+        this.route.use('/likes', likesRoute);
+        this.route.use('/listings', listingsRoute);
+        this.route.use('/categories', categoriesRoute);
+        this.route.use('/listing-comments', listingCommentsRoute);
+        this.route.use('/listing-locations', listingLocationsRoute);
+        this.route.use('/listing-updates', listingUpdatesRoute);
+        this.route.use('/locations', locationsRoute);
+        this.route.use('/milestones', milestonesRoute);
+        this.route.use('/organisations', organisationsRoute);
+        this.route.use('/participants', participantsRoute);
+        this.route.use('/programmes', programmesRoute);
+        this.route.use('/users', usersRoute);
+        this.route.use('/file-upload', uploadsRoute);
+        this.route.use('/send-email', sendEmailRoute);
+        this.route.use('/listings-organisations', listingsOrganisationsRoute);
+        this.route.use('/announcements', organisationAnnouncementsRoute);
+        this.route.use('/organisation-likes', organisationLikesRoute);
+
+        // All unimplemented route give 404 response
+        this.route.use('/*', (req, res) => res.status(404).json({ success: false, error: `Route not found: ${req.method} ${req.originalUrl}` }));
+    }
+}
+
+export const apiRouter = new ApiRouter().getRoute;

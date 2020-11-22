@@ -1,5 +1,4 @@
 import { HashtagsRepository, ListingsRepository } from '../database';
-import { asyncHandler } from '../middleware';
 import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
 
 export class HashtagsController {
@@ -13,7 +12,7 @@ export class HashtagsController {
      * @route   GET /api/listings/:listing_id/hashtags
      * @access  Public
      */
-    getHashtagsForListing = asyncHandler(async (req, res, next) => {
+    getHashtagsForListing = async (req, res, next) => {
         if (req.params.listing_id) {
             // return 404 error response if listing not found or soft deleted
             await this.listingsRepository.getListingById(req.params.listing_id);
@@ -27,14 +26,14 @@ export class HashtagsController {
         }
 
         return next(new ErrorResponse('Invalid route', 404));
-    });
+    };
 
     /**
      * @desc    Create hashtag
      * @route   POST /api/hashtags
      * @access  Owner/Admin
      */
-    createHashtag = asyncHandler(async (req, res, next) => {
+    createHashtag = async (req, res, next) => {
         const { listing_id, tag } = req.body;
 
         const data = {
@@ -58,14 +57,14 @@ export class HashtagsController {
             success: true,
             data: rows,
         });
-    });
+    };
 
     /**
      * @desc    Delete single hashtag
      * @route   DELETE /api/hashtags/:id
      * @access  Owner/Admin
      */
-    deleteHashtag = asyncHandler(async (req, res, next) => {
+    deleteHashtag = async (req, res, next) => {
         // check if hashtag exists
         const hashtag = await this.hashtagsRepository.getHashtagById(req.params.id);
 
@@ -83,5 +82,5 @@ export class HashtagsController {
             success: true,
             data: rows,
         });
-    });
+    };
 }
