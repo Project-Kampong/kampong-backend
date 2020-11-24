@@ -18,7 +18,7 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   WITH_V: true
             - name: Replace all occurrence of word 'Unreleased' in CHANGELOG with new release version
-              run: sed -i '' -- 's/Unreleased/${{ steps.tag-bump.outputs.new_tag }}' ./CHANGELOG.md
+              run: sed -i 's/Unreleased/${{ steps.tag-bump.outputs.new_tag }}/g' ./CHANGELOG.md
             - name: Commit changes and push to current branch
               uses: stefanzweifel/git-auto-commit-action@v4
               with:
