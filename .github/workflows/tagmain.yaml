@@ -12,8 +12,14 @@ jobs:
               with:
                   fetch-depth: '0'
             - name: GitHub Tag Bump
+              id: tag-bump
               uses: anothrNick/github-tag-action@1.26.0
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   WITH_V: true
-                  INITIAL_VERSION: 0.1.4
+            - name: Replace all occurrence of word 'Unreleased' in CHANGELOG with new release version
+              run: sed -i '' -- 's/Unreleased/${{ steps.tag-bump.outputs.new_tag }}' ./CHANGELOG.md
+            - name: Commit changes and push to current branch
+              uses: stefanzweifel/git-auto-commit-action@v4
+              with:
+                  commit_message: Update CHANGELOG with new version
