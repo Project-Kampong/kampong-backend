@@ -52,6 +52,7 @@ export async function up(knex: Knex): Promise<void> {
             table.string('website_url');
             table.string('phone');
             table.string('email', 320);
+            table.string('address');
             table.uuid('owned_by').references('user_id').inTable('loginuser').onDelete('SET NULL');
             table.specificType('locations', 'VARCHAR[]');
             table.text('story');
