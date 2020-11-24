@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Update dependencies, node v14.15.1, yarn v1.22.10, and PostgreSQL 13.1
 -   GitHub Actions build script and API docs generator for CI/CD
 -   Jest tests
+-   Database migration to be handle by knex.
 
 ### Changed
 

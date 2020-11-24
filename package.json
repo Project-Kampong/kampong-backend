@@ -8,14 +8,22 @@
         "yarn": "1.x"
     },
     "scripts": {
-        "start": "NODE_ENV=production node dist/server.js",
+        "start": "NODE_ENV=production node dist/src/server.js",
         "dev": "nodemon src/server.ts",
         "build": "node --max-old-space-size=8192 node_modules/.bin/tsc -p .",
-        "create-tables": "ts-node src/utils/seeder.ts -i",
-        "import-data": "ts-node src/utils/seeder.ts -d",
+        "create-tables-old": "ts-node src/utils/seeder.ts -i",
+        "create-tables": "yarn knex:migrate:rollback all && yarn knex:migrate:latest",
+        "import-required": "yarn knex:seed:run",
+        "import-mock": "ts-node src/utils/seeder.ts -d",
         "format": "prettier --write .",
-        "test": "jest",
-        "heroku-postbuild": "node --max-old-space-size=8192 node_modules/.bin/tsc -p . && yarn create-tables && yarn import-data"
+        "heroku-postbuild": "node --max-old-space-size=8192 node_modules/.bin/tsc -p . && yarn create-tables && yarn import-required && yarn import-mock",
+        "knex:migrate:make": "knex --knexfile src/database/knexfile.ts migrate:make -x ts",
+        "knex:migrate:latest": "knex --knexfile src/database/knexfile.ts migrate:latest",
+        "knex:migrate:rollback": "knex --knexfile src/database/knexfile.ts migrate:rollback",
+        "knex:migrate:list": "knex --knexfile src/database/knexfile.ts migrate:list",
+        "knex:seed:make": "knex --knexfile src/database/knexfile.ts seed:make -x ts",
+        "knex:seed:run": "knex --knexfile src/database/knexfile.ts seed:run",
+        "test": "jest"
     },
     "license": "MIT",
     "dependencies": {
@@ -51,6 +59,7 @@
         "eslint": "^7.10.0",
         "eslint-config-prettier": "^6.12.0",
         "eslint-plugin-prettier": "^3.1.4",
+        "knex": "^0.21.6",
         "jest": "^26.6.3",
         "nodemon": "^2.0.5",
         "prettier": "2.1.2",

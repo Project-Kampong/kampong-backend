@@ -54,12 +54,12 @@ Refer to this [guide](https://www.postgresql.org/docs/current/tutorial-start.htm
 
 Under `config/config.env`, fill in `PG_USER`, `PG_HOST`, `PG_NAME`, `PG_PORT`, `PG_PASSWORD` with your PostgreSQL database credentials.
 
-##### Create database tables and import required data
+##### Clear, create database tables and import required data
 
 On the command line in the project root directory:
 
 ```bash
-yarn create-tables
+yarn create-tables && yarn import-required
 ```
 
 ##### Populate database with mock data
@@ -67,10 +67,39 @@ yarn create-tables
 On the command line in the project root directory:
 
 ```bash
-yarn import-data
+yarn import-mock
 ```
 
-> **_NOTE:_** If data import fails, run the create database tables command and try again.
+> **_NOTE:_** If mock data import fails, run the create database tables command and try again.
+
+##### Database Migration
+
+Migrations are used for version control of database schema in production. To make any changes to the database, create a new migration file.
+
+On the command line in the project root directory:
+
+```bash
+#### List migrations that have completed and have yet to be run
+yarn knex:migrate:list
+
+#### Run all migration scripts that have not been run before
+yarn knex:migrate:latest
+
+#### Run all available seed files
+yarn knex:seed:run
+
+#### Create migration file
+yarn knex:migrate:make
+
+#### Create seed files
+yarn knex:seed:make
+
+#### Rollback the most recent migration
+yarn knex:migrate:rollback
+
+#### Rollback all migration
+yarn knex:migrate:rollback all
+```
 
 ### Running the app
 

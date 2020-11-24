@@ -1,4 +1,4 @@
-INSERT INTO location (location, zone) VALUES
+INSERT INTO location (location_name, zone) VALUES
 ('Admiralty', 'North'),
 ('Kranji', 'North'),
 ('Woodlands', 'North'),
@@ -88,4 +88,4 @@ INSERT INTO category (category_name, category_group) VALUES
 ('Innovation', 'Others'), 
 ('Research', 'Others'), 
 ('Manpower', 'Others'), 
-('Design', 'Others')
+('Design', 'Others');
