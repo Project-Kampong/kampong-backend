@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
+### [v0.56.0]
+
 ### [v0.55.0]
 
 ### [v0.54.0]
@@ -212,7 +214,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Internal, dev-only test routes and methods.
 -   API documentation temporarily set up as front-end page to be served, for ease of testing by frontend.
 
-[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.55.0...HEAD
+[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.56.0...HEAD
+[v0.56.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.56.0
 [v0.55.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.55.0
 [v0.54.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.54.0
 [v0.53.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.53.0
