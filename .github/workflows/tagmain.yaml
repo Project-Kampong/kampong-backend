@@ -19,7 +19,11 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   WITH_V: true
             - name: Replace all occurrence of word 'Unreleased' in CHANGELOG with new release version
-              run: sed -i 's/Unreleased/${{ steps.tag-bump.outputs.new_tag }}/g' ./CHANGELOG.md
+              run: |
+              sed -i '/^### \[Unreleased]/a \\n### [${{ steps.tag-bump.outputs.new_tag }}]' ./CHANGELOG.md
+              sed -i '/^\[unreleased]: https:\/\/github.com\/Project-Kampong\/kampong-backend\/compare\//a [${{ steps.tag-bump.outputs.new_tag }}]: https://github.com/Project-Kampong/kampong-backend/releases/tag/${{ steps.tag-bump.outputs.new_tag }}' ./CHANGELOG.md
+              sed -i 's/^\[unreleased]: https:\/\/github.com\/Project-Kampong\/kampong-backend\/compare\/.*/\[unreleased]: https:\/\/github.com\/Project-Kampong\/kampong-backend\/compare\/${{ steps.tag-bump.outputs.new_tag }}...HEAD/' ./CHANGELOG.md
+
             - name: Commit changes and push to current branch
               uses: stefanzweifel/git-auto-commit-action@v4
               with:
