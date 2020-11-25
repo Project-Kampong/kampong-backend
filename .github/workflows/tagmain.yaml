@@ -3,6 +3,8 @@ on:
     push:
         branches:
             - master
+        paths-ignore:
+            - 'CHANGELOG.md' # Does not run if only changelog is changed, to prevent recursive run of this action
 jobs:
     build:
         runs-on: ubuntu-20.04
@@ -27,6 +29,6 @@ jobs:
             - name: Commit changes and push to current branch
               uses: stefanzweifel/git-auto-commit-action@v4
               with:
-                  commit_message: Update CHANGELOG with new version
+                  commit_message: Update CHANGELOG with new version ${{ steps.tag-bump.outputs.new_tag }}
                   file_pattern: CHANGELOG.md
                   push_options: --force
