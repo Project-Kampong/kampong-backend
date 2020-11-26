@@ -5,7 +5,7 @@ const config: Config.InitialOptions = {
     testEnvironment: 'node',
     rootDir: './',
     clearMocks: true,
-    roots: ['<rootDir>/src/'],
+    roots: ['<rootDir>/src/tests'],
 };
 
 export default config;
