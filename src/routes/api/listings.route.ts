@@ -36,7 +36,6 @@ import { router as listingUpdatesRoute } from './listingUpdates.route';
 import { router as milestonesRoute } from './milestones.route';
 import { router as participantsRoute } from './participants.route';
 import { router as jobsRoute } from './jobs.route';
-import { router as listingStoriesRoute } from './listingStories.route';
 import { router as organisationsRoute } from './organisations.route';
 
 // Re-route this URI to other resource router
@@ -48,8 +47,6 @@ router.use('/:listing_id/listing-locations', listingLocationsRoute);
 router.use('/:listing_id/listing-updates', listingUpdatesRoute);
 router.use('/:listing_id/milestones', milestonesRoute);
 router.use('/:listing_id/participants', participantsRoute);
-router.use('/stories', listingStoriesRoute);
-router.use('/:listing_id/stories', listingStoriesRoute);
 router.use('/:listing_id/jobs', jobsRoute);
 router.use('/:listing_id/organisations', organisationsRoute);
 
@@ -75,6 +72,10 @@ const validateUpdateListingFields = [
             check('about').exists(),
             check('tagline').exists(),
             check('mission').exists(),
+            check('overview').exists(),
+            check('problem').exists(),
+            check('solution').exists(),
+            check('outcome').exists(),
             check('listing_url').exists(),
             check('listing_email').exists(),
             check('listing_status').exists(),

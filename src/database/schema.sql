@@ -24,8 +24,6 @@ DROP TABLE IF EXISTS listing CASCADE;
 
 DROP TABLE IF EXISTS listingorganisation CASCADE;
 
-DROP TABLE IF EXISTS listingstory CASCADE;
-
 DROP TABLE IF EXISTS hashtag CASCADE;
 
 DROP TABLE IF EXISTS job CASCADE;
@@ -163,6 +161,10 @@ CREATE TABLE listing (
 	about TEXT,
 	tagline VARCHAR,
 	mission TEXT,
+	overview TEXT,
+	problem TEXT,
+	solution TEXT,
+	outcome TEXT,
 	listing_url VARCHAR,
 	listing_email VARCHAR(320),
 	listing_status VARCHAR,
@@ -188,16 +190,6 @@ CREATE TABLE listingorganisation (
 	UNIQUE (listing_id, organisation_id),
 	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE,
 	FOREIGN KEY (organisation_id) REFERENCES organisation ON DELETE CASCADE
-);
-
-CREATE TABLE listingstory (
-	listing_id UUID,
-	overview TEXT,
-	problem TEXT,
-	solution TEXT,
-	outcome TEXT,
-	PRIMARY KEY (listing_id),
-	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );
 
 CREATE TABLE hashtag (

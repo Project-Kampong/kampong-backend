@@ -11,13 +11,11 @@ import { getProgrammes, getProgramme, createProgramme, updateProgramme, deletePr
 const validateCreateProgrammeFields = [
     check('organisation_id', INVALID_FIELD_MSG('organisation id')).notEmpty().isUUID(),
     check('title', INVALID_FIELD_MSG('title')).trim().notEmpty(),
-    check('about', INVALID_ALPHA_SPACE_MSG('about')).trim().notEmpty(),
 ];
 
 const validateUpdateProgrammeFields = [
     oneOf([check('title').exists(), check('about').exists(), check('media_url').exists()], NO_FIELD_UPDATED_MSG),
-    check('title', INVALID_FIELD_MSG('title')).optional().trim(),
-    check('about', INVALID_ALPHA_SPACE_MSG('about')).optional().trim(),
+    check('title', INVALID_FIELD_MSG('title')).optional().trim().notEmpty(),
 ];
 
 // Map public routes to controller

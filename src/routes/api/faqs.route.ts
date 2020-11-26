@@ -13,13 +13,11 @@ const faqsController = new FaqsController(db.faqs, db.listings);
 const validateCreateFaqFields = [
     check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID(),
     check('question', INVALID_FIELD_MSG('question')).trim().notEmpty(),
-    check('answer').optional().trim(),
 ];
 
 const validateUpdateFaqFields = [
     oneOf([check('question').exists(), check('answer').exists()], NO_FIELD_UPDATED_MSG),
     check('question', INVALID_FIELD_MSG('question')).optional().trim().notEmpty(),
-    check('answer').optional().trim(),
 ];
 
 router.route('/').get(asyncHandler(faqsController.getFaqsForListing));

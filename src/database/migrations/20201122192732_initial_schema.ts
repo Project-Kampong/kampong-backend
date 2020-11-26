@@ -98,6 +98,10 @@ export async function up(knex: Knex): Promise<void> {
             table.text('about');
             table.string('tagline');
             table.text('mission');
+            table.text('overview');
+            table.text('problem');
+            table.text('solution');
+            table.text('outcome');
             table.string('listing_url');
             table.string('listing_email', 320);
             table.string('listing_status');
@@ -117,14 +121,6 @@ export async function up(knex: Knex): Promise<void> {
             table.uuid('listing_id').notNullable().references('listing_id').inTable('listing').onDelete('CASCADE');
             table.uuid('organisation_id').notNullable().references('organisation_id').inTable('organisation').onDelete('CASCADE');
             table.unique(['listing_id', 'organisation_id']);
-        });
-
-        await tx.schema.createTable('listingstory', (table: Knex.TableBuilder) => {
-            table.uuid('listing_id').primary().references('listing_id').inTable('listing').onDelete('CASCADE');
-            table.text('overview');
-            table.text('problem');
-            table.text('solution');
-            table.text('outcome');
         });
 
         await tx.schema.createTable('hashtag', (table: Knex.TableBuilder) => {
@@ -245,7 +241,6 @@ export async function down(knex: Knex): Promise<void> {
         await tx.schema.dropTableIfExists('faq');
         await tx.schema.dropTableIfExists('job');
         await tx.schema.dropTableIfExists('hashtag');
-        await tx.schema.dropTableIfExists('listingstory');
         await tx.schema.dropTableIfExists('listingorganisation');
         await tx.schema.dropTableIfExists('listing');
         await tx.schema.dropTableIfExists('category');
