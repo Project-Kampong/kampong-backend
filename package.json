@@ -4,7 +4,6 @@
     "description": "Kampong Backend API",
     "main": "dist/src/server.js",
     "engines": {
-        "node": "14.x",
         "yarn": "1.x"
     },
     "scripts": {
