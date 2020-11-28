@@ -7,7 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
+### Changed
+
+-   File upload endpoint request and response body
+-   Change dependency from `multer` and `multer-s3` to `express-fileupload`
+
 ### [v0.63.0]
+
+### Changed
+
+-   Build file changed back to `dist/server.js`
 
 ### [v0.62.0]
 

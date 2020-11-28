@@ -1,0 +1,30 @@
+name: NodeJS v15.x Build
+
+on: [push]
+
+jobs:
+    build:
+        runs-on: ubuntu-20.04
+
+        steps:
+            - uses: actions/checkout@v1
+            - name: Use Node.js 15
+              uses: actions/setup-node@v2-beta
+              with:
+                  node-version: '15'
+                  check-latest: true
+            - run: npm install -g yarn
+            - name: Create config.env file with necessary testing credentials from GitHub secrets
+              uses: SpicyPizza/create-envfile@v1
+              with:
+                  envkey_S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
+                  envkey_S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY }}
+                  envkey_S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+                  envkey_S3_REGION: ${{secrets.S3_REGION}}
+                  file_name: config/config.env
+            - name: Install dependencies, check formatting, test, and build
+              run: |
+                  yarn install
+                  yarn prettier --check .
+                  yarn test
+                  yarn build
