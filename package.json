@@ -8,9 +8,9 @@
         "yarn": "1.x"
     },
     "scripts": {
-        "start": "NODE_ENV=production node dist/src/server.js",
+        "start": "NODE_ENV=production node dist/server.js",
         "dev": "nodemon src/server.ts",
-        "build": "node --max-old-space-size=8192 node_modules/.bin/tsc -p .",
+        "build": "node --max-old-space-size=8192 node_modules/.bin/tsc -p src",
         "create-tables-old": "ts-node src/utils/seeder.ts -i",
         "create-tables": "yarn knex:migrate:rollback all && yarn knex:migrate:latest",
         "import-required": "yarn knex:seed:run",
