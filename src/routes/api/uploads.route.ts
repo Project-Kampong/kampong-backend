@@ -7,6 +7,6 @@ import { protect } from '../../middleware';
 import { UploadsController } from '../../controllers/uploads';
 const uploadsController = new UploadsController(s3ClientService);
 
-router.post('/v2', protect, uploadsController.uploadSingleFileToPublic);
+router.post('/', protect, uploadsController.uploadSingleFileToPublic);
 
-router.post('/v2/multi', protect, uploadsController.uploadMultipleFilesToPublic);
+router.post('/multi', protect, uploadsController.uploadMultipleFilesToPublic);
