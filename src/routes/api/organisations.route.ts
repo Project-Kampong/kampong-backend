@@ -22,9 +22,6 @@ const validateCreateOrganisationFields = [
     check('about', INVALID_ALPHA_SPACE_MSG('about')).trim().notEmpty(),
     check('phone', INVALID_PHONE_NUMBER_MSG).optional().trim().notEmpty(),
     check('email', INVALID_EMAIL_MSG).trim().notEmpty().isEmail().normalizeEmail(),
-    check('address', INVALID_ALPHA_SPACE_MSG('address')).optional().trim(),
-    check('locations', INVALID_LOCATION_MSG).optional(),
-    check('story', INVALID_ALPHA_SPACE_MSG('story')).optional().trim(),
 ];
 
 const validateUpdateOrganisationFields = [
@@ -50,9 +47,6 @@ const validateUpdateOrganisationFields = [
     check('about', INVALID_ALPHA_SPACE_MSG('about')).optional().trim().notEmpty(),
     check('phone', INVALID_PHONE_NUMBER_MSG).optional().trim().notEmpty(),
     check('email', INVALID_EMAIL_MSG).optional().trim().notEmpty().isEmail().normalizeEmail(),
-    check('address', INVALID_ALPHA_SPACE_MSG('address')).optional().trim(),
-    check('locations', INVALID_LOCATION_MSG).optional(),
-    check('story', INVALID_ALPHA_SPACE_MSG('story')).optional().trim(),
 ];
 
 // Map public routes to controller

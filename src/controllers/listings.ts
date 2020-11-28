@@ -118,6 +118,10 @@ export const createListing = asyncHandler(async (req, res) => {
         about,
         tagline,
         mission,
+        overview,
+        problem,
+        solution,
+        outcome,
         listing_url,
         listing_email,
         listing_status,
@@ -136,6 +140,10 @@ export const createListing = asyncHandler(async (req, res) => {
         about,
         tagline,
         mission,
+        overview,
+        problem,
+        solution,
+        outcome,
         listing_url,
         listing_email,
         listing_status,
@@ -148,17 +156,7 @@ export const createListing = asyncHandler(async (req, res) => {
     // remove undefined values in json object
     cleanseData(data);
 
-    /**
-     * SQL Transaction, creating listing and associated listing story
-     * Returns an array of 2 json:
-     * 1st json: Listing entry
-     * 2nd json: Listing story entry
-     */
-    const rows = await db.tx(async (query) => {
-        const createListing = await query.one('INSERT INTO listing (${this:name}) VALUES (${this:csv}) RETURNING *', data);
-        const createListingStory = await query.one('INSERT INTO listingstory (listing_id) VALUES ($1) RETURNING *', createListing.listing_id);
-        return query.batch([createListing, createListingStory]);
-    });
+    const rows = await db.one('INSERT INTO listing (${this:name}) VALUES (${this:csv}) RETURNING *', data);
 
     res.status(201).json({
         success: true,
@@ -187,6 +185,10 @@ export const updateListing = asyncHandler(async (req, res, next) => {
         about,
         tagline,
         mission,
+        overview,
+        problem,
+        solution,
+        outcome,
         listing_url,
         listing_email,
         listing_status,
@@ -203,6 +205,10 @@ export const updateListing = asyncHandler(async (req, res, next) => {
         about,
         tagline,
         mission,
+        overview,
+        problem,
+        solution,
+        outcome,
         listing_url,
         listing_email,
         listing_status,

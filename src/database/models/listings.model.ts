@@ -7,6 +7,10 @@ export interface ListingsView {
     about: string;
     tagline: string;
     mission: string;
+    overview: string;
+    problem: string;
+    solution: string;
+    outcome: string;
     listing_url: string;
     listing_email: string;
     pic1: string;

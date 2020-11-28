@@ -13,13 +13,11 @@ const jobsController = new JobsController(db.jobs, db.listings);
 const validateCreateJobFields = [
     check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID(),
     check('job_title', INVALID_FIELD_MSG('job title')).trim().notEmpty(),
-    check('job_description').optional().trim(),
 ];
 
 const validateUpdateJobFields = [
     oneOf([check('job_title').exists(), check('job_description').exists()], NO_FIELD_UPDATED_MSG),
     check('job_title', INVALID_FIELD_MSG('job title')).optional().trim().notEmpty(),
-    check('job_description').optional().trim(),
 ];
 
 router.route('/').get(jobsController.getJobs);
