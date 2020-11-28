@@ -5,7 +5,10 @@ const config: Config.InitialOptions = {
     testEnvironment: 'node',
     rootDir: './',
     clearMocks: true,
-    roots: ['<rootDir>/src/'],
+    roots: ['<rootDir>/tests'],
+    transform: {
+        '^.+\\.(ts|tsx)$': 'ts-jest',
+    },
 };
 
 export default config;
