@@ -65,11 +65,6 @@ Backend API for Project Kampong.
   * [Create Listing Location](#1-create-listing-location)
   * [Delete Listing Location](#2-delete-listing-location)
 
-* [Listing Stories](#listing-stories)
-
-  * [Get Listing Story for Listing](#1-get-listing-story-for-listing)
-  * [Update Listing Story](#2-update-listing-story)
-
 * [Listing Updates](#listing-updates)
 
   * [Create Listing Update](#1-create-listing-update)
@@ -3900,247 +3895,6 @@ URL: {{URL}}/api/listing-locations/1
 
 
 
-## Listing Stories
-Listing stories CRUD functionality.
-
-
-
-### 1. Get Listing Story for Listing
-
-
-Get listing story for listing, identified by listing id. Permission: Public.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Get Single Listing Story (404 Not Found - Non-existent listing id)
-
-
-
-##### I. Example Response: Get Single Listing Story (404 Not Found - Non-existent listing id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
-##### II. Example Request: Get Single Listing Story (200 OK)
-
-
-
-##### II. Example Response: Get Single Listing Story (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-        "overview": null,
-        "problem": null,
-        "solution": null,
-        "outcome": null
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 2. Update Listing Story
-
-
-Update listing story identified by listing id. Permission: Admin/Owner.
-
-Field rules:
-At least one field must be updated.
-overview
-problem
-solution 
-outcome
-
-
-***Endpoint:***
-
-```bash
-Method: PUT
-Type: RAW
-URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/stories
-```
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-    "overview": "Mental Health for Youth",
-    "problem": "There is insufficient knowledge about mental health.",
-    "solution": "We aim to champion mental health awareness by launching a campaign to promote mental well-being in schools",
-    "outcome": "We hope that schools will implement mental health education into their curriculum, and implement programmes around mental health advocacy."
-}
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Update Listing Story (400 Bad Request - Invalid fields updated)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-    "title": "Updated title 1",
-    "category": "Updated category",
-    "about": "Updated about",
-    "tagline": "Updated tagline",
-    "mission": "Updated mission",
-    "listing_url": "www.updated-test.com",
-    "is_published": "true",
-    "start_date": "2018-08-15 16:45:43.41585+08",
-    "end_date": "2020-01-30 16:45:43.41585+08"
-}
-```
-
-
-
-##### I. Example Response: Update Listing Story (400 Bad Request - Invalid fields updated)
-```js
-{
-    "success": false,
-    "error": "At least one field must be updated."
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-##### II. Example Request: Update Listing Story (404 Not Found - Invalid listing id)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-    "overview": "Mental Health for Youth",
-    "problem": "There is insufficient knowledge about mental health.",
-    "solution": "We aim to champion mental health awareness by launching a campaign to promote mental well-being in schools",
-    "outcome": "We hope that schools will implement mental health education into their curriculum, and implement programmes around mental health advocacy."
-}
-```
-
-
-
-##### II. Example Response: Update Listing Story (404 Not Found - Invalid listing id)
-```js
-{
-    "success": false,
-    "error": "Resource not found"
-}
-```
-
-
-***Status Code:*** 404
-
-<br>
-
-
-
-##### III. Example Request: Update Listing Story (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-    "overview": "Mental Health for Youth",
-    "problem": "There is insufficient knowledge about mental health.",
-    "solution": "We aim to champion mental health awareness by launching a campaign to promote mental well-being in schools",
-    "outcome": "We hope that schools will implement mental health education into their curriculum, and implement programmes around mental health advocacy."
-}
-```
-
-
-
-##### III. Example Response: Update Listing Story (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "overview": "Mental Health for Youth",
-        "problem": "There is insufficient knowledge about mental health.",
-        "solution": "We aim to champion mental health awareness by launching a campaign to promote mental well-being in schools",
-        "outcome": "We hope that schools will implement mental health education into their curriculum, and implement programmes around mental health advocacy."
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
 ## Listing Updates
 Listing Updates CRUD functionality.
 
@@ -4521,7 +4275,11 @@ URL: {{URL}}/api/listings
     "start_date": "2019-08-15 16:45:43.41585+08",
     "end_date": "2020-07-17 16:45:43.41585+08",
     "listing_email": "new_listing@gmail.com",
-    "listing_status": "ongoing"
+    "listing_status": "ongoing",
+    "overview": "Listing's overview",
+    "problem": "Problem the listing is tackling",
+    "solution": "We aim to solve this by mobilising the community.",
+    "outcome": "We hope to create a close-knitted community."
 }
 ```
 
@@ -4658,7 +4416,11 @@ URL: {{URL}}/api/listings
     "start_date": "2019-08-15 16:45:43.41585+08",
     "end_date": "2020-07-17 16:45:43.41585+08",
     "listing_email": "new_listing@gmail.com",
-    "listing_status": "ongoing"
+    "listing_status": "ongoing",
+    "overview": "Listing's overview",
+    "problem": "Problem the listing is tackling",
+    "solution": "We aim to solve this by mobilising the community.",
+    "outcome": "We hope to create a close-knitted community."
 }
 ```
 
@@ -4668,42 +4430,37 @@ URL: {{URL}}/api/listings
 ```js
 {
     "success": true,
-    "data": [
-        {
-            "listing_id": "0de8f600-28a8-11eb-9eae-89e03086f17e",
-            "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
-            "title": "New title 1",
-            "category": "Health",
-            "about": "test about",
-            "tagline": "test tagline",
-            "mission": "test mission",
-            "listing_url": "www.test.com",
-            "listing_email": "new_listing@gmail.com",
-            "listing_status": "ongoing",
-            "pics": [
-                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
-                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
-                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
-                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
-                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg"
-            ],
-            "is_published": false,
-            "is_verified": false,
-            "is_featured": false,
-            "start_date": "2019-08-15T08:45:43.415Z",
-            "end_date": "2020-07-17T08:45:43.415Z",
-            "created_on": "2020-11-17T07:39:41.794Z",
-            "updated_on": "2020-11-17T07:39:41.794Z",
-            "deleted_on": null
-        },
-        {
-            "listing_id": "0de8f600-28a8-11eb-9eae-89e03086f17e",
-            "overview": null,
-            "problem": null,
-            "solution": null,
-            "outcome": null
-        }
-    ]
+    "data": {
+        "listing_id": "0bcb4040-3126-11eb-92d3-6f3f0a50fbf6",
+        "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
+        "title": "New title 1",
+        "category": "Health",
+        "about": "test about",
+        "tagline": "test tagline",
+        "mission": "test mission",
+        "overview": "Listing's overview",
+        "problem": "Problem the listing is tackling",
+        "solution": "We aim to solve this by mobilising the community.",
+        "outcome": "We hope to create a close-knitted community.",
+        "listing_url": "www.test.com",
+        "listing_email": "new_listing@gmail.com",
+        "listing_status": "ongoing",
+        "pics": [
+            "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+            "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+            "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+            "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+            "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg"
+        ],
+        "is_published": false,
+        "is_verified": false,
+        "is_featured": false,
+        "start_date": "2019-08-15T08:45:43.415Z",
+        "end_date": "2020-07-17T08:45:43.415Z",
+        "created_on": "2020-11-28T03:01:44.134Z",
+        "updated_on": "2020-11-28T03:01:44.134Z",
+        "deleted_on": null
+    }
 }
 ```
 
@@ -6115,38 +5872,47 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
     "success": true,
     "data": {
         "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-        "organisation_id": null,
         "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
-        "title": "Rebuilding Homes",
-        "category": "Community",
-        "about": "Customer-focused dynamic installation",
-        "tagline": "Building Better Lives",
-        "mission": "Sharing compassion",
-        "listing_url": "http://ifeng.com/nisl.jsp",
-        "listing_email": null,
-        "pic1": "https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "pic2": "https://robohash.org/ipsaiuresed.bmp?size=500x500&set=set1",
-        "pic3": "https://robohash.org/animiautvoluptas.jpg?size=500x500&set=set1",
-        "pic4": "https://robohash.org/fugaidconsequatur.png?size=500x500&set=set1",
-        "pic5": null,
-        "is_published": false,
+        "title": "Updated title 1",
+        "category": "Health",
+        "about": "Updated about",
+        "tagline": "Updated tagline",
+        "mission": "Updated mission",
+        "overview": "Listing's overview",
+        "problem": "Problem the listing is tackling",
+        "solution": "We aim to solve this by mobilising the community.",
+        "outcome": "We hope to create a close-knitted community.",
+        "listing_url": "www.updated-test.com",
+        "listing_email": "updated_email@gmail.com",
+        "listing_status": "completed",
+        "pics": [
+            "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+            "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+            "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+            "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+            "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg"
+        ],
+        "is_published": true,
         "is_verified": false,
-        "start_date": "2020-12-01T11:09:20.000Z",
-        "end_date": null,
-        "created_on": "2020-08-20T09:36:45.816Z",
+        "is_featured": false,
+        "start_date": "2018-08-15T08:45:43.415Z",
+        "end_date": "2020-01-30T08:45:43.415Z",
+        "created_on": "2020-08-20T09:36:45.815Z",
+        "updated_on": "2020-11-28T03:02:42.341Z",
         "deleted_on": null,
         "nickname": "Wayne",
         "profile_picture": "https://images.pexels.com/photos/1561863/pexels-photo-1561863.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
         "locations": [
-            "01 Raffles Place, Cecil, Marina, Peoples Park",
-            "02 Anson, Tanjong Pagar",
-            "03 Queenstown, Tiong Bahru"
+            "Admiralty",
+            "Kranji",
+            "Woodlands"
         ],
         "location_ids": [
             1,
             2,
             3
-        ]
+        ],
+        "keyword_vector": "'1':3 'admiralti':5 'health':4 'kranji':6 'titl':2 'updat':1 'woodland':7"
     }
 }
 ```
@@ -6417,7 +6183,11 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
         "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg"
     ],
     "listing_status": "completed",
-    "listing_email": "updated_email@gmail.com"
+    "listing_email": "updated_email@gmail.com",
+    "overview": "Listing's overview",
+    "problem": "Problem the listing is tackling",
+    "solution": "We aim to solve this by mobilising the community.",
+    "outcome": "We hope to create a close-knitted community."
 }
 ```
 
@@ -6539,13 +6309,19 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
     "is_published": true,
     "start_date": "2018-08-15 16:45:43.41585+08",
     "end_date": "2020-01-30 16:45:43.41585+08",
-    "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
-    "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
-    "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
-    "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
-    "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg",
+    "pics": [
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg"
+    ],
     "listing_status": "completed",
-    "listing_email": "updated_email@gmail.com"
+    "listing_email": "updated_email@gmail.com",
+    "overview": "Listing's overview",
+    "problem": "Problem the listing is tackling",
+    "solution": "We aim to solve this by mobilising the community.",
+    "outcome": "We hope to create a close-knitted community."
 }
 ```
 
@@ -6563,21 +6339,27 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae
         "about": "Updated about",
         "tagline": "Updated tagline",
         "mission": "Updated mission",
+        "overview": "Listing's overview",
+        "problem": "Problem the listing is tackling",
+        "solution": "We aim to solve this by mobilising the community.",
+        "outcome": "We hope to create a close-knitted community.",
         "listing_url": "www.updated-test.com",
         "listing_email": "updated_email@gmail.com",
         "listing_status": "completed",
-        "pic1": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
-        "pic2": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
-        "pic3": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
-        "pic4": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
-        "pic5": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg",
+        "pics": [
+            "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636567.jpeg",
+            "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636568.jpeg",
+            "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636569.jpeg",
+            "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636570.jpeg",
+            "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/new%20pic-1597985636571.jpeg"
+        ],
         "is_published": true,
         "is_verified": false,
         "is_featured": false,
         "start_date": "2018-08-15T08:45:43.415Z",
         "end_date": "2020-01-30T08:45:43.415Z",
         "created_on": "2020-08-20T09:36:45.815Z",
-        "updated_on": "2020-11-16T17:44:44.189Z",
+        "updated_on": "2020-11-28T03:02:42.341Z",
         "deleted_on": null
     }
 }
@@ -9718,4 +9500,4 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-26 16:13:06 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-28 03:32:32 by [docgen](https://github.com/thedevsaddam/docgen)
