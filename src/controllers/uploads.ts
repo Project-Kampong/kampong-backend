@@ -1,5 +1,5 @@
 import moment from 'moment-timezone';
-import { camelCase, cloneDeep, forEach, forOwn, get, map } from 'lodash';
+import { camelCase, cloneDeep, forOwn, get, map } from 'lodash';
 import { S3ClientService } from '../services/s3Client.service';
 
 export class UploadsController {
