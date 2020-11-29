@@ -1,13 +1,17 @@
 import dotenv from 'dotenv';
-import Promise from 'bluebird';
-import pgpDriver from 'pg-promise';
+import promise from 'bluebird';
+import pgpDriver, { IInitOptions, IDatabase, IMain } from 'pg-promise';
+import { IExtensions, ListingsRepository, FaqsRepository, HashtagsRepository } from './repositories';
+import { JobsRepository } from './repositories/jobs.repository';
+
+export type PgpExtendedProtocol = IDatabase<IExtensions> & IExtensions;
 
 // TODO: find out if loading dotenv config in non server/index.js file is good practice, else try pre-loading dotenv files on start-up
 // see: https://medium.com/the-node-js-collection/making-your-node-js-work-everywhere-with-environment-variables-2da8cdf6e786
 // and: https://dev.to/numtostr/environment-variables-in-node-js-the-right-way-15ad
 dotenv.config({ path: 'config/config.env' });
 
-const dbConfig = {
+const dbConfig: IInitOptions<IExtensions> = {
     query(e) {
         // only run in development mode
         if (process.env.NODE_ENV === 'development') {
@@ -20,14 +24,21 @@ const dbConfig = {
             console.error(JSON.stringify(err, null, 2).red);
         }
     },
+    // Initialize repositories as singleton here
+    extend(obj: PgpExtendedProtocol) {
+        obj.faqs = new FaqsRepository(obj, pgp);
+        obj.hashtags = new HashtagsRepository(obj, pgp);
+        obj.jobs = new JobsRepository(obj, pgp);
+        obj.listings = new ListingsRepository(obj, pgp);
+    },
     capSQL: true,
-    promiseLib: Promise,
+    promiseLib: promise,
 };
 
-export const pgp = pgpDriver(dbConfig);
+export const pgp: IMain = pgpDriver(dbConfig);
 
 // To be called by main server driver (with loaded env vars)
-export const db = pgp({
+export const db: PgpExtendedProtocol = pgp({
     host: process.env.PG_HOST,
     port: parseInt(process.env.PG_PORT, 10),
     database: process.env.PG_NAME,

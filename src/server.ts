@@ -12,7 +12,7 @@ import hpp from 'hpp';
 import cors from 'cors';
 import { get } from 'lodash';
 import { checkConn } from './utils';
-import { router as apiRoutes } from './routes';
+import { apiRouter } from './routes';
 import { errorHandler } from './middleware';
 
 dotenv.config({ path: 'config/config.env' });
@@ -55,32 +55,34 @@ app.use(hpp());
 app.use(cors());
 
 // Mount routers
-app.use('/api', apiRoutes);
+app.use('/api', apiRouter);
 
 // Mount error handler
 app.use(errorHandler);
 
 // Set static folder
-app.use(express.static(path.resolve(__dirname, '..', 'client', 'build')));
-app.use(express.static(path.resolve(__dirname, '..', 'public')));
+app.use(express.static(path.resolve(__dirname, '../client/build')));
+app.use(express.static(path.resolve(__dirname, '../public')));
 
 // Serve frontend homepage
 app.get('*', (req, res) => {
-    const homePath = path.resolve(__dirname, '..', 'client', 'build', 'index.html');
-    const apiDocsPath = path.resolve(__dirname, '..', 'public', 'api-docs', 'index.html');
+    const homePath = path.resolve(__dirname, '../client/build/index.html');
+    const apiDocsPath = path.resolve(__dirname, '../public/api-docs/index.html');
     const pathToServe = fs.existsSync(homePath) ? homePath : apiDocsPath;
     res.sendFile(pathToServe);
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = parseInt(process.env.PORT) || 5000;
 
 const server = app.listen(PORT, () => {
     console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold);
 });
 
 // Handle unhandled promise rejections
-process.on('unhandledRejection', (err, promise) => {
+process.on('unhandledRejection', (err: Error, promise: Promise<any>) => {
     console.log(`Unhandled Error: ${get(err, 'message')}`.bgRed);
+    // Write diagnostic report
+    process.report.writeReport(err);
     // Close server & exit process
     server.close(() => process.exit(1));
 });

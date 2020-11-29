@@ -1,11 +1,11 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check } from 'express-validator';
-import { advancedResults, protect, checkInputError } from '../../middleware';
+import { protect, checkInputError } from '../../middleware';
 import { INVALID_FIELD_MSG } from '../../utils';
 
 // import controllers here
-import { getListingLocations, getListingLocation, createListingLocation, deleteListingLocation } from '../../controllers/listingLocations';
+import { getListingLocations, createListingLocation, deleteListingLocation } from '../../controllers/listingLocations';
 
 // Define input validation chain
 const validateCreateListingLocation = [
@@ -13,10 +13,9 @@ const validateCreateListingLocation = [
     check('location_id', INVALID_FIELD_MSG('location id')).isInt(),
 ];
 
-router.route('/').get(advancedResults('listinglocations', 'locations', 'location_id'), getListingLocations);
-router.route('/:id').get(getListingLocation);
+router.route('/').get(getListingLocations);
 
-// all routes below only accessible to authenticated user
+// all routes below only accessible to authenticated user, (specifically, listing owners, to be implemented)
 router.use(protect);
 
 // map routes to controller

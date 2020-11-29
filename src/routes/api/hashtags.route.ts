@@ -1,11 +1,13 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
-import { check, oneOf } from 'express-validator';
-import { advancedResults, checkInputError, protect, authorise } from '../../middleware';
-import { HASHTAG_REGEX, NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } from '../../utils';
+import { check } from 'express-validator';
+import { db } from '../../database';
+import { asyncHandler, checkInputError, protect } from '../../middleware';
+import { HASHTAG_REGEX, INVALID_FIELD_MSG } from '../../utils';
 
-// import controllers here
-import { getHashtags, getHashtag, createHashtag, updateHashtag, deleteHashtag } from '../../controllers/hashtags';
+// import and initialize controllers here
+import { HashtagsController } from '../../controllers/hashtags';
+const hashtagsController = new HashtagsController(db.hashtags, db.listings);
 
 // Define input validation chain
 const validateCreateHashtagFields = [
@@ -13,19 +15,12 @@ const validateCreateHashtagFields = [
     check('tag', INVALID_FIELD_MSG('tag')).matches(HASHTAG_REGEX),
 ];
 
-const validateUpdateHashtagFields = [
-    oneOf([check('tag').exists()], NO_FIELD_UPDATED_MSG),
-    check('tag', INVALID_FIELD_MSG('tag')).optional().matches(HASHTAG_REGEX),
-];
-
-router.route('/').get(advancedResults('hashtags'), getHashtags);
-router.route('/:id').get(getHashtag);
+router.route('/').get(asyncHandler(hashtagsController.getHashtagsForListing));
 
 // all routes below only accessible to authenticated user
 router.use(protect);
-router.use(authorise('user', 'admin'));
 
 // map routes to controller
-router.route('/').post(validateCreateHashtagFields, checkInputError, createHashtag);
+router.route('/').post(validateCreateHashtagFields, checkInputError, asyncHandler(hashtagsController.createHashtag));
 
-router.route('/:id').put(validateUpdateHashtagFields, checkInputError, updateHashtag).delete(deleteHashtag);
+router.route('/:id').delete(asyncHandler(hashtagsController.deleteHashtag));

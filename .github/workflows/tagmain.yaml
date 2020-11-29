@@ -3,6 +3,8 @@ on:
     push:
         branches:
             - master
+        paths-ignore:
+            - 'CHANGELOG.md' # Does not run if only changelog is changed, to prevent recursive run of this action
 jobs:
     build:
         runs-on: ubuntu-20.04
@@ -11,9 +13,22 @@ jobs:
               uses: actions/checkout@v2
               with:
                   fetch-depth: '0'
+                  token: ${{ secrets.PAT }}
             - name: GitHub Tag Bump
+              id: tag-bump
               uses: anothrNick/github-tag-action@1.26.0
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   WITH_V: true
-                  INITIAL_VERSION: 0.1.4
+            - name: Replace all occurrence of word 'Unreleased' in CHANGELOG with new release version
+              run: |
+                  sed -i '/^### \[Unreleased]/a \\n### [${{ steps.tag-bump.outputs.new_tag }}]' ./CHANGELOG.md
+                  sed -i '/^\[unreleased]: https:\/\/github.com\/Project-Kampong\/kampong-backend\/compare\//a [${{ steps.tag-bump.outputs.new_tag }}]: https://github.com/Project-Kampong/kampong-backend/releases/tag/${{ steps.tag-bump.outputs.new_tag }}' ./CHANGELOG.md
+                  sed -i 's/^\[unreleased]: https:\/\/github.com\/Project-Kampong\/kampong-backend\/compare\/.*/\[unreleased]: https:\/\/github.com\/Project-Kampong\/kampong-backend\/compare\/${{ steps.tag-bump.outputs.new_tag }}...HEAD/' ./CHANGELOG.md
+
+            - name: Commit changes and push to current branch
+              uses: stefanzweifel/git-auto-commit-action@v4
+              with:
+                  commit_message: Update CHANGELOG with new version ${{ steps.tag-bump.outputs.new_tag }}
+                  file_pattern: CHANGELOG.md
+                  push_options: --force

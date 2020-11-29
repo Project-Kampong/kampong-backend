@@ -7,16 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
+### [v0.63.0]
+
+### [v0.62.0]
+
+### Changed
+
+-   Build file location from `dist/server.js` to `dist/src/server.js`
+
+### Fixed
+
+-   Bug in heroku build not running due to build file location changes
+
+### [v0.50.0]
+
+### Added
+
+-   Changelog tags to be updated automatically by tag-bump Actions pipeline
+
+### [v0.48.0]
+
 ### Added
 
 -   TypeScript migration
--   Listings now have `listing_status` field.
--   Update dependencies, node v14.14.0, yarn v1.22.5, and PostgreSQL 13.0
+-   Update dependencies, node v14.15.1, yarn v1.22.10, and PostgreSQL 13.1
 -   GitHub Actions build script and API docs generator for CI/CD
+-   Jest tests
+-   Database migration to be handle by knex.
 
 ### Changed
 
 -   Query params `sort` now accepts `asc` or `desc` but can only sort at most one field.
+
+### Removed
+
+-   Remove `skills` and `listing_skills`
 
 ### [v0.1.4] - 2020-09-19
 
@@ -189,7 +214,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Internal, dev-only test routes and methods.
 -   API documentation temporarily set up as front-end page to be served, for ease of testing by frontend.
 
-[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.1.4...HEAD
+[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.63.0...HEAD
+[v0.63.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.63.0
+[v0.62.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.62.0
+[v0.51.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.51.0
+[v0.50.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.50.0
+[v0.48.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.48.0
 [v0.1.4]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.1.4
 [v0.1.3]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.1.3
 [v0.1.2b]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.1.2b

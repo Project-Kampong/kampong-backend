@@ -2,7 +2,7 @@
     "name": "kampong-backend",
     "version": "1.0.0",
     "description": "Kampong Backend API",
-    "main": "dist/server.js",
+    "main": "dist/src/server.js",
     "engines": {
         "node": "14.x",
         "yarn": "1.x"
@@ -10,11 +10,20 @@
     "scripts": {
         "start": "NODE_ENV=production node dist/server.js",
         "dev": "nodemon src/server.ts",
-        "build": "node --max-old-space-size=8192 node_modules/.bin/tsc -p .",
-        "create-tables": "ts-node src/utils/seeder.ts -i",
-        "import-data": "ts-node src/utils/seeder.ts -d",
+        "build": "node --max-old-space-size=8192 node_modules/.bin/tsc -p src",
+        "create-tables-old": "ts-node src/utils/seeder.ts -i",
+        "create-tables": "yarn knex:migrate:rollback all && yarn knex:migrate:latest",
+        "import-required": "yarn knex:seed:run",
+        "import-mock": "ts-node src/utils/seeder.ts -d",
         "format": "prettier --write .",
-        "heroku-postbuild": "node --max-old-space-size=8192 node_modules/.bin/tsc -p . && yarn create-tables && yarn import-data"
+        "heroku-postbuild": "yarn build && yarn create-tables && yarn import-required && yarn import-mock",
+        "knex:migrate:make": "knex --knexfile src/database/knexfile.ts migrate:make -x ts",
+        "knex:migrate:latest": "knex --knexfile src/database/knexfile.ts migrate:latest",
+        "knex:migrate:rollback": "knex --knexfile src/database/knexfile.ts migrate:rollback",
+        "knex:migrate:list": "knex --knexfile src/database/knexfile.ts migrate:list",
+        "knex:seed:make": "knex --knexfile src/database/knexfile.ts seed:make -x ts",
+        "knex:seed:run": "knex --knexfile src/database/knexfile.ts seed:run",
+        "test": "jest"
     },
     "license": "MIT",
     "dependencies": {
@@ -32,7 +41,7 @@
         "hpp": "^0.2.3",
         "jsonwebtoken": "^8.5.1",
         "lodash": "^4.17.19",
-        "moment": "^2.27.0",
+        "moment-timezone": "^0.5.32",
         "morgan": "^1.10.0",
         "multer": "^1.4.2",
         "multer-s3": "^2.9.0",
@@ -42,6 +51,7 @@
     },
     "devDependencies": {
         "@types/express": "^4.17.8",
+        "@types/jest": "^26.0.15",
         "@types/multer": "^1.4.4",
         "@types/node": "^14.11.2",
         "@typescript-eslint/eslint-plugin": "^4.3.0",
@@ -49,9 +59,12 @@
         "eslint": "^7.10.0",
         "eslint-config-prettier": "^6.12.0",
         "eslint-plugin-prettier": "^3.1.4",
+        "knex": "^0.21.6",
+        "jest": "^26.6.3",
         "nodemon": "^2.0.5",
         "prettier": "2.1.2",
+        "ts-jest": "^26.4.4",
         "ts-node": "^9.0.0",
-        "typescript": "^4.0.3"
+        "typescript": "^4.0.5"
     }
 }

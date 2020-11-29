@@ -1,11 +1,11 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
-import { advancedResults, protect, authorise, checkInputError } from '../../middleware';
+import { protect, checkInputError } from '../../middleware';
 import { DATETIME_REGEX, NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG, INVALID_TIMESTAMP_MSG } from '../../utils';
 
 // import controllers here
-import { getMilestones, getMilestone, createMilestone, updateMilestone, deleteMilestone } from '../../controllers/milestones';
+import { getMilestonesForListing, createMilestone, updateMilestone, deleteMilestone } from '../../controllers/milestones';
 
 // Define input validation chain
 const validateCreateMilestoneFields = [
@@ -20,12 +20,10 @@ const validateUpdateMilestoneFields = [
     check('date', INVALID_TIMESTAMP_MSG('date')).optional().matches(DATETIME_REGEX),
 ];
 
-router.route('/').get(advancedResults('milestones'), getMilestones);
-router.route('/:id').get(getMilestone);
+router.route('/').get(getMilestonesForListing);
 
-// all routes below only accessible to authenticated user
+// all routes below only accessible to authenticated user, specifically, listing owner (to be implemented)
 router.use(protect);
-router.use(authorise('user', 'admin'));
 
 // map routes to controller
 router.route('/').post(validateCreateMilestoneFields, checkInputError, createMilestone);
