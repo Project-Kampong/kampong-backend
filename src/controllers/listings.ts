@@ -95,7 +95,7 @@ export const getListing = asyncHandler(async (req, res, next) => {
 export const getAllListingsOwnedByUser = asyncHandler(async (req, res, next) => {
     const userId = req.params.user_id;
     // check if user exists
-    await db.one('SELECT * FROM Users WHERE user_id = $1', userId);
+    await db.one('SELECT * FROM loginuser WHERE user_id = $1', userId);
 
     const rows = await db.manyOrNone('SELECT * FROM listingview WHERE created_by = $1', userId);
 

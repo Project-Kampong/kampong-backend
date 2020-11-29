@@ -33,9 +33,7 @@ Backend API for Project Kampong.
 * [File Upload](#file-upload)
 
   * [Multiple File Upload V2](#1-multiple-file-upload-v2)
-  * [Multiple file upload](#2-multiple-file-upload)
-  * [Single File Upload V2](#3-single-file-upload-v2)
-  * [Single file upload](#4-single-file-upload)
+  * [Single File Upload V2](#2-single-file-upload-v2)
 
 * [Hashtags](#hashtags)
 
@@ -2379,71 +2377,7 @@ URL: {{URL}}/api/file-upload/multi
 
 
 
-### 2. Multiple file upload
-
-
-Multiple file upload, response data object shows the upload information made available by the library (multer). Permission: Public.
-
-Field rules: 
-All fields required unless otherwise stated. 
-files - Collection of up to 3 valid files.
-
-
-***Endpoint:***
-
-```bash
-Method: POST
-Type: FORMDATA
-URL: {{URL}}/api/file-upload/multi
-```
-
-
-
-***Body:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| files |  | Collection of 5 JPG files |
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Multiple file upload (200 OK)
-
-
-
-***Body:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| files |  | Collection of 3 JPG files |
-
-
-
-##### I. Example Response: Multiple file upload (200 OK)
-```js
-{
-    "success": true,
-    "data": [
-        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1597856638482.jpg",
-        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-1597856638492.jpg",
-        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-1597856638523.jpg",
-        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-1597856638531.jpg",
-        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-1597856638537.jpg"
-    ]
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 3. Single File Upload V2
+### 2. Single File Upload V2
 
 
 Single file upload. Response data object shows the upload information. Permission: Public.
@@ -2495,89 +2429,6 @@ URL: {{URL}}/api/file-upload
         "location": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-20201129002226.jpg",
         "key": "test-pic-2-20201129002226.jpg",
         "bucket": "kampong-dev"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 4. Single file upload
-
-
-Single file upload. Response data object shows the upload information made available by the library (multer). Permission: Public.
-
-Field rules: 
-All fields required unless otherwise stated. 
-file - Valid file.
-
-
-***Endpoint:***
-
-```bash
-Method: POST
-Type: FORMDATA
-URL: {{URL}}/api/file-upload
-```
-
-
-
-***Body:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| file |  | Test jpg file |
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Single file upload (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| file |  | Test jpg file |
-
-
-
-##### I. Example Response: Single file upload (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "fieldname": "file",
-        "originalname": "DSC00424.jpg",
-        "encoding": "7bit",
-        "mimetype": "image/jpeg",
-        "size": 2848607,
-        "bucket": "kampong-dev",
-        "key": "DSC00424-1596295032490.jpg",
-        "acl": "public-read",
-        "contentType": "application/octet-stream",
-        "contentDisposition": null,
-        "storageClass": "STANDARD",
-        "serverSideEncryption": null,
-        "metadata": {
-            "fieldName": "file"
-        },
-        "location": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/DSC00424-1596295032490.jpg",
-        "etag": "\"02d8c9a8b87fb34f2086e7e2886e0390\""
     }
 }
 ```
@@ -9654,4 +9505,4 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-28 17:14:09 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-29 07:00:11 by [docgen](https://github.com/thedevsaddam/docgen)

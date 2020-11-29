@@ -10,4 +10,4 @@ import { router as listingsRoute } from './listings.route';
 // Re-route this URI to other resource router
 router.use('/:location_id/listings', listingsRoute);
 
-router.route('/').get(advancedResults('locations'), getLocations);
+router.route('/').get(advancedResults('location'), getLocations);

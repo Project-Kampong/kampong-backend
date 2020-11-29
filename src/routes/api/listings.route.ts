@@ -108,7 +108,7 @@ const validateSearchListingsFields = [
 ];
 
 // map routes to controller
-router.route('/').get(advancedResults('listingsview'), getListings).post(protect, validateCreateListingFields, checkInputError, createListing);
+router.route('/').get(advancedResults('listingview'), getListings).post(protect, validateCreateListingFields, checkInputError, createListing);
 
 router.route('/featured').get(getFeaturedListings);
 router.route('/owner').get(getAllListingsOwnedByUser);
