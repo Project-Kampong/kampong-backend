@@ -26,7 +26,7 @@ export const getListingComments = asyncHandler(async (req, res, next) => {
 
     if (req.params.user_id) {
         // return 404 error response if user not found
-        await db.one('SELECT * FROM Users WHERE user_id = $1', req.params.user_id);
+        await db.one('SELECT * FROM loginuser WHERE user_id = $1', req.params.user_id);
 
         const listingComments = await db.manyOrNone('SELECT * FROM listingcommentview WHERE user_id = $1', req.params.user_id);
 

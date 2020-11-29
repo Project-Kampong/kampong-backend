@@ -11,7 +11,7 @@ export const getListingLocations = asyncHandler(async (req, res, next) => {
     if (req.params.listing_id) {
         // return 404 error response if listing not found or soft deleted
         const listingLocations = await db.many(
-            'SELECT lil.listing_location_id, l.listing_id, lil.location_id, lo.location FROM listingview l LEFT JOIN listinglocation lil ON l.listing_id = lil.listing_id LEFT JOIN location lo ON lil.location_id = lo.location_id WHERE l.listing_id = $1',
+            'SELECT lil.listing_location_id, l.listing_id, lil.location_id, lo.location_name FROM listingview l LEFT JOIN listinglocation lil ON l.listing_id = lil.listing_id LEFT JOIN location lo ON lil.location_id = lo.location_id WHERE l.listing_id = $1',
             req.params.listing_id,
         );
 
