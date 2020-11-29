@@ -1,6 +1,7 @@
 import moment from 'moment-timezone';
-import { camelCase, cloneDeep, forOwn, get, map } from 'lodash';
+import { camelCase, cloneDeep, forOwn, get, isNil, map } from 'lodash';
 import { S3ClientService } from '../services/s3Client.service';
+import { ErrorResponse } from '../utils';
 
 export class UploadsController {
     constructor(private readonly s3ClientService: S3ClientService) {
@@ -8,8 +9,14 @@ export class UploadsController {
     }
 
     uploadSingleFileToPublic = async (req, res, next) => {
-        const file: Buffer = get(req.files, 'upload.data', null);
         const name: string = get(req.files, 'upload.name', null);
+        if (isNil(name)) {
+            return next(new ErrorResponse('Cannot upload file as filename is empty', 400));
+        }
+        const file: Buffer = get(req.files, 'upload.data', null);
+        if (isNil(file)) {
+            return next(new ErrorResponse(`Cannot upload file as file is empty (filename: ${name})`, 400));
+        }
         const nameArr = name.split('.');
         const key = `${nameArr.shift()}-${moment.tz(process.env.DEFAULT_TIMEZONE).format('YYYYMMDDHHmmss')}.${nameArr.join()}`;
         const result = await this.s3ClientService.uploadFileToPublicRead(file, key, { originalFileName: name });
@@ -22,8 +29,14 @@ export class UploadsController {
     uploadMultipleFilesToPublic = async (req, res, next) => {
         const uploads = get(req.files, 'uploads', []);
         const uploadPromises = map(uploads, (upload) => {
-            const file: Buffer = get(upload, 'data', null);
             const name: string = get(upload, 'name', null);
+            if (isNil(name)) {
+                return next(new ErrorResponse('Cannot upload file as filename is empty', 400));
+            }
+            const file: Buffer = get(upload, 'data', null);
+            if (isNil(file)) {
+                return next(new ErrorResponse(`Cannot upload file as file is empty (filename: ${name})`, 400));
+            }
             const nameArr = name.split('.');
             const key = `${nameArr.shift()}-${moment.tz(process.env.DEFAULT_TIMEZONE).format('YYYYMMDDHHmmss')}.${nameArr.join()}`;
             return this.s3ClientService.uploadFileToPublicRead(file, key, { originalFileName: name });
