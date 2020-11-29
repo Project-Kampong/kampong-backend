@@ -222,7 +222,7 @@ export const resetPassword = asyncHandler(async (req, res, next) => {
     const data = {
         password: await hashPassword(password), // hash new password
     };
-    const updatePasswordQuery = parseSqlUpdateStmt(data, 'users', 'WHERE email = $1 RETURNING *', email);
+    const updatePasswordQuery = parseSqlUpdateStmt(data, 'loginuser', 'WHERE email = $1 RETURNING *', email);
 
     /**
      * SQL Transaction, creating user and associated user profile

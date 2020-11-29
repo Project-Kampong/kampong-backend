@@ -31,7 +31,7 @@ const validateProfileUpdateFields = [
 ];
 
 // map routes to controller
-router.route('/').get(getProfile, advancedResults('profiles'), getProfiles);
+router.route('/').get(getProfile, advancedResults('profile'), getProfiles);
 
 // all routes below uses protect middleware
 router.use(protect);

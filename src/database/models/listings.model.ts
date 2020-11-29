@@ -1,4 +1,4 @@
-export interface ListingsView {
+export interface ListingView {
     listing_id: string;
     organisation_id: number;
     created_by: string;
