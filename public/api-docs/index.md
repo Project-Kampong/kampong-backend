@@ -32,8 +32,8 @@ Backend API for Project Kampong.
 
 * [File Upload](#file-upload)
 
-  * [Multiple file upload](#1-multiple-file-upload)
-  * [Single file upload](#2-single-file-upload)
+  * [Multiple File Upload V2](#1-multiple-file-upload-v2)
+  * [Single File Upload V2](#2-single-file-upload-v2)
 
 * [Hashtags](#hashtags)
 
@@ -2288,14 +2288,14 @@ File upload endpoints.
 
 
 
-### 1. Multiple file upload
+### 1. Multiple File Upload V2
 
 
 Multiple file upload, response data object shows the upload information made available by the library (multer). Permission: Public.
 
 Field rules: 
 All fields required unless otherwise stated. 
-files - Collection of up to 3 valid files.
+files - Collection of valid files.
 
 
 ***Endpoint:***
@@ -2312,14 +2312,14 @@ URL: {{URL}}/api/file-upload/multi
 
 | Key | Value | Description |
 | --- | ------|-------------|
-| files |  | Collection of 5 JPG files |
+| uploads |  | Collection of 5 JPG files |
 
 
 
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Multiple file upload (200 OK)
+##### I. Example Request: New Multiple File Upload (200 OK)
 
 
 
@@ -2327,20 +2327,45 @@ URL: {{URL}}/api/file-upload/multi
 
 | Key | Value | Description |
 | --- | ------|-------------|
-| files |  | Collection of 3 JPG files |
+| uploads |  | Collection of 5 JPG files |
 
 
 
-##### I. Example Response: Multiple file upload (200 OK)
+##### I. Example Response: New Multiple File Upload (200 OK)
 ```js
 {
     "success": true,
     "data": [
-        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-1597856638482.jpg",
-        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-1597856638492.jpg",
-        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-1597856638523.jpg",
-        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-1597856638531.jpg",
-        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-1597856638537.jpg"
+        {
+            "eTag": "\"954cd8d1b554392d5c17ffe5555fcbf3\"",
+            "location": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-20201129002420.jpg",
+            "key": "test-pic-1-20201129002420.jpg",
+            "bucket": "kampong-dev"
+        },
+        {
+            "eTag": "\"75de1274482faec1576f1635c29fec80\"",
+            "location": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-20201129002420.jpg",
+            "key": "test-pic-2-20201129002420.jpg",
+            "bucket": "kampong-dev"
+        },
+        {
+            "eTag": "\"836e9404f022be50df93f05d8c709468\"",
+            "location": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-20201129002420.jpg",
+            "key": "test-pic-3-20201129002420.jpg",
+            "bucket": "kampong-dev"
+        },
+        {
+            "eTag": "\"045ce3420761a585257f21ca9587af06\"",
+            "location": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-20201129002420.jpg",
+            "key": "test-pic-4-20201129002420.jpg",
+            "bucket": "kampong-dev"
+        },
+        {
+            "eTag": "\"2902595cea403d87445b048c75cd7060\"",
+            "location": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-20201129002420.jpg",
+            "key": "test-pic-5-20201129002420.jpg",
+            "bucket": "kampong-dev"
+        }
     ]
 }
 ```
@@ -2352,10 +2377,10 @@ URL: {{URL}}/api/file-upload/multi
 
 
 
-### 2. Single file upload
+### 2. Single File Upload V2
 
 
-Single file upload. Response data object shows the upload information made available by the library (multer). Permission: Public.
+Single file upload. Response data object shows the upload information. Permission: Public.
 
 Field rules: 
 All fields required unless otherwise stated. 
@@ -2376,21 +2401,14 @@ URL: {{URL}}/api/file-upload
 
 | Key | Value | Description |
 | --- | ------|-------------|
-| file |  | Test jpg file |
+| upload |  | Test jpg file |
 
 
 
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Single file upload (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
+##### I. Example Request: Single File Upload V2 (200 OK)
 
 
 
@@ -2398,32 +2416,19 @@ URL: {{URL}}/api/file-upload
 
 | Key | Value | Description |
 | --- | ------|-------------|
-| file |  | Test jpg file |
+| upload |  | Test jpg file |
 
 
 
-##### I. Example Response: Single file upload (200 OK)
+##### I. Example Response: Single File Upload V2 (200 OK)
 ```js
 {
     "success": true,
     "data": {
-        "fieldname": "file",
-        "originalname": "DSC00424.jpg",
-        "encoding": "7bit",
-        "mimetype": "image/jpeg",
-        "size": 2848607,
-        "bucket": "kampong-dev",
-        "key": "DSC00424-1596295032490.jpg",
-        "acl": "public-read",
-        "contentType": "application/octet-stream",
-        "contentDisposition": null,
-        "storageClass": "STANDARD",
-        "serverSideEncryption": null,
-        "metadata": {
-            "fieldName": "file"
-        },
-        "location": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/DSC00424-1596295032490.jpg",
-        "etag": "\"02d8c9a8b87fb34f2086e7e2886e0390\""
+        "eTag": "\"75de1274482faec1576f1635c29fec80\"",
+        "location": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-20201129002226.jpg",
+        "key": "test-pic-2-20201129002226.jpg",
+        "bucket": "kampong-dev"
     }
 }
 ```
@@ -9500,4 +9505,4 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-28 03:32:32 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-29 07:00:11 by [docgen](https://github.com/thedevsaddam/docgen)
