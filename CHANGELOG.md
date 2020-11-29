@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
+### Fixed
+
+-   DB queries for locations, auth etc
+
 ### [v0.63.0]
 
 ### [v0.62.0]
