@@ -18,7 +18,7 @@ import { router as participantsRoute } from './api/participants.route';
 import { router as programmesRoute } from './api/programmes.route';
 import { router as usersRoute } from './api/users.route';
 import { router as uploadsRoute } from './api/uploads.route';
-import { router as sendEmailRoute } from './api/sendEmail.route';
+import { router as mailerRoute } from './api/mailer.route';
 import { router as listingsOrganisationsRoute } from './api/listingsOrganisations.route';
 import { router as organisationAnnouncementsRoute } from './api/organisationAnnoucements.route';
 import { router as organisationLikesRoute } from './api/organisationLikes.route';
@@ -45,7 +45,7 @@ class ApiRouter extends BaseRouter {
         this.route.use('/programmes', programmesRoute);
         this.route.use('/users', usersRoute);
         this.route.use('/file-upload', uploadsRoute);
-        this.route.use('/send-email', sendEmailRoute);
+        this.route.use('/mailer', mailerRoute);
         this.route.use('/listings-organisations', listingsOrganisationsRoute);
         this.route.use('/announcements', organisationAnnouncementsRoute);
         this.route.use('/organisation-likes', organisationLikesRoute);

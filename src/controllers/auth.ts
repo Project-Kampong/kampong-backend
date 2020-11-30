@@ -1,8 +1,9 @@
 import crypto from 'crypto';
 import { v1 as uuidv1 } from 'uuid';
-import { checkPassword, cleanseData, ErrorResponse, getSignedJwtToken, hashPassword, parseSqlUpdateStmt, sendEmail } from '../utils';
+import { checkPassword, cleanseData, ErrorResponse, getSignedJwtToken, hashPassword, parseSqlUpdateStmt } from '../utils';
 import { db } from '../database/db';
 import { asyncHandler } from '../middleware';
+import { mailerService } from '../services/mailer.service';
 
 /**
  * @desc    Register user and send email to user email with link to confirm email and activate account
@@ -46,10 +47,11 @@ export const register = asyncHandler(async (req, res, next) => {
         `intended receipient of this mail.\n\nWelcome on board!\n\nTeam Kampong`;
 
     try {
-        await sendEmail({
-            email,
+        await mailerService.sendEmail({
+            fromEmail: process.env.FROM_EMAIL,
+            toEmail: email,
             subject: 'Project Kampong Account Activation',
-            message,
+            text: message,
         });
 
         /**
@@ -113,10 +115,11 @@ export const resendActivationEmail = asyncHandler(async (req, res, next) => {
       of this mail.\n\nWelcome on board!\n\nTeam Kampong`;
 
     try {
-        await sendEmail({
-            email,
-            subject: 'Project Kampong Account Activation',
-            message,
+        await mailerService.sendEmail({
+            fromEmail: process.env.FROM_EMAIL,
+            toEmail: email,
+            subject: 'Project Kampong Account Activation (Re-Send)',
+            text: message,
         });
     } catch (err) {
         return next(new ErrorResponse('Email could not be sent. Please try again later.', 409));
@@ -167,7 +170,7 @@ export const forgetPassword = asyncHandler(async (req, res, next) => {
         expiry: new Date(tokenExpiry),
     };
 
-    const rows = await db.one('INSERT INTO forgetpassworduser (${this:name}) VALUES (${this:csv}) RETURNING *', data);
+    await db.one('INSERT INTO forgetpassworduser (${this:name}) VALUES (${this:csv}) RETURNING *', data);
 
     // Create reset password url
     const resetPasswordUrl = `${req.protocol}://${req.get('host')}/api/auth/resetpassword/${token}`;
@@ -176,10 +179,11 @@ export const forgetPassword = asyncHandler(async (req, res, next) => {
   Please make a PUT request to: \n\n ${resetPasswordUrl}`;
 
     try {
-        await sendEmail({
-            email: rows.email,
-            subject: 'Reset Your Account Password',
-            message,
+        await mailerService.sendEmail({
+            fromEmail: process.env.FROM_EMAIL,
+            toEmail: email,
+            subject: 'Project Kampong: Reset Your Account Password',
+            text: message,
         });
 
         res.status(200).json({
