@@ -102,6 +102,10 @@ Backend API for Project Kampong.
   * [Get All Listings for a Location](#1-get-all-listings-for-a-location)
   * [Get All Locations](#2-get-all-locations)
 
+* [Mailer](#mailer)
+
+  * [Send email](#1-send-email)
+
 * [Milestones](#milestones)
 
   * [Create Milestone](#1-create-milestone)
@@ -129,10 +133,6 @@ Backend API for Project Kampong.
   * [Get All Programmes](#3-get-all-programmes)
   * [Get Single Programme](#4-get-single-programme)
   * [Update Programme](#5-update-programme)
-
-* [Send Email](#send-email)
-
-  * [Send email](#1-send-email)
 
 * [Users](#users)
 
@@ -7002,6 +7002,82 @@ URL: {{URL}}/api/locations
 
 
 
+## Mailer
+Send email endpoints.
+
+
+
+### 1. Send email
+
+
+Send email to a single recipient with optional cc of sender's email. Permission: Public.
+
+Field rules: 
+All fields required unless otherwise stated. 
+receiverEmail - Valid email address.
+senderEmail - Valid email address. Optional.
+subject - Valid non empty text.
+message - Valid non empty text.
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: {{URL}}/api/mailer/send
+```
+
+
+
+***Body:***
+
+```js        
+{
+    "receiverEmail": "dontay0209@gmail.com",
+    "senderEmail": "dontay0209@gmail.com",
+    "subject": "Test Email 1",
+    "message": "This is a test email."
+}
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Send email (200 OK)
+
+
+
+***Body:***
+
+```js        
+{
+    "receiverEmail": "dontay0209@gmail.com",
+    "senderEmail": "dontay0209@gmail.com",
+    "subject": "Test Email 1",
+    "message": "This is a test email."
+}
+```
+
+
+
+##### I. Example Response: Send email (200 OK)
+```js
+{
+    "success": true,
+    "data": {}
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
 ## Milestones
 Listing Milestones CRUD functionality.
 
@@ -9050,83 +9126,6 @@ URL: {{URL}}/api/programmes/1
 
 
 
-## Send Email
-Send email endpoints.
-
-
-
-### 1. Send email
-
-
-Send email to a single recipient with optional cc of sender's email. Permission: Public.
-
-Field rules: 
-All fields required unless otherwise stated. 
-receiverEmail - Valid email address.
-senderEmail - Valid email address. Optional.
-subject - Valid text.
-message - Valid text.
-
-
-
-***Endpoint:***
-
-```bash
-Method: POST
-Type: RAW
-URL: {{URL}}/api/send-email
-```
-
-
-
-***Body:***
-
-```js        
-{
-    "receiverEmail": "dontay0209@gmail.com",
-    "senderEmail": "dontay0209@gmail.com",
-    "subject": "Test Email 1",
-    "message": "This is a test email."
-}
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Send email (200 OK)
-
-
-
-***Body:***
-
-```js        
-{
-    "receiverEmail": "dontay0209@gmail.com",
-    "senderEmail": "dontay0209@gmail.com",
-    "subject": "Test Email 1",
-    "message": "This is a test email."
-}
-```
-
-
-
-##### I. Example Response: Send email (200 OK)
-```js
-{
-    "success": true,
-    "data": {}
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
 ## Users
 Users CRUD functionality.
 
@@ -9505,4 +9504,4 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-29 07:00:11 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-11-29 14:13:51 by [docgen](https://github.com/thedevsaddam/docgen)
