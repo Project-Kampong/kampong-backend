@@ -33,6 +33,21 @@ export class OrganisationJobsController {
     });
 
     /**
+     * @desc    Get single organisation job
+     * @route   GET /api/organisation-jobs/:organisationJobId
+     * @access  Public
+     */
+    getSingleOrganisationJob = asyncHandler(async (req, res, next) => {
+        const organisationJobId = req.params.organisationJobId;
+
+        const job = await this.organisationJobsRepository.getOrganisationJobById(organisationJobId);
+        return res.status(200).json({
+            success: true,
+            data: job
+        });
+    });
+
+    /**
      * @desc    Create organisation job
      * @route   POST /api/organisation-jobs
      * @access  Owner/Admin
