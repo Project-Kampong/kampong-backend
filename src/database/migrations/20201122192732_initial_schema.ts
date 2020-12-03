@@ -223,20 +223,11 @@ export async function up(knex: Knex): Promise<void> {
             table.timestamp('updated_on').notNullable().defaultTo(knex.fn.now());
             table.timestamp('deleted_on');
         });
-
-        await tx.schema.createTable('organisationjob', (table: Knex.TableBuilder) => {
-            table.increments('organisation_job_id').primary();
-            table.uuid('organisation_id').notNullable().references('organisation_id').inTable('organisation').onDelete('CASCADE');
-            table.string('organisation_job_title').notNullable();
-            table.text('organisation_job_description');
-            table.timestamp('deleted_on');
-        });
     });
 }
 
 export async function down(knex: Knex): Promise<void> {
     return knex.transaction(async (tx: Knex.Transaction) => {
-        await tx.schema.dropTableIfExists('organisationjob');
         await tx.schema.dropTableIfExists('organisationannouncement');
         await tx.schema.dropTableIfExists('listinglocation');
         await tx.schema.dropTableIfExists('location');
