@@ -17,7 +17,7 @@ export class OrganisationJobsController {
      */
     getOrganisationJobs = asyncHandler(async (req, res, next) => {
         if (req.params.organisation_id) {
-            const organisationId: string = req.params.organisationId;
+            const organisationId: string = req.params.organisation_id;
 
             // return 404 error response if organisation not found
             await this.organisationsRepository.getOrganisationById(organisationId);
