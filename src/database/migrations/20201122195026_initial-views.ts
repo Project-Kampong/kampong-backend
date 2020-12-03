@@ -13,11 +13,13 @@ export async function up(knex: Knex): Promise<void> {
 }
 
 export async function down(knex: Knex): Promise<void> {
-    return knex.schema
-        .raw('DROP VIEW IF EXISTS featuredlistingview CASCADE')
-        .raw('DROP VIEW IF EXISTS listingview CASCADE')
-        .raw('DROP VIEW IF EXISTS organisationview CASCADE')
-        // TODO: deprecated, to be removed
-        .raw('DROP VIEW IF EXISTS jobview CASCADE')
-        .raw('DROP VIEW IF EXISTS listingcommentview CASCADE');
+    return (
+        knex.schema
+            .raw('DROP VIEW IF EXISTS featuredlistingview CASCADE')
+            .raw('DROP VIEW IF EXISTS listingview CASCADE')
+            .raw('DROP VIEW IF EXISTS organisationview CASCADE')
+            // TODO: deprecated, to be removed
+            .raw('DROP VIEW IF EXISTS jobview CASCADE')
+            .raw('DROP VIEW IF EXISTS listingcommentview CASCADE')
+    );
 }
