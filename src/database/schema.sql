@@ -50,8 +50,6 @@ DROP TABLE IF EXISTS listinglocation CASCADE;
 
 DROP TABLE IF EXISTS organisationannouncement CASCADE;
 
-DROP TABLE IF EXISTS organisationjob CASCADE;
-
 CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
 
 CREATE TABLE loginuser (
@@ -325,15 +323,5 @@ CREATE TABLE organisationannouncement (
 	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	deleted_on TIMESTAMPTZ,
 	PRIMARY KEY (announcement_id),
-	FOREIGN KEY (organisation_id) REFERENCES organisation ON DELETE CASCADE
-);
-
-CREATE TABLE organisationjob (
-	organisation_job_id SERIAL,
-	organisation_id UUID NOT NULL,
-	organisation_job_title VARCHAR NOT NULL,
-	organisation_job_description TEXT,
-	deleted_on TIMESTAMPTZ,
-	PRIMARY KEY (organisation_job_id),
 	FOREIGN KEY (organisation_id) REFERENCES organisation ON DELETE CASCADE
 );
