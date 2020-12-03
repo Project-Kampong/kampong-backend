@@ -2,7 +2,7 @@ import { IDatabase, IMain } from 'pg-promise';
 import { BaseRepository } from './base.repository';
 import { Organisation, CreateOrganisationSchema, UpdateOrganisationSchema } from '../models';
 
-export class OrganisationRepository extends BaseRepository {
+export class OrganisationsRepository extends BaseRepository {
     constructor(protected readonly db: IDatabase<any>, protected readonly pgp: IMain) {
         super(db, pgp);
     }
