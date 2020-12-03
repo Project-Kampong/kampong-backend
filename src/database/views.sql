@@ -11,6 +11,7 @@ CREATE OR REPLACE VIEW listingview AS WITH agg_listing_info AS (
 		j.jobs,
 		ll.user_likes,
 		lol.locations,
+		lu.listing_updates,
 		ml.milestone_description,
 		p.participants
 	FROM
@@ -18,7 +19,10 @@ CREATE OR REPLACE VIEW listingview AS WITH agg_listing_info AS (
 	LEFT JOIN (
 		SELECT
 			listing_id,
-			ARRAY_AGG(ARRAY [question,answer]) faqs
+			ARRAY_AGG(JSONB_BUILD_OBJECT ('question',
+					question,
+					'answer',
+					answer)) faqs
 		FROM
 			faq
 		GROUP BY
@@ -34,8 +38,10 @@ CREATE OR REPLACE VIEW listingview AS WITH agg_listing_info AS (
 	LEFT JOIN (
 		SELECT
 			listing_id,
-			JSONB_OBJECT (ARRAY_AGG(job_title),
-				ARRAY_AGG(job_description)) jobs
+			ARRAY_AGG(JSONB_BUILD_OBJECT ('job_title',
+					job_title,
+					'job_description',
+					job_description)) jobs
 		FROM
 			job
 		GROUP BY
@@ -60,6 +66,21 @@ CREATE OR REPLACE VIEW listingview AS WITH agg_listing_info AS (
 	LEFT JOIN (
 		SELECT
 			listing_id,
+			ARRAY_AGG(JSONB_BUILD_OBJECT ('description',
+					description,
+					'pics',
+					pics,
+					'created_on',
+					created_on,
+					'updated_on',
+					updated_on)) listing_updates
+	FROM
+		listingupdate
+	GROUP BY
+		listing_id) lu ON l.listing_id = lu.listing_id
+	LEFT JOIN (
+		SELECT
+			listing_id,
 			ARRAY_AGG(description) milestone_description
 		FROM
 			milestone
@@ -81,6 +102,7 @@ SELECT
 	ali.jobs,
 	ali.user_likes,
 	ali.locations,
+	ali.listing_updates,
 	ali.milestone_description,
 	ali.participants,
 	p.nickname,
