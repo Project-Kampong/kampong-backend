@@ -234,7 +234,7 @@ export const updateListing = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Verify or feature single listing
- * @route   PUT /api/listings/:id/verify
+ * @route   PUT /api/listings/:id/verify-feature
  * @access  Admin
  */
 export const verifyOrFeatureListing = asyncHandler(async (req, res, next) => {

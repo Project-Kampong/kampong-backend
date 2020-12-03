@@ -2,7 +2,7 @@ import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
 import { db } from '../../database';
-import { authorise, checkInputError, protect } from '../../middleware';
+import { checkInputError, protect } from '../../middleware';
 import { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } from '../../utils';
 
 // import and initialize controllers here
@@ -28,9 +28,4 @@ router.use(protect);
 // map routes to controller
 router.route('/').post(validateCreateJobFields, checkInputError, jobsController.createJob);
 
-router.route('/:id/deactivate').put(protect, jobsController.deactivateJob);
-
-router
-    .route('/:id')
-    .put(validateUpdateJobFields, checkInputError, jobsController.updateJob)
-    .delete(protect, authorise('admin'), jobsController.deleteJob);
+router.route('/:id').put(validateUpdateJobFields, checkInputError, jobsController.updateJob).delete(protect, jobsController.deleteJob);

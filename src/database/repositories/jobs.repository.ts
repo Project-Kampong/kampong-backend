@@ -8,11 +8,11 @@ export class JobsRepository extends BaseRepository {
     }
 
     getAllJobsForListing(listingId: string): Promise<Job[]> {
-        return this.db.manyOrNone('SELECT * FROM jobview WHERE listing_id = $1', listingId);
+        return this.db.manyOrNone('SELECT * FROM job WHERE listing_id = $1', listingId);
     }
 
     getJobById(jobId: string): Promise<Job> {
-        return this.db.one('SELECT * FROM jobview WHERE job_id = $1', jobId);
+        return this.db.one('SELECT * FROM job WHERE job_id = $1', jobId);
     }
 
     createJob(createJobData: CreateJobSchema): Promise<Job> {
