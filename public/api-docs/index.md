@@ -125,6 +125,12 @@ Backend API for Project Kampong.
   * [Create participant](#1-create-participant)
   * [Delete Participant](#2-delete-participant)
 
+* [Profiles](#profiles)
+
+  * [Get Single Profile](#1-get-single-profile)
+  * [Update Profile](#2-update-profile)
+  * [Verify Profile (by User ID)](#3-verify-profile-(by-user-id))
+
 * [Programmes](#programmes)
 
   * [Create Programme](#1-create-programme)
@@ -9514,6 +9520,393 @@ URL: {{URL}}/api/participants/11
 
 
 
+## Profiles
+Profiles CRUD funcitonality by raw User ID.
+
+
+
+### 1. Get Single Profile
+
+
+Get single user profile identified by user id. Permission: Public.
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Get Single Profile (200 OK)
+
+
+
+##### I. Example Response: Get Single Profile (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+        "nickname": "User One",
+        "profile_picture": "https://robohash.org/consequaturatquia.jpg?size=500x500&set=set1",
+        "about": "Down-sized disintermediate circuit",
+        "gender": "f",
+        "dob": "2003-09-22T00:32:55.000Z",
+        "interest": "Statistician IV",
+        "phone": "87685829",
+        "facebook_link": "https://tripadvisor.com/ornare/imperdiet.png",
+        "twitter_link": "https://google.com/quis/orci/nullam/molestie/nibh/in/lectus.xml",
+        "instagram_link": "http://1und1.de/in/libero/ut/massa.png",
+        "linkedin_link": "http://i2i.jp/imperdiet/sapien/urna/pretium/nisl/ut.jpg",
+        "is_verified": false,
+        "created_on": "2020-08-17T16:58:38.704Z"
+    }
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+### 2. Update Profile
+
+
+Update user profile identified by user id. Permission: Admin/Private.
+
+Field rules:
+At least one field must be updated.
+nickname - Non-empty.
+about
+gender - Enum: 'm', 'f', 'o', 'u'
+dob - Valid SQL Datetime format.
+interest
+phone - Valid phone number internationally.
+facebook_link - Valid URL.
+twitter_link - Valid URL.
+instagram_link - Valid URL.
+linkedin_link - Valid URL.
+
+
+***Endpoint:***
+
+```bash
+Method: PUT
+Type: RAW
+URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"nickname": "don-tay",
+	"about": "Updated about me",
+	"gender": "m",
+	"dob": "2000-07-18 00:00:00.746876+08",
+	"interest": "Graphic Design",
+	"phone": "91231234",
+	"facebook_link": "www.facebook.com",
+	"twitter_link": "www.twitter.com",
+	"instagram_link": "www.instagram.com",
+	"linkedin_link": "www.linkedin.com"
+}
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Update Profile (400 Bad Request - Invalid field entered)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"nickname": "don-tay",
+	"profile_picture": "https://robohash.org/explicaboquiafacere.bmp?size=50x50&set=set1",
+	"about": "Updated about me",
+	"gender": "m",
+	"dob": "2000-07-18 00:00:00.746876+08",
+	"interest": "Graphic Design",
+	"phone": "91231234",
+	"facebook_link": "invalid URL link",
+	"twitter_link": "www.twitter.com",
+	"instagram_link": "www.instagram.com",
+	"linkedin_link": "www.linkedin.com"
+}
+```
+
+
+
+##### I. Example Response: Update Profile (400 Bad Request - Invalid field entered)
+```js
+{
+    "success": false,
+    "error": "Please include a valid URL."
+}
+```
+
+
+***Status Code:*** 400
+
+<br>
+
+
+
+##### II. Example Request: Update Profile (404 Not Found - Non-existent user id)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"nickname": "don-tay",
+	"about": "Updated about me",
+	"gender": "m",
+	"dob": "2000-07-18 00:00:00.746876+08",
+	"interest": "Graphic Design",
+	"phone": "91231234",
+	"facebook_link": "www.facebook.com",
+	"twitter_link": "www.twitter.com",
+	"instagram_link": "www.instagram.com",
+	"linkedin_link": "www.linkedin.com"
+}
+```
+
+
+
+##### II. Example Response: Update Profile (404 Not Found - Non-existent user id)
+```js
+{
+    "success": false,
+    "error": "Resource not found"
+}
+```
+
+
+***Status Code:*** 404
+
+<br>
+
+
+
+##### III. Example Request: Update Profile (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"nickname": "don-tay",
+	"about": "Updated about me",
+	"gender": "m",
+	"dob": "2000-07-18 00:00:00.746876+08",
+	"interest": "Graphic Design",
+	"phone": "91231234",
+	"facebook_link": "www.facebook.com",
+	"twitter_link": "www.twitter.com",
+	"instagram_link": "www.instagram.com",
+	"linkedin_link": "www.linkedin.com"
+}
+```
+
+
+
+##### III. Example Response: Update Profile (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "nickname": "don-tay",
+        "about": "Updated about me",
+        "gender": "m",
+        "dob": "2000-07-17T16:00:00.747Z",
+        "interest": "Graphic Design",
+        "phone": "91231234",
+        "facebook_link": "www.facebook.com",
+        "twitter_link": "www.twitter.com",
+        "instagram_link": "www.instagram.com",
+        "linkedin_link": "www.linkedin.com"
+    }
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+##### IV. Example Request: Update Profile  (403 Forbidden - Non-admin user updating other user profile)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"nickname": "don-tay",
+	"profile_picture": "https://robohash.org/explicaboquiafacere.bmp?size=50x50&set=set1",
+	"about": "Updated about me",
+	"gender": "m",
+	"dob": "2000-07-18 00:00:00.746876+08",
+	"interest": "Graphic Design",
+	"phone": "91231234",
+	"facebook_link": "www.facebook.com",
+	"twitter_link": "www.twitter.com",
+	"instagram_link": "www.instagram.com",
+	"linkedin_link": "www.linkedin.com"
+}
+```
+
+
+
+##### IV. Example Response: Update Profile  (403 Forbidden - Non-admin user updating other user profile)
+```js
+{
+    "success": false,
+    "error": "Not allowed to update other user's profile"
+}
+```
+
+
+***Status Code:*** 403
+
+<br>
+
+
+
+### 3. Verify Profile (by User ID)
+
+
+Verify user profile identified by user id. Permission: Admin.
+
+Field rules:
+At least one field must be updated.
+is_verified - Boolean.
+
+
+***Endpoint:***
+
+```bash
+Method: PUT
+Type: RAW
+URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles/verify
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"is_verified": true
+}
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Verify Profile (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"is_verified": true
+}
+```
+
+
+
+##### I. Example Response: Verify Profile (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "is_verified": true
+    }
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
 ## Programmes
 Organisations CRUD functionality.
 
@@ -10220,4 +10613,4 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-12-03 17:08:07 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-12-05 06:28:29 by [docgen](https://github.com/thedevsaddam/docgen)

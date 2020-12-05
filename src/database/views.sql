@@ -12,7 +12,7 @@ CREATE OR REPLACE VIEW listingview AS WITH agg_listing_info AS (
 		ll.user_likes,
 		lol.locations,
 		lu.listing_updates,
-		ml.milestone_description,
+		ml.milestones,
 		p.participants
 	FROM
 		listing l
@@ -81,7 +81,10 @@ CREATE OR REPLACE VIEW listingview AS WITH agg_listing_info AS (
 	LEFT JOIN (
 		SELECT
 			listing_id,
-			ARRAY_AGG(description) milestone_description
+			ARRAY_AGG(JSONB_BUILD_OBJECT ('milestone_description',
+					description,
+					'date',
+					date)) milestones
 		FROM
 			milestone
 		GROUP BY
@@ -103,7 +106,7 @@ SELECT
 	ali.user_likes,
 	ali.locations,
 	ali.listing_updates,
-	ali.milestone_description,
+	ali.milestones,
 	ali.participants,
 	p.nickname,
 	p.profile_picture,
