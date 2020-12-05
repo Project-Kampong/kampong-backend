@@ -19,7 +19,7 @@ class DbBackupJob extends BaseJob {
             const backupFileName = `${process.env.PG_NAME}-${moment.tz(process.env.DEFAULT_TIMEZONE).format('YYYYMMDD-HHmmss')}`;
             const backupFilePath = `${backupDirectory}/${backupFileName}`;
             shell.exec(
-                `mkdir -p ${backupDirectory} && sudo -u ${process.env.PG_USER} pg_dump ${process.env.PG_NAME} > ${backupFilePath} --no-password`,
+                `mkdir -p ${backupDirectory} && sudo -u ${process.env.PG_USER} pg_dump ${process.env.PG_NAME} --no-password > ${backupFilePath}`,
                 {
                     fatal: true,
                 },
