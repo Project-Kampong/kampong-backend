@@ -19,11 +19,9 @@ export class UploadsController {
         }
         const nameArr = name.split('.');
         const key = `${nameArr.shift()}-${moment.tz(process.env.DEFAULT_TIMEZONE).format('YYYYMMDDHHmmss')}.${nameArr.join()}`;
-        const result = await this.s3ClientService.uploadFileToPublicRead(file, key, { originalFileName: name });
+        const { Location, Key, Bucket } = await this.s3ClientService.uploadFileToPublicRead(file, key, { originalFileName: name });
 
-        const parsedResult = this.convertObjKeysToCamel(result);
-
-        res.status(200).json({ success: true, data: parsedResult });
+        res.status(200).json({ success: true, data: { location: Location, key: Key, bucket: Bucket } });
     };
 
     uploadMultipleFilesToPublic = async (req, res, next) => {
@@ -43,7 +41,7 @@ export class UploadsController {
         });
         const results = await Promise.all(uploadPromises);
 
-        const parsedResults = map(results, (result) => this.convertObjKeysToCamel(result));
+        const parsedResults = map(results, ({ Location }) => Location);
 
         res.status(200).json({ success: true, data: parsedResults });
     };
