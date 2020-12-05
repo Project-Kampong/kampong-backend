@@ -5398,6 +5398,83 @@ URL: {{URL}}/api/listings
     "pagination": {},
     "data": [
         {
+            "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+            "created_by": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
+            "title": "Project Kampong",
+            "category": "Technology",
+            "about": null,
+            "tagline": "With Kampong you can",
+            "mission": "To build a platform that connects people with ideas and skills to build and track social good project initiatives",
+            "overview": "Formed in Sept 2019, a result of the Youth Action Challenge under the Ministry of Culture, Community, and Youth (MCCY), National Youth Council (NYC) and People's Association Youth Movement (PAYM). PKG hopes to understand the existing gaps in the communication & information network systems which are utilized in the Social Sector in Singapore.\n\n\nOur platform seeks to serve as an integrative shared central platform starting by creating visibility on completed and ongoing social good activities/initiatives. The aim of PKG is to lower the barrier for stakeholders to collaborate and create sustainable projects with trackable impacts.\nThe current members of Project Kampong met each other at the YAC workshops hosted, ideated and formed Project Kampong.",
+            "problem": "Current providers include Volunteer.sg & Giving.sg. However, these platforms are not able to fully support the growth of initiatives but are instead a depository of resources to tap on for manpower and funds respectively. PKG would like to build capacity to meet the information visibility gap in the social sector. Being an aggregator or ecosystem builder is a growing trend with the likes of Trybe and A Good Space. However, the ecosystems in which these organizations have built are not available openly.\n\n\nThe restriction of such information has resulted in a lack of benchmarking in efforts directed towards addressing social issues. There is uncertainty as to who and how is actively working towards solving that problem. The lack of visibility and communication results in similar initiatives being created and sometimes funded from the same source.\n\n\nThe sooner this capacity is built, the sooner PKG will be able to engage the prospective users to efficiently start their own initiatives or find existing ones to join and contribute.\nPKG operates and develops in a series of sprints whereby in each sprint, a new feature will be rolled out, tested and deployed.",
+            "solution": "Project Kampong is an online platform aggregator for youths to connect, collaborate and create social good initiatives for the benefit of their respective communities.\nThrough skills and idea matching and intuitive progress tracking, we aim to be an online platform that collates and promotes collaboration.\n\nAs part of the Singapore's TogetherSG movement, having a shared central network system is crucial towards the aim of community development. Collaborative systems and Visibility are key areas in which focus, and resources should be poured into. Having an asset mapping tool is essential towards any initiatives or goals served by platforms like Project Kampong.",
+            "outcome": "Youths today are becoming increasingly engaged in social issues. However, when trying to kick start their ideas, they often bump into a couple of problems: the lack of connection with people with the right skills, the resources to expand the ideas, or a platform to commit to. Youths that do start their ideas also face issues with project sustainability, such as making sure their ideas continue to deliver impact and staying afloat in the long run.",
+            "listing_url": "www.test.com",
+            "listing_email": "joinourkampong@gmail.com",
+            "listing_status": "ongoing",
+            "pics": [
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/kampong%20logo-1597985636566.jpeg",
+                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/group-large-1597985817857.png"
+            ],
+            "is_published": false,
+            "is_verified": false,
+            "is_featured": false,
+            "start_date": "2020-08-20T20:50:15.047Z",
+            "end_date": null,
+            "created_on": "2020-08-20T20:50:15.047Z",
+            "updated_on": "2020-12-04T16:41:12.432Z",
+            "deleted_on": null,
+            "faqs": [
+                {
+                    "answer": "Project Kampong is a youth-led platform dedicated to connecting young Singaporean leaders to build social good initiatives, together. By breaking down the barriers youths face in finding ideas and/or members, Project Kampong hopes to create a more level playing field that supports youth to innovate and  pursue their passions.",
+                    "question": "Who is behind Project Kampong?"
+                }
+            ],
+            "tags": [
+                "#kampong",
+                "#socialgood",
+                "#initiative"
+            ],
+            "jobs": [],
+            "user_likes": [],
+            "locations": [],
+            "listing_updates": [],
+            "milestones": [
+                {
+                    "date": "2020-08-21T16:00:00+08:00",
+                    "milestone_description": "Profile Listing"
+                },
+                {
+                    "date": "2020-09-18T16:00:00+08:00",
+                    "milestone_description": "Location"
+                },
+                {
+                    "date": "2020-08-07T16:00:00+08:00",
+                    "milestone_description": "One-Pager Template for Project Listing Platform"
+                },
+                {
+                    "date": "2020-07-31T16:00:00+08:00",
+                    "milestone_description": "Project Browsing and Filtering"
+                },
+                {
+                    "date": "2020-08-14T16:00:00+08:00",
+                    "milestone_description": "Individual Portfolio Dashboard"
+                },
+                {
+                    "date": "2020-11-30T16:00:00+08:00",
+                    "milestone_description": "Project- Profile Matching & Recommendation"
+                },
+                {
+                    "date": "2020-10-31T16:00:00+08:00",
+                    "milestone_description": "On-Platform Chat"
+                }
+            ],
+            "participants": [],
+            "nickname": "Derrick",
+            "profile_picture": "https://images.pexels.com/photos/2434268/pexels-photo-2434268.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+            "keyword_vector": "'kampong':2 'project':1 'technolog':3"
+        },
+        {
             "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
             "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
             "title": "Rebuilding Homes",
@@ -5424,7 +5501,7 @@ URL: {{URL}}/api/listings
             "start_date": "2020-12-01T11:09:20.000Z",
             "end_date": null,
             "created_on": "2020-08-20T09:36:45.815Z",
-            "updated_on": "2020-12-03T16:57:05.934Z",
+            "updated_on": "2020-12-04T16:41:12.432Z",
             "deleted_on": null,
             "faqs": [
                 {
@@ -5512,9 +5589,15 @@ URL: {{URL}}/api/listings
                     "description": "Inverse eco-centric conglomeration"
                 }
             ],
-            "milestone_description": [
-                "De-engineered content-based solution",
-                "Centralized stable groupware"
+            "milestones": [
+                {
+                    "date": "2019-06-01T11:27:43+08:00",
+                    "milestone_description": "De-engineered content-based solution"
+                },
+                {
+                    "date": "2020-07-09T11:30:19+08:00",
+                    "milestone_description": "Centralized stable groupware"
+                }
             ],
             "participants": [
                 "f96b2138-1754-4c17-a405-940e20adc601",
@@ -5549,7 +5632,7 @@ URL: {{URL}}/api/listings
             "start_date": "2020-07-30T05:54:45.000Z",
             "end_date": null,
             "created_on": "2020-08-20T09:36:45.815Z",
-            "updated_on": "2020-12-03T16:57:05.934Z",
+            "updated_on": "2020-12-04T16:41:12.432Z",
             "deleted_on": null,
             "faqs": [
                 {
@@ -5650,10 +5733,19 @@ URL: {{URL}}/api/listings
                     "description": "Phased reciprocal parallelism"
                 }
             ],
-            "milestone_description": [
-                "Future-proofed systemic interface",
-                "Pre-emptive static installation",
-                "Multi-channelled secondary model"
+            "milestones": [
+                {
+                    "date": "2016-11-13T21:27:33+08:00",
+                    "milestone_description": "Future-proofed systemic interface"
+                },
+                {
+                    "date": "2015-08-06T09:28:56+08:00",
+                    "milestone_description": "Pre-emptive static installation"
+                },
+                {
+                    "date": "2016-12-04T03:14:39+08:00",
+                    "milestone_description": "Multi-channelled secondary model"
+                }
             ],
             "participants": [
                 "f96b2138-1754-4c17-a405-940e20adc601",
@@ -5691,7 +5783,7 @@ URL: {{URL}}/api/listings
             "start_date": "2020-12-25T14:21:11.000Z",
             "end_date": null,
             "created_on": "2020-08-20T09:36:45.815Z",
-            "updated_on": "2020-12-03T16:57:05.934Z",
+            "updated_on": "2020-12-04T16:41:12.432Z",
             "deleted_on": null,
             "faqs": [
                 {
@@ -5721,7 +5813,7 @@ URL: {{URL}}/api/listings
                     "job_description": "Phased bottom-line encryption"
                 }
             ],
-            "user_likes": null,
+            "user_likes": [],
             "locations": [
                 "Woodlands",
                 "Sembawang"
@@ -5740,8 +5832,11 @@ URL: {{URL}}/api/listings
                     "description": "Business-focused multi-state productivity"
                 }
             ],
-            "milestone_description": [
-                "Monitored object-oriented access"
+            "milestones": [
+                {
+                    "date": "2020-01-21T19:04:19+08:00",
+                    "milestone_description": "Monitored object-oriented access"
+                }
             ],
             "participants": [
                 "d69a127d-815b-4834-b2b6-54ab398fccad"
@@ -5775,7 +5870,7 @@ URL: {{URL}}/api/listings
             "start_date": "2020-01-01T12:54:13.000Z",
             "end_date": null,
             "created_on": "2020-08-20T09:36:45.815Z",
-            "updated_on": "2020-12-03T16:57:05.934Z",
+            "updated_on": "2020-12-04T16:41:12.432Z",
             "deleted_on": null,
             "faqs": [
                 {
@@ -5825,7 +5920,7 @@ URL: {{URL}}/api/listings
                     "job_description": "Universal 24 hour protocol"
                 }
             ],
-            "user_likes": null,
+            "user_likes": [],
             "locations": [
                 "Woodlands"
             ],
@@ -5842,9 +5937,15 @@ URL: {{URL}}/api/listings
                     "description": "Enterprise-wide leading edge productivity"
                 }
             ],
-            "milestone_description": [
-                "Intuitive client-driven knowledge user",
-                "Monitored attitude-oriented array"
+            "milestones": [
+                {
+                    "date": "2018-12-16T08:49:35+08:00",
+                    "milestone_description": "Intuitive client-driven knowledge user"
+                },
+                {
+                    "date": "2017-11-23T11:53:21+08:00",
+                    "milestone_description": "Monitored attitude-oriented array"
+                }
             ],
             "participants": [
                 "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
@@ -5882,7 +5983,7 @@ URL: {{URL}}/api/listings
             "start_date": "2020-03-19T03:04:15.000Z",
             "end_date": null,
             "created_on": "2020-08-20T09:36:45.815Z",
-            "updated_on": "2020-12-03T16:57:05.934Z",
+            "updated_on": "2020-12-04T16:41:12.432Z",
             "deleted_on": null,
             "faqs": [
                 {
@@ -5921,73 +6022,20 @@ URL: {{URL}}/api/listings
                 "d69a127d-815b-4834-b2b6-54ab398fccad",
                 "f997120c-2956-482e-9ba3-81a12b4fecc1"
             ],
-            "locations": null,
-            "listing_updates": null,
-            "milestone_description": [
-                "Managed attitude-oriented frame"
+            "locations": [],
+            "listing_updates": [],
+            "milestones": [
+                {
+                    "date": "2020-02-12T22:30:42+08:00",
+                    "milestone_description": "Managed attitude-oriented frame"
+                }
             ],
             "participants": [
                 "f997120c-2956-482e-9ba3-81a12b4fecc1"
             ],
             "nickname": "Constance Tan",
             "profile_picture": "https://images.pexels.com/photos/2426656/pexels-photo-2426656.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            "keyword_vector": null
-        },
-        {
-            "listing_id": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
-            "created_by": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
-            "title": "Project Kampong",
-            "category": "Technology",
-            "about": null,
-            "tagline": "With Kampong you can",
-            "mission": "To build a platform that connects people with ideas and skills to build and track social good project initiatives",
-            "overview": "Formed in Sept 2019, a result of the Youth Action Challenge under the Ministry of Culture, Community, and Youth (MCCY), National Youth Council (NYC) and People's Association Youth Movement (PAYM). PKG hopes to understand the existing gaps in the communication & information network systems which are utilized in the Social Sector in Singapore.\n\n\nOur platform seeks to serve as an integrative shared central platform starting by creating visibility on completed and ongoing social good activities/initiatives. The aim of PKG is to lower the barrier for stakeholders to collaborate and create sustainable projects with trackable impacts.\nThe current members of Project Kampong met each other at the YAC workshops hosted, ideated and formed Project Kampong.",
-            "problem": "Current providers include Volunteer.sg & Giving.sg. However, these platforms are not able to fully support the growth of initiatives but are instead a depository of resources to tap on for manpower and funds respectively. PKG would like to build capacity to meet the information visibility gap in the social sector. Being an aggregator or ecosystem builder is a growing trend with the likes of Trybe and A Good Space. However, the ecosystems in which these organizations have built are not available openly.\n\n\nThe restriction of such information has resulted in a lack of benchmarking in efforts directed towards addressing social issues. There is uncertainty as to who and how is actively working towards solving that problem. The lack of visibility and communication results in similar initiatives being created and sometimes funded from the same source.\n\n\nThe sooner this capacity is built, the sooner PKG will be able to engage the prospective users to efficiently start their own initiatives or find existing ones to join and contribute.\nPKG operates and develops in a series of sprints whereby in each sprint, a new feature will be rolled out, tested and deployed.",
-            "solution": "Project Kampong is an online platform aggregator for youths to connect, collaborate and create social good initiatives for the benefit of their respective communities.\nThrough skills and idea matching and intuitive progress tracking, we aim to be an online platform that collates and promotes collaboration.\n\nAs part of the Singapore's TogetherSG movement, having a shared central network system is crucial towards the aim of community development. Collaborative systems and Visibility are key areas in which focus, and resources should be poured into. Having an asset mapping tool is essential towards any initiatives or goals served by platforms like Project Kampong.",
-            "outcome": "Youths today are becoming increasingly engaged in social issues. However, when trying to kick start their ideas, they often bump into a couple of problems: the lack of connection with people with the right skills, the resources to expand the ideas, or a platform to commit to. Youths that do start their ideas also face issues with project sustainability, such as making sure their ideas continue to deliver impact and staying afloat in the long run.",
-            "listing_url": "www.test.com",
-            "listing_email": "joinourkampong@gmail.com",
-            "listing_status": "ongoing",
-            "pics": [
-                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/kampong%20logo-1597985636566.jpeg",
-                "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/group-large-1597985817857.png"
-            ],
-            "is_published": false,
-            "is_verified": false,
-            "is_featured": true,
-            "start_date": "2020-08-20T20:50:15.047Z",
-            "end_date": null,
-            "created_on": "2020-08-20T20:50:15.047Z",
-            "updated_on": "2020-12-03T16:57:05.934Z",
-            "deleted_on": null,
-            "faqs": [
-                {
-                    "answer": "Project Kampong is a youth-led platform dedicated to connecting young Singaporean leaders to build social good initiatives, together. By breaking down the barriers youths face in finding ideas and/or members, Project Kampong hopes to create a more level playing field that supports youth to innovate and  pursue their passions.",
-                    "question": "Who is behind Project Kampong?"
-                }
-            ],
-            "tags": [
-                "#kampong",
-                "#socialgood",
-                "#initiative"
-            ],
-            "jobs": null,
-            "user_likes": null,
-            "locations": null,
-            "listing_updates": null,
-            "milestone_description": [
-                "Profile Listing",
-                "Location",
-                "One-Pager Template for Project Listing Platform",
-                "Project Browsing and Filtering",
-                "Individual Portfolio Dashboard",
-                "Project- Profile Matching & Recommendation",
-                "On-Platform Chat"
-            ],
-            "participants": null,
-            "nickname": "Derrick",
-            "profile_picture": "https://images.pexels.com/photos/2434268/pexels-photo-2434268.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            "keyword_vector": null
+            "keyword_vector": "'donat':2 'drive':3 'elder':4 'project':1"
         }
     ]
 }
@@ -6413,7 +6461,7 @@ URL: {{URL}}/api/listings/search
             "start_date": "2020-12-01T11:09:20.000Z",
             "end_date": null,
             "created_on": "2020-08-20T09:36:45.815Z",
-            "updated_on": "2020-12-03T16:57:05.934Z",
+            "updated_on": "2020-12-04T16:41:12.432Z",
             "deleted_on": null,
             "faqs": [
                 {
@@ -6501,9 +6549,15 @@ URL: {{URL}}/api/listings/search
                     "description": "Inverse eco-centric conglomeration"
                 }
             ],
-            "milestone_description": [
-                "De-engineered content-based solution",
-                "Centralized stable groupware"
+            "milestones": [
+                {
+                    "date": "2019-06-01T11:27:43+08:00",
+                    "milestone_description": "De-engineered content-based solution"
+                },
+                {
+                    "date": "2020-07-09T11:30:19+08:00",
+                    "milestone_description": "Centralized stable groupware"
+                }
             ],
             "participants": [
                 "f96b2138-1754-4c17-a405-940e20adc601",
@@ -6539,7 +6593,7 @@ URL: {{URL}}/api/listings/search
             "start_date": "2020-07-30T05:54:45.000Z",
             "end_date": null,
             "created_on": "2020-08-20T09:36:45.815Z",
-            "updated_on": "2020-12-03T16:57:05.934Z",
+            "updated_on": "2020-12-04T16:41:12.432Z",
             "deleted_on": null,
             "faqs": [
                 {
@@ -6640,10 +6694,19 @@ URL: {{URL}}/api/listings/search
                     "description": "Phased reciprocal parallelism"
                 }
             ],
-            "milestone_description": [
-                "Future-proofed systemic interface",
-                "Pre-emptive static installation",
-                "Multi-channelled secondary model"
+            "milestones": [
+                {
+                    "date": "2016-11-13T21:27:33+08:00",
+                    "milestone_description": "Future-proofed systemic interface"
+                },
+                {
+                    "date": "2015-08-06T09:28:56+08:00",
+                    "milestone_description": "Pre-emptive static installation"
+                },
+                {
+                    "date": "2016-12-04T03:14:39+08:00",
+                    "milestone_description": "Multi-channelled secondary model"
+                }
             ],
             "participants": [
                 "f96b2138-1754-4c17-a405-940e20adc601",
@@ -6682,7 +6745,7 @@ URL: {{URL}}/api/listings/search
             "start_date": "2020-12-25T14:21:11.000Z",
             "end_date": null,
             "created_on": "2020-08-20T09:36:45.815Z",
-            "updated_on": "2020-12-03T16:57:05.934Z",
+            "updated_on": "2020-12-04T16:41:12.432Z",
             "deleted_on": null,
             "faqs": [
                 {
@@ -6712,7 +6775,7 @@ URL: {{URL}}/api/listings/search
                     "job_description": "Phased bottom-line encryption"
                 }
             ],
-            "user_likes": null,
+            "user_likes": [],
             "locations": [
                 "Woodlands",
                 "Sembawang"
@@ -6731,8 +6794,11 @@ URL: {{URL}}/api/listings/search
                     "description": "Business-focused multi-state productivity"
                 }
             ],
-            "milestone_description": [
-                "Monitored object-oriented access"
+            "milestones": [
+                {
+                    "date": "2020-01-21T19:04:19+08:00",
+                    "milestone_description": "Monitored object-oriented access"
+                }
             ],
             "participants": [
                 "d69a127d-815b-4834-b2b6-54ab398fccad"
@@ -6767,7 +6833,7 @@ URL: {{URL}}/api/listings/search
             "start_date": "2020-01-01T12:54:13.000Z",
             "end_date": null,
             "created_on": "2020-08-20T09:36:45.815Z",
-            "updated_on": "2020-12-03T16:57:05.934Z",
+            "updated_on": "2020-12-04T16:41:12.432Z",
             "deleted_on": null,
             "faqs": [
                 {
@@ -6817,7 +6883,7 @@ URL: {{URL}}/api/listings/search
                     "job_description": "Universal 24 hour protocol"
                 }
             ],
-            "user_likes": null,
+            "user_likes": [],
             "locations": [
                 "Woodlands"
             ],
@@ -6834,9 +6900,15 @@ URL: {{URL}}/api/listings/search
                     "description": "Enterprise-wide leading edge productivity"
                 }
             ],
-            "milestone_description": [
-                "Intuitive client-driven knowledge user",
-                "Monitored attitude-oriented array"
+            "milestones": [
+                {
+                    "date": "2018-12-16T08:49:35+08:00",
+                    "milestone_description": "Intuitive client-driven knowledge user"
+                },
+                {
+                    "date": "2017-11-23T11:53:21+08:00",
+                    "milestone_description": "Monitored attitude-oriented array"
+                }
             ],
             "participants": [
                 "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
@@ -10613,4 +10685,4 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-12-05 06:28:29 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-12-05 08:07:49 by [docgen](https://github.com/thedevsaddam/docgen)
