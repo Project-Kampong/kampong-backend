@@ -17,7 +17,7 @@
         "import-required": "yarn knex:seed:run --specific=required_data.ts",
         "import-mock": "ts-node src/utils/seeder.ts -d",
         "format": "prettier --write .",
-        "heroku-postbuild": "yarn build && yarn create-tables && yarn import-required && yarn import-mock",
+        "heroku-postbuild": "yarn build && yarn reset-db && yarn create-tables && yarn import-required && yarn import-mock",
         "knex:migrate:make": "knex --knexfile src/database/knexfile.ts migrate:make -x ts",
         "knex:migrate:latest": "knex --knexfile src/database/knexfile.ts migrate:latest",
         "knex:migrate:rollback": "knex --knexfile src/database/knexfile.ts migrate:rollback",
