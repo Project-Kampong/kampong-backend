@@ -5,33 +5,31 @@ Record of notable changes to Project Kampong Backend. Server deployment do not f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### [Unreleased]
+## [Unreleased]
 
-### [v0.70.0]
+### Added
 
-### [v0.69.0]
+-   Convenience method `yarn reset-db` for clean reset of db schema.
 
-### [v0.68.0]
+### Changed
 
-### [v0.67.0]
+-   ListingView data response.
 
-### [v0.66.0]
+## [v0.65.0]
 
-### [v0.65.0]
-
-# Changed
+### Changed
 
 -   Send email route from `/api/send-email` to `/api/mailer/send`
 
-### [v0.64.0]
+## [v0.64.0]
 
 ### Fixed
 
 -   DB queries for locations, auth etc
 
-### [v0.63.0]
+## [v0.63.0]
 
-### [v0.62.0]
+## [v0.62.0]
 
 ### Changed
 
@@ -41,13 +39,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Bug in heroku build not running due to build file location changes
 
-### [v0.50.0]
+## [v0.50.0]
 
 ### Added
 
 -   Changelog tags to be updated automatically by tag-bump Actions pipeline
 
-### [v0.48.0]
+## [v0.48.0]
 
 ### Added
 
@@ -65,7 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Remove `skills` and `listing_skills`
 
-### [v0.1.4] - 2020-09-19
+## [v0.1.4] - 2020-09-19
 
 ### Added
 
@@ -75,7 +73,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Landing page search will now search by title, category and locations using full text search.
 
-### [v0.1.3] - 2020-09-13
+## [v0.1.3] - 2020-09-13
 
 ### Added
 
@@ -89,7 +87,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   BREAKING: Route naming for all auth endpoints changed to kebab case to adhere to convention.
 -   Update backend structure to fit new DevOps workflow for both frontend and backend. This repo no longer stores frontend build.
 
-### [v0.1.2b] - 2020-09-03
+## [v0.1.2b] - 2020-09-03
 
 ### Added
 
@@ -99,7 +97,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Password requirement to 8-25 characters, at least 1 uppercase, lowercase, and special character respectively.
 
-### [v0.1.1a] - 2020-08-24
+## [v0.1.1a] - 2020-08-24
 
 ### Added
 
@@ -112,14 +110,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Registration flow for users who try to re-register within 15min will see an error with an appropriate prompt, and users can smoothly re-register after 15min.
 -   Registration token expiry shortened from 30min to 15min.
 
-### [v0.1.0b] - 2020-08-20
+## [v0.1.0b] - 2020-08-20
 
 ### Added
 
 -   Add frontend build files in `client/build` to be served. Frontend is now integrated with backend!
 -   Redirect user to homepage on confirmation of email address
 
-### [v0.0.4] - 2020-08-20
+## [v0.0.4] - 2020-08-20
 
 ### Added
 
