@@ -6,16 +6,24 @@ DROP VIEW IF EXISTS listingcommentview CASCADE;
 CREATE OR REPLACE VIEW listingview AS WITH agg_listing_info AS (
 	SELECT
 		l.listing_id,
-		f.faqs,
-		h.tags,
-		j.jobs,
-		ll.user_likes,
-		lol.locations,
-		lu.listing_updates,
-		ml.milestones,
-		p.participants
-	FROM
-		listing l
+		COALESCE(f.faqs,
+			'{}'::jsonb []) faqs,
+		COALESCE(h.tags,
+			'{}'::VARCHAR []) tags,
+		COALESCE(j.jobs,
+			'{}'::jsonb []) jobs,
+		COALESCE(ll.user_likes,
+			'{}'::uuid []) user_likes,
+		COALESCE(lol.locations,
+			'{}'::VARCHAR []) locations,
+		COALESCE(lu.listing_updates,
+			'{}'::jsonb []) listing_updates,
+	COALESCE(ml.milestones,
+		'{}'::jsonb []) milestones,
+	COALESCE(p.participants,
+		'{}'::uuid []) participants
+FROM
+	listing l
 	LEFT JOIN (
 		SELECT
 			listing_id,
