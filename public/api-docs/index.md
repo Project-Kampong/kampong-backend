@@ -2324,7 +2324,7 @@ URL: {{URL}}/api/file-upload/multi
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: New Multiple File Upload (200 OK)
+##### I. Example Request: Multiple File Upload V2 (200 OK)
 
 
 
@@ -2336,41 +2336,16 @@ URL: {{URL}}/api/file-upload/multi
 
 
 
-##### I. Example Response: New Multiple File Upload (200 OK)
+##### I. Example Response: Multiple File Upload V2 (200 OK)
 ```js
 {
     "success": true,
     "data": [
-        {
-            "eTag": "\"954cd8d1b554392d5c17ffe5555fcbf3\"",
-            "location": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-20201129002420.jpg",
-            "key": "test-pic-1-20201129002420.jpg",
-            "bucket": "kampong-dev"
-        },
-        {
-            "eTag": "\"75de1274482faec1576f1635c29fec80\"",
-            "location": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-20201129002420.jpg",
-            "key": "test-pic-2-20201129002420.jpg",
-            "bucket": "kampong-dev"
-        },
-        {
-            "eTag": "\"836e9404f022be50df93f05d8c709468\"",
-            "location": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-20201129002420.jpg",
-            "key": "test-pic-3-20201129002420.jpg",
-            "bucket": "kampong-dev"
-        },
-        {
-            "eTag": "\"045ce3420761a585257f21ca9587af06\"",
-            "location": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-20201129002420.jpg",
-            "key": "test-pic-4-20201129002420.jpg",
-            "bucket": "kampong-dev"
-        },
-        {
-            "eTag": "\"2902595cea403d87445b048c75cd7060\"",
-            "location": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-20201129002420.jpg",
-            "key": "test-pic-5-20201129002420.jpg",
-            "bucket": "kampong-dev"
-        }
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-20201206011003.jpg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-20201206011003.jpg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-20201206011003.jpg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-20201206011003.jpg",
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-20201206011003.jpg"
     ]
 }
 ```
@@ -2430,9 +2405,8 @@ URL: {{URL}}/api/file-upload
 {
     "success": true,
     "data": {
-        "eTag": "\"75de1274482faec1576f1635c29fec80\"",
-        "location": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-20201129002226.jpg",
-        "key": "test-pic-2-20201129002226.jpg",
+        "location": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-20201206010937.jpg",
+        "key": "test-pic-2-20201206010937.jpg",
         "bucket": "kampong-dev"
     }
 }
@@ -10685,4 +10659,4 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-12-05 08:07:49 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-12-05 17:10:54 by [docgen](https://github.com/thedevsaddam/docgen)
