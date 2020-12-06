@@ -4,6 +4,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import 'colors';
 import cookieParser from 'cookie-parser';
+import fileUpload from 'express-fileupload';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import xss from 'xss-clean';
@@ -28,6 +29,9 @@ app.use(express.json());
 
 // Cookie parser
 app.use(cookieParser());
+
+// Multipart/formdata file uploader
+app.use(fileUpload());
 
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
