@@ -66,7 +66,9 @@ app.use('/api', apiRouter);
 app.use(errorHandler);
 
 // Run db backup cron job
-dbBackupJob.start();
+if (process.env.NODE_ENV === 'production') {
+    dbBackupJob.start();
+}
 
 // Set static folder
 app.use(express.static(path.resolve(__dirname, '../client/build')));
