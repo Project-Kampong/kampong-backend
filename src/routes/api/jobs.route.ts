@@ -1,13 +1,11 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
-import { db } from '../../database';
 import { checkInputError, protect } from '../../middleware';
 import { NO_FIELD_UPDATED_MSG, INVALID_FIELD_MSG } from '../../utils';
 
-// import and initialize controllers here
-import { JobsController } from '../../controllers/jobs';
-const jobsController = new JobsController(db.jobs, db.listings);
+// import controller
+import { jobsController } from '../../controllers/jobs';
 
 // Define input validation chain
 const validateCreateJobFields = [
