@@ -9,17 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
--   File upload endpoint request and response body
--   Change dependency from `multer` and `multer-s3` to `express-fileupload`
+-   File upload endpoint request and response body.
+-   Change dependency from `multer` and `multer-s3` to `express-fileupload`.
+-   ListingView data response.
 
 ### Added
 
 -   Convenience method `yarn reset-db` for clean reset of db schema.
--   Add db backup cronjob to backup to local machine.
-
-### Changed
-
--   ListingView data response.
+-   Add db backup cronjob to backup to local machine and private S3 bucket.
 
 ## [v0.65.0]
 

@@ -17,7 +17,12 @@ export class S3ClientService {
     }
 
     async uploadFileToPublicRead(file: Buffer, key: string, meta?: { [key: string]: string }): Promise<S3.ManagedUpload.SendData> {
-        const uploadParams = { Bucket: process.env.S3_BUCKET_NAME, Key: key, Body: file, ACL: 'public-read', Metadata: meta };
+        const uploadParams: S3.PutObjectRequest = { Bucket: process.env.S3_BUCKET_NAME, Key: key, Body: file, ACL: 'public-read', Metadata: meta };
+        return this.s3Client.upload(uploadParams).promise();
+    }
+
+    async uploadFileToBackupBucket(file: Buffer, key: string, meta?: { [key: string]: string }): Promise<S3.ManagedUpload.SendData> {
+        const uploadParams: S3.PutObjectRequest = { Bucket: process.env.S3_BACKUP_BUCKET_NAME, Key: key, Body: file, ACL: 'private', Metadata: meta };
         return this.s3Client.upload(uploadParams).promise();
     }
 }
