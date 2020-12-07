@@ -1,8 +1,8 @@
-import { JobsRepository, ListingsRepository } from '../database';
+import { db, JobsRepository, ListingsRepository } from '../database';
 import { asyncHandler } from '../middleware';
 import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
 
-export class JobsController {
+class JobsController {
     constructor(private readonly jobsRepository: JobsRepository, private readonly listingsRepository: ListingsRepository) {
         this.jobsRepository = jobsRepository;
         this.listingsRepository = listingsRepository;
@@ -120,3 +120,5 @@ export class JobsController {
         });
     });
 }
+
+export const jobsController = new JobsController(db.jobs, db.listings);
