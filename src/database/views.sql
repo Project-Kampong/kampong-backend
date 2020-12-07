@@ -9,11 +9,11 @@ CREATE OR REPLACE VIEW listingview AS WITH agg_listing_info AS (
 		COALESCE(f.faqs,
 			'{}'::jsonb []) faqs,
 		COALESCE(h.tags,
-			'{}'::VARCHAR []) tags,
+			'{}'::jsonb []) tags,
 		COALESCE(j.jobs,
 			'{}'::jsonb []) jobs,
 		COALESCE(ll.user_likes,
-			'{}'::uuid []) user_likes,
+			'{}'::jsonb []) user_likes,
 		COALESCE(lol.locations,
 			'{}'::VARCHAR []) locations,
 		COALESCE(lu.listing_updates,
@@ -27,7 +27,9 @@ FROM
 	LEFT JOIN (
 		SELECT
 			listing_id,
-			ARRAY_AGG(JSONB_BUILD_OBJECT ('question',
+			ARRAY_AGG(JSONB_BUILD_OBJECT ('faq_id',
+					faq_id,
+					'question',
 					question,
 					'answer',
 					answer)) faqs
@@ -38,7 +40,10 @@ FROM
 	LEFT JOIN (
 		SELECT
 			listing_id,
-			ARRAY_AGG(tag) tags
+			ARRAY_AGG(JSONB_BUILD_OBJECT ('hashtag_id',
+					hashtag_id,
+					'tag',
+					tag)) tags
 		FROM
 			hashtag
 		GROUP BY
@@ -46,7 +51,9 @@ FROM
 	LEFT JOIN (
 		SELECT
 			listing_id,
-			ARRAY_AGG(JSONB_BUILD_OBJECT ('job_title',
+			ARRAY_AGG(JSONB_BUILD_OBJECT ('job_id',
+					job_id,
+					'job_title',
 					job_title,
 					'job_description',
 					job_description)) jobs
@@ -57,7 +64,10 @@ FROM
 	LEFT JOIN (
 		SELECT
 			listing_id,
-			ARRAY_AGG(user_id) user_likes
+			ARRAY_AGG(JSONB_BUILD_OBJECT ('like_id',
+					like_id,
+					'user_id',
+					user_id)) user_likes
 		FROM
 			listinglike
 		GROUP BY
@@ -74,7 +84,9 @@ FROM
 	LEFT JOIN (
 		SELECT
 			listing_id,
-			ARRAY_AGG(JSONB_BUILD_OBJECT ('description',
+			ARRAY_AGG(JSONB_BUILD_OBJECT ('listing_update_id',
+					listing_update_id,
+					'description',
 					description,
 					'pics',
 					pics,
@@ -89,7 +101,9 @@ FROM
 	LEFT JOIN (
 		SELECT
 			listing_id,
-			ARRAY_AGG(JSONB_BUILD_OBJECT ('milestone_description',
+			ARRAY_AGG(JSONB_BUILD_OBJECT ('milestone_id',
+					milestone_id,
+					'milestone_description',
 					description,
 					'date',
 					date)) milestones
