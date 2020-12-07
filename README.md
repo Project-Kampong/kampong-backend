@@ -139,6 +139,12 @@ On the command line in the project root directory:
 yarn format
 ```
 
+## Cron jobs
+
+### Usage
+
+-   Database backup cron job runs at 5am daily to backup the application's database locally.
+
 ## Documentation
 
 API Documentation

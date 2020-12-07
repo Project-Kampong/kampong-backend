@@ -15,6 +15,7 @@ import { get } from 'lodash';
 import { checkConn } from './utils';
 import { apiRouter } from './routes';
 import { errorHandler } from './middleware';
+import { dbBackupJob } from './jobs/dbBackup.job';
 
 dotenv.config({ path: 'config/config.env' });
 
@@ -63,6 +64,11 @@ app.use('/api', apiRouter);
 
 // Mount error handler
 app.use(errorHandler);
+
+// Run db backup cron job
+if (process.env.NODE_ENV === 'production') {
+    dbBackupJob.start();
+}
 
 // Set static folder
 app.use(express.static(path.resolve(__dirname, '../client/build')));
