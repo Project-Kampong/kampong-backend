@@ -2,7 +2,7 @@ import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
 import { db } from '../../database';
-import { authorise, checkInputError, protect } from '../../middleware';
+import { authorise, checkInputError, protect, asyncHandler } from '../../middleware';
 import { INVALID_FIELD_MSG, NO_FIELD_UPDATED_MSG } from '../../utils';
 
 // Import controllers and initialise controller
@@ -22,17 +22,17 @@ const validateUpdateOrganisationJobFields = [
     check('job_description', INVALID_FIELD_MSG('job description')).optional().trim().notEmpty(),
 ];
 
-router.route('/').get(organisationJobsController.getOrganisationJobs);
-router.route('/:organisationJobId').get(organisationJobsController.getSingleOrganisationJob);
+router.route('/').get(asyncHandler(organisationJobsController.getOrganisationJobs));
+router.route('/:organisationJobId').get(asyncHandler(organisationJobsController.getSingleOrganisationJob));
 
 // Use authentication middleware for routes below
 router.use(protect);
 
-router.route('/').post(validateCreateOrganisationJobFields, checkInputError, organisationJobsController.createOrganisationJob);
+router.route('/').post(validateCreateOrganisationJobFields, checkInputError, asyncHandler(organisationJobsController.createOrganisationJob));
 
-router.route('/:organisationJobId/deactivate').put(protect, organisationJobsController.deactivateOrganisationJob);
+router.route('/:organisationJobId/deactivate').put(protect, asyncHandler(organisationJobsController.deactivateOrganisationJob));
 
 router
     .route('/:organisationJobId')
-    .put(validateUpdateOrganisationJobFields, checkInputError, organisationJobsController.updateOrganisationJob)
-    .delete(protect, authorise('admin'), organisationJobsController.deleteOrganisationJob);
+    .put(validateUpdateOrganisationJobFields, checkInputError, asyncHandler(organisationJobsController.updateOrganisationJob))
+    .delete(protect, authorise('admin'), asyncHandler(organisationJobsController.deleteOrganisationJob));

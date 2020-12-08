@@ -1,7 +1,6 @@
 import moment from 'moment-timezone';
 import { CreateOrganisationJobSchema } from '../database/models';
 import { OrganisationJobsRepository, OrganisationsRepository } from '../database';
-import { asyncHandler } from '../middleware';
 import { checkOrganisationOwner, cleanseData, ErrorResponse } from '../utils';
 
 export class OrganisationJobsController {
@@ -18,7 +17,7 @@ export class OrganisationJobsController {
      * @route   GET /api/organisations/:organisationId/jobs
      * @access  Public
      */
-    getOrganisationJobs = asyncHandler(async (req, res, next) => {
+    getOrganisationJobs = async (req, res, next) => {
         if (req.params.organisation_id) {
             const organisationId: string = req.params.organisation_id;
 
@@ -33,14 +32,14 @@ export class OrganisationJobsController {
         }
 
         return next(new ErrorResponse('Invalid route', 404));
-    });
+    };
 
     /**
      * @desc    Get single organisation job
      * @route   GET /api/organisation-jobs/:organisationJobId
      * @access  Public
      */
-    getSingleOrganisationJob = asyncHandler(async (req, res, next) => {
+    getSingleOrganisationJob = async (req, res, next) => {
         const organisationJobId = req.params.organisationJobId;
 
         const job = await this.organisationJobsRepository.getOrganisationJobById(organisationJobId);
@@ -48,14 +47,14 @@ export class OrganisationJobsController {
             success: true,
             data: job,
         });
-    });
+    };
 
     /**
      * @desc    Create organisation job
      * @route   POST /api/organisation-jobs
      * @access  Owner/Admin
      */
-    createOrganisationJob = asyncHandler(async (req, res, next) => {
+    createOrganisationJob = async (req, res, next) => {
         const { organisation_id, job_title, job_description } = req.body;
 
         const data: CreateOrganisationJobSchema = {
@@ -80,14 +79,14 @@ export class OrganisationJobsController {
             success: true,
             data: rows,
         });
-    });
+    };
 
     /**
      * @desc    Update single organisation job
      * @route   PUT /api/organisation-jobs/:organisationJobId
      * @access  Admin/Owner
      */
-    updateOrganisationJob = asyncHandler(async (req, res, next) => {
+    updateOrganisationJob = async (req, res, next) => {
         // check if job exists and is not soft deleted
         const job = await this.organisationJobsRepository.getOrganisationJobById(req.params.organisationJobId);
 
@@ -114,14 +113,14 @@ export class OrganisationJobsController {
             success: true,
             data: rows,
         });
-    });
+    };
 
     /**
      * @desc    Deactivate (Soft delete) single organisation job
      * @route   PUT /api/organisation-jobs/:organisationJobId/deactivate
      * @access  Admin/Owner
      */
-    deactivateOrganisationJob = asyncHandler(async (req, res, next) => {
+    deactivateOrganisationJob = async (req, res, next) => {
         // check if job exists and not soft deleted
         const job = await this.organisationJobsRepository.getOrganisationJobById(req.params.organisationJobId);
 
@@ -143,19 +142,19 @@ export class OrganisationJobsController {
             success: true,
             data: rows,
         });
-    });
+    };
 
     /**
      * @desc    Delete single organisation job
      * @route   DELETE /api/organisation-jobs/:organisationJobId
      * @access  Admin
      */
-    deleteOrganisationJob = asyncHandler(async (req, res, next) => {
+    deleteOrganisationJob = async (req, res, next) => {
         const rows = await this.organisationJobsRepository.deleteOrganisationJobById(req.params.organisationJobId);
 
         res.status(200).json({
             success: true,
             data: rows,
         });
-    });
+    };
 }
