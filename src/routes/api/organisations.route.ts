@@ -50,7 +50,7 @@ const validateUpdateOrganisationFields = [
 ];
 
 // Map public routes to controller
-router.route('/').get(advancedResults('organisations'), getOrganisations);
+router.route('/').get(advancedResults('organisation'), getOrganisations);
 
 router.route('/:id').get(getOrganisation);
 

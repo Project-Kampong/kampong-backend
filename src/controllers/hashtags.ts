@@ -1,7 +1,7 @@
-import { HashtagsRepository, ListingsRepository } from '../database';
+import { db, HashtagsRepository, ListingsRepository } from '../database';
 import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
 
-export class HashtagsController {
+class HashtagsController {
     constructor(private readonly hashtagsRepository: HashtagsRepository, private readonly listingsRepository: ListingsRepository) {
         this.hashtagsRepository = hashtagsRepository;
         this.listingsRepository = listingsRepository;
@@ -84,3 +84,5 @@ export class HashtagsController {
         });
     };
 }
+
+export const hashtagsController = new HashtagsController(db.hashtags, db.listings);
