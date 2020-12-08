@@ -116,35 +116,6 @@ export class OrganisationJobsController {
     };
 
     /**
-     * @desc    Deactivate (Soft delete) single organisation job
-     * @route   PUT /api/organisation-jobs/:organisationJobId/deactivate
-     * @access  Admin/Owner
-     */
-    deactivateOrganisationJob = async (req, res, next) => {
-        // check if job exists and not soft deleted
-        const job = await this.organisationJobsRepository.getOrganisationJobById(req.params.organisationJobId);
-
-        // check if organisation exists and user is organisation owner
-        const isOrganisationOwner = await checkOrganisationOwner(req.user.user_id, job.organisation_id);
-
-        // Unauthorised if neither admin nor organisation owner
-        if (!(req.user.role === 'admin' || isOrganisationOwner)) {
-            return next(new ErrorResponse(`Not authorised to create jobs for this listing`, 403));
-        }
-
-        const data = {
-            deleted_on: moment.tz(process.env.DEFAULT_TIMEZONE).toDate(),
-        };
-
-        const rows = await this.organisationJobsRepository.deactivateOrganisationJobById(data, req.params.organisationJobId);
-
-        res.status(200).json({
-            success: true,
-            data: rows,
-        });
-    };
-
-    /**
      * @desc    Delete single organisation job
      * @route   DELETE /api/organisation-jobs/:organisationJobId
      * @access  Admin

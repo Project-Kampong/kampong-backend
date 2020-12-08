@@ -26,16 +26,6 @@ export class OrganisationJobsRepository extends BaseRepository {
         return this.db.one(updateOrganisationJobQuery);
     }
 
-    deactivateOrganisationJobById(
-        deactivateOrganisationJobData: DeactivateOrganisationJobSchema,
-        organisationJobId: string,
-    ): Promise<OrganisationJob> {
-        const deactivateOrganisationJobQuery =
-            this.pgp.helpers.update(deactivateOrganisationJobData, null, 'organisationjob') +
-            this.pgp.as.format(' WHERE organisation_job_id = $1 RETURNING *', organisationJobId);
-        return this.db.one(deactivateOrganisationJobQuery);
-    }
-
     deleteOrganisationJobById(organisationJobId: string): Promise<OrganisationJob> {
         return this.db.one('DELETE FROM organisationjob WHERE organisation_job_id = $1 RETURNING *', organisationJobId);
     }

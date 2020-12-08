@@ -30,8 +30,6 @@ router.use(protect);
 
 router.route('/').post(validateCreateOrganisationJobFields, checkInputError, asyncHandler(organisationJobsController.createOrganisationJob));
 
-router.route('/:organisationJobId/deactivate').put(protect, asyncHandler(organisationJobsController.deactivateOrganisationJob));
-
 router
     .route('/:organisationJobId')
     .put(validateUpdateOrganisationJobFields, checkInputError, asyncHandler(organisationJobsController.updateOrganisationJob))
