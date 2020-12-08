@@ -8,8 +8,8 @@ export class OrganisationsRepository extends BaseRepository {
     }
 
     // TODO: To fill in query
-    getAllOrganisations(organisationId: string): Promise<Organisation[]> {
-        return;
+    getAllOrganisations(): Promise<Organisation[]> {
+        return this.db.manyOrNone('SELECT * FROM organisation');
     }
 
     getOrganisationById(organisationId: string): Promise<Organisation> {

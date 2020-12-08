@@ -1,8 +1,8 @@
 import { CreateOrganisationJobSchema } from '../database/models';
-import { OrganisationJobsRepository, OrganisationsRepository } from '../database';
+import { db, OrganisationJobsRepository, OrganisationsRepository } from '../database';
 import { checkOrganisationOwner, cleanseData, ErrorResponse } from '../utils';
 
-export class OrganisationJobsController {
+class OrganisationJobsController {
     constructor(
         private readonly organisationJobsRepository: OrganisationJobsRepository,
         private readonly organisationsRepository: OrganisationsRepository,
@@ -39,12 +39,12 @@ export class OrganisationJobsController {
      * @access  Owner/Admin
      */
     createOrganisationJob = async (req, res, next) => {
-        const { organisation_id, job_title, job_description } = req.body;
+        const { organisation_id, organisation_job_title, organisation_job_description } = req.body;
 
         const data: CreateOrganisationJobSchema = {
             organisation_id,
-            organisation_job_title: job_title,
-            organisation_job_description: job_description,
+            organisation_job_title,
+            organisation_job_description,
         };
 
         cleanseData(data);
@@ -71,8 +71,10 @@ export class OrganisationJobsController {
      * @access  Admin/Owner
      */
     updateOrganisationJob = async (req, res, next) => {
-        // check if job exists and is not soft deleted
-        const job = await this.organisationJobsRepository.getOrganisationJobById(req.params.organisationJobId);
+        const { organisationJobId } = req.params;
+
+        // check if job exists
+        const job = await this.organisationJobsRepository.getOrganisationJobById(organisationJobId);
 
         // check if organisation exists and user is organisation owner
         const isOrganisationOwner = await checkOrganisationOwner(req.user.user_id, job.organisation_id);
@@ -82,16 +84,16 @@ export class OrganisationJobsController {
             return next(new ErrorResponse(`Not authorised to create jobs for this listing`, 403));
         }
 
-        const { job_title, job_description } = req.body;
+        const { organisation_job_title, organisation_job_description } = req.body;
 
         const data = {
-            organisation_job_title: job_title,
-            organisation_job_description: job_description,
+            organisation_job_title,
+            organisation_job_description,
         };
 
         cleanseData(data);
 
-        const rows = await this.organisationJobsRepository.updateOrganisationJobById(data, req.params.organisationJobId);
+        const rows = await this.organisationJobsRepository.updateOrganisationJobById(data, organisationJobId);
 
         res.status(200).json({
             success: true,
@@ -105,7 +107,8 @@ export class OrganisationJobsController {
      * @access  Admin
      */
     deleteOrganisationJob = async (req, res, next) => {
-        const rows = await this.organisationJobsRepository.deleteOrganisationJobById(req.params.organisationJobId);
+        const { organisationJobId } = req.params;
+        const rows = await this.organisationJobsRepository.deleteOrganisationJobById(organisationJobId);
 
         res.status(200).json({
             success: true,
@@ -113,3 +116,5 @@ export class OrganisationJobsController {
         });
     };
 }
+
+export const organisationJobsController = new OrganisationJobsController(db.organisationJobs, db.organisations);
