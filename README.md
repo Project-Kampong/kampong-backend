@@ -59,7 +59,7 @@ Under `config/config.env`, fill in `PG_USER`, `PG_HOST`, `PG_NAME`, `PG_PORT`, `
 On the command line in the project root directory:
 
 ```bash
-yarn create-tables && yarn import-required
+yarn reset-db && yarn create-tables && yarn import-required
 ```
 
 ##### Populate database with mock data
@@ -138,6 +138,12 @@ On the command line in the project root directory:
 #### Format all files excluding those in .prettierignore file
 yarn format
 ```
+
+## Cron jobs
+
+### Usage
+
+-   Database backup cron job runs at 5am daily to backup the application's database locally.
 
 ## Documentation
 

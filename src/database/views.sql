@@ -1,54 +1,158 @@
 DROP VIEW IF EXISTS featuredlistingview CASCADE;
 DROP VIEW IF EXISTS listingview CASCADE;
 DROP VIEW IF EXISTS organisationview CASCADE;
-DROP VIEW IF EXISTS jobview CASCADE;
 DROP VIEW IF EXISTS listingcommentview CASCADE;
 
-CREATE VIEW listingview AS 
-	WITH combinedlistinglocation AS (
-		SELECT
-			ls.listing_id,
-			ARRAY_AGG(lo.location_name) AS locations,
-			ARRAY_AGG(lo.location_id) AS location_ids
-		FROM
-			listing ls
-			JOIN (listinglocation lsl
-				JOIN location lo ON lsl.location_id = lo.location_id) ON ls.listing_id = lsl.listing_id
-		GROUP BY
-			ls.listing_id
-	)
+CREATE OR REPLACE VIEW listingview AS WITH agg_listing_info AS (
 	SELECT
-		l.*,
-		p.nickname,
-		p.profile_picture,
-		cll.locations,
-		cll.location_ids,
-		to_tsvector(l.title || ' ' || l.category || ' ' || array_to_string(cll.locations::text[], ' ')) AS keyword_vector
+		l.listing_id,
+		COALESCE(f.faqs,
+			'{}'::jsonb []) faqs,
+		COALESCE(h.tags,
+			'{}'::jsonb []) tags,
+		COALESCE(j.jobs,
+			'{}'::jsonb []) jobs,
+		COALESCE(ll.user_likes,
+			'{}'::jsonb []) user_likes,
+		COALESCE(lol.locations,
+			'{}'::VARCHAR []) locations,
+		COALESCE(lu.listing_updates,
+			'{}'::jsonb []) listing_updates,
+	COALESCE(ml.milestones,
+		'{}'::jsonb []) milestones,
+	COALESCE(p.participants,
+		'{}'::uuid []) participants
+FROM
+	listing l
+	LEFT JOIN (
+		SELECT
+			listing_id,
+			ARRAY_AGG(JSONB_BUILD_OBJECT ('faq_id',
+					faq_id,
+					'question',
+					question,
+					'answer',
+					answer)) faqs
+		FROM
+			faq
+		GROUP BY
+			listing_id) f ON l.listing_id = f.listing_id
+	LEFT JOIN (
+		SELECT
+			listing_id,
+			ARRAY_AGG(JSONB_BUILD_OBJECT ('hashtag_id',
+					hashtag_id,
+					'tag',
+					tag)) tags
+		FROM
+			hashtag
+		GROUP BY
+			listing_id) h ON l.listing_id = h.listing_id
+	LEFT JOIN (
+		SELECT
+			listing_id,
+			ARRAY_AGG(JSONB_BUILD_OBJECT ('job_id',
+					job_id,
+					'job_title',
+					job_title,
+					'job_description',
+					job_description)) jobs
+		FROM
+			job
+		GROUP BY
+			listing_id) j ON l.listing_id = j.listing_id
+	LEFT JOIN (
+		SELECT
+			listing_id,
+			ARRAY_AGG(JSONB_BUILD_OBJECT ('like_id',
+					like_id,
+					'user_id',
+					user_id)) user_likes
+		FROM
+			listinglike
+		GROUP BY
+			listing_id) ll ON l.listing_id = ll.listing_id
+	LEFT JOIN (
+		SELECT
+			listing_id,
+			ARRAY_AGG(location_name) locations
+		FROM
+			listinglocation ll
+			JOIN LOCATION lo ON ll.location_id = lo.location_id
+		GROUP BY
+			listing_id) lol ON l.listing_id = lol.listing_id
+	LEFT JOIN (
+		SELECT
+			listing_id,
+			ARRAY_AGG(JSONB_BUILD_OBJECT ('listing_update_id',
+					listing_update_id,
+					'description',
+					description,
+					'pics',
+					pics,
+					'created_on',
+					created_on,
+					'updated_on',
+					updated_on)) listing_updates
 	FROM
-		listing l
-		LEFT JOIN combinedlistinglocation cll ON l.listing_id = cll.listing_id
-		LEFT JOIN profile p ON l.created_by = p.user_id
-	WHERE
-		deleted_on IS NULL;
+		listingupdate
+	GROUP BY
+		listing_id) lu ON l.listing_id = lu.listing_id
+	LEFT JOIN (
+		SELECT
+			listing_id,
+			ARRAY_AGG(JSONB_BUILD_OBJECT ('milestone_id',
+					milestone_id,
+					'milestone_description',
+					description,
+					'date',
+					date)) milestones
+		FROM
+			milestone
+		GROUP BY
+			listing_id) ml ON l.listing_id = ml.listing_id
+	LEFT JOIN (
+		SELECT
+			listing_id,
+			ARRAY_AGG(user_id) participants
+		FROM
+			participant
+		GROUP BY
+			listing_id) p ON l.listing_id = p.listing_id
+)
+SELECT
+	l.*,
+	ali.faqs,
+	ali.tags,
+	ali.jobs,
+	ali.user_likes,
+	ali.locations,
+	ali.listing_updates,
+	ali.milestones,
+	ali.participants,
+	p.nickname,
+	p.profile_picture,
+	to_tsvector(l.title || ' ' || l.category || ' ' || array_to_string(ali.locations::text [], ' ')) AS keyword_vector
+FROM
+	listing l
+	LEFT JOIN agg_listing_info ali ON l.listing_id = ali.listing_id
+	LEFT JOIN profile p ON l.created_by = p.user_id
+WHERE
+	deleted_on IS NULL;
 
-CREATE VIEW organisationview AS
+CREATE OR REPLACE VIEW organisationview AS
 	SELECT *
   	FROM organisation
   	WHERE deleted_on IS NULL;
 
-CREATE VIEW jobview AS
-  	SELECT *
-  	FROM job
-  	WHERE deleted_on IS NULL;
-
-CREATE VIEW listingcommentview AS
+CREATE OR REPLACE VIEW listingcommentview AS
 	SELECT lc.*, p.nickname, p.profile_picture
 	FROM listingcomment lc
 	LEFT JOIN profile p
 	ON lc.user_id = p.user_id
 	WHERE lc.deleted_on IS NULL;
   
-CREATE VIEW featuredlistingview AS
+CREATE OR REPLACE VIEW featuredlistingview AS
 	SELECT *
 	FROM listingview
 	WHERE is_featured = TRUE;

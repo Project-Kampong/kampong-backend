@@ -1,4 +1,4 @@
-import { FaqsRepository, ListingsRepository } from '../database';
+import { db, FaqsRepository, ListingsRepository } from '../database';
 import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
 
 export class FaqsController {
@@ -119,3 +119,5 @@ export class FaqsController {
         });
     };
 }
+
+export const faqsController = new FaqsController(db.faqs, db.listings);
