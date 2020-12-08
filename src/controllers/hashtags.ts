@@ -1,7 +1,7 @@
 import { db, HashtagsRepository, ListingsRepository } from '../database';
 import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
 
-class HashtagsController {
+export class HashtagsController {
     constructor(private readonly hashtagsRepository: HashtagsRepository, private readonly listingsRepository: ListingsRepository) {
         this.hashtagsRepository = hashtagsRepository;
         this.listingsRepository = listingsRepository;
