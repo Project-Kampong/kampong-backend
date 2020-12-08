@@ -17,4 +17,13 @@ interface IExtensions {
     organisationJobs: OrganisationJobsRepository;
 }
 
-export { IExtensions, CategoriesRepository, FaqsRepository, HashtagsRepository, JobsRepository, ListingsRepository, OrganisationsRepository, OrganisationJobsRepository };
+export {
+    IExtensions,
+    CategoriesRepository,
+    FaqsRepository,
+    HashtagsRepository,
+    JobsRepository,
+    ListingsRepository,
+    OrganisationsRepository,
+    OrganisationJobsRepository,
+};

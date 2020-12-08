@@ -13,14 +13,14 @@ const organisationJobsController = new OrganisationJobsController(db.organisatio
 const validateCreateOrganisationJobFields = [
     check('organisation_id', INVALID_FIELD_MSG('organisation id')).isUUID(),
     check('job_title', INVALID_FIELD_MSG('job title')).trim().notEmpty(),
-    check('job_description', INVALID_FIELD_MSG('job description')).trim().notEmpty()
-]
+    check('job_description', INVALID_FIELD_MSG('job description')).trim().notEmpty(),
+];
 
 const validateUpdateOrganisationJobFields = [
     oneOf([check('job_title').exists(), check('job_description').exists()], NO_FIELD_UPDATED_MSG),
     check('job_title', INVALID_FIELD_MSG('job title')).optional().trim().notEmpty(),
-    check('job_description', INVALID_FIELD_MSG('job description')).optional().trim().notEmpty()
-]
+    check('job_description', INVALID_FIELD_MSG('job description')).optional().trim().notEmpty(),
+];
 
 router.route('/').get(organisationJobsController.getOrganisationJobs);
 router.route('/:organisationJobId').get(organisationJobsController.getSingleOrganisationJob);
@@ -36,5 +36,3 @@ router
     .route('/:organisationJobId')
     .put(validateUpdateOrganisationJobFields, checkInputError, organisationJobsController.updateOrganisationJob)
     .delete(protect, authorise('admin'), organisationJobsController.deleteOrganisationJob);
-
-

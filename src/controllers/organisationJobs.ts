@@ -5,7 +5,10 @@ import { asyncHandler } from '../middleware';
 import { checkOrganisationOwner, cleanseData, ErrorResponse } from '../utils';
 
 export class OrganisationJobsController {
-    constructor(private readonly organisationJobsRepository: OrganisationJobsRepository, private readonly organisationsRepository: OrganisationsRepository) {
+    constructor(
+        private readonly organisationJobsRepository: OrganisationJobsRepository,
+        private readonly organisationsRepository: OrganisationsRepository,
+    ) {
         this.organisationJobsRepository = organisationJobsRepository;
         this.organisationsRepository = organisationsRepository;
     }
@@ -43,7 +46,7 @@ export class OrganisationJobsController {
         const job = await this.organisationJobsRepository.getOrganisationJobById(organisationJobId);
         return res.status(200).json({
             success: true,
-            data: job
+            data: job,
         });
     });
 

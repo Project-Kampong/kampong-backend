@@ -21,7 +21,9 @@ export class OrganisationsRepository extends BaseRepository {
     }
 
     updateOrganisationById(updateOrganisationData: UpdateOrganisationSchema, organisationId: string): Promise<Organisation> {
-        const updateOrganisationQuery = this.pgp.helpers.update(updateOrganisationData, null, 'organisation') + this.pgp.as.format(' WHERE organisation_id = $1 RETURNING *', organisationId);
+        const updateOrganisationQuery =
+            this.pgp.helpers.update(updateOrganisationData, null, 'organisation') +
+            this.pgp.as.format(' WHERE organisation_id = $1 RETURNING *', organisationId);
         return this.db.one(updateOrganisationQuery);
     }
 

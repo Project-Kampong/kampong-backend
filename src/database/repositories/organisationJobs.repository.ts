@@ -20,13 +20,19 @@ export class OrganisationJobsRepository extends BaseRepository {
     }
 
     updateOrganisationJobById(updateOrganisationJobData: UpdateOrganisationJobSchema, organisationJobId: string): Promise<OrganisationJob> {
-        const updateOrganisationJobQuery = this.pgp.helpers.update(updateOrganisationJobData, null, 'organisationjob') + this.pgp.as.format(' WHERE organisation_job_id = $1 RETURNING *', organisationJobId);
+        const updateOrganisationJobQuery =
+            this.pgp.helpers.update(updateOrganisationJobData, null, 'organisationjob') +
+            this.pgp.as.format(' WHERE organisation_job_id = $1 RETURNING *', organisationJobId);
         return this.db.one(updateOrganisationJobQuery);
     }
 
-    deactivateOrganisationJobById(deactivateOrganisationJobData: DeactivateOrganisationJobSchema, organisationJobId: string): Promise<OrganisationJob> {
+    deactivateOrganisationJobById(
+        deactivateOrganisationJobData: DeactivateOrganisationJobSchema,
+        organisationJobId: string,
+    ): Promise<OrganisationJob> {
         const deactivateOrganisationJobQuery =
-            this.pgp.helpers.update(deactivateOrganisationJobData, null, 'organisationjob') + this.pgp.as.format(' WHERE organisation_job_id = $1 RETURNING *', organisationJobId);
+            this.pgp.helpers.update(deactivateOrganisationJobData, null, 'organisationjob') +
+            this.pgp.as.format(' WHERE organisation_job_id = $1 RETURNING *', organisationJobId);
         return this.db.one(deactivateOrganisationJobQuery);
     }
 
