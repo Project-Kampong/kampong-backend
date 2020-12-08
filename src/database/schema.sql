@@ -333,7 +333,6 @@ CREATE TABLE organisationjob (
 	organisation_id UUID NOT NULL,
 	organisation_job_title VARCHAR NOT NULL,
 	organisation_job_description TEXT,
-	deleted_on TIMESTAMPTZ,
 	PRIMARY KEY (organisation_job_id),
 	FOREIGN KEY (organisation_id) REFERENCES organisation ON DELETE CASCADE
 )

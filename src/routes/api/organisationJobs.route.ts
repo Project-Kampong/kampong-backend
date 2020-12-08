@@ -23,7 +23,6 @@ const validateUpdateOrganisationJobFields = [
 ];
 
 router.route('/').get(asyncHandler(organisationJobsController.getOrganisationJobs));
-router.route('/:organisationJobId').get(asyncHandler(organisationJobsController.getSingleOrganisationJob));
 
 // Use authentication middleware for routes below
 router.use(protect);

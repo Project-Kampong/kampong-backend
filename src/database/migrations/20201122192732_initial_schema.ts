@@ -229,7 +229,6 @@ export async function up(knex: Knex): Promise<void> {
             table.uuid('organisation_id').notNullable().references('organisation_id').inTable('organisation').onDelete('CASCADE');
             table.string('organisation_job_title').notNullable();
             table.text('organisation_job_description');
-            table.timestamp('deleted_on');
         });
     });
 }
