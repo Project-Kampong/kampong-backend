@@ -2,7 +2,7 @@ import { db, JobsRepository, ListingsRepository } from '../database';
 import { asyncHandler } from '../middleware';
 import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
 
-class JobsController {
+export class JobsController {
     constructor(private readonly jobsRepository: JobsRepository, private readonly listingsRepository: ListingsRepository) {
         this.jobsRepository = jobsRepository;
         this.listingsRepository = listingsRepository;
