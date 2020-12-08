@@ -86,7 +86,7 @@ export class OrganisationJobsController {
      */
     updateOrganisationJob = asyncHandler(async (req, res, next) => {
         // check if job exists and is not soft deleted
-        const job = await this.organisationJobsRepository.getOrganisationJobById(req.params.organisationId);
+        const job = await this.organisationJobsRepository.getOrganisationJobById(req.params.organisationJobId);
 
         // check if organisation exists and user is organisation owner
         const isOrganisationOwner = await checkOrganisationOwner(req.user.user_id, job.organisation_id);
@@ -105,7 +105,7 @@ export class OrganisationJobsController {
 
         cleanseData(data);
 
-        const rows = await this.organisationJobsRepository.updateOrganisationJobById(data, req.params.organisationId);
+        const rows = await this.organisationJobsRepository.updateOrganisationJobById(data, req.params.organisationJobId);
 
         res.status(200).json({
             success: true,
@@ -148,7 +148,7 @@ export class OrganisationJobsController {
      * @access  Admin
      */
     deleteOrganisationJob = asyncHandler(async (req, res, next) => {
-        const rows = await this.organisationJobsRepository.deleteOrganisationJobById(req.params.id);
+        const rows = await this.organisationJobsRepository.deleteOrganisationJobById(req.params.organisationJobId);
 
         res.status(200).json({
             success: true,
