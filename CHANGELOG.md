@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+-   `listings`, `milestones`, `listing updates`, and `programmes` schema with columns `description` and `title` are now prepended with their table name eg. `milestone_description`
+
 ## [v0.78.0]
 
 ## [v0.77.0]

@@ -113,7 +113,7 @@ export const getAllListingsOwnedByUser = asyncHandler(async (req, res, next) => 
 export const createListing = asyncHandler(async (req, res) => {
     const {
         organisation_id,
-        title,
+        listing_title,
         category,
         about,
         tagline,
@@ -135,7 +135,7 @@ export const createListing = asyncHandler(async (req, res) => {
         listing_id: uuidv1(),
         created_by: req.user.user_id,
         organisation_id,
-        title,
+        listing_title,
         category,
         about,
         tagline,
@@ -180,7 +180,7 @@ export const updateListing = asyncHandler(async (req, res, next) => {
 
     const {
         organisation_id, // NOTE: do not use this field until organisations endpoint is implemented
-        title,
+        listing_title,
         category,
         about,
         tagline,
@@ -200,7 +200,7 @@ export const updateListing = asyncHandler(async (req, res, next) => {
 
     const data = {
         organisation_id,
-        title,
+        listing_title,
         category,
         about,
         tagline,
@@ -306,7 +306,7 @@ export const deleteListing = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Search listings by title, category or location
+ * @desc    Search listings by listing_title, category or location
  * @route   GET /api/listings/search?keyword=:keyword&limit=:limit
  * @access  Public
  */
@@ -321,7 +321,7 @@ export const searchListings = asyncHandler(async (req, res) => {
         'SELECT * FROM rankedlisting WHERE keyword_vector @@ to_tsquery(${fullTextKeyword}) ' +
         'UNION ' +
         // ILIKE is expensive query, remove line below if too expensive
-        "SELECT * FROM rankedlisting WHERE title ILIKE ANY (${partialTextKeyword}) OR category ILIKE ANY (${partialTextKeyword}) OR array_to_string(locations::text[], ' ') ILIKE ANY (${partialTextKeyword}) " +
+        "SELECT * FROM rankedlisting WHERE listing_title ILIKE ANY (${partialTextKeyword}) OR category ILIKE ANY (${partialTextKeyword}) OR array_to_string(locations::text[], ' ') ILIKE ANY (${partialTextKeyword}) " +
         'ORDER BY ts_rank_cd DESC LIMIT ${limit}';
 
     const rows = await db.manyOrNone(searchQuery, data);

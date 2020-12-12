@@ -139,7 +139,7 @@ CREATE TABLE membership (
 CREATE TABLE programme (
 	programme_id SERIAL,
 	organisation_id UUID NOT NULL,
-	title VARCHAR NOT NULL,
+	programme_title VARCHAR NOT NULL,
 	about TEXT,
 	media_url VARCHAR[],
 	PRIMARY KEY (programme_id),
@@ -156,7 +156,7 @@ CREATE TABLE category (
 CREATE TABLE listing (
 	listing_id UUID,
 	created_by UUID,
-	title VARCHAR NOT NULL,
+	listing_title VARCHAR NOT NULL,
 	category VARCHAR,
 	about TEXT,
 	tagline VARCHAR,
@@ -266,7 +266,7 @@ CREATE TABLE participant (
 CREATE TABLE milestone (
 	milestone_id SERIAL,
 	listing_id UUID NOT NULL,
-	description TEXT,
+	milestone_description TEXT,
 	date TIMESTAMPTZ,
 	PRIMARY KEY (milestone_id),
 	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
@@ -275,7 +275,7 @@ CREATE TABLE milestone (
 CREATE TABLE listingupdate (
 	listing_update_id SERIAL,
 	listing_id UUID NOT NULL,
-	description TEXT,
+	listing_update_description TEXT,
 	pics VARCHAR[],
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -293,8 +293,8 @@ CREATE TABLE listingcomment (
 	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	deleted_on TIMESTAMPTZ,
 	PRIMARY KEY (listing_comment_id),
-	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE SET NULL,
-	FOREIGN KEY (user_id) REFERENCES loginuser ON DELETE SET NULL,
+	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES loginuser ON DELETE CASCADE,
 	FOREIGN KEY (reply_to_id) REFERENCES listingcomment (listing_comment_id) ON DELETE SET NULL
 );
 
