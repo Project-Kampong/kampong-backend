@@ -22,6 +22,7 @@ import { router as mailerRoute } from './api/mailer.route';
 import { router as listingsOrganisationsRoute } from './api/listingsOrganisations.route';
 import { router as organisationAnnouncementsRoute } from './api/organisationAnnoucements.route';
 import { router as organisationLikesRoute } from './api/organisationLikes.route';
+import { router as organisationJobsRoute } from './api/organisationJobs.route';
 
 class ApiRouter extends BaseRouter {
     constructor() {
@@ -49,6 +50,7 @@ class ApiRouter extends BaseRouter {
         this.route.use('/listings-organisations', listingsOrganisationsRoute);
         this.route.use('/announcements', organisationAnnouncementsRoute);
         this.route.use('/organisation-likes', organisationLikesRoute);
+        this.route.use('/organisation-jobs', organisationJobsRoute);
 
         // All unimplemented route give 404 response
         this.route.use('/*', (req, res) => res.status(404).json({ success: false, error: `Route not found: ${req.method} ${req.originalUrl}` }));

@@ -3,6 +3,7 @@ import promise from 'bluebird';
 import pgpDriver, { IInitOptions, IDatabase, IMain } from 'pg-promise';
 import { IExtensions, ListingsRepository, FaqsRepository, HashtagsRepository, CategoriesRepository } from './repositories';
 import { JobsRepository } from './repositories/jobs.repository';
+import { OrganisationsRepository, OrganisationJobsRepository } from './repositories';
 
 export type PgpExtendedProtocol = IDatabase<IExtensions> & IExtensions;
 
@@ -28,6 +29,8 @@ const dbConfig: IInitOptions<IExtensions> = {
         obj.hashtags = new HashtagsRepository(obj, pgp);
         obj.jobs = new JobsRepository(obj, pgp);
         obj.listings = new ListingsRepository(obj, pgp);
+        obj.organisations = new OrganisationsRepository(obj, pgp);
+        obj.organisationJobs = new OrganisationJobsRepository(obj, pgp);
     },
     capSQL: true,
     promiseLib: promise,
