@@ -24,7 +24,7 @@ export class MailerController {
     };
 
     sendEnquiryEmail = async (req, res) => {
-        const { receiverEmail, senderEmail, subject, receiverUsername, senderUsername, projectTitle, senderNumber, senderMessage } = req.body;
+        const { receiverEmail, senderEmail, subject, message, receiverUsername, senderUsername, projectTitle, senderNumber } = req.body;
 
         const parsedSenderNumber = !isEmpty(senderNumber) ? senderNumber : 'Not provided';
 
@@ -34,10 +34,39 @@ export class MailerController {
             projectTitle,
             senderNumber: parsedSenderNumber,
             senderEmail,
-            senderMessage,
+            senderMessage: message,
         };
 
         const pathToTemplate = path.resolve(__dirname, '../templates/email/enquiry-template.html');
+        const htmlMessage = this.generateHtmlMessage(pathToTemplate, templateVariables);
+
+        await this.mailService.sendEmail({
+            fromEmail: senderEmail,
+            toEmail: receiverEmail,
+            ccEmail: senderEmail,
+            subject,
+            html: htmlMessage,
+        });
+
+        res.sendStatus(204);
+    };
+
+    sendApplicationEmail = async (req, res) => {
+        const { receiverEmail, senderEmail, subject, message, receiverUsername, senderUsername, projectTitle, senderNumber, roleApplied } = req.body;
+
+        const parsedSenderNumber = !isEmpty(senderNumber) ? senderNumber : 'Not provided';
+
+        const templateVariables = {
+            receiverUsername,
+            senderUsername,
+            projectTitle,
+            senderNumber: parsedSenderNumber,
+            senderEmail,
+            senderMessage: message,
+            roleApplied,
+        };
+
+        const pathToTemplate = path.resolve(__dirname, '../templates/email/apply-template.html');
         const htmlMessage = this.generateHtmlMessage(pathToTemplate, templateVariables);
 
         await this.mailService.sendEmail({
