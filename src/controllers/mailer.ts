@@ -2,8 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import handlebars from 'handlebars';
 import { isEmpty } from 'lodash';
-import { MailerService } from '../services/mailer.service';
-import { mailerService } from '../services/mailer.service';
+import { mailerService, MailerService } from '../services/mailer.service';
+import { db } from '../database';
 
 export class MailerController {
     constructor(private readonly mailService: MailerService) {
@@ -24,15 +24,20 @@ export class MailerController {
     };
 
     sendEnquiryEmail = async (req, res) => {
-        const { receiverEmail, senderEmail, subject, message, receiverUsername, senderUsername, projectTitle, senderNumber } = req.body;
+        const { subject, message } = req.body;
+        const { user_id } = req.user;
 
-        const parsedSenderNumber = !isEmpty(senderNumber) ? senderNumber : 'Not provided';
+        const sender = db.one('SELECT * FROM profile WHERE user_id = $1', user_id);
+
+        const { nickname, phone } = sender;
+
+        const parsedSenderNumber = !isEmpty(phone) ? phone : 'Not provided';
 
         const templateVariables = {
             receiverUsername,
             senderUsername,
             projectTitle,
-            senderNumber: parsedSenderNumber,
+            phone,
             senderEmail,
             senderMessage: message,
         };
@@ -52,7 +57,7 @@ export class MailerController {
     };
 
     sendApplicationEmail = async (req, res) => {
-        const { receiverEmail, senderEmail, subject, message, receiverUsername, senderUsername, projectTitle, senderNumber, roleApplied } = req.body;
+        const { subject, message, roleApplied } = req.body;
 
         const parsedSenderNumber = !isEmpty(senderNumber) ? senderNumber : 'Not provided';
 
