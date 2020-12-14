@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial scale=5.0" />
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <!-- CSS (load bootstrap from a CDN) -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css" />
+        <style>
+            body {
+                padding-top: 50px;
+            }
+            p {
+                font-family: Verdana, Arial, Helvetica, sans-serif;
+            }
+            table {
+                background-color: white;
+                padding: 1rem;
+            }
+            .p-medium {
+                font-size: 1em;
+            }
+            .p-large {
+                font-size: 1.2rem;
+            }
+            .p-bold {
+                font-weight: bold;
+                color: #595959;
+            }
+        </style>
+    </head>
+    <body class="container">
+        <table
+            border="0"
+            cellpadding="0"
+            cellspacing="0"
+            style="
+                border-collapse: separate;
+                mso-table-lspace: 0pt;
+                mso-table-rspace: 0pt;
+                width: 100%;
+                box-sizing: border-box;
+                min-width: 100% !important;
+            "
+            width="100%"
+        >
+            <tr>
+                <td>
+                    <img
+                        style="max-height: 80px; max-width: 300px; margin-bottom: 2rem"
+                        src="https://kampong-dev.s3.ap-southeast-1.amazonaws.com/logo-1607448784951.png"
+                    />
+                    <p class="p-large">Hi {{ receiverUsername }},</p>
+
+                    <p class="p-medium">{{ senderUsername }} has applied to the following opportunity:</p>
+
+                    <p class="p-medium p-bold">{{ projectTitle }} - {{ roleApplied }}</p>
+                </td>
+            </tr>
+            <!-- Content -->
+            <tr>
+                <td style="border-top: 0.1rem solid #c5c5c5; border-bottom: 0.1rem solid #c5c5c5; padding: 2rem 0">
+                    <p>
+                        <span style="text-decoration: underline">{{ receiverUsername }} Contact Details</span>
+                        <br />
+                        Number: {{ senderNumber }}
+                        <br />
+                        Email: {{ senderEmail }}
+                    </p>
+                    <p style="margin: 0">{{ senderMessage }}</p>
+                </td>
+            </tr>
+            <!-- End of Content -->
+
+            <tr>
+                <td style="padding-top: 1rem">
+                    <p>
+                        Regards,
+                        <br />
+                        Team Kampong
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
