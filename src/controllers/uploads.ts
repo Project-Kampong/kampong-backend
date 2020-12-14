@@ -1,6 +1,6 @@
 import moment from 'moment-timezone';
-import { camelCase, cloneDeep, forOwn, get, isNil, map } from 'lodash';
-import { S3ClientService } from '../services/s3Client.service';
+import { get, isNil, map } from 'lodash';
+import { s3ClientService, S3ClientService } from '../services/s3Client.service';
 import { ErrorResponse } from '../utils';
 
 export class UploadsController {
@@ -8,24 +8,9 @@ export class UploadsController {
         this.s3ClientService = s3ClientService;
     }
 
-    uploadSingleFileToPublic = async (req, res, next) => {
-        const name: string = get(req.files, 'upload.name', null);
-        if (isNil(name)) {
-            return next(new ErrorResponse('Cannot upload file as filename is empty', 400));
-        }
-        const file: Buffer = get(req.files, 'upload.data', null);
-        if (isNil(file)) {
-            return next(new ErrorResponse(`Cannot upload file as file is empty (filename: ${name})`, 400));
-        }
-        const nameArr = name.split('.');
-        const key = `${nameArr.shift()}-${moment.tz(process.env.DEFAULT_TIMEZONE).format('YYYYMMDDHHmmss')}.${nameArr.join()}`;
-        const { Location, Key, Bucket } = await this.s3ClientService.uploadFileToPublicRead(file, key, { originalFileName: name });
+    uploadFilesToPublic = async (req, res, next) => {
+        const uploads = [].concat(get(req.files, 'uploads', []));
 
-        res.status(200).json({ success: true, data: { location: Location, key: Key, bucket: Bucket } });
-    };
-
-    uploadMultipleFilesToPublic = async (req, res, next) => {
-        const uploads = get(req.files, 'uploads', []);
         const uploadPromises = map(uploads, (upload) => {
             const name: string = get(upload, 'name', null);
             if (isNil(name)) {
@@ -45,13 +30,6 @@ export class UploadsController {
 
         res.status(200).json({ success: true, data: parsedResults });
     };
-
-    private convertObjKeysToCamel(obj: { [key: string]: any }): { [key: string]: any } {
-        const objCopy = cloneDeep(obj);
-        forOwn(objCopy, (val: any, key: string) => {
-            delete objCopy[key];
-            objCopy[camelCase(key)] = val;
-        });
-        return objCopy;
-    }
 }
+
+export const uploadsController = new UploadsController(s3ClientService);
