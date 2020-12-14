@@ -1,5 +1,5 @@
 import moment from 'moment-timezone';
-import { get, isNil, map } from 'lodash';
+import { get, isEmpty, map } from 'lodash';
 import { s3ClientService, S3ClientService } from '../services/s3Client.service';
 import { ErrorResponse } from '../utils';
 
@@ -9,15 +9,13 @@ export class UploadsController {
     }
 
     uploadFilesToPublic = async (req, res, next) => {
-        const uploads = [].concat(get(req.files, 'uploads', []));
+        const uploads: { name: string; data: Buffer }[] = [].concat(get(req.files, 'uploads', []));
 
-        const uploadPromises = map(uploads, (upload) => {
-            const name: string = get(upload, 'name', null);
-            if (isNil(name)) {
+        const uploadPromises = map(uploads, ({ name, data: file }) => {
+            if (isEmpty(name)) {
                 return next(new ErrorResponse('Cannot upload file as filename is empty', 400));
             }
-            const file: Buffer = get(upload, 'data', null);
-            if (isNil(file)) {
+            if (isEmpty(file)) {
                 return next(new ErrorResponse(`Cannot upload file as file is empty (filename: ${name})`, 400));
             }
             const nameArr = name.split('.');
@@ -26,7 +24,7 @@ export class UploadsController {
         });
         const results = await Promise.all(uploadPromises);
 
-        const parsedResults = map(results, ({ Location }) => Location);
+        const parsedResults = map(results, 'Location');
 
         res.status(200).json({ success: true, data: parsedResults });
     };
