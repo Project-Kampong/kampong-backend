@@ -37,7 +37,7 @@ export class MailerController {
             senderMessage: message,
         };
 
-        const pathToTemplate = path.resolve(__dirname, '../templates/email/enquiry-template.html');
+        const pathToTemplate = path.resolve(__dirname, '../../public/templates/email/enquiry-template.html');
         const htmlMessage = this.generateHtmlMessage(pathToTemplate, templateVariables);
 
         await this.mailService.sendEmail({
@@ -66,7 +66,7 @@ export class MailerController {
             roleApplied,
         };
 
-        const pathToTemplate = path.resolve(__dirname, '../templates/email/apply-template.html');
+        const pathToTemplate = path.resolve(__dirname, '../../public/templates/email/apply-template.html');
         const htmlMessage = this.generateHtmlMessage(pathToTemplate, templateVariables);
 
         await this.mailService.sendEmail({
