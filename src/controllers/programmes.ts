@@ -5,20 +5,20 @@ import { checkOrganisationOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt 
 interface ProgrammeSchema {
     programme_id: number;
     organisation_id: number;
-    title: string;
+    programme_title: string;
     about: string;
     media_url: string[];
 }
 
 interface CreateProgrammeRequestSchema {
     organisation_id: number;
-    title: string;
+    programme_title: string;
     about: string;
     media_url?: string[];
 }
 
 interface UpdateProgrammeRequestSchema {
-    title?: string;
+    programme_title?: string;
     about?: string;
     media_url?: string[];
 }
@@ -63,7 +63,7 @@ export const getProgramme = asyncHandler(async (req, res, next) => {
  * @access  Admin/Owner
  */
 export const createProgramme = asyncHandler(async (req, res, next) => {
-    const { organisation_id, title, about, media_url } = req.body;
+    const { organisation_id, programme_title, about, media_url } = req.body;
 
     const userId: string = req.user.user_id;
     const isOrganisationOwner = await checkOrganisationOwner(userId, organisation_id);
@@ -74,7 +74,7 @@ export const createProgramme = asyncHandler(async (req, res, next) => {
 
     const data: CreateProgrammeRequestSchema = {
         organisation_id,
-        title,
+        programme_title,
         about,
         media_url,
     };
@@ -107,10 +107,10 @@ export const updateProgramme = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse('Not authorised to update programme as you are not the organisation owner', 403));
     }
 
-    const { title, about, media_url } = req.body;
+    const { programme_title, about, media_url } = req.body;
 
     const data: UpdateProgrammeRequestSchema = {
-        title,
+        programme_title,
         about,
         media_url,
     };

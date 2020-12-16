@@ -10,16 +10,16 @@ import { getProgrammes, getProgramme, createProgramme, updateProgramme, deletePr
 // Define input validation
 const validateCreateProgrammeFields = [
     check('organisation_id', INVALID_FIELD_MSG('organisation id')).notEmpty().isUUID(),
-    check('title', INVALID_FIELD_MSG('title')).trim().notEmpty(),
+    check('programme_title', INVALID_FIELD_MSG('programme_title')).trim().notEmpty(),
 ];
 
 const validateUpdateProgrammeFields = [
-    oneOf([check('title').exists(), check('about').exists(), check('media_url').exists()], NO_FIELD_UPDATED_MSG),
-    check('title', INVALID_FIELD_MSG('title')).optional().trim().notEmpty(),
+    oneOf([check('programme_title').exists(), check('about').exists(), check('media_url').exists()], NO_FIELD_UPDATED_MSG),
+    check('programme_title', INVALID_FIELD_MSG('programme_title')).optional().trim().notEmpty(),
 ];
 
 // Map public routes to controller
-router.route('/').get(advancedResults('programmes'), getProgrammes);
+router.route('/').get(advancedResults('programme'), getProgrammes);
 
 router.route('/:id').get(getProgramme);
 
