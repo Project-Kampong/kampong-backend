@@ -10,10 +10,12 @@ import { getOrganisations, getOrganisation, createOrganisation, updateOrganisati
 // Import other controllers
 import { router as programmeRoute } from './programmes.route';
 import { router as listingsRoute } from './listings.route';
+import { router as organisationJobsRoute } from './organisationJobs.route';
 
 // Re-route this URI to other resource router
 router.use('/:organisation_id/programmes', programmeRoute);
 router.use('/:organisation_id/listings', listingsRoute);
+router.use('/:organisation_id/organisation-jobs', organisationJobsRoute);
 
 // Define input validation
 const validateCreateOrganisationFields = [
