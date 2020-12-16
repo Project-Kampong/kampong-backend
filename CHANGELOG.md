@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.82.0]
+
 ### Changed
 
 -   `listings`, `milestones`, `listing updates`, and `programmes` schema with columns `description` and `title` are now prepended with their table name eg. `milestone_description`
@@ -261,7 +263,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Internal, dev-only test routes and methods.
 -   API documentation temporarily set up as front-end page to be served, for ease of testing by frontend.
 
-[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.81.0...HEAD
+[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.82.0...HEAD
+[v0.82.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.82.0
 [v0.81.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.81.0
 [v0.80.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.80.0
 [v0.79.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.79.0
