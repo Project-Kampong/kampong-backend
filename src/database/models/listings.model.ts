@@ -1,8 +1,12 @@
+import { Faq } from './faqs.model';
+import { Hashtag } from './hashtags.model';
+import { Job } from './jobs.model';
+
 export interface ListingView {
     listing_id: string;
     organisation_id: number;
     created_by: string;
-    title: string;
+    listing_title: string;
     category: string;
     about: string;
     tagline: string;
@@ -13,19 +17,24 @@ export interface ListingView {
     outcome: string;
     listing_url: string;
     listing_email: string;
-    pic1: string;
-    pic2: string;
-    pic3: string;
-    pic4: string;
-    pic5: string;
+    listing_status: string;
+    pics: string[];
     is_published: boolean;
     is_verified: boolean;
+    is_featured: boolean;
     start_date: Date;
     end_date: Date;
     created_on: Date;
+    updated_on: Date;
     deleted_on: Date;
+    faqs: Faq[];
+    tags: Hashtag[];
+    jobs: Job[];
+    user_likes: { like_id: number; user_id: string }[];
+    locations: string[];
+    listing_updates: { listing_update_id: number; listing_update_description: string; pics: string[]; created_on: Date; updated_on: Date }[];
+    milestones: { milestone_id: Date; milestone_description: string; date: Date }[];
+    participants: string[];
     nickname: string;
     profile_picture: string;
-    locations: string[];
-    location_ids: number;
 }

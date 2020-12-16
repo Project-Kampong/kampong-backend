@@ -10,13 +10,13 @@ import { getMilestonesForListing, createMilestone, updateMilestone, deleteMilest
 // Define input validation chain
 const validateCreateMilestoneFields = [
     check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID(),
-    check('description', INVALID_FIELD_MSG('description')).trim().notEmpty(),
+    check('milestone_description', INVALID_FIELD_MSG('milestone_description')).trim().notEmpty(),
     check('date', INVALID_TIMESTAMP_MSG('date')).optional().matches(DATETIME_REGEX),
 ];
 
 const validateUpdateMilestoneFields = [
-    oneOf([check('description').exists(), check('date').exists()], NO_FIELD_UPDATED_MSG),
-    check('description', INVALID_FIELD_MSG('description')).optional().trim().notEmpty(),
+    oneOf([check('milestone_description').exists(), check('date').exists()], NO_FIELD_UPDATED_MSG),
+    check('milestone_description', INVALID_FIELD_MSG('milestone description')).optional().trim().notEmpty(),
     check('date', INVALID_TIMESTAMP_MSG('date')).optional().matches(DATETIME_REGEX),
 ];
 
