@@ -4,6 +4,7 @@ import handlebars from 'handlebars';
 import { isEmpty } from 'lodash';
 import { mailerService, MailerService } from '../services/mailer.service';
 import { db } from '../database';
+import { stringify } from 'querystring';
 
 export class MailerController {
     constructor(private readonly mailService: MailerService) {
@@ -24,22 +25,29 @@ export class MailerController {
     };
 
     sendEnquiryEmail = async (req, res) => {
-        const { subject, message } = req.body;
+        const { message, listingId } = req.body;
         const { user_id } = req.user;
 
-        const sender = db.one('SELECT * FROM profile WHERE user_id = $1', user_id);
+        const { email: senderEmail, nickname: senderUsername, phone } = await db.one<Promise<{ email: string; nickname: string; phone: string }>>(
+            'SELECT email, nickname, phone FROM loginuser JOIN profile USING (user_id) WHERE user_id = $1',
+            user_id,
+        );
 
-        const { nickname, phone } = sender;
+        const { listing_title: projectTitle, listing_email: receiverEmail } = await db.one<Promise<{ listing_title: string; listing_email: string }>>(
+            'SELECT listing_title, listing_email FROM listingview where listing_id = $1',
+            listingId,
+        );
+
+        const subject = `Kampong: ${projectTitle} Enquiry from ${senderUsername}`;
 
         const parsedSenderNumber = !isEmpty(phone) ? phone : 'Not provided';
 
         const templateVariables = {
-            receiverUsername,
             senderUsername,
             projectTitle,
-            phone,
+            phone: parsedSenderNumber,
             senderEmail,
-            senderMessage: message,
+            message,
         };
 
         const pathToTemplate = path.resolve(__dirname, '../../public/templates/email/enquiry-template.html');
@@ -57,17 +65,28 @@ export class MailerController {
     };
 
     sendApplicationEmail = async (req, res) => {
-        const { subject, message, roleApplied } = req.body;
+        const { listingId, roleApplied } = req.body;
+        const { user_id } = req.user;
 
-        const parsedSenderNumber = !isEmpty(senderNumber) ? senderNumber : 'Not provided';
+        const { email: senderEmail, nickname: senderUsername, phone } = await db.one<Promise<{ email: string; nickname: string; phone: string }>>(
+            'SELECT email, nickname, phone FROM loginuser JOIN profile USING (user_id) WHERE user_id = $1',
+            user_id,
+        );
+
+        const { listing_title: projectTitle, listing_email: receiverEmail } = await db.one<Promise<{ listing_title: string; listing_email: string }>>(
+            'SELECT listing_title, listing_email FROM listingview where listing_id = $1',
+            listingId,
+        );
+
+        const subject = `Kampong: ${projectTitle} Application for ${roleApplied}`;
+
+        const parsedSenderNumber = !isEmpty(phone) ? phone : 'Not provided';
 
         const templateVariables = {
-            receiverUsername,
             senderUsername,
             projectTitle,
-            senderNumber: parsedSenderNumber,
+            phone: parsedSenderNumber,
             senderEmail,
-            senderMessage: message,
             roleApplied,
         };
 

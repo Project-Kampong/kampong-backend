@@ -49,24 +49,22 @@
                         style="max-height: 80px; max-width: 300px; margin-bottom: 2rem"
                         src="https://kampong-dev.s3.ap-southeast-1.amazonaws.com/logo-1607448784951.png"
                     />
-                    <p class="p-large">Hi {{ receiverUsername }},</p>
+                    <p class="p-large">Hi {{ projectTitle }} Admin,</p>
 
-                    <p class="p-medium">{{ senderUsername }} has sent you an enquiry to the following listing:</p>
-
-                    <p class="p-medium p-bold">{{ projectTitle }}</p>
+                    <p class="p-medium">{{ senderUsername }} has sent you an enquiry for your listing: {{ projectTitle }}</p>
                 </td>
             </tr>
             <!-- Content -->
             <tr>
                 <td style="border-top: 0.1rem solid #c5c5c5; border-bottom: 0.1rem solid #c5c5c5; padding: 2rem 0">
                     <p>
-                        <span style="text-decoration: underline">{{ receiverUsername }} Contact Details</span>
+                        <span style="text-decoration: underline">{{ senderUsername }}'s Contact Details</span>
                         <br />
-                        Number: {{ senderNumber }}
+                        Number: {{ phone }}
                         <br />
                         Email: {{ senderEmail }}
                     </p>
-                    <p style="margin: 0">{{ senderMessage }}</p>
+                    <p style="margin: 0">{{ message }}</p>
                 </td>
             </tr>
             <!-- End of Content -->

@@ -14,11 +14,19 @@ const validateEmail = [
     check('message', INVALID_FIELD_MSG('email message')).notEmpty(),
     check('subject', INVALID_FIELD_MSG('email subject')).notEmpty(),
 ];
+const validateEnquiryEmail = [
+    check('message', INVALID_FIELD_MSG('email message')).notEmpty(),
+    check('listingId', INVALID_FIELD_MSG('listingId')).isUUID().notEmpty(),
+];
+const validateApplicationEmail = [
+    check('roleApplied', INVALID_FIELD_MSG('role applied')).notEmpty(),
+    check('listingId', INVALID_FIELD_MSG('listingId')).isUUID().notEmpty(),
+];
 
 // Routes below allowed for authenticated users only
 router.use(protect);
 
 // Map route to controller
 router.route('/send').post(validateEmail, checkInputError, asyncHandler(mailerController.sendEmailGeneric));
-router.route('/send-enquiry').post(validateEmail, checkInputError, asyncHandler(mailerController.sendEnquiryEmail));
-router.route('/send-application').post(validateEmail, checkInputError, asyncHandler(mailerController.sendApplicationEmail));
+router.route('/send-enquiry').post(validateEnquiryEmail, checkInputError, asyncHandler(mailerController.sendEnquiryEmail));
+router.route('/send-application').post(validateApplicationEmail, checkInputError, asyncHandler(mailerController.sendApplicationEmail));
