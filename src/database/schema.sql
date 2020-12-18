@@ -255,7 +255,7 @@ CREATE TABLE listingadmin (
 
 CREATE TABLE participant (
 	participant_id SERIAL,
-	listing_id UUID NOT NULL,
+	listing_id UUID NOT NUlistingLL,
 	user_id UUID NOT NULL,
 	joined_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	end_on TIMESTAMPTZ,
@@ -293,7 +293,6 @@ CREATE TABLE listingcomment (
 	reply_to_id INTEGER,
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-	deleted_on TIMESTAMPTZ,
 	PRIMARY KEY (listing_comment_id),
 	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE SET NULL,
 	FOREIGN KEY (user_id) REFERENCES loginuser ON DELETE SET NULL,
