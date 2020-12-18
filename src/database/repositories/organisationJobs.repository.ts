@@ -1,6 +1,6 @@
 import { IDatabase, IMain } from 'pg-promise';
 import { BaseRepository } from './base.repository';
-import { OrganisationJob, CreateOrganisationJobSchema, UpdateOrganisationJobSchema, DeactivateOrganisationJobSchema } from '../models';
+import { OrganisationJob, CreateOrganisationJobSchema, UpdateOrganisationJobSchema } from '../models';
 
 export class OrganisationJobsRepository extends BaseRepository {
     constructor(protected readonly db: IDatabase<any>, protected readonly pgp: IMain) {
