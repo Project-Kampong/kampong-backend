@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+-   Bump node version to 14.15.3
+
 ## [v0.82.0]
 
 ### Added

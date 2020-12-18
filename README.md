@@ -17,7 +17,7 @@
 Latest version of the app has been tested to run on:
 
 ```
-- Node v14.15.2
+- Node v14.15.3
 - Yarn v1.22.10
 - PostgreSQL 13.1
 ```
