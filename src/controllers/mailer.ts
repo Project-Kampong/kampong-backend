@@ -4,7 +4,6 @@ import handlebars from 'handlebars';
 import { isEmpty } from 'lodash';
 import { mailerService, MailerService } from '../services/mailer.service';
 import { db } from '../database';
-import { stringify } from 'querystring';
 
 export class MailerController {
     constructor(private readonly mailService: MailerService) {
@@ -25,7 +24,7 @@ export class MailerController {
     };
 
     sendEnquiryEmail = async (req, res) => {
-        const { message, listingId } = req.body;
+        const { subject, message, listingId } = req.body;
         const { user_id } = req.user;
 
         const { email: senderEmail, nickname: senderUsername, phone } = await db.one<Promise<{ email: string; nickname: string; phone: string }>>(
@@ -38,7 +37,7 @@ export class MailerController {
             listingId,
         );
 
-        const subject = `Kampong: ${projectTitle} Enquiry from ${senderUsername}`;
+        const parsedSubject = `Kampong: ${projectTitle} Enquiry - ${subject}`;
 
         const parsedSenderNumber = !isEmpty(phone) ? phone : 'Not provided';
 
@@ -57,7 +56,7 @@ export class MailerController {
             fromEmail: senderEmail,
             toEmail: receiverEmail,
             ccEmail: senderEmail,
-            subject,
+            subject: parsedSubject,
             html: htmlMessage,
         });
 

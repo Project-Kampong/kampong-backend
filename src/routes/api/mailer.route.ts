@@ -16,6 +16,7 @@ const validateEmail = [
 ];
 const validateEnquiryEmail = [
     check('message', INVALID_FIELD_MSG('email message')).notEmpty(),
+    check('subject', INVALID_FIELD_MSG('email subject')).notEmpty(),
     check('listingId', INVALID_FIELD_MSG('listingId')).isUUID().notEmpty(),
 ];
 const validateApplicationEmail = [
