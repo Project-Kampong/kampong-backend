@@ -2,10 +2,7 @@ import { db, HashtagsRepository, ListingsRepository } from '../database';
 import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
 
 export class HashtagsController {
-    constructor(private readonly hashtagsRepository: HashtagsRepository, private readonly listingsRepository: ListingsRepository) {
-        this.hashtagsRepository = hashtagsRepository;
-        this.listingsRepository = listingsRepository;
-    }
+    constructor(private readonly hashtagsRepository: HashtagsRepository, private readonly listingsRepository: ListingsRepository) {}
 
     /**
      * @desc    Get all hashtags for a listing

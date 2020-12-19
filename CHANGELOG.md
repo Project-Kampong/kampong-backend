@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Bump node version to 14.15.3
 
+## [v0.83.0]
+
 ## [v0.82.0]
 
 ### Added
@@ -272,7 +274,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Internal, dev-only test routes and methods.
 -   API documentation temporarily set up as front-end page to be served, for ease of testing by frontend.
 
-[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.82.0...HEAD
+[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.83.0...HEAD
+[v0.83.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.83.0
 [v0.82.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.82.0
 [v0.81.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.81.0
 [v0.80.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.80.0

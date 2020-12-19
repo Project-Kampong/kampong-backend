@@ -6,9 +6,8 @@ import { mailerService, MailerService } from '../services/mailer.service';
 import { db } from '../database';
 
 export class MailerController {
-    constructor(private readonly mailService: MailerService) {
-        this.mailService = mailService;
-    }
+    constructor(private readonly mailService: MailerService) {}
+
     sendEmailGeneric = async (req, res) => {
         const { receiverEmail, senderEmail, subject, message } = req.body;
 
