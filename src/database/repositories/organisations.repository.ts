@@ -1,12 +1,7 @@
-import { IDatabase, IMain } from 'pg-promise';
 import { BaseRepository } from './base.repository';
 import { Organisation, CreateOrganisationSchema, UpdateOrganisationSchema } from '../models';
 
 export class OrganisationsRepository extends BaseRepository {
-    constructor(protected readonly db: IDatabase<any>, protected readonly pgp: IMain) {
-        super(db, pgp);
-    }
-
     // TODO: To fill in query
     getAllOrganisations(): Promise<Organisation[]> {
         return this.db.manyOrNone('SELECT * FROM organisation');

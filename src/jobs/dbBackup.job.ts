@@ -8,7 +8,6 @@ import { S3ClientService, s3ClientService } from '../services/s3Client.service';
 class DbBackupJob extends BaseJob {
     constructor(private readonly s3ClientService: S3ClientService) {
         super();
-        this.s3ClientService = s3ClientService;
     }
 
     get frequency() {
