@@ -3,10 +3,7 @@ import { asyncHandler } from '../middleware';
 import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
 
 export class JobsController {
-    constructor(private readonly jobsRepository: JobsRepository, private readonly listingsRepository: ListingsRepository) {
-        this.jobsRepository = jobsRepository;
-        this.listingsRepository = listingsRepository;
-    }
+    constructor(private readonly jobsRepository: JobsRepository, private readonly listingsRepository: ListingsRepository) {}
 
     /**
      * @desc    Get all jobs for a listing
