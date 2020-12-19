@@ -15,7 +15,7 @@ import { get } from 'lodash';
 import { checkConn } from './utils';
 import { apiRouter } from './routes';
 import { errorHandler } from './middleware';
-import { dbBackupJob } from './jobs/dbBackup.job';
+import { dbBackupJob } from './jobs';
 
 dotenv.config({ path: 'config/config.env' });
 

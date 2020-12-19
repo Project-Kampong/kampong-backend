@@ -4,9 +4,7 @@ import { s3ClientService, S3ClientService } from '../services/s3Client.service';
 import { ErrorResponse } from '../utils';
 
 export class UploadsController {
-    constructor(private readonly s3ClientService: S3ClientService) {
-        this.s3ClientService = s3ClientService;
-    }
+    constructor(private readonly s3ClientService: S3ClientService) {}
 
     uploadFilesToPublic = async (req, res, next) => {
         const uploads: { name: string; data: Buffer }[] = [].concat(get(req.files, 'uploads', []));

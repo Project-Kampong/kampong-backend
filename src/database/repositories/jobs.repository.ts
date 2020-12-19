@@ -1,12 +1,7 @@
-import { IDatabase, IMain } from 'pg-promise';
 import { BaseRepository } from './base.repository';
 import { CreateJobSchema, DeactivateJobSchema, Job, UpdateJobSchema } from '../models';
 
 export class JobsRepository extends BaseRepository {
-    constructor(protected readonly db: IDatabase<any>, protected readonly pgp: IMain) {
-        super(db, pgp);
-    }
-
     getAllJobsForListing(listingId: string): Promise<Job[]> {
         return this.db.manyOrNone('SELECT * FROM job WHERE listing_id = $1', listingId);
     }

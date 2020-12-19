@@ -1,9 +1,8 @@
 import { MailerService } from '../services/mailer.service';
 
 export class MailerController {
-    constructor(private readonly mailService: MailerService) {
-        this.mailService = mailService;
-    }
+    constructor(private readonly mailService: MailerService) {}
+
     sendEmailGeneric = async (req, res) => {
         const { receiverEmail, senderEmail, subject, message } = req.body;
 
