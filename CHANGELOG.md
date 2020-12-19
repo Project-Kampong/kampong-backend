@@ -7,13 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+-   Bump node version to 14.15.3
+
 ## [v0.83.0]
 
 ## [v0.82.0]
 
+### Added
+
+-   Listing enquiry and application endpoints and email templates
+
 ### Changed
 
 -   `listings`, `milestones`, `listing updates`, and `programmes` schema with columns `description` and `title` are now prepended with their table name eg. `milestone_description`
+-   Bump node version to 14.15.2
 
 ## [v0.81.0]
 

@@ -32,8 +32,7 @@ Backend API for Project Kampong.
 
 * [File Upload](#file-upload)
 
-  * [Multiple File Upload V2](#1-multiple-file-upload-v2)
-  * [Single File Upload V2](#2-single-file-upload-v2)
+  * [File Upload](#1-file-upload)
 
 * [Hashtags](#hashtags)
 
@@ -103,7 +102,9 @@ Backend API for Project Kampong.
 
 * [Mailer](#mailer)
 
-  * [Send email](#1-send-email)
+  * [Send application email](#1-send-application-email)
+  * [Send email](#2-send-email)
+  * [Send enquiry email](#3-send-enquiry-email)
 
 * [Milestones](#milestones)
 
@@ -2293,74 +2294,10 @@ File upload endpoints.
 
 
 
-### 1. Multiple File Upload V2
+### 1. File Upload
 
 
-Multiple file upload, response data object shows the upload information made available by the library (multer). Permission: Public.
-
-Field rules: 
-All fields required unless otherwise stated. 
-files - Collection of valid files.
-
-
-***Endpoint:***
-
-```bash
-Method: POST
-Type: FORMDATA
-URL: {{URL}}/api/file-upload/multi
-```
-
-
-
-***Body:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| uploads |  | Collection of 5 JPG files |
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Multiple File Upload V2 (200 OK)
-
-
-
-***Body:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| uploads |  | Collection of 5 JPG files |
-
-
-
-##### I. Example Response: Multiple File Upload V2 (200 OK)
-```js
-{
-    "success": true,
-    "data": [
-        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-1-20201206011003.jpg",
-        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-20201206011003.jpg",
-        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-20201206011003.jpg",
-        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-4-20201206011003.jpg",
-        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-5-20201206011003.jpg"
-    ]
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 2. Single File Upload V2
-
-
-Single file upload. Response data object shows the upload information. Permission: Public.
+File upload. Response data object shows the upload information. Permission: Public.
 
 Field rules: 
 All fields required unless otherwise stated. 
@@ -2381,7 +2318,7 @@ URL: {{URL}}/api/file-upload
 
 | Key | Value | Description |
 | --- | ------|-------------|
-| upload |  | Test jpg file |
+| uploads |  | Test jpg file |
 
 
 
@@ -7776,7 +7713,74 @@ Send email endpoints.
 
 
 
-### 1. Send email
+### 1. Send application email
+
+
+Send application email to a single recipient. Permission: Public.
+
+Field rules: 
+All fields required unless otherwise stated. 
+listingId - Valid listing id.
+roleApplied - Valid non empty text.
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: {{URL}}/api/mailer/send-application
+```
+
+
+
+***Body:***
+
+```js        
+{
+    "listingId": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+    "roleApplied": "HR Manager"
+}
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Send email (200 OK)
+
+
+
+***Body:***
+
+```js        
+{
+    "receiverEmail": "dontay0209@gmail.com",
+    "senderEmail": "dontay0209@gmail.com",
+    "subject": "Test Email 1",
+    "message": "This is a test email."
+}
+```
+
+
+
+##### I. Example Response: Send email (200 OK)
+```js
+{
+    "success": true,
+    "data": {}
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+### 2. Send email
 
 
 Send email to a single recipient with optional cc of sender's email. Permission: Public.
@@ -7807,6 +7811,74 @@ URL: {{URL}}/api/mailer/send
     "senderEmail": "dontay0209@gmail.com",
     "subject": "Test Email 1",
     "message": "This is a test email."
+}
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Send email (200 OK)
+
+
+
+***Body:***
+
+```js        
+{
+    "receiverEmail": "dontay0209@gmail.com",
+    "senderEmail": "dontay0209@gmail.com",
+    "subject": "Test Email 1",
+    "message": "This is a test email."
+}
+```
+
+
+
+##### I. Example Response: Send email (200 OK)
+```js
+{
+    "success": true,
+    "data": {}
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+### 3. Send enquiry email
+
+
+Send enquiry email to a single recipient. Permission: Public.
+
+Field rules: 
+All fields required unless otherwise stated. 
+listingId - Valid listing id.
+message - Valid non empty text.
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: {{URL}}/api/mailer/send-enquiry
+```
+
+
+
+***Body:***
+
+```js        
+{
+    "listingId": "1276b4eb-df3a-4de3-bcae-a450ed96eeac",
+    "message": "Hi this is a test enquiry.",
+    "subject": "Kampong Opening Enquiry"
 }
 ```
 
@@ -10878,4 +10950,4 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-12-12 08:28:06 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-12-19 12:59:37 by [docgen](https://github.com/thedevsaddam/docgen)
