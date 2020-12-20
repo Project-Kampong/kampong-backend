@@ -13,7 +13,6 @@ jobs:
 
         steps:
             - name: Run deployment script on development
-              if: ${{ github.event.inputs.name == 'DEV' }}
               uses: appleboy/ssh-action@master
               with:
                   HOST: ${{ secrets.DEV_HOST }}
