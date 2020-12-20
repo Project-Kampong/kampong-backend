@@ -1,19 +1,18 @@
-name: Deploy (Run update-backend.sh script)
+name: Deploy to development
 
 on:
-    workflow_dispatch:
-        inputs:
-            name:
-                description: 'Deploy to DEV / PROD'
-                required: true
-                default: 'DEV'
+    workflow_run:
+        workflow_run: ['Bump version']
+        branches: [master]
+        types:
+            - completed
 
 jobs:
     build:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Run deployment script on development server
+            - name: Run deployment script on development
               if: ${{ github.event.inputs.name == 'DEV' }}
               uses: appleboy/ssh-action@master
               with:
@@ -21,13 +20,4 @@ jobs:
                   USERNAME: root
                   PORT: 22
                   KEY: ${{ secrets.SSHKEY }}
-                  script: ~/deployment-scripts/backend-script/update-backend.sh
-            - name: Run deployment script on production server
-              if: ${{ github.event.inputs.name == 'PROD' }}
-              uses: appleboy/ssh-action@master
-              with:
-                  HOST: ${{ secrets.PROD_HOST }}
-                  USERNAME: root
-                  PORT: 22
-                  KEY: ${{ secrets.SSHKEY }}
-                  script: ~/deployment-scripts/backend-script/update-backend.sh
+                  script: ~/deployment-scripts/backend-script/development/update-backend.sh
