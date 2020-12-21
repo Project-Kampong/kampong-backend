@@ -1,8 +1,9 @@
+import passport from 'passport';
 import express from 'express';
 export const router = express.Router();
 import rateLimit from 'express-rate-limit';
 import { check, oneOf } from 'express-validator';
-import { protect, checkInputError } from '../../middleware';
+import { protect, checkInputError, asyncHandler } from '../../middleware';
 import {
     ALPHA_WHITESPACE_REGEX,
     PASSWORD_REGEX,
@@ -26,6 +27,8 @@ import {
     resetPassword,
     resendActivationEmail,
 } from '../../controllers/auth';
+import { googleAuthController } from '../../controllers/googleAuth';
+import { facebookAuthController } from '../../controllers/facebookAuth';
 
 // input validation chain definition
 const validateRegisterFields = [
@@ -71,6 +74,20 @@ router.post('/register', validateRegisterFields, checkInputError, register);
 router.post('/login', validateLoginFields, checkInputError, login);
 router.post('/forget-password', authRequestLimiter, validateForgetPasswordFields, checkInputError, forgetPassword);
 router.put('/forget-password/:resetToken', validateResetPasswordFields, checkInputError, resetPassword);
+
+// Social authentication
+router.get('/google-login', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get('/facebook-login', passport.authenticate('facebook', { scope: ['email'] }));
+router.get(
+    '/google-login/callback',
+    passport.authenticate('google', { failureRedirect: '/login' }),
+    googleAuthController.googleLogin
+);
+router.get(
+    '/facebook-login/callback',
+    passport.authenticate('facebook', { failureRedirect: '/login' }),
+    facebookAuthController.facebookLogin
+);
 
 // routers below use protect middleware
 router.use(protect);
