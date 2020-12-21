@@ -15,9 +15,9 @@ export interface CreateUserSchema {
     first_name: string,
     last_name: string,
     email: string,
-    password: string | null,
-    google_id: string | null,
-    facebook_id: string | null,
+    password?: string | null,
+    google_id?: string | null,
+    facebook_id?: string | null,
     role?: string
     is_activated?: boolean
 };
