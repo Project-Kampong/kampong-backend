@@ -35,4 +35,4 @@ export interface UpdateUserDetailsSchema {
 
 export interface UpdateUserPasswordSchema {
     password: string
-}
+};
