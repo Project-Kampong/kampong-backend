@@ -5,6 +5,7 @@ import { JobsRepository } from './jobs.repository';
 import { ListingsRepository } from './listings.repository';
 import { OrganisationsRepository } from './organisations.repository';
 import { OrganisationJobsRepository } from './organisationJobs.repository';
+import { UsersRepository } from './users.repository';
 
 // Database Interface Extensions (Add repositories here):
 interface IExtensions {
@@ -15,6 +16,7 @@ interface IExtensions {
     hashtags: HashtagsRepository;
     organisations: OrganisationsRepository;
     organisationJobs: OrganisationJobsRepository;
+    users: UsersRepository;
 }
 
 export {
@@ -26,4 +28,5 @@ export {
     ListingsRepository,
     OrganisationsRepository,
     OrganisationJobsRepository,
+    UsersRepository
 };
