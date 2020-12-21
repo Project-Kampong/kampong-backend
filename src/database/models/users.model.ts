@@ -4,8 +4,8 @@ export interface User {
     last_name: string,
     email: string,
     password: string | null,
-    googleId: string | null,
-    facebookId: string | null,
+    google_id: string | null,
+    facebook_id: string | null,
     role: string
     is_activated: boolean
 };
@@ -16,8 +16,8 @@ export interface CreateUserSchema {
     last_name: string,
     email: string,
     password: string | null,
-    googleId: string | null,
-    facebookId: string | null,
+    google_id: string | null,
+    facebook_id: string | null,
     role?: string
     is_activated?: boolean
 };
@@ -27,8 +27,8 @@ export interface UpdateUserDetailsSchema {
     last_name: string,
     email: string,
     password?: string | null,
-    googleId?: string | null,
-    facebookId?: string | null,
+    google_id?: string | null,
+    facebook_id?: string | null,
     role?: string
     is_activated?: boolean
 };
