@@ -1,9 +1,9 @@
 /* Login user population */
-insert into loginuser (user_id, first_name, last_name, email, password, role) values ('f96b2138-1754-4c17-a405-940e20adc601', 'Wayne', 'Lee', 'admin@gmail.com', $1, 'admin');
-insert into loginuser (user_id, first_name, last_name, email, password, role) values ('b7662cd1-a2c9-4054-95e7-078e35ea6fa1', 'Derrick', 'Lim', 'derrick@gmail.com', $1, 'admin');
-insert into loginuser (user_id, first_name, last_name, email, password, role) values ('d69a127d-815b-4834-b2b6-54ab398fccad', 'Aaron', 'Lim', 'user@gmail.com', $1, 'user');
-insert into loginuser (user_id, first_name, last_name, email, password, role) values ('f997120c-2956-482e-9ba3-81a12b4fecc1', 'Viki', 'Tay', 'valbrooke3@businessinsider.com', $1, 'user');
-insert into loginuser (user_id, first_name, last_name, email, password, role) values ('2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb', 'Constance', 'Tan', 'cstan4@toplist.cz', $1, 'user');
+insert into loginuser (user_id, first_name, last_name, email, password, google_id, facebook_id, role) values ('f96b2138-1754-4c17-a405-940e20adc601', 'Wayne', 'Lee', 'admin@gmail.com', $1, null, null, 'admin');
+insert into loginuser (user_id, first_name, last_name, email, password, google_id, facebook_id, role) values ('b7662cd1-a2c9-4054-95e7-078e35ea6fa1', 'Derrick', 'Lim', 'derrick@gmail.com', $1, null, null, 'admin');
+insert into loginuser (user_id, first_name, last_name, email, password, google_id, facebook_id, role) values ('d69a127d-815b-4834-b2b6-54ab398fccad', 'Aaron', 'Lim', 'user@gmail.com', $1, null, null, 'user');
+insert into loginuser (user_id, first_name, last_name, email, password, google_id, facebook_id, role) values ('f997120c-2956-482e-9ba3-81a12b4fecc1', 'Viki', 'Tay', 'valbrooke3@businessinsider.com', $1, null, null, 'user');
+insert into loginuser (user_id, first_name, last_name, email, password, google_id, facebook_id, role) values ('2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb', 'Constance', 'Tan', 'cstan4@toplist.cz', $1, null, null, 'user');
 
 /* User profile population */
 insert into profile (user_id, nickname, profile_picture, about, gender, dob, occupation, phone, facebook_link, twitter_link, instagram_link, linkedin_link) values ('f96b2138-1754-4c17-a405-940e20adc601', 'Wayne', 'https://images.pexels.com/photos/1561863/pexels-photo-1561863.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'Quality-focused impactful projection', 'o', '1985-04-18 00:43:59', 'Geological Engineer', 97690390, 'http://baidu.com/ipsum/primis/in/faucibus/orci/luctus.xml', 'http://nhs.uk/at/diam/nam.png', 'http://nasa.gov/pede/justo/eu/massa/donec/dapibus/duis.aspx', 'https://linkedin.com/ante/vestibulum/ante/ipsum/primis/in.json');
