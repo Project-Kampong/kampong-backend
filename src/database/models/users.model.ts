@@ -18,7 +18,7 @@ export interface CreateUserSchema {
     is_activated?: boolean
 };
 
-export interface UpdateUserSchema {
+export interface UpdateUserDetailsSchema {
     first_name: string,
     last_name: string,
     email: string,
@@ -26,3 +26,7 @@ export interface UpdateUserSchema {
     role?: string
     is_activated?: boolean
 };
+
+export interface UpdateUserPasswordSchema {
+    password: string
+}
