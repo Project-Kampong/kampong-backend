@@ -11,11 +11,13 @@ import xss from 'xss-clean';
 import rateLimit from 'express-rate-limit';
 import hpp from 'hpp';
 import cors from 'cors';
+import passport from 'passport';
 import { get } from 'lodash';
 import { checkConn } from './utils';
 import { apiRouter } from './routes';
 import { errorHandler } from './middleware';
 import { dbBackupJob } from './jobs';
+import { googlePassport, facebookPassport } from './utils';
 
 dotenv.config({ path: 'config/config.env' });
 
@@ -24,6 +26,11 @@ const app = express();
 
 // Check connection to db
 checkConn();
+
+// Initialise social media auth passport
+googlePassport(passport);
+facebookPassport(passport);
+app.use(passport.initialize());
 
 // Express json parser
 app.use(express.json());
