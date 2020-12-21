@@ -28,5 +28,5 @@ export {
     ListingsRepository,
     OrganisationsRepository,
     OrganisationJobsRepository,
-    UsersRepository
+    UsersRepository,
 };

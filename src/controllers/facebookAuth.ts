@@ -5,9 +5,7 @@ import { UsersRepository } from '../database';
 import { CreateUserSchema } from '../database/models';
 
 class FacebookAuthController {
-    constructor(
-        private readonly usersRepository: UsersRepository
-    ) {}
+    constructor(private readonly usersRepository: UsersRepository) {}
 
     /**
      * @desc Login using facebook
@@ -24,7 +22,7 @@ class FacebookAuthController {
                 first_name: profile.name.givenName,
                 last_name: profile.name.familyName,
                 email: profile.emails[0].value,
-                facebook_id: profile.id
+                facebook_id: profile.id,
             };
             cleanseData(userData);
             const createUserQueries = await db.tx(async (query) => {
@@ -37,7 +35,7 @@ class FacebookAuthController {
 
         sendTokenResponse(user, 200, res);
     };
-};
+}
 
 // Helper method to get token from model, create cookie and send response
 const sendTokenResponse = (user, statusCode, res, redirectHome = false) => {

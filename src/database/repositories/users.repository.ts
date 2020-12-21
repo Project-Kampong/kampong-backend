@@ -11,15 +11,15 @@ export class UsersRepository extends BaseRepository {
     }
 
     updateUserDetailsById(updateUserDetailsData: UpdateUserDetailsSchema, userId: string): Promise<User> {
-        const updateUserDetailsQuery = 
+        const updateUserDetailsQuery =
             this.pgp.helpers.update(updateUserDetailsData, null, 'loginuser') + this.pgp.as.format(' WHERE user_id = $1 RETURNING *', userId);
 
         return this.db.one(updateUserDetailsQuery);
     }
 
     updateUserPasswordById(updateUserPasswordData: UpdateUserPasswordSchema, userId: string): Promise<User> {
-        const updatePasswordQuery = 
-        this.pgp.helpers.update(updateUserPasswordData, null, 'loginuser') + this.pgp.as.format(' WHERE user_id = $1 RETURNING *', userId);
+        const updatePasswordQuery =
+            this.pgp.helpers.update(updateUserPasswordData, null, 'loginuser') + this.pgp.as.format(' WHERE user_id = $1 RETURNING *', userId);
 
         return this.db.one(updatePasswordQuery);
     }
@@ -27,4 +27,4 @@ export class UsersRepository extends BaseRepository {
     deleteUserById(userId: string): Promise<User> {
         return this.db.one('DELETE FROM loginuser WHERE user_id = $1 RETURNING *', userId);
     }
-};
+}
