@@ -78,8 +78,8 @@ router.put('/forget-password/:resetToken', validateResetPasswordFields, checkInp
 // Social authentication
 router.get('/google-login', passport.authenticate('google', { scope: ['profile', 'email'] }));
 router.get('/facebook-login', passport.authenticate('facebook', { scope: ['email'] }));
-router.get('/google-login/callback', passport.authenticate('google', { failureRedirect: '/login' }), googleAuthController.googleLogin);
-router.get('/facebook-login/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), facebookAuthController.facebookLogin);
+router.get('/google-login/callback', passport.authenticate('google', { failureRedirect: '/login' }), asyncHandler(googleAuthController.googleLogin));
+router.get('/facebook-login/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), asyncHandler(facebookAuthController.facebookLogin));
 
 // routers below use protect middleware
 router.use(protect);
