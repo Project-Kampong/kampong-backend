@@ -33,6 +33,10 @@ class GoogleAuthController {
             sendTokenResponse(createUserQueries[0], 200, res);
         }
 
+        if (!user.google_id) {
+            user.google_id = profile.id;
+        }
+
         sendTokenResponse(user, 200, res);
     };
 }

@@ -33,6 +33,10 @@ class FacebookAuthController {
             sendTokenResponse(createUserQueries[0], 200, res);
         }
 
+        if (!user.facebook_id) {
+            user.facebook_id = profile.id;
+        }
+
         sendTokenResponse(user, 200, res);
     };
 }
