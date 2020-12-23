@@ -2,7 +2,7 @@
     "name": "kampong-backend",
     "version": "1.0.0",
     "description": "Kampong Backend API",
-    "main": "dist/src/server.js",
+    "main": "dist/server.js",
     "engines": {
         "yarn": "1.x",
         "node": "14.x"
