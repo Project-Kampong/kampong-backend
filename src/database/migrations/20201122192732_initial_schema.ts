@@ -9,9 +9,9 @@ export async function up(knex: Knex): Promise<void> {
             table.string('first_name').notNullable();
             table.string('last_name');
             table.string('email').unique().notNullable();
-            table.string('password').defaultTo('NULL');
-            table.string('google_id').defaultTo('NULL');
-            table.string('facebook_id').defaultTo('NULL');
+            table.string('password');
+            table.string('google_id');
+            table.string('facebook_id');
             table.enu('role', ['admin', 'user'], { useNative: true, enumName: 'user_role' }).notNullable().defaultTo('user');
             table.boolean('is_activated').notNullable().defaultTo(false);
         });
