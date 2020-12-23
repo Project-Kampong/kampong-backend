@@ -17,7 +17,7 @@ import { checkConn } from './utils';
 import { apiRouter } from './routes';
 import { errorHandler } from './middleware';
 import { dbBackupJob } from './jobs';
-import { googlePassport, facebookPassport } from './utils';
+import { googlePassport, facebookPassport } from './services/passport.service';
 
 dotenv.config({ path: 'config/config.env' });
 
