@@ -11,7 +11,7 @@ class DbBackupJob extends BaseJob {
     }
 
     get frequency() {
-        return '* 0 5 * * *';
+        return '0 0 5 * * *';
     }
 
     get command() {
