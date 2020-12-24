@@ -1,15 +1,15 @@
 import { mocked } from 'ts-jest/utils';
-import { HashtagsController } from '../../src/controllers/hashtags';
-import { HashtagsRepository, ListingsRepository } from '../../src/database';
+import { HashtagsController } from './hashtags';
+import { HashtagsRepository, ListingsRepository } from '../database';
 
 // Mock imported function checkListingOwner, and leave ErrorResponse unmocked
-jest.mock('../../src/utils', () => {
+jest.mock('../utils', () => {
     return {
-        ...jest.requireActual('../../src/utils'),
+        ...jest.requireActual('../utils'),
         checkListingOwner: jest.fn(),
     };
 });
-import { checkListingOwner, ErrorResponse } from '../../src/utils';
+import { checkListingOwner, ErrorResponse } from '../utils';
 const mockedCheckListingOwner = mocked(checkListingOwner, true);
 
 // Mock injected dependencies
