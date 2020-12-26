@@ -79,7 +79,7 @@ export async function up(knex: Knex): Promise<void> {
         await tx.schema.createTable('programme', (table: Knex.TableBuilder) => {
             table.increments('programme_id').primary();
             table.uuid('organisation_id').notNullable().references('organisation_id').inTable('organisation').onDelete('CASCADE');
-            table.string('title').notNullable();
+            table.string('programme_title').notNullable();
             table.text('about');
             table.specificType('media_url', 'VARCHAR[]');
         });
@@ -93,7 +93,7 @@ export async function up(knex: Knex): Promise<void> {
         await tx.schema.createTable('listing', (table: Knex.TableBuilder) => {
             table.uuid('listing_id').primary();
             table.uuid('created_by').references('user_id').inTable('loginuser').onDelete('SET NULL');
-            table.string('title').notNullable();
+            table.string('listing_title').notNullable();
             table.string('category').references('category_name').inTable('category').onDelete('SET NULL');
             table.text('about');
             table.string('tagline');
@@ -178,14 +178,14 @@ export async function up(knex: Knex): Promise<void> {
         await tx.schema.createTable('milestone', (table: Knex.TableBuilder) => {
             table.increments('milestone_id').primary();
             table.uuid('listing_id').notNullable().references('listing_id').inTable('listing').onDelete('CASCADE');
-            table.text('description');
+            table.text('milestone_description');
             table.timestamp('date');
         });
 
         await tx.schema.createTable('listingupdate', (table: Knex.TableBuilder) => {
             table.increments('listing_update_id').primary();
             table.uuid('listing_id').notNullable().references('listing_id').inTable('listing').onDelete('CASCADE');
-            table.text('description');
+            table.text('listing_update_description');
             table.specificType('pics', 'VARCHAR[]');
             table.timestamp('created_on').notNullable().defaultTo(knex.fn.now());
             table.timestamp('updated_on').notNullable().defaultTo(knex.fn.now());
@@ -193,8 +193,8 @@ export async function up(knex: Knex): Promise<void> {
 
         await tx.schema.createTable('listingcomment', (table: Knex.TableBuilder) => {
             table.increments('listing_comment_id').primary();
-            table.uuid('user_id').notNullable().references('user_id').inTable('loginuser').onDelete('SET NULL');
-            table.uuid('listing_id').notNullable().references('listing_id').inTable('listing').onDelete('SET NULL');
+            table.uuid('user_id').notNullable().references('user_id').inTable('loginuser').onDelete('CASCADE');
+            table.uuid('listing_id').notNullable().references('listing_id').inTable('listing').onDelete('CASCADE');
             table.text('comment');
             table.integer('reply_to_id').references('listing_comment_id').inTable('listingcomment').onDelete('SET NULL');
             table.timestamp('created_on').notNullable().defaultTo(knex.fn.now());
@@ -223,11 +223,19 @@ export async function up(knex: Knex): Promise<void> {
             table.timestamp('updated_on').notNullable().defaultTo(knex.fn.now());
             table.timestamp('deleted_on');
         });
+
+        await tx.schema.createTable('organisationjob', (table: Knex.TableBuilder) => {
+            table.increments('organisation_job_id').primary();
+            table.uuid('organisation_id').notNullable().references('organisation_id').inTable('organisation').onDelete('CASCADE');
+            table.string('organisation_job_title').notNullable();
+            table.text('organisation_job_description');
+        });
     });
 }
 
 export async function down(knex: Knex): Promise<void> {
     return knex.transaction(async (tx: Knex.Transaction) => {
+        await tx.schema.dropTableIfExists('organisationjob');
         await tx.schema.dropTableIfExists('organisationannouncement');
         await tx.schema.dropTableIfExists('listinglocation');
         await tx.schema.dropTableIfExists('location');

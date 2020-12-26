@@ -4,6 +4,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import 'colors';
 import cookieParser from 'cookie-parser';
+import fileUpload from 'express-fileupload';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import xss from 'xss-clean';
@@ -14,6 +15,7 @@ import { get } from 'lodash';
 import { checkConn } from './utils';
 import { apiRouter } from './routes';
 import { errorHandler } from './middleware';
+import { dbBackupJob } from './jobs';
 
 dotenv.config({ path: 'config/config.env' });
 
@@ -28,6 +30,9 @@ app.use(express.json());
 
 // Cookie parser
 app.use(cookieParser());
+
+// Multipart/formdata file uploader
+app.use(fileUpload());
 
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
@@ -59,6 +64,11 @@ app.use('/api', apiRouter);
 
 // Mount error handler
 app.use(errorHandler);
+
+// Run db backup cron job
+if (process.env.NODE_ENV === 'production') {
+    dbBackupJob.start();
+}
 
 // Set static folder
 app.use(express.static(path.resolve(__dirname, '../client/build')));

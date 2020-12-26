@@ -1,13 +1,9 @@
-import moment from 'moment-timezone';
-import { JobsRepository, ListingsRepository } from '../database';
+import { db, JobsRepository, ListingsRepository } from '../database';
 import { asyncHandler } from '../middleware';
 import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
 
 export class JobsController {
-    constructor(private readonly jobsRepository: JobsRepository, private readonly listingsRepository: ListingsRepository) {
-        this.jobsRepository = jobsRepository;
-        this.listingsRepository = listingsRepository;
-    }
+    constructor(private readonly jobsRepository: JobsRepository, private readonly listingsRepository: ListingsRepository) {}
 
     /**
      * @desc    Get all jobs for a listing
@@ -17,7 +13,7 @@ export class JobsController {
     getJobs = asyncHandler(async (req, res, next) => {
         if (req.params.listing_id) {
             const listingId: string = req.params.listing_id;
-            // return 404 error response if listing not found or soft deleted
+            // return 404 error response if listing not found
             await this.listingsRepository.getListingById(listingId);
 
             const jobs = await this.jobsRepository.getAllJobsForListing(listingId);
@@ -68,7 +64,7 @@ export class JobsController {
      * @access  Admin/Owner
      */
     updateJob = asyncHandler(async (req, res, next) => {
-        // check if job exists and is not soft deleted
+        // check if job exists
         const job = await this.jobsRepository.getJobById(req.params.id);
 
         // check if listing exists and is listing owner
@@ -97,12 +93,12 @@ export class JobsController {
     });
 
     /**
-     * @desc    Deactivate (Soft delete) single job
-     * @route   PUT /api/jobs/:id/deactivate
-     * @access  Admin/Owner
+     * @desc    Delete single job
+     * @route   DELETE /api/jobs/:id
+     * @access  Owner/Admin
      */
-    deactivateJob = asyncHandler(async (req, res, next) => {
-        // check if job exists nd not soft deleted
+    deleteJob = asyncHandler(async (req, res, next) => {
+        // check if job exists
         const job = await this.jobsRepository.getJobById(req.params.id);
 
         // check if listing exists and is listing owner
@@ -110,27 +106,9 @@ export class JobsController {
 
         // Unauthorised if neither admin nor listing owner
         if (!(req.user.role === 'admin' || isListingOwner)) {
-            return next(new ErrorResponse(`Not authorised to deactivate jobs for this listing`, 403));
+            return next(new ErrorResponse(`Not authorised to delete jobs for this listing`, 403));
         }
 
-        const data = {
-            deleted_on: moment.tz(process.env.DEFAULT_TIMEZONE).toDate(),
-        };
-
-        const rows = await this.jobsRepository.deactivateJobById(data, req.params.id);
-
-        res.status(200).json({
-            success: true,
-            data: rows,
-        });
-    });
-
-    /**
-     * @desc    Delete single job
-     * @route   DELETE /api/jobs/:id
-     * @access  Admin
-     */
-    deleteJob = asyncHandler(async (req, res, next) => {
         const rows = await this.jobsRepository.deleteJobById(req.params.id);
 
         res.status(200).json({
@@ -139,3 +117,5 @@ export class JobsController {
         });
     });
 }
+
+export const jobsController = new JobsController(db.jobs, db.listings);

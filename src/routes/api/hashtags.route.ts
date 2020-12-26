@@ -1,13 +1,11 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check } from 'express-validator';
-import { db } from '../../database';
 import { asyncHandler, checkInputError, protect } from '../../middleware';
 import { HASHTAG_REGEX, INVALID_FIELD_MSG } from '../../utils';
 
-// import and initialize controllers here
-import { HashtagsController } from '../../controllers/hashtags';
-const hashtagsController = new HashtagsController(db.hashtags, db.listings);
+// import controller
+import { hashtagsController } from '../../controllers/hashtags';
 
 // Define input validation chain
 const validateCreateHashtagFields = [

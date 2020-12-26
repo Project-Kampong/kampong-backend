@@ -53,7 +53,7 @@ router.use('/:listing_id/organisations', organisationsRoute);
 // Define input validation chain
 const validateCreateListingFields = [
     check('organisation_id', INVALID_FIELD_MSG('organisation id')).optional().isInt(),
-    check('title', INVALID_FIELD_MSG('title')).trim().notEmpty(),
+    check('listing_title', INVALID_FIELD_MSG('listing_title')).trim().notEmpty(),
     check('category', INVALID_FIELD_MSG('category')).trim().notEmpty(),
     check('listing_email', INVALID_EMAIL_MSG).notEmpty().isEmail(),
     check('listing_status', INVALID_LISTING_STATUS_MSG).notEmpty().isIn(['ongoing', 'completed']),
@@ -67,7 +67,7 @@ const validateUpdateListingFields = [
     oneOf(
         [
             check('organisation_id').exists(),
-            check('title').exists(),
+            check('listing_title').exists(),
             check('category').exists(),
             check('about').exists(),
             check('tagline').exists(),
@@ -87,7 +87,7 @@ const validateUpdateListingFields = [
         NO_FIELD_UPDATED_MSG,
     ),
     check('organisation_id', INVALID_FIELD_MSG('organisation id')).optional().isInt(),
-    check('title', INVALID_FIELD_MSG('title')).optional().trim().notEmpty(),
+    check('listing_title', INVALID_FIELD_MSG('listing_title')).optional().trim().notEmpty(),
     check('category', INVALID_FIELD_MSG('category')).optional().trim().notEmpty(),
     check('listing_email', INVALID_EMAIL_MSG).optional().isEmail(),
     check('listing_status', INVALID_LISTING_STATUS_MSG).optional().isIn(['ongoing', 'completed']),
@@ -108,7 +108,7 @@ const validateSearchListingsFields = [
 ];
 
 // map routes to controller
-router.route('/').get(advancedResults('listingsview'), getListings).post(protect, validateCreateListingFields, checkInputError, createListing);
+router.route('/').get(advancedResults('listingview'), getListings).post(protect, validateCreateListingFields, checkInputError, createListing);
 
 router.route('/featured').get(getFeaturedListings);
 router.route('/owner').get(getAllListingsOwnedByUser);

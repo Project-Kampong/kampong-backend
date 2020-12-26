@@ -1,11 +1,8 @@
-import { FaqsRepository, ListingsRepository } from '../database';
+import { db, FaqsRepository, ListingsRepository } from '../database';
 import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
 
 export class FaqsController {
-    constructor(private readonly faqsRepository: FaqsRepository, private readonly listingsRepository: ListingsRepository) {
-        this.faqsRepository = faqsRepository;
-        this.listingsRepository = listingsRepository;
-    }
+    constructor(private readonly faqsRepository: FaqsRepository, private readonly listingsRepository: ListingsRepository) {}
 
     /**
      * @desc    Get all faqs for a listing
@@ -119,3 +116,5 @@ export class FaqsController {
         });
     };
 }
+
+export const faqsController = new FaqsController(db.faqs, db.listings);

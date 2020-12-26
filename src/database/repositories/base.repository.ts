@@ -12,8 +12,5 @@ import { IDatabase, IMain } from 'pg-promise';
  * or other namespaces available from the root.
  */
 export abstract class BaseRepository {
-    constructor(protected readonly db: IDatabase<any>, protected readonly pgp: IMain) {
-        this.db = db;
-        this.pgp = pgp;
-    }
+    constructor(protected readonly db: IDatabase<any>, protected readonly pgp: IMain) {}
 }

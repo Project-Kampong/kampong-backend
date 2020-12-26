@@ -1,10 +1,17 @@
-import { asyncHandler } from '../middleware';
+import { db, CategoriesRepository } from '../database';
 
-/**
- * @desc    Get all categories
- * @route   GET /api/categories
- * @access  Public
- */
-export const getCategories = asyncHandler(async (req, res, next) => {
-    res.status(200).json(res.advancedResults);
-});
+class CategoriesController {
+    constructor(private readonly categoriesRepository: CategoriesRepository) {}
+
+    /**
+     * @desc    Get all categories
+     * @route   GET /api/categories
+     * @access  Public
+     */
+    getCategories = async (req, res, next) => {
+        const categories = await this.categoriesRepository.list();
+        res.status(200).json({ success: true, data: categories });
+    };
+}
+
+export const categoriesController = new CategoriesController(db.categories);

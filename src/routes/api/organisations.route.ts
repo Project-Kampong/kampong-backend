@@ -2,7 +2,7 @@ import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
 import { advancedResults, protect, checkInputError } from '../../middleware';
-import { INVALID_PHONE_NUMBER_MSG, INVALID_EMAIL_MSG, INVALID_ALPHA_SPACE_MSG, NO_FIELD_UPDATED_MSG, INVALID_LOCATION_MSG } from '../../utils';
+import { INVALID_PHONE_NUMBER_MSG, INVALID_EMAIL_MSG, INVALID_ALPHA_SPACE_MSG, NO_FIELD_UPDATED_MSG } from '../../utils';
 
 // Import organisation controllers
 import { getOrganisations, getOrganisation, createOrganisation, updateOrganisation, deleteOrganisation } from '../../controllers/organisations';
@@ -10,10 +10,12 @@ import { getOrganisations, getOrganisation, createOrganisation, updateOrganisati
 // Import other controllers
 import { router as programmeRoute } from './programmes.route';
 import { router as listingsRoute } from './listings.route';
+import { router as organisationJobsRoute } from './organisationJobs.route';
 
 // Re-route this URI to other resource router
 router.use('/:organisation_id/programmes', programmeRoute);
 router.use('/:organisation_id/listings', listingsRoute);
+router.use('/:organisation_id/organisation-jobs', organisationJobsRoute);
 
 // Define input validation
 const validateCreateOrganisationFields = [
@@ -50,7 +52,7 @@ const validateUpdateOrganisationFields = [
 ];
 
 // Map public routes to controller
-router.route('/').get(advancedResults('organisations'), getOrganisations);
+router.route('/').get(advancedResults('organisation'), getOrganisations);
 
 router.route('/:id').get(getOrganisation);
 

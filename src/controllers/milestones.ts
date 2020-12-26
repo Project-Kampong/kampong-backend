@@ -11,7 +11,7 @@ export const getMilestonesForListing = asyncHandler(async (req, res, next) => {
     if (req.params.listing_id) {
         // returns 404 error response if listing not found
         const milestones = await db.many(
-            'SELECT l.listing_id, m.milestone_id, description, m.date FROM listingview l LEFT JOIN milestone m ON l.listing_id = m.listing_id WHERE l.listing_id = $1',
+            'SELECT l.listing_id, m.milestone_id, m.milestone_description, m.date FROM listingview l LEFT JOIN milestone m ON l.listing_id = m.listing_id WHERE l.listing_id = $1',
             req.params.listing_id,
         );
 
@@ -33,11 +33,11 @@ export const getMilestonesForListing = asyncHandler(async (req, res, next) => {
  * @access  Owner/Admin
  */
 export const createMilestone = asyncHandler(async (req, res, next) => {
-    const { listing_id, description, date } = req.body;
+    const { listing_id, milestone_description, date } = req.body;
 
     const data = {
         listing_id,
-        description,
+        milestone_description,
         date,
     };
 
@@ -74,10 +74,10 @@ export const updateMilestone = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Not authorised to update milestone for this listing`, 403));
     }
 
-    const { description, date } = req.body;
+    const { milestone_description, date } = req.body;
 
     const data = {
-        description,
+        milestone_description,
         date,
     };
 
