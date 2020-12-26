@@ -15,8 +15,7 @@ import { get } from 'lodash';
 import { checkConn } from './utils';
 import { apiRouter } from './routes';
 import { errorHandler } from './middleware';
-import { dbBackupJob } from './jobs';
-import { shuffleFeaturedListings } from './jobs/randomFeaturedListing.job';
+import { dbBackupJob, shuffleFeaturedListings } from './jobs';
 
 dotenv.config({ path: 'config/config.env' });
 
