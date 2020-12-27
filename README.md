@@ -46,13 +46,36 @@ yarn install
 
 ##### Create a new PostgreSQL database instance
 
+The 2 suggested ways of setting up PostgreSQL for the app is shown below. The main difference is the use of Docker to host the database instance.
+
 > **_NOTE:_** Skip this step if you already have a PostgreSQL database to connect to.
 
+###### Setting up database (without Docker)
+
 Refer to this [guide](https://www.postgresql.org/docs/current/tutorial-start.html) on creating a PostgreSQL database locally.
+
+###### Setting up database (with Docker)
+
+Run Docker on your machine, then run the following commands:
+
+```bash
+docker container run --name kampong-db -e POSTGRES_PASSWORD=kampong -e POSTGRES_USER=kampong-admin -p 5432:5432 -d postgres
+docker exec -it kampong-db psql -h localhost -U kampong-admin -c 'CREATE DATABASE kamponglocal;'
+```
 
 ##### Connect PostgreSQL database to the Project Kampong web server
 
 Under `config/config.env`, fill in `PG_USER`, `PG_HOST`, `PG_NAME`, `PG_PORT`, `PG_PASSWORD` with your PostgreSQL database credentials.
+
+For db setup with Docker, your credentials will be:
+
+```bash
+PG_USER=kampong-admin
+PG_HOST=5432
+PG_NAME=kamponglocal
+PG_PORT=5432
+PG_PASSWORD=kampong
+```
 
 ##### Clear, create database tables and import required data
 
