@@ -1,4 +1,3 @@
-DROP VIEW IF EXISTS featuredlistingview CASCADE;
 DROP VIEW IF EXISTS listingview CASCADE;
 DROP VIEW IF EXISTS organisationview CASCADE;
 DROP VIEW IF EXISTS listingcommentview CASCADE;
@@ -151,8 +150,3 @@ CREATE OR REPLACE VIEW listingcommentview AS
 	LEFT JOIN profile p
 	ON lc.user_id = p.user_id
 	WHERE lc.deleted_on IS NULL;
-  
-CREATE OR REPLACE VIEW featuredlistingview AS
-	SELECT *
-	FROM listingview
-	WHERE is_featured = TRUE;
