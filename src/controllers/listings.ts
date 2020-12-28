@@ -70,7 +70,7 @@ export const getListings = asyncHandler(async (req, res) => {
  * @access  Public
  */
 export const getFeaturedListings = asyncHandler(async (req, res) => {
-    const rows = await db.manyOrNone('SELECT * FROM featuredlistingview');
+    const rows = await db.manyOrNone('SELECT * FROM listingview where is_featured=TRUE');
     res.status(200).json({ success: true, data: rows });
 });
 
