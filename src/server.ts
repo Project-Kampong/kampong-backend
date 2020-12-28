@@ -16,8 +16,8 @@ import { get } from 'lodash';
 import { checkConn } from './utils';
 import { apiRouter } from './routes';
 import { errorHandler } from './middleware';
-import { dbBackupJob } from './jobs';
 import { googlePassport, facebookPassport } from './services/passport.service';
+import { dbBackupJob, shuffleFeaturedListings } from './jobs';
 
 dotenv.config({ path: 'config/config.env' });
 
@@ -72,9 +72,10 @@ app.use('/api', apiRouter);
 // Mount error handler
 app.use(errorHandler);
 
-// Run db backup cron job
+// Run jobs (only in production)
 if (process.env.NODE_ENV === 'production') {
     dbBackupJob.start();
+    shuffleFeaturedListings.start();
 }
 
 // Set static folder

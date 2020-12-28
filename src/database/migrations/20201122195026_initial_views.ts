@@ -8,14 +8,12 @@ export async function up(knex: Knex): Promise<void> {
         .raw('CREATE VIEW organisationview AS SELECT*FROM organisation WHERE deleted_on IS NULL')
         .raw(
             'CREATE VIEW listingcommentview AS SELECT lc.*,p.nickname,p.profile_picture FROM listingcomment lc LEFT JOIN profile p ON lc.user_id=p.user_id WHERE lc.deleted_on IS NULL',
-        )
-        .raw('CREATE VIEW featuredlistingview AS SELECT*FROM listingview WHERE is_featured=TRUE');
+        );
 }
 
 export async function down(knex: Knex): Promise<void> {
     return (
         knex.schema
-            .raw('DROP VIEW IF EXISTS featuredlistingview CASCADE')
             .raw('DROP VIEW IF EXISTS listingview CASCADE')
             .raw('DROP VIEW IF EXISTS organisationview CASCADE')
             // TODO: deprecated, to be removed
