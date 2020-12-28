@@ -1,0 +1,20 @@
+= Project Kampong - Backend Developer Guide
+:site-section: DeveloperGuide
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:xrefstyle: full
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:warning-caption: :warning:
+endif::[]
+:repoURL: https://github.com/Project-Kampong/kampong-backend
+
+By: `Project Kampong Backend Team`      Since: `Jun 2016`      Licence: ``
+
+== Setting up
+Refer to the guide <<README.md#, here>>.
