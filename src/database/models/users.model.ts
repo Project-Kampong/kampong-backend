@@ -13,18 +13,18 @@ export interface User {
 export interface FacebookProfile {
     id: string;
     username?: string;
-    displayName? :string;
+    displayName?: string;
     name: {
         familyName: string;
         givenName: string;
         middleName?: string;
-    }
+    };
     gender?: string;
-    profileUrl? :string;
+    profileUrl?: string;
     emails: [
         {
             value?: string;
-        }
+        },
     ];
     provider: string;
     _raw: object;
@@ -33,23 +33,23 @@ export interface FacebookProfile {
 
 export interface GoogleProfile {
     id: string;
-    displayName? :string;
+    displayName?: string;
     name: {
         familyName: string;
         givenName: string;
-    }
+    };
     gender?: string;
-    profileUrl? :string;
+    profileUrl?: string;
     emails: [
         {
             value?: string;
             verified?: boolean;
-        }
+        },
     ];
     photos: [
         {
             value?: string;
-        }
+        },
     ];
     provider: string;
     _raw: object;

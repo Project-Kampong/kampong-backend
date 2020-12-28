@@ -2,7 +2,7 @@ import { v1 as uuidv1 } from 'uuid';
 import { cleanseData, getSignedJwtToken } from '../utils';
 import { db } from '../database/db';
 import { UsersRepository } from '../database';
-import { CreateUserSchema } from '../database/models';
+import { FacebookProfile, CreateUserSchema } from '../database/models';
 
 class FacebookAuthController {
     constructor(private readonly usersRepository: UsersRepository) {}
@@ -13,7 +13,7 @@ class FacebookAuthController {
      * @access  Public
      */
     facebookLogin = async (req: any, res: any, next: any) => {
-        const profile = req.user;
+        const profile: FacebookProfile = req.user;
         const user = await this.usersRepository.getUserByEmail(profile.emails[0].value);
 
         if (!user) {
