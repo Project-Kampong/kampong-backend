@@ -255,7 +255,7 @@ CREATE TABLE listingadmin (
 
 CREATE TABLE participant (
 	participant_id SERIAL,
-	listing_id UUID NOT NUlistingLL,
+	listing_id UUID NOT NULL,
 	user_id UUID NOT NULL,
 	joined_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	end_on TIMESTAMPTZ,

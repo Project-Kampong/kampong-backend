@@ -231,11 +231,11 @@ export const deleteOrganisation = asyncHandler(async (req, res, next) => {
 /**
  * @desc    Soft delete single organisation
  * @route   PUT /api/organisations/:id
- * @access  Admin/Owner
+ * @access  Admin/Ownerz
  */
 export const deactivateOrganisation = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
-    const userId: string = req.user.user_id;
+    const { user_id: userId }: { user_id: string; [key: string]: string } = req.user;
     const isOrganisationOwner = await checkOrganisationOwner(userId, req.params.id);
     // check current user is admin or owner of listing
     if (req.user.role !== 'admin' && !isOrganisationOwner) {
