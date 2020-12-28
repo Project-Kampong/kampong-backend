@@ -10,6 +10,52 @@ export interface User {
     is_activated: boolean;
 }
 
+export interface FacebookProfile {
+    id: string;
+    username?: string;
+    displayName? :string;
+    name: {
+        familyName: string;
+        givenName: string;
+        middleName?: string;
+    }
+    gender?: string;
+    profileUrl? :string;
+    emails: [
+        {
+            value?: string;
+        }
+    ];
+    provider: string;
+    _raw: object;
+    _json: object;
+}
+
+export interface GoogleProfile {
+    id: string;
+    displayName? :string;
+    name: {
+        familyName: string;
+        givenName: string;
+    }
+    gender?: string;
+    profileUrl? :string;
+    emails: [
+        {
+            value?: string;
+            verified?: boolean;
+        }
+    ];
+    photos: [
+        {
+            value?: string;
+        }
+    ];
+    provider: string;
+    _raw: object;
+    _json: object;
+}
+
 export interface CreateUserSchema {
     user_id: string;
     first_name: string;
