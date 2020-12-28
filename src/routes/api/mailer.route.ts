@@ -3,11 +3,9 @@ export const router = express.Router({ mergeParams: true });
 import { check } from 'express-validator';
 import { INVALID_EMAIL_MSG, INVALID_FIELD_MSG } from '../../utils';
 import { asyncHandler, checkInputError, protect } from '../../middleware';
-import { mailerService } from '../../services/mailer.service';
 
 // Import mailer controller
-import { MailerController } from '../../controllers/mailer';
-const mailerController = new MailerController(mailerService);
+import { mailerController } from '../../controllers/mailer';
 
 // Validate input email
 const validateEmail = [
@@ -16,9 +14,20 @@ const validateEmail = [
     check('message', INVALID_FIELD_MSG('email message')).notEmpty(),
     check('subject', INVALID_FIELD_MSG('email subject')).notEmpty(),
 ];
+const validateEnquiryEmail = [
+    check('message', INVALID_FIELD_MSG('email message')).notEmpty(),
+    check('subject', INVALID_FIELD_MSG('email subject')).notEmpty(),
+    check('listingId', INVALID_FIELD_MSG('listingId')).isUUID().notEmpty(),
+];
+const validateApplicationEmail = [
+    check('roleApplied', INVALID_FIELD_MSG('role applied')).notEmpty(),
+    check('listingId', INVALID_FIELD_MSG('listingId')).isUUID().notEmpty(),
+];
 
 // Routes below allowed for authenticated users only
 router.use(protect);
 
 // Map route to controller
 router.route('/send').post(validateEmail, checkInputError, asyncHandler(mailerController.sendEmailGeneric));
+router.route('/send-enquiry').post(validateEnquiryEmail, checkInputError, asyncHandler(mailerController.sendEnquiryEmail));
+router.route('/send-application').post(validateApplicationEmail, checkInputError, asyncHandler(mailerController.sendApplicationEmail));

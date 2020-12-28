@@ -16,7 +16,3 @@ export interface UpdateOrganisationJobSchema {
     organisation_job_title: string;
     organisation_job_description: string;
 }
-
-export interface DeactivateOrganisationJobSchema {
-    deleted_on: Date;
-}

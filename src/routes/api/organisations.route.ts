@@ -2,7 +2,7 @@ import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
 import { advancedResults, protect, checkInputError } from '../../middleware';
-import { INVALID_PHONE_NUMBER_MSG, INVALID_EMAIL_MSG, INVALID_ALPHA_SPACE_MSG, NO_FIELD_UPDATED_MSG, INVALID_LOCATION_MSG } from '../../utils';
+import { INVALID_PHONE_NUMBER_MSG, INVALID_EMAIL_MSG, INVALID_ALPHA_SPACE_MSG, NO_FIELD_UPDATED_MSG } from '../../utils';
 
 // Import organisation controllers
 import {

@@ -1,4 +1,3 @@
-DROP VIEW IF EXISTS featuredlistingview CASCADE;
 DROP VIEW IF EXISTS listingview CASCADE;
 DROP VIEW IF EXISTS organisationview CASCADE;
 DROP VIEW IF EXISTS listingcommentview CASCADE;
@@ -86,8 +85,8 @@ FROM
 			listing_id,
 			ARRAY_AGG(JSONB_BUILD_OBJECT ('listing_update_id',
 					listing_update_id,
-					'description',
-					description,
+					'listing_update_description',
+					listing_update_description,
 					'pics',
 					pics,
 					'created_on',
@@ -104,7 +103,7 @@ FROM
 			ARRAY_AGG(JSONB_BUILD_OBJECT ('milestone_id',
 					milestone_id,
 					'milestone_description',
-					description,
+					milestone_description,
 					'date',
 					date)) milestones
 		FROM
@@ -132,7 +131,7 @@ SELECT
 	ali.participants,
 	p.nickname,
 	p.profile_picture,
-	to_tsvector(l.title || ' ' || l.category || ' ' || array_to_string(ali.locations::text [], ' ')) AS keyword_vector
+	to_tsvector(l.listing_title || ' ' || l.category || ' ' || array_to_string(ali.locations::text [], ' ')) AS keyword_vector
 FROM
 	listing l
 	LEFT JOIN agg_listing_info ali ON l.listing_id = ali.listing_id
@@ -151,8 +150,3 @@ CREATE OR REPLACE VIEW listingcommentview AS
 	LEFT JOIN profile p
 	ON lc.user_id = p.user_id
 	WHERE lc.deleted_on IS NULL;
-  
-CREATE OR REPLACE VIEW featuredlistingview AS
-	SELECT *
-	FROM listingview
-	WHERE is_featured = TRUE;

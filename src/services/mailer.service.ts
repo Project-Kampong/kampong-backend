@@ -6,13 +6,6 @@ type EmailAddressOptions = {
     name: string;
     address: string;
 };
-
-type AttachmentOptions = {
-    filename: string;
-    content: string | Buffer;
-    contentType?: string;
-};
-
 interface SendEmailOptions {
     fromEmail: string | EmailAddressOptions;
     toEmail: string | EmailAddressOptions;
@@ -21,7 +14,8 @@ interface SendEmailOptions {
     html?: string;
     ccEmail?: string | EmailAddressOptions;
     bccEmail?: string | EmailAddressOptions;
-    attachments?: AttachmentOptions[];
+    attachments?: Mail.Attachment[];
+    headers?: Mail.Headers;
 }
 
 export class MailerService {
@@ -53,6 +47,7 @@ export class MailerService {
             text: options.text,
             html: options.html,
             attachments: options.attachments,
+            headers: options.headers,
         };
 
         return this.mailClient.sendMail(mailContent);

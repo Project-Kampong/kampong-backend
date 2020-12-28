@@ -6,10 +6,7 @@ class OrganisationJobsController {
     constructor(
         private readonly organisationJobsRepository: OrganisationJobsRepository,
         private readonly organisationsRepository: OrganisationsRepository,
-    ) {
-        this.organisationJobsRepository = organisationJobsRepository;
-        this.organisationsRepository = organisationsRepository;
-    }
+    ) {}
 
     /**
      * @desc    Get all jobs for a organisation
