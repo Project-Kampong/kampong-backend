@@ -1,0 +1,22 @@
+name: Deploy to development
+
+on:
+    workflow_run:
+        workflows: ['Bump version']
+        branches: [master]
+        types:
+            - completed
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Run deployment script on development
+              uses: appleboy/ssh-action@master
+              with:
+                  HOST: ${{ secrets.DEV_HOST }}
+                  USERNAME: root
+                  PORT: 22
+                  KEY: ${{ secrets.SSHKEY }}
+                  script: ~/deployment-scripts/backend-script/development/update-backend.sh

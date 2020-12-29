@@ -1,9 +1,7 @@
 import { db, CategoriesRepository } from '../database';
 
 class CategoriesController {
-    constructor(private readonly categoriesRepository: CategoriesRepository) {
-        this.categoriesRepository = categoriesRepository;
-    }
+    constructor(private readonly categoriesRepository: CategoriesRepository) {}
 
     /**
      * @desc    Get all categories

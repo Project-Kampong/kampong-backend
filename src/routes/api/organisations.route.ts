@@ -2,10 +2,17 @@ import express from 'express';
 export const router = express.Router({ mergeParams: true });
 import { check, oneOf } from 'express-validator';
 import { advancedResults, protect, checkInputError } from '../../middleware';
-import { INVALID_PHONE_NUMBER_MSG, INVALID_EMAIL_MSG, INVALID_ALPHA_SPACE_MSG, NO_FIELD_UPDATED_MSG, INVALID_LOCATION_MSG } from '../../utils';
+import { INVALID_PHONE_NUMBER_MSG, INVALID_EMAIL_MSG, INVALID_ALPHA_SPACE_MSG, NO_FIELD_UPDATED_MSG } from '../../utils';
 
 // Import organisation controllers
-import { getOrganisations, getOrganisation, createOrganisation, updateOrganisation, deleteOrganisation } from '../../controllers/organisations';
+import {
+    getOrganisations,
+    getOrganisation,
+    createOrganisation,
+    updateOrganisation,
+    deleteOrganisation,
+    deactivateOrganisation,
+} from '../../controllers/organisations';
 
 // Import other controllers
 import { router as programmeRoute } from './programmes.route';
@@ -63,3 +70,5 @@ router.use(protect);
 router.route('/').post(validateCreateOrganisationFields, checkInputError, createOrganisation);
 
 router.route('/:id').put(validateUpdateOrganisationFields, checkInputError, updateOrganisation).delete(deleteOrganisation);
+
+router.route('/:id/deactivate').put(protect, deactivateOrganisation);

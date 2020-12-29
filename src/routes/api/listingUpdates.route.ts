@@ -10,13 +10,13 @@ import { getListingUpdatesForListing, createListingUpdate, modifyListingUpdate, 
 // Define input validation chain
 const validateCreateListingUpdateFields = [
     check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID(),
-    check('description', INVALID_FIELD_MSG('description')).trim().notEmpty(),
+    check('listing_update_description', INVALID_FIELD_MSG('listing_update_description')).trim().notEmpty(),
     check('pics').isArray(),
 ];
 
 const validateModifyListingUpdateFields = [
-    oneOf([check('description').exists(), check('pics').exists()], NO_FIELD_UPDATED_MSG),
-    check('description', INVALID_FIELD_MSG('description')).optional().trim().notEmpty(),
+    oneOf([check('listing_update_description').exists(), check('pics').exists()], NO_FIELD_UPDATED_MSG),
+    check('listing_update_description', INVALID_FIELD_MSG('listing_update_description')).optional().trim().notEmpty(),
     check('pics').optional().isArray(),
 ];
 
