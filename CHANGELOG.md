@@ -7,29 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v0.96.0]
+### Changed
 
-## [v0.95.0]
-
-## [v0.94.0]
-
-## [v0.93.0]
-
-## [v0.92.0]
-
-## [v0.91.0]
-
-## [v0.90.0]
-
-## [v0.89.0]
-
-## [v0.88.0]
-
-## [v0.87.0]
-
-## [v0.86.0]
-
-## [v0.85.0]
+-   Backend no longer serves frontend assets (ie. App and About page). These assets will be served by NGINX.
 
 ## [v0.84.0]
 
