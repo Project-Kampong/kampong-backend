@@ -117,4 +117,63 @@ This job only depends on the <<Design-Repository,`Repository`>> component to fet
 
 == Implementation
 
-[[Implementation-]]
+[[Implementation-Auth]]
+=== Authentication
+Authentication for Kampong App is done is 2 ways:
+
+* Social media authentication using OAuth2
+* Email and password authentication
+
+[[Implementation-Social-Media-Auth]]
+==== Social Media Authentication
+
+===== Aspect: Justification
+
+The reason for implementing social media authentication is to avoid any legal issues with regard to data usage / leakage that comes with storing sensitive user data. By implementing social media authentication, we ensure that any sensitive user data that we store is coming from an established organisation with their own set of privacy policies. (Don please rephrase this hahaha)
+
+===== Aspect: How social media authentication is implemented
+
+Using the link:http://www.passportjs.org/docs/[Passport.js] library, a Google and Facebook passport using OAuth2.0 is created and mounted to the express application as middleware.
+
+Since the Facebook and Google authentication are similar in implementation, this guide will only explain the Facebook auth implementation.
+
+In order to use Facebook authentication, Kampong must first be created as an app at link:https://developers.facebook.com/[Facebook Developers]. When created, an App ID and App Secret will be assigned.
+
+The Facebook passport requires a Facebook strategy to be defined which requires the Facebook App ID and App Secret and a redirect URL to be implemented, to which Facebook will redirect users after successful approval of access to the Kampong app. Additionally, a verify callback function is to be implemented for Facebook authentication. The end code for a Facebook Strategy will look like this:
+```
+passport.use(
+    new FacebookStrategy(
+        {
+            clientID: process.env.FACEBOOK_APP_ID,
+            clientSecret: process.env.FACEBOOK_APP_SECRET,
+            callbackURL: '/auth/facebook-login/callback',
+        },
+        (accessToken, refreshToken, profile, done) => {
+            done(null, profile);
+        },
+    ),
+);
+```
+The done function is a callback that an error as its first argument and a return value as its second argument. `profile` will contain user profile information provided by Facebook.
+
+Two routes need to be implemented. The first route redirects the user to Facebook. The second route is the URL to which Facebook will redirect the user to after they have successfully logged in.
+```
+app.get('/auth/facebook', passport.authenticate('facebook'));
+
+app.get('/auth/facebook-login/callback',
+    passport.authenticate('facebook', { failureRedirect: '/login' }),
+    facebookAuthController.facebookLogin,
+);
+```
+
+[[Implementation-Email-Password]]
+==== Email and password authentication
+Using conventional email and password authentication requires the user to verify his/her email upon signing up. This is done by tapping on the <<Design-Services, `Mailer`>> service to send a confirmation email to the user.
+
+Unverified users will be restricted to only a few features of the Kampong app. Upon verification by clicking on the URL provided in the confirmation email, the user will be granted full unrestricted access to the Kampong app.
+
+== Testing
+Testing is done using the link:https://jestjs.io/docs/en/getting-started.html[Jest] testing framework. It is currently still being implemented.
+
+== Api Documentation
+Refer to the api docs https://github.com/Project-Kampong/kampong-backend/blob/master/public/api-docs/index.md[here].
