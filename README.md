@@ -71,7 +71,7 @@ For db setup with Docker above, your credentials will be:
 
 ```bash
 PG_USER=kampong-admin
-PG_HOST=5432
+PG_HOST=localhost
 PG_NAME=kamponglocal
 PG_PORT=5432
 PG_PASSWORD=kampong
