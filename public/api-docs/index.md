@@ -7321,6 +7321,10 @@ URL: {{URL}}/api/listings-organisations
 
 
 Listing leave organisation. Permission: Listing or Organisation owner.
+Field rules (all fields required unless otherwise stated:
+Query params
+listingId - valid listingId
+organisationId - valid organisationId
 
 
 ***Endpoint:***
@@ -7328,7 +7332,7 @@ Listing leave organisation. Permission: Listing or Organisation owner.
 ```bash
 Method: DELETE
 Type: 
-URL: {{URL}}/api/listings-organisations/1
+URL: {{URL}}/api/listings-organisations
 ```
 
 
@@ -7337,6 +7341,15 @@ URL: {{URL}}/api/listings-organisations/1
 | Key | Value | Description |
 | --- | ------|-------------|
 | Content-Type | application/json | JSON Type |
+
+
+
+***Query params:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| listingId | 43824166-bee2-426e-8a08-ca2c4e4120ae |  |
+| organisationId | 8426a370-280e-11eb-aa97-9d0bb1a7de0d |  |
 
 
 
@@ -7354,12 +7367,21 @@ URL: {{URL}}/api/listings-organisations/1
 
 
 
+***Query:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| listingId | 43824166-bee2-426e-8a08-ca2c4e4120ae |  |
+| organisationId | 8426a370-280e-11eb-aa97-9d0bb1a7de0d |  |
+
+
+
 ##### I. Example Response: Listing leave Organisation (200 OK)
 ```js
 {
     "success": true,
     "data": {
-        "listing_organisation_id": 1,
+        "listing_organisation_id": 2,
         "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
         "organisation_id": "8426a370-280e-11eb-aa97-9d0bb1a7de0d"
     }
@@ -10950,4 +10972,4 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-12-27 12:53:05 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2021-01-02 10:28:19 by [docgen](https://github.com/thedevsaddam/docgen)
