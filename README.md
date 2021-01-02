@@ -67,7 +67,7 @@ docker exec -it kampong-db psql -h localhost -U kampong-admin -c 'CREATE DATABAS
 
 Under `config/config.env`, fill in `PG_USER`, `PG_HOST`, `PG_NAME`, `PG_PORT`, `PG_PASSWORD` with your PostgreSQL database credentials.
 
-For db setup with Docker, your credentials will be:
+For db setup with Docker above, your credentials will be:
 
 ```bash
 PG_USER=kampong-admin
@@ -166,13 +166,15 @@ yarn format
 
 ### Usage
 
--   Database backup cron job runs at 5am daily to backup the application's database locally.
+-   Database backup cron job runs at 5am daily to backup the application's database remotely.
+-   Featured listings shuffled at 12am daily.
 
 ## Documentation
 
 API Documentation
 
--   Supported and running live on Kampong: https://kampong.app/api-docs
+-   Supported and running live on Kampong: https://kampong.app/api/docs
+
 -   Latest, unreleased version [here](https://github.com/Project-Kampong/kampong-backend/blob/master/public/api-docs/index.md)
 
 The Postman API Collection is available [here](https://github.com/Project-Kampong/kampong-backend/blob/master/public/api-docs/kampong-api.json), and can be imported into your Postman API client for API testing.
