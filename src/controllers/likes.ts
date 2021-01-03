@@ -11,7 +11,7 @@ export class LikeController {
      * @route   GET /api/users/:user_id/likes
      * @access  Public
      */
-    getLikes = asyncHandler(async (req, res, next) => {
+    getLikes = async (req, res, next) => {
         if (req.params.listing_id) {
             // return 404 error response if listing not found or soft deleted
             await db.one('SELECT * FROM listingview WHERE listing_id = $1', req.params.listing_id);
@@ -40,14 +40,14 @@ export class LikeController {
         }
 
         return next(new ErrorResponse('Invalid route', 404));
-    });
+    };
 
     /**
      * @desc    User like listing
      * @route   POST /api/likes
      * @access  Private
      */
-    newLike = asyncHandler(async (req, res, next) => {
+    newLike = async (req, res, next) => {
         const { listing_id } = req.body;
 
         const data = {
@@ -63,14 +63,14 @@ export class LikeController {
             success: true,
             data: rows,
         });
-    });
+    };
 
     /**
      * @desc    User unlike listing (identified by like_id)
      * @route   DELETE /api/likes/like_id
      * @access  Private
      */
-    unLike = asyncHandler(async (req, res, next) => {
+    unLike = async (req, res, next) => {
         const listingLike = await db.one('SELECT * FROM listinglike WHERE like_id = $1', req.params.like_id);
 
         if (listingLike.user_id !== req.user.user_id) {
@@ -83,7 +83,7 @@ export class LikeController {
             success: true,
             data: rows,
         });
-    });
+    };
 }
 
 export const likeController = new LikeController();
