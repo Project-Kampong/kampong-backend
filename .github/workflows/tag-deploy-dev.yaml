@@ -1,4 +1,4 @@
-name: Bump version
+name: Bump tag version and deploy to dev server
 on:
     push:
         branches:
@@ -25,10 +25,17 @@ jobs:
                   sed -i '/^## \[Unreleased]/a \\n## [${{ steps.tag-bump.outputs.new_tag }}]' ./CHANGELOG.md
                   sed -i '/^\[unreleased]: https:\/\/github.com\/Project-Kampong\/kampong-backend\/compare\//a [${{ steps.tag-bump.outputs.new_tag }}]: https://github.com/Project-Kampong/kampong-backend/releases/tag/${{ steps.tag-bump.outputs.new_tag }}' ./CHANGELOG.md
                   sed -i 's/^\[unreleased]: https:\/\/github.com\/Project-Kampong\/kampong-backend\/compare\/.*/\[unreleased]: https:\/\/github.com\/Project-Kampong\/kampong-backend\/compare\/${{ steps.tag-bump.outputs.new_tag }}...HEAD/' ./CHANGELOG.md
-
             - name: Commit changes and push to current branch
               uses: stefanzweifel/git-auto-commit-action@v4
               with:
                   commit_message: Update CHANGELOG with new version ${{ steps.tag-bump.outputs.new_tag }}
                   file_pattern: CHANGELOG.md
                   push_options: --force
+            - name: Deploy to dev server
+              uses: appleboy/ssh-action@master
+              with:
+                  HOST: ${{ secrets.DEV_HOST }}
+                  USERNAME: root
+                  PORT: 22
+                  PASSWORD: ${{ secrets.DEV_PASSWORD }}
+                  script: ~/deployment-scripts/update-backend.sh dev
