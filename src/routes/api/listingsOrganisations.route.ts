@@ -1,7 +1,7 @@
 import express from 'express';
 export const router = express.Router();
 import { check, query } from 'express-validator';
-import { protect, authorise, checkInputError, asyncHandler } from '../../middleware';
+import { protect, checkInputError, asyncHandler } from '../../middleware';
 import { INVALID_FIELD_MSG } from '../../utils';
 
 // Import listings-organisations controllers
