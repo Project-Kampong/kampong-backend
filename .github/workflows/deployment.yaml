@@ -1,0 +1,41 @@
+name: Deploy server
+
+on:
+    workflow_dispatch:
+        inputs:
+            server_type:
+                description: 'Deploy to dev / staging / prod'
+                required: true
+                default: 'dev'
+
+jobs:
+    deploy:
+        runs-on: ubuntu-20.04
+        steps:
+            - name: Run deployment script on development
+              if: github.event.inputs.server_type == 'dev'
+              uses: appleboy/ssh-action@master
+              with:
+                  HOST: ${{ secrets.DEV_HOST }}
+                  USERNAME: root
+                  PORT: 22
+                  PASSWORD: ${{ secrets.DEV_PASSWORD }}
+                  script: ~/deployment-scripts/update-backend.sh dev
+            - name: Run deployment script on staging
+              if: github.event.inputs.server_type == 'staging'
+              uses: appleboy/ssh-action@master
+              with:
+                  HOST: ${{ secrets.DEV_HOST }}
+                  USERNAME: root
+                  PORT: 22
+                  PASSWORD: ${{ secrets.DEV_PASSWORD }}
+                  script: ~/deployment-scripts/update-backend.sh staging
+            - name: Run deployment script on production
+              if: github.event.inputs.server_type == 'prod'
+              uses: appleboy/ssh-action@master
+              with:
+                  HOST: ${{ secrets.PROD_HOST }}
+                  USERNAME: root
+                  PORT: 22
+                  PASSWORD: ${{ secrets.PROD_PASSWORD }}
+                  script: ~/deployment-scripts/update-backend.sh prod
