@@ -1,3 +1,4 @@
+import path from 'path';
 import express from 'express';
 import { BaseRouter } from './base.route';
 
@@ -51,6 +52,7 @@ class ApiRouter extends BaseRouter {
         this.route.use('/announcements', organisationAnnouncementsRoute);
         this.route.use('/organisation-likes', organisationLikesRoute);
         this.route.use('/organisation-jobs', organisationJobsRoute);
+        this.route.use('/docs', (req, res) => res.sendFile(path.resolve(__dirname, '../../public/api-docs/index.html')));
 
         // All unimplemented route give 404 response
         this.route.use('/*', (req, res) => res.status(404).json({ success: false, error: `Route not found: ${req.method} ${req.originalUrl}` }));
