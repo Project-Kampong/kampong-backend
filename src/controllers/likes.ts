@@ -1,8 +1,7 @@
 import { db } from '../database/db';
-import { asyncHandler } from '../middleware';
 import { cleanseData, ErrorResponse } from '../utils';
 
-export class LikeController {
+export class LikesController {
     constructor() {}
     /**
      * @desc    Get all likes (including profile information) for a listing
@@ -86,4 +85,4 @@ export class LikeController {
     };
 }
 
-export const likeController = new LikeController();
+export const likeController = new LikesController();
