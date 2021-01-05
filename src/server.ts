@@ -43,6 +43,10 @@ app.use(helmet());
 // Prevent XSS attacks
 app.use(xss());
 
+// Set express to populate req.ip from req headers 1 hop before proxy (ie. client's public ip)
+// see: https://expressjs.com/en/guide/behind-proxies.html
+app.set('trust proxy', 1);
+
 // Rate limiting
 const limiter = rateLimit({
     windowMs: 1 * 60 * 1000, // 1 minute
@@ -86,7 +90,7 @@ const server = app.listen(PORT, () => {
 });
 
 // Handle unhandled promise rejections
-process.on('unhandledRejection', (err: Error, promise: Promise<any>) => {
+process.on('unhandledRejection', (err: Error, _promise: Promise<any>) => {
     console.log(`Unhandled Error: ${get(err, 'message')}`.bgRed);
     // Write diagnostic report
     process.report.writeReport(err);
