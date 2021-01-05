@@ -119,7 +119,7 @@ This job only depends on the <<Design-Repository,`Repository`>> component to fet
 
 [[Implementation-Auth]]
 === Authentication
-Authentication for Kampong App is done is 2 ways:
+Authentication for Kampong App is done in 2 ways:
 
 * Social media authentication using OAuth2
 * Email and password authentication
