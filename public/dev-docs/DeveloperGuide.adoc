@@ -129,7 +129,7 @@ Authentication for Kampong App is done in 2 ways:
 
 ===== Aspect: Justification
 
-The reason for implementing social media authentication is to avoid any legal issues with regard to data usage / leakage that comes with storing sensitive user data. By implementing social media authentication, we ensure that any sensitive user data that we store is coming from an established organisation with their own set of privacy policies. (Don please rephrase this hahaha)
+The reason for implementing social media authentication is to minimise the liabilities associated with storing sensitive user data. By implementing social media authentication, we minimise the storage of PII data (eg. password) on our platforms, hence, ensuring that no sensitive user data is being compromised.
 
 ===== Aspect: How social media authentication is implemented
 
