@@ -1,8 +1,7 @@
 import crypto from 'crypto';
 import { v1 as uuidv1 } from 'uuid';
-import { checkPassword, cleanseData, ErrorResponse, getSignedJwtToken, hashPassword, parseSqlUpdateStmt } from '../utils';
+import { checkPassword, ErrorResponse, getSignedJwtToken, hashPassword, parseSqlUpdateStmt } from '../utils';
 import { db } from '../database/db';
-import { asyncHandler } from '../middleware';
 import { mailerService } from '../services/mailer.service';
 
 /**
@@ -10,7 +9,7 @@ import { mailerService } from '../services/mailer.service';
  * @route   POST /api/auth/register
  * @access  Public
  */
-export const register = asyncHandler(async (req, res, next) => {
+export const register = async (req, res, next) => {
     // Check if user email already exists
     const { username, email, password } = req.body;
     const userExists = await db.oneOrNone('SELECT * FROM loginuser WHERE email = $1 OR username = $2', [email, username]);
@@ -73,14 +72,14 @@ export const register = asyncHandler(async (req, res, next) => {
     } catch (err) {
         return next(new ErrorResponse('Email could not be sent. Please register for an account again.', 409));
     }
-});
+};
 
 /**
  * @desc    Activate user account via email confirmation
  * @route   GET /api/auth/register/:confirmEmailToken/confirm-email
  * @access  Public
  */
-export const confirmEmail = asyncHandler(async (req, res, next) => {
+export const confirmEmail = async (req, res, next) => {
     const hashedToken = hashToken(req.params.confirmEmailToken);
 
     // Check that pending user exists
@@ -92,14 +91,14 @@ export const confirmEmail = asyncHandler(async (req, res, next) => {
         return query.batch([deletePendingUser, activateUser]);
     });
     sendTokenResponse(confirmEmail[1], 200, res, true);
-});
+};
 
 /**
  * @desc    User forget password
  * @route   POST /api/auth/forget-password
  * @access  Public
  */
-export const forgetPassword = asyncHandler(async (req, res, next) => {
+export const forgetPassword = async (req, res, next) => {
     // Check if user email already exists
     const { email } = req.body;
     const userExists = await db.oneOrNone('SELECT * FROM loginuser WHERE email = $1', email);
@@ -160,14 +159,14 @@ export const forgetPassword = asyncHandler(async (req, res, next) => {
 
         return next(new ErrorResponse('Email could not be sent', 500));
     }
-});
+};
 
 /**
  * @desc    Reset account password of user with forgotten password
  * @route   PUT /api/auth/forget-password/:resetToken
  * @access  Public
  */
-export const resetPassword = asyncHandler(async (req, res, next) => {
+export const resetPassword = async (req, res, next) => {
     const { resetToken } = req.params;
     const hashedToken = hashToken(resetToken);
 
@@ -201,14 +200,14 @@ export const resetPassword = asyncHandler(async (req, res, next) => {
         return query.batch([updateUserPassword, deleteForgetPasswordUser]);
     });
     sendTokenResponse(updateUser[0], 200, res);
-});
+};
 
 /**
  * @desc    Login user
  * @route   POST /api/auth/login
  * @access  Public
  */
-export const login = asyncHandler(async (req, res, next) => {
+export const login = async (req, res, next) => {
     const { email, password } = req.body;
 
     const user = await db.oneOrNone('SELECT * FROM loginuser WHERE email = $1', email);
@@ -227,14 +226,14 @@ export const login = asyncHandler(async (req, res, next) => {
     }
 
     sendTokenResponse(user, 200, res);
-});
+};
 
 /**
  * @desc    Log out and delete cookie
  * @route   GET /api/auth/logout
  * @access  Private
  */
-export const logout = asyncHandler(async (req, res, next) => {
+export const logout = async (req, res, next) => {
     // set token cookie to none
     res.cookie('token', 'none', {
         expires: new Date(Date.now() + 10 * 1000),
@@ -244,28 +243,28 @@ export const logout = asyncHandler(async (req, res, next) => {
         success: true,
         data: {},
     });
-});
+};
 
 /**
  * @desc    Get current logged in user details
  * @route   GET /api/auth/me
  * @access  Private
  */
-export const getMe = asyncHandler(async (req, res, next) => {
+export const getMe = async (req, res, next) => {
     const data = req.user;
     delete data['password'];
     res.status(200).json({
         success: true,
         data,
     });
-});
+};
 
 /**
  * @desc    Update current logged in user password
  * @route   PUT /api/auth/update-password
  * @access  Private
  */
-export const updatePassword = asyncHandler(async (req, res, next) => {
+export const updatePassword = async (req, res, next) => {
     // check if user exists
     const user = await db.oneOrNone('SELECT * FROM loginuser WHERE user_id = $1', req.user.user_id);
 
@@ -292,7 +291,7 @@ export const updatePassword = asyncHandler(async (req, res, next) => {
     const rows = await db.one(updatePasswordQuery);
 
     sendTokenResponse(rows, 200, res);
-});
+};
 
 // Helper method to get token from model, create cookie and send response
 const sendTokenResponse = (user, statusCode, res, redirectHome = false) => {

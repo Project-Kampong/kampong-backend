@@ -2,7 +2,7 @@ import express from 'express';
 export const router = express.Router();
 import rateLimit from 'express-rate-limit';
 import { check } from 'express-validator';
-import { protect, checkInputError } from '../../middleware';
+import { protect, checkInputError, asyncHandler } from '../../middleware';
 import {
     ALPHA_WHITESPACE_REGEX,
     PASSWORD_REGEX,
@@ -44,15 +44,19 @@ const authRequestLimiter = rateLimit({
 });
 
 // map routes to controller
-router.get('/logout', protect, logout);
-router.get('/me', protect, getMe);
-router.get('/register/:confirmEmailToken/confirm-email', confirmEmail);
-router.post('/register', authRequestLimiter, validateRegisterFields, checkInputError, register);
-router.post('/login', authRequestLimiter, validateLoginFields, checkInputError, login);
-router.post('/forget-password', authRequestLimiter, validateForgetPasswordFields, checkInputError, forgetPassword);
-router.put('/forget-password/:resetToken', validateResetPasswordFields, checkInputError, resetPassword);
+router.get('/logout', protect, asyncHandler(logout));
+router.get('/me', protect, asyncHandler(getMe));
+
+// Request limiter for all auth endpoints below this line
+router.use(authRequestLimiter);
+
+router.get('/register/:confirmEmailToken/confirm-email', asyncHandler(confirmEmail));
+router.post('/register', validateRegisterFields, checkInputError, asyncHandler(register));
+router.post('/login', validateLoginFields, checkInputError, asyncHandler(login));
+router.post('/forget-password', authRequestLimiter, validateForgetPasswordFields, checkInputError, asyncHandler(forgetPassword));
+router.put('/forget-password/:resetToken', validateResetPasswordFields, checkInputError, asyncHandler(resetPassword));
 
 // routers below use protect middleware
 router.use(protect);
 
-router.put('/update-password', validateUpdatePasswordFields, checkInputError, updatePassword);
+router.put('/update-password', validateUpdatePasswordFields, checkInputError, asyncHandler(updatePassword));
