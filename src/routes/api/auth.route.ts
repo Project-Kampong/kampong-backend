@@ -13,7 +13,7 @@ import {
 } from '../../utils';
 
 // import controllers here
-import { register, login, logout, getMe, updatePassword, confirmEmail, forgetPassword, resetPassword } from '../../controllers/auth';
+import { authController } from '../../controllers/auth';
 
 // input validation chain definition
 const validateRegisterFields = [
@@ -36,27 +36,35 @@ const validateUpdatePasswordFields = [
     check('newPassword', INVALID_PASSWORD_MSG).matches(PASSWORD_REGEX),
 ];
 
+let max: number;
+// max number of request in 15min is 5 for prod, and unlimited for non-prod env
+if (process.env.NODE_ENV === 'production') {
+    max = 5;
+} else {
+    max = 0;
+}
+
 // Request limiter middleware for auth endpoints
 const authRequestLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 min window
-    max: 5, // start blocking after 5 requests
+    max, // start blocking after 5 requests
     message: { success: false, error: 'Request limit exceeded, please try again in 15 minutes.' },
 });
 
 // map routes to controller
-router.get('/logout', protect, asyncHandler(logout));
-router.get('/me', protect, asyncHandler(getMe));
+router.get('/logout', protect, asyncHandler(authController.logout));
+router.get('/me', protect, asyncHandler(authController.getMe));
 
 // Request limiter for all auth endpoints below this line
 router.use(authRequestLimiter);
 
-router.get('/register/:confirmEmailToken/confirm-email', asyncHandler(confirmEmail));
-router.post('/register', validateRegisterFields, checkInputError, asyncHandler(register));
-router.post('/login', validateLoginFields, checkInputError, asyncHandler(login));
-router.post('/forget-password', authRequestLimiter, validateForgetPasswordFields, checkInputError, asyncHandler(forgetPassword));
-router.put('/forget-password/:resetToken', validateResetPasswordFields, checkInputError, asyncHandler(resetPassword));
+router.get('/register/:confirmEmailToken/confirm-email', asyncHandler(authController.confirmEmail));
+router.post('/register', validateRegisterFields, checkInputError, asyncHandler(authController.register));
+router.post('/login', validateLoginFields, checkInputError, asyncHandler(authController.login));
+router.post('/forget-password', authRequestLimiter, validateForgetPasswordFields, checkInputError, asyncHandler(authController.forgetPassword));
+router.put('/forget-password/:resetToken', validateResetPasswordFields, checkInputError, asyncHandler(authController.resetPassword));
 
 // routers below use protect middleware
 router.use(protect);
 
-router.put('/update-password', validateUpdatePasswordFields, checkInputError, asyncHandler(updatePassword));
+router.put('/update-password', validateUpdatePasswordFields, checkInputError, asyncHandler(authController.updatePassword));
