@@ -12,8 +12,8 @@ import { mailerService } from '../services/mailer.service';
  */
 export const register = asyncHandler(async (req, res, next) => {
     // Check if user email already exists
-    const { first_name, last_name, email, password } = req.body;
-    const userExists = await db.oneOrNone('SELECT * FROM loginuser WHERE email = $1', email);
+    const { username, email, password } = req.body;
+    const userExists = await db.oneOrNone('SELECT * FROM loginuser WHERE email = $1 OR username = $2', [email, username]);
 
     if (userExists) {
         return next(new ErrorResponse(`Email has already been used.`, 400));
@@ -25,8 +25,7 @@ export const register = asyncHandler(async (req, res, next) => {
 
     const userData = {
         user_id: uuidv1(),
-        first_name,
-        last_name,
+        username,
         email,
         password: await hashPassword(password),
     };
@@ -35,8 +34,6 @@ export const register = asyncHandler(async (req, res, next) => {
         user_id: userData.user_id,
         token: hashedEmailToken,
     };
-
-    const nickname = first_name + ' ' + (last_name || '');
 
     // Create confirmation url
     const confirmationUrl = `${req.protocol}://${req.get('host')}/api/auth/register/${token}/confirm-email`;
@@ -56,15 +53,17 @@ export const register = asyncHandler(async (req, res, next) => {
 
         /**
          * SQL Transaction, creating user and associated user profile
-         * Returns an array of 2 json:
+         * User profile nickname is set to default username
+         * Returns an array of 3 json:
          * 1st json: User auth
          * 2nd json: User profile
+         * 3rd json: Pending user entry
          */
         const createUserQueries = await db.tx(async (query) => {
             const createUser = await query.one('INSERT INTO loginuser (${this:name}) VALUES (${this:csv}) RETURNING *', userData);
             const createProfile = await query.one('INSERT INTO profile (user_id, nickname) VALUES ($1, $2) RETURNING *', [
                 createUser.user_id,
-                nickname,
+                username,
             ]);
             const createPendingUser = await query.one('INSERT INTO pendinguser (${this:name}) VALUES (${this:csv}) RETURNING *', pendingUserData);
             return query.batch([createUser, createProfile, createPendingUser]);
@@ -96,41 +95,6 @@ export const confirmEmail = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Resend account activation email for logged in unactivated user
- * @route   GET /api/auth/register/resend-confirm-email
- * @access  Private
- */
-export const resendActivationEmail = asyncHandler(async (req, res, next) => {
-    const pendingUser = await db.one(
-        'SELECT * FROM pendinguser pu JOIN loginuser u ON pu.user_id = u.user_id WHERE pu.user_id = $1',
-        req.user.user_id,
-    );
-    const { email, token } = pendingUser;
-
-    // Create confirmation url
-    const confirmationUrl = `${req.protocol}://${req.get('host')}/api/auth/register/${token}/confirm-email`;
-
-    const message = `Thank you for joining Project Kampong. Please click on the link to activate your account:
-      \n\n${confirmationUrl}\n\nPlease contact admin@kampong.com immediately if you are not the intended receipient 
-      of this mail.\n\nWelcome on board!\n\nTeam Kampong`;
-
-    try {
-        await mailerService.sendEmail({
-            fromEmail: process.env.FROM_EMAIL,
-            toEmail: email,
-            subject: 'Project Kampong Account Activation (Re-Send)',
-            text: message,
-        });
-    } catch (err) {
-        return next(new ErrorResponse('Email could not be sent. Please try again later.', 409));
-    }
-    res.status(200).json({
-        success: true,
-        data: {},
-    });
-});
-
-/**
  * @desc    User forget password
  * @route   POST /api/auth/forget-password
  * @access  Public
@@ -144,11 +108,11 @@ export const forgetPassword = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`User does not exist.`, 404));
     }
 
-    const forgetPasswordUserExists = await db.oneOrNone('SELECT * FROM pendinguser WHERE email = $1', email);
+    const forgetPasswordUserExists = await db.oneOrNone('SELECT * FROM forgetpassworduser WHERE email = $1', email);
 
     // if forget password user try after token has expired, delete existing entry and allow to go ahead
     if (forgetPasswordUserExists && forgetPasswordUserExists.expiry < Date.now()) {
-        await db.one('DELETE FROM pendinguser WHERE email = $1 RETURNING *', email);
+        await db.one('DELETE FROM forgetpassworduser WHERE email = $1 RETURNING *', email);
     }
 
     // if forget password user attempts to make new forget password request while existing token has not expired, 400 response
@@ -288,41 +252,12 @@ export const logout = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 export const getMe = asyncHandler(async (req, res, next) => {
+    const data = req.user;
+    delete data['password'];
     res.status(200).json({
         success: true,
-        data: req.user,
+        data,
     });
-});
-
-/**
- * @desc    Update current logged in user details (except password)
- * @route   PUT /api/auth/update-details
- * @access  Private
- */
-export const updateDetails = asyncHandler(async (req, res, next) => {
-    // check if user exists
-    const user = await db.oneOrNone('SELECT * FROM loginuser WHERE user_id = $1', req.user.user_id);
-
-    // if user does not exist, return 401 unauthorised response
-    if (!user) {
-        return next(new ErrorResponse(`Not authorised to access this route`, 401));
-    }
-
-    const { first_name, last_name, email } = req.body;
-
-    const data = {
-        first_name,
-        last_name,
-        email,
-    };
-
-    cleanseData(data);
-
-    const updateUserQuery = parseSqlUpdateStmt(data, 'loginuser', 'WHERE user_id = $1 RETURNING *', [req.user.user_id]);
-
-    const rows = await db.one(updateUserQuery);
-
-    sendTokenResponse(rows, 200, res);
 });
 
 /**

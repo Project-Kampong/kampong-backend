@@ -1,7 +1,7 @@
 import express from 'express';
 export const router = express.Router();
 import rateLimit from 'express-rate-limit';
-import { check, oneOf } from 'express-validator';
+import { check } from 'express-validator';
 import { protect, checkInputError } from '../../middleware';
 import {
     ALPHA_WHITESPACE_REGEX,
@@ -9,28 +9,15 @@ import {
     INVALID_EMAIL_MSG,
     INVALID_ALPHA_SPACE_MSG,
     INVALID_PASSWORD_MSG,
-    NO_FIELD_UPDATED_MSG,
     INVALID_EXISTING_MSG,
 } from '../../utils';
 
 // import controllers here
-import {
-    register,
-    login,
-    logout,
-    getMe,
-    updateDetails,
-    updatePassword,
-    confirmEmail,
-    forgetPassword,
-    resetPassword,
-    resendActivationEmail,
-} from '../../controllers/auth';
+import { register, login, logout, getMe, updatePassword, confirmEmail, forgetPassword, resetPassword } from '../../controllers/auth';
 
 // input validation chain definition
 const validateRegisterFields = [
-    check('first_name', INVALID_ALPHA_SPACE_MSG('first name')).trim().notEmpty().matches(ALPHA_WHITESPACE_REGEX),
-    check('last_name', INVALID_ALPHA_SPACE_MSG('last name')).optional().trim().notEmpty().matches(ALPHA_WHITESPACE_REGEX),
+    check('username', INVALID_ALPHA_SPACE_MSG('username')).trim().notEmpty().matches(ALPHA_WHITESPACE_REGEX),
     check('email', INVALID_EMAIL_MSG).trim().isEmail().normalizeEmail(),
     check('password', INVALID_PASSWORD_MSG).matches(PASSWORD_REGEX),
 ];
@@ -43,13 +30,6 @@ const validateLoginFields = [
 const validateForgetPasswordFields = [check('email', INVALID_EMAIL_MSG).trim().isEmail().normalizeEmail()];
 
 const validateResetPasswordFields = [check('password', INVALID_PASSWORD_MSG).matches(PASSWORD_REGEX)];
-
-const validateUpdateDetailsFields = [
-    oneOf([check('first_name').exists(), check('last_name').exists(), check('email').exists()], NO_FIELD_UPDATED_MSG),
-    check('first_name', INVALID_ALPHA_SPACE_MSG('first name')).optional().trim().notEmpty().matches(ALPHA_WHITESPACE_REGEX),
-    check('last_name', INVALID_ALPHA_SPACE_MSG('last name')).optional().trim().notEmpty().matches(ALPHA_WHITESPACE_REGEX),
-    check('email', INVALID_EMAIL_MSG).optional().trim().isEmail().normalizeEmail(),
-];
 
 const validateUpdatePasswordFields = [
     check('oldPassword', INVALID_EXISTING_MSG('old password')).exists(),
@@ -74,9 +54,5 @@ router.put('/forget-password/:resetToken', validateResetPasswordFields, checkInp
 
 // routers below use protect middleware
 router.use(protect);
-
-router.get('/register/resend-confirm-email', resendActivationEmail);
-
-router.put('/update-details', validateUpdateDetailsFields, checkInputError, updateDetails);
 
 router.put('/update-password', validateUpdatePasswordFields, checkInputError, updatePassword);
