@@ -14,9 +14,6 @@ jobs:
               with:
                   fetch-depth: '0'
                   token: ${{ secrets.PAT }}
-            - uses: webfactory/ssh-agent@v0.4.1
-              with:
-                  ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
             - name: GitHub Tag Bump
               id: tag-bump
               uses: anothrNick/github-tag-action@1.26.0
@@ -40,5 +37,5 @@ jobs:
                   HOST: ${{ secrets.DEV_HOST }}
                   USERNAME: root
                   PORT: 22
-                  KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+                  PASSWORD: ${{ secrets.DEV_PASSWORD }}
                   script: ~/deployment-scripts/update-backend.sh dev
