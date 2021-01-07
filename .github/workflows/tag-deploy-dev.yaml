@@ -37,5 +37,5 @@ jobs:
                   HOST: ${{ secrets.DEV_HOST }}
                   USERNAME: root
                   PORT: 22
-                  PASSWORD: ${{ secrets.DEV_PASSWORD }}
+                  KEY: ${{ secrets.SSHKEY }}
                   script: ~/deployment-scripts/update-backend.sh dev
