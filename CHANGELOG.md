@@ -7,17 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v0.103.0]
+### Changed
 
-## [v0.102.0]
-
-## [v0.101.0]
-
-## [v0.100.0]
-
-## [v0.99.0]
-
-## [v0.98.0]
+-   Add globally unique `username` to `loginuser` table, and move `first_name` and `last_name` from `loginuser` to `profile` table
 
 ## [v0.97.0]
 
