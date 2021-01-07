@@ -6,7 +6,8 @@ export async function up(knex: Knex): Promise<void> {
 
         await tx.schema.createTable('loginuser', (table: Knex.TableBuilder) => {
             table.uuid('user_id').primary();
-            table.string('username').unique().notNullable();
+            table.string('first_name').notNullable();
+            table.string('last_name');
             table.string('email').unique().notNullable();
             table.string('password').notNullable();
             table.enu('role', ['admin', 'user'], { useNative: true, enumName: 'user_role' }).notNullable().defaultTo('user');
@@ -28,8 +29,6 @@ export async function up(knex: Knex): Promise<void> {
 
         await tx.schema.createTable('profile', (table: Knex.TableBuilder) => {
             table.uuid('user_id').primary().references('user_id').inTable('loginuser').onDelete('CASCADE');
-            table.string('first_name');
-            table.string('last_name');
             table.string('nickname').notNullable();
             table.string('profile_picture');
             table.text('about');

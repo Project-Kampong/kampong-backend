@@ -12,8 +12,6 @@ const validateProfileUpdateFields = [
     oneOf(
         [
             check('nickname').exists(),
-            check('first_name').exists(),
-            check('last_name').exists(),
             check('profile_picture').exists(),
             check('about').exists(),
             check('gender').exists(),

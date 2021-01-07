@@ -5,17 +5,17 @@ import { checkInputError, protect, asyncHandler } from '../../middleware';
 import { INVALID_FIELD_MSG } from '../../utils';
 
 // import controllers here
-import { likesController } from '../../controllers/likes';
+import { likeController } from '../../controllers/likes';
 
 // Define input validation chain
 const validateNewLikeFields = [check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID()];
 
-router.route('/').get(asyncHandler(likesController.getLikes));
+router.route('/').get(asyncHandler(likeController.getLikes));
 
 // all routes below only accessible to authenticated users
 router.use(protect);
 
 // map routes to controller
-router.route('/').post(validateNewLikeFields, checkInputError, asyncHandler(likesController.newLike));
+router.route('/').post(validateNewLikeFields, checkInputError, asyncHandler(likeController.newLike));
 
-router.route('/:like_id').delete(asyncHandler(likesController.unLike));
+router.route('/:like_id').delete(asyncHandler(likeController.unLike));
