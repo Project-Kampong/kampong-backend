@@ -12,9 +12,6 @@ jobs:
     deploy:
         runs-on: ubuntu-20.04
         steps:
-            - uses: webfactory/ssh-agent@v0.4.1
-              with:
-                  ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
             - name: Run deployment script on development
               if: github.event.inputs.server_type == 'dev'
               uses: appleboy/ssh-action@master
@@ -22,7 +19,7 @@ jobs:
                   HOST: ${{ secrets.DEV_HOST }}
                   USERNAME: root
                   PORT: 22
-                  KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+                  PASSWORD: ${{ secrets.DEV_PASSWORD }}
                   script: ~/deployment-scripts/update-backend.sh dev
             - name: Run deployment script on staging
               if: github.event.inputs.server_type == 'staging'
@@ -31,7 +28,7 @@ jobs:
                   HOST: ${{ secrets.DEV_HOST }}
                   USERNAME: root
                   PORT: 22
-                  KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+                  PASSWORD: ${{ secrets.DEV_PASSWORD }}
                   script: ~/deployment-scripts/update-backend.sh staging
             - name: Run deployment script on production
               if: github.event.inputs.server_type == 'prod'
@@ -40,5 +37,5 @@ jobs:
                   HOST: ${{ secrets.PROD_HOST }}
                   USERNAME: root
                   PORT: 22
-                  KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+                  PASSWORD: ${{ secrets.PROD_PASSWORD }}
                   script: ~/deployment-scripts/update-backend.sh prod
