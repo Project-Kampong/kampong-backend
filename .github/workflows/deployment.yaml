@@ -19,7 +19,7 @@ jobs:
                   HOST: ${{ secrets.DEV_HOST }}
                   USERNAME: root
                   PORT: 22
-                  PASSWORD: ${{ secrets.DEV_PASSWORD }}
+                  KEY: ${{ secrets.SSHKEY }}
                   script: ~/deployment-scripts/update-backend.sh dev
             - name: Run deployment script on staging
               if: github.event.inputs.server_type == 'staging'
@@ -28,7 +28,7 @@ jobs:
                   HOST: ${{ secrets.DEV_HOST }}
                   USERNAME: root
                   PORT: 22
-                  PASSWORD: ${{ secrets.DEV_PASSWORD }}
+                  KEY: ${{ secrets.SSHKEY }}
                   script: ~/deployment-scripts/update-backend.sh staging
             - name: Run deployment script on production
               if: github.event.inputs.server_type == 'prod'
@@ -37,5 +37,5 @@ jobs:
                   HOST: ${{ secrets.PROD_HOST }}
                   USERNAME: root
                   PORT: 22
-                  PASSWORD: ${{ secrets.PROD_PASSWORD }}
+                  KEY: ${{ secrets.SSHKEY }}
                   script: ~/deployment-scripts/update-backend.sh prod
