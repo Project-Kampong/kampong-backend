@@ -9,8 +9,10 @@ export class MessengerService {
 
     private constructor(private readonly socketIoServer: Server) {
         this.socketIoServer.on('connection', (socket: Socket) => {
+            const { id } = socket;
+
             socket.on('joinRoom', ({ username, room }) => {
-                this.userJoin(socket.id, username, room);
+                this.userJoin(id, username, room);
                 socket.join(room);
 
                 // when client connects
@@ -27,14 +29,14 @@ export class MessengerService {
 
             // Listen for chatMessage
             socket.on('chatMessage', (msg) => {
-                const user = this.getUserById(socket.id);
-                this.socketIoServer.to(user.room).emit('message', this.formatMessage(user?.username, msg));
+                const user = this.getUserById(id);
+                this.socketIoServer.to(user?.room).emit('message', this.formatMessage(user?.username, msg));
             });
 
             // when client disconnect
             socket.on('disconnect', () => {
-                const user = this.getUserById(socket.id);
-                this.userLeave(socket.id);
+                const user = this.getUserById(id);
+                this.userLeave(id);
                 this.socketIoServer.to(user?.room).emit('message', this.formatMessage(this.botName, `${user?.username} has left the chat`));
                 this.socketIoServer.to(user?.room).emit('roomUsers', {
                     room: user?.room,
