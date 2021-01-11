@@ -56,8 +56,7 @@ CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
 
 CREATE TABLE loginuser (
 	user_id UUID,
-	first_name VARCHAR NOT NULL,
-	last_name VARCHAR,
+	username VARCHAR UNIQUE NOT NULL,
 	email VARCHAR(320) UNIQUE NOT NULL,
 	password VARCHAR,
 	google_id VARCHAR,
@@ -86,6 +85,8 @@ CREATE TABLE forgetpassworduser (
 
 CREATE TABLE profile (
 	user_id UUID,
+	first_name VARCHAR,
+	last_name VARCHAR,
 	nickname VARCHAR NOT NULL,
 	profile_picture VARCHAR,
 	about TEXT,

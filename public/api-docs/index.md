@@ -14,10 +14,8 @@ Backend API for Project Kampong.
   * [Login User](#5-login-user)
   * [Logout User](#6-logout-user)
   * [Register User](#7-register-user)
-  * [Resend Account Activation Email](#8-resend-account-activation-email)
-  * [Reset Password](#9-reset-password)
-  * [Update Details](#10-update-details)
-  * [Update Password](#11-update-password)
+  * [Reset Password](#8-reset-password)
+  * [Update Password](#9-update-password)
 
 * [Categories](#categories)
 
@@ -166,7 +164,7 @@ Activates user account via confirmation of email address used in user registrati
 
 ```bash
 Method: GET
-Type: RAW
+Type: 
 URL: {{URL}}/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirm-email
 ```
 
@@ -176,18 +174,6 @@ URL: {{URL}}/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirm-
 | Key | Value | Description |
 | --- | ------|-------------|
 | Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"name": "Don",
-	"email" : "don@gmail.com",
-	"password": "123456"
-}
-```
 
 
 
@@ -202,18 +188,6 @@ URL: {{URL}}/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirm-
 | Key | Value | Description |
 | --- | ------|-------------|
 | Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"name": "Don",
-	"email" : "don@gmail.com",
-	"password": "123456"
-}
-```
 
 
 
@@ -240,18 +214,6 @@ URL: {{URL}}/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirm-
 | Key | Value | Description |
 | --- | ------|-------------|
 | Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"name": "Don",
-	"email" : "don@gmail.com",
-	"password": "123456"
-}
-```
 
 
 
@@ -465,12 +427,12 @@ URL: {{URL}}/api/auth/me
 {
     "success": true,
     "data": {
-        "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
-        "first_name": "User",
-        "last_name": "One",
-        "email": "user@gmail.com",
-        "password": "$2a$10$LeHqGA.ETVf74tLuK1UI2.er9i5hFR9EADSt3TU7VTKRx3buhpxbW",
-        "role": "user"
+        "user_id": "de1c5ad0-502e-11eb-970c-a7e9e3e2748c",
+        "username": "DonTay",
+        "email": "dontay0209@gmail.com",
+        "password": "$2a$10$pyuwGxY22xS/AfeUtJJ88.w4nQ63pjvIz0uGDEWdQGvp23IkR5sPW",
+        "role": "user",
+        "is_activated": false
     }
 }
 ```
@@ -774,7 +736,7 @@ URL: {{URL}}/api/auth/logout
 ### 7. Register User
 
 
-User registration with password encryption, sends confirmation email address to activate account. Token expires in 15min, after which user must register again. Permission: Public.
+User registration with password encryption, sends confirmation email address to activate account. User is logged in with unactivated flag upon registration. Permission: Public.
 
 Field rules:
 All fields required unless otherwise stated.
@@ -805,8 +767,7 @@ URL: {{URL}}/api/auth/register
 
 ```js        
 {
-	"first_name": "Don",
-	"last_name": "Tay",
+	"username": "DonTay",
 	"email" : "dontay0209@gmail.com",
 	"password": "Abc1234!"
 }
@@ -934,163 +895,7 @@ URL: {{URL}}/api/auth/register
 
 
 
-### 8. Resend Account Activation Email
-
-
-Resend account activation email for unactivated user. Permission: Private.
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: RAW
-URL: {{URL}}/api/auth/register/resend-confirm-email
-```
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"first_name": "Don",
-	"last_name": "Tay",
-	"email" : "dontay0209@gmail.com",
-	"password": "Abc1234!"
-}
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Register User (400 Bad Request - User account already exists)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"first_name": "Don",
-	"last_name": "Tay",
-	"email" : "don@gmail.com",
-	"password": "123456"
-}
-```
-
-
-
-##### I. Example Response: Register User (400 Bad Request - User account already exists)
-```js
-{
-    "success": false,
-    "error": "Duplicate field value entered: Key (email)=(don@gmail.com) already exists."
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-##### II. Example Request: Register User (400 Bad Request - Invalid email/password requirement)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"first_name": "Bon",
-	"last_name": "Tan",
-	"email" : "bon@gmail.com",
-	"password": "12345"
-}
-```
-
-
-
-##### II. Example Response: Register User (400 Bad Request - Invalid email/password requirement)
-```js
-{
-    "success": false,
-    "error": "Please enter a password with 6 or more characters."
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-##### III. Example Request: Register User (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"first_name": "Don",
-	"last_name": "Tay",
-	"email" : "dontay0209@gmail.com",
-	"password": "123456"
-}
-```
-
-
-
-##### III. Example Response: Register User (200 OK)
-```js
-{
-    "success": true,
-    "data": "http://localhost:5000/api/auth/register/e69f4085f4f847a4983af536ab653a29a27c2b85/confirmemail"
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 9. Reset Password
+### 8. Reset Password
 
 
 Resets user password, based on reset token sent to user when user submitted a 'Forget Password' request (see 'Forget Password' request). Permission: Public.
@@ -1238,165 +1043,7 @@ URL: {{URL}}/api/auth/forget-password/9cd4383ffdde29ce4850d7752d8fce0e384cca71
 
 
 
-### 10. Update Details
-
-
-Update logged in user name and email.
-
-Field rules:
-At least 1 field must be updated.
-first_name: Alphabets and whitespaces only. 
-last_name: Alphabets and whitespaces only.
-email: Valid email address only. Email address will be canonicalized.
-
-
-***Endpoint:***
-
-```bash
-Method: PUT
-Type: RAW
-URL: {{URL}}/api/auth/update-details
-```
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"email": "don@gmail.com",
-	"first_name": "Don",
-	"last_name": "Tay"
-}
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Update Details (401 Unauthorised)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"email": "don@gmail.com",
-	"first_name": "Don",
-	"last_name": "Taylor",
-}
-```
-
-
-
-##### I. Example Response: Update Details (401 Unauthorised)
-```js
-{
-    "success": false,
-    "error": "Not authorised to access this route"
-}
-```
-
-
-***Status Code:*** 401
-
-<br>
-
-
-
-##### II. Example Request: Update Details (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"email": "don@gmail.com",
-	"first_name": "Don",
-	"last_name": "Taylor"
-}
-```
-
-
-
-##### II. Example Response: Update Details (200 OK)
-```js
-{
-    "success": true,
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkb25AZ21haWwuY29tIiwiY3JlYXRlZF9vbiI6IjIwMjAtMDctMTdUMDk6NDQ6MTUuMTY4WiIsImlhdCI6MTU5NDk3OTI3NiwiZXhwIjoxNTk3NTcxMjc2fQ.peKwAJG3E0Imx5DILZH9nNjgdVaPilgohcGEdSCUIIg"
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-##### III. Example Request: Update Details (400 Bad Request - Invalid field entered)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"email": "gmail.com",
-	"first_name": "Don",
-	"last_name": "Taylor"
-}
-```
-
-
-
-##### III. Example Response: Update Details (400 Bad Request - Invalid field entered)
-```js
-{
-    "success": false,
-    "error": "Please include a valid email."
-}
-```
-
-
-***Status Code:*** 400
-
-<br>
-
-
-
-### 11. Update Password
+### 9. Update Password
 
 
 Update logged in user password.
@@ -2325,7 +1972,7 @@ URL: {{URL}}/api/file-upload
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Single File Upload V2 (200 OK)
+##### I. Example Request: File Upload (200 OK)
 
 
 
@@ -2333,19 +1980,17 @@ URL: {{URL}}/api/file-upload
 
 | Key | Value | Description |
 | --- | ------|-------------|
-| upload |  | Test jpg file |
+| uploads |  | Test jpg file |
 
 
 
-##### I. Example Response: Single File Upload V2 (200 OK)
+##### I. Example Response: File Upload (200 OK)
 ```js
 {
     "success": true,
-    "data": {
-        "location": "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-2-20201206010937.jpg",
-        "key": "test-pic-2-20201206010937.jpg",
-        "bucket": "kampong-dev"
-    }
+    "data": [
+        "https://kampong-dev.s3.ap-southeast-1.amazonaws.com/test-pic-3-20210106025512.jpg"
+    ]
 }
 ```
 
@@ -7321,6 +6966,10 @@ URL: {{URL}}/api/listings-organisations
 
 
 Listing leave organisation. Permission: Listing or Organisation owner.
+Field rules (all fields required unless otherwise stated:
+Query params
+listingId - valid listingId
+organisationId - valid organisationId
 
 
 ***Endpoint:***
@@ -7328,7 +6977,7 @@ Listing leave organisation. Permission: Listing or Organisation owner.
 ```bash
 Method: DELETE
 Type: 
-URL: {{URL}}/api/listings-organisations/1
+URL: {{URL}}/api/listings-organisations
 ```
 
 
@@ -7337,6 +6986,15 @@ URL: {{URL}}/api/listings-organisations/1
 | Key | Value | Description |
 | --- | ------|-------------|
 | Content-Type | application/json | JSON Type |
+
+
+
+***Query params:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| listingId | 43824166-bee2-426e-8a08-ca2c4e4120ae |  |
+| organisationId | 8426a370-280e-11eb-aa97-9d0bb1a7de0d |  |
 
 
 
@@ -7354,12 +7012,21 @@ URL: {{URL}}/api/listings-organisations/1
 
 
 
+***Query:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| listingId | 43824166-bee2-426e-8a08-ca2c4e4120ae |  |
+| organisationId | 8426a370-280e-11eb-aa97-9d0bb1a7de0d |  |
+
+
+
 ##### I. Example Response: Listing leave Organisation (200 OK)
 ```js
 {
     "success": true,
     "data": {
-        "listing_organisation_id": 1,
+        "listing_organisation_id": 2,
         "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
         "organisation_id": "8426a370-280e-11eb-aa97-9d0bb1a7de0d"
     }
@@ -9673,19 +9340,21 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles
     "success": true,
     "data": {
         "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
-        "nickname": "User One",
-        "profile_picture": "https://robohash.org/consequaturatquia.jpg?size=500x500&set=set1",
-        "about": "Down-sized disintermediate circuit",
-        "gender": "f",
-        "dob": "2003-09-22T00:32:55.000Z",
-        "interest": "Statistician IV",
-        "phone": "87685829",
-        "facebook_link": "https://tripadvisor.com/ornare/imperdiet.png",
-        "twitter_link": "https://google.com/quis/orci/nullam/molestie/nibh/in/lectus.xml",
-        "instagram_link": "http://1und1.de/in/libero/ut/massa.png",
-        "linkedin_link": "http://i2i.jp/imperdiet/sapien/urna/pretium/nisl/ut.jpg",
+        "first_name": "Don",
+        "last_name": "Tay",
+        "nickname": "don-tay",
+        "profile_picture": "https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+        "about": "Updated about me",
+        "gender": "m",
+        "dob": "2000-07-17T16:00:00.746Z",
+        "occupation": "Statistician IV",
+        "phone": "91231234",
+        "facebook_link": "www.facebook.com",
+        "twitter_link": "www.twitter.com",
+        "instagram_link": "www.instagram.com",
+        "linkedin_link": "www.linkedin.com",
         "is_verified": false,
-        "created_on": "2020-08-17T16:58:38.704Z"
+        "created_on": "2021-01-06T14:52:49.011Z"
     }
 }
 ```
@@ -9705,8 +9374,10 @@ Update user profile identified by user id. Permission: Admin/Private.
 Field rules:
 At least one field must be updated.
 nickname - Non-empty.
+first_name
+last_name
 about
-gender - Enum: 'm', 'f', 'o', 'u'
+gender
 dob - Valid SQL Datetime format.
 interest
 phone - Valid phone number internationally.
@@ -9738,6 +9409,8 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles
 ```js        
 {
 	"nickname": "don-tay",
+    "first_name": "Don",
+    "last_name": "Tay",
 	"about": "Updated about me",
 	"gender": "m",
 	"dob": "2000-07-18 00:00:00.746876+08",
@@ -9846,63 +9519,7 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles
 
 
 
-##### III. Example Request: Update Profile (200 OK)
-
-
-***Headers:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| Content-Type | application/json | JSON Type |
-
-
-
-***Body:***
-
-```js        
-{
-	"nickname": "don-tay",
-	"about": "Updated about me",
-	"gender": "m",
-	"dob": "2000-07-18 00:00:00.746876+08",
-	"interest": "Graphic Design",
-	"phone": "91231234",
-	"facebook_link": "www.facebook.com",
-	"twitter_link": "www.twitter.com",
-	"instagram_link": "www.instagram.com",
-	"linkedin_link": "www.linkedin.com"
-}
-```
-
-
-
-##### III. Example Response: Update Profile (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "nickname": "don-tay",
-        "about": "Updated about me",
-        "gender": "m",
-        "dob": "2000-07-17T16:00:00.747Z",
-        "interest": "Graphic Design",
-        "phone": "91231234",
-        "facebook_link": "www.facebook.com",
-        "twitter_link": "www.twitter.com",
-        "instagram_link": "www.instagram.com",
-        "linkedin_link": "www.linkedin.com"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-##### IV. Example Request: Update Profile  (403 Forbidden - Non-admin user updating other user profile)
+##### III. Example Request: Update Profile  (403 Forbidden - Non-admin user updating other user profile)
 
 
 ***Headers:***
@@ -9933,7 +9550,7 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles
 
 
 
-##### IV. Example Response: Update Profile  (403 Forbidden - Non-admin user updating other user profile)
+##### III. Example Response: Update Profile  (403 Forbidden - Non-admin user updating other user profile)
 ```js
 {
     "success": false,
@@ -9943,6 +9560,70 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/profiles
 
 
 ***Status Code:*** 403
+
+<br>
+
+
+
+##### IV. Example Request: Update Profile (200 OK)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+	"nickname": "don-tay",
+    "first_name": "Don",
+    "last_name": "Tay",
+	"about": "Updated about me",
+	"gender": "m",
+	"dob": "2000-07-18 00:00:00.746876+08",
+	"interest": "Graphic Design",
+	"phone": "91231234",
+	"facebook_link": "www.facebook.com",
+	"twitter_link": "www.twitter.com",
+	"instagram_link": "www.instagram.com",
+	"linkedin_link": "www.linkedin.com"
+}
+```
+
+
+
+##### IV. Example Response: Update Profile (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+        "first_name": "Don",
+        "last_name": "Tay",
+        "nickname": "don-tay",
+        "profile_picture": "https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+        "about": "Updated about me",
+        "gender": "m",
+        "dob": "2000-07-17T16:00:00.746Z",
+        "occupation": "Statistician IV",
+        "phone": "91231234",
+        "facebook_link": "www.facebook.com",
+        "twitter_link": "www.twitter.com",
+        "instagram_link": "www.instagram.com",
+        "linkedin_link": "www.linkedin.com",
+        "is_verified": false,
+        "created_on": "2021-01-06T14:52:49.011Z"
+    }
+}
+```
+
+
+***Status Code:*** 200
 
 <br>
 
@@ -10950,4 +10631,4 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2020-12-27 12:53:05 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2021-01-06 15:20:08 by [docgen](https://github.com/thedevsaddam/docgen)

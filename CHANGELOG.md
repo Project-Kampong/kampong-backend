@@ -7,27 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v0.95.0]
+## [v0.109.0]
 
-## [v0.94.0]
+## [v0.108.0]
 
-## [v0.93.0]
+## [v0.104.0]
 
-## [v0.92.0]
+### Changed
 
-## [v0.91.0]
+-   Add globally unique `username` to `loginuser` table, and move `first_name` and `last_name` from `loginuser` to `profile` table
 
-## [v0.90.0]
+## [v0.97.0]
 
-## [v0.89.0]
+### Changed
 
-## [v0.88.0]
-
-## [v0.87.0]
-
-## [v0.86.0]
-
-## [v0.85.0]
+-   Backend no longer serves frontend assets (ie. App and About page). These assets will be served by NGINX.
 
 ## [v0.84.0]
 
@@ -298,7 +292,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Internal, dev-only test routes and methods.
 -   API documentation temporarily set up as front-end page to be served, for ease of testing by frontend.
 
-[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.95.0...HEAD
+[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.109.0...HEAD
+[v0.109.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.109.0
+[v0.108.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.108.0
+[v0.104.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.104.0
+[v0.103.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.103.0
+[v0.102.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.102.0
+[v0.101.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.101.0
+[v0.100.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.100.0
+[v0.99.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.99.0
+[v0.98.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.98.0
+[v0.97.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.97.0
+[v0.96.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.96.0
 [v0.95.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.95.0
 [v0.94.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.94.0
 [v0.93.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.93.0
