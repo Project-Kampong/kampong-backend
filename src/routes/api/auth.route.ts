@@ -64,6 +64,7 @@ router.use(authRequestLimiter);
 // Social authentication
 router.get('/google-login', passport.authenticate('google', { scope: ['profile', 'email'] }));
 router.get('/facebook-login', passport.authenticate('facebook', { scope: ['email'] }));
+// TODO: Work with frontend to implement the redirect
 router.get('/google-login/callback', passport.authenticate('google', { failureRedirect: '/login' }), asyncHandler(googleAuthController.googleLogin));
 router.get(
     '/facebook-login/callback',
