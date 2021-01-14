@@ -1,4 +1,4 @@
-class ChatRoomController {
+class ChatRoomsController {
     constructor() {}
 
     /**
@@ -24,10 +24,10 @@ class ChatRoomController {
 
     /**
      * @desc    Delete chatroom
-     * @route   DELETE /api/chatrooms
+     * @route   DELETE /api/chatrooms/:chatroom_id
      * @access  Private (Current logged in user must be in chatroom)
      */
     deleteChatroom = async (req, res, next) => {};
 }
 
-export const chatRoomController = new ChatRoomController();
+export const chatRoomsController = new ChatRoomsController();
