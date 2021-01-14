@@ -10,5 +10,6 @@ export const initSocketIoServer = (httpServer: http.Server) => {
         },
     });
 
+    // Init services dependent on socketIo
     MessengerService.init(server);
 };
