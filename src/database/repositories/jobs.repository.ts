@@ -1,5 +1,5 @@
 import { BaseRepository } from './base.repository';
-import { CreateJobSchema, DeactivateJobSchema, Job, UpdateJobSchema } from '../models';
+import { CreateJobSchema, DeactivateJobSchema, Job, UpdateJobSchema } from '../../models';
 
 export class JobsRepository extends BaseRepository {
     getAllJobsForListing(listingId: string): Promise<Job[]> {
