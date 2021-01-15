@@ -1,14 +1,11 @@
 import express from 'express';
 export const router = express.Router({ mergeParams: true });
-import { check } from 'express-validator';
-import { checkInputError, protect, asyncHandler } from '../../middleware';
-import { INVALID_FIELD_MSG } from '../../utils';
+import { protect, asyncHandler } from '../../middleware';
 
 // import controllers here
 import { likesController } from '../../controllers/likes';
 
 // Define input validation chain
-const validateNewLikeFields = [check('listing_id', INVALID_FIELD_MSG('listing id')).isUUID()];
 
 router.route('/').get(asyncHandler(likesController.getLikes));
 
@@ -16,6 +13,6 @@ router.route('/').get(asyncHandler(likesController.getLikes));
 router.use(protect);
 
 // map routes to controller
-router.route('/').post(validateNewLikeFields, checkInputError, asyncHandler(likesController.newLike));
+router.route('/').post(asyncHandler(likesController.newLike));
 
 router.route('/:like_id').delete(asyncHandler(likesController.unLike));

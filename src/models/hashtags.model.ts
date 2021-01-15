@@ -13,9 +13,9 @@ export interface CreateHashtagSchema {
 }
 
 export class CreateHashtagReqDto {
-    @IsUUID(undefined, { message: INVALID_FIELD_MSG('listing id') })
+    @IsUUID(undefined, { message: () => INVALID_FIELD_MSG('listing id') })
     listing_id: string;
 
-    @Matches(HASHTAG_REGEX, { message: INVALID_FIELD_MSG('tag') })
+    @Matches(HASHTAG_REGEX, { message: () => INVALID_FIELD_MSG('tag') })
     tag: string;
 }

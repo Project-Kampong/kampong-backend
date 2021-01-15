@@ -25,24 +25,24 @@ export interface DeactivateJobSchema {
 }
 
 export class CreateJobReqDto {
-    @IsUUID(undefined, { message: INVALID_FIELD_MSG('listing id ') })
+    @IsUUID(undefined, { message: () => INVALID_FIELD_MSG('listing id ') })
     listing_id: string;
 
-    @IsString({ message: INVALID_FIELD_MSG('job title') })
-    @IsNotEmpty({ message: INVALID_FIELD_MSG('job title') })
+    @IsString({ message: () => INVALID_FIELD_MSG('job title') })
+    @IsNotEmpty({ message: () => INVALID_FIELD_MSG('job title') })
     job_title: string;
 
     @IsOptional()
-    @IsString({ message: INVALID_FIELD_MSG('job description') })
+    @IsString({ message: () => INVALID_FIELD_MSG('job description') })
     job_description: string;
 }
 
 export class UpdateJobReqDto {
-    @IsString({ message: INVALID_FIELD_MSG('job title') })
-    @IsNotEmpty({ message: INVALID_FIELD_MSG('job title') })
+    @IsString({ message: () => INVALID_FIELD_MSG('job title') })
+    @IsNotEmpty({ message: () => INVALID_FIELD_MSG('job title') })
     job_title: string;
 
     @IsOptional()
-    @IsString({ message: INVALID_FIELD_MSG('job description') })
+    @IsString({ message: () => INVALID_FIELD_MSG('job description') })
     job_description: string;
 }
