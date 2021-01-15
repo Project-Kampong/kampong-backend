@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsUUID } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
 import { INVALID_FIELD_MSG } from '../utils';
 
 export interface Faq {
@@ -20,22 +20,26 @@ export interface UpdateFaqSchema {
 }
 
 export class CreateFaqReqDto {
-    @IsUUID(undefined, { message: INVALID_FIELD_MSG('listing id') })
+    @IsUUID(undefined, { message: () => INVALID_FIELD_MSG('listing id') })
     listing_id: string;
 
-    @IsNotEmpty({ message: INVALID_FIELD_MSG('question') })
+    @IsString({ message: () => INVALID_FIELD_MSG('question') })
+    @IsNotEmpty({ message: () => INVALID_FIELD_MSG('question') })
     question: string;
 
     @IsOptional()
-    @IsNotEmpty({ message: INVALID_FIELD_MSG('answer') })
+    @IsString({ message: () => INVALID_FIELD_MSG('answer') })
+    @IsNotEmpty({ message: () => INVALID_FIELD_MSG('answer') })
     answer?: string;
 }
 
 export class UpdateFaqReqDto {
-    @IsNotEmpty({ message: INVALID_FIELD_MSG('question') })
+    @IsString({ message: () => INVALID_FIELD_MSG('question') })
+    @IsNotEmpty({ message: () => INVALID_FIELD_MSG('question') })
     question: string;
 
     @IsOptional()
-    @IsNotEmpty({ message: INVALID_FIELD_MSG('answer') })
+    @IsString({ message: () => INVALID_FIELD_MSG('answer') })
+    @IsNotEmpty({ message: () => INVALID_FIELD_MSG('answer') })
     answer?: string;
 }
