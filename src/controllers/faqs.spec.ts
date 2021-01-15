@@ -18,7 +18,7 @@ const mockListingsRepository = mocked(new ListingsRepository(null, null));
 const mockModelValidator = mocked(new ModelValidator());
 
 // mock ModelValidator method for this test
-jest.spyOn(mockModelValidator, 'validateModel').mockResolvedValue(null);
+jest.spyOn(mockModelValidator, 'validateModel').mockResolvedValue();
 
 const res = {
     // allows chained json method to be called
