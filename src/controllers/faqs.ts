@@ -1,10 +1,14 @@
 import { db, FaqsRepository, ListingsRepository } from '../database';
 import { CreateFaqReqDto, UpdateFaqReqDto } from '../models';
-import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
-import { validateModel } from '../utils/modelValidator';
+import { checkListingOwner, ErrorResponse } from '../utils';
+import { ModelValidator, modelValidator } from '../utils/modelValidator';
 
 export class FaqsController {
-    constructor(private readonly faqsRepository: FaqsRepository, private readonly listingsRepository: ListingsRepository) {}
+    constructor(
+        private readonly faqsRepository: FaqsRepository,
+        private readonly listingsRepository: ListingsRepository,
+        private readonly modelValidator: ModelValidator,
+    ) {}
 
     /**
      * @desc    Get all faqs for a listing
@@ -41,7 +45,7 @@ export class FaqsController {
             answer,
         };
 
-        await validateModel(CreateFaqReqDto, data);
+        await this.modelValidator.validateModel(CreateFaqReqDto, data);
 
         // check if listing exists and is listing owner
         const isListingOwner = await checkListingOwner(req.user.user_id, listing_id);
@@ -83,7 +87,7 @@ export class FaqsController {
             answer,
         };
 
-        await validateModel(UpdateFaqReqDto, data);
+        await this.modelValidator.validateModel(UpdateFaqReqDto, data);
 
         const rows = await this.faqsRepository.updateFaqById(data, req.params.id);
 
@@ -119,4 +123,4 @@ export class FaqsController {
     };
 }
 
-export const faqsController = new FaqsController(db.faqs, db.listings);
+export const faqsController = new FaqsController(db.faqs, db.listings, modelValidator);
