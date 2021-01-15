@@ -9,12 +9,16 @@ jest.mock('../utils', () => {
         checkListingOwner: jest.fn(),
     };
 });
-import { checkListingOwner, ErrorResponse } from '../utils';
+import { checkListingOwner, ErrorResponse, ModelValidator } from '../utils';
 const mockedCheckListingOwner = mocked(checkListingOwner, true);
 
 // Mock injected dependencies
 const mockFaqsRepository = mocked(new FaqsRepository(null, null));
 const mockListingsRepository = mocked(new ListingsRepository(null, null));
+const mockModelValidator = mocked(new ModelValidator());
+
+// mock ModelValidator method for this test
+jest.spyOn(mockModelValidator, 'validateModel').mockResolvedValue(null);
 
 const res = {
     // allows chained json method to be called
@@ -28,7 +32,7 @@ let faqsController: FaqsController;
 
 describe('FaqsController', () => {
     beforeEach(() => {
-        faqsController = new FaqsController(mockFaqsRepository, mockListingsRepository);
+        faqsController = new FaqsController(mockFaqsRepository, mockListingsRepository, mockModelValidator);
     });
 
     afterAll(() => {

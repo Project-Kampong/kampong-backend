@@ -1,7 +1,6 @@
 import { db, FaqsRepository, ListingsRepository } from '../database';
 import { CreateFaqReqDto, UpdateFaqReqDto } from '../models';
-import { checkListingOwner, ErrorResponse } from '../utils';
-import { ModelValidator, modelValidator } from '../utils/modelValidator';
+import { checkListingOwner, modelValidator, ErrorResponse, ModelValidator } from '../utils';
 
 export class FaqsController {
     constructor(
