@@ -4,9 +4,6 @@ export const router = express.Router({ mergeParams: true });
 import { chatRoomsController } from '../../controllers/chatRooms';
 import { asyncHandler, protect } from '../../middleware';
 
-// TODO: implement once chatroom schema is up
-const validateCreateChatRoom = [];
-
 // All chatroom routes are accessible by authenticated user only
 router.use(protect);
 
