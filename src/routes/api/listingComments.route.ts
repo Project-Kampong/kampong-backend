@@ -11,7 +11,6 @@ import {
     createListingComment,
     updateListingComment,
     deleteListingComment,
-    deactivateListingComment,
 } from '../../controllers/listingComments';
 
 // Define input validation chain
@@ -36,5 +35,3 @@ router.use(protect);
 router.route('/').post(validateCreateListingCommentFields, checkInputError, createListingComment);
 
 router.route('/:id').put(validateUpdateListingCommentFields, checkInputError, updateListingComment).delete(deleteListingComment);
-
-router.route('/:id/deactivate').put(deactivateListingComment);

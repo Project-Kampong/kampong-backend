@@ -148,5 +148,4 @@ CREATE OR REPLACE VIEW listingcommentview AS
 	SELECT lc.*, p.nickname, p.profile_picture
 	FROM listingcomment lc
 	LEFT JOIN profile p
-	ON lc.user_id = p.user_id
-	WHERE lc.deleted_on IS NULL;
+	ON lc.user_id = p.user_id;
