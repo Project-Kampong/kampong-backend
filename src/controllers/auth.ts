@@ -111,6 +111,10 @@ export class AuthController {
             return next(new ErrorResponse(`User does not exist.`, 404));
         }
 
+        if (!userExists.password) {
+            return next(new ErrorResponse(`User does not have a password.`, 403));
+        }
+
         const forgetPasswordUserExists = await db.oneOrNone('SELECT * FROM forgetpassworduser WHERE email = $1', email);
 
         // if forget password user try after token has expired, delete existing entry and allow to go ahead
