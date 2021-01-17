@@ -210,7 +210,6 @@ CREATE TABLE job (
 	listing_id UUID NOT NULL,
 	job_title VARCHAR NOT NULL,
 	job_description TEXT,
-	deleted_on TIMESTAMPTZ,
 	PRIMARY KEY (job_id),
 	FOREIGN KEY (listing_id) REFERENCES listing ON DELETE CASCADE
 );

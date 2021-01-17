@@ -136,7 +136,6 @@ export async function up(knex: Knex): Promise<void> {
             table.uuid('listing_id').notNullable().references('listing_id').inTable('listing').onDelete('CASCADE');
             table.string('job_title').notNullable();
             table.text('job_description');
-            table.timestamp('deleted_on');
         });
 
         await tx.schema.createTable('faq', (table: Knex.TableBuilder) => {
