@@ -40,10 +40,25 @@ export const updateProfile = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Not allowed to update other user's profile`, 403));
     }
 
-    const { nickname, about, gender, dob, occupation, phone, facebook_link, twitter_link, instagram_link, linkedin_link } = req.body;
+    const {
+        nickname,
+        first_name,
+        last_name,
+        about,
+        gender,
+        dob,
+        occupation,
+        phone,
+        facebook_link,
+        twitter_link,
+        instagram_link,
+        linkedin_link,
+    } = req.body;
 
     const data = {
         nickname,
+        first_name,
+        last_name,
         about,
         gender,
         dob,

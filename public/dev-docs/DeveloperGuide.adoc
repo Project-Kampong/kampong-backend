@@ -1,0 +1,179 @@
+= Project Kampong - Backend Developer Guide
+:site-section: DeveloperGuide
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:xrefstyle: full
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:warning-caption: :warning:
+endif::[]
+:repoURL: https://github.com/Project-Kampong/kampong-backend
+
+By: `Project Kampong Backend Team`      Since: `[Date]`      Licence: ``
+
+== Setting up
+Refer to the guide https://github.com/Project-Kampong/kampong-backend/blob/chore/documentation/README.md[here].
+
+== Design
+
+[[Design-Architecture]]
+=== Architecture
+.Architecture Diagram
+image::ArchitectureDiagram.png[]
+
+The *_Architecture Diagram_* given above explains the high-level design of the Kampong App. The sections below give more details of each component.
+
+[[Design-Main]]
+=== Main Component
+`Main` is a class called link:{repoURL}/src/server.ts[`server.ts`] located in the `src` folder. It is responsible for:
+
+* At app launch:
+** Initializing the express app including all its dependencies.
+** Loading middleware functions.
+** Connecting to the postgres database.
+** Mounting express routers.
+** Running the express application on a server.
+
+* At shut down:
+** Closes the server and writes error reports (if any).
+
+[[Design-Router]]
+=== Router Component
+`Router` is the express Router object with all the http endpoints mounted as routes.
+The entry point is located at `api.route.ts`.
+
+.Structure of the Router component
+image::RouterDiagram.png[]
+
+Any request that comes to the server will pass through the base `apiRouter` object which will then route the request to the correct route accordingly where the request will be handled by the respective controllers.
+
+The https://en.wikipedia.org/wiki/Singleton_pattern[Singleton] design pattern is applied on the `ApiRouter`. This is to ensure that only one instance of the `ApiRouter` class exists in the system at any time and every request made will go through this single instance.
+
+[[Design-Controller]]
+=== Controller Component
+
+.Structure of Jobs Route to Jobs Controller
+image::ControllerDiagram.png[]
+
+The `Controller` component holds the request handlers of each HTTP endpoint.
+
+Each controller class has methods to handle different HTTP requests. These methods may call upon the postgres <<Design-Database, `Database`>> through the <<Design-Repository, `Repository`>>, if necessary.
+
+Some controllers make use of 3rd party services which will be called during the handling of the request. e.g. Mailing services for password reset.
+
+These services reside in the `Services` component and can be called upon by any component that requires them. More information on `Services` component is provided <<Design-Services, here>>.
+
+[[Design-Repository]]
+=== Repository Component
+The `Repository` component acts as a facade to the postgres `Database` instance and handles the making of all queries into the database.
+
+A repository instance depends on the <<Design-Model, `Model`>> component to access the exact structure of the data for the following purposes:
+
+* To ensure validity of data received from controller component.
+* To query the database.
+* To receive data from the database following a query.
+
+A controller that depends on a repository is instantiated with a read-only copy of the needed repository in the constructor.
+
+[[Design-Model]]
+=== Model Component
+The `Model` component holds the data structures that define how each object in the Kampong network will exist.
+
+Additionally, schemas are defined here for any operation that involves data transfer across components. This is to ensure the intergrity of the data being transferred.
+
+[[Design-Services]]
+=== Services Component
+The `Services` component is made up of several 3rd party services:
+
+* Mailer service comprising nodemailer
+* Amazon Web Services comprising
+** S3 client service
+** SQS client service
+
+Like the <<Design-Router,`ApiRouter`>>, these services implement the singleton pattern.
+
+[[Design-Jobs]]
+=== Jobs Component
+Currently, the `Jobs` component consists of 2 cron jobs:
+
+. Database backup
+. Shuffling of featured listings
+
+==== Database backup
+This job depends on:
+
+* `Services` component, more specifically, the S3 client service
+* `Database` component
+
+The database backup job, as the name suggests, runs at 5am (+8 GMT) daily to backup the application's database remotely using the AWS S3 client service.
+
+==== Shuffling of featured listings
+This job only depends on the <<Design-Repository,`Repository`>> component to fetch `Listing` table from the database and updates featured listings to a new set of 3 listings daily at 12am (+8 GMT).
+
+== Implementation
+
+[[Implementation-Auth]]
+=== Authentication
+Authentication for Kampong App is done in 2 ways:
+
+* Social media authentication using OAuth2
+* Email and password authentication
+
+[[Implementation-Social-Media-Auth]]
+==== Social Media Authentication
+
+===== Aspect: Justification
+
+The reason for implementing social media authentication is to minimise the liabilities associated with storing sensitive user data. By implementing social media authentication, we minimise the storage of PII data (eg. password) on our platforms, hence, ensuring that no sensitive user data is being compromised.
+
+===== Aspect: How social media authentication is implemented
+
+Using the link:http://www.passportjs.org/docs/[Passport.js] library, a Google and Facebook passport using OAuth2.0 is created and mounted to the express application as middleware.
+
+Since the Facebook and Google authentication are similar in implementation, this guide will only explain the Facebook auth implementation.
+
+In order to use Facebook authentication, Kampong must first be created as an app at link:https://developers.facebook.com/[Facebook Developers]. When created, an App ID and App Secret will be assigned.
+
+The Facebook passport requires a Facebook strategy to be defined which requires the Facebook App ID and App Secret and a redirect URL to be implemented, to which Facebook will redirect users after successful approval of access to the Kampong app. Additionally, a verify callback function is to be implemented for Facebook authentication. The end code for a Facebook Strategy will look like this:
+```
+passport.use(
+    new FacebookStrategy(
+        {
+            clientID: process.env.FACEBOOK_APP_ID,
+            clientSecret: process.env.FACEBOOK_APP_SECRET,
+            callbackURL: '/auth/facebook-login/callback',
+        },
+        (accessToken, refreshToken, profile, done) => {
+            done(null, profile);
+        },
+    ),
+);
+```
+The done function is a callback that an error as its first argument and a return value as its second argument. `profile` will contain user profile information provided by Facebook.
+
+Two routes need to be implemented. The first route redirects the user to Facebook. The second route is the URL to which Facebook will redirect the user to after they have successfully logged in.
+```
+app.get('/auth/facebook', passport.authenticate('facebook'));
+
+app.get('/auth/facebook-login/callback',
+    passport.authenticate('facebook', { failureRedirect: '/login' }),
+    facebookAuthController.facebookLogin,
+);
+```
+
+[[Implementation-Email-Password]]
+==== Email and password authentication
+Using conventional email and password authentication requires the user to verify his/her email upon signing up. This is done by tapping on the <<Design-Services, `Mailer`>> service to send a confirmation email to the user.
+
+Unverified users will be restricted to only a few features of the Kampong app. Upon verification by clicking on the URL provided in the confirmation email, the user will be granted full unrestricted access to the Kampong app.
+
+== Testing
+Testing is done using the link:https://jestjs.io/docs/en/getting-started.html[Jest] testing framework. It is currently still being implemented.
+
+== Api Documentation
+Refer to the api docs https://github.com/Project-Kampong/kampong-backend/blob/master/public/api-docs/index.md[here].
