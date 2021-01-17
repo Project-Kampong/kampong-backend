@@ -20,10 +20,6 @@ export interface UpdateJobSchema {
     job_description: string;
 }
 
-export interface DeactivateJobSchema {
-    deleted_on: Date;
-}
-
 export class CreateJobReqDto {
     @IsUUID(undefined, { message: () => INVALID_FIELD_MSG('listing id ') })
     listing_id: string;
