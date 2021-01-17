@@ -225,6 +225,11 @@ export class AuthController {
             return next(new ErrorResponse('Invalid login credentials', 401));
         }
 
+        // check if user has a password
+        if (!user.password) {
+            return next(new ErrorResponse(`User does not have a password.`, 403));
+        }
+
         // Check if password matches
         const originalPassword = user.password;
         const isMatch = await checkPassword(password, originalPassword);
@@ -285,7 +290,7 @@ export class AuthController {
         if (!user.password) {
             return next(new ErrorResponse(`User does not have a password.`, 403));
         }
-        
+
         const { oldPassword, newPassword } = req.body;
 
         // validate old password
