@@ -1,5 +1,4 @@
 import { db } from '../database/db';
-import { asyncHandler } from '../middleware';
 import { checkOrganisationOwner, checkListingOwner, cleanseData, ErrorResponse } from '../utils';
 
 /**
@@ -7,7 +6,7 @@ import { checkOrganisationOwner, checkListingOwner, cleanseData, ErrorResponse }
  * @route   POST /api/listings-organisations
  * @access  Private
  */
-export const createListingOrganisation = asyncHandler(async (req, res, next) => {
+export const createListingOrganisation = async (req, res, next) => {
     const userId = req.user.user_id;
     const { listing_id, organisation_id } = req.body;
 
@@ -31,29 +30,31 @@ export const createListingOrganisation = asyncHandler(async (req, res, next) => 
         success: true,
         data: rows,
     });
-});
+};
 
 /**
  * @desc    Delete an entry in the listings-organisations table
- * @route   DELETE /api/listings-organisations/:id
+ * @route   DELETE /api/listings-organisations?listingId=:listingId&organisationId=:organisationId
  * @access  Admin/Owner
  */
-export const deleteListingOrganisation = asyncHandler(async (req, res, next) => {
+export const deleteListingOrganisation = async (req, res, next) => {
     const userId: string = req.user.user_id;
-    const ids = await db.one('SELECT listing_id, organisation_id FROM listingorganisation WHERE listing_organisation_id = $1', req.params.id);
-    const { listing_id, organisation_id } = ids;
+    const { listingId, organisationId } = req.query;
 
     // Check permissions
-    const isOrganisationOwner = await checkOrganisationOwner(userId, organisation_id);
-    const isListingOwner = await checkListingOwner(userId, listing_id);
+    const isOrganisationOwner = await checkOrganisationOwner(userId, organisationId);
+    const isListingOwner = await checkListingOwner(userId, listingId);
     if (req.user.role !== 'admin' && !isListingOwner && !isOrganisationOwner) {
         return next(new ErrorResponse('Not authorised to delete listing organisation as you are not the organisation or listing owner', 403));
     }
 
-    const rows = await db.one('DELETE FROM listingorganisation WHERE listing_organisation_id = $1 RETURNING *', req.params.id);
+    const rows = await db.one('DELETE FROM listingorganisation WHERE listing_id = $1 AND organisation_id = $2 RETURNING *', [
+        listingId,
+        organisationId,
+    ]);
 
     res.status(200).json({
         success: true,
         data: rows,
     });
-});
+};
