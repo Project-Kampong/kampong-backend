@@ -280,6 +280,12 @@ export class AuthController {
         if (!user) {
             return next(new ErrorResponse(`Not authorised to access this route`, 401));
         }
+
+        // check if user has a password
+        if (!user.password) {
+            return next(new ErrorResponse(`User does not have a password.`, 403));
+        }
+        
         const { oldPassword, newPassword } = req.body;
 
         // validate old password
