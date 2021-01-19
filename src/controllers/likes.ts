@@ -2,10 +2,6 @@ import { db } from '../database/db';
 import { cleanseData, ErrorResponse } from '../utils';
 
 export class LikesController {
-<<<<<<< HEAD
-    constructor() {}
-=======
->>>>>>> 22adde2996a92f1d8c7c73304cfa167b13c7fc51
     /**
      * @desc    Get all likes (including profile information) for a listing
      * @route   GET /api/listings/:listing_id/likes
@@ -88,8 +84,4 @@ export class LikesController {
     };
 }
 
-<<<<<<< HEAD
-export const likeController = new LikesController();
-=======
 export const likesController = new LikesController();
->>>>>>> 22adde2996a92f1d8c7c73304cfa167b13c7fc51

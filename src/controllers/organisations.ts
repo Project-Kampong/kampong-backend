@@ -65,6 +65,16 @@ interface UpdateOrganisationRequestSchema {
  * @access  Public
  */
 export const getOrganisations = asyncHandler(async (req, res) => {
+    if (req.params.user_id) {
+        const rows = await db.manyOrNone(
+            'SELECT o.* FROM user u LEFT JOIN organisation o ON u.user_id = o.owner_id WHERE u.user_id = $1',
+            req.params.user_id,
+        );
+        return res.status(200).json({
+            success: true,
+            data: rows,
+        });
+    }
     if (req.params.listing_id) {
         const rows = await db.manyOrNone(
             'SELECT * FROM listing l LEFT JOIN listingorganisation lo ON l.listing_id = lo.listing_id LEFT JOIN organisation o ON lo.organisation_id = o.organisation_id WHERE l.listing_id = $1',

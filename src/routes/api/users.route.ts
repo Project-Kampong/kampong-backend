@@ -16,4 +16,5 @@ router.use('/:user_id/listing-comments', listingCommentsRoute);
 router.use('/:user_id/listings', listingsRoute);
 router.use('/:user_id/participants', participantsRoute);
 router.use('/:user_id/profiles', profilesRoute);
+router.use('/:user_id/organisations', organisationRoute);
  
