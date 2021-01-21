@@ -138,7 +138,6 @@ export async function up(knex: Knex): Promise<void> {
             table.uuid('listing_id').notNullable().references('listing_id').inTable('listing').onDelete('CASCADE');
             table.string('job_title').notNullable();
             table.text('job_description');
-            table.timestamp('deleted_on');
         });
 
         await tx.schema.createTable('faq', (table: Knex.TableBuilder) => {
@@ -202,7 +201,6 @@ export async function up(knex: Knex): Promise<void> {
             table.integer('reply_to_id').references('listing_comment_id').inTable('listingcomment').onDelete('SET NULL');
             table.timestamp('created_on').notNullable().defaultTo(knex.fn.now());
             table.timestamp('updated_on').notNullable().defaultTo(knex.fn.now());
-            table.timestamp('deleted_on');
         });
 
         await tx.schema.createTable('location', (table: Knex.TableBuilder) => {
