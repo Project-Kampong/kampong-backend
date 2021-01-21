@@ -150,7 +150,7 @@ Backend API for Project Kampong.
 
 
 ## Authentication
-User authentication functionality.
+User authentication functionality. All auth endpoints are rate limited to 5 every 15min (except get logged in user via token and logout user endpoints).
 
 
 
@@ -4570,79 +4570,34 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/likes
 ```js
 {
     "success": true,
-    "count": 4,
     "data": [
         {
-            "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
             "like_id": 1,
+            "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
             "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "nickname": "Admin",
-            "profile_picture": "https://robohash.org/autvelautem.jpg?size=500x500&set=set1",
-            "about": "Quality-focused impactful projection",
-            "gender": "o",
-            "dob": "1985-04-17T16:43:59.000Z",
-            "interest": "Geological Engineer",
-            "phone": "97690390",
-            "facebook_link": "http://baidu.com/ipsum/primis/in/faucibus/orci/luctus.xml",
-            "twitter_link": "http://nhs.uk/at/diam/nam.png",
-            "instagram_link": "http://nasa.gov/pede/justo/eu/massa/donec/dapibus/duis.aspx",
-            "linkedin_link": "https://linkedin.com/ante/vestibulum/ante/ipsum/primis/in.json",
-            "is_verified": false,
-            "created_on": "2020-08-17T15:24:50.398Z"
+            "nickname": "Wayne",
+            "profile_picture": "https://images.pexels.com/photos/1561863/pexels-photo-1561863.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
         },
         {
-            "user_id": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
             "like_id": 4,
+            "user_id": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
             "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
             "nickname": "Derrick",
-            "profile_picture": null,
-            "about": "Inverse local strategy",
-            "gender": "m",
-            "dob": "1990-05-07T07:40:00.000Z",
-            "interest": "Software Consultant",
-            "phone": "96831702",
-            "facebook_link": "https://jigsy.com/eu/interdum/eu/tincidunt/in.html",
-            "twitter_link": "http://nasa.gov/nisi/at/nibh/in/hac/habitasse.png",
-            "instagram_link": "https://360.cn/sed/nisl/nunc/rhoncus/dui/vel.jpg",
-            "linkedin_link": "https://cbc.ca/id/luctus/nec/molestie/sed/justo/pellentesque.png",
-            "is_verified": false,
-            "created_on": "2020-08-17T15:24:50.398Z"
+            "profile_picture": "https://images.pexels.com/photos/2434268/pexels-photo-2434268.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
         },
         {
-            "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
             "like_id": 7,
+            "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
             "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "nickname": "User One",
-            "profile_picture": "https://robohash.org/consequaturatquia.jpg?size=500x500&set=set1",
-            "about": "Down-sized disintermediate circuit",
-            "gender": "f",
-            "dob": "2003-09-22T00:32:55.000Z",
-            "interest": "Statistician IV",
-            "phone": "87685829",
-            "facebook_link": "https://tripadvisor.com/ornare/imperdiet.png",
-            "twitter_link": "https://google.com/quis/orci/nullam/molestie/nibh/in/lectus.xml",
-            "instagram_link": "http://1und1.de/in/libero/ut/massa.png",
-            "linkedin_link": "http://i2i.jp/imperdiet/sapien/urna/pretium/nisl/ut.jpg",
-            "is_verified": false,
-            "created_on": "2020-08-17T15:24:50.398Z"
+            "nickname": "Aaron",
+            "profile_picture": "https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
         },
         {
-            "user_id": "f997120c-2956-482e-9ba3-81a12b4fecc1",
             "like_id": 10,
+            "user_id": "f997120c-2956-482e-9ba3-81a12b4fecc1",
             "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "nickname": "Viki Albrooke",
-            "profile_picture": "https://robohash.org/sedasperioresmaxime.bmp?size=500x500&set=set1",
-            "about": "Face to face neutral conglomeration",
-            "gender": "u",
-            "dob": "2000-07-04T11:07:24.000Z",
-            "interest": "VP Product Management",
-            "phone": "84428699",
-            "facebook_link": "https://nhs.uk/mauris.xml",
-            "twitter_link": "http://uiuc.edu/sit/amet/consectetuer/adipiscing/elit/proin.aspx",
-            "instagram_link": "http://cbsnews.com/elementum/eu/interdum.jsp",
-            "linkedin_link": "https://hibu.com/quam/sapien/varius/ut/blandit/non/interdum.html",
-            "is_verified": false,
-            "created_on": "2020-08-17T15:24:50.398Z"
+            "nickname": "Viki Tay",
+            "profile_picture": "https://images.pexels.com/photos/2426551/pexels-photo-2426551.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
         }
     ]
 }
@@ -10304,55 +10259,27 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/likes
 ```js
 {
     "success": true,
-    "count": 2,
     "data": [
         {
-            "listing_id": "c975a572-452d-4824-8ed5-500b50488436",
-            "like_id": 8,
-            "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
-            "organisation_id": null,
-            "created_by": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
-            "title": "vestibulum sed magna at nunc",
-            "category": "Training",
-            "about": "Team-oriented context-sensitive forecast",
-            "tagline": "innovate B2C markets",
-            "mission": "cultivate cutting-edge markets",
-            "listing_url": "https://ehow.com/in/imperdiet/et/commodo/vulputate/justo.xml",
-            "pic1": "https://robohash.org/etpossimusea.png?size=500x500&set=set1",
-            "pic2": null,
-            "pic3": null,
-            "pic4": null,
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-07-30T05:54:45.000Z",
-            "end_date": null,
-            "created_on": "2020-08-17T16:52:17.118Z",
-            "deleted_on": null
-        },
-        {
-            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
             "like_id": 7,
             "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
-            "organisation_id": null,
-            "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
-            "title": "Updated title 1",
-            "category": "Updated category",
-            "about": "Updated about",
-            "tagline": "Updated tagline",
-            "mission": "Updated mission",
-            "listing_url": "www.updated-test.com",
-            "pic1": null,
-            "pic2": null,
-            "pic3": null,
-            "pic4": null,
-            "pic5": null,
-            "is_published": true,
-            "is_verified": true,
-            "start_date": "2018-08-15T08:45:43.416Z",
-            "end_date": "2020-01-30T08:45:43.416Z",
-            "created_on": "2020-08-17T16:52:17.118Z",
-            "deleted_on": "2020-08-17T16:52:32.000Z"
+            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
+            "nickname": "Aaron",
+            "profile_picture": "https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+        },
+        {
+            "like_id": 8,
+            "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+            "listing_id": "c975a572-452d-4824-8ed5-500b50488436",
+            "nickname": "Aaron",
+            "profile_picture": "https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+        },
+        {
+            "like_id": 9,
+            "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+            "listing_id": "e411bd80-d5cf-49ac-b847-18c9fc13377a",
+            "nickname": "Aaron",
+            "profile_picture": "https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
         }
     ]
 }
@@ -10631,4 +10558,4 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2021-01-06 15:20:08 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2021-01-17 08:11:39 by [docgen](https://github.com/thedevsaddam/docgen)
