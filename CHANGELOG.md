@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+-   BREAKING: Upgrade yarn from v1.22.10 to v2.4.
+
 ## [v0.110.0]
 
 ## [v0.109.0]
