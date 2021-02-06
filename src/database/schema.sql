@@ -52,6 +52,8 @@ DROP TABLE IF EXISTS organisationannouncement CASCADE;
 
 DROP TABLE IF EXISTS organisationjob CASCADE;
 
+DROP TABLE IF EXISTS chatroom CASCADE;
+
 CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
 
 CREATE TABLE loginuser (
@@ -334,4 +336,15 @@ CREATE TABLE organisationjob (
 	organisation_job_description TEXT,
 	PRIMARY KEY (organisation_job_id),
 	FOREIGN KEY (organisation_id) REFERENCES organisation ON DELETE CASCADE
+);
+
+CREATE TABLE chatroom (
+	chatroom_id UUID,
+	user_ids UUID[],
+	messages JSONB[],
+	PRIMARY KEY (chatroom_id)
 )
+
+CREATE INDEX ON chatroom USING GIN (user_ids);
+
+CREATE INDEX ON chatroom USING GIN (messages);

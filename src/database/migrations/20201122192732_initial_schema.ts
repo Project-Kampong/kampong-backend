@@ -229,11 +229,20 @@ export async function up(knex: Knex): Promise<void> {
             table.string('organisation_job_title').notNullable();
             table.text('organisation_job_description');
         });
+
+        await tx.schema.createTable('chatroom', (table: Knex.TableBuilder) => {
+            table.increments('chatroom_id').primary();
+            table.specificType('user_ids', 'UUID[]').notNullable();
+            table.specificType('messages', 'JSONB[]').notNullable();
+            table.index('user_ids', null, 'GIN');
+            table.index('messages', null, 'GIN');
+        });
     });
 }
 
 export async function down(knex: Knex): Promise<void> {
     return knex.transaction(async (tx: Knex.Transaction) => {
+        await tx.schema.dropTableIfExists('chatroom');
         await tx.schema.dropTableIfExists('organisationjob');
         await tx.schema.dropTableIfExists('organisationannouncement');
         await tx.schema.dropTableIfExists('listinglocation');
