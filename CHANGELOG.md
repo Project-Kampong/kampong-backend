@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   BREAKING: Upgrade yarn from v1.22.10 to v2.4.
 
+## [v0.111.0]
+
 ## [v0.110.0]
 
 ## [v0.109.0]
@@ -298,7 +300,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Internal, dev-only test routes and methods.
 -   API documentation temporarily set up as front-end page to be served, for ease of testing by frontend.
 
-[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.110.0...HEAD
+[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.111.0...HEAD
+[v0.111.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.111.0
 [v0.110.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.110.0
 [v0.109.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.109.0
 [v0.108.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.108.0
