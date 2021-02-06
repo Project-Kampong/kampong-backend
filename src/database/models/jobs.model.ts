@@ -3,7 +3,6 @@ export interface Job {
     listing_id: string;
     job_title: string;
     job_description: string;
-    deleted_on: Date;
 }
 
 export interface CreateJobSchema {
@@ -15,8 +14,4 @@ export interface CreateJobSchema {
 export interface UpdateJobSchema {
     job_title: string;
     job_description: string;
-}
-
-export interface DeactivateJobSchema {
-    deleted_on: Date;
 }
