@@ -3,6 +3,7 @@ import { v1 as uuidv1 } from 'uuid';
 import { checkPassword, ErrorResponse, getSignedJwtToken, hashPassword, parseSqlUpdateStmt } from '../utils';
 import { db } from '../database/db';
 import { mailerService } from '../services/mailer.service';
+import { isEmpty } from 'lodash';
 
 export class AuthController {
     /**
@@ -35,7 +36,7 @@ export class AuthController {
             token: hashedEmailToken,
         };
 
-        // Create confirmation url
+        // TODO: coordinate with FE for confirmation URL link
         const confirmationUrl = `${req.protocol}://${req.get('host')}/api/auth/register/${token}/confirm-email`;
 
         const message =
@@ -77,11 +78,17 @@ export class AuthController {
 
     /**
      * @desc    Activate user account via email confirmation
-     * @route   GET /api/auth/register/:confirmEmailToken/confirm-email
+     * @route   POST /api/auth/register/confirm-email
      * @access  Public
      */
     confirmEmail = async (req, res, next) => {
-        const hashedToken = this.hashToken(req.params.confirmEmailToken);
+        // TODO: refactor to new validation method
+        const { confirmEmailToken } = req.body;
+        if (isEmpty(confirmEmailToken)) {
+            return next(new ErrorResponse('confirmEmailToken is a required field', 400));
+        }
+
+        const hashedToken = this.hashToken(confirmEmailToken);
 
         // Check that pending user exists
         await db.one('SELECT * FROM pendinguser WHERE token = $1', hashedToken);
@@ -94,7 +101,7 @@ export class AuthController {
             );
             return query.batch([deletePendingUser, activateUser]);
         });
-        this.sendTokenResponse(confirmEmail[1], 200, res, true);
+        this.sendTokenResponse(confirmEmail[1], 200, res);
     };
 
     /**
@@ -298,29 +305,25 @@ export class AuthController {
     };
 
     // Helper method to get token from model, create cookie and send response
-    private sendTokenResponse = (user, statusCode, res, redirectHome = false) => {
+    private sendTokenResponse = (user, statusCode, res) => {
         // Create token
         const token = getSignedJwtToken(user);
 
         // Set cookie options
         const options = {
             expires: new Date(Date.now() + parseInt(process.env.JWT_COOKIE_EXPIRE, 10) * 24 * 60 * 60 * 1000),
+            secure: false, // default false for dev env
         };
 
         // Set secure flag to true if in production (cookie will be sent through https)
         if (process.env.NODE_ENV === 'production') {
-            const secure = true;
-            Object.assign(options, secure);
+            options.secure = true;
         }
 
-        if (redirectHome) {
-            res.status(statusCode).cookie('token', token, options).redirect('/');
-        } else {
-            res.status(statusCode).cookie('token', token, options).json({
-                success: true,
-                token,
-            });
-        }
+        res.status(statusCode).cookie('token', token, options).json({
+            success: true,
+            token,
+        });
     };
 
     // Hash pending user token
