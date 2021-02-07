@@ -54,6 +54,8 @@ DROP TABLE IF EXISTS organisationjob CASCADE;
 
 DROP TABLE IF EXISTS chatroom CASCADE;
 
+DROP TABLE IF EXISTS chatmessage CASCADE;
+
 CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
 
 CREATE TABLE loginuser (
@@ -340,11 +342,27 @@ CREATE TABLE organisationjob (
 
 CREATE TABLE chatroom (
 	chatroom_id UUID,
-	user_ids UUID[],
-	messages JSONB[],
+	chatroom_name VARCHAR,
+	chatroom_pic VARCHAR,
+	is_dm BOOLEAN NOT NULL DEFAULT FALSE,
+	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	PRIMARY KEY (chatroom_id)
-)
+);
 
-CREATE INDEX ON chatroom USING GIN (user_ids);
+CREATE TABLE chatmessage (
+	chatmessage_id SERIAL,
+	chatroom_id UUID NOT NULL,
+	user_id UUID,
+	chatmessage_text TEXT,
+	reply_to INTEGER,
+	file_links VARCHAR[],
+	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	PRIMARY KEY (chatmessage_id),
+	FOREIGN KEY (chatroom_id) REFERENCES chatroom ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES loginuser ON DELETE SET NULL,
+	FOREIGN KEY (reply_to) REFERENCES chatmessage (chatmessage_id) ON DELETE SET NULL
+);
 
-CREATE INDEX ON chatroom USING GIN (messages);
+CREATE INDEX ON chatmessage USING BTREE (chatroom_id, created_on);

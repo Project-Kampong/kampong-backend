@@ -231,17 +231,40 @@ export async function up(knex: Knex): Promise<void> {
         });
 
         await tx.schema.createTable('chatroom', (table: Knex.TableBuilder) => {
-            table.increments('chatroom_id').primary();
-            table.specificType('user_ids', 'UUID[]').notNullable();
-            table.specificType('messages', 'JSONB[]').notNullable();
-            table.index('user_ids', null, 'GIN');
-            table.index('messages', null, 'GIN');
+            table.uuid('chatroom_id').primary();
+            table.string('chatroom_name');
+            table.string('chatroom_pic');
+            table.boolean('is_dm').notNullable().defaultTo('FALSE');
+            table.timestamp('created_on').notNullable().defaultTo(knex.fn.now());
+            table.timestamp('updated_on').notNullable().defaultTo(knex.fn.now());
+        });
+
+        await tx.schema.createTable('chatparticipant', (table: Knex.TableBuilder) => {
+            table.increments('chatparticipant_id').primary();
+            table.uuid('user_id').references('user_id').inTable('loginuser').onDelete('SET NULL');
+            table.uuid('chatroom_id').notNullable().references('chatroom_id').inTable('chatroom').onDelete('CASCADE');
+            table.timestamp('last_seen').notNullable().defaultTo(knex.fn.now());
+            table.timestamp('joined_on').notNullable().defaultTo(knex.fn.now());
+        });
+
+        await tx.schema.createTable('chatmessage', (table: Knex.TableBuilder) => {
+            table.increments('chatmessage_id').primary();
+            // TODO: normalize chatparticipant and chatmessage
+            table.uuid('chatroom_id').notNullable().references('chatroom_id').inTable('chatroom').onDelete('CASCADE');
+            table.uuid('user_id').references('user_id').inTable('loginuser').onDelete('SET NULL');
+            table.text('chatmessage_text');
+            table.integer('reply_to').references('chatmessage_id').inTable('chatmessage').onDelete('SET NULL');
+            table.specificType('file_links', 'VARCHAR[]');
+            table.timestamp('created_on').notNullable().defaultTo(knex.fn.now());
+            table.timestamp('updated_on').notNullable().defaultTo(knex.fn.now());
+            table.index(['chatroom_id', 'created_on'], null, 'BTREE');
         });
     });
 }
 
 export async function down(knex: Knex): Promise<void> {
     return knex.transaction(async (tx: Knex.Transaction) => {
+        await tx.schema.dropTableIfExists('chatmessage');
         await tx.schema.dropTableIfExists('chatroom');
         await tx.schema.dropTableIfExists('organisationjob');
         await tx.schema.dropTableIfExists('organisationannouncement');
