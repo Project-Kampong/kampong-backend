@@ -1,0 +1,74 @@
+= Project Kampong - Login Flow
+:site-section: LoginFlow
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:xrefstyle: full
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:warning-caption: :warning:
+endif::[]
+:repoURL: https://github.com/Project-Kampong/kampong-backend
+
+By: `Project Kampong Backend Team`      Since: `[Date]`      Licence: ``
+
+== Social Media Login
+
+[[Facebook-Login]]
+=== Facebook Login
+.Facebook Login Flow
+image::facebook-login-flow.png[]
+
+In the case of a Facebook login, user will be redirected to the Facebook page where Facebook will authenticate the user.
+
+==== First Time Login
+If the user has not authenticated with Facebook before, Facebook will ask the user for permissions to his/her required data.
+
+If user allows the request, an account will be created in the database for the user with his/her Facebook credentials. He/she will then be redirected back to the Kampong homepage as a logged in and authenticated user.
+
+If not, the user will be redirected back to the Kampong login page.
+
+==== Subsequent Login
+If the user has authenticated with Facebook before, permissions for data retrieval will no longer need to be asked again. User will be immediately be redirected to the Kampong homepage upon authentication by Facebook.
+
+Any failure in authentication will redirect the user back to the Kampong login page.
+
+[[Google-Login]]
+=== Google Login Flow
+The scenario for Google login is similar to Facebook except there will not be a page asking permission for data retrieval from the user.
+
+[[Traditional-Login]]
+== Traditional Login Flow
+.Traditional Login Flow
+image::traditional-login-flow.png[]
+
+The traditional login flow differs from the social media login by the sign up process. Unlike social media login, a user signing up via email and password will have an email sent to verify the email given.
+
+Upon verifying the email, the user will then be fully authenticated and able to access Kampong as an authenticated user.
+
+== Using Both Social and Traditional Login
+
+[[Consequence-of-social-media-signup]]
+=== Consequence of Social Media Signup
+When a user signs up using a social media, whether Facebook or Google, the user's password is stored as `null`.
+
+This brings about consequences when the user decides to:
+
+* Subsequently login using email and password
+* Click forget/update password while logged in
+
+For both cases, the backend will check if the user's password is `null` (user had previously signed up using a social media).
+
+If so, an error will be thrown saying that the user has no password.
+
+The _only_ way a user can login after signing up using social media is using the same social media.
+
+[[Consequence-of-traditional-signup]]
+=== Consequence of Traditional Signup
+When a user signs up using email and password and subsequently logs in using social media, the social media credentials will be added into the user profile upon authentication.
+
+Subsequently, the user can login using both social media and email and password.

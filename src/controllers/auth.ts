@@ -111,6 +111,10 @@ export class AuthController {
             return next(new ErrorResponse(`User does not exist.`, 404));
         }
 
+        if (!userExists.password) {
+            return next(new ErrorResponse(`User does not have a password.`, 403));
+        }
+
         const forgetPasswordUserExists = await db.oneOrNone('SELECT * FROM forgetpassworduser WHERE email = $1', email);
 
         // if forget password user try after token has expired, delete existing entry and allow to go ahead
@@ -221,6 +225,11 @@ export class AuthController {
             return next(new ErrorResponse('Invalid login credentials', 401));
         }
 
+        // check if user has a password
+        if (!user.password) {
+            return next(new ErrorResponse(`User does not have a password.`, 403));
+        }
+
         // Check if password matches
         const originalPassword = user.password;
         const isMatch = await checkPassword(password, originalPassword);
@@ -276,6 +285,12 @@ export class AuthController {
         if (!user) {
             return next(new ErrorResponse(`Not authorised to access this route`, 401));
         }
+
+        // check if user has a password
+        if (!user.password) {
+            return next(new ErrorResponse(`User does not have a password.`, 403));
+        }
+
         const { oldPassword, newPassword } = req.body;
 
         // validate old password

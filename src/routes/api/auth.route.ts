@@ -1,3 +1,4 @@
+import passport from 'passport';
 import express from 'express';
 export const router = express.Router();
 import rateLimit from 'express-rate-limit';
@@ -13,6 +14,8 @@ import {
 } from '../../utils';
 
 // import controllers here
+import { googleAuthController } from '../../controllers/googleAuth';
+import { facebookAuthController } from '../../controllers/facebookAuth';
 import { authController } from '../../controllers/auth';
 
 // input validation chain definition
@@ -57,6 +60,17 @@ router.get('/me', protect, asyncHandler(authController.getMe));
 
 // Request limiter for all auth endpoints below this line
 router.use(authRequestLimiter);
+
+// Social authentication
+router.get('/google-login', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get('/facebook-login', passport.authenticate('facebook', { scope: ['email'] }));
+// TODO: Work with frontend to implement the redirect
+router.get('/google-login/callback', passport.authenticate('google', { failureRedirect: '/login' }), asyncHandler(googleAuthController.googleLogin));
+router.get(
+    '/facebook-login/callback',
+    passport.authenticate('facebook', { failureRedirect: '/login' }),
+    asyncHandler(facebookAuthController.facebookLogin),
+);
 
 router.get('/register/:confirmEmailToken/confirm-email', asyncHandler(authController.confirmEmail));
 router.post('/register', validateRegisterFields, checkInputError, asyncHandler(authController.register));

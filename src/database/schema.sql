@@ -58,7 +58,9 @@ CREATE TABLE loginuser (
 	user_id UUID,
 	username VARCHAR UNIQUE NOT NULL,
 	email VARCHAR(320) UNIQUE NOT NULL,
-	password VARCHAR NOT NULL,
+	password VARCHAR,
+	google_id VARCHAR,
+	facebook_id VARCHAR,
 	role user_role NOT NULL DEFAULT 'user',
 	is_activated BOOLEAN NOT NULL DEFAULT FALSE,
 	PRIMARY KEY (user_id)
