@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import promise from 'bluebird';
 import pgpDriver, { IInitOptions, IDatabase, IMain } from 'pg-promise';
-import { IExtensions, ListingsRepository, FaqsRepository, HashtagsRepository, CategoriesRepository } from './repositories';
+import { IExtensions, ListingsRepository, FaqsRepository, HashtagsRepository, CategoriesRepository, ChatRoomsRepository } from './repositories';
 import { JobsRepository } from './repositories/jobs.repository';
 import { OrganisationsRepository, OrganisationJobsRepository } from './repositories';
 
@@ -25,6 +25,7 @@ const dbConfig: IInitOptions<IExtensions> = {
     // Initialize repositories as singleton here
     extend(obj: PgpExtendedProtocol) {
         obj.categories = new CategoriesRepository(obj, pgp);
+        obj.chatRooms = new ChatRoomsRepository(obj, pgp);
         obj.faqs = new FaqsRepository(obj, pgp);
         obj.hashtags = new HashtagsRepository(obj, pgp);
         obj.jobs = new JobsRepository(obj, pgp);
