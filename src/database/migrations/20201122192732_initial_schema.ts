@@ -241,7 +241,6 @@ export async function up(knex: Knex): Promise<void> {
 
         await tx.schema.createTable('chatmessage', (table: Knex.TableBuilder) => {
             table.increments('chatmessage_id').primary();
-            // TODO: normalize chatparticipant and chatmessage
             table.uuid('chatroom_id').notNullable().references('chatroom_id').inTable('chatroom').onDelete('CASCADE');
             table.uuid('user_id').references('user_id').inTable('loginuser').onDelete('SET NULL');
             table.text('chatmessage_text');
