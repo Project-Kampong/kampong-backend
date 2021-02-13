@@ -1,5 +1,5 @@
 import { BaseRepository } from './base.repository';
-import { Organisation, CreateOrganisationSchema, UpdateOrganisationSchema } from '../models';
+import { Organisation, CreateOrganisationSchema, UpdateOrganisationSchema } from '../../models';
 
 export class OrganisationsRepository extends BaseRepository {
     // TODO: To fill in query

@@ -1,5 +1,5 @@
 import { BaseRepository } from './base.repository';
-import { CreateHashtagSchema, Hashtag } from '../models';
+import { CreateHashtagSchema, Hashtag } from '../../models';
 
 export class HashtagsRepository extends BaseRepository {
     getAllHashtagsForListing(listingId: string): Promise<Hashtag[]> {
