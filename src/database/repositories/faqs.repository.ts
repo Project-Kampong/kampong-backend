@@ -1,5 +1,5 @@
 import { BaseRepository } from './base.repository';
-import { CreateFaqSchema, Faq, UpdateFaqSchema } from '../models';
+import { CreateFaqSchema, Faq, UpdateFaqSchema } from '../../models';
 
 export class FaqsRepository extends BaseRepository {
     getAllFaqsForListing(listingId: string): Promise<Faq[]> {

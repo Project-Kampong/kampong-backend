@@ -1,4 +1,4 @@
-import { CreateOrganisationJobSchema } from '../database/models';
+import { CreateOrganisationJobSchema } from '../models';
 import { db, OrganisationJobsRepository, OrganisationsRepository } from '../database';
 import { checkOrganisationOwner, cleanseData, ErrorResponse } from '../utils';
 
