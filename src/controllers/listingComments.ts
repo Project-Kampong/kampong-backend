@@ -114,32 +114,6 @@ export const updateListingComment = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Deactivate (soft delete) single listing comment (identified by listing comment id)
- * @route   PUT /api/listings-comments/:id/deactivate
- * @access  Admin/Owner/Private
- */
-export const deactivateListingComment = asyncHandler(async (req, res, next) => {
-    const isListingOrCommentOwner = await checkListingOrCommentOwner(req.user.user_id, req.params.id);
-    // check for non-admin, must be listing owner, else must deactivate own comment only
-    if (!(req.user.role === 'admin' || isListingOrCommentOwner)) {
-        return next(new ErrorResponse(`Not authorised to update other comments in this listing`, 403));
-    }
-
-    const data = {
-        deleted_on: moment.tz(process.env.DEFAULT_TIMEZONE).toDate(),
-    };
-
-    const deactivateListingCommentQuery = parseSqlUpdateStmt(data, 'listingcomment', 'WHERE listing_comment_id = $1 RETURNING *', [req.params.id]);
-
-    const rows = await db.one(deactivateListingCommentQuery);
-
-    res.status(200).json({
-        success: true,
-        data: rows,
-    });
-});
-
-/**
  * @desc    Delete single listing comment (identified by listing comment id)
  * @route   DELETE /api/listing-comments/:id
  * @access  Admin/Owner/Private

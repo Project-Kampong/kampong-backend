@@ -1,5 +1,5 @@
 import { BaseRepository } from './base.repository';
-import { CreateJobSchema, DeactivateJobSchema, Job, UpdateJobSchema } from '../../models';
+import { CreateJobSchema, Job, UpdateJobSchema } from '../../models';
 
 export class JobsRepository extends BaseRepository {
     getAllJobsForListing(listingId: string): Promise<Job[]> {
@@ -17,12 +17,6 @@ export class JobsRepository extends BaseRepository {
     updateJobById(updateJobData: UpdateJobSchema, jobId: string): Promise<Job> {
         const updateJobQuery = this.pgp.helpers.update(updateJobData, null, 'job') + this.pgp.as.format(' WHERE job_id = $1 RETURNING *', jobId);
         return this.db.one(updateJobQuery);
-    }
-
-    deactivateJobById(deactivateJobData: DeactivateJobSchema, jobId: string): Promise<Job> {
-        const deactivateJobQuery =
-            this.pgp.helpers.update(deactivateJobData, null, 'job') + this.pgp.as.format(' WHERE job_id = $1 RETURNING *', jobId);
-        return this.db.one(deactivateJobQuery);
     }
 
     deleteJobById(jobId: string): Promise<Job> {

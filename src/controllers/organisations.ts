@@ -227,3 +227,26 @@ export const deleteOrganisation = asyncHandler(async (req, res, next) => {
         data: rows,
     });
 });
+
+/**
+ * @desc    Soft delete single organisation
+ * @route   PUT /api/organisations/:id
+ * @access  Admin/Owner
+ */
+export const deactivateOrganisation = asyncHandler(async (req, res, next) => {
+    const { id } = req.params;
+    const { user_id: userId }: { user_id: string; [key: string]: string } = req.user;
+    const isOrganisationOwner = await checkOrganisationOwner(userId, req.params.id);
+    // check current user is admin or owner of listing
+    if (req.user.role !== 'admin' && !isOrganisationOwner) {
+        return next(new ErrorResponse('Not authorised to delete organisation as you are not the organisation owner', 403));
+    }
+    // update db with new value for the affected organisation
+    // UPDATE organisation SET (deleted_on) WHERE organisation_id = :id
+    const rows = await db.one('UPDATE organisation SET (deleted_on) = $1 WHERE organisation_id = $2 RETURNING *', [new Date(), id]);
+
+    res.status(200).json({
+        success: true,
+        data: rows,
+    });
+});
