@@ -56,6 +56,8 @@ DROP TABLE IF EXISTS chatroom CASCADE;
 
 DROP TABLE IF EXISTS chatmessage CASCADE;
 
+DROP TABLE IF EXISTS chatparticipant CASCADE;
+
 CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
 
 CREATE TABLE loginuser (
@@ -345,6 +347,7 @@ CREATE TABLE chatroom (
 	chatroom_name VARCHAR,
 	chatroom_pic VARCHAR,
 	is_dm BOOLEAN NOT NULL DEFAULT FALSE,
+	user_ids VARCHAR[],
 	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	PRIMARY KEY (chatroom_id)
@@ -366,3 +369,17 @@ CREATE TABLE chatmessage (
 );
 
 CREATE INDEX ON chatmessage USING BTREE (chatroom_id, created_on);
+
+CREATE TABLE chatparticipant (
+	chatparticipant_id SERIAL,
+	user_id UUID NOT NULL,
+	chatroom_id UUID NOT NULL,
+	last_seen TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	joined_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	PRIMARY KEY (chatparticipant_id),
+	FOREIGN KEY (chatroom_id) REFERENCES chatroom ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES loginuser ON DELETE CASCADE,
+	UNIQUE (user_id, chatroom_id)
+);
+
+CREATE INDEX ON chatparticipant USING BTREE (chatroom_id);

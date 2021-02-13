@@ -239,14 +239,6 @@ export async function up(knex: Knex): Promise<void> {
             table.timestamp('updated_on').notNullable().defaultTo(knex.fn.now());
         });
 
-        await tx.schema.createTable('chatparticipant', (table: Knex.TableBuilder) => {
-            table.increments('chatparticipant_id').primary();
-            table.uuid('user_id').references('user_id').inTable('loginuser').onDelete('SET NULL');
-            table.uuid('chatroom_id').notNullable().references('chatroom_id').inTable('chatroom').onDelete('CASCADE');
-            table.timestamp('last_seen').notNullable().defaultTo(knex.fn.now());
-            table.timestamp('joined_on').notNullable().defaultTo(knex.fn.now());
-        });
-
         await tx.schema.createTable('chatmessage', (table: Knex.TableBuilder) => {
             table.increments('chatmessage_id').primary();
             // TODO: normalize chatparticipant and chatmessage
@@ -259,11 +251,22 @@ export async function up(knex: Knex): Promise<void> {
             table.timestamp('updated_on').notNullable().defaultTo(knex.fn.now());
             table.index(['chatroom_id', 'created_on'], null, 'BTREE');
         });
+
+        await tx.schema.createTable('chatparticipant', (table: Knex.TableBuilder) => {
+            table.increments('chatparticipant_id').primary();
+            table.uuid('user_id').notNullable().references('user_id').inTable('loginuser').onDelete('CASCADE');
+            table.uuid('chatroom_id').notNullable().references('chatroom_id').inTable('chatroom').onDelete('CASCADE');
+            table.timestamp('last_seen').notNullable().defaultTo(knex.fn.now());
+            table.timestamp('joined_on').notNullable().defaultTo(knex.fn.now());
+            table.unique(['user_id', 'chatroom_id']);
+            table.index('chatroom_id');
+        });
     });
 }
 
 export async function down(knex: Knex): Promise<void> {
     return knex.transaction(async (tx: Knex.Transaction) => {
+        await tx.schema.dropTableIfExists('chatparticipant');
         await tx.schema.dropTableIfExists('chatmessage');
         await tx.schema.dropTableIfExists('chatroom');
         await tx.schema.dropTableIfExists('organisationjob');
