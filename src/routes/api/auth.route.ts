@@ -58,7 +58,7 @@ router.get('/me', protect, asyncHandler(authController.getMe));
 // Request limiter for all auth endpoints below this line
 router.use(authRequestLimiter);
 
-router.get('/register/:confirmEmailToken/confirm-email', asyncHandler(authController.confirmEmail));
+router.post('/register/confirm-email', asyncHandler(authController.confirmEmail));
 router.post('/register', validateRegisterFields, checkInputError, asyncHandler(authController.register));
 router.post('/login', validateLoginFields, checkInputError, asyncHandler(authController.login));
 router.post('/forget-password', authRequestLimiter, validateForgetPasswordFields, checkInputError, asyncHandler(authController.forgetPassword));

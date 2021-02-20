@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+-   Account activation request method changed from GET to POST, and move `createEmailToken` from query params to req body instead.
+-   Account activation email changed to a FE route instead of a direct API call. This fixes issues with server-side redirection after account activation.
+
 ## [v0.112.0]
 
 ## [v0.111.0]

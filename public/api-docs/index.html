@@ -6,15 +6,20 @@ Backend API for Project Kampong.</title><style media=screen>/*!* Bootstrap v3.3.
 <span class=badge>9</span></h3></div><div class=panel-body><p><p>User authentication functionality. All auth endpoints are rate limited to 5 every 15min (except get logged in user via token and logout user endpoints).<div class=request-item><div class=panel-group id=accordion-Authentication><div class="panel panel-info" id=jump-Authentication-ActivateAccount_28viaEmailConfirmation_29><div class=panel-heading><small class="pull-right text-muted"></small><a class=text-info data-toggle=collapse data-parent=#accordion-Authentication href=#collapse-Authentication-ActivateAccount_28viaEmailConfirmation_29><h4 class=panel-title><span class="glyphicon glyphicon-plus"></span><strong>Activate Account (via Email Confirmation)</strong> &nbsp;|&nbsp;
 <strong class="request-method border-info">GET</strong>
 &nbsp;
-{{URL}}/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirm-email</h4></a></div><div id=collapse-Authentication-ActivateAccount_28viaEmailConfirmation_29 class="panel-collapse collapse"><div class=panel-body><h5 class="label label-default">Description</h5><br><small><p>Activates user account via confirmation of email address used in user registration. Permission: Public.</small><br><br><h5 class="label label-warning">Headers</h5><table class="table table-hover"><thead><tr><th>Key<th>Value<th>Description<tbody><tr><td>Content-Type<td>application/json<td><p>JSON Type</table><select class=resp-selector>
+{{URL}}/api/auth/register/confirm-email</h4></a></div><div id=collapse-Authentication-ActivateAccount_28viaEmailConfirmation_29 class="panel-collapse collapse"><div class=panel-body><h5 class="label label-default">Description</h5><br><small><p>Activates user account via confirmation of email address used in user registration. Permission: Public.</small><br><br><h5 class="label label-warning">Headers</h5><table class="table table-hover"><thead><tr><th>Key<th>Value<th>Description<tbody><tr><td>Content-Type<td>application/json<td><p>JSON Type</table><h5 class="label label-primary">Body</h5><span class=resp-prettyprint>{
+&#34;confirmEmailToken&#34;: &#34;560bf4b1b75f642f7409f3bdcb72ad17a9901c4b&#34;
+}</span><div class=clearfix></div><select class=resp-selector>
 <option value>Select Example Request/Response
-<option value=req_res_Authentication_ActivateAccount_28viaEmailConfirmation_29_0_ActivateAccount_28viaEmailConfirmation_29_28200OK_29>Activate Account (via Email Confirmation) (200 OK)
-<option value=req_res_Authentication_ActivateAccount_28viaEmailConfirmation_29_1_ActivateAccount_28viaEmailConfirmation_29_28400BadRequestTokenexpired_2Cinvalid_2Corused_29>Activate Account (via Email Confirmation) (400 Bad Request - Token expired, invalid, or used)</select><br><section id=req_res_Authentication_ActivateAccount_28viaEmailConfirmation_29_0_ActivateAccount_28viaEmailConfirmation_29_28200OK_29 style=display:none><h4>Example Request</h4><h5>URL: {{URL}}/api/auth/register/e69f4085f4f847a4983af536ab653a29a27c2b85/confirmemail</h5><h5 class="label label-warning">Headers</h5><table class="table table-hover"><thead><tr><th>Key<th>Value<th>Description<tbody><tr><td>Content-Type<td>application/json<td><p>JSON Type</table><h4>Example Response</h4><h5 class="label label-success">Body</h5><span class=resp-prettyprint>{
+<option value=req_res_Authentication_ActivateAccount_28viaEmailConfirmation_29_0_ActivateAccount_28viaEmailConfirmation_29>Activate Account (via Email Confirmation)
+<option value=req_res_Authentication_ActivateAccount_28viaEmailConfirmation_29_1_ActivateAccount_28viaEmailConfirmation_29_28400BadRequest_29>Activate Account (via Email Confirmation) (400 Bad Request)</select><br><section id=req_res_Authentication_ActivateAccount_28viaEmailConfirmation_29_0_ActivateAccount_28viaEmailConfirmation_29 style=display:none><h4>Example Request</h4><h5>URL: {{URL}}/api/auth/register/confirm-email</h5><h5 class="label label-warning">Headers</h5><table class="table table-hover"><thead><tr><th>Key<th>Value<th>Description<tbody><tr><td>Content-Type<td>application/json<td><p>JSON Type</table><h5 class="label label-primary">Body</h5><span class=resp-prettyprint>{
+&#34;confirmEmailToken&#34;: &#34;560bf4b1b75f642f7409f3bdcb72ad17a9901c4b&#34;
+}</span><div class=clearfix></div><h4>Example Response</h4><h5 class="label label-success">Body</h5><span class=resp-prettyprint>{
 &#34;success&#34;: true,
-&#34;token&#34;: &#34;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA2LCJlbWFpbCI6ImRvbnRheTAyMDlAZ21haWwuY29tIiwiaWF0IjoxNTk2MDQ3MzUyLCJleHAiOjE1OTg2MzkzNTJ9.ux5SoaPBAqfvCKbQanb5T8S3xbyh95HvZ59WYWDv8Bo&#34;
-}</span><div class=clearfix></div><h5 class="label label-info">Code:</h5><strong>200</strong></section><section id=req_res_Authentication_ActivateAccount_28viaEmailConfirmation_29_1_ActivateAccount_28viaEmailConfirmation_29_28400BadRequestTokenexpired_2Cinvalid_2Corused_29 style=display:none><h4>Example Request</h4><h5>URL: {{URL}}/api/auth/register/e69f4085f4f847a4983af536ab653a29a27c2b85/confirmemail</h5><h5 class="label label-warning">Headers</h5><table class="table table-hover"><thead><tr><th>Key<th>Value<th>Description<tbody><tr><td>Content-Type<td>application/json<td><p>JSON Type</table><h4>Example Response</h4><h5 class="label label-success">Body</h5><span class=resp-prettyprint>{
+&#34;token&#34;: &#34;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5YTJhOGYwLTY5NGYtMTFlYi1hNWY4LWJmN2U1M2MxOTUxYiIsImVtYWlsIjoiZG9udGF5MDIwOUBnbWFpbC5jb20iLCJpYXQiOjE2MTI3MDc4MjIsImV4cCI6MTYxNTI5OTgyMn0.z8No1qimW0NduSCiUIRRg7SAV-Itnu1F3KgjcWkSXnA&#34;
+}</span><div class=clearfix></div><h5 class="label label-info">Code:</h5><strong>200</strong></section><section id=req_res_Authentication_ActivateAccount_28viaEmailConfirmation_29_1_ActivateAccount_28viaEmailConfirmation_29_28400BadRequest_29 style=display:none><h4>Example Request</h4><h5>URL: {{URL}}/api/auth/register/confirm-email</h5><h5 class="label label-warning">Headers</h5><table class="table table-hover"><thead><tr><th>Key<th>Value<th>Description<tbody><tr><td>Content-Type<td>application/json<td><p>JSON Type</table><h5 class="label label-primary">Body</h5><span class=resp-prettyprint>{
+}</span><div class=clearfix></div><h4>Example Response</h4><h5 class="label label-success">Body</h5><span class=resp-prettyprint>{
 &#34;success&#34;: false,
-&#34;error&#34;: &#34;Invalid account activation link. The user account may have been activated already.&#34;
+&#34;error&#34;: &#34;confirmEmailToken is a required field&#34;
 }</span><div class=clearfix></div><h5 class="label label-info">Code:</h5><strong>400</strong></section></div></div></div><div class="panel panel-success" id=jump-Authentication-ForgetPassword><div class=panel-heading><small class="pull-right text-muted">raw</small>
 <a class=text-success data-toggle=collapse data-parent=#accordion-Authentication href=#collapse-Authentication-ForgetPassword><h4 class=panel-title><span class="glyphicon glyphicon-plus"></span><strong>Forget Password</strong> &nbsp;|&nbsp;
 <strong class="request-method border-success">POST</strong>
@@ -816,7 +821,7 @@ listing_id - Valid integer, existing listing id.</small><br><br><h5 class="label
 &#34;success&#34;: false,
 &#34;error&#34;: &#34;Not authorised to access this route&#34;
 }</span><div class=clearfix></div><h5 class="label label-info">Code:</h5><strong>401</strong></section></div></div></div></div></div></div></div><div class="panel panel-default"><div class=panel-heading><h3 class=panel-title id=ListingComments>Listing Comments
-<span class=badge>5</span></h3></div><div class=panel-body><p><p>Listing Comments CRUD functionality.<div class=request-item><div class=panel-group id=accordion-ListingComments><div class="panel panel-success" id=jump-ListingComments-CreateListingComment><div class=panel-heading><small class="pull-right text-muted">raw</small>
+<span class=badge>4</span></h3></div><div class=panel-body><p><p>Listing Comments CRUD functionality.<div class=request-item><div class=panel-group id=accordion-ListingComments><div class="panel panel-success" id=jump-ListingComments-CreateListingComment><div class=panel-heading><small class="pull-right text-muted">raw</small>
 <a class=text-success data-toggle=collapse data-parent=#accordion-ListingComments href=#collapse-ListingComments-CreateListingComment><h4 class=panel-title><span class="glyphicon glyphicon-plus"></span><strong>Create Listing Comment</strong> &nbsp;|&nbsp;
 <strong class="request-method border-success">POST</strong>
 &nbsp;
@@ -846,17 +851,7 @@ reply_to_id - Valid integer, existing listing comment id. Optional.</small><br><
 &#34;updated_on&#34;: &#34;2020-08-17T16:40:14.624Z&#34;,
 &#34;deleted_on&#34;: null
 }
-}</span><div class=clearfix></div><h5 class="label label-info">Code:</h5><strong>201</strong></section></div></div></div><div class="panel panel-warning" id=jump-ListingComments-DeactivateListingComment><div class=panel-heading><small class="pull-right text-muted"></small><a class=text-warning data-toggle=collapse data-parent=#accordion-ListingComments href=#collapse-ListingComments-DeactivateListingComment><h4 class=panel-title><span class="glyphicon glyphicon-plus"></span><strong>Deactivate Listing Comment</strong> &nbsp;|&nbsp;
-<strong class="request-method border-warning">PUT</strong>
-&nbsp;
-{{URL}}/api/listing-comments/17/deactivate</h4></a></div><div id=collapse-ListingComments-DeactivateListingComment class="panel-collapse collapse"><div class=panel-body><h5 class="label label-default">Description</h5><br><small><p>Deactivate (soft-delete) listing comment identified by listing comment id. Permission: Admin/Owner/Private.<p>Field rules: None.</small><br><br><select class=resp-selector>
-<option value>Select Example Request/Response
-<option value=req_res_ListingComments_DeactivateListingComment_0_DeactivateListingComment_28200OK_29>Deactivate Listing Comment (200 OK)</select><br><section id=req_res_ListingComments_DeactivateListingComment_0_DeactivateListingComment_28200OK_29 style=display:none><h4>Example Request</h4><h5>URL: {{URL}}/api/listing-comments/1/deactivate</h5><h4>Example Response</h4><h5 class="label label-success">Body</h5><span class=resp-prettyprint>{
-&#34;success&#34;: true,
-&#34;data&#34;: {
-&#34;deleted_on&#34;: &#34;2020-08-16T10:09:07.000Z&#34;
-}
-}</span><div class=clearfix></div><h5 class="label label-info">Code:</h5><strong>200</strong></section></div></div></div><div class="panel panel-danger" id=jump-ListingComments-DeleteListingComment><div class=panel-heading><small class="pull-right text-muted"></small><a class=text-danger data-toggle=collapse data-parent=#accordion-ListingComments href=#collapse-ListingComments-DeleteListingComment><h4 class=panel-title><span class="glyphicon glyphicon-plus"></span><strong>Delete Listing Comment</strong> &nbsp;|&nbsp;
+}</span><div class=clearfix></div><h5 class="label label-info">Code:</h5><strong>201</strong></section></div></div></div><div class="panel panel-danger" id=jump-ListingComments-DeleteListingComment><div class=panel-heading><small class="pull-right text-muted"></small><a class=text-danger data-toggle=collapse data-parent=#accordion-ListingComments href=#collapse-ListingComments-DeleteListingComment><h4 class=panel-title><span class="glyphicon glyphicon-plus"></span><strong>Delete Listing Comment</strong> &nbsp;|&nbsp;
 <strong class="request-method border-danger">DELETE</strong>
 &nbsp;
 {{URL}}/api/listing-comments/17</h4></a></div><div id=collapse-ListingComments-DeleteListingComment class="panel-collapse collapse"><div class=panel-body><h5 class="label label-default">Description</h5><br><small><p>Delete listing comment identified by listing comment id. Permission: Admin/Owner/Private.</small><br><br><select class=resp-selector>
@@ -1517,79 +1512,34 @@ pics - Array of URL paths to uploaded JPG/PNG file. Required. Otherwise, pass em
 &#34;error&#34;: &#34;Resource not found&#34;
 }</span><div class=clearfix></div><h5 class="label label-info">Code:</h5><strong>404</strong></section><section id=req_res_Listings_GetAllLikesforaListing_1_GetAllLikesforaListing_28200OK_29 style=display:none><h4>Example Request</h4><h5>URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/likes</h5><h4>Example Response</h4><h5 class="label label-success">Body</h5><span class=resp-prettyprint>{
 &#34;success&#34;: true,
-&#34;count&#34;: 4,
 &#34;data&#34;: [
 {
-&#34;user_id&#34;: &#34;f96b2138-1754-4c17-a405-940e20adc601&#34;,
 &#34;like_id&#34;: 1,
+&#34;user_id&#34;: &#34;f96b2138-1754-4c17-a405-940e20adc601&#34;,
 &#34;listing_id&#34;: &#34;43824166-bee2-426e-8a08-ca2c4e4120ae&#34;,
-&#34;nickname&#34;: &#34;Admin&#34;,
-&#34;profile_picture&#34;: &#34;https://robohash.org/autvelautem.jpg?size=500x500&amp;set=set1&#34;,
-&#34;about&#34;: &#34;Quality-focused impactful projection&#34;,
-&#34;gender&#34;: &#34;o&#34;,
-&#34;dob&#34;: &#34;1985-04-17T16:43:59.000Z&#34;,
-&#34;interest&#34;: &#34;Geological Engineer&#34;,
-&#34;phone&#34;: &#34;97690390&#34;,
-&#34;facebook_link&#34;: &#34;http://baidu.com/ipsum/primis/in/faucibus/orci/luctus.xml&#34;,
-&#34;twitter_link&#34;: &#34;http://nhs.uk/at/diam/nam.png&#34;,
-&#34;instagram_link&#34;: &#34;http://nasa.gov/pede/justo/eu/massa/donec/dapibus/duis.aspx&#34;,
-&#34;linkedin_link&#34;: &#34;https://linkedin.com/ante/vestibulum/ante/ipsum/primis/in.json&#34;,
-&#34;is_verified&#34;: false,
-&#34;created_on&#34;: &#34;2020-08-17T15:24:50.398Z&#34;
+&#34;nickname&#34;: &#34;Wayne&#34;,
+&#34;profile_picture&#34;: &#34;https://images.pexels.com/photos/1561863/pexels-photo-1561863.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=750&amp;w=1260&#34;
 },
 {
-&#34;user_id&#34;: &#34;b7662cd1-a2c9-4054-95e7-078e35ea6fa1&#34;,
 &#34;like_id&#34;: 4,
+&#34;user_id&#34;: &#34;b7662cd1-a2c9-4054-95e7-078e35ea6fa1&#34;,
 &#34;listing_id&#34;: &#34;43824166-bee2-426e-8a08-ca2c4e4120ae&#34;,
 &#34;nickname&#34;: &#34;Derrick&#34;,
-&#34;profile_picture&#34;: null,
-&#34;about&#34;: &#34;Inverse local strategy&#34;,
-&#34;gender&#34;: &#34;m&#34;,
-&#34;dob&#34;: &#34;1990-05-07T07:40:00.000Z&#34;,
-&#34;interest&#34;: &#34;Software Consultant&#34;,
-&#34;phone&#34;: &#34;96831702&#34;,
-&#34;facebook_link&#34;: &#34;https://jigsy.com/eu/interdum/eu/tincidunt/in.html&#34;,
-&#34;twitter_link&#34;: &#34;http://nasa.gov/nisi/at/nibh/in/hac/habitasse.png&#34;,
-&#34;instagram_link&#34;: &#34;https://360.cn/sed/nisl/nunc/rhoncus/dui/vel.jpg&#34;,
-&#34;linkedin_link&#34;: &#34;https://cbc.ca/id/luctus/nec/molestie/sed/justo/pellentesque.png&#34;,
-&#34;is_verified&#34;: false,
-&#34;created_on&#34;: &#34;2020-08-17T15:24:50.398Z&#34;
+&#34;profile_picture&#34;: &#34;https://images.pexels.com/photos/2434268/pexels-photo-2434268.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=750&amp;w=1260&#34;
 },
 {
-&#34;user_id&#34;: &#34;d69a127d-815b-4834-b2b6-54ab398fccad&#34;,
 &#34;like_id&#34;: 7,
+&#34;user_id&#34;: &#34;d69a127d-815b-4834-b2b6-54ab398fccad&#34;,
 &#34;listing_id&#34;: &#34;43824166-bee2-426e-8a08-ca2c4e4120ae&#34;,
-&#34;nickname&#34;: &#34;User One&#34;,
-&#34;profile_picture&#34;: &#34;https://robohash.org/consequaturatquia.jpg?size=500x500&amp;set=set1&#34;,
-&#34;about&#34;: &#34;Down-sized disintermediate circuit&#34;,
-&#34;gender&#34;: &#34;f&#34;,
-&#34;dob&#34;: &#34;2003-09-22T00:32:55.000Z&#34;,
-&#34;interest&#34;: &#34;Statistician IV&#34;,
-&#34;phone&#34;: &#34;87685829&#34;,
-&#34;facebook_link&#34;: &#34;https://tripadvisor.com/ornare/imperdiet.png&#34;,
-&#34;twitter_link&#34;: &#34;https://google.com/quis/orci/nullam/molestie/nibh/in/lectus.xml&#34;,
-&#34;instagram_link&#34;: &#34;http://1und1.de/in/libero/ut/massa.png&#34;,
-&#34;linkedin_link&#34;: &#34;http://i2i.jp/imperdiet/sapien/urna/pretium/nisl/ut.jpg&#34;,
-&#34;is_verified&#34;: false,
-&#34;created_on&#34;: &#34;2020-08-17T15:24:50.398Z&#34;
+&#34;nickname&#34;: &#34;Aaron&#34;,
+&#34;profile_picture&#34;: &#34;https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=750&amp;w=1260&#34;
 },
 {
-&#34;user_id&#34;: &#34;f997120c-2956-482e-9ba3-81a12b4fecc1&#34;,
 &#34;like_id&#34;: 10,
+&#34;user_id&#34;: &#34;f997120c-2956-482e-9ba3-81a12b4fecc1&#34;,
 &#34;listing_id&#34;: &#34;43824166-bee2-426e-8a08-ca2c4e4120ae&#34;,
-&#34;nickname&#34;: &#34;Viki Albrooke&#34;,
-&#34;profile_picture&#34;: &#34;https://robohash.org/sedasperioresmaxime.bmp?size=500x500&amp;set=set1&#34;,
-&#34;about&#34;: &#34;Face to face neutral conglomeration&#34;,
-&#34;gender&#34;: &#34;u&#34;,
-&#34;dob&#34;: &#34;2000-07-04T11:07:24.000Z&#34;,
-&#34;interest&#34;: &#34;VP Product Management&#34;,
-&#34;phone&#34;: &#34;84428699&#34;,
-&#34;facebook_link&#34;: &#34;https://nhs.uk/mauris.xml&#34;,
-&#34;twitter_link&#34;: &#34;http://uiuc.edu/sit/amet/consectetuer/adipiscing/elit/proin.aspx&#34;,
-&#34;instagram_link&#34;: &#34;http://cbsnews.com/elementum/eu/interdum.jsp&#34;,
-&#34;linkedin_link&#34;: &#34;https://hibu.com/quam/sapien/varius/ut/blandit/non/interdum.html&#34;,
-&#34;is_verified&#34;: false,
-&#34;created_on&#34;: &#34;2020-08-17T15:24:50.398Z&#34;
+&#34;nickname&#34;: &#34;Viki Tay&#34;,
+&#34;profile_picture&#34;: &#34;https://images.pexels.com/photos/2426551/pexels-photo-2426551.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=750&amp;w=1260&#34;
 }
 ]
 }</span><div class=clearfix></div><h5 class="label label-info">Code:</h5><strong>200</strong></section></div></div></div><div class="panel panel-info" id=jump-Listings-GetAllListingCommentsforaListing><div class=panel-heading><small class="pull-right text-muted"></small><a class=text-info data-toggle=collapse data-parent=#accordion-Listings href=#collapse-Listings-GetAllListingCommentsforaListing><h4 class=panel-title><span class="glyphicon glyphicon-plus"></span><strong>Get All Listing Comments for a Listing</strong> &nbsp;|&nbsp;
@@ -5137,55 +5087,27 @@ At least one field must be updated.</small><br><br><h5 class="label label-warnin
 &#34;error&#34;: &#34;Resource not found&#34;
 }</span><div class=clearfix></div><h5 class="label label-info">Code:</h5><strong>404</strong></section><section id=req_res_Users_GetAllLikesforaUser_1_GetAllLikesforaUser_28200OK_29 style=display:none><h4>Example Request</h4><h5>URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/likes</h5><h4>Example Response</h4><h5 class="label label-success">Body</h5><span class=resp-prettyprint>{
 &#34;success&#34;: true,
-&#34;count&#34;: 2,
 &#34;data&#34;: [
 {
-&#34;listing_id&#34;: &#34;c975a572-452d-4824-8ed5-500b50488436&#34;,
-&#34;like_id&#34;: 8,
-&#34;user_id&#34;: &#34;d69a127d-815b-4834-b2b6-54ab398fccad&#34;,
-&#34;organisation_id&#34;: null,
-&#34;created_by&#34;: &#34;b7662cd1-a2c9-4054-95e7-078e35ea6fa1&#34;,
-&#34;title&#34;: &#34;vestibulum sed magna at nunc&#34;,
-&#34;category&#34;: &#34;Training&#34;,
-&#34;about&#34;: &#34;Team-oriented context-sensitive forecast&#34;,
-&#34;tagline&#34;: &#34;innovate B2C markets&#34;,
-&#34;mission&#34;: &#34;cultivate cutting-edge markets&#34;,
-&#34;listing_url&#34;: &#34;https://ehow.com/in/imperdiet/et/commodo/vulputate/justo.xml&#34;,
-&#34;pic1&#34;: &#34;https://robohash.org/etpossimusea.png?size=500x500&amp;set=set1&#34;,
-&#34;pic2&#34;: null,
-&#34;pic3&#34;: null,
-&#34;pic4&#34;: null,
-&#34;pic5&#34;: null,
-&#34;is_published&#34;: false,
-&#34;is_verified&#34;: false,
-&#34;start_date&#34;: &#34;2020-07-30T05:54:45.000Z&#34;,
-&#34;end_date&#34;: null,
-&#34;created_on&#34;: &#34;2020-08-17T16:52:17.118Z&#34;,
-&#34;deleted_on&#34;: null
-},
-{
-&#34;listing_id&#34;: &#34;43824166-bee2-426e-8a08-ca2c4e4120ae&#34;,
 &#34;like_id&#34;: 7,
 &#34;user_id&#34;: &#34;d69a127d-815b-4834-b2b6-54ab398fccad&#34;,
-&#34;organisation_id&#34;: null,
-&#34;created_by&#34;: &#34;f96b2138-1754-4c17-a405-940e20adc601&#34;,
-&#34;title&#34;: &#34;Updated title 1&#34;,
-&#34;category&#34;: &#34;Updated category&#34;,
-&#34;about&#34;: &#34;Updated about&#34;,
-&#34;tagline&#34;: &#34;Updated tagline&#34;,
-&#34;mission&#34;: &#34;Updated mission&#34;,
-&#34;listing_url&#34;: &#34;www.updated-test.com&#34;,
-&#34;pic1&#34;: null,
-&#34;pic2&#34;: null,
-&#34;pic3&#34;: null,
-&#34;pic4&#34;: null,
-&#34;pic5&#34;: null,
-&#34;is_published&#34;: true,
-&#34;is_verified&#34;: true,
-&#34;start_date&#34;: &#34;2018-08-15T08:45:43.416Z&#34;,
-&#34;end_date&#34;: &#34;2020-01-30T08:45:43.416Z&#34;,
-&#34;created_on&#34;: &#34;2020-08-17T16:52:17.118Z&#34;,
-&#34;deleted_on&#34;: &#34;2020-08-17T16:52:32.000Z&#34;
+&#34;listing_id&#34;: &#34;43824166-bee2-426e-8a08-ca2c4e4120ae&#34;,
+&#34;nickname&#34;: &#34;Aaron&#34;,
+&#34;profile_picture&#34;: &#34;https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=750&amp;w=1260&#34;
+},
+{
+&#34;like_id&#34;: 8,
+&#34;user_id&#34;: &#34;d69a127d-815b-4834-b2b6-54ab398fccad&#34;,
+&#34;listing_id&#34;: &#34;c975a572-452d-4824-8ed5-500b50488436&#34;,
+&#34;nickname&#34;: &#34;Aaron&#34;,
+&#34;profile_picture&#34;: &#34;https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=750&amp;w=1260&#34;
+},
+{
+&#34;like_id&#34;: 9,
+&#34;user_id&#34;: &#34;d69a127d-815b-4834-b2b6-54ab398fccad&#34;,
+&#34;listing_id&#34;: &#34;e411bd80-d5cf-49ac-b847-18c9fc13377a&#34;,
+&#34;nickname&#34;: &#34;Aaron&#34;,
+&#34;profile_picture&#34;: &#34;https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=750&amp;w=1260&#34;
 }
 ]
 }</span><div class=clearfix></div><h5 class="label label-info">Code:</h5><strong>200</strong></section></div></div></div><div class="panel panel-info" id=jump-Users-GetAllListingCommentsforaUser><div class=panel-heading><small class="pull-right text-muted"></small><a class=text-info data-toggle=collapse data-parent=#accordion-Users href=#collapse-Users-GetAllListingCommentsforaUser><h4 class=panel-title><span class="glyphicon glyphicon-plus"></span><strong>Get All Listing Comments for a User</strong> &nbsp;|&nbsp;
@@ -5339,4 +5261,4 @@ if(IsJsonString(html)){var obj=JSON.parse(html);var formattedJson=JSON.stringify
 function IsJsonString(str){try{JSON.parse(str);}catch(e){return false;}
 return true;}
 String.prototype.replaceAll=function(replaceThis,withThis){var re=new RegExp(RegExp.quote(replaceThis),"g");return this.replace(re,withThis);};RegExp.quote=function(str){return str.replace(/([.?*+^$[\]\\(){}-])/g,"\\$1");};function syntaxHighlight(json){json=json.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,function(match){var cls='number';if(/^"/.test(match)){if(/:$/.test(match)){cls='key';}else{cls='string';}}else if(/true|false/.test(match)){cls='boolean';}else if(/null/.test(match)){cls='null';}
-return '<span class="'+cls+'">'+match+'</span>';});}</script><br><br><footer class="navbar-default navbar-fixed-bottom"><div class=container-fluid><div class="span12 text-center"><span data-toggle=tooltip title="If the application help you, please feel free to give a star to the project in github. Your star inspire me to work more on open-source projects like this!">Made with <em class=love-color>&#9829;</em> by <a href=https://github.com/thedevsaddam target=_blank class=text-muted>thedevsaddam</a> | Generated at: 2021-01-14 18:00:41 by <a href=https://github.com/thedevsaddam/docgen target=_blank class=text-muted>docgen</a></span></div></div></footer>
+return '<span class="'+cls+'">'+match+'</span>';});}</script><br><br><footer class="navbar-default navbar-fixed-bottom"><div class=container-fluid><div class="span12 text-center"><span data-toggle=tooltip title="If the application help you, please feel free to give a star to the project in github. Your star inspire me to work more on open-source projects like this!">Made with <em class=love-color>&#9829;</em> by <a href=https://github.com/thedevsaddam target=_blank class=text-muted>thedevsaddam</a> | Generated at: 2021-02-07 14:34:21 by <a href=https://github.com/thedevsaddam/docgen target=_blank class=text-muted>docgen</a></span></div></div></footer>
