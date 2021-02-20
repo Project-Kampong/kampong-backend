@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Account activation request method changed from GET to POST, and move `createEmailToken` from query params to req body instead.
 -   Account activation email changed to a FE route instead of a direct API call. This fixes issues with server-side redirection after account activation.
 
+## [v0.112.0]
+
 ## [v0.111.0]
 
 ## [v0.110.0]
@@ -301,7 +303,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Internal, dev-only test routes and methods.
 -   API documentation temporarily set up as front-end page to be served, for ease of testing by frontend.
 
-[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.111.0...HEAD
+[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.112.0...HEAD
+[v0.112.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.112.0
 [v0.111.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.111.0
 [v0.110.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.110.0
 [v0.109.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.109.0
