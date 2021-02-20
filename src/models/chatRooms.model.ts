@@ -10,6 +10,7 @@ export interface ChatRoom {
 
 export interface ChatRoomMessage {
     chatmessage_id: number;
+    chatroom_id: string;
     user_id: string;
     chatmessage_text: string;
     reply_to: number;
