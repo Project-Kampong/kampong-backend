@@ -1,7 +1,11 @@
+import { LikesRepository } from '../database';
 import { db } from '../database/db';
-import { cleanseData, ErrorResponse } from '../utils';
+import { NewLikeReqDto } from '../models';
+import { modelValidator, ErrorResponse, ModelValidator } from '../utils';
 
 export class LikesController {
+    constructor(private readonly likesRepository: LikesRepository, private readonly modelValidator: ModelValidator) {}
+
     /**
      * @desc    Get all likes (including profile information) for a listing
      * @route   GET /api/listings/:listing_id/likes
@@ -11,10 +15,7 @@ export class LikesController {
      */
     getLikes = async (req, res, next) => {
         if (req.params.listing_id) {
-            // return 404 error response if listing not found or soft deleted
-            await db.one('SELECT * FROM listingview WHERE listing_id = $1', req.params.listing_id);
-
-            const likes = await db.manyOrNone('SELECT * FROM listinglike NATURAL JOIN profile WHERE listing_id = $1', req.params.listing_id);
+            const likes = await this.likesRepository.getAllLikesInfoForListing(req.params.listing_id);
 
             return res.status(200).json({
                 success: true,
@@ -23,13 +24,7 @@ export class LikesController {
         }
 
         if (req.params.user_id) {
-            // return 404 error response if user not found
-            await db.one('SELECT * FROM loginuser WHERE user_id = $1', req.params.user_id);
-
-            const likes = await db.manyOrNone(
-                'SELECT * FROM listinglike ll JOIN listing ls ON ll.listing_id = ls.listing_id WHERE user_id = $1',
-                req.params.user_id,
-            );
+            const likes = await this.likesRepository.getAllLikesInfoForUser(req.params.user_id);
 
             return res.status(200).json({
                 success: true,
@@ -53,9 +48,9 @@ export class LikesController {
             user_id: req.user.user_id,
         };
 
-        cleanseData(data);
+        await this.modelValidator.validateModel(NewLikeReqDto, data);
 
-        const rows = await db.one('INSERT INTO listinglike (${this:name}) VALUES (${this:csv}) RETURNING *', data);
+        const rows = await this.likesRepository.createLike(data);
 
         res.status(201).json({
             success: true,
@@ -65,17 +60,18 @@ export class LikesController {
 
     /**
      * @desc    User unlike listing (identified by like_id)
-     * @route   DELETE /api/likes/like_id
+     * @route   DELETE /api/likes/:like_id
      * @access  Private
      */
     unLike = async (req, res, next) => {
-        const listingLike = await db.one('SELECT * FROM listinglike WHERE like_id = $1', req.params.like_id);
+        const { like_id } = req.params;
+        const listingLike = await this.likesRepository.getLikeById(like_id);
 
         if (listingLike.user_id !== req.user.user_id) {
             return next(new ErrorResponse('Not authorised to access this route', 403));
         }
 
-        const rows = await db.one('DELETE FROM listinglike WHERE like_id = $1 RETURNING *', req.params.like_id);
+        const rows = await this.likesRepository.deleteLikeById(like_id);
 
         res.status(200).json({
             success: true,
@@ -84,4 +80,4 @@ export class LikesController {
     };
 }
 
-export const likesController = new LikesController();
+export const likesController = new LikesController(db.likes, modelValidator);
