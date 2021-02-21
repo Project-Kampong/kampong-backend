@@ -1,5 +1,6 @@
 import { BaseRepository } from './base.repository';
-import { ChatRoom, ChatRoomMessage, ChatRoomForUserResponseDto, CreateChatRoomRequestDto, SendMessageRequestDto } from '../../models';
+import { ChatRoom, ChatRoomMessage, ChatRoomForUserResponseDto, CreateChatRoomRequestDto, SendMessageRequestDto, ChatRoomUser } from '../../models';
+import { isEmpty } from 'lodash';
 
 export class ChatRoomsRepository extends BaseRepository {
     getAllChatRoomsForUser(userId: string): Promise<ChatRoomForUserResponseDto[]> {
@@ -9,15 +10,28 @@ export class ChatRoomsRepository extends BaseRepository {
         );
     }
 
-    getChatRoomAndMessagesById(ChatRoomId: string): Promise<ChatRoomMessage> {
-        return this.db.one('SELECT * FROM chatroom WHERE chatroom_id = $1', ChatRoomId);
+    getMessagesByChatroomAndTime(chatRoomId: string, fromTime?: Date): Promise<ChatRoomMessage[]> {
+        let getMsgQuery = 'SELECT * FROM chatmessage cm WHERE cm.chatroom_id = $1';
+        const getMsgParams: [string, Date?] = [chatRoomId];
+        if (!isEmpty(fromTime)) {
+            getMsgQuery = isEmpty(fromTime) ? getMsgQuery + ' cm.created_on >= $2' : getMsgQuery;
+            getMsgParams.push(fromTime);
+        }
+        return this.db.manyOrNone(getMsgQuery, getMsgParams);
+    }
+
+    getAllUsersByChatroom(chatRoomId: string): Promise<ChatRoomUser[]> {
+        return this.db.manyOrNone(
+            'SELECT cp.user_id, p.nickname, p.profile_picture FROM chatparticipant cp LEFT JOIN profile p ON cp.user_id = p.user_id WHERE cp.chatroom_id = $1',
+            [chatRoomId],
+        );
     }
 
     createChatRoom(createChatRoomData: CreateChatRoomRequestDto): Promise<ChatRoom> {
         return this.db.one('INSERT INTO chatroom (${this:name}) VALUES (${this:csv}) RETURNING *', createChatRoomData);
     }
 
-    sendMessageToChatroom(sendMessageData: SendMessageRequestDto): Promise<ChatRoom> {
+    sendMessageToChatroom(sendMessageData: SendMessageRequestDto): Promise<ChatRoomMessage> {
         return this.db.one('INSERT INTO chatmessage (${this:name}) VALUES (${this:csv}) RETURNING *', sendMessageData);
     }
 

@@ -18,8 +18,14 @@ export interface ChatRoomMessage {
     created_on: Date;
     updated_on: Date;
 }
+
+export interface ChatRoomUser {
+    user_id: string;
+    nickname: string;
+    profile_picture: string;
+}
 export interface ChatRoomMessageResponseDto {
-    users: { user_id: string; nickname: string; profile_picture: string }[];
+    users: ChatRoomUser[];
     messages: ChatRoomMessage[];
 }
 
