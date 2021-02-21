@@ -12,7 +12,7 @@ router.route('/').post(asyncHandler(chatRoomsController.createChatroom));
 router.route('/me').get(asyncHandler(chatRoomsController.getChatroomsForUser));
 
 // TODO: move to messages route (use express router mergeParams) when new endpoints added to it
-router.route('/:chatroom_id/messages').post(asyncHandler(chatRoomsController.sendMessageToChatRoom));
+router.route('/messages').post(asyncHandler(chatRoomsController.sendMessageToChatRoom));
 
 router.route('/:chatroom_id/update-last-seen').put(asyncHandler(chatRoomsController.updateUserLastSeen));
 

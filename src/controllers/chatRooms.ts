@@ -1,7 +1,7 @@
 import { v1 as uuidv1 } from 'uuid';
 import { db, ChatRoomsRepository } from '../database';
 import { modelValidator, ErrorResponse, ModelValidator } from '../utils';
-import { CreateChatRoomReqDto } from '../models';
+import { CreateChatRoomReqDto, SendMessageReqDto } from '../models';
 class ChatRoomsController {
     constructor(private readonly chatRoomsRepository: ChatRoomsRepository, private readonly modelValidator: ModelValidator) {}
 
@@ -59,10 +59,28 @@ class ChatRoomsController {
 
     /**
      * @desc    Send message to chatroom
-     * @route   POST /api/chatrooms/:chatroom_id/messages
+     * @route   POST /api/chatrooms/messages
      * @access  Private (Current logged in user must be in chatroom)
      */
-    sendMessageToChatRoom = async (req, res, next) => {};
+    sendMessageToChatRoom = async (req, res, next) => {
+        const { chatroom_id, chatmessage_text, reply_to, file_links } = req.body;
+        const { user_id } = req.user;
+        const data = { chatroom_id, chatmessage_text, reply_to, file_links, user_id };
+        await this.modelValidator.validateModel(SendMessageReqDto, data);
+
+        // check if user is in chatroom
+        const isUserInChatRoom = await this.checkUserFromChatRoom(user_id, chatroom_id);
+        if (!isUserInChatRoom) {
+            return next(new ErrorResponse('User does not belong to this chat room', 403));
+        }
+
+        const sentMsg = await this.chatRoomsRepository.sendMessageToChatroom(data);
+
+        res.status(201).json({
+            success: true,
+            data: sentMsg,
+        });
+    };
 
     /**
      * @desc    Update user's last seen
@@ -70,6 +88,16 @@ class ChatRoomsController {
      * @access  Private (Current logged in user must be in chatroom)
      */
     updateUserLastSeen = async (req, res, next) => {};
+
+    /**
+     * Helper to check if a given user belongs is in a chat room
+     * @param userId
+     * @param chatroomId
+     */
+    checkUserFromChatRoom = async (userId: string, chatroomId: string): Promise<boolean> => {
+        const users = await this.chatRoomsRepository.getAllUsersByChatroom(chatroomId);
+        return users.map(({ user_id }) => user_id).includes(userId);
+    };
 }
 
 export const chatRoomsController = new ChatRoomsController(db.chatRooms, modelValidator);
