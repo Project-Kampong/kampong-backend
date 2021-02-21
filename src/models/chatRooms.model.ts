@@ -34,11 +34,10 @@ export interface ChatRoomForUserResponseDto {
     chatroom_name: string;
     chatroom_pic: string;
     is_dm: boolean;
-    user_ids: string[];
-    created_on: Date;
-    updated_on: Date;
     last_seen: Date;
-    joined_on: Date;
+    chatmessage_text: string;
+    created_on: Date;
+    user_id: string;
 }
 
 export interface CreateChatRoomRequestDto {

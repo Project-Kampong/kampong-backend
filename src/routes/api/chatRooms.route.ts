@@ -7,6 +7,13 @@ import { asyncHandler, protect } from '../../middleware';
 // All chatroom routes are accessible by authenticated user only
 router.use(protect);
 
-router.route('/').get(asyncHandler(chatRoomsController.getChatroomsForUser)).post(asyncHandler(chatRoomsController.createChatroom));
+router.route('/').post(asyncHandler(chatRoomsController.createChatroom));
 
-router.route('/:chatroom_id').get(asyncHandler(chatRoomsController.getChatroomById)).delete(asyncHandler(chatRoomsController.deleteChatroom));
+router.route('/me').get(asyncHandler(chatRoomsController.getChatroomsForUser));
+
+// TODO: move to messages route (use express router mergeParams) when new endpoints added to it
+router.route('/:chatroom_id/messages').post(asyncHandler(chatRoomsController.sendMessageToChatRoom));
+
+router.route('/:chatroom_id/update-last-seen').put(asyncHandler(chatRoomsController.updateUserLastSeen));
+
+router.route('/:chatroom_id').get(asyncHandler(chatRoomsController.getChatroomById));
