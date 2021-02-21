@@ -374,7 +374,7 @@ CREATE TABLE chatparticipant (
 	chatparticipant_id SERIAL,
 	user_id UUID NOT NULL,
 	chatroom_id UUID NOT NULL,
-	last_seen TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	last_seen TIMESTAMPTZ,
 	joined_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	PRIMARY KEY (chatparticipant_id),
 	FOREIGN KEY (chatroom_id) REFERENCES chatroom ON DELETE CASCADE,

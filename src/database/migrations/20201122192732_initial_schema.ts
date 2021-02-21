@@ -255,7 +255,7 @@ export async function up(knex: Knex): Promise<void> {
             table.increments('chatparticipant_id').primary();
             table.uuid('user_id').notNullable().references('user_id').inTable('loginuser').onDelete('CASCADE');
             table.uuid('chatroom_id').notNullable().references('chatroom_id').inTable('chatroom').onDelete('CASCADE');
-            table.timestamp('last_seen').notNullable().defaultTo(knex.fn.now());
+            table.timestamp('last_seen');
             table.timestamp('joined_on').notNullable().defaultTo(knex.fn.now());
             table.unique(['user_id', 'chatroom_id']);
             table.index('chatroom_id');
