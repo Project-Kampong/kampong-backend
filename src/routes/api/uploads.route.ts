@@ -7,3 +7,4 @@ import { asyncHandler, protect } from '../../middleware';
 import { uploadsController } from '../../controllers/uploads';
 
 router.post('/', protect, asyncHandler(uploadsController.uploadFilesToPublic));
+router.post ('/delete', protect, asyncHandler(uploadsController.deleteFileFromBucket));

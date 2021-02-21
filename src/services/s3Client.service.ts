@@ -25,6 +25,11 @@ export class S3ClientService {
         const uploadParams: S3.PutObjectRequest = { Bucket: process.env.S3_BACKUP_BUCKET_NAME, Key: key, Body: file, ACL: 'private', Metadata: meta };
         return this.s3Client.upload(uploadParams).promise();
     }
+
+    async deleteFileFromPublicRead(key: string) {
+        const deleteParams: S3.DeleteObjectRequest = { Bucket: process.env.S3_BUCKET_NAME, Key: key }
+        return this.s3Client.deleteObject(deleteParams).promise();
+    }
 }
 
 export const s3ClientService = new S3ClientService();

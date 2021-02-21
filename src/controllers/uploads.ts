@@ -26,6 +26,17 @@ export class UploadsController {
 
         res.status(200).json({ success: true, data: parsedResults });
     };
+
+    deleteFileFromBucket = async (req, res, next) => {
+        const { filename } = req.body;
+        
+        // const key = new RegExp(`^${filename}-[0-9]{14}\.jpg|[a-zA-Z]+-[0-9]{14}\.jpeg|[a-zA-Z]+-[0-9]{14}\.png$`);
+        const key = filename;
+
+        const results = await this.s3ClientService.deleteFileFromPublicRead(key);
+
+        res.status(200).json({ success: true, data: results });
+    }
 }
 
 export const uploadsController = new UploadsController(s3ClientService);
