@@ -1,7 +1,7 @@
 import { v1 as uuidv1 } from 'uuid';
 import { db, ChatRoomsRepository } from '../database';
 import { modelValidator, ErrorResponse, ModelValidator } from '../utils';
-import { CreateChatRoomReqDto, SendMessageReqDto } from '../models';
+import { CreateChatRoomReqDto, SendMessageReqDto, UpdateLastSeenDto } from '../models';
 class ChatRoomsController {
     constructor(private readonly chatRoomsRepository: ChatRoomsRepository, private readonly modelValidator: ModelValidator) {}
 
@@ -87,7 +87,18 @@ class ChatRoomsController {
      * @route   PUT /api/chatrooms/:chatroom_id/update-last-seen
      * @access  Private (Current logged in user must be in chatroom)
      */
-    updateUserLastSeen = async (req, res, next) => {};
+    updateUserLastSeen = async (req, res, next) => {
+        const { chatroom_id } = req.params;
+        const { user_id } = req.user;
+        const data = { chatroom_id, user_id };
+        await this.modelValidator.validateModel(UpdateLastSeenDto, data);
+
+        const last_seen = await this.chatRoomsRepository.updateUserLastSeen({ user_id, chatroom_id });
+        res.status(200).json({
+            success: true,
+            data: last_seen,
+        });
+    };
 
     /**
      * Helper to check if a given user belongs is in a chat room

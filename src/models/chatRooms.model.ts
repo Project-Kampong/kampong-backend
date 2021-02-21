@@ -1,4 +1,4 @@
-import { IsArray, IsBoolean, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, IsUrl, IsUUID } from 'class-validator';
+import { IsArray, IsBoolean, IsInt, IsNotEmpty, IsOptional, IsString, IsUrl, IsUUID } from 'class-validator';
 import { INVALID_FIELD_MSG } from '../utils';
 
 export interface ChatRoom {
@@ -77,4 +77,11 @@ export class SendMessageReqDto {
     @IsArray()
     @IsUrl(null, { message: () => INVALID_FIELD_MSG('file links') })
     file_links: string[];
+}
+
+export class UpdateLastSeenDto {
+    @IsUUID(undefined, { message: () => INVALID_FIELD_MSG('chatroom id') })
+    chatroom_id: string;
+    @IsUUID(undefined, { message: () => INVALID_FIELD_MSG('user id') })
+    user_id: string;
 }
