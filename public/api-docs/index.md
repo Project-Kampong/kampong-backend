@@ -150,7 +150,7 @@ Backend API for Project Kampong.
 
 
 ## Authentication
-User authentication functionality.
+User authentication functionality. All auth endpoints are rate limited to 5 every 15min (except get logged in user via token and logout user endpoints).
 
 
 
@@ -10631,4 +10631,4 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2021-01-06 15:20:08 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2021-01-15 05:20:52 by [docgen](https://github.com/thedevsaddam/docgen)

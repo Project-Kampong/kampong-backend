@@ -73,6 +73,14 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
+# Yarn v2 files to ignore
+ .yarn/*
+ !.yarn/releases
+ !.yarn/plugins
+ !.yarn/sdks
+ !.yarn/versions
+ .pnp.*
+
 # dotenv environment variables file
 config/config.env
 .env.test
