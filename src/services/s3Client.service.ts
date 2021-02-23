@@ -27,7 +27,7 @@ export class S3ClientService {
     }
 
     async deleteFileFromPublicRead(key: string) {
-        const deleteParams: S3.DeleteObjectRequest = { Bucket: process.env.S3_BUCKET_NAME, Key: key }
+        const deleteParams: S3.DeleteObjectRequest = { Bucket: process.env.S3_BUCKET_NAME, Key: key };
         return this.s3Client.deleteObject(deleteParams).promise();
     }
 }
