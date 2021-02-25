@@ -7,6 +7,7 @@ import {
     FaqsRepository,
     HashtagsRepository,
     CategoriesRepository,
+    ChatRoomsRepository,
     JobsRepository,
     LikesRepository,
     OrganisationsRepository,
@@ -33,6 +34,7 @@ const dbConfig: IInitOptions<IExtensions> = {
     // Initialize repositories as singleton here
     extend(obj: PgpExtendedProtocol) {
         obj.categories = new CategoriesRepository(obj, pgp);
+        obj.chatRooms = new ChatRoomsRepository(obj, pgp);
         obj.faqs = new FaqsRepository(obj, pgp);
         obj.hashtags = new HashtagsRepository(obj, pgp);
         obj.jobs = new JobsRepository(obj, pgp);

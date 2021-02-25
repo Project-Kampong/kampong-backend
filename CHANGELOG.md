@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+-   Chat room endpoints, including chatroom creation, send message, update last seen, get all chatrooms for user, and get single chatroom with messages
+
 ## [v0.113.0]
 
 ## [v0.112.0]
