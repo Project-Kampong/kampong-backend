@@ -1,4 +1,4 @@
-import { IsArray, IsBoolean, IsInt, IsNotEmpty, IsOptional, IsString, IsUrl, IsUUID } from 'class-validator';
+import { IsArray, IsBoolean, IsInt, IsNotEmpty, IsOptional, IsString, IsUrl, IsUUID, ValidateIf } from 'class-validator';
 import { INVALID_FIELD_MSG } from '../utils';
 
 export interface ChatRoom {
@@ -47,10 +47,11 @@ export interface ChatRoomForUserResDto {
 export class CreateChatRoomReqDto {
     @IsUUID(undefined, { message: () => INVALID_FIELD_MSG('chatroom id') })
     chatroom_id: string;
-    @IsOptional()
+    @ValidateIf((o) => o.is_dm)
     @IsString({ message: () => INVALID_FIELD_MSG('chatroom name') })
     @IsNotEmpty({ message: () => INVALID_FIELD_MSG('chatroom name') })
     chatroom_name: string;
+    @ValidateIf((o) => o.is_dm)
     @IsOptional()
     @IsString({ message: () => INVALID_FIELD_MSG('chatroom picture') })
     @IsNotEmpty({ message: () => INVALID_FIELD_MSG('chatroom picture') })
@@ -58,6 +59,7 @@ export class CreateChatRoomReqDto {
     @IsOptional()
     @IsBoolean({ message: () => INVALID_FIELD_MSG('is_dm') })
     is_dm: boolean;
+    // TODO; validate array length exactly 2 logic for is_dm on controller or service level
     @IsArray()
     @IsUUID(undefined, { each: true, message: () => INVALID_FIELD_MSG('user ids') })
     user_ids: string[];

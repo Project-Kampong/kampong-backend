@@ -53,6 +53,9 @@ class ChatRoomsController {
         const { chatroom_name, chatroom_pic, is_dm, user_ids: rawUserIdArr } = req.body;
         rawUserIdArr.push(req.user.user_id);
         const user_ids = [...new Set<string>(rawUserIdArr)];
+        if (is_dm && user_ids.length != 2) {
+            return next(new ErrorResponse('DM chatrooms must have exactly 2 users', 400));
+        }
         const chatroom_id = uuidv1();
         const data = { chatroom_id, chatroom_name, chatroom_pic, is_dm, user_ids };
         await this.modelValidator.validateModel(CreateChatRoomReqDto, data);
