@@ -37,6 +37,7 @@ export interface ChatRoomForUserResDto {
     chatroom_name: string;
     chatroom_pic: string;
     is_dm: boolean;
+    nickname: string;
     last_seen: Date;
     chatmessage_text: string;
     created_on: Date;
