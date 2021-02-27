@@ -22,6 +22,14 @@ Backend API for Project Kampong.
   * [Get All Categories](#1-get-all-categories)
   * [Get All Listings for a Category](#2-get-all-listings-for-a-category)
 
+* [Chat Rooms](#chat-rooms)
+
+  * [Create Chat Room](#1-create-chat-room)
+  * [Get Chat Room by Chat Room ID](#2-get-chat-room-by-chat-room-id)
+  * [Get Chat Rooms for User](#3-get-chat-rooms-for-user)
+  * [Send Message in Chat Room](#4-send-message-in-chat-room)
+  * [Update User Last Seen (200 OK)](#5-update-user-last-seen-(200-ok))
+
 * [Faqs](#faqs)
 
   * [Create Faq](#1-create-faq)
@@ -51,10 +59,9 @@ Backend API for Project Kampong.
 * [Listing Comments](#listing-comments)
 
   * [Create Listing Comment](#1-create-listing-comment)
-  * [Deactivate Listing Comment](#2-deactivate-listing-comment)
-  * [Delete Listing Comment](#3-delete-listing-comment)
-  * [Get All Children Comment for Listing Comment](#4-get-all-children-comment-for-listing-comment)
-  * [Update Listing Comment](#5-update-listing-comment)
+  * [Delete Listing Comment](#2-delete-listing-comment)
+  * [Get All Children Comment for Listing Comment](#3-get-all-children-comment-for-listing-comment)
+  * [Update Listing Comment](#4-update-listing-comment)
 
 * [Listing Locations](#listing-locations)
 
@@ -163,9 +170,9 @@ Activates user account via confirmation of email address used in user registrati
 ***Endpoint:***
 
 ```bash
-Method: GET
-Type: 
-URL: {{URL}}/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirm-email
+Method: POST
+Type: RAW
+URL: {{URL}}/api/auth/register/confirm-email
 ```
 
 
@@ -177,10 +184,20 @@ URL: {{URL}}/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirm-
 
 
 
+***Body:***
+
+```js        
+{
+    "confirmEmailToken": "560bf4b1b75f642f7409f3bdcb72ad17a9901c4b"
+}
+```
+
+
+
 ***More example Requests/Responses:***
 
 
-##### I. Example Request: Activate Account (via Email Confirmation) (200 OK)
+##### I. Example Request: Activate Account (via Email Confirmation)
 
 
 ***Headers:***
@@ -191,11 +208,21 @@ URL: {{URL}}/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirm-
 
 
 
-##### I. Example Response: Activate Account (via Email Confirmation) (200 OK)
+***Body:***
+
+```js        
+{
+    "confirmEmailToken": "560bf4b1b75f642f7409f3bdcb72ad17a9901c4b"
+}
+```
+
+
+
+##### I. Example Response: Activate Account (via Email Confirmation)
 ```js
 {
     "success": true,
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA2LCJlbWFpbCI6ImRvbnRheTAyMDlAZ21haWwuY29tIiwiaWF0IjoxNTk2MDQ3MzUyLCJleHAiOjE1OTg2MzkzNTJ9.ux5SoaPBAqfvCKbQanb5T8S3xbyh95HvZ59WYWDv8Bo"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5YTJhOGYwLTY5NGYtMTFlYi1hNWY4LWJmN2U1M2MxOTUxYiIsImVtYWlsIjoiZG9udGF5MDIwOUBnbWFpbC5jb20iLCJpYXQiOjE2MTI3MDc4MjIsImV4cCI6MTYxNTI5OTgyMn0.z8No1qimW0NduSCiUIRRg7SAV-Itnu1F3KgjcWkSXnA"
 }
 ```
 
@@ -206,7 +233,7 @@ URL: {{URL}}/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirm-
 
 
 
-##### II. Example Request: Activate Account (via Email Confirmation) (400 Bad Request - Token expired, invalid, or used)
+##### II. Example Request: Activate Account (via Email Confirmation) (400 Bad Request)
 
 
 ***Headers:***
@@ -217,11 +244,21 @@ URL: {{URL}}/api/auth/register/81a1890b0135b02edeeb41dae93a4dba38d4a51d/confirm-
 
 
 
-##### II. Example Response: Activate Account (via Email Confirmation) (400 Bad Request - Token expired, invalid, or used)
+***Body:***
+
+```js        
+{
+    
+}
+```
+
+
+
+##### II. Example Response: Activate Account (via Email Confirmation) (400 Bad Request)
 ```js
 {
     "success": false,
-    "error": "Invalid account activation link. The user account may have been activated already."
+    "error": "confirmEmailToken is a required field"
 }
 ```
 
@@ -1520,6 +1557,978 @@ URL: {{URL}}/api/categories/Health/listings
             "keyword_vector": "'1':3 'admiralti':5 'health':4 'kranji':6 'titl':2 'updat':1 'woodland':7"
         }
     ]
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+## Chat Rooms
+
+
+
+### 1. Create Chat Room
+
+
+// Request Body Schema
+
+chatroom_name: string // Required if is_dm === true
+chatroom_pic: string // Optional URL
+is_dm: boolean // Optional. Default to false
+user_ids: string[] // Required. Array of user ids to add to chatrooms. Must be exactly 1 other user id (other than self) if is_dm === true.
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: {{URL}}/api/chatrooms
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+        "chatroom_name": null,
+        "chatroom_pic": null,
+        "is_dm": false,
+        "user_ids": ["2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb"]
+}
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Create Chat Room (201 Created)
+
+
+
+***Body:***
+
+```js        
+{
+        "chatroom_name": null,
+        "chatroom_pic": null,
+        "is_dm": true,
+        "user_ids": ["2e9c26a0-7c1c-49d1-8c78-3a0545ca22eb"]
+}
+```
+
+
+
+##### I. Example Response: Create Chat Room (201 Created)
+```js
+{
+    "success": true,
+    "data": {
+        "chatroom_id": "65e76830-741d-11eb-b8c2-8fbe2e7ec560",
+        "chatroom_name": null,
+        "chatroom_pic": null,
+        "is_dm": true,
+        "created_on": "2021-02-21T08:18:37.751Z",
+        "updated_on": "2021-02-21T08:18:37.751Z"
+    }
+}
+```
+
+
+***Status Code:*** 201
+
+<br>
+
+
+
+### 2. Get Chat Room by Chat Room ID
+
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{URL}}/api/chatrooms/1f81d9c7-5903-4f4b-8809-92bb2726807a
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Get chatroom by chatroom id (200 OK)
+
+
+
+##### I. Example Response: Get chatroom by chatroom id (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "users": [
+            {
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "nickname": "Wayne",
+                "profile_picture": "https://images.pexels.com/photos/1561863/pexels-photo-1561863.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+            },
+            {
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "nickname": "Aaron",
+                "profile_picture": "https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+            }
+        ],
+        "messages": [
+            {
+                "chatmessage_id": 1,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-17T18:47:27.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 2,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-16T23:49:11.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 3,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-17T18:04:02.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 4,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T14:48:41.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 5,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Integer ac neque. Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T15:14:36.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 6,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T21:05:01.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 7,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T20:04:21.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 8,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque. Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-17T05:52:00.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 9,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Pellentesque ultrices mattis odio. Donec vitae nisi.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-19T01:16:43.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 10,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Morbi a ipsum. Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet. Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T03:03:28.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 11,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque. Quisque porta volutpat erat.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T17:39:00.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 12,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede. Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-17T17:38:47.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 13,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo. Etiam pretium iaculis justo.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-17T06:26:38.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 14,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est. Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-19T03:25:18.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 15,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-17T08:14:51.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 16,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti. Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T00:30:43.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 17,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-17T08:17:25.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 18,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis. Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T18:41:50.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 19,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque. Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T13:46:27.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 20,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "In congue.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T06:19:56.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 21,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus. Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam. Nam tristique tortor eu pede.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-17T04:23:45.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 22,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Cras in purus eu magna vulputate luctus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-17T00:31:45.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 23,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T09:58:00.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 24,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Cras in purus eu magna vulputate luctus.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T21:27:05.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 25,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T10:19:05.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 26,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-16T20:28:08.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 27,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-16T19:32:30.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 28,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis. Sed ante. Vivamus tortor.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-19T13:20:40.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 29,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "In quis justo. Maecenas rhoncus aliquam lacus.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-19T09:34:49.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 30,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede. Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-17T10:29:08.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 31,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-17T17:51:42.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 32,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-19T04:02:09.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 33,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius. Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi. Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus. Curabitur at ipsum ac tellus semper interdum.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-17T09:28:28.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 34,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-16T21:17:42.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 35,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T02:20:07.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 36,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-16T16:01:28.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 37,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Praesent lectus. Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T02:17:25.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 38,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Morbi ut odio. Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl. Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-17T20:28:52.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 39,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl. Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum. Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-17T05:24:37.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 40,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat. Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T18:58:20.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 41,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T16:44:25.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 42,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "In est risus, auctor sed, tristique in, tempus sit amet, sem. Fusce consequat. Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-19T10:26:37.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 43,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet. Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T12:56:29.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 44,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis. Sed ante.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T14:06:35.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 45,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Morbi a ipsum. Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet. Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui. Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-16T21:22:56.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 46,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-17T17:28:28.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 47,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-17T15:54:17.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 48,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T16:35:35.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 49,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Integer ac leo. Pellentesque ultrices mattis odio.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T12:33:05.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 50,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T20:27:03.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 51,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Phasellus in felis. Donec semper sapien a libero. Nam dui. Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius. Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T04:27:20.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 52,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat. Curabitur gravida nisi at nibh. In hac habitasse platea dictumst.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-19T14:02:24.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 53,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Aliquam non mauris. Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis. Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem. Sed sagittis.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T08:44:20.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 54,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Duis bibendum.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-19T05:22:17.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 55,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet. Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-16T21:16:49.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 56,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-19T14:10:32.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 57,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Aliquam sit amet diam in magna bibendum imperdiet.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T12:39:35.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 58,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-17T23:41:06.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 59,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Nulla ut erat id mauris vulputate elementum.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-16T21:41:41.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 60,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl. Duis ac nibh.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T12:35:34.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 61,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "In congue. Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus. Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-16T16:17:02.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 62,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T08:34:03.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 63,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus. Curabitur at ipsum ac tellus semper interdum.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-17T06:36:21.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 64,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+                "chatmessage_text": "Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-17T04:15:04.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            },
+            {
+                "chatmessage_id": 65,
+                "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+                "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+                "chatmessage_text": "Nulla mollis molestie lorem. Quisque ut erat. Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit.",
+                "reply_to": null,
+                "file_links": null,
+                "created_on": "2021-02-18T13:56:52.000Z",
+                "updated_on": "2021-02-20T17:57:07.359Z"
+            }
+        ]
+    }
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+### 3. Get Chat Rooms for User
+
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{URL}}/api/chatrooms/me
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Get Chat Rooms for User (200 OK)
+
+
+
+##### I. Example Response: Get Chat Rooms for User (200 OK)
+```js
+{
+    "success": true,
+    "data": [
+        {
+            "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+            "chatroom_name": null,
+            "chatroom_pic": null,
+            "is_dm": true,
+            "last_seen": "2021-02-19T11:03:26.000Z",
+            "most_recent_msg": {
+                "chatmessage_text": "Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.",
+                "created_on": "2021-02-19T14:10:32.000Z",
+                "user_id": "f96b2138-1754-4c17-a405-940e20adc601"
+            }
+        },
+        {
+            "chatroom_id": "8de86724-5eac-4ba0-bd92-79c300a8eaea",
+            "chatroom_name": "Healthcare Heroes Interest Group!",
+            "chatroom_pic": "https://robohash.org/cupiditatebeataeminima.bmp?size=150x150&set=set1",
+            "is_dm": false,
+            "last_seen": "2021-02-18T22:02:08.000Z",
+            "most_recent_msg": {
+                "chatmessage_text": null,
+                "created_on": null,
+                "user_id": null
+            }
+        }
+    ]
+}
+```
+
+
+***Status Code:*** 200
+
+<br>
+
+
+
+### 4. Send Message in Chat Room
+
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: {{URL}}/api/chatrooms/messages
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+  "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+  "chatmessage_text": "hi",
+  "reply_to": null,
+  "file_links": null
+}
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Send Message in Chat Room (201 Created)
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json | JSON Type |
+
+
+
+***Body:***
+
+```js        
+{
+  "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+  "chatmessage_text": "hi",
+  "reply_to": null,
+  "file_links": null
+}
+```
+
+
+
+##### I. Example Response: Send Message in Chat Room (201 Created)
+```js
+{
+    "success": true,
+    "data": {
+        "chatmessage_id": 66,
+        "chatroom_id": "1f81d9c7-5903-4f4b-8809-92bb2726807a",
+        "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
+        "chatmessage_text": "hi",
+        "reply_to": null,
+        "file_links": null,
+        "created_on": "2021-02-21T08:32:23.130Z",
+        "updated_on": "2021-02-21T08:32:23.130Z"
+    }
+}
+```
+
+
+***Status Code:*** 201
+
+<br>
+
+
+
+### 5. Update User Last Seen (200 OK)
+
+
+
+***Endpoint:***
+
+```bash
+Method: PUT
+Type: 
+URL: {{URL}}/api/chatrooms/1f81d9c7-5903-4f4b-8809-92bb2726807a/update-last-seen
+```
+
+
+
+***More example Requests/Responses:***
+
+
+##### I. Example Request: Update User Last Seen (200 OK)
+
+
+
+##### I. Example Response: Update User Last Seen (200 OK)
+```js
+{
+    "success": true,
+    "data": {
+        "last_seen": "2021-02-21T08:45:41.881Z"
+    }
 }
 ```
 
@@ -2985,49 +3994,7 @@ URL: {{URL}}/api/listing-comments
 
 
 
-### 2. Deactivate Listing Comment
-
-
-Deactivate (soft-delete) listing comment identified by listing comment id. Permission: Admin/Owner/Private.
-
-Field rules: None.
-
-
-***Endpoint:***
-
-```bash
-Method: PUT
-Type: 
-URL: {{URL}}/api/listing-comments/17/deactivate
-```
-
-
-
-***More example Requests/Responses:***
-
-
-##### I. Example Request: Deactivate Listing Comment (200 OK)
-
-
-
-##### I. Example Response: Deactivate Listing Comment (200 OK)
-```js
-{
-    "success": true,
-    "data": {
-        "deleted_on": "2020-08-16T10:09:07.000Z"
-    }
-}
-```
-
-
-***Status Code:*** 200
-
-<br>
-
-
-
-### 3. Delete Listing Comment
+### 2. Delete Listing Comment
 
 
 Delete listing comment identified by listing comment id. Permission: Admin/Owner/Private.
@@ -3073,7 +4040,7 @@ URL: {{URL}}/api/listing-comments/17
 
 
 
-### 4. Get All Children Comment for Listing Comment
+### 3. Get All Children Comment for Listing Comment
 
 
 Get all children listing comment (ie. listing comment chain) of a listing comment (inclusive). Permission: Public.
@@ -3184,7 +4151,7 @@ URL: {{URL}}/api/listing-comments/3/children
 
 
 
-### 5. Update Listing Comment
+### 4. Update Listing Comment
 
 
 Update listing comment identified by listing comment id. Permission: Admin/Owner/Private.
@@ -4570,79 +5537,34 @@ URL: {{URL}}/api/listings/43824166-bee2-426e-8a08-ca2c4e4120ae/likes
 ```js
 {
     "success": true,
-    "count": 4,
     "data": [
         {
-            "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
             "like_id": 1,
+            "user_id": "f96b2138-1754-4c17-a405-940e20adc601",
             "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "nickname": "Admin",
-            "profile_picture": "https://robohash.org/autvelautem.jpg?size=500x500&set=set1",
-            "about": "Quality-focused impactful projection",
-            "gender": "o",
-            "dob": "1985-04-17T16:43:59.000Z",
-            "interest": "Geological Engineer",
-            "phone": "97690390",
-            "facebook_link": "http://baidu.com/ipsum/primis/in/faucibus/orci/luctus.xml",
-            "twitter_link": "http://nhs.uk/at/diam/nam.png",
-            "instagram_link": "http://nasa.gov/pede/justo/eu/massa/donec/dapibus/duis.aspx",
-            "linkedin_link": "https://linkedin.com/ante/vestibulum/ante/ipsum/primis/in.json",
-            "is_verified": false,
-            "created_on": "2020-08-17T15:24:50.398Z"
+            "nickname": "Wayne",
+            "profile_picture": "https://images.pexels.com/photos/1561863/pexels-photo-1561863.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
         },
         {
-            "user_id": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
             "like_id": 4,
+            "user_id": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
             "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
             "nickname": "Derrick",
-            "profile_picture": null,
-            "about": "Inverse local strategy",
-            "gender": "m",
-            "dob": "1990-05-07T07:40:00.000Z",
-            "interest": "Software Consultant",
-            "phone": "96831702",
-            "facebook_link": "https://jigsy.com/eu/interdum/eu/tincidunt/in.html",
-            "twitter_link": "http://nasa.gov/nisi/at/nibh/in/hac/habitasse.png",
-            "instagram_link": "https://360.cn/sed/nisl/nunc/rhoncus/dui/vel.jpg",
-            "linkedin_link": "https://cbc.ca/id/luctus/nec/molestie/sed/justo/pellentesque.png",
-            "is_verified": false,
-            "created_on": "2020-08-17T15:24:50.398Z"
+            "profile_picture": "https://images.pexels.com/photos/2434268/pexels-photo-2434268.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
         },
         {
-            "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
             "like_id": 7,
+            "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
             "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "nickname": "User One",
-            "profile_picture": "https://robohash.org/consequaturatquia.jpg?size=500x500&set=set1",
-            "about": "Down-sized disintermediate circuit",
-            "gender": "f",
-            "dob": "2003-09-22T00:32:55.000Z",
-            "interest": "Statistician IV",
-            "phone": "87685829",
-            "facebook_link": "https://tripadvisor.com/ornare/imperdiet.png",
-            "twitter_link": "https://google.com/quis/orci/nullam/molestie/nibh/in/lectus.xml",
-            "instagram_link": "http://1und1.de/in/libero/ut/massa.png",
-            "linkedin_link": "http://i2i.jp/imperdiet/sapien/urna/pretium/nisl/ut.jpg",
-            "is_verified": false,
-            "created_on": "2020-08-17T15:24:50.398Z"
+            "nickname": "Aaron",
+            "profile_picture": "https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
         },
         {
-            "user_id": "f997120c-2956-482e-9ba3-81a12b4fecc1",
             "like_id": 10,
+            "user_id": "f997120c-2956-482e-9ba3-81a12b4fecc1",
             "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
-            "nickname": "Viki Albrooke",
-            "profile_picture": "https://robohash.org/sedasperioresmaxime.bmp?size=500x500&set=set1",
-            "about": "Face to face neutral conglomeration",
-            "gender": "u",
-            "dob": "2000-07-04T11:07:24.000Z",
-            "interest": "VP Product Management",
-            "phone": "84428699",
-            "facebook_link": "https://nhs.uk/mauris.xml",
-            "twitter_link": "http://uiuc.edu/sit/amet/consectetuer/adipiscing/elit/proin.aspx",
-            "instagram_link": "http://cbsnews.com/elementum/eu/interdum.jsp",
-            "linkedin_link": "https://hibu.com/quam/sapien/varius/ut/blandit/non/interdum.html",
-            "is_verified": false,
-            "created_on": "2020-08-17T15:24:50.398Z"
+            "nickname": "Viki Tay",
+            "profile_picture": "https://images.pexels.com/photos/2426551/pexels-photo-2426551.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
         }
     ]
 }
@@ -10304,55 +11226,27 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/likes
 ```js
 {
     "success": true,
-    "count": 2,
     "data": [
         {
-            "listing_id": "c975a572-452d-4824-8ed5-500b50488436",
-            "like_id": 8,
-            "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
-            "organisation_id": null,
-            "created_by": "b7662cd1-a2c9-4054-95e7-078e35ea6fa1",
-            "title": "vestibulum sed magna at nunc",
-            "category": "Training",
-            "about": "Team-oriented context-sensitive forecast",
-            "tagline": "innovate B2C markets",
-            "mission": "cultivate cutting-edge markets",
-            "listing_url": "https://ehow.com/in/imperdiet/et/commodo/vulputate/justo.xml",
-            "pic1": "https://robohash.org/etpossimusea.png?size=500x500&set=set1",
-            "pic2": null,
-            "pic3": null,
-            "pic4": null,
-            "pic5": null,
-            "is_published": false,
-            "is_verified": false,
-            "start_date": "2020-07-30T05:54:45.000Z",
-            "end_date": null,
-            "created_on": "2020-08-17T16:52:17.118Z",
-            "deleted_on": null
-        },
-        {
-            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
             "like_id": 7,
             "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
-            "organisation_id": null,
-            "created_by": "f96b2138-1754-4c17-a405-940e20adc601",
-            "title": "Updated title 1",
-            "category": "Updated category",
-            "about": "Updated about",
-            "tagline": "Updated tagline",
-            "mission": "Updated mission",
-            "listing_url": "www.updated-test.com",
-            "pic1": null,
-            "pic2": null,
-            "pic3": null,
-            "pic4": null,
-            "pic5": null,
-            "is_published": true,
-            "is_verified": true,
-            "start_date": "2018-08-15T08:45:43.416Z",
-            "end_date": "2020-01-30T08:45:43.416Z",
-            "created_on": "2020-08-17T16:52:17.118Z",
-            "deleted_on": "2020-08-17T16:52:32.000Z"
+            "listing_id": "43824166-bee2-426e-8a08-ca2c4e4120ae",
+            "nickname": "Aaron",
+            "profile_picture": "https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+        },
+        {
+            "like_id": 8,
+            "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+            "listing_id": "c975a572-452d-4824-8ed5-500b50488436",
+            "nickname": "Aaron",
+            "profile_picture": "https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+        },
+        {
+            "like_id": 9,
+            "user_id": "d69a127d-815b-4834-b2b6-54ab398fccad",
+            "listing_id": "e411bd80-d5cf-49ac-b847-18c9fc13377a",
+            "nickname": "Aaron",
+            "profile_picture": "https://images.pexels.com/photos/1368347/pexels-photo-1368347.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
         }
     ]
 }
@@ -10631,4 +11525,4 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2021-01-15 05:20:52 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2021-02-27 08:30:31 by [docgen](https://github.com/thedevsaddam/docgen)
