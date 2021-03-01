@@ -14,8 +14,16 @@ class ChatRoomsController {
         const { user_id } = req.user;
         const chatRooms = await this.chatRoomsRepository.getAllChatRoomsForUser(user_id);
         const data = chatRooms.map((chatRoom) => {
-            const { chatroom_id, chatroom_name, chatroom_pic, is_dm, last_seen, chatmessage_text, created_on, user_id } = chatRoom;
-            return { chatroom_id, chatroom_name, chatroom_pic, is_dm, last_seen, most_recent_msg: { chatmessage_text, created_on, user_id } };
+            const { chatroom_id, chatroom_name, chatroom_pic, is_dm, nickname, last_seen, chatmessage_text, created_on, user_id } = chatRoom;
+            return {
+                chatroom_id,
+                chatroom_name,
+                chatroom_pic,
+                is_dm,
+                nickname,
+                last_seen,
+                most_recent_msg: { chatmessage_text, created_on, user_id },
+            };
         });
         res.status(200).json({ success: true, data });
     };
@@ -45,6 +53,9 @@ class ChatRoomsController {
         const { chatroom_name, chatroom_pic, is_dm, user_ids: rawUserIdArr } = req.body;
         rawUserIdArr.push(req.user.user_id);
         const user_ids = [...new Set<string>(rawUserIdArr)];
+        if (is_dm && user_ids.length != 2) {
+            return next(new ErrorResponse('DM chatrooms must have exactly 2 users', 400));
+        }
         const chatroom_id = uuidv1();
         const data = { chatroom_id, chatroom_name, chatroom_pic, is_dm, user_ids };
         await this.modelValidator.validateModel(CreateChatRoomReqDto, data);
