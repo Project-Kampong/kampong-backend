@@ -1,4 +1,5 @@
 export * from './categories.model';
+export * from './chatRooms.model';
 export * from './faqs.model';
 export * from './hashtags.model';
 export * from './jobs.model';

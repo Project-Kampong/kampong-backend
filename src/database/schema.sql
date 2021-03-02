@@ -52,6 +52,12 @@ DROP TABLE IF EXISTS organisationannouncement CASCADE;
 
 DROP TABLE IF EXISTS organisationjob CASCADE;
 
+DROP TABLE IF EXISTS chatroom CASCADE;
+
+DROP TABLE IF EXISTS chatmessage CASCADE;
+
+DROP TABLE IF EXISTS chatparticipant CASCADE;
+
 CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
 
 CREATE TABLE loginuser (
@@ -334,4 +340,46 @@ CREATE TABLE organisationjob (
 	organisation_job_description TEXT,
 	PRIMARY KEY (organisation_job_id),
 	FOREIGN KEY (organisation_id) REFERENCES organisation ON DELETE CASCADE
-)
+);
+
+CREATE TABLE chatroom (
+	chatroom_id UUID,
+	chatroom_name VARCHAR,
+	chatroom_pic VARCHAR,
+	is_dm BOOLEAN NOT NULL DEFAULT FALSE,
+	user_ids VARCHAR[],
+	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	PRIMARY KEY (chatroom_id)
+);
+
+CREATE TABLE chatmessage (
+	chatmessage_id SERIAL,
+	chatroom_id UUID NOT NULL,
+	user_id UUID,
+	chatmessage_text TEXT,
+	reply_to INTEGER,
+	file_links VARCHAR[],
+	created_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	updated_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	PRIMARY KEY (chatmessage_id),
+	FOREIGN KEY (chatroom_id) REFERENCES chatroom ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES loginuser ON DELETE SET NULL,
+	FOREIGN KEY (reply_to) REFERENCES chatmessage (chatmessage_id) ON DELETE SET NULL
+);
+
+CREATE INDEX ON chatmessage USING BTREE (chatroom_id, created_on);
+
+CREATE TABLE chatparticipant (
+	chatparticipant_id SERIAL,
+	user_id UUID NOT NULL,
+	chatroom_id UUID NOT NULL,
+	last_seen TIMESTAMPTZ,
+	joined_on TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	PRIMARY KEY (chatparticipant_id),
+	FOREIGN KEY (chatroom_id) REFERENCES chatroom ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES loginuser ON DELETE CASCADE,
+	UNIQUE (user_id, chatroom_id)
+);
+
+CREATE INDEX ON chatparticipant USING BTREE (chatroom_id);

@@ -1,4 +1,5 @@
 import { CategoriesRepository } from './categories.repository';
+import { ChatRoomsRepository } from './chatRooms.repository';
 import { FaqsRepository } from './faqs.repository';
 import { HashtagsRepository } from './hashtags.repository';
 import { JobsRepository } from './jobs.repository';
@@ -10,6 +11,7 @@ import { LikesRepository } from './likes.repository';
 // Database Interface Extensions (Add repositories here):
 interface IExtensions {
     categories: CategoriesRepository;
+    chatRooms: ChatRoomsRepository;
     faqs: FaqsRepository;
     jobs: JobsRepository;
     likes: LikesRepository;
@@ -22,6 +24,7 @@ interface IExtensions {
 export {
     IExtensions,
     CategoriesRepository,
+    ChatRoomsRepository,
     FaqsRepository,
     HashtagsRepository,
     JobsRepository,
