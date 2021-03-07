@@ -1,4 +1,4 @@
-import { CreateOrganisationJobSchema } from '../models';
+import { CreateOrganisationJobReqDto, UpdateOrganisationJobReqDto } from '../models';
 import { db, OrganisationJobsRepository, OrganisationsRepository } from '../database';
 import { checkOrganisationOwner, cleanseData, ErrorResponse } from '../utils';
 
@@ -38,7 +38,7 @@ class OrganisationJobsController {
     createOrganisationJob = async (req, res, next) => {
         const { organisation_id, organisation_job_title, organisation_job_description } = req.body;
 
-        const data: CreateOrganisationJobSchema = {
+        const data: CreateOrganisationJobReqDto = {
             organisation_id,
             organisation_job_title,
             organisation_job_description,
@@ -83,7 +83,7 @@ class OrganisationJobsController {
 
         const { organisation_job_title, organisation_job_description } = req.body;
 
-        const data = {
+        const data: UpdateOrganisationJobReqDto = {
             organisation_job_title,
             organisation_job_description,
         };
