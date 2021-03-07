@@ -9,7 +9,6 @@ import { router as participantsRoute } from './participants.route';
 import { router as profilesRoute } from './profiles.route';
 
 // Re-route this URI to other resource router
-router.use('/profiles', profilesRoute);
 router.use('/:user_id/likes', likesRoute);
 router.use('/:user_id/listing-comments', listingCommentsRoute);
 router.use('/:user_id/listings', listingsRoute);

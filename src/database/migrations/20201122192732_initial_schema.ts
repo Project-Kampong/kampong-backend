@@ -136,7 +136,6 @@ export async function up(knex: Knex): Promise<void> {
             table.uuid('listing_id').notNullable().references('listing_id').inTable('listing').onDelete('CASCADE');
             table.string('job_title').notNullable();
             table.text('job_description');
-            table.timestamp('deleted_on');
         });
 
         await tx.schema.createTable('faq', (table: Knex.TableBuilder) => {
@@ -200,7 +199,6 @@ export async function up(knex: Knex): Promise<void> {
             table.integer('reply_to_id').references('listing_comment_id').inTable('listingcomment').onDelete('SET NULL');
             table.timestamp('created_on').notNullable().defaultTo(knex.fn.now());
             table.timestamp('updated_on').notNullable().defaultTo(knex.fn.now());
-            table.timestamp('deleted_on');
         });
 
         await tx.schema.createTable('location', (table: Knex.TableBuilder) => {
@@ -231,11 +229,45 @@ export async function up(knex: Knex): Promise<void> {
             table.string('organisation_job_title').notNullable();
             table.text('organisation_job_description');
         });
+
+        await tx.schema.createTable('chatroom', (table: Knex.TableBuilder) => {
+            table.uuid('chatroom_id').primary();
+            table.string('chatroom_name');
+            table.string('chatroom_pic');
+            table.boolean('is_dm').notNullable().defaultTo('FALSE');
+            table.timestamp('created_on').notNullable().defaultTo(knex.fn.now());
+            table.timestamp('updated_on').notNullable().defaultTo(knex.fn.now());
+        });
+
+        await tx.schema.createTable('chatmessage', (table: Knex.TableBuilder) => {
+            table.increments('chatmessage_id').primary();
+            table.uuid('chatroom_id').notNullable().references('chatroom_id').inTable('chatroom').onDelete('CASCADE');
+            table.uuid('user_id').references('user_id').inTable('loginuser').onDelete('SET NULL');
+            table.text('chatmessage_text');
+            table.integer('reply_to').references('chatmessage_id').inTable('chatmessage').onDelete('SET NULL');
+            table.specificType('file_links', 'VARCHAR[]');
+            table.timestamp('created_on').notNullable().defaultTo(knex.fn.now());
+            table.timestamp('updated_on').notNullable().defaultTo(knex.fn.now());
+            table.index(['chatroom_id', 'created_on'], null, 'BTREE');
+        });
+
+        await tx.schema.createTable('chatparticipant', (table: Knex.TableBuilder) => {
+            table.increments('chatparticipant_id').primary();
+            table.uuid('user_id').notNullable().references('user_id').inTable('loginuser').onDelete('CASCADE');
+            table.uuid('chatroom_id').notNullable().references('chatroom_id').inTable('chatroom').onDelete('CASCADE');
+            table.timestamp('last_seen');
+            table.timestamp('joined_on').notNullable().defaultTo(knex.fn.now());
+            table.unique(['user_id', 'chatroom_id']);
+            table.index('chatroom_id');
+        });
     });
 }
 
 export async function down(knex: Knex): Promise<void> {
     return knex.transaction(async (tx: Knex.Transaction) => {
+        await tx.schema.dropTableIfExists('chatparticipant');
+        await tx.schema.dropTableIfExists('chatmessage');
+        await tx.schema.dropTableIfExists('chatroom');
         await tx.schema.dropTableIfExists('organisationjob');
         await tx.schema.dropTableIfExists('organisationannouncement');
         await tx.schema.dropTableIfExists('listinglocation');

@@ -1,16 +1,20 @@
 import { db, JobsRepository, ListingsRepository } from '../database';
-import { asyncHandler } from '../middleware';
-import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
+import { CreateJobReqDto, UpdateJobReqDto } from '../models';
+import { checkListingOwner, modelValidator, ErrorResponse, ModelValidator } from '../utils';
 
 export class JobsController {
-    constructor(private readonly jobsRepository: JobsRepository, private readonly listingsRepository: ListingsRepository) {}
+    constructor(
+        private readonly jobsRepository: JobsRepository,
+        private readonly listingsRepository: ListingsRepository,
+        private readonly modelValidator: ModelValidator,
+    ) {}
 
     /**
      * @desc    Get all jobs for a listing
      * @route   GET /api/listings/:listing_id/jobs
      * @access  Public
      */
-    getJobs = asyncHandler(async (req, res, next) => {
+    getJobs = async (req, res, next) => {
         if (req.params.listing_id) {
             const listingId: string = req.params.listing_id;
             // return 404 error response if listing not found
@@ -24,14 +28,14 @@ export class JobsController {
         }
 
         return next(new ErrorResponse('Invalid route', 404));
-    });
+    };
 
     /**
      * @desc    Create job
      * @route   POST /api/jobs
      * @access  Owner/Admin
      */
-    createJob = asyncHandler(async (req, res, next) => {
+    createJob = async (req, res, next) => {
         const { listing_id, job_title, job_description } = req.body;
 
         const data = {
@@ -40,7 +44,7 @@ export class JobsController {
             job_description,
         };
 
-        cleanseData(data);
+        await this.modelValidator.validateModel(CreateJobReqDto, data);
 
         // check if listing exists and is listing owner
         const isListingOwner = await checkListingOwner(req.user.user_id, listing_id);
@@ -56,16 +60,25 @@ export class JobsController {
             success: true,
             data: rows,
         });
-    });
+    };
 
     /**
      * @desc    Update single job
      * @route   PUT /api/jobs/:id
      * @access  Admin/Owner
      */
-    updateJob = asyncHandler(async (req, res, next) => {
+    updateJob = async (req, res, next) => {
         // check if job exists
         const job = await this.jobsRepository.getJobById(req.params.id);
+
+        const { job_title, job_description } = req.body;
+
+        const data = {
+            job_title,
+            job_description,
+        };
+
+        await this.modelValidator.validateModel(UpdateJobReqDto, data);
 
         // check if listing exists and is listing owner
         const isListingOwner = await checkListingOwner(req.user.user_id, job.listing_id);
@@ -75,29 +88,20 @@ export class JobsController {
             return next(new ErrorResponse(`Not authorised to update jobs for this listing`, 403));
         }
 
-        const { job_title, job_description } = req.body;
-
-        const data = {
-            job_title,
-            job_description,
-        };
-
-        cleanseData(data);
-
         const rows = await this.jobsRepository.updateJobById(data, req.params.id);
 
         res.status(200).json({
             success: true,
             data: rows,
         });
-    });
+    };
 
     /**
      * @desc    Delete single job
      * @route   DELETE /api/jobs/:id
      * @access  Owner/Admin
      */
-    deleteJob = asyncHandler(async (req, res, next) => {
+    deleteJob = async (req, res, next) => {
         // check if job exists
         const job = await this.jobsRepository.getJobById(req.params.id);
 
@@ -115,7 +119,7 @@ export class JobsController {
             success: true,
             data: rows,
         });
-    });
+    };
 }
 
-export const jobsController = new JobsController(db.jobs, db.listings);
+export const jobsController = new JobsController(db.jobs, db.listings, modelValidator);

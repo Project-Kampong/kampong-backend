@@ -1,5 +1,5 @@
 import { BaseRepository } from './base.repository';
-import { ListingView } from '../models';
+import { ListingView } from '../../models';
 
 export class ListingsRepository extends BaseRepository {
     async getListingById(listingId: string): Promise<ListingView> {

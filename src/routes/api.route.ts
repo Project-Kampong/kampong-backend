@@ -3,6 +3,7 @@ import express from 'express';
 import { BaseRouter } from './base.route';
 
 import { router as authRoute } from './api/auth.route';
+import { router as chatRoomsRoute } from './api/chatRooms.route';
 import { router as faqsRoute } from './api/faqs.route';
 import { router as hashtagsRoute } from './api/hashtags.route';
 import { router as jobsRoute } from './api/jobs.route';
@@ -31,6 +32,7 @@ class ApiRouter extends BaseRouter {
 
         // Mount routes
         this.route.use('/auth', authRoute);
+        this.route.use('/chatrooms', chatRoomsRoute);
         this.route.use('/faqs', faqsRoute);
         this.route.use('/hashtags', hashtagsRoute);
         this.route.use('/jobs', jobsRoute);
