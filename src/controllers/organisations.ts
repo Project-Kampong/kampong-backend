@@ -1,61 +1,8 @@
 import { v1 as uuidv1 } from 'uuid';
 import { db } from '../database/db';
+import { Organisation, CreateOrganisationReqDto, UpdateOrganisationReqDto } from '../models';
 import { asyncHandler } from '../middleware';
 import { checkOrganisationOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
-
-interface OrganisationSchema {
-    organisation_id: string;
-    name: string;
-    organisation_type: string;
-    about: string;
-    website_url: string;
-    phone: string;
-    email: string;
-    owned_by: string;
-    locations: string[];
-    story: string;
-    is_verified: boolean;
-    created_on: Date;
-    deleted_on: Date;
-}
-
-interface CreateOrganisationRequestSchema {
-    organisation_id: string;
-    name: string;
-    organisation_type?: string;
-    about: string;
-    website_url?: string;
-    phone?: string;
-    email: string;
-    address: string;
-    owned_by: string;
-    locations: string[];
-    story: string;
-    facebook_link: string;
-    twitter_link: string;
-    instagram_link: string;
-    banner_photo: string;
-    profile_photo: string;
-    additional_photos: string[];
-}
-
-interface UpdateOrganisationRequestSchema {
-    name?: string;
-    organisation_type?: string;
-    about?: string;
-    website_url?: string;
-    phone?: string;
-    email?: string;
-    address?: string;
-    locations?: string[];
-    story?: string;
-    facebook_link?: string;
-    twitter_link?: string;
-    instagram_link?: string;
-    banner_photo?: string;
-    profile_photo?: string;
-    additional_photos?: string[];
-}
 
 /**
  * @desc    Get all organisations
@@ -84,7 +31,7 @@ export const getOrganisations = asyncHandler(async (req, res) => {
  * @access  Public
  */
 export const getOrganisation = asyncHandler(async (req, res) => {
-    const rows = await db.one<Promise<OrganisationSchema>>('SELECT * FROM organisation WHERE organisation_id = $1', req.params.id);
+    const rows = await db.one<Promise<Organisation>>('SELECT * FROM organisation WHERE organisation_id = $1', req.params.id);
     res.status(200).json({
         success: true,
         data: rows,
@@ -115,7 +62,7 @@ export const createOrganisation = asyncHandler(async (req, res) => {
         additional_photos,
     } = req.body;
 
-    const data: CreateOrganisationRequestSchema = {
+    const data: CreateOrganisationReqDto = {
         organisation_id: uuidv1(),
         name,
         organisation_type,
@@ -137,7 +84,7 @@ export const createOrganisation = asyncHandler(async (req, res) => {
 
     cleanseData(data);
 
-    const rows = await db.one<OrganisationSchema>('INSERT INTO organisation (${this:name}) VALUES (${this:csv}) RETURNING *', data);
+    const rows = await db.one<Organisation>('INSERT INTO organisation (${this:name}) VALUES (${this:csv}) RETURNING *', data);
 
     res.status(201).json({
         success: true,
@@ -177,7 +124,7 @@ export const updateOrganisation = asyncHandler(async (req, res, next) => {
         additional_photos,
     } = req.body;
 
-    const data: UpdateOrganisationRequestSchema = {
+    const data: UpdateOrganisationReqDto = {
         name,
         organisation_type,
         about,
@@ -199,7 +146,7 @@ export const updateOrganisation = asyncHandler(async (req, res, next) => {
 
     const updateOrganisationQuery = parseSqlUpdateStmt(data, 'organisation', 'WHERE organisation_id = $1 RETURNING *', [req.params.id]);
 
-    const rows = await db.one<OrganisationSchema>(updateOrganisationQuery);
+    const rows = await db.one<Organisation>(updateOrganisationQuery);
 
     res.status(200).json({
         success: true,
@@ -220,7 +167,7 @@ export const deleteOrganisation = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse('Not authorised to delete organisation as you are not the organisation owner', 403));
     }
 
-    const rows = await db.one<OrganisationSchema>('DELETE FROM organisation WHERE organisation_id = $1 RETURNING *', req.params.id);
+    const rows = await db.one<Organisation>('DELETE FROM organisation WHERE organisation_id = $1 RETURNING *', req.params.id);
 
     res.status(200).json({
         success: true,
