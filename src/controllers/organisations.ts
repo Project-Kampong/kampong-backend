@@ -12,6 +12,16 @@ import { checkOrganisationOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt 
  * @access  Public
  */
 export const getOrganisations = asyncHandler(async (req, res) => {
+    if (req.params.user_id) {
+        const rows = await db.manyOrNone(
+            'SELECT o.* FROM loginuser lu LEFT JOIN organisation o ON lu.user_id = o.owned_by WHERE lu.user_id = $1',
+            req.params.user_id,
+        );
+        return res.status(200).json({
+            success: true,
+            data: rows,
+        });
+    }
     if (req.params.listing_id) {
         const rows = await db.manyOrNone(
             'SELECT * FROM listing l LEFT JOIN listingorganisation lo ON l.listing_id = lo.listing_id LEFT JOIN organisation o ON lo.organisation_id = o.organisation_id WHERE l.listing_id = $1',
