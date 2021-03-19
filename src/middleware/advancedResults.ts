@@ -26,7 +26,7 @@ import { isString, get, isEmpty } from 'lodash';
 export const advancedResults = (model: string, join?: string, on?: string) =>
     asyncHandler(async (req, res, next) => {
         if (!isEmpty(req.params)) {
-            next();
+            return next();
         }
         let { select, sort, page = 1, limit = 25 } = req.query;
         select = select ? select.split(',') : '*';
