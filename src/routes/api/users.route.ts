@@ -10,7 +10,6 @@ import { router as profilesRoute } from './profiles.route';
 import { router as organisationRoute } from './organisations.route';
 
 // Re-route this URI to other resource router
-router.use('/profiles', profilesRoute);
 router.use('/:user_id/likes', likesRoute);
 router.use('/:user_id/listing-comments', listingCommentsRoute);
 router.use('/:user_id/listings', listingsRoute);

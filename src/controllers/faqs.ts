@@ -1,8 +1,13 @@
 import { db, FaqsRepository, ListingsRepository } from '../database';
-import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
+import { CreateFaqReqDto, UpdateFaqReqDto } from '../models';
+import { checkListingOwner, modelValidator, ErrorResponse, ModelValidator } from '../utils';
 
 export class FaqsController {
-    constructor(private readonly faqsRepository: FaqsRepository, private readonly listingsRepository: ListingsRepository) {}
+    constructor(
+        private readonly faqsRepository: FaqsRepository,
+        private readonly listingsRepository: ListingsRepository,
+        private readonly modelValidator: ModelValidator,
+    ) {}
 
     /**
      * @desc    Get all faqs for a listing
@@ -39,7 +44,7 @@ export class FaqsController {
             answer,
         };
 
-        cleanseData(data);
+        await this.modelValidator.validateModel(CreateFaqReqDto, data);
 
         // check if listing exists and is listing owner
         const isListingOwner = await checkListingOwner(req.user.user_id, listing_id);
@@ -81,7 +86,7 @@ export class FaqsController {
             answer,
         };
 
-        cleanseData(data);
+        await this.modelValidator.validateModel(UpdateFaqReqDto, data);
 
         const rows = await this.faqsRepository.updateFaqById(data, req.params.id);
 
@@ -117,4 +122,4 @@ export class FaqsController {
     };
 }
 
-export const faqsController = new FaqsController(db.faqs, db.listings);
+export const faqsController = new FaqsController(db.faqs, db.listings, modelValidator);

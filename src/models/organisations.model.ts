@@ -14,7 +14,7 @@ export interface Organisation {
     deleted_on: Date;
 }
 
-export interface CreateOrganisationSchema {
+export interface CreateOrganisationReqDto {
     organisation_id: string;
     name: string;
     organisation_type?: string;
@@ -34,7 +34,7 @@ export interface CreateOrganisationSchema {
     additional_photos: string[];
 }
 
-export interface UpdateOrganisationSchema {
+export interface UpdateOrganisationReqDto {
     name?: string;
     organisation_type?: string;
     about?: string;

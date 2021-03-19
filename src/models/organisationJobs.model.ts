@@ -3,16 +3,15 @@ export interface OrganisationJob {
     organisation_id: string;
     organisation_job_title: string;
     organisation_job_description: string;
-    deleted_on: Date;
 }
 
-export interface CreateOrganisationJobSchema {
+export interface CreateOrganisationJobReqDto {
     organisation_id: string;
     organisation_job_title: string;
     organisation_job_description: string;
 }
 
-export interface UpdateOrganisationJobSchema {
+export interface UpdateOrganisationJobReqDto {
     organisation_job_title: string;
     organisation_job_description: string;
 }

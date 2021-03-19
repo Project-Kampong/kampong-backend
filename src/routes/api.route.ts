@@ -1,8 +1,8 @@
 import path from 'path';
-import express from 'express';
-import { BaseRouter } from './base.route';
+import express, { Router } from 'express';
 
 import { router as authRoute } from './api/auth.route';
+import { router as chatRoomsRoute } from './api/chatRooms.route';
 import { router as faqsRoute } from './api/faqs.route';
 import { router as hashtagsRoute } from './api/hashtags.route';
 import { router as jobsRoute } from './api/jobs.route';
@@ -25,12 +25,15 @@ import { router as organisationAnnouncementsRoute } from './api/organisationAnno
 import { router as organisationLikesRoute } from './api/organisationLikes.route';
 import { router as organisationJobsRoute } from './api/organisationJobs.route';
 
-class ApiRouter extends BaseRouter {
-    constructor() {
-        super(express.Router());
+class ApiRouter {
+    private static instance: ApiRouter;
+
+    private constructor(private readonly route: Router) {
+        ApiRouter.instance = this;
 
         // Mount routes
         this.route.use('/auth', authRoute);
+        this.route.use('/chatrooms', chatRoomsRoute);
         this.route.use('/faqs', faqsRoute);
         this.route.use('/hashtags', hashtagsRoute);
         this.route.use('/jobs', jobsRoute);
@@ -57,6 +60,10 @@ class ApiRouter extends BaseRouter {
         // All unimplemented route give 404 response
         this.route.use('/*', (req, res) => res.status(404).json({ success: false, error: `Route not found: ${req.method} ${req.originalUrl}` }));
     }
+
+    static init(): Router {
+        return this.instance?.route || new ApiRouter(express.Router()).route;
+    }
 }
 
-export const apiRouter = new ApiRouter().getRoute;
+export const apiRouter = ApiRouter.init();

@@ -1,8 +1,13 @@
 import { db, HashtagsRepository, ListingsRepository } from '../database';
-import { checkListingOwner, cleanseData, ErrorResponse } from '../utils';
+import { CreateHashtagReqDto } from '../models';
+import { checkListingOwner, modelValidator, ErrorResponse, ModelValidator } from '../utils';
 
 export class HashtagsController {
-    constructor(private readonly hashtagsRepository: HashtagsRepository, private readonly listingsRepository: ListingsRepository) {}
+    constructor(
+        private readonly hashtagsRepository: HashtagsRepository,
+        private readonly listingsRepository: ListingsRepository,
+        private readonly modelValidator: ModelValidator,
+    ) {}
 
     /**
      * @desc    Get all hashtags for a listing
@@ -38,7 +43,7 @@ export class HashtagsController {
             tag,
         };
 
-        cleanseData(data);
+        await this.modelValidator.validateModel(CreateHashtagReqDto, data);
 
         // check if listing exists and is listing owner
         const isListingOwner = await checkListingOwner(req.user.user_id, listing_id);
@@ -82,4 +87,4 @@ export class HashtagsController {
     };
 }
 
-export const hashtagsController = new HashtagsController(db.hashtags, db.listings);
+export const hashtagsController = new HashtagsController(db.hashtags, db.listings, modelValidator);

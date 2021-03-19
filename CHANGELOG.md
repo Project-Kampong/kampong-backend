@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## []
+
+## [v0.116.0]
+
+## [v0.115.0]
+
+## [v0.114.0]
+
+### Added
+
+-   Chat room endpoints, including chatroom creation, send message, update last seen, get all chatrooms for user, and get single chatroom with messages
+
+## [v0.113.0]
+
+## [v0.112.0]
+
+## [v0.111.0]
+
+## [v0.110.0]
+
 ## [v0.109.0]
 
 ## [v0.108.0]
@@ -292,7 +312,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Internal, dev-only test routes and methods.
 -   API documentation temporarily set up as front-end page to be served, for ease of testing by frontend.
 
-[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.109.0...HEAD
+[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/...HEAD
+[]: https://github.com/Project-Kampong/kampong-backend/releases/tag/
+[v0.116.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.116.0
+[v0.115.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.115.0
+[v0.114.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.114.0
+[v0.113.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.113.0
+[v0.112.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.112.0
+[v0.111.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.111.0
+[v0.110.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.110.0
 [v0.109.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.109.0
 [v0.108.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.108.0
 [v0.104.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.104.0

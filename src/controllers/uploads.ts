@@ -7,6 +7,9 @@ export class UploadsController {
     constructor(private readonly s3ClientService: S3ClientService) {}
 
     uploadFilesToPublic = async (req, res, next) => {
+        if (isEmpty(req.files)) {
+            return next(new ErrorResponse('Please upload a file', 400));
+        }
         const uploads: { name: string; data: Buffer }[] = [].concat(get(req.files, 'uploads', []));
 
         const uploadPromises = map(uploads, ({ name, data: file }) => {
