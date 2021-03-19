@@ -2969,6 +2969,13 @@ URL: {{URL}}/api/file-upload
 ```
 
 
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | multipart/form-data | Form Data |
+
+
 
 ***Body:***
 
@@ -11525,4 +11532,4 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner
 
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2021-02-27 09:03:00 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2021-03-19 11:45:31 by [docgen](https://github.com/thedevsaddam/docgen)
