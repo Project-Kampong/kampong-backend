@@ -7,31 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## []
+### Changed
 
-## []
+-   Update node to 14.16.0 using nvm.
 
-## [v0.116.0]
+### Fixed
 
-## [v0.115.0]
+-   Github actions deployment script bug, failing to deploy on all envs.
 
 ## [v0.114.0]
 
 ### Added
 
 -   Chat room endpoints, including chatroom creation, send message, update last seen, get all chatrooms for user, and get single chatroom with messages
-
-## [v0.113.0]
-
-## [v0.112.0]
-
-## [v0.111.0]
-
-## [v0.110.0]
-
-## [v0.109.0]
-
-## [v0.108.0]
 
 ## [v0.104.0]
 
@@ -51,8 +39,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Bump node version to 14.15.3
 
-## [v0.83.0]
-
 ## [v0.82.0]
 
 ### Added
@@ -63,20 +49,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   `listings`, `milestones`, `listing updates`, and `programmes` schema with columns `description` and `title` are now prepended with their table name eg. `milestone_description`
 -   Bump node version to 14.15.2
-
-## [v0.81.0]
-
-## [v0.80.0]
-
-## [v0.79.0]
-
-## [v0.78.0]
-
-## [v0.77.0]
-
-## [v0.76.0]
-
-## [v0.75.0]
 
 ## [v0.73.0]
 
@@ -314,10 +286,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Internal, dev-only test routes and methods.
 -   API documentation temporarily set up as front-end page to be served, for ease of testing by frontend.
 
-[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/...HEAD
-[]: https://github.com/Project-Kampong/kampong-backend/releases/tag/
-
-[]: https://github.com/Project-Kampong/kampong-backend/releases/tag/
+[unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/v0.118.0...HEAD
+[v0.118.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.118.0
 [v0.116.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.116.0
 [v0.115.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.115.0
 [v0.114.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.114.0

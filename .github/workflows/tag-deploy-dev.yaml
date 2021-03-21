@@ -38,4 +38,7 @@ jobs:
                   USERNAME: root
                   PORT: 22
                   PASSWORD: ${{ secrets.DEV_PASSWORD }}
-                  script: ~/deployment-scripts/update-backend.sh dev
+                  script: |
+                      export NVM_DIR=~/.nvm
+                      source ~/.nvm/nvm.sh
+                      ~/deployment-scripts/update-backend.sh dev
