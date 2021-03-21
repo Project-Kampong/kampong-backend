@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+-   Update node to 14.16.0 using nvm.
+
 ### Fixed
 
 -   Github actions deployment script bug, failing to deploy on all envs.
