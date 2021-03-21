@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## []
 
+## []
+
 ## [v0.116.0]
 
 ## [v0.115.0]
@@ -313,6 +315,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   API documentation temporarily set up as front-end page to be served, for ease of testing by frontend.
 
 [unreleased]: https://github.com/Project-Kampong/kampong-backend/compare/...HEAD
+[]: https://github.com/Project-Kampong/kampong-backend/releases/tag/
 
 []: https://github.com/Project-Kampong/kampong-backend/releases/tag/
 [v0.116.0]: https://github.com/Project-Kampong/kampong-backend/releases/tag/v0.116.0
