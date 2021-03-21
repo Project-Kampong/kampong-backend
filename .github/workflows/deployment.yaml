@@ -23,7 +23,6 @@ jobs:
                   script: |
                       export NVM_DIR=~/.nvm
                       source ~/.nvm/nvm.sh
-                      npm --help
                       ~/deployment-scripts/update-backend.sh dev
             - name: Run deployment script on staging
               if: github.event.inputs.server_type == 'staging'
@@ -33,7 +32,10 @@ jobs:
                   USERNAME: root
                   PORT: 22
                   PASSWORD: ${{ secrets.DEV_PASSWORD }}
-                  script: ~/deployment-scripts/update-backend.sh staging
+                  script: |
+                      export NVM_DIR=~/.nvm
+                      source ~/.nvm/nvm.sh
+                      ~/deployment-scripts/update-backend.sh staging
             - name: Run deployment script on production
               if: github.event.inputs.server_type == 'prod'
               uses: appleboy/ssh-action@master
@@ -42,4 +44,7 @@ jobs:
                   USERNAME: root
                   PORT: 22
                   PASSWORD: ${{ secrets.PROD_PASSWORD }}
-                  script: ~/deployment-scripts/update-backend.sh prod
+                  script: |
+                      export NVM_DIR=~/.nvm
+                      source ~/.nvm/nvm.sh
+                      ~/deployment-scripts/update-backend.sh prod
