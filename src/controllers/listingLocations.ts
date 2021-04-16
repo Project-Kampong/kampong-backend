@@ -20,7 +20,6 @@ export const getListingLocations = asyncHandler(async (req, res, next) => {
 
         return res.status(200).json({
             success: true,
-            count: data.length,
             data,
         });
     }

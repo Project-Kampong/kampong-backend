@@ -3,7 +3,7 @@ import { v1 as uuidv1 } from 'uuid';
 import { db } from '../database';
 import { asyncHandler } from '../middleware';
 import { checkListingOwner, cleanseData, ErrorResponse, parseSqlUpdateStmt } from '../utils';
-import { isFinite, isNil, isNumber } from 'lodash';
+import { isFinite } from 'lodash';
 
 /**
  * @desc    Get all listings
