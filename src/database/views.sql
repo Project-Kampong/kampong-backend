@@ -130,8 +130,7 @@ SELECT
 	ali.milestones,
 	ali.participants,
 	p.nickname,
-	p.profile_picture,
-	to_tsvector(l.listing_title || ' ' || l.category || ' ' || array_to_string(ali.locations::text [], ' ')) AS keyword_vector
+	p.profile_picture
 FROM
 	listing l
 	LEFT JOIN agg_listing_info ali ON l.listing_id = ali.listing_id

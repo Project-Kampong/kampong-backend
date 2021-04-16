@@ -4,6 +4,8 @@ CREATE TYPE user_role AS ENUM ('admin', 'user');
 
 DROP EXTENSION IF EXISTS pg_stat_statements CASCADE;
 
+DROP EXTENSION IF EXISTS pg_trgm CASCADE;
+
 DROP TABLE IF EXISTS loginuser CASCADE;
 
 DROP TABLE IF EXISTS pendinguser CASCADE;
@@ -59,6 +61,8 @@ DROP TABLE IF EXISTS chatmessage CASCADE;
 DROP TABLE IF EXISTS chatparticipant CASCADE;
 
 CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
 CREATE TABLE loginuser (
 	user_id UUID,
