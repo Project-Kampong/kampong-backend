@@ -151,6 +151,7 @@ Backend API for Project Kampong.
   * [Get All Listing Comments for a User](#2-get-all-listing-comments-for-a-user)
   * [Get All Listing Participation for a User](#3-get-all-listing-participation-for-a-user)
   * [Get All Listings Owned by a User](#4-get-all-listings-owned-by-a-user)
+  * [Get All Organisations for a User](#5-get-all-organisations-for-a-user)
 
 
 --------
@@ -11530,6 +11531,22 @@ URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/listings/owner
 
 
 
+### 5. Get All Organisations for a User
+
+
+Get all likes for an associated user, identified by the user id. Permission: Public.
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{URL}}/api/users/d69a127d-815b-4834-b2b6-54ab398fccad/organisations
+```
+
+
+
 ---
 [Back to top](#kampong-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2021-03-19 11:45:31 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2021-04-16 05:15:33 by [docgen](https://github.com/thedevsaddam/docgen)

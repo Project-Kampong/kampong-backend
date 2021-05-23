@@ -19,7 +19,6 @@ export const getListingComments = asyncHandler(async (req, res, next) => {
 
         return res.status(200).json({
             success: true,
-            count: listingComments.length,
             data: listingComments,
         });
     }
@@ -32,7 +31,6 @@ export const getListingComments = asyncHandler(async (req, res, next) => {
 
         return res.status(200).json({
             success: true,
-            count: listingComments.length,
             data: listingComments,
         });
     }

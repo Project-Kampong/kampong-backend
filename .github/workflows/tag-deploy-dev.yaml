@@ -6,7 +6,7 @@ on:
         paths-ignore:
             - 'CHANGELOG.md' # Does not run if only changelog is changed, to prevent recursive run of this action
 jobs:
-    build:
+    tag-deploy-dev:
         runs-on: ubuntu-20.04
         steps:
             - name: Check out repository
