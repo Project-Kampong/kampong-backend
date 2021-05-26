@@ -5,3 +5,4 @@ export * from './inputExceptionMsg';
 export * from './listingAuth';
 export * from './modelValidator';
 export * from './regex';
+export * from './deleteFromBucket';
